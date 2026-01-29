@@ -1,0 +1,144 @@
+/**
+ * Almadar Brand Color Palette
+ *
+ * Theme: Arabic manuscript meets sci-fi
+ * Inspired by: Dune, Book of Kells, Islamic geometric patterns
+ */
+
+:root {
+  /* === Primary Colors === */
+
+  /* Sand Gold - Primary accent, highlights, CTAs */
+  --almadar-sand-gold: #C9A227;
+  --almadar-sand-gold-light: #E8C547;
+  --almadar-sand-gold-dark: #8B6914;
+
+  /* Midnight Blue - Primary background, dark mode */
+  --almadar-midnight: #1A1F3D;
+  --almadar-midnight-light: #2A3050;
+  --almadar-midnight-dark: #0A0A0F;
+
+  /* Cosmic Teal - Interactive elements, links, accents */
+  --almadar-teal: #0D7377;
+  --almadar-teal-light: #14A3A8;
+  --almadar-teal-dark: #095456;
+
+  /* === Secondary Colors === */
+
+  /* Deep Bronze - Secondary accent, aged elements */
+  --almadar-bronze: #8B6914;
+  --almadar-bronze-light: #A67F1A;
+
+  /* Dust Rose - Warm accents, highlights */
+  --almadar-dust-rose: #B87B6B;
+  --almadar-dust-rose-light: #D4998A;
+
+  /* Parchment - Light backgrounds, text areas */
+  --almadar-parchment: #F5E6C8;
+  --almadar-parchment-dark: #E8D4A8;
+
+  /* Ink Black - Text, dark mode background */
+  --almadar-ink: #0A0A0F;
+  --almadar-ink-light: #1A1A1F;
+
+  /* === Semantic Colors === */
+
+  /* Text */
+  --almadar-text-primary: #F5E6C8;
+  --almadar-text-secondary: #A0A0B0;
+  --almadar-text-muted: #6A6A7A;
+  --almadar-text-on-light: #1A1F3D;
+
+  /* Backgrounds */
+  --almadar-bg-primary: #1A1F3D;
+  --almadar-bg-secondary: #0A0A0F;
+  --almadar-bg-card: #2A3050;
+  --almadar-bg-light: #F5E6C8;
+
+  /* Interactive */
+  --almadar-link: #0D7377;
+  --almadar-link-hover: #14A3A8;
+  --almadar-button-primary: #C9A227;
+  --almadar-button-primary-hover: #E8C547;
+
+  /* Status */
+  --almadar-success: #0D7377;
+  --almadar-warning: #C9A227;
+  --almadar-error: #B87B6B;
+  --almadar-info: #14A3A8;
+
+  /* Borders */
+  --almadar-border: #2A3050;
+  --almadar-border-light: #3A4060;
+  --almadar-border-accent: #C9A227;
+
+  /* === Code Syntax Highlighting === */
+
+  --almadar-code-bg: #0A0A0F;
+  --almadar-code-keyword: #C9A227;
+  --almadar-code-string: #B87B6B;
+  --almadar-code-function: #0D7377;
+  --almadar-code-comment: #6A6A7A;
+  --almadar-code-variable: #14A3A8;
+  --almadar-code-number: #E8C547;
+
+  /* === Gradients === */
+
+  --almadar-gradient-gold: linear-gradient(135deg, #C9A227 0%, #E8C547 50%, #8B6914 100%);
+  --almadar-gradient-teal: linear-gradient(135deg, #0D7377 0%, #14A3A8 100%);
+  --almadar-gradient-midnight: linear-gradient(135deg, #1A1F3D 0%, #0A0A0F 100%);
+  --almadar-gradient-hero: linear-gradient(135deg, #1A1F3D 0%, #0D7377 50%, #1A1F3D 100%);
+
+  /* === Shadows === */
+
+  --almadar-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --almadar-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --almadar-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  --almadar-shadow-glow-gold: 0 0 20px rgba(201, 162, 39, 0.3);
+  --almadar-shadow-glow-teal: 0 0 20px rgba(13, 115, 119, 0.3);
+
+  /* === Typography === */
+
+  --almadar-font-arabic: 'Noto Naskh Arabic', 'Traditional Arabic', serif;
+  --almadar-font-sans: 'Inter', 'IBM Plex Sans', 'Helvetica Neue', sans-serif;
+  --almadar-font-mono: 'IBM Plex Mono', 'Fira Code', monospace;
+
+  /* === Spacing (8px base) === */
+
+  --almadar-space-1: 0.25rem;  /* 4px */
+  --almadar-space-2: 0.5rem;   /* 8px */
+  --almadar-space-3: 0.75rem;  /* 12px */
+  --almadar-space-4: 1rem;     /* 16px */
+  --almadar-space-5: 1.5rem;   /* 24px */
+  --almadar-space-6: 2rem;     /* 32px */
+  --almadar-space-8: 3rem;     /* 48px */
+  --almadar-space-10: 4rem;    /* 64px */
+
+  /* === Border Radius === */
+
+  --almadar-radius-sm: 4px;
+  --almadar-radius-md: 8px;
+  --almadar-radius-lg: 12px;
+  --almadar-radius-xl: 16px;
+  --almadar-radius-full: 9999px;
+
+  /* === Transitions === */
+
+  --almadar-transition-fast: 150ms ease;
+  --almadar-transition-normal: 250ms ease;
+  --almadar-transition-slow: 400ms ease;
+}
+
+/* === Dark Mode (default) === */
+[data-theme="dark"], :root {
+  --almadar-bg: var(--almadar-midnight);
+  --almadar-text: var(--almadar-parchment);
+  --almadar-accent: var(--almadar-sand-gold);
+}
+
+/* === Light Mode === */
+[data-theme="light"] {
+  --almadar-bg: var(--almadar-parchment);
+  --almadar-text: var(--almadar-midnight);
+  --almadar-accent: var(--almadar-teal);
+}
