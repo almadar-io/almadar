@@ -1,25 +1,11 @@
-yangshun:
-  name: Yangshun Tay
-  title: Ex-Meta Staff Engineer, Co-founder GreatFrontEnd
-  url: https://linkedin.com/in/yangshun
-  image_url: https://github.com/yangshun.png
-  page: true
-  socials:
-    x: yangshunz
-    linkedin: yangshun
-    github: yangshun
-    newsletter: https://www.greatfrontend.com
+almadar:
+  name: Almadar Team
+  title: The Almadar Team
+  url: https://github.com/almadar-io
+  image_url: /img/almadar-icon-64.png
 
-slorber:
-  name: Sébastien Lorber
-  title: Docusaurus maintainer
-  url: https://sebastienlorber.com
-  image_url: https://github.com/slorber.png
-  page:
-    # customize the url of the author page at /blog/authors/<permalink>
-    permalink: '/all-sebastien-lorber-articles'
-  socials:
-    x: sebastienlorber
-    linkedin: sebastienlorber
-    github: slorber
-    newsletter: https://thisweekinreact.com
+osamah:
+  name: Osamah Alghanmi
+  title: Co-Founder & Technical Lead
+  url: https://linkedin.com/in/osama-alghanmi-0957bb28
+  image_url: https://github.com/osamah.png
