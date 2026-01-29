@@ -447,6 +447,65 @@ html[dir="rtl"] .alert {
     outline-offset: 2px;
 }
 
+/* === Blog Styles === */
+.blog-wrapper,
+article,
+.blog-post-page {
+    font-family: var(--ifm-font-family-base);
+}
+
+[data-theme="dark"] .blog-wrapper {
+    background: var(--almadar-midnight);
+}
+
+.blog-post-page h1,
+.blog-post-page h2,
+.blog-post-page h3 {
+    font-family: var(--ifm-heading-font-family);
+    color: var(--almadar-parchment);
+}
+
+[data-theme="dark"] article {
+    color: var(--almadar-parchment-muted);
+}
+
+[data-theme="dark"] article h1,
+[data-theme="dark"] article h2,
+[data-theme="dark"] article h3 {
+    color: var(--almadar-parchment);
+}
+
+[data-theme="dark"] .avatar__name {
+    color: var(--almadar-parchment);
+}
+
+[data-theme="dark"] .avatar__subtitle {
+    color: var(--almadar-parchment-muted);
+}
+
+/* Blog cards */
+[data-theme="dark"] .blog-list-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--almadar-midnight-light);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+[data-theme="dark"] .blog-list-item:hover {
+    border-color: var(--almadar-teal);
+}
+
+/* Blog tags */
+.blog-tags a {
+    background: rgba(20, 184, 166, 0.1);
+    color: var(--almadar-teal);
+    padding: 0.25rem 0.75rem;
+    border-radius: 99px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
 /* === Tags === */
 .tag {
     background: rgba(20, 184, 166, 0.1);
