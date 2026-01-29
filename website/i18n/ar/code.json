@@ -466,8 +466,8 @@
     "message": "إضافة إلى رقم",
     "description": "Increment effect description"
   },
-  "homepage.effect.notify": {
-    "message": "عرض إشعار",
-    "description": "Notify effect description"
+  "homepage.effect.renderui": {
+    "message": "عرض نمط في منطقة",
+    "description": "Render-ui effect description"
   }
 }

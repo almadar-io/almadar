@@ -32,7 +32,13 @@ const helloWorldSchema = `{
           "effects": [
             ["set", "message", "Hello, World!"],
             ["increment", "count", 1],
-            ["notify", "success", "You clicked!"]
+            ["render-ui", "main", {
+              "pattern": "stats",
+              "props": {
+                "title": "@entity.message",
+                "value": "@entity.count"
+              }
+            }]
           ]
         }]
       }
@@ -698,10 +704,10 @@ function HomepagePhilosophy() {
                 </Translate>
               </div>
               <div className={styles.effectItem}>
-                <span className={styles.effectIcon}>🔔</span>
-                <code>notify</code> —{" "}
-                <Translate id="homepage.effect.notify">
-                  Show notification
+                <span className={styles.effectIcon}>🎨</span>
+                <code>render-ui</code> —{" "}
+                <Translate id="homepage.effect.renderui">
+                  Render pattern to slot
                 </Translate>
               </div>
             </div>
