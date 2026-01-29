@@ -5,8 +5,40 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
+import CodeBlock from "@theme/CodeBlock";
 
 import styles from "./index.module.css";
+
+const helloWorldSchema = `{
+  "name": "HelloWorld",
+  "orbitals": [{
+    "name": "Greeter",
+    "entity": {
+      "name": "Greeting",
+      "fields": [
+        { "name": "message", "type": "string" },
+        { "name": "count", "type": "number" }
+      ]
+    },
+    "traits": [{
+      "name": "Clickable",
+      "stateMachine": {
+        "initial": "idle",
+        "states": ["idle", "greeted"],
+        "transitions": [{
+          "from": "idle",
+          "event": "CLICK",
+          "to": "greeted",
+          "effects": [
+            ["set", "message", "Hello, World!"],
+            ["increment", "count", 1],
+            ["notify", "success", "You clicked!"]
+          ]
+        }]
+      }
+    }]
+  }]
+}`;
 
 function OrbitalSVG() {
   return (
@@ -644,25 +676,35 @@ function HomepagePhilosophy() {
             </div>
           </div>
           <div className={styles.codePreview}>
-            <pre>
-              <code>{`{
-  "orbitals": [{
-    "name": "TaskManager",
-    "entity": {
-      "name": "Task",
-      "fields": [
-        { "name": "title", "type": "string" },
-        { "name": "status", "type": "enum",
-          "options": ["todo", "done"] }
-      ]
-    },
-    "traits": [
-      { "ref": "Listable" },
-      { "ref": "Editable" }
-    ]
-  }]
-}`}</code>
-            </pre>
+            <div className={styles.codeHeader}>
+              <span className={styles.codeLang}>hello-world.orb</span>
+            </div>
+            <CodeBlock language="json" showLineNumbers>
+              {helloWorldSchema}
+            </CodeBlock>
+            <div className={styles.effectsLegend}>
+              <div className={styles.effectItem}>
+                <span className={styles.effectIcon}>📝</span>
+                <code>set</code> —{" "}
+                <Translate id="homepage.effect.set">
+                  Update entity field
+                </Translate>
+              </div>
+              <div className={styles.effectItem}>
+                <span className={styles.effectIcon}>➕</span>
+                <code>increment</code> —{" "}
+                <Translate id="homepage.effect.increment">
+                  Add to number
+                </Translate>
+              </div>
+              <div className={styles.effectItem}>
+                <span className={styles.effectIcon}>🔔</span>
+                <code>notify</code> —{" "}
+                <Translate id="homepage.effect.notify">
+                  Show notification
+                </Translate>
+              </div>
+            </div>
           </div>
         </div>
       </div>

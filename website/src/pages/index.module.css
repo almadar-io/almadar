@@ -219,17 +219,63 @@ html[dir="rtl"] .heroText {
     overflow: hidden;
 }
 
+.codeHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid #1e293b;
+}
+
+.codeLang {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #14b8a6;
+    font-family: "IBM Plex Mono", "Fira Code", monospace;
+}
+
 .codePreview pre {
-    margin: 0;
-    padding: 1.5rem;
-    overflow-x: auto;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    border: none !important;
 }
 
 .codePreview code {
     font-family: "IBM Plex Mono", "Fira Code", monospace;
     font-size: 0.85rem;
-    color: #94a3b8;
     line-height: 1.6;
+}
+
+.effectsLegend {
+    padding: 1rem 1.25rem;
+    background: rgba(20, 184, 166, 0.05);
+    border-top: 1px solid #1e293b;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.effectItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #94a3b8;
+}
+
+.effectIcon {
+    font-size: 1rem;
+}
+
+.effectItem code {
+    background: rgba(20, 184, 166, 0.15);
+    color: #14b8a6;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.8rem;
+    font-weight: 500;
 }
 
 /* CTA Section */
