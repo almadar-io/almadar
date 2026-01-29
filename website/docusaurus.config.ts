@@ -72,7 +72,7 @@ const config: Config = {
       title: "Almadar",
       logo: {
         alt: "Almadar Logo",
-        src: "img/nobg-almadar-icon-64.png",
+        src: "img/almadar-icon-transparent.svg",
       },
       items: [
         {
