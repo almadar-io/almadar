@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#C9A227"/>
+      <stop offset="50%" style="stop-color:#E8C547"/>
+      <stop offset="100%" style="stop-color:#8B6914"/>
+    </linearGradient>
+
+    <linearGradient id="teal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0D7377"/>
+      <stop offset="100%" style="stop-color:#14A3A8"/>
+    </linearGradient>
+
+    <linearGradient id="midnight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A1F3D"/>
+      <stop offset="100%" style="stop-color:#2A3050"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <circle cx="100" cy="100" r="95" fill="url(#midnight)"/>
+
+  <!-- Main orbital ring 1 - outer -->
+  <ellipse cx="100" cy="100" rx="70" ry="27"
+           fill="none" stroke="url(#teal)" stroke-width="4"
+           transform="rotate(-30 100 100)"/>
+
+  <!-- Main orbital ring 2 - middle -->
+  <ellipse cx="100" cy="100" rx="58" ry="22"
+           fill="none" stroke="url(#gold)" stroke-width="3"
+           transform="rotate(30 100 100)"/>
+
+  <!-- Main orbital ring 3 - inner -->
+  <ellipse cx="100" cy="100" rx="46" ry="18"
+           fill="none" stroke="url(#teal)" stroke-width="2.5"
+           transform="rotate(-60 100 100)"/>
+
+  <!-- Central Meem shape -->
+  <g transform="translate(100, 100)">
+    <!-- Core circle -->
+    <circle cx="0" cy="0" r="14" fill="url(#gold)"/>
+
+    <!-- Meem curve -->
+    <path d="M-22 11
+             Q-33 0 -22 -14
+             Q-5 -30 16 -22
+             Q30 -14 24 5
+             Q19 19 5 22"
+          fill="none" stroke="url(#gold)" stroke-width="5"
+          stroke-linecap="round"/>
+
+    <!-- Orbital dots -->
+    <circle cx="-52" cy="-24" r="4" fill="url(#teal)"/>
+    <circle cx="46" cy="30" r="4" fill="url(#teal)"/>
+    <circle cx="32" cy="-44" r="3" fill="url(#gold)"/>
+    <circle cx="-38" cy="38" r="3" fill="url(#gold)"/>
+  </g>
+</svg>

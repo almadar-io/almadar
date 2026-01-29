@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width="400" height="120">
+  <defs>
+    <linearGradient id="goldText" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#C9A227"/>
+      <stop offset="100%" style="stop-color:#E8C547"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Arabic text: المدار -->
+  <text x="200" y="55"
+        font-family="'Noto Naskh Arabic', 'Traditional Arabic', serif"
+        font-size="48"
+        font-weight="600"
+        fill="url(#goldText)"
+        text-anchor="middle"
+        direction="rtl">المدار</text>
+
+  <!-- Latin text: Almadar -->
+  <text x="200" y="100"
+        font-family="'Inter', 'IBM Plex Sans', 'Helvetica Neue', sans-serif"
+        font-size="32"
+        font-weight="500"
+        fill="#0D7377"
+        text-anchor="middle"
+        letter-spacing="2">ALMADAR</text>
+</svg>
