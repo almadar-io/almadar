@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> header }}
+
+<body>
+    {{> navigation }}
+
+    <div class="docs-layout">
+        <!-- Sidebar -->
+        <aside class="docs-sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Getting Started</div>
+                <ul class="sidebar-nav">
+                    <li><a href="#overview" class="sidebar-link active">Overview</a></li>
+                    <li><a href="#architecture" class="sidebar-link">Architecture</a></li>
+                    <li><a href="#schema-structure" class="sidebar-link">Schema Structure</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Core Concepts</div>
+                <ul class="sidebar-nav">
+                    <li><a href="#entities" class="sidebar-link">Entities</a></li>
+                    <li><a href="#traits" class="sidebar-link">Traits</a></li>
+                    <li><a href="#s-expressions" class="sidebar-link">S-Expressions</a></li>
+                    <li><a href="#bindings" class="sidebar-link">@ Bindings</a></li>
+                    <li><a href="#effects" class="sidebar-link">Effects</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Standard Library</div>
+                <ul class="sidebar-nav">
+                    <li><a href="stdlib.html" class="sidebar-link">📚 Stdlib Reference</a></li>
+                    <li><a href="behaviors.html" class="sidebar-link">🔄 Behaviors Reference</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Tutorials</div>
+                <ul class="sidebar-nav">
+                    <li><a href="#tutorial-task-app" class="sidebar-link">Task App</a></li>
+                    <li><a href="#tutorial-approval" class="sidebar-link">Approval Workflow</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Tooling</div>
+                <ul class="sidebar-nav">
+                    <li><a href="#vscode-extension" class="sidebar-link">VS Code Extension</a></li>
+                    <li><a href="#builder" class="sidebar-link">Almadar Builder</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="docs-content">
+            {{{body}}}
+        </main>
+    </div>
+
+    {{> footer }}
+    {{> scripts }}
+
+    <!-- Orbital State Machine Visualizer -->
+    <script src="js/orbital-visualizer.js"></script>
+
+    <!-- Docs-specific scroll spy -->
+    <script>
+        // Simple scroll spy for sidebar links
+        document.addEventListener('DOMContentLoaded', function () {
+            const sections = document.querySelectorAll('[id]');
+            const navLinks = document.querySelectorAll('.sidebar-link');
+
+            function updateActiveLink() {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    if (scrollY >= sectionTop) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveLink);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur" />
+            <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+    </defs>
+    
+    <!-- ====== MINIMAL ROBOT HEAD ====== -->
+    <g filter="url(#glow)">
+        <!-- Head - clean angular shape -->
+        <path d="M 60 35 L 100 25 L 140 35 L 145 75 L 140 110 L 100 120 L 60 110 L 55 75 Z" 
+              fill="none" stroke="#14b8a6" stroke-width="2" />
+        
+        <!-- Eyes - simple rectangles -->
+        <rect x="68" y="55" width="22" height="12" fill="none" stroke="#14b8a6" stroke-width="1.5" rx="2" />
+        <rect x="110" y="55" width="22" height="12" fill="none" stroke="#14b8a6" stroke-width="1.5" rx="2" />
+        
+        <!-- Eye cores -->
+        <circle cx="79" cy="61" r="3" fill="#14b8a6" opacity="0.9">
+            <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="121" cy="61" r="3" fill="#14b8a6" opacity="0.9">
+            <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite" begin="0.5s" />
+        </circle>
+        
+        <!-- Face plate - single clean line -->
+        <path d="M 75 85 L 100 90 L 125 85" fill="none" stroke="#14b8a6" stroke-width="1.5" opacity="0.6" />
+    </g>
+    
+    <!-- ====== SHOULDERS - minimal ====== -->
+    <g filter="url(#glow)">
+        <!-- Left shoulder -->
+        <path d="M 35 115 L 55 105 L 75 115 L 75 140 L 55 145 L 35 135 Z" 
+              fill="none" stroke="#14b8a6" stroke-width="1.5" opacity="0.7" />
+        
+        <!-- Right shoulder -->
+        <path d="M 165 115 L 145 105 L 125 115 L 125 140 L 145 145 L 165 135 Z" 
+              fill="none" stroke="#14b8a6" stroke-width="1.5" opacity="0.7" />
+        
+        <!-- Chest core -->
+        <circle cx="100" cy="135" r="10" fill="none" stroke="#14b8a6" stroke-width="1.5" opacity="0.6" />
+        <circle cx="100" cy="135" r="4" fill="#14b8a6" opacity="0.7">
+            <animate attributeName="opacity" values="0.5;0.9;0.5" dur="2.5s" repeatCount="indefinite" />
+        </circle>
+    </g>
+    
+    <!-- ====== NAME ====== -->
+    <text x="100" y="175" text-anchor="middle" fill="#14b8a6" font-family="Space Grotesk, sans-serif" font-size="12" font-weight="600" letter-spacing="2">
+        JUOHMARU
+    </text>
+    <text x="100" y="190" text-anchor="middle" fill="#06b6d4" font-family="serif" font-size="11" opacity="0.7">
+        丈丸
+    </text>
+</svg>

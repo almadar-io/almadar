@@ -1,0 +1,184 @@
+/**
+ * Navigation Styles
+ * 
+ * Desktop and mobile navigation, including hamburger menu.
+ */
+
+/* Main Navigation Bar */
+nav {
+    padding: 1.5rem 0;
+    backdrop-filter: blur(10px);
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(15, 23, 42, 0.7);
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: #fff;
+    text-decoration: none;
+}
+
+.logo-svg {
+    width: 40px;
+    height: 40px;
+}
+
+/* Desktop Navigation Links */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-item {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--transition-fast);
+    cursor: pointer;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    color: #fff;
+}
+
+.nav-btn {
+    padding: 0.5rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 99px;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all var(--transition-normal);
+}
+
+.nav-btn:hover {
+    background: var(--brand-gradient);
+    border-color: transparent;
+}
+
+/* Mobile Menu Toggle (Hamburger) */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 28px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    position: relative;
+    z-index: 120;
+}
+
+/* When menu is open, make toggle fixed so it stays visible above overlay */
+.mobile-menu-toggle.active {
+    position: fixed;
+    top: 1.5rem;
+    right: 2rem;
+}
+
+.mobile-menu-toggle span {
+    width: 100%;
+    height: 3px;
+    background: #fff;
+    border-radius: 3px;
+    transition: all var(--transition-normal);
+    transform-origin: center;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: translateY(10px) rotate(45deg);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: translateY(-10px) rotate(-45deg);
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--bg-darker);
+    z-index: 105;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+}
+
+.mobile-menu.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-menu-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 2rem;
+    padding-top: 80px;
+}
+
+.mobile-nav-item {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.mobile-nav-item:hover {
+    color: #fff;
+}
+
+.mobile-nav-btn {
+    padding: 0.75rem 2rem;
+    background: var(--brand-gradient);
+    border-radius: 99px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+/* Show mobile elements on small screens */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    .mobile-menu-toggle {
+        display: flex;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+}

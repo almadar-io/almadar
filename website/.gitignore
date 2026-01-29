@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Build output
+build/
+.docusaurus/
+.firebase/
+
+# Environment (secrets)
+.env
+.env.local
+.env.*.local

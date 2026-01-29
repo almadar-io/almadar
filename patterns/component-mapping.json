@@ -1,0 +1,599 @@
+{
+  "version": "1.0.0",
+  "exportedAt": "2026-01-29T02:29:19.144Z",
+  "mappings": {
+    "page-header": {
+      "component": "PageHeader",
+      "importPath": "@/components/organisms/PageHeader",
+      "category": "header"
+    },
+    "title-only": {
+      "component": "Title",
+      "importPath": "@/components/atoms/Title",
+      "category": "header"
+    },
+    "entity-list": {
+      "component": "List",
+      "importPath": "@/components/organisms/List",
+      "category": "display"
+    },
+    "entity-table": {
+      "component": "DataTable",
+      "importPath": "@/components/organisms/DataTable",
+      "category": "display"
+    },
+    "entity-cards": {
+      "component": "CardGrid",
+      "importPath": "@/components/organisms/CardGrid",
+      "category": "display"
+    },
+    "entity-detail": {
+      "component": "DetailPanel",
+      "importPath": "@/components/organisms/DetailPanel",
+      "category": "display"
+    },
+    "stats": {
+      "component": "StatCard",
+      "importPath": "@/components/organisms/StatCard",
+      "category": "display"
+    },
+    "detail-panel": {
+      "component": "DetailPanel",
+      "importPath": "@/components/organisms/DetailPanel",
+      "category": "display"
+    },
+    "form": {
+      "component": "Form",
+      "importPath": "@/components/organisms/Form",
+      "category": "form"
+    },
+    "form-fields": {
+      "component": "FormFields",
+      "importPath": "@/components/organisms/FormFields",
+      "category": "form"
+    },
+    "form-section": {
+      "component": "Form",
+      "importPath": "@/components/organisms/Form",
+      "category": "form"
+    },
+    "form-actions": {
+      "component": "ButtonGroup",
+      "importPath": "@/components/molecules/ButtonGroup",
+      "category": "form"
+    },
+    "search-bar": {
+      "component": "SearchInput",
+      "importPath": "@/components/molecules/SearchInput",
+      "category": "filter"
+    },
+    "filter-group": {
+      "component": "FilterGroup",
+      "importPath": "@/components/molecules/FilterGroup",
+      "category": "filter"
+    },
+    "search-input": {
+      "component": "SearchInput",
+      "importPath": "@/components/molecules/SearchInput",
+      "category": "filter"
+    },
+    "empty-state": {
+      "component": "EmptyState",
+      "importPath": "@/components/molecules/EmptyState",
+      "category": "state"
+    },
+    "loading-state": {
+      "component": "LoadingState",
+      "importPath": "@/components/molecules/LoadingState",
+      "category": "state"
+    },
+    "error-state": {
+      "component": "ErrorState",
+      "importPath": "@/components/molecules/ErrorState",
+      "category": "state"
+    },
+    "notification": {
+      "component": "Toast",
+      "importPath": "@/components/molecules/Toast",
+      "category": "state"
+    },
+    "tabs": {
+      "component": "Tabs",
+      "importPath": "@/components/molecules/Tabs",
+      "category": "navigation"
+    },
+    "tab-bar": {
+      "component": "TabBar",
+      "importPath": "@/components/molecules/TabBar",
+      "category": "navigation"
+    },
+    "breadcrumb": {
+      "component": "Breadcrumb",
+      "importPath": "@/components/molecules/Breadcrumb",
+      "category": "navigation"
+    },
+    "wizard-container": {
+      "component": "WizardContainer",
+      "importPath": "@/components/organisms/WizardContainer",
+      "category": "navigation"
+    },
+    "wizard-progress": {
+      "component": "WizardProgress",
+      "importPath": "@/components/molecules/WizardProgress",
+      "category": "navigation"
+    },
+    "wizard-navigation": {
+      "component": "WizardNavigation",
+      "importPath": "@/components/molecules/WizardNavigation",
+      "category": "navigation"
+    },
+    "pagination": {
+      "component": "Pagination",
+      "importPath": "@/components/molecules/Pagination",
+      "category": "navigation"
+    },
+    "card": {
+      "component": "Card",
+      "importPath": "@/components/molecules/Card",
+      "category": "display"
+    },
+    "modal": {
+      "component": "Modal",
+      "importPath": "@/components/molecules/Modal",
+      "category": "layout"
+    },
+    "modal-container": {
+      "component": "ModalSlot",
+      "importPath": "@/components/organisms/ModalSlot",
+      "category": "layout"
+    },
+    "drawer": {
+      "component": "Drawer",
+      "importPath": "@/components/molecules/Drawer",
+      "category": "layout"
+    },
+    "drawer-container": {
+      "component": "DrawerSlot",
+      "importPath": "@/components/organisms/DrawerSlot",
+      "category": "layout"
+    },
+    "confirm-dialog": {
+      "component": "ConfirmDialog",
+      "importPath": "@/components/organisms/ConfirmDialog",
+      "category": "layout"
+    },
+    "split-layout": {
+      "component": "SplitPane",
+      "importPath": "@/components/organisms/layout/SplitPane",
+      "category": "layout"
+    },
+    "master-detail": {
+      "component": "MasterDetail",
+      "importPath": "@/components/organisms/layout/MasterDetail",
+      "category": "layout"
+    },
+    "dashboard-grid": {
+      "component": "DashboardGrid",
+      "importPath": "@/components/organisms/layout/DashboardGrid",
+      "category": "layout"
+    },
+    "tabbed-layout": {
+      "component": "TabbedContainer",
+      "importPath": "@/components/organisms/layout/TabbedContainer",
+      "category": "layout"
+    },
+    "game-canvas": {
+      "component": "GameCanvas",
+      "importPath": "@/components/organisms/game/GameCanvas",
+      "category": "game"
+    },
+    "game-hud": {
+      "component": "GameHud",
+      "importPath": "@/components/organisms/game/GameHud",
+      "category": "game"
+    },
+    "game-controls": {
+      "component": "GameControls",
+      "importPath": "@/components/organisms/game/GameControls",
+      "category": "game"
+    },
+    "game-menu": {
+      "component": "GameMenu",
+      "importPath": "@/components/organisms/game/GameMenu",
+      "category": "game"
+    },
+    "game-pause-overlay": {
+      "component": "GamePauseOverlay",
+      "importPath": "@/components/organisms/game/GamePauseOverlay",
+      "category": "game"
+    },
+    "game-over-screen": {
+      "component": "GameOverScreen",
+      "importPath": "@/components/organisms/game/GameOverScreen",
+      "category": "game"
+    },
+    "level-select": {
+      "component": "LevelSelect",
+      "importPath": "@/components/organisms/game/LevelSelect",
+      "category": "game"
+    },
+    "tilemap-renderer": {
+      "component": "TilemapRenderer",
+      "importPath": "@/components/organisms/game/TilemapRenderer",
+      "category": "game"
+    },
+    "inventory-panel": {
+      "component": "InventoryPanel",
+      "importPath": "@/components/organisms/game/InventoryPanel",
+      "category": "game"
+    },
+    "dialogue-box": {
+      "component": "DialogueBox",
+      "importPath": "@/components/organisms/game/DialogueBox",
+      "category": "game"
+    },
+    "card-hand": {
+      "component": "CardHand",
+      "importPath": "@/components/organisms/game/CardHand",
+      "category": "game"
+    },
+    "card-deck": {
+      "component": "CardDeck",
+      "importPath": "@/components/organisms/game/CardDeck",
+      "category": "game"
+    },
+    "board-grid": {
+      "component": "BoardGrid",
+      "importPath": "@/components/organisms/game/BoardGrid",
+      "category": "game"
+    },
+    "turn-indicator": {
+      "component": "TurnIndicator",
+      "importPath": "@/components/organisms/game/TurnIndicator",
+      "category": "game"
+    },
+    "match3-grid": {
+      "component": "Match3Grid",
+      "importPath": "@/components/organisms/game/Match3Grid",
+      "category": "game"
+    },
+    "puzzle-board": {
+      "component": "PuzzleBoard",
+      "importPath": "@/components/organisms/game/PuzzleBoard",
+      "category": "game"
+    },
+    "input-listener": {
+      "component": "InputListener",
+      "importPath": "@/components/organisms/game/InputListener",
+      "category": "game"
+    },
+    "collision-detector": {
+      "component": "CollisionDetector",
+      "importPath": "@/components/organisms/game/CollisionDetector",
+      "category": "game"
+    },
+    "runtime-debugger": {
+      "component": "RuntimeDebugger",
+      "importPath": "@/components/organisms/debug/RuntimeDebugger",
+      "category": "debug"
+    },
+    "game-debug-panel": {
+      "component": "RuntimeDebugger",
+      "importPath": "@/components/organisms/debug/RuntimeDebugger",
+      "category": "debug",
+      "deprecated": true,
+      "replacedBy": "runtime-debugger"
+    },
+    "pattern-proposal": {
+      "component": "PatternProposalRenderer",
+      "importPath": "@/components/organisms/PatternProposalRenderer",
+      "category": "meta"
+    },
+    "trust-meter": {
+      "component": "TrustMeter",
+      "importPath": "@/clients/winning-11/atoms/TrustMeter",
+      "category": "display",
+      "client": "winning-11"
+    },
+    "growth-meter": {
+      "component": "GrowthMeter",
+      "importPath": "@/clients/winning-11/atoms/GrowthMeter",
+      "category": "display",
+      "client": "winning-11"
+    },
+    "care-indicator": {
+      "component": "CareIndicator",
+      "importPath": "@/clients/winning-11/atoms/CareIndicator",
+      "category": "display",
+      "client": "winning-11"
+    },
+    "season-indicator": {
+      "component": "SeasonIndicator",
+      "importPath": "@/clients/winning-11/atoms/SeasonIndicator",
+      "category": "display",
+      "client": "winning-11"
+    },
+    "plant-card": {
+      "component": "PlantCard",
+      "importPath": "@/clients/winning-11/molecules/PlantCard",
+      "category": "display",
+      "client": "winning-11"
+    },
+    "harvest-card": {
+      "component": "HarvestCard",
+      "importPath": "@/clients/winning-11/molecules/HarvestCard",
+      "category": "display",
+      "client": "winning-11"
+    },
+    "weather-widget": {
+      "component": "WeatherWidget",
+      "importPath": "@/clients/winning-11/molecules/WeatherWidget",
+      "category": "display",
+      "client": "winning-11"
+    },
+    "garden-view": {
+      "component": "GardenView",
+      "importPath": "@/clients/winning-11/organisms/GardenView",
+      "category": "display",
+      "client": "winning-11"
+    },
+    "relationship-garden": {
+      "component": "RelationshipGardenTemplate",
+      "importPath": "@/clients/winning-11/templates/RelationshipGardenTemplate",
+      "category": "template",
+      "client": "winning-11"
+    },
+    "trust-intelligence": {
+      "component": "TrustIntelligenceTemplate",
+      "importPath": "@/clients/winning-11/templates/TrustIntelligenceTemplate",
+      "category": "template",
+      "client": "winning-11"
+    },
+    "connections-view": {
+      "component": "ConnectionsTemplate",
+      "importPath": "@/clients/winning-11/templates/ConnectionsTemplate",
+      "category": "template",
+      "client": "winning-11"
+    },
+    "invites-list": {
+      "component": "InvitesTemplate",
+      "importPath": "@/clients/winning-11/templates/InvitesTemplate",
+      "category": "template",
+      "client": "winning-11"
+    },
+    "admin-dashboard": {
+      "component": "AdminDashboardTemplate",
+      "importPath": "@/clients/winning-11/templates/AdminDashboardTemplate",
+      "category": "template",
+      "client": "winning-11"
+    },
+    "assessment-form": {
+      "component": "AssessmentTemplate",
+      "importPath": "@/clients/winning-11/templates/AssessmentTemplate",
+      "category": "template",
+      "client": "winning-11"
+    },
+    "suggestions-list": {
+      "component": "SuggestionsTemplate",
+      "importPath": "@/clients/winning-11/templates/SuggestionsTemplate",
+      "category": "template",
+      "client": "winning-11"
+    },
+    "graph-intelligence": {
+      "component": "GraphIntelligenceTemplate",
+      "importPath": "@/clients/winning-11/templates/GraphIntelligenceTemplate",
+      "category": "template",
+      "client": "winning-11"
+    },
+    "seed-network": {
+      "component": "SeedNetworkTemplate",
+      "importPath": "@/clients/winning-11/templates/SeedNetworkTemplate",
+      "category": "template",
+      "client": "winning-11"
+    },
+    "projects-list": {
+      "component": "ProjectsTemplate",
+      "importPath": "@/clients/winning-11/templates/ProjectsTemplate",
+      "category": "template",
+      "client": "winning-11"
+    },
+    "project-detail": {
+      "component": "ProjectDetailTemplate",
+      "importPath": "@/clients/winning-11/templates/ProjectDetailTemplate",
+      "category": "template",
+      "client": "winning-11"
+    },
+    "teams-list": {
+      "component": "TeamsTemplate",
+      "importPath": "@/clients/winning-11/templates/TeamsTemplate",
+      "category": "template",
+      "client": "winning-11"
+    },
+    "team-detail": {
+      "component": "TeamDetailTemplate",
+      "importPath": "@/clients/winning-11/templates/TeamDetailTemplate",
+      "category": "template",
+      "client": "winning-11"
+    },
+    "team-members-list": {
+      "component": "TeamMembersTemplate",
+      "importPath": "@/clients/winning-11/templates/TeamMembersTemplate",
+      "category": "template",
+      "client": "winning-11"
+    },
+    "user-profile": {
+      "component": "UserProfileTemplate",
+      "importPath": "@/clients/winning-11/templates/UserProfileTemplate",
+      "category": "template",
+      "client": "winning-11"
+    },
+    "users-list": {
+      "component": "UsersTemplate",
+      "importPath": "@/clients/winning-11/templates/UsersTemplate",
+      "category": "template",
+      "client": "winning-11"
+    },
+    "law-reference-badge": {
+      "component": "LawReferenceBadge",
+      "importPath": "@/clients/inspection-system/atoms/LawReferenceBadge",
+      "category": "display",
+      "client": "inspection-system"
+    },
+    "phase-indicator": {
+      "component": "PhaseIndicator",
+      "importPath": "@/clients/inspection-system/atoms/PhaseIndicator",
+      "category": "display",
+      "client": "inspection-system"
+    },
+    "card-selector": {
+      "component": "CardSelector",
+      "importPath": "@/clients/inspection-system/molecules/CardSelector",
+      "category": "form",
+      "client": "inspection-system"
+    },
+    "compliance-summary": {
+      "component": "ComplianceSummary",
+      "importPath": "@/clients/inspection-system/molecules/ComplianceSummary",
+      "category": "display",
+      "client": "inspection-system"
+    },
+    "conditional-field": {
+      "component": "ConditionalField",
+      "importPath": "@/clients/inspection-system/molecules/ConditionalField",
+      "category": "form",
+      "client": "inspection-system"
+    },
+    "document-preview": {
+      "component": "DocumentPreview",
+      "importPath": "@/clients/inspection-system/molecules/DocumentPreview",
+      "category": "display",
+      "client": "inspection-system"
+    },
+    "entity-search": {
+      "component": "EntitySearch",
+      "importPath": "@/clients/inspection-system/molecules/EntitySearch",
+      "category": "form",
+      "client": "inspection-system"
+    },
+    "inspection-timeline": {
+      "component": "InspectionTimeline",
+      "importPath": "@/clients/inspection-system/molecules/InspectionTimeline",
+      "category": "display",
+      "client": "inspection-system"
+    },
+    "objection-recorder": {
+      "component": "ObjectionRecorder",
+      "importPath": "@/clients/inspection-system/molecules/ObjectionRecorder",
+      "category": "form",
+      "client": "inspection-system"
+    },
+    "participant-list": {
+      "component": "ParticipantList",
+      "importPath": "@/clients/inspection-system/molecules/ParticipantList",
+      "category": "display",
+      "client": "inspection-system"
+    },
+    "photo-attachment": {
+      "component": "PhotoAttachment",
+      "importPath": "@/clients/inspection-system/molecules/PhotoAttachment",
+      "category": "form",
+      "client": "inspection-system"
+    },
+    "progress-header": {
+      "component": "ProgressHeader",
+      "importPath": "@/clients/inspection-system/molecules/ProgressHeader",
+      "category": "display",
+      "client": "inspection-system"
+    },
+    "rule-check-item": {
+      "component": "RuleCheckItem",
+      "importPath": "@/clients/inspection-system/molecules/RuleCheckItem",
+      "category": "form",
+      "client": "inspection-system"
+    },
+    "repeatable-form-section": {
+      "component": "RepeatableFormSection",
+      "importPath": "@/clients/inspection-system/molecules/RepeatableFormSection",
+      "category": "form",
+      "client": "inspection-system"
+    },
+    "floating-action-menu": {
+      "component": "FloatingActionMenu",
+      "importPath": "@/clients/inspection-system/organisms/FloatingActionMenu",
+      "category": "navigation",
+      "client": "inspection-system"
+    },
+    "signature-capture": {
+      "component": "SignatureCapture",
+      "importPath": "@/clients/inspection-system/organisms/SignatureCapture",
+      "category": "form",
+      "client": "inspection-system"
+    },
+    "inspections-list": {
+      "component": "InspectionsTemplate",
+      "importPath": "@/clients/inspection-system/templates/InspectionsTemplate",
+      "category": "template",
+      "client": "inspection-system"
+    },
+    "companies-list": {
+      "component": "CompaniesTemplate",
+      "importPath": "@/clients/inspection-system/templates/CompaniesTemplate",
+      "category": "template",
+      "client": "inspection-system"
+    },
+    "inspectors-list": {
+      "component": "InspectorsTemplate",
+      "importPath": "@/clients/inspection-system/templates/InspectorsTemplate",
+      "category": "template",
+      "client": "inspection-system"
+    },
+    "inspection-wizard": {
+      "component": "InspectionWizardTemplate",
+      "importPath": "@/clients/inspection-system/templates/InspectionWizardTemplate",
+      "category": "template",
+      "client": "inspection-system"
+    },
+    "inspection-process": {
+      "component": "InspectionProcessTemplate",
+      "importPath": "@/clients/inspection-system/templates/InspectionProcessTemplate",
+      "category": "template",
+      "client": "inspection-system"
+    },
+    "inspection-form-demo": {
+      "component": "InspectionFormDemoTemplate",
+      "importPath": "@/clients/inspection-system/templates/InspectionFormDemoTemplate",
+      "category": "template",
+      "client": "inspection-system"
+    },
+    "info-display": {
+      "component": "InfoDisplay",
+      "importPath": "@/clients/inspection-system/atoms/InfoDisplay",
+      "category": "form",
+      "client": "inspection-system"
+    },
+    "stats-grid": {
+      "component": "StatsGrid",
+      "importPath": "@/clients/inspection-system/molecules/StatsGrid",
+      "category": "display",
+      "client": "inspection-system"
+    },
+    "checklist": {
+      "component": "Checklist",
+      "importPath": "@/clients/inspection-system/molecules/Checklist",
+      "category": "form",
+      "client": "inspection-system"
+    },
+    "multi-select": {
+      "component": "MultiSelect",
+      "importPath": "@/clients/inspection-system/molecules/MultiSelect",
+      "category": "form",
+      "client": "inspection-system"
+    },
+    "signature": {
+      "component": "SignatureCapture",
+      "importPath": "@/clients/inspection-system/organisms/SignatureCapture",
+      "category": "form",
+      "client": "inspection-system"
+    }
+  }
+}

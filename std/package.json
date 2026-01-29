@@ -1,0 +1,19 @@
+{
+  "name": "@almadar/std",
+  "version": "1.0.0",
+  "description": "Almadar Standard Library - Math, string, array, and utility operators",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/almadar-io/almadar.git",
+    "directory": "std"
+  },
+  "keywords": [
+    "almadar",
+    "std",
+    "standard-library",
+    "operators"
+  ],
+  "main": "index.ts",
+  "types": "index.ts"
+}
