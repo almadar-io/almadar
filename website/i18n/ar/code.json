@@ -469,5 +469,193 @@
   "homepage.effect.renderui": {
     "message": "عرض نمط في منطقة",
     "description": "Render-ui effect description"
+  },
+  "enterprise.tag": {
+    "message": "للمؤسسات",
+    "description": "Enterprise tag"
+  },
+  "enterprise.title": {
+    "message": "المدار للفرق والمؤسسات",
+    "description": "Enterprise title"
+  },
+  "enterprise.subtitle": {
+    "message": "وسّع تطويرك مع ميزات مؤسسية، دعم مخصص، وخيارات نشر مرنة.",
+    "description": "Enterprise subtitle"
+  },
+  "enterprise.cta.contact": {
+    "message": "تواصل مع المبيعات",
+    "description": "Contact sales button"
+  },
+  "enterprise.cta.docs": {
+    "message": "عرض التوثيق",
+    "description": "View docs button"
+  },
+  "enterprise.features.title": {
+    "message": "ميزات المؤسسات",
+    "description": "Enterprise features title"
+  },
+  "enterprise.features.subtitle": {
+    "message": "كل ما تحتاجه للبناء على نطاق واسع",
+    "description": "Enterprise features subtitle"
+  },
+  "enterprise.feature.collaboration.title": {
+    "message": "التعاون الجماعي",
+    "description": "Collaboration feature title"
+  },
+  "enterprise.feature.collaboration.description": {
+    "message": "اعمل مع فريقك على المخططات مع التحكم بالوصول وسجل الإصدارات والتعاون الفوري.",
+    "description": "Collaboration feature description"
+  },
+  "enterprise.feature.deployment.title": {
+    "message": "النشر الخاص",
+    "description": "Deployment feature title"
+  },
+  "enterprise.feature.deployment.description": {
+    "message": "انشر محلياً أو في سحابتك الخاصة. تحكم كامل في بياناتك وبنيتك التحتية.",
+    "description": "Deployment feature description"
+  },
+  "enterprise.feature.security.title": {
+    "message": "أمان المؤسسات",
+    "description": "Security feature title"
+  },
+  "enterprise.feature.security.description": {
+    "message": "تكامل SSO/SAML، سجلات التدقيق، توافق SOC 2، وضوابط أمان متقدمة.",
+    "description": "Security feature description"
+  },
+  "enterprise.feature.support.title": {
+    "message": "دعم أولوية",
+    "description": "Support feature title"
+  },
+  "enterprise.feature.support.description": {
+    "message": "قنوات دعم مخصصة مع أوقات استجابة مضمونة ووصول مباشر لفريقنا الهندسي.",
+    "description": "Support feature description"
+  },
+  "enterprise.feature.training.title": {
+    "message": "تدريب مخصص",
+    "description": "Training feature title"
+  },
+  "enterprise.feature.training.description": {
+    "message": "برامج تأهيل وورش عمل وتدريب مخصص لاحتياجات فريقك.",
+    "description": "Training feature description"
+  },
+  "enterprise.feature.customization.title": {
+    "message": "تكاملات مخصصة",
+    "description": "Customization feature title"
+  },
+  "enterprise.feature.customization.description": {
+    "message": "ابنِ موصلات مخصصة لأنظمتك الداخلية. نساعدك على ربط المدار ببنيتك التحتية.",
+    "description": "Customization feature description"
+  },
+  "enterprise.pricing.title": {
+    "message": "تسعير مرن",
+    "description": "Pricing title"
+  },
+  "enterprise.pricing.subtitle": {
+    "message": "خطط تنمو مع مؤسستك",
+    "description": "Pricing subtitle"
+  },
+  "enterprise.pricing.team.title": {
+    "message": "فريق",
+    "description": "Team plan title"
+  },
+  "enterprise.pricing.team.description": {
+    "message": "للفرق الصغيرة في البداية",
+    "description": "Team plan description"
+  },
+  "enterprise.pricing.team.feature1": {
+    "message": "حتى 10 أعضاء",
+    "description": "Team feature 1"
+  },
+  "enterprise.pricing.team.feature2": {
+    "message": "مخططات مشتركة",
+    "description": "Team feature 2"
+  },
+  "enterprise.pricing.team.feature3": {
+    "message": "دعم بالبريد",
+    "description": "Team feature 3"
+  },
+  "enterprise.pricing.team.feature4": {
+    "message": "نشر سحابي",
+    "description": "Team feature 4"
+  },
+  "enterprise.pricing.popular": {
+    "message": "الأكثر شيوعاً",
+    "description": "Most popular badge"
+  },
+  "enterprise.pricing.business.title": {
+    "message": "أعمال",
+    "description": "Business plan title"
+  },
+  "enterprise.pricing.business.description": {
+    "message": "للمؤسسات النامية",
+    "description": "Business plan description"
+  },
+  "enterprise.pricing.business.feature1": {
+    "message": "أعضاء غير محدودين",
+    "description": "Business feature 1"
+  },
+  "enterprise.pricing.business.feature2": {
+    "message": "تكامل SSO/SAML",
+    "description": "Business feature 2"
+  },
+  "enterprise.pricing.business.feature3": {
+    "message": "دعم أولوية",
+    "description": "Business feature 3"
+  },
+  "enterprise.pricing.business.feature4": {
+    "message": "خيار السحابة الخاصة",
+    "description": "Business feature 4"
+  },
+  "enterprise.pricing.business.feature5": {
+    "message": "سجلات التدقيق",
+    "description": "Business feature 5"
+  },
+  "enterprise.pricing.enterprise.title": {
+    "message": "مؤسسات",
+    "description": "Enterprise plan title"
+  },
+  "enterprise.pricing.enterprise.description": {
+    "message": "للمؤسسات الكبيرة",
+    "description": "Enterprise plan description"
+  },
+  "enterprise.pricing.enterprise.feature1": {
+    "message": "نشر محلي",
+    "description": "Enterprise feature 1"
+  },
+  "enterprise.pricing.enterprise.feature2": {
+    "message": "تكاملات مخصصة",
+    "description": "Enterprise feature 2"
+  },
+  "enterprise.pricing.enterprise.feature3": {
+    "message": "دعم مخصص",
+    "description": "Enterprise feature 3"
+  },
+  "enterprise.pricing.enterprise.feature4": {
+    "message": "ضمان SLA",
+    "description": "Enterprise feature 4"
+  },
+  "enterprise.pricing.enterprise.feature5": {
+    "message": "تدريب مخصص",
+    "description": "Enterprise feature 5"
+  },
+  "enterprise.pricing.contact": {
+    "message": "تواصل معنا",
+    "description": "Contact us button"
+  },
+  "enterprise.contact.title": {
+    "message": "جاهز للبدء؟",
+    "description": "Contact title"
+  },
+  "enterprise.contact.description": {
+    "message": "تواصل مع فريق المبيعات لمناقشة متطلباتك والحصول على عرض أسعار مخصص.",
+    "description": "Contact description"
+  },
+  "enterprise.meta.title": {
+    "message": "للمؤسسات",
+    "description": "Enterprise meta title"
+  },
+  "enterprise.meta.description": {
+    "message": "المدار للمؤسسات - وسّع تطويرك مع ميزات مؤسسية",
+    "description": "Enterprise meta description"
   }
 }
