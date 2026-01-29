@@ -379,8 +379,36 @@ html[dir="rtl"] {
     text-align: right;
 }
 
+/* Navbar RTL - flip the entire layout */
+html[dir="rtl"] .navbar {
+    direction: rtl;
+}
+
+html[dir="rtl"] .navbar > .container,
+html[dir="rtl"] .navbar > .container-fluid {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .navbar__inner {
+    flex-direction: row-reverse;
+}
+
 html[dir="rtl"] .navbar__items {
     flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .navbar__items--right {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .navbar__brand {
+    margin-right: 0;
+    margin-left: 1rem;
+}
+
+html[dir="rtl"] .navbar__logo {
+    margin-right: 0;
+    margin-left: 0.5rem;
 }
 
 html[dir="rtl"] .alert {
