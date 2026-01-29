@@ -1,0 +1,61 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., v1.0.0)'
+        required: true
+        type: string
+
+jobs:
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "version=${{ inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          name: Almadar ${{ steps.version.outputs.version }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          body: |
+            ## Almadar ${{ steps.version.outputs.version }}
+
+            ### Installation
+
+            ```bash
+            # Install CLI (when available)
+            curl -fsSL https://almadar.io/install.sh | sh
+
+            # Or use npm
+            npm install -g @almadar/cli
+            ```
+
+            ### What's Changed
+
+            See the automatically generated release notes below.
+
+            ### Documentation
+
+            - [Getting Started](https://almadar.io/docs/en/getting-started/introduction)
+            - [Standard Library](https://almadar.io/stdlib)
+            - [API Reference](https://almadar.io/docs/en/api)
