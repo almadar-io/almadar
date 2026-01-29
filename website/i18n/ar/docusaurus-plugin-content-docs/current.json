@@ -1,0 +1,26 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.docsSidebar.category.Getting Started": {
+    "message": "Getting Started",
+    "description": "The label for category 'Getting Started' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Downloads": {
+    "message": "Downloads",
+    "description": "The label for category 'Downloads' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Enterprise": {
+    "message": "Enterprise",
+    "description": "The label for category 'Enterprise' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Community": {
+    "message": "Community",
+    "description": "The label for category 'Community' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.doc.Overview": {
+    "message": "Overview",
+    "description": "The label for the doc item 'Overview' in sidebar 'docsSidebar', linking to the doc index"
+  }
+}
