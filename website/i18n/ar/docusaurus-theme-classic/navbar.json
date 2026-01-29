@@ -11,6 +11,10 @@
     "message": "التوثيق",
     "description": "Navbar item with label Docs"
   },
+  "item.label.Enterprise": {
+    "message": "للمؤسسات",
+    "description": "Navbar item with label Enterprise"
+  },
   "item.label.Blog": {
     "message": "المدونة",
     "description": "Navbar item with label Blog"

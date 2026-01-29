@@ -82,6 +82,11 @@ const config: Config = {
           label: "Docs",
         },
         {
+          to: "/enterprise",
+          label: "Enterprise",
+          position: "left",
+        },
+        {
           to: "/blog",
           label: "Blog",
           position: "left",
