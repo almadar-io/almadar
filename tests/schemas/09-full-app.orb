@@ -20,8 +20,119 @@
         ]
       },
       "traits": [
-        { "ref": "TaskLifecycle", "linkedEntity": "Task" },
-        { "ref": "TaskCRUD", "linkedEntity": "Task" }
+        {
+          "name": "TaskLifecycle",
+          "linkedEntity": "Task",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [
+              { "name": "todo", "isInitial": true },
+              { "name": "inProgress" },
+              { "name": "review" },
+              { "name": "done" }
+            ],
+            "events": [
+              { "key": "START", "name": "Start Task" },
+              { "key": "SUBMIT_FOR_REVIEW", "name": "Submit for Review" },
+              { "key": "APPROVE", "name": "Approve" },
+              { "key": "REJECT", "name": "Request Changes" },
+              { "key": "COMPLETE", "name": "Complete" }
+            ],
+            "transitions": [
+              { "from": "todo", "event": "START", "to": "inProgress" },
+              { "from": "inProgress", "event": "SUBMIT_FOR_REVIEW", "to": "review" },
+              { "from": "review", "event": "APPROVE", "to": "done", "effects": [
+                ["emit", "TASK_COMPLETED", { "taskId": "@entity.id", "projectId": "@entity.projectId" }]
+              ]},
+              { "from": "review", "event": "REJECT", "to": "inProgress" },
+              { "from": "inProgress", "event": "COMPLETE", "to": "done", "effects": [
+                ["emit", "TASK_COMPLETED", { "taskId": "@entity.id", "projectId": "@entity.projectId" }]
+              ]}
+            ]
+          }
+        },
+        {
+          "name": "TaskCRUD",
+          "linkedEntity": "Task",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [
+              { "name": "listing", "isInitial": true },
+              { "name": "creating" },
+              { "name": "editing" }
+            ],
+            "events": [
+              { "key": "MOUNT", "name": "Mount" },
+              { "key": "CREATE", "name": "Create Task" },
+              { "key": "EDIT", "name": "Edit Task" },
+              { "key": "SAVE", "name": "Save" },
+              { "key": "CANCEL", "name": "Cancel" },
+              { "key": "DELETE", "name": "Delete Task" }
+            ],
+            "transitions": [
+              {
+                "from": "listing",
+                "event": "MOUNT",
+                "to": "listing",
+                "effects": [
+                  ["fetch", "tasks", { "collection": "tasks" }],
+                  ["render-ui", "main", {
+                    "type": "entity-table",
+                    "props": {
+                      "entity": "Task",
+                      "columns": ["title", "priority", "dueDate"]
+                    }
+                  }]
+                ]
+              },
+              {
+                "from": "listing",
+                "event": "CREATE",
+                "to": "creating",
+                "effects": [
+                  ["render-ui", "main", {
+                    "type": "form",
+                    "props": { "entity": "Task" }
+                  }]
+                ]
+              },
+              {
+                "from": "creating",
+                "event": "SAVE",
+                "to": "listing",
+                "effects": [
+                  ["persist", "task", { "collection": "tasks" }],
+                  ["emit", "TASK_CREATED", { "taskId": "@entity.id", "projectId": "@entity.projectId" }],
+                  ["notify", "success", "Task created"]
+                ]
+              },
+              { "from": "creating", "event": "CANCEL", "to": "listing" },
+              {
+                "from": "listing",
+                "event": "EDIT",
+                "to": "editing"
+              },
+              {
+                "from": "editing",
+                "event": "SAVE",
+                "to": "listing",
+                "effects": [
+                  ["persist", "task", { "collection": "tasks" }]
+                ]
+              },
+              { "from": "editing", "event": "CANCEL", "to": "listing" },
+              {
+                "from": "listing",
+                "event": "DELETE",
+                "to": "listing",
+                "effects": [
+                  ["delete", "task", { "collection": "tasks" }],
+                  ["notify", "info", "Task deleted"]
+                ]
+              }
+            ]
+          }
+        }
       ],
       "pages": [
         {
@@ -49,7 +160,42 @@
         ]
       },
       "traits": [
-        { "ref": "ProjectStats", "linkedEntity": "Project" }
+        {
+          "name": "ProjectStats",
+          "linkedEntity": "Project",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [
+              { "name": "idle", "isInitial": true }
+            ],
+            "events": [
+              { "key": "TASK_COMPLETED", "name": "Task Completed" },
+              { "key": "TASK_CREATED", "name": "Task Created" }
+            ],
+            "transitions": [
+              {
+                "from": "idle",
+                "event": "TASK_CREATED",
+                "to": "idle",
+                "effects": [
+                  ["increment", "taskCount", 1]
+                ]
+              },
+              {
+                "from": "idle",
+                "event": "TASK_COMPLETED",
+                "to": "idle",
+                "effects": [
+                  ["increment", "completedCount", 1]
+                ]
+              }
+            ]
+          },
+          "listens": [
+            { "event": "TASK_COMPLETED", "scope": "external" },
+            { "event": "TASK_CREATED", "scope": "external" }
+          ]
+        }
       ],
       "pages": [
         {
@@ -78,154 +224,6 @@
       },
       "traits": [],
       "pages": []
-    }
-  ],
-  "traits": [
-    {
-      "name": "TaskLifecycle",
-      "category": "interaction",
-      "stateMachine": {
-        "states": [
-          { "name": "todo", "initial": true },
-          { "name": "inProgress" },
-          { "name": "review" },
-          { "name": "done" }
-        ],
-        "events": [
-          { "name": "START", "label": "Start Task" },
-          { "name": "SUBMIT_FOR_REVIEW", "label": "Submit for Review" },
-          { "name": "APPROVE", "label": "Approve" },
-          { "name": "REJECT", "label": "Request Changes" },
-          { "name": "COMPLETE", "label": "Complete" }
-        ],
-        "transitions": [
-          { "from": "todo", "event": "START", "to": "inProgress" },
-          { "from": "inProgress", "event": "SUBMIT_FOR_REVIEW", "to": "review" },
-          { "from": "review", "event": "APPROVE", "to": "done", "effects": [
-            ["emit", "TASK_COMPLETED", { "taskId": "@entity.id", "projectId": "@entity.projectId" }]
-          ]},
-          { "from": "review", "event": "REJECT", "to": "inProgress" },
-          { "from": "inProgress", "event": "COMPLETE", "to": "done", "effects": [
-            ["emit", "TASK_COMPLETED", { "taskId": "@entity.id", "projectId": "@entity.projectId" }]
-          ]}
-        ]
-      }
-    },
-    {
-      "name": "TaskCRUD",
-      "category": "interaction",
-      "stateMachine": {
-        "states": [
-          { "name": "listing", "initial": true },
-          { "name": "creating" },
-          { "name": "editing" }
-        ],
-        "events": [
-          { "name": "MOUNT", "label": "Mount" },
-          { "name": "CREATE", "label": "Create Task" },
-          { "name": "EDIT", "label": "Edit Task" },
-          { "name": "SAVE", "label": "Save" },
-          { "name": "CANCEL", "label": "Cancel" },
-          { "name": "DELETE", "label": "Delete Task" }
-        ],
-        "transitions": [
-          {
-            "from": "listing",
-            "event": "MOUNT",
-            "to": "listing",
-            "effects": [
-              ["fetch", "tasks", { "collection": "tasks" }],
-              ["render-ui", "main", {
-                "type": "entity-table",
-                "props": {
-                  "entity": "Task",
-                  "columns": ["title", "priority", "dueDate"]
-                }
-              }]
-            ]
-          },
-          {
-            "from": "listing",
-            "event": "CREATE",
-            "to": "creating",
-            "effects": [
-              ["render-ui", "main", {
-                "type": "form",
-                "props": { "entity": "Task" }
-              }]
-            ]
-          },
-          {
-            "from": "creating",
-            "event": "SAVE",
-            "to": "listing",
-            "effects": [
-              ["persist", "task", { "collection": "tasks" }],
-              ["emit", "TASK_CREATED", { "taskId": "@entity.id", "projectId": "@entity.projectId" }],
-              ["notify", "success", "Task created"]
-            ]
-          },
-          { "from": "creating", "event": "CANCEL", "to": "listing" },
-          {
-            "from": "listing",
-            "event": "EDIT",
-            "to": "editing"
-          },
-          {
-            "from": "editing",
-            "event": "SAVE",
-            "to": "listing",
-            "effects": [
-              ["persist", "task", { "collection": "tasks" }]
-            ]
-          },
-          { "from": "editing", "event": "CANCEL", "to": "listing" },
-          {
-            "from": "listing",
-            "event": "DELETE",
-            "to": "listing",
-            "effects": [
-              ["delete", "task", { "collection": "tasks" }],
-              ["notify", "info", "Task deleted"]
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "name": "ProjectStats",
-      "category": "interaction",
-      "stateMachine": {
-        "states": [
-          { "name": "idle", "initial": true }
-        ],
-        "events": [
-          { "name": "TASK_COMPLETED", "label": "Task Completed" },
-          { "name": "TASK_CREATED", "label": "Task Created" }
-        ],
-        "transitions": [
-          {
-            "from": "idle",
-            "event": "TASK_CREATED",
-            "to": "idle",
-            "effects": [
-              ["increment", "taskCount", 1]
-            ]
-          },
-          {
-            "from": "idle",
-            "event": "TASK_COMPLETED",
-            "to": "idle",
-            "effects": [
-              ["increment", "completedCount", 1]
-            ]
-          }
-        ]
-      },
-      "listens": [
-        { "event": "TASK_COMPLETED", "scope": "external" },
-        { "event": "TASK_CREATED", "scope": "external" }
-      ]
     }
   ]
 }

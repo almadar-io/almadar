@@ -16,33 +16,52 @@
         ]
       },
       "traits": [
-        { "ref": "AccountActions", "linkedEntity": "Account" }
-      ],
-      "pages": []
-    }
-  ],
-  "traits": [
-    {
-      "name": "AccountActions",
-      "category": "interaction",
-      "stateMachine": {
-        "states": [
-          { "name": "active", "initial": true },
-          { "name": "withdrawn" },
-          { "name": "frozen" }
-        ],
-        "events": [
-          { "name": "WITHDRAW", "label": "Withdraw Funds", "payload": [
-            { "name": "amount", "type": "number", "required": true }
-          ]},
-          { "name": "FREEZE", "label": "Freeze Account" },
-          { "name": "UNFREEZE", "label": "Unfreeze Account" }
-        ],
-        "transitions": [
-          {
-            "from": "active",
-            "event": "WITHDRAW",
-            "to": "active",
+        {
+          "name": "AccountActions",
+          "linkedEntity": "Account",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [
+              { "name": "active", "isInitial": true },
+              { "name": "frozen" }
+            ],
+            "events": [
+              { "key": "WITHDRAW", "name": "Withdraw Funds", "payload": [
+                { "name": "amount", "type": "number", "required": true }
+              ]},
+              { "key": "FREEZE", "name": "Freeze Account" },
+              { "key": "UNFREEZE", "name": "Unfreeze Account" }
+            ],
+            "transitions": [
+              {
+                "from": "active",
+                "event": "WITHDRAW",
+                "to": "active",
+                "guards": [
+                  {
+                    "name": "hasSufficientBalance",
+                    "condition": [">=", "@entity.balance", "@payload.amount"]
+                  },
+                  {
+                    "name": "isVerified",
+                    "condition": ["=", "@entity.isVerified", true]
+                  }
+                ],
+                "effects": [
+                  ["set", "@entity.balance", ["-", "@entity.balance", "@payload.amount"]]
+                ]
+              },
+              {
+                "from": "active",
+                "event": "FREEZE",
+                "to": "frozen"
+              },
+              {
+                "from": "frozen",
+                "event": "UNFREEZE",
+                "to": "active"
+              }
+            ],
             "guards": [
               {
                 "name": "hasSufficientBalance",
@@ -52,33 +71,11 @@
                 "name": "isVerified",
                 "condition": ["=", "@entity.isVerified", true]
               }
-            ],
-            "effects": [
-              ["set", "balance", ["-", "@entity.balance", "@payload.amount"]]
             ]
-          },
-          {
-            "from": "active",
-            "event": "FREEZE",
-            "to": "frozen"
-          },
-          {
-            "from": "frozen",
-            "event": "UNFREEZE",
-            "to": "active"
           }
-        ],
-        "guards": [
-          {
-            "name": "hasSufficientBalance",
-            "condition": [">=", "@entity.balance", "@payload.amount"]
-          },
-          {
-            "name": "isVerified",
-            "condition": ["=", "@entity.isVerified", true]
-          }
-        ]
-      }
+        }
+      ],
+      "pages": []
     }
   ]
 }
