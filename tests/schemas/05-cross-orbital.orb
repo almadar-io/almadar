@@ -19,6 +19,22 @@
           "name": "CartActions",
           "linkedEntity": "Cart",
           "category": "interaction",
+          "emits": [
+            {
+              "event": "ITEM_ADDED",
+              "scope": "external",
+              "description": "Emitted when an item is added to cart",
+              "payload": [
+                { "name": "itemCount", "type": "number", "required": true },
+                { "name": "total", "type": "number", "required": true }
+              ]
+            },
+            {
+              "event": "CART_CLEARED",
+              "scope": "external",
+              "description": "Emitted when cart is cleared"
+            }
+          ],
           "stateMachine": {
             "states": [
               { "name": "empty", "isInitial": true },

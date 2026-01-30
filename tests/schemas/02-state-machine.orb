@@ -25,16 +25,36 @@
               { "name": "pending", "isInitial": true },
               { "name": "confirmed" },
               { "name": "shipped" },
-              { "name": "delivered" },
-              { "name": "cancelled" }
+              { "name": "delivered", "description": "Terminal state - order complete" },
+              { "name": "cancelled", "description": "Terminal state - order cancelled" }
             ],
             "events": [
+              { "key": "INIT", "name": "Initialize" },
               { "key": "CONFIRM", "name": "Confirm Order" },
               { "key": "SHIP", "name": "Ship Order" },
               { "key": "DELIVER", "name": "Mark Delivered" },
               { "key": "CANCEL", "name": "Cancel Order" }
             ],
             "transitions": [
+              {
+                "from": "pending",
+                "event": "INIT",
+                "to": "pending",
+                "effects": [
+                  ["fetch", "Order"],
+                  ["render-ui", "main", {
+                    "type": "entity-table",
+                    "props": {
+                      "entity": "Order",
+                      "columns": ["customerName", "total"],
+                      "itemActions": [
+                        { "event": "CONFIRM", "label": "Confirm" },
+                        { "event": "CANCEL", "label": "Cancel" }
+                      ]
+                    }
+                  }]
+                ]
+              },
               { "from": "pending", "event": "CONFIRM", "to": "confirmed" },
               { "from": "confirmed", "event": "SHIP", "to": "shipped" },
               { "from": "shipped", "event": "DELIVER", "to": "delivered" },
