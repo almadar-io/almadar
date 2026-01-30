@@ -16,8 +16,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
           cache-dependency-path: std/package.json
 
       - name: Install std dependencies
@@ -28,6 +28,21 @@ jobs:
         working-directory: std
         run: npm test || echo "No tests configured yet"
 
+  validate-test-schemas:
+    name: Validate Test Schemas
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check JSON validity of test schemas
+        run: |
+          echo "Validating test schemas..."
+          for file in tests/schemas/*.orb; do
+            echo "  Checking $file..."
+            python3 -c "import json; json.load(open('$file'))" || exit 1
+          done
+          echo "All test schemas are valid JSON!"
+
   build-website:
     name: Build Website
     runs-on: ubuntu-latest
@@ -37,7 +52,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install website dependencies
         working-directory: website
@@ -56,6 +71,13 @@ jobs:
       - name: Check JSON validity
         run: |
           for file in patterns/*.json; do
+            echo "Checking $file..."
+            python3 -c "import json; json.load(open('$file'))"
+          done
+
+      - name: Check example schemas
+        run: |
+          for file in examples/*.orb; do
             echo "Checking $file..."
             python3 -c "import json; json.load(open('$file'))"
           done

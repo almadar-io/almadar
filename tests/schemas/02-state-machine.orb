@@ -1,0 +1,52 @@
+{
+  "name": "state-machine-test",
+  "version": "1.0.0",
+  "description": "Test: State machine with transitions",
+  "orbitals": [
+    {
+      "name": "OrderManager",
+      "entity": {
+        "name": "Order",
+        "persistence": "persistent",
+        "collection": "orders",
+        "fields": [
+          { "name": "id", "type": "string", "required": true },
+          { "name": "customerName", "type": "string", "required": true },
+          { "name": "total", "type": "number", "default": 0 }
+        ]
+      },
+      "traits": [
+        { "ref": "OrderLifecycle", "linkedEntity": "Order" }
+      ],
+      "pages": []
+    }
+  ],
+  "traits": [
+    {
+      "name": "OrderLifecycle",
+      "category": "interaction",
+      "stateMachine": {
+        "states": [
+          { "name": "pending", "initial": true },
+          { "name": "confirmed" },
+          { "name": "shipped" },
+          { "name": "delivered" },
+          { "name": "cancelled" }
+        ],
+        "events": [
+          { "name": "CONFIRM", "label": "Confirm Order" },
+          { "name": "SHIP", "label": "Ship Order" },
+          { "name": "DELIVER", "label": "Mark Delivered" },
+          { "name": "CANCEL", "label": "Cancel Order" }
+        ],
+        "transitions": [
+          { "from": "pending", "event": "CONFIRM", "to": "confirmed" },
+          { "from": "confirmed", "event": "SHIP", "to": "shipped" },
+          { "from": "shipped", "event": "DELIVER", "to": "delivered" },
+          { "from": "pending", "event": "CANCEL", "to": "cancelled" },
+          { "from": "confirmed", "event": "CANCEL", "to": "cancelled" }
+        ]
+      }
+    }
+  ]
+}

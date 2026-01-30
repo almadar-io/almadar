@@ -1,0 +1,114 @@
+{
+  "name": "effects-test",
+  "version": "1.0.0",
+  "description": "Test: Effect execution (render_ui, set, increment, persist)",
+  "orbitals": [
+    {
+      "name": "CounterManager",
+      "entity": {
+        "name": "Counter",
+        "persistence": "runtime",
+        "runtime": true,
+        "fields": [
+          { "name": "id", "type": "string", "required": true },
+          { "name": "value", "type": "number", "default": 0 },
+          { "name": "lastUpdated", "type": "timestamp" }
+        ]
+      },
+      "traits": [
+        { "ref": "CounterActions", "linkedEntity": "Counter" }
+      ],
+      "pages": [
+        {
+          "name": "CounterPage",
+          "path": "/counter",
+          "traits": [
+            { "ref": "CounterActions", "linkedEntity": "Counter" }
+          ]
+        }
+      ]
+    }
+  ],
+  "traits": [
+    {
+      "name": "CounterActions",
+      "category": "interaction",
+      "stateMachine": {
+        "states": [
+          { "name": "idle", "initial": true },
+          { "name": "updated" }
+        ],
+        "events": [
+          { "name": "INCREMENT", "label": "Increment" },
+          { "name": "DECREMENT", "label": "Decrement" },
+          { "name": "RESET", "label": "Reset" },
+          { "name": "SET_VALUE", "label": "Set Value", "payload": [
+            { "name": "value", "type": "number", "required": true }
+          ]}
+        ],
+        "transitions": [
+          {
+            "from": "idle",
+            "event": "INCREMENT",
+            "to": "updated",
+            "effects": [
+              ["increment", "value", 1],
+              ["set", "lastUpdated", "@now"]
+            ]
+          },
+          {
+            "from": "idle",
+            "event": "DECREMENT",
+            "to": "updated",
+            "effects": [
+              ["decrement", "value", 1],
+              ["set", "lastUpdated", "@now"]
+            ]
+          },
+          {
+            "from": "idle",
+            "event": "RESET",
+            "to": "idle",
+            "effects": [
+              ["set", "value", 0],
+              ["set", "lastUpdated", "@now"]
+            ]
+          },
+          {
+            "from": "idle",
+            "event": "SET_VALUE",
+            "to": "updated",
+            "effects": [
+              ["set", "value", "@payload.value"],
+              ["set", "lastUpdated", "@now"]
+            ]
+          },
+          {
+            "from": "updated",
+            "event": "INCREMENT",
+            "to": "updated",
+            "effects": [
+              ["increment", "value", 1]
+            ]
+          },
+          {
+            "from": "updated",
+            "event": "DECREMENT",
+            "to": "updated",
+            "effects": [
+              ["decrement", "value", 1]
+            ]
+          },
+          {
+            "from": "updated",
+            "event": "RESET",
+            "to": "idle",
+            "effects": [
+              ["set", "value", 0]
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

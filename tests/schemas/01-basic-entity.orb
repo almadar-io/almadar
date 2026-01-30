@@ -1,0 +1,30 @@
+{
+  "name": "basic-entity-test",
+  "version": "1.0.0",
+  "description": "Test: Basic entity definition with all field types",
+  "orbitals": [
+    {
+      "name": "ItemManager",
+      "entity": {
+        "name": "Item",
+        "persistence": "persistent",
+        "collection": "items",
+        "fields": [
+          { "name": "id", "type": "string", "required": true },
+          { "name": "name", "type": "string", "required": true },
+          { "name": "description", "type": "string" },
+          { "name": "quantity", "type": "number", "default": 0 },
+          { "name": "price", "type": "number" },
+          { "name": "isActive", "type": "boolean", "default": true },
+          { "name": "createdAt", "type": "timestamp" },
+          { "name": "tags", "type": "array", "items": { "type": "string" } },
+          { "name": "metadata", "type": "object" },
+          { "name": "status", "type": "enum", "values": ["draft", "published", "archived"] }
+        ]
+      },
+      "traits": [],
+      "pages": []
+    }
+  ],
+  "traits": []
+}
