@@ -16,37 +16,35 @@
         ]
       },
       "traits": [
-        { "ref": "OrderLifecycle", "linkedEntity": "Order" }
+        {
+          "name": "OrderLifecycle",
+          "linkedEntity": "Order",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [
+              { "name": "pending", "isInitial": true },
+              { "name": "confirmed" },
+              { "name": "shipped" },
+              { "name": "delivered" },
+              { "name": "cancelled" }
+            ],
+            "events": [
+              { "key": "CONFIRM", "name": "Confirm Order" },
+              { "key": "SHIP", "name": "Ship Order" },
+              { "key": "DELIVER", "name": "Mark Delivered" },
+              { "key": "CANCEL", "name": "Cancel Order" }
+            ],
+            "transitions": [
+              { "from": "pending", "event": "CONFIRM", "to": "confirmed" },
+              { "from": "confirmed", "event": "SHIP", "to": "shipped" },
+              { "from": "shipped", "event": "DELIVER", "to": "delivered" },
+              { "from": "pending", "event": "CANCEL", "to": "cancelled" },
+              { "from": "confirmed", "event": "CANCEL", "to": "cancelled" }
+            ]
+          }
+        }
       ],
       "pages": []
-    }
-  ],
-  "traits": [
-    {
-      "name": "OrderLifecycle",
-      "category": "interaction",
-      "stateMachine": {
-        "states": [
-          { "name": "pending", "initial": true },
-          { "name": "confirmed" },
-          { "name": "shipped" },
-          { "name": "delivered" },
-          { "name": "cancelled" }
-        ],
-        "events": [
-          { "name": "CONFIRM", "label": "Confirm Order" },
-          { "name": "SHIP", "label": "Ship Order" },
-          { "name": "DELIVER", "label": "Mark Delivered" },
-          { "name": "CANCEL", "label": "Cancel Order" }
-        ],
-        "transitions": [
-          { "from": "pending", "event": "CONFIRM", "to": "confirmed" },
-          { "from": "confirmed", "event": "SHIP", "to": "shipped" },
-          { "from": "shipped", "event": "DELIVER", "to": "delivered" },
-          { "from": "pending", "event": "CANCEL", "to": "cancelled" },
-          { "from": "confirmed", "event": "CANCEL", "to": "cancelled" }
-        ]
-      }
     }
   ]
 }

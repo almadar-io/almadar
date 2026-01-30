@@ -19,7 +19,137 @@
         ]
       },
       "traits": [
-        { "ref": "ProductCRUD", "linkedEntity": "Product" }
+        {
+          "name": "ProductCRUD",
+          "linkedEntity": "Product",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [
+              { "name": "listing", "isInitial": true },
+              { "name": "viewing" },
+              { "name": "editing" },
+              { "name": "creating" }
+            ],
+            "events": [
+              { "key": "MOUNT", "name": "Page Mount" },
+              { "key": "VIEW", "name": "View Product", "payload": [
+                { "name": "id", "type": "string", "required": true }
+              ]},
+              { "key": "EDIT", "name": "Edit Product" },
+              { "key": "CREATE", "name": "Create Product" },
+              { "key": "SAVE", "name": "Save" },
+              { "key": "CANCEL", "name": "Cancel" },
+              { "key": "BACK", "name": "Back to List" }
+            ],
+            "transitions": [
+              {
+                "from": "listing",
+                "event": "MOUNT",
+                "to": "listing",
+                "effects": [
+                  ["fetch", "products", { "collection": "products" }],
+                  ["render-ui", "main", {
+                    "type": "entity-table",
+                    "props": {
+                      "entity": "Product",
+                      "columns": ["name", "price", "stock", "category"],
+                      "actions": ["view", "edit", "delete"]
+                    }
+                  }]
+                ]
+              },
+              {
+                "from": "listing",
+                "event": "VIEW",
+                "to": "viewing",
+                "effects": [
+                  ["fetch", "product", { "collection": "products", "id": "@payload.id" }],
+                  ["render-ui", "main", {
+                    "type": "entity-detail",
+                    "props": {
+                      "entity": "Product",
+                      "fields": ["name", "description", "price", "stock", "category"]
+                    }
+                  }]
+                ]
+              },
+              {
+                "from": "listing",
+                "event": "CREATE",
+                "to": "creating",
+                "effects": [
+                  ["render-ui", "main", {
+                    "type": "form",
+                    "props": {
+                      "entity": "Product",
+                      "fields": [
+                        { "name": "name", "label": "Product Name", "required": true },
+                        { "name": "description", "label": "Description", "type": "textarea" },
+                        { "name": "price", "label": "Price", "type": "number", "required": true },
+                        { "name": "stock", "label": "Stock", "type": "number" },
+                        { "name": "category", "label": "Category" }
+                      ]
+                    }
+                  }]
+                ]
+              },
+              {
+                "from": "viewing",
+                "event": "EDIT",
+                "to": "editing",
+                "effects": [
+                  ["render-ui", "main", {
+                    "type": "form",
+                    "props": {
+                      "entity": "Product",
+                      "mode": "edit"
+                    }
+                  }]
+                ]
+              },
+              {
+                "from": "viewing",
+                "event": "BACK",
+                "to": "listing",
+                "effects": [
+                  ["navigate", "/products"]
+                ]
+              },
+              {
+                "from": "editing",
+                "event": "SAVE",
+                "to": "viewing",
+                "effects": [
+                  ["persist", "product", { "collection": "products" }],
+                  ["notify", "success", "Product saved successfully"]
+                ]
+              },
+              {
+                "from": "editing",
+                "event": "CANCEL",
+                "to": "viewing"
+              },
+              {
+                "from": "creating",
+                "event": "SAVE",
+                "to": "listing",
+                "effects": [
+                  ["persist", "product", { "collection": "products" }],
+                  ["notify", "success", "Product created successfully"],
+                  ["navigate", "/products"]
+                ]
+              },
+              {
+                "from": "creating",
+                "event": "CANCEL",
+                "to": "listing",
+                "effects": [
+                  ["navigate", "/products"]
+                ]
+              }
+            ]
+          }
+        }
       ],
       "pages": [
         {
@@ -37,138 +167,6 @@
           ]
         }
       ]
-    }
-  ],
-  "traits": [
-    {
-      "name": "ProductCRUD",
-      "category": "interaction",
-      "stateMachine": {
-        "states": [
-          { "name": "listing", "initial": true },
-          { "name": "viewing" },
-          { "name": "editing" },
-          { "name": "creating" }
-        ],
-        "events": [
-          { "name": "MOUNT", "label": "Page Mount" },
-          { "name": "VIEW", "label": "View Product", "payload": [
-            { "name": "id", "type": "string", "required": true }
-          ]},
-          { "name": "EDIT", "label": "Edit Product" },
-          { "name": "CREATE", "label": "Create Product" },
-          { "name": "SAVE", "label": "Save" },
-          { "name": "CANCEL", "label": "Cancel" },
-          { "name": "BACK", "label": "Back to List" }
-        ],
-        "transitions": [
-          {
-            "from": "listing",
-            "event": "MOUNT",
-            "to": "listing",
-            "effects": [
-              ["fetch", "products", { "collection": "products" }],
-              ["render-ui", "main", {
-                "type": "entity-table",
-                "props": {
-                  "entity": "Product",
-                  "columns": ["name", "price", "stock", "category"],
-                  "actions": ["view", "edit", "delete"]
-                }
-              }]
-            ]
-          },
-          {
-            "from": "listing",
-            "event": "VIEW",
-            "to": "viewing",
-            "effects": [
-              ["fetch", "product", { "collection": "products", "id": "@payload.id" }],
-              ["render-ui", "main", {
-                "type": "entity-detail",
-                "props": {
-                  "entity": "Product",
-                  "fields": ["name", "description", "price", "stock", "category"]
-                }
-              }]
-            ]
-          },
-          {
-            "from": "listing",
-            "event": "CREATE",
-            "to": "creating",
-            "effects": [
-              ["render-ui", "main", {
-                "type": "form",
-                "props": {
-                  "entity": "Product",
-                  "fields": [
-                    { "name": "name", "label": "Product Name", "required": true },
-                    { "name": "description", "label": "Description", "type": "textarea" },
-                    { "name": "price", "label": "Price", "type": "number", "required": true },
-                    { "name": "stock", "label": "Stock", "type": "number" },
-                    { "name": "category", "label": "Category" }
-                  ]
-                }
-              }]
-            ]
-          },
-          {
-            "from": "viewing",
-            "event": "EDIT",
-            "to": "editing",
-            "effects": [
-              ["render-ui", "main", {
-                "type": "form",
-                "props": {
-                  "entity": "Product",
-                  "mode": "edit"
-                }
-              }]
-            ]
-          },
-          {
-            "from": "viewing",
-            "event": "BACK",
-            "to": "listing",
-            "effects": [
-              ["navigate", "/products"]
-            ]
-          },
-          {
-            "from": "editing",
-            "event": "SAVE",
-            "to": "viewing",
-            "effects": [
-              ["persist", "product", { "collection": "products" }],
-              ["notify", "success", "Product saved successfully"]
-            ]
-          },
-          {
-            "from": "editing",
-            "event": "CANCEL",
-            "to": "viewing"
-          },
-          {
-            "from": "creating",
-            "event": "SAVE",
-            "to": "listing",
-            "effects": [
-              ["persist", "product", { "collection": "products" }],
-              ["notify", "success", "Product created successfully"],
-              ["navigate", "/products"]
-            ]
-          },
-          {
-            "from": "creating",
-            "event": "CANCEL",
-            "to": "listing",
-            "effects": [
-              ["navigate", "/products"]
-            ]
-          }
-        ]
-      }
     }
   ]
 }

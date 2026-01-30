@@ -16,11 +16,58 @@
         ]
       },
       "traits": [
-        { "ref": "CartActions", "linkedEntity": "Cart" }
+        {
+          "name": "CartActions",
+          "linkedEntity": "Cart",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [
+              { "name": "empty", "isInitial": true },
+              { "name": "hasItems" }
+            ],
+            "events": [
+              { "key": "ADD_ITEM", "name": "Add Item", "payload": [
+                { "name": "price", "type": "number", "required": true }
+              ]},
+              { "key": "CLEAR", "name": "Clear Cart" }
+            ],
+            "transitions": [
+              {
+                "from": "empty",
+                "event": "ADD_ITEM",
+                "to": "hasItems",
+                "effects": [
+                  ["increment", "itemCount", 1],
+                  ["set", "total", ["+", "@entity.total", "@payload.price"]],
+                  ["emit", "ITEM_ADDED", { "itemCount": "@entity.itemCount", "total": "@entity.total" }]
+                ]
+              },
+              {
+                "from": "hasItems",
+                "event": "ADD_ITEM",
+                "to": "hasItems",
+                "effects": [
+                  ["increment", "itemCount", 1],
+                  ["set", "total", ["+", "@entity.total", "@payload.price"]],
+                  ["emit", "ITEM_ADDED", { "itemCount": "@entity.itemCount", "total": "@entity.total" }]
+                ]
+              },
+              {
+                "from": "hasItems",
+                "event": "CLEAR",
+                "to": "empty",
+                "effects": [
+                  ["set", "itemCount", 0],
+                  ["set", "total", 0],
+                  ["emit", "CART_CLEARED", {}]
+                ]
+              }
+            ]
+          }
+        }
       ],
       "pages": [],
-      "emits": ["ITEM_ADDED", "CART_CLEARED"],
-      "listens": []
+      "emits": ["ITEM_ADDED", "CART_CLEARED"]
     },
     {
       "name": "NotificationManager",
@@ -35,109 +82,58 @@
         ]
       },
       "traits": [
-        { "ref": "NotificationHandler", "linkedEntity": "Notification" }
+        {
+          "name": "NotificationHandler",
+          "linkedEntity": "Notification",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [
+              { "name": "idle", "isInitial": true },
+              { "name": "notified" }
+            ],
+            "events": [
+              { "key": "ITEM_ADDED", "name": "Item Added" },
+              { "key": "CART_CLEARED", "name": "Cart Cleared" }
+            ],
+            "transitions": [
+              {
+                "from": "idle",
+                "event": "ITEM_ADDED",
+                "to": "notified",
+                "effects": [
+                  ["increment", "count", 1],
+                  ["set", "message", "Item added to cart"]
+                ]
+              },
+              {
+                "from": "notified",
+                "event": "ITEM_ADDED",
+                "to": "notified",
+                "effects": [
+                  ["increment", "count", 1]
+                ]
+              },
+              {
+                "from": "notified",
+                "event": "CART_CLEARED",
+                "to": "idle",
+                "effects": [
+                  ["set", "message", "Cart cleared"],
+                  ["set", "count", 0]
+                ]
+              }
+            ]
+          },
+          "listens": [
+            { "event": "ITEM_ADDED", "scope": "external" },
+            { "event": "CART_CLEARED", "scope": "external" }
+          ]
+        }
       ],
       "pages": [],
-      "emits": [],
       "listens": [
         { "event": "ITEM_ADDED", "from": "CartManager" },
         { "event": "CART_CLEARED", "from": "CartManager" }
-      ]
-    }
-  ],
-  "traits": [
-    {
-      "name": "CartActions",
-      "category": "interaction",
-      "stateMachine": {
-        "states": [
-          { "name": "empty", "initial": true },
-          { "name": "hasItems" }
-        ],
-        "events": [
-          { "name": "ADD_ITEM", "label": "Add Item", "payload": [
-            { "name": "price", "type": "number", "required": true }
-          ]},
-          { "name": "CLEAR", "label": "Clear Cart" }
-        ],
-        "transitions": [
-          {
-            "from": "empty",
-            "event": "ADD_ITEM",
-            "to": "hasItems",
-            "effects": [
-              ["increment", "itemCount", 1],
-              ["set", "total", ["+", "@entity.total", "@payload.price"]],
-              ["emit", "ITEM_ADDED", { "itemCount": "@entity.itemCount", "total": "@entity.total" }]
-            ]
-          },
-          {
-            "from": "hasItems",
-            "event": "ADD_ITEM",
-            "to": "hasItems",
-            "effects": [
-              ["increment", "itemCount", 1],
-              ["set", "total", ["+", "@entity.total", "@payload.price"]],
-              ["emit", "ITEM_ADDED", { "itemCount": "@entity.itemCount", "total": "@entity.total" }]
-            ]
-          },
-          {
-            "from": "hasItems",
-            "event": "CLEAR",
-            "to": "empty",
-            "effects": [
-              ["set", "itemCount", 0],
-              ["set", "total", 0],
-              ["emit", "CART_CLEARED", {}]
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "name": "NotificationHandler",
-      "category": "interaction",
-      "stateMachine": {
-        "states": [
-          { "name": "idle", "initial": true },
-          { "name": "notified" }
-        ],
-        "events": [
-          { "name": "ITEM_ADDED", "label": "Item Added" },
-          { "name": "CART_CLEARED", "label": "Cart Cleared" }
-        ],
-        "transitions": [
-          {
-            "from": "idle",
-            "event": "ITEM_ADDED",
-            "to": "notified",
-            "effects": [
-              ["increment", "count", 1],
-              ["set", "message", "Item added to cart"]
-            ]
-          },
-          {
-            "from": "notified",
-            "event": "ITEM_ADDED",
-            "to": "notified",
-            "effects": [
-              ["increment", "count", 1]
-            ]
-          },
-          {
-            "from": "notified",
-            "event": "CART_CLEARED",
-            "to": "idle",
-            "effects": [
-              ["set", "message", "Cart cleared"],
-              ["set", "count", 0]
-            ]
-          }
-        ]
-      },
-      "listens": [
-        { "event": "ITEM_ADDED", "scope": "external" },
-        { "event": "CART_CLEARED", "scope": "external" }
       ]
     }
   ]
