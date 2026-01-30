@@ -65,7 +65,15 @@
           }
         }
       ],
-      "pages": [],
+      "pages": [
+        {
+          "name": "CartPage",
+          "path": "/cart",
+          "traits": [
+            { "ref": "CartActions", "linkedEntity": "Cart" }
+          ]
+        }
+      ],
       "emits": ["ITEM_ADDED", "CART_CLEARED"]
     },
     {
@@ -128,7 +136,15 @@
           ]
         }
       ],
-      "pages": [],
+      "pages": [
+        {
+          "name": "NotificationsPage",
+          "path": "/notifications",
+          "traits": [
+            { "ref": "NotificationHandler", "linkedEntity": "Notification" }
+          ]
+        }
+      ],
       "listens": [
         { "event": "ITEM_ADDED", "from": "CartManager" },
         { "event": "CART_CLEARED", "from": "CartManager" }

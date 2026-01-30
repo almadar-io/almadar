@@ -225,7 +225,12 @@
         ]
       },
       "traits": [],
-      "pages": []
+      "pages": [
+        {
+          "name": "UserListPage",
+          "path": "/users"
+        }
+      ]
     }
   ]
 }

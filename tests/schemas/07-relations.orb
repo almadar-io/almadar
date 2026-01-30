@@ -16,7 +16,12 @@
         ]
       },
       "traits": [],
-      "pages": []
+      "pages": [
+        {
+          "name": "AuthorListPage",
+          "path": "/authors"
+        }
+      ]
     },
     {
       "name": "BookManager",
@@ -33,7 +38,12 @@
         ]
       },
       "traits": [],
-      "pages": []
+      "pages": [
+        {
+          "name": "BookListPage",
+          "path": "/books"
+        }
+      ]
     },
     {
       "name": "CategoryManager",
@@ -47,7 +57,12 @@
         ]
       },
       "traits": [],
-      "pages": []
+      "pages": [
+        {
+          "name": "CategoryListPage",
+          "path": "/categories"
+        }
+      ]
     }
   ]
 }

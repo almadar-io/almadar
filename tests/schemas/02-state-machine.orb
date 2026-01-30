@@ -44,7 +44,15 @@
           }
         }
       ],
-      "pages": []
+      "pages": [
+        {
+          "name": "OrderListPage",
+          "path": "/orders",
+          "traits": [
+            { "ref": "OrderLifecycle", "linkedEntity": "Order" }
+          ]
+        }
+      ]
     }
   ]
 }
