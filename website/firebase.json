@@ -1,7 +1,7 @@
 {
   "hosting": {
     "site": "almadar-builder-website",
-    "public": "build",
+    "public": "dist",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {

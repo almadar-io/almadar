@@ -44,13 +44,13 @@ jobs:
       - name: Upload artifact for GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: website/build
+          path: website/dist
 
       - name: Upload artifact for Firebase
         uses: actions/upload-artifact@v4
         with:
           name: website-build
-          path: website/build
+          path: website/dist
 
   deploy-github-pages:
     name: Deploy to GitHub Pages
@@ -75,7 +75,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: website-build
-          path: website/build
+          path: website/dist
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
