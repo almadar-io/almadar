@@ -26,6 +26,7 @@
               { "name": "frozen" }
             ],
             "events": [
+              { "key": "INIT", "name": "Initialize" },
               { "key": "WITHDRAW", "name": "Withdraw Funds", "payload": [
                 { "name": "amount", "type": "number", "required": true }
               ]},
@@ -33,6 +34,25 @@
               { "key": "UNFREEZE", "name": "Unfreeze Account" }
             ],
             "transitions": [
+              {
+                "from": "active",
+                "event": "INIT",
+                "to": "active",
+                "effects": [
+                  ["fetch", "Account"],
+                  ["render-ui", "main", {
+                    "type": "entity-table",
+                    "props": {
+                      "entity": "Account",
+                      "columns": ["balance", "isVerified"],
+                      "itemActions": [
+                        { "event": "WITHDRAW", "label": "Withdraw" },
+                        { "event": "FREEZE", "label": "Freeze" }
+                      ]
+                    }
+                  }]
+                ]
+              },
               {
                 "from": "active",
                 "event": "WITHDRAW",

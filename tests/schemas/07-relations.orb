@@ -15,11 +15,38 @@
           { "name": "email", "type": "string" }
         ]
       },
-      "traits": [],
+      "traits": [
+        {
+          "name": "AuthorBrowser",
+          "linkedEntity": "Author",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [{ "name": "browsing", "isInitial": true }],
+            "events": [{ "key": "INIT", "name": "Initialize" }],
+            "transitions": [{
+              "from": "browsing",
+              "event": "INIT",
+              "to": "browsing",
+              "effects": [
+                ["fetch", "Author"],
+                ["render-ui", "main", {
+                  "type": "entity-table",
+                  "props": {
+                    "entity": "Author",
+                    "columns": ["name", "email"],
+                    "itemActions": [{ "event": "VIEW", "label": "View" }]
+                  }
+                }]
+              ]
+            }]
+          }
+        }
+      ],
       "pages": [
         {
           "name": "AuthorListPage",
-          "path": "/authors"
+          "path": "/authors",
+          "traits": [{ "ref": "AuthorBrowser", "linkedEntity": "Author" }]
         }
       ]
     },
@@ -37,11 +64,38 @@
           { "name": "authorId", "type": "string", "required": true }
         ]
       },
-      "traits": [],
+      "traits": [
+        {
+          "name": "BookBrowser",
+          "linkedEntity": "Book",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [{ "name": "browsing", "isInitial": true }],
+            "events": [{ "key": "INIT", "name": "Initialize" }],
+            "transitions": [{
+              "from": "browsing",
+              "event": "INIT",
+              "to": "browsing",
+              "effects": [
+                ["fetch", "Book"],
+                ["render-ui", "main", {
+                  "type": "entity-table",
+                  "props": {
+                    "entity": "Book",
+                    "columns": ["title", "isbn", "publishedYear"],
+                    "itemActions": [{ "event": "VIEW", "label": "View" }]
+                  }
+                }]
+              ]
+            }]
+          }
+        }
+      ],
       "pages": [
         {
           "name": "BookListPage",
-          "path": "/books"
+          "path": "/books",
+          "traits": [{ "ref": "BookBrowser", "linkedEntity": "Book" }]
         }
       ]
     },

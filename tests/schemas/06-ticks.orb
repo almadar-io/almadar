@@ -31,14 +31,33 @@
             "states": [
               { "name": "active", "isInitial": true },
               { "name": "idle" },
-              { "name": "expired" }
+              { "name": "expired", "description": "Terminal state - session expired" }
             ],
             "events": [
+              { "key": "INIT", "name": "Initialize" },
               { "key": "ACTIVITY", "name": "User Activity" },
               { "key": "TICK", "name": "Tick" },
               { "key": "EXPIRE", "name": "Expire Session" }
             ],
             "transitions": [
+              {
+                "from": "active",
+                "event": "INIT",
+                "to": "active",
+                "effects": [
+                  ["render-ui", "main", {
+                    "type": "stats",
+                    "props": {
+                      "title": "Session Status",
+                      "value": "@state",
+                      "subtitle": "Idle: @entity.idleSeconds seconds",
+                      "actions": [
+                        { "event": "ACTIVITY", "label": "Activity" }
+                      ]
+                    }
+                  }]
+                ]
+              },
               {
                 "from": "active",
                 "event": "ACTIVITY",

@@ -25,6 +25,7 @@
               { "name": "updated" }
             ],
             "events": [
+              { "key": "INIT", "name": "Initialize" },
               { "key": "INCREMENT", "name": "Increment" },
               { "key": "DECREMENT", "name": "Decrement" },
               { "key": "RESET", "name": "Reset" },
@@ -33,6 +34,25 @@
               ]}
             ],
             "transitions": [
+              {
+                "from": "idle",
+                "event": "INIT",
+                "to": "idle",
+                "effects": [
+                  ["render-ui", "main", {
+                    "type": "stats",
+                    "props": {
+                      "title": "Counter Value",
+                      "value": "@entity.value",
+                      "actions": [
+                        { "event": "INCREMENT", "label": "+" },
+                        { "event": "DECREMENT", "label": "-" },
+                        { "event": "RESET", "label": "Reset" }
+                      ]
+                    }
+                  }]
+                ]
+              },
               {
                 "from": "idle",
                 "event": "INCREMENT",
