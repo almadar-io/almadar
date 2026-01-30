@@ -77,7 +77,11 @@ jobs:
 
       - name: Check example schemas
         run: |
-          for file in examples/*.orb; do
-            echo "Checking $file..."
-            python3 -c "import json; json.load(open('$file'))"
-          done
+          if ls examples/*.orb 1> /dev/null 2>&1; then
+            for file in examples/*.orb; do
+              echo "Checking $file..."
+              python3 -c "import json; json.load(open('$file'))"
+            done
+          else
+            echo "No example schemas found (examples/*.orb)"
+          fi
