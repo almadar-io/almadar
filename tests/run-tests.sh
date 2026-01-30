@@ -59,16 +59,6 @@ fi
 # Get almadar version
 echo "Almadar CLI version: $(almadar --version 2>/dev/null || echo 'unknown')"
 echo ""
-
-# Debug: Show environment
-echo "Debug: ORBITAL_SHELLS_DIR=$ORBITAL_SHELLS_DIR"
-if [ -d "$ORBITAL_SHELLS_DIR" ]; then
-  echo "Debug: Shells directory exists"
-  ls -la "$ORBITAL_SHELLS_DIR"
-else
-  echo "Debug: Shells directory NOT FOUND"
-fi
-echo ""
 echo "--------------------------------------"
 
 # Run tests
@@ -99,9 +89,6 @@ for schema in "$SCHEMAS_DIR"/*.orb; do
 
   # Create temp directory for output
   TEMP_DIR=$(mktemp -d)
-
-  # Debug: Test env var before compile
-  echo "  Debug before compile: ORBITAL_SHELLS_DIR=$ORBITAL_SHELLS_DIR"
 
   if ! almadar compile "$schema" --shell "$SHELL" --output "$TEMP_DIR" 2>&1; then
     echo -e "${RED}FAILED${NC} (compilation)"
