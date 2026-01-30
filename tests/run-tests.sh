@@ -100,6 +100,9 @@ for schema in "$SCHEMAS_DIR"/*.orb; do
   # Create temp directory for output
   TEMP_DIR=$(mktemp -d)
 
+  # Debug: Test env var before compile
+  echo "  Debug before compile: ORBITAL_SHELLS_DIR=$ORBITAL_SHELLS_DIR"
+
   if ! almadar compile "$schema" --shell "$SHELL" --output "$TEMP_DIR" 2>&1; then
     echo -e "${RED}FAILED${NC} (compilation)"
     if $VERBOSE; then
