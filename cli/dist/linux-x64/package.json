@@ -1,0 +1,19 @@
+{
+  "name": "@almadar/cli-linux-x64",
+  "version": "0.1.0",
+  "description": "Almadar CLI binary for linux-x64",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/almadar-io/almadar.git"
+  },
+  "os": [
+    "linux"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "files": [
+    "almadar"
+  ]
+}

@@ -2,8 +2,8 @@
 node_modules/
 
 # Build outputs
-dist/
 build/
+# Note: cli/dist/ contains pre-built binaries and is NOT ignored
 .docusaurus/
 .firebase/
 
