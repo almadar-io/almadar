@@ -32,7 +32,10 @@
             {
               "event": "CART_CLEARED",
               "scope": "external",
-              "description": "Emitted when cart is cleared"
+              "description": "Emitted when cart is cleared",
+              "payload": [
+                { "name": "timestamp", "type": "number", "required": true }
+              ]
             }
           ],
           "stateMachine": {
@@ -55,14 +58,12 @@
                 "effects": [
                   ["render-ui", "main", {
                     "type": "stats",
-                    "props": {
-                      "title": "Shopping Cart",
-                      "value": "@entity.itemCount",
-                      "subtitle": "Total: $@entity.total",
-                      "actions": [
-                        { "event": "ADD_ITEM", "label": "Add Item" }
-                      ]
-                    }
+                    "title": "Shopping Cart",
+                    "value": "@entity.itemCount",
+                    "subtitle": "Total: $@entity.total",
+                    "actions": [
+                      { "event": "ADD_ITEM", "label": "Add Item" }
+                    ]
                   }]
                 ]
               },
@@ -93,7 +94,7 @@
                 "effects": [
                   ["set", "@entity.itemCount", 0],
                   ["set", "@entity.total", 0],
-                  ["emit", "CART_CLEARED", {}]
+                  ["emit", "CART_CLEARED", { "timestamp": "@now" }]
                 ]
               }
             ]
@@ -145,11 +146,9 @@
                 "effects": [
                   ["render-ui", "main", {
                     "type": "stats",
-                    "props": {
-                      "title": "Notifications",
-                      "value": "@entity.count",
-                      "subtitle": "@entity.message"
-                    }
+                    "title": "Notifications",
+                    "value": "@entity.count",
+                    "subtitle": "@entity.message"
                   }]
                 ]
               },

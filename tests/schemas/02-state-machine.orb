@@ -25,11 +25,14 @@
               { "name": "pending", "isInitial": true },
               { "name": "confirmed" },
               { "name": "shipped" },
-              { "name": "delivered", "description": "Terminal state - order complete" },
-              { "name": "cancelled", "description": "Terminal state - order cancelled" }
+              { "name": "delivered", "isTerminal": true, "description": "Terminal state - order complete" },
+              { "name": "cancelled", "isTerminal": true, "description": "Terminal state - order cancelled" }
             ],
             "events": [
               { "key": "INIT", "name": "Initialize" },
+              { "key": "VIEW", "name": "View Order", "payload": [
+                { "name": "id", "type": "string", "required": true }
+              ]},
               { "key": "CONFIRM", "name": "Confirm Order" },
               { "key": "SHIP", "name": "Ship Order" },
               { "key": "DELIVER", "name": "Mark Delivered" },
@@ -44,15 +47,21 @@
                   ["fetch", "Order"],
                   ["render-ui", "main", {
                     "type": "entity-table",
-                    "props": {
-                      "entity": "Order",
-                      "columns": ["customerName", "total"],
-                      "itemActions": [
-                        { "event": "CONFIRM", "label": "Confirm" },
-                        { "event": "CANCEL", "label": "Cancel" }
-                      ]
-                    }
+                    "entity": "Order",
+                    "columns": ["customerName", "total"],
+                    "itemActions": [
+                      { "event": "CONFIRM", "label": "Confirm" },
+                      { "event": "VIEW", "label": "View" }
+                    ]
                   }]
+                ]
+              },
+              {
+                "from": "pending",
+                "event": "VIEW",
+                "to": "pending",
+                "effects": [
+                  ["navigate", "/orders/@payload.id"]
                 ]
               },
               { "from": "pending", "event": "CONFIRM", "to": "confirmed" },

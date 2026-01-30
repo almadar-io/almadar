@@ -41,15 +41,13 @@
                 "effects": [
                   ["render-ui", "main", {
                     "type": "stats",
-                    "props": {
-                      "title": "Counter Value",
-                      "value": "@entity.value",
-                      "actions": [
-                        { "event": "INCREMENT", "label": "+" },
-                        { "event": "DECREMENT", "label": "-" },
-                        { "event": "RESET", "label": "Reset" }
-                      ]
-                    }
+                    "title": "Counter Value",
+                    "value": "@entity.value",
+                    "actions": [
+                      { "event": "INCREMENT", "label": "+" },
+                      { "event": "DECREMENT", "label": "-" },
+                      { "event": "RESET", "label": "Reset" }
+                    ]
                   }]
                 ]
               },

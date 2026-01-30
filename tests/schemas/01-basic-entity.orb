@@ -32,7 +32,10 @@
               { "name": "browsing", "isInitial": true }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" }
+              { "key": "INIT", "name": "Initialize" },
+              { "key": "VIEW", "name": "View Item", "payload": [
+                { "name": "id", "type": "string", "required": true }
+              ]}
             ],
             "transitions": [
               {
@@ -43,14 +46,20 @@
                   ["fetch", "Item"],
                   ["render-ui", "main", {
                     "type": "entity-table",
-                    "props": {
-                      "entity": "Item",
-                      "columns": ["name", "quantity", "price", "status"],
-                      "itemActions": [
-                        { "event": "VIEW", "label": "View" }
-                      ]
-                    }
+                    "entity": "Item",
+                    "columns": ["name", "quantity", "price", "status"],
+                    "itemActions": [
+                      { "event": "VIEW", "label": "View" }
+                    ]
                   }]
+                ]
+              },
+              {
+                "from": "browsing",
+                "event": "VIEW",
+                "to": "browsing",
+                "effects": [
+                  ["navigate", "/items/@payload.id"]
                 ]
               }
             ]

@@ -42,14 +42,12 @@
                   ["fetch", "Account"],
                   ["render-ui", "main", {
                     "type": "entity-table",
-                    "props": {
-                      "entity": "Account",
-                      "columns": ["balance", "isVerified"],
-                      "itemActions": [
-                        { "event": "WITHDRAW", "label": "Withdraw" },
-                        { "event": "FREEZE", "label": "Freeze" }
-                      ]
-                    }
+                    "entity": "Account",
+                    "columns": ["balance", "isVerified"],
+                    "itemActions": [
+                      { "event": "WITHDRAW", "label": "Withdraw" },
+                      { "event": "FREEZE", "label": "Freeze" }
+                    ]
                   }]
                 ]
               },
