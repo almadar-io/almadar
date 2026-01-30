@@ -22,11 +22,48 @@
           { "name": "status", "type": "enum", "values": ["draft", "published", "archived"] }
         ]
       },
-      "traits": [],
+      "traits": [
+        {
+          "name": "ItemBrowser",
+          "linkedEntity": "Item",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [
+              { "name": "browsing", "isInitial": true }
+            ],
+            "events": [
+              { "key": "INIT", "name": "Initialize" }
+            ],
+            "transitions": [
+              {
+                "from": "browsing",
+                "event": "INIT",
+                "to": "browsing",
+                "effects": [
+                  ["fetch", "Item"],
+                  ["render-ui", "main", {
+                    "type": "entity-table",
+                    "props": {
+                      "entity": "Item",
+                      "columns": ["name", "quantity", "price", "status"],
+                      "itemActions": [
+                        { "event": "VIEW", "label": "View" }
+                      ]
+                    }
+                  }]
+                ]
+              }
+            ]
+          }
+        }
+      ],
       "pages": [
         {
           "name": "ItemListPage",
-          "path": "/items"
+          "path": "/items",
+          "traits": [
+            { "ref": "ItemBrowser", "linkedEntity": "Item" }
+          ]
         }
       ]
     }

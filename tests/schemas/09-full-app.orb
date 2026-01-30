@@ -24,6 +24,17 @@
           "name": "TaskLifecycle",
           "linkedEntity": "Task",
           "category": "interaction",
+          "emits": [
+            {
+              "event": "TASK_COMPLETED",
+              "scope": "external",
+              "description": "Emitted when a task is completed",
+              "payload": [
+                { "name": "taskId", "type": "string", "required": true },
+                { "name": "projectId", "type": "string", "required": false }
+              ]
+            }
+          ],
           "stateMachine": {
             "states": [
               { "name": "todo", "isInitial": true },
@@ -55,6 +66,17 @@
           "name": "TaskCRUD",
           "linkedEntity": "Task",
           "category": "interaction",
+          "emits": [
+            {
+              "event": "TASK_CREATED",
+              "scope": "external",
+              "description": "Emitted when a new task is created",
+              "payload": [
+                { "name": "taskId", "type": "string", "required": true },
+                { "name": "projectId", "type": "string", "required": false }
+              ]
+            }
+          ],
           "stateMachine": {
             "states": [
               { "name": "listing", "isInitial": true },

@@ -20,6 +20,13 @@
           "name": "SessionTimeout",
           "linkedEntity": "Session",
           "category": "interaction",
+          "emits": [
+            {
+              "event": "TICK",
+              "scope": "internal",
+              "description": "Internal tick event for session timeout checking"
+            }
+          ],
           "stateMachine": {
             "states": [
               { "name": "active", "isInitial": true },
