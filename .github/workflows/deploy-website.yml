@@ -83,7 +83,7 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           channelId: live
-          projectId: almadar-b3a39
-          target: almadar-builder-website
+          projectId: kflow-b3a39
+          entryPoint: website
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
