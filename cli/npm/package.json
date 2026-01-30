@@ -1,7 +1,7 @@
 {
   "name": "@almadar/cli",
   "version": "1.0.0",
-  "description": "Almadar CLI - Compile Orbital schemas to full-stack applications",
+  "description": "Almadar CLI - Compile Almadar schemas to full-stack applications",
   "license": "MIT",
   "repository": {
     "type": "git",

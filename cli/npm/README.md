@@ -1,6 +1,6 @@
 # @almadar/cli
 
-Almadar CLI - Compile Orbital schemas to full-stack applications.
+Almadar CLI - Compile Almadar schemas to full-stack applications.
 
 ## Installation
 
@@ -28,11 +28,11 @@ almadar dev schema.orb
 
 | Command | Description |
 |---------|-------------|
-| `almadar validate <file>` | Validate an Orbital schema |
+| `almadar validate <file>` | Validate an Almadar schema |
 | `almadar parse <file>` | Parse and display schema information |
 | `almadar compile <file>` | Compile schema to generated code |
-| `almadar serve <file>` | Start the Orbital server runtime |
-| `almadar gui <file>` | Start the Orbital desktop GUI |
+| `almadar serve <file>` | Start the Almadar server runtime |
+| `almadar gui <file>` | Start the Almadar desktop GUI |
 | `almadar dev <file>` | Start both server and client (dev mode) |
 
 ## Documentation
