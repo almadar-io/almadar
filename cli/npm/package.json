@@ -1,0 +1,56 @@
+{
+  "name": "@almadar/cli",
+  "version": "1.0.0",
+  "description": "Almadar CLI - Compile Orbital schemas to full-stack applications",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/almadar-io/almadar.git",
+    "directory": "cli/npm"
+  },
+  "homepage": "https://almadar.io",
+  "bugs": {
+    "url": "https://github.com/almadar-io/almadar/issues"
+  },
+  "keywords": [
+    "almadar",
+    "orbital",
+    "cli",
+    "compiler",
+    "codegen",
+    "full-stack",
+    "react",
+    "typescript",
+    "python",
+    "fastapi"
+  ],
+  "bin": {
+    "almadar": "bin/almadar"
+  },
+  "files": [
+    "bin",
+    "README.md"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "optionalDependencies": {
+    "@almadar/cli-darwin-x64": "1.0.0",
+    "@almadar/cli-darwin-arm64": "1.0.0",
+    "@almadar/cli-linux-x64": "1.0.0",
+    "@almadar/cli-linux-arm64": "1.0.0",
+    "@almadar/cli-win32-x64": "1.0.0"
+  }
+}
