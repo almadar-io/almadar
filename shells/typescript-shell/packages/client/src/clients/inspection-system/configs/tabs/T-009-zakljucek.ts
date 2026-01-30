@@ -1,0 +1,207 @@
+export default {
+  "tabId": "T-009",
+  "name": "Zaključek",
+  "description": "Closing phase - end time, signatures, archive",
+  "phase": "closing",
+  "globalVariablesSet": [
+    "HG-INSPECTION_COMPLETED"
+  ],
+  "globalVariablesRequired": [
+    "HG-UNRESOLVED_OBJECTIONS"
+  ],
+  "localVariables": [],
+  "entityMapping": {
+    "entity": "Inspection",
+    "mode": "update",
+    "idField": "inspectionId"
+  },
+  "sections": [
+    {
+      "id": "S-1",
+      "title": "Čas zaključka",
+      "description": "Record inspection end time",
+      "fields": [
+        {
+          "id": "endDateTime",
+          "label": "Datum in čas zaključka",
+          "type": "datetime",
+          "required": true,
+          "defaultValue": "@now",
+          "entityField": "endDateTime"
+        },
+        {
+          "id": "duration",
+          "label": "Trajanje pregleda",
+          "type": "info-display",
+          "displayTemplate": {
+            "content": "Pregled je trajal: @calculated.duration"
+          },
+          "calculated": {
+            "duration": ["time/diff", "@entity.startDateTime", "@entity.formValues.endDateTime", "minutes"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "S-2",
+      "title": "Povzetek pregleda",
+      "description": "Summary of inspection results",
+      "fields": [
+        {
+          "id": "summaryStats",
+          "label": "",
+          "type": "stats-grid",
+          "stats": [
+            {
+              "label": "Ugotovitve",
+              "value": "@entity.globalVariables.HG_FINDING_COUNT",
+              "icon": "alert-triangle"
+            },
+            {
+              "label": "Odločbe",
+              "value": "@entity.globalVariables.HG_DECISION_COUNT",
+              "icon": "file-text"
+            },
+            {
+              "label": "Pripombe",
+              "value": "@entity.globalVariables.HG_OBJECTION_COUNT",
+              "icon": "message-circle"
+            },
+            {
+              "label": "Udeleženci",
+              "value": "@entity.globalVariables.HG_PARTICIPANT_COUNT",
+              "icon": "users"
+            }
+          ]
+        },
+        {
+          "id": "inspectorNotes",
+          "label": "Zaključne opombe inšpektorja",
+          "type": "textarea",
+          "required": false,
+          "maxLength": 1000,
+          "placeholder": "Morebitne dodatne opombe..."
+        }
+      ]
+    },
+    {
+      "id": "S-3",
+      "title": "Podpisi",
+      "description": "Electronic signatures",
+      "fields": [
+        {
+          "id": "signatureInfo",
+          "label": "",
+          "type": "info-display",
+          "displayTemplate": {
+            "variant": "warning",
+            "icon": "pen-tool",
+            "title": "Elektronski podpis",
+            "content": "Za zaključek pregleda sta potrebna podpisa inšpektorja in predstavnika zavezanca."
+          }
+        },
+        {
+          "id": "inspectorSignature",
+          "label": "Podpis inšpektorja",
+          "type": "signature",
+          "required": true,
+          "signatureConfig": {
+            "role": "inspector",
+            "nameField": "@entity.inspector.name",
+            "timestampField": "inspectorSignedAt"
+          }
+        },
+        {
+          "id": "merchantSignature",
+          "label": "Podpis predstavnika zavezanca",
+          "type": "signature",
+          "required": true,
+          "signatureConfig": {
+            "role": "merchant",
+            "nameField": "@entity.participants[0].name",
+            "timestampField": "merchantSignedAt"
+          }
+        },
+        {
+          "id": "merchantRefusedSignature",
+          "label": "Zavezanec zavrača podpis",
+          "type": "checkbox",
+          "required": false,
+          "condition": ["=", "@entity.formValues.merchantSignature", null]
+        },
+        {
+          "id": "refusalReason",
+          "label": "Razlog zavrnitve podpisa",
+          "type": "textarea",
+          "required": true,
+          "condition": ["=", "@entity.formValues.merchantRefusedSignature", true],
+          "placeholder": "Navedite razlog..."
+        }
+      ]
+    },
+    {
+      "id": "S-4",
+      "title": "Zaključek in arhiviranje",
+      "description": "Complete and archive inspection",
+      "fields": [
+        {
+          "id": "completionChecklist",
+          "label": "Kontrolni seznam",
+          "type": "checklist",
+          "items": [
+            { "id": "check1", "label": "Vsi podatki so izpolnjeni", "autoCheck": true },
+            { "id": "check2", "label": "Ugotovitve so dokumentirane", "autoCheck": [">=", "@entity.globalVariables.HG_FINDING_COUNT", 0] },
+            { "id": "check3", "label": "Pripombe so obravnavane", "autoCheck": ["=", "@entity.globalVariables.HG_UNRESOLVED_OBJECTIONS", 0] },
+            { "id": "check4", "label": "Podpisi so zbrani", "autoCheck": ["or", ["!=", "@entity.formValues.inspectorSignature", null], ["=", "@entity.formValues.merchantRefusedSignature", true]] }
+          ]
+        },
+        {
+          "id": "finalStatus",
+          "label": "Končni status",
+          "type": "dropdown",
+          "required": true,
+          "options": [
+            { "value": "completed", "label": "Zaključen" },
+            { "value": "completed_with_findings", "label": "Zaključen z ugotovitvami" },
+            { "value": "completed_follow_up", "label": "Zaključen - potrebno spremljanje" }
+          ],
+          "entityField": "status"
+        }
+      ],
+      "hiddenCalculations": [
+        {
+          "variable": "HG-INSPECTION_COMPLETED",
+          "expression": true,
+          "scope": "global"
+        }
+      ]
+    }
+  ],
+  "validationRules": [
+    {
+      "condition": ["!=", "@entity.formValues.endDateTime", null],
+      "message": "Datum in čas zaključka je obvezen"
+    },
+    {
+      "condition": ["or",
+        ["!=", "@entity.formValues.inspectorSignature", null],
+        true
+      ],
+      "message": "Podpis inšpektorja je obvezen (ZIN 28. člen)"
+    },
+    {
+      "condition": ["or",
+        ["!=", "@entity.formValues.merchantSignature", null],
+        ["=", "@entity.formValues.merchantRefusedSignature", true]
+      ],
+      "message": "Podpis zavezanca je obvezen ali mora biti zabeležena zavrnitev"
+    }
+  ],
+  "lawReferences": [
+    {
+      "law": "ZIN",
+      "article": "28",
+      "description": "Zapisnik morata podpisati inšpektor in zavezanec"
+    }
+  ]
+};

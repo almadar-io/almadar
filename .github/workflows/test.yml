@@ -29,6 +29,8 @@ jobs:
         shell: bash
 
       - name: Run language tests
+        env:
+          ORBITAL_SHELLS_DIR: ${{ github.workspace }}/shells
         run: |
           chmod +x tests/run-tests.sh
           ./tests/run-tests.sh --shell ${{ matrix.shell }} --verbose

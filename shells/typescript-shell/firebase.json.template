@@ -1,0 +1,53 @@
+{
+  "apphosting": {
+    "backendId": "{{BACKEND_NAME}}",
+    "rootDir": ".",
+    "ignore": [
+      "node_modules",
+      ".git",
+      "firebase-debug.log",
+      "firebase-debug.*.log",
+      "packages/client",
+      ".env",
+      ".env.*",
+      "packages/server/.env"
+    ],
+    "alwaysDeployFromSource": true
+  },
+  "hosting": {
+    "site": "{{SITE_NAME}}",
+    "public": "packages/client/dist",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
+    "headers": [
+      {
+        "source": "**/*.@(js|css)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(jpg|jpeg|gif|png|svg|webp|ico)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      }
+    ]
+  },
+  "firestore": {
+    "database": "{{SITE_NAME}}",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  }
+}

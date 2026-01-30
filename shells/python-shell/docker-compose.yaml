@@ -1,0 +1,57 @@
+# ===========================================
+# Docker Compose - Development Environment
+# ===========================================
+# Runs Python server with Firebase Emulator for local development
+#
+# Usage:
+#   docker-compose up        # Start all services
+#   docker-compose up -d     # Start in background
+#   docker-compose logs -f   # Follow logs
+#   docker-compose down      # Stop all services
+
+version: '3.8'
+
+services:
+  # Python FastAPI Server
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8080"
+    environment:
+      - ENVIRONMENT=development
+      - PORT=8080
+      - FIRESTORE_EMULATOR_HOST=firebase:8080
+      - FIREBASE_PROJECT_ID=demo-project
+      - CORS_ORIGINS=http://localhost:3000,http://localhost:5173
+    depends_on:
+      - firebase
+    volumes:
+      # Mount source for hot reload (development only)
+      - ./src:/app/src:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  # Firebase Emulator
+  firebase:
+    image: andreysenov/firebase-tools:latest
+    ports:
+      - "4000:4000"   # Emulator UI
+      - "8080:8080"   # Firestore
+      - "9099:9099"   # Auth
+    command: firebase emulators:start --only firestore,auth --project demo-project
+    volumes:
+      - firebase-data:/home/node/.cache/firebase/emulators
+
+volumes:
+  firebase-data:
+
+# ===========================================
+# Production Compose (for reference)
+# ===========================================
+# For production, use Cloud Run instead of Docker Compose.
+# See: ./scripts/deploy.sh

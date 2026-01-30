@@ -1,0 +1,361 @@
+export default {
+  "tabId": "T-001",
+  "name": "UVOD",
+  "globalVariablesSet": [
+    "HG-PROSTOR_NADZORA",
+    "HG-POTROSNIKI"
+  ],
+  "globalVariablesRequired": [
+    "HG-PROSTOR_NADZORA",
+    "HG-POTROSNIKI"
+  ],
+  "localVariables": [
+    "H-NADZOR",
+    "H-FIRMA_PO_PD"
+  ],
+  "sections": [
+    {
+      "id": "S-1",
+      "title": "A. PODATKI O ZADEVI",
+      "fields": [
+        {
+          "id": "A1",
+          "label": "Številka zapisnika:",
+          "type": "text",
+          "required": false,
+          "repeatable": false
+        },
+        {
+          "id": "A2",
+          "label": "Datum pregleda:",
+          "type": "date",
+          "required": true,
+          "repeatable": false
+        },
+        {
+          "id": "A3",
+          "label": "Ura začetka pregleda:",
+          "type": "text",
+          "required": true,
+          "repeatable": false
+        },
+        {
+          "id": "A4",
+          "label": "Številka vodila:",
+          "type": "text",
+          "required": false,
+          "repeatable": true
+        },
+        {
+          "id": "A5",
+          "label": "Postopek vodi v aplikacijo prijavljeni tržni inšpektor.",
+          "type": "comment",
+          "required": false,
+          "repeatable": false
+        },
+        {
+          "id": "A6",
+          "label": "Nadzor se opravi tako, da inšpektor …",
+          "type": "dropdown",
+          "required": false,
+          "repeatable": false,
+          "options": [
+            {
+              "value": "TAKOJ NASTOPI KOT INŠPEKTOR",
+              "label": "TAKOJ NASTOPI KOT INŠPEKTOR",
+              "isDefault": true
+            },
+            {
+              "value": "NAJPREJ OPAZUJE POSLOVANJE ZAVEZANCA",
+              "label": "najprej opazuje poslovanje zavezanca",
+              "isDefault": false
+            },
+            {
+              "value": "NAJPREJ NASTOPI KOT POTROŠNIK",
+              "label": "najprej nastopi kot potrošnik",
+              "isDefault": false
+            }
+          ],
+          "defaultValue": "TAKOJ NASTOPI KOT INŠPEKTOR"
+        },
+        {
+          "id": "A7",
+          "label": "Pri pregledu sodelujejo še drugi tržni inšpektorji.",
+          "type": "radio",
+          "required": false,
+          "repeatable": false,
+          "options": [
+            {
+              "value": "DA",
+              "label": "da",
+              "isDefault": false
+            },
+            {
+              "value": "NE",
+              "label": "NE",
+              "isDefault": true
+            }
+          ],
+          "defaultValue": "NE"
+        },
+        {
+          "id": "A8",
+          "label": "Tržni inšpektor:",
+          "type": "text",
+          "required": false,
+          "repeatable": true,
+          "condition": [
+            "=",
+            "@entity.formValues.A7",
+            "DA«"
+          ]
+        },
+        {
+          "id": "A9",
+          "label": "Pregled se opravlja v …",
+          "type": "dropdown",
+          "required": false,
+          "repeatable": false,
+          "options": [
+            {
+              "value": "PROSTORIH ZAVEZANCA",
+              "label": "PROSTORIH ZAVEZANCA",
+              "isDefault": true
+            },
+            {
+              "value": "PROSTORIH TIRS",
+              "label": "prostorih TIRS",
+              "isDefault": false
+            },
+            {
+              "value": "PRIVATNIH PROSTORIH",
+              "label": "privatnih prostorih",
+              "isDefault": false
+            },
+            {
+              "value": "DRUGIH PROSTORIH",
+              "label": "drugih prostorih",
+              "isDefault": false
+            }
+          ],
+          "defaultValue": "PROSTORIH ZAVEZANCA"
+        },
+        {
+          "id": "A10",
+          "label": "Inšpektor je povabljen v privatne prostore.",
+          "type": "radio",
+          "required": false,
+          "repeatable": false,
+          "options": [
+            {
+              "value": "DA",
+              "label": "da",
+              "isDefault": false
+            },
+            {
+              "value": "NE",
+              "label": "NE",
+              "isDefault": true
+            }
+          ],
+          "defaultValue": "NE",
+          "condition": [
+            "=",
+            "@entity.formValues.A9",
+            "PRIVATNIH PROSTORIH«"
+          ]
+        },
+        {
+          "id": "A10",
+          "label": "= »NE«: Opomba: O zavrnitvi vstopa v privatne prostore z namenom opravljanja inšpekcijskega nadzora sestavi uradni zaznamek.",
+          "type": "comment",
+          "required": false,
+          "repeatable": false
+        },
+        {
+          "id": "A11",
+          "label": "V privatnih prostorih je sedež zavezanca:",
+          "type": "radio",
+          "required": false,
+          "repeatable": false,
+          "options": [
+            {
+              "value": "DA",
+              "label": "da",
+              "isDefault": false
+            },
+            {
+              "value": "NE",
+              "label": "ne",
+              "isDefault": false
+            }
+          ],
+          "condition": [
+            "=",
+            "@entity.formValues.A10",
+            "DA«"
+          ]
+        },
+        {
+          "id": "A12",
+          "label": "Ime in priimek osebe, ki je inšpektorja povabila v privatne prostore:",
+          "type": "text",
+          "required": true,
+          "repeatable": false,
+          "condition": [
+            "=",
+            "@entity.formValues.A10",
+            "DA«"
+          ]
+        },
+        {
+          "id": "A13",
+          "label": "Izjava osebe, ki je inšpektorja povabila v privatne prostore:",
+          "type": "textarea",
+          "required": true,
+          "repeatable": false,
+          "condition": [
+            "=",
+            "@entity.formValues.A10",
+            "DA«"
+          ]
+        },
+        {
+          "id": "A14",
+          "label": "Inšpekcijski pregled se opravlja na lokaciji …",
+          "type": "text",
+          "required": false,
+          "repeatable": false,
+          "contextMenu": [
+            "Opis dejanskega stanja"
+          ],
+          "condition": [
+            "or",
+            [
+              "=",
+              "@entity.formValues.A9",
+              "DRUGIH PROSTORIH«"
+            ],
+            [
+              "=",
+              "@entity.formValues.A10",
+              "DA«"
+            ]
+          ]
+        },
+        {
+          "id": "A15",
+          "label": "Z inšpektorjem sodelujejo tudi druge osebe.",
+          "type": "radio",
+          "required": false,
+          "repeatable": false,
+          "options": [
+            {
+              "value": "DA",
+              "label": "da",
+              "isDefault": false
+            },
+            {
+              "value": "NE",
+              "label": "NE",
+              "isDefault": true
+            }
+          ],
+          "defaultValue": "NE",
+          "condition": [
+            "or",
+            [
+              "!=",
+              "@entity.formValues.A8",
+              "PRIVATNIH PROSTORIH«"
+            ],
+            [
+              "and",
+              [
+                "=",
+                "@entity.formValues.A8",
+                "PRIVATNIH PROSTORIH«"
+              ],
+              [
+                "=",
+                "@entity.formValues.A9",
+                "DA«"
+              ]
+            ]
+          ]
+        }
+      ],
+      "subsections": [
+        {
+          "id": "S-1-1",
+          "title": "VA.15 = »DA«: Z inšpektorjem sodeluje oseba:",
+          "fields": [
+            {
+              "id": "A16",
+              "label": "Oseba sodeluje kot:",
+              "type": "dropdown",
+              "required": true,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "IZVEDENEC",
+                  "label": "izvedenec",
+                  "isDefault": false
+                },
+                {
+                  "value": "IZVEDENKA",
+                  "label": "izvedenka",
+                  "isDefault": false
+                },
+                {
+                  "value": "POLICIST",
+                  "label": "policist",
+                  "isDefault": false
+                },
+                {
+                  "value": "POLICISTKA",
+                  "label": "policistka",
+                  "isDefault": false
+                },
+                {
+                  "value": "INŠPEKTOR DRUGE INŠPEKCIJE",
+                  "label": "inšpektor druge inšpekcije",
+                  "isDefault": false
+                },
+                {
+                  "value": "INŠPEKTORICA DRUGE INŠPEKCIJE",
+                  "label": "inšpektorica druge inšpekcije",
+                  "isDefault": false
+                }
+              ]
+            },
+            {
+              "id": "A17",
+              "label": "Ime in priimek:",
+              "type": "text",
+              "required": true,
+              "repeatable": false
+            },
+            {
+              "id": "A18",
+              "label": "Naziv organizacije, ki ji pripada:",
+              "type": "text",
+              "required": true,
+              "repeatable": false
+            }
+          ]
+        },
+        {
+          "id": "S-1-1",
+          "title": "Konec",
+          "fields": []
+        }
+      ]
+    },
+    {
+      "id": "S-1",
+      "title": "Konec",
+      "fields": []
+    }
+  ]
+};

@@ -1,0 +1,58 @@
+/**
+ * Theme index - exports all theme CSS files
+ */
+
+/* Import all theme definitions */
+@import './wireframe.css';
+@import './minimalist.css';
+@import './almadar.css';
+
+/* Default theme if none specified */
+:root {
+    /* Default to wireframe theme values */
+    --shadow-main: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+    --shadow-sm: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+    --shadow-lg: 6px 6px 0px 0px rgba(0, 0, 0, 1);
+    --shadow-inner: inset 2px 2px 0px 0px rgba(0, 0, 0, 0.1);
+
+    --radius-none: 0px;
+    --radius-sm: 0px;
+    --radius-md: 0px;
+    --radius-lg: 0px;
+    --radius-xl: 0px;
+    --radius-full: 0px;
+
+    --border-width: 2px;
+    --border-width-thin: 1px;
+    --border-width-thick: 3px;
+
+    --color-primary: #000000;
+    --color-primary-hover: #333333;
+    --color-primary-foreground: #ffffff;
+
+    --color-secondary: #ffffff;
+    --color-secondary-hover: #f5f5f5;
+    --color-secondary-foreground: #000000;
+
+    --color-accent: #000000;
+    --color-accent-foreground: #ffffff;
+
+    --color-muted: #f5f5f5;
+    --color-muted-foreground: #737373;
+
+    --color-background: #ffffff;
+    --color-foreground: #000000;
+    --color-card: #ffffff;
+    --color-card-foreground: #000000;
+    --color-border: #000000;
+    --color-input: #000000;
+    --color-ring: #000000;
+
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+
+    --transition-fast: 100ms;
+    --transition-normal: 150ms;
+    --transition-slow: 300ms;
+}

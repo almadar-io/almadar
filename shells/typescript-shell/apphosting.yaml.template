@@ -1,0 +1,51 @@
+# Firebase App Hosting configuration
+# Documentation: https://firebase.google.com/docs/app-hosting/configure
+
+# Build configuration
+build:
+  command: npm run build
+
+# Run configuration
+run:
+  runtime: nodejs20
+  command: node packages/server/dist/index.js
+
+runConfig:
+  minInstances: 0
+  maxInstances: 10
+  concurrency: 80
+  cpu: 1
+  memoryMiB: 512
+
+env:
+  # Use development during build to install devDependencies (esbuild)
+  - variable: NODE_ENV
+    value: development
+    availability:
+      - BUILD
+
+  # Use production at runtime
+  - variable: NODE_ENV
+    value: production
+    availability:
+      - RUNTIME
+
+  # CORS configuration
+  - variable: CORS_ORIGIN
+    value: "{{CORS_ORIGINS}}"
+    availability:
+      - RUNTIME
+
+  # Firebase project ID for Admin SDK initialization
+  - variable: FIREBASE_PROJECT_ID
+    value: "{{FIREBASE_PROJECT_ID}}"
+    availability:
+      - RUNTIME
+
+{{#SECRETS}}
+  # Secrets from Cloud Secret Manager
+{{#EACH_SECRET}}
+  - variable: {{SECRET_NAME}}
+    secret: {{SECRET_NAME}}
+{{/EACH_SECRET}}
+{{/SECRETS}}
