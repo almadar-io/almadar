@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "kflow-builder-website",
+    "site": "almadar-builder-website",
     "public": "build",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [

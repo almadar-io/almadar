@@ -17,7 +17,7 @@ Before any release, these tests ensure that:
 | `02-state-machine.orb` | State machines with transitions |
 | `03-guards.orb` | Guard conditions on transitions |
 | `04-effects.orb` | Effect execution (set, increment, etc.) |
-| `05-cross-orbital.orb` | Cross-orbital communication (emit/listen) |
+| `05-cross-orbital.orb` | Cross-almadar communication (emit/listen) |
 | `06-ticks.orb` | Scheduled effects via ticks |
 | `07-relations.orb` | Entity relations (one-to-many, many-to-many) |
 | `08-patterns.orb` | UI patterns (render_ui effects) |
