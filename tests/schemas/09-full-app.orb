@@ -101,7 +101,7 @@
                 "event": "SAVE",
                 "to": "listing",
                 "effects": [
-                  ["persist", "upsert", "Task", "@entity"],
+                  ["persist", "update", "Task", "@entity"],
                   ["emit", "TASK_CREATED", { "taskId": "@entity.id", "projectId": "@entity.projectId" }],
                   ["notify", "success", "Task created"]
                 ]
@@ -117,7 +117,7 @@
                 "event": "SAVE",
                 "to": "listing",
                 "effects": [
-                  ["persist", "upsert", "Task", "@entity"]
+                  ["persist", "update", "Task", "@entity"]
                 ]
               },
               { "from": "editing", "event": "CANCEL", "to": "listing" },
