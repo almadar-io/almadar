@@ -39,7 +39,10 @@
               { "key": "CREATE", "name": "Create Product" },
               { "key": "SAVE", "name": "Save" },
               { "key": "CANCEL", "name": "Cancel" },
-              { "key": "BACK", "name": "Back to List" }
+              { "key": "BACK", "name": "Back to List" },
+              { "key": "DELETE", "name": "Delete Product", "payload": [
+                { "name": "id", "type": "string", "required": true }
+              ]}
             ],
             "transitions": [
               {
@@ -50,11 +53,13 @@
                   ["fetch", "Product"],
                   ["render-ui", "main", {
                     "type": "entity-table",
-                    "props": {
-                      "entity": "Product",
-                      "columns": ["name", "price", "stock", "category"],
-                      "actions": ["view", "edit", "delete"]
-                    }
+                    "entity": "Product",
+                    "columns": ["name", "price", "stock", "category"],
+                    "itemActions": [
+                      { "event": "VIEW", "label": "View" },
+                      { "event": "EDIT", "label": "Edit" },
+                      { "event": "DELETE", "label": "Delete" }
+                    ]
                   }]
                 ]
               },
@@ -66,10 +71,8 @@
                   ["fetch", "Product", "@payload.id"],
                   ["render-ui", "main", {
                     "type": "entity-detail",
-                    "props": {
-                      "entity": "Product",
-                      "fields": ["name", "description", "price", "stock", "category"]
-                    }
+                    "entity": "Product",
+                    "fields": ["name", "description", "price", "stock", "category"]
                   }]
                 ]
               },
@@ -80,16 +83,14 @@
                 "effects": [
                   ["render-ui", "main", {
                     "type": "form",
-                    "props": {
-                      "entity": "Product",
-                      "fields": [
-                        { "name": "name", "label": "Product Name", "required": true },
-                        { "name": "description", "label": "Description", "type": "textarea" },
-                        { "name": "price", "label": "Price", "type": "number", "required": true },
-                        { "name": "stock", "label": "Stock", "type": "number" },
-                        { "name": "category", "label": "Category" }
-                      ]
-                    }
+                    "entity": "Product",
+                    "fields": [
+                      { "name": "name", "label": "Product Name", "required": true },
+                      { "name": "description", "label": "Description", "type": "textarea" },
+                      { "name": "price", "label": "Price", "type": "number", "required": true },
+                      { "name": "stock", "label": "Stock", "type": "number" },
+                      { "name": "category", "label": "Category" }
+                    ]
                   }]
                 ]
               },
@@ -100,10 +101,8 @@
                 "effects": [
                   ["render-ui", "main", {
                     "type": "form",
-                    "props": {
-                      "entity": "Product",
-                      "mode": "edit"
-                    }
+                    "entity": "Product",
+                    "mode": "edit"
                   }]
                 ]
               },
@@ -145,6 +144,15 @@
                 "to": "listing",
                 "effects": [
                   ["navigate", "/products"]
+                ]
+              },
+              {
+                "from": "listing",
+                "event": "DELETE",
+                "to": "listing",
+                "effects": [
+                  ["persist", "delete", "Product", "@payload.id"],
+                  ["notify", "info", "Product deleted"]
                 ]
               }
             ]

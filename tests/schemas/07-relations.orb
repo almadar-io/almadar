@@ -22,23 +22,36 @@
           "category": "interaction",
           "stateMachine": {
             "states": [{ "name": "browsing", "isInitial": true }],
-            "events": [{ "key": "INIT", "name": "Initialize" }],
-            "transitions": [{
-              "from": "browsing",
-              "event": "INIT",
-              "to": "browsing",
-              "effects": [
-                ["fetch", "Author"],
-                ["render-ui", "main", {
-                  "type": "entity-table",
-                  "props": {
+            "events": [
+              { "key": "INIT", "name": "Initialize" },
+              { "key": "VIEW", "name": "View Author", "payload": [
+                { "name": "id", "type": "string", "required": true }
+              ]}
+            ],
+            "transitions": [
+              {
+                "from": "browsing",
+                "event": "INIT",
+                "to": "browsing",
+                "effects": [
+                  ["fetch", "Author"],
+                  ["render-ui", "main", {
+                    "type": "entity-table",
                     "entity": "Author",
                     "columns": ["name", "email"],
                     "itemActions": [{ "event": "VIEW", "label": "View" }]
-                  }
-                }]
-              ]
-            }]
+                  }]
+                ]
+              },
+              {
+                "from": "browsing",
+                "event": "VIEW",
+                "to": "browsing",
+                "effects": [
+                  ["navigate", "/authors/@payload.id"]
+                ]
+              }
+            ]
           }
         }
       ],
@@ -71,23 +84,36 @@
           "category": "interaction",
           "stateMachine": {
             "states": [{ "name": "browsing", "isInitial": true }],
-            "events": [{ "key": "INIT", "name": "Initialize" }],
-            "transitions": [{
-              "from": "browsing",
-              "event": "INIT",
-              "to": "browsing",
-              "effects": [
-                ["fetch", "Book"],
-                ["render-ui", "main", {
-                  "type": "entity-table",
-                  "props": {
+            "events": [
+              { "key": "INIT", "name": "Initialize" },
+              { "key": "VIEW", "name": "View Book", "payload": [
+                { "name": "id", "type": "string", "required": true }
+              ]}
+            ],
+            "transitions": [
+              {
+                "from": "browsing",
+                "event": "INIT",
+                "to": "browsing",
+                "effects": [
+                  ["fetch", "Book"],
+                  ["render-ui", "main", {
+                    "type": "entity-table",
                     "entity": "Book",
                     "columns": ["title", "isbn", "publishedYear"],
                     "itemActions": [{ "event": "VIEW", "label": "View" }]
-                  }
-                }]
-              ]
-            }]
+                  }]
+                ]
+              },
+              {
+                "from": "browsing",
+                "event": "VIEW",
+                "to": "browsing",
+                "effects": [
+                  ["navigate", "/books/@payload.id"]
+                ]
+              }
+            ]
           }
         }
       ],
@@ -110,11 +136,51 @@
           { "name": "name", "type": "string", "required": true }
         ]
       },
-      "traits": [],
+      "traits": [
+        {
+          "name": "CategoryBrowser",
+          "linkedEntity": "Category",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [{ "name": "browsing", "isInitial": true }],
+            "events": [
+              { "key": "INIT", "name": "Initialize" },
+              { "key": "VIEW", "name": "View Category", "payload": [
+                { "name": "id", "type": "string", "required": true }
+              ]}
+            ],
+            "transitions": [
+              {
+                "from": "browsing",
+                "event": "INIT",
+                "to": "browsing",
+                "effects": [
+                  ["fetch", "Category"],
+                  ["render-ui", "main", {
+                    "type": "entity-table",
+                    "entity": "Category",
+                    "columns": ["name"],
+                    "itemActions": [{ "event": "VIEW", "label": "View" }]
+                  }]
+                ]
+              },
+              {
+                "from": "browsing",
+                "event": "VIEW",
+                "to": "browsing",
+                "effects": [
+                  ["navigate", "/categories/@payload.id"]
+                ]
+              }
+            ]
+          }
+        }
+      ],
       "pages": [
         {
           "name": "CategoryListPage",
-          "path": "/categories"
+          "path": "/categories",
+          "traits": [{ "ref": "CategoryBrowser", "linkedEntity": "Category" }]
         }
       ]
     }
