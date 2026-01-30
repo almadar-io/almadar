@@ -8,7 +8,6 @@
       "entity": {
         "name": "Session",
         "persistence": "runtime",
-        "runtime": true,
         "fields": [
           { "name": "id", "type": "string", "required": true },
           { "name": "lastActivity", "type": "timestamp" },
@@ -38,22 +37,17 @@
                 "event": "ACTIVITY",
                 "to": "active",
                 "effects": [
-                  ["set", "lastActivity", "@now"],
-                  ["set", "idleSeconds", 0]
+                  ["set", "@entity.lastActivity", "@now"],
+                  ["set", "@entity.idleSeconds", 0]
                 ]
               },
               {
                 "from": "active",
                 "event": "TICK",
                 "to": "idle",
-                "guards": [
-                  {
-                    "name": "isIdle",
-                    "condition": [">", "@entity.idleSeconds", 300]
-                  }
-                ],
+                "guard": [">", "@entity.idleSeconds", 300],
                 "effects": [
-                  ["increment", "idleSeconds", 1]
+                  ["increment", "@entity.idleSeconds", 1]
                 ]
               },
               {
@@ -61,7 +55,7 @@
                 "event": "TICK",
                 "to": "active",
                 "effects": [
-                  ["increment", "idleSeconds", 1]
+                  ["increment", "@entity.idleSeconds", 1]
                 ]
               },
               {
@@ -69,8 +63,8 @@
                 "event": "ACTIVITY",
                 "to": "active",
                 "effects": [
-                  ["set", "lastActivity", "@now"],
-                  ["set", "idleSeconds", 0]
+                  ["set", "@entity.lastActivity", "@now"],
+                  ["set", "@entity.idleSeconds", 0]
                 ]
               },
               {
@@ -78,7 +72,7 @@
                 "event": "EXPIRE",
                 "to": "expired",
                 "effects": [
-                  ["set", "isExpired", true]
+                  ["set", "@entity.isExpired", true]
                 ]
               }
             ]
