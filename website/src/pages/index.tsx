@@ -637,13 +637,13 @@ function HomepagePhilosophy() {
             </span>
             <Heading as="h2">
               <Translate id="homepage.philosophy.title">
-                Entity + Trait = Orbital
+                Entity + Trait = Almadar
               </Translate>
             </Heading>
             <p>
               <Translate id="homepage.philosophy.description">
                 Just as electrons orbit nuclei following quantum rules, your
-                application components follow state machine rules. Each Orbital
+                application components follow state machine rules. Each Almadar
                 is an entity with attached traits that define its behavior, UI,
                 and integrations.
               </Translate>
@@ -728,7 +728,7 @@ function HomepageCTA() {
           </Heading>
           <p>
             <Translate id="homepage.cta.description">
-              Install the CLI and create your first Orbital schema in seconds.
+              Install the CLI and create your first Almadar schema in seconds.
             </Translate>
           </p>
           <div className={styles.ctaCode}>

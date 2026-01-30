@@ -1,0 +1,41 @@
+/**
+ * Almadar Brand Design Tokens
+ * 
+ * These CSS custom properties define the visual identity of the Almadar website.
+ * All colors, typography, and spacing should reference these variables.
+ */
+
+:root {
+    /* Almadar Brand Colors */
+    --teal: #14b8a6;
+    --cyan: #06b6d4;
+    --brand-gradient: linear-gradient(135deg, var(--teal) 0%, var(--cyan) 100%);
+
+    /* Background Colors */
+    --bg-dark: #0f172a;
+    --bg-darker: #020617;
+    
+    /* Text Colors */
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    
+    /* Border */
+    --border: #1e293b;
+    
+    /* Spacing */
+    --container-max-width: 1200px;
+    --section-padding: 6rem;
+    
+    /* Typography */
+    --font-family: 'Plus Jakarta Sans', sans-serif;
+    
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+}

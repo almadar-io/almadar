@@ -6,7 +6,7 @@
 
 ## Brand Overview
 
-**Almadar** (المدار) means "The Orbit" in Arabic. Our visual identity blends the elegance of Arabic/Islamic geometric art with the precision of scientific orbital diagrams, creating a unique aesthetic that honors both ancient wisdom and modern technology.
+**Almadar** (المدار) means "The Orbit" in Arabic. Our visual identity blends the elegance of Arabic/Islamic geometric art with the precision of scientific almadar diagrams, creating a unique aesthetic that honors both ancient wisdom and modern technology.
 
 ### Brand Essence
 
@@ -21,7 +21,7 @@
 
 ### Primary Logo
 
-The Almadar logo represents an orbital shell - a quantum mechanical probability cloud that defines where electrons can exist around an atom. This symbolizes our core philosophy: software behavior follows natural laws, like physics.
+The Almadar logo represents an almadar shell - a quantum mechanical probability cloud that defines where electrons can exist around an atom. This symbolizes our core philosophy: software behavior follows natural laws, like physics.
 
 **Files:**
 - `logos/almadar-logo.png` - Full color, primary use

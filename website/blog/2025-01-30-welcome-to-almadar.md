@@ -19,9 +19,9 @@ Almadar (Arabic for "The Orbit") brings a new paradigm to software development:
 - **State Machines**: Model behavior as predictable, testable state machines
 - **Full-Stack Generation**: Compile to React frontend, Express/FastAPI backend, and database models
 
-## The Orbital Model
+## The Almadar Model
 
-Just as electrons orbit nuclei following quantum rules, your application components follow state machine rules. Each **Orbital** is an entity with attached **traits** that define its behavior, UI, and integrations.
+Just as electrons orbit nuclei following quantum rules, your application components follow state machine rules. Each **Almadar** is an entity with attached **traits** that define its behavior, UI, and integrations.
 
 ```json
 {
