@@ -1,0 +1,50 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+.env
+.env.*
+!.env.example
+.venv
+venv
+ENV
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# Testing
+.pytest_cache
+.coverage
+htmlcov
+.tox
+
+# Build artifacts
+*.egg-info
+dist
+build
+
+# Documentation
+docs/_build
+*.md
+!README.md
+
+# Scripts (not needed in container)
+scripts/
+
+# Local development
+.mypy_cache
+.ruff_cache
+
+# Misc
+*.log
+.DS_Store
+Thumbs.db

@@ -1,0 +1,148 @@
+{
+  "tabId": "T-008",
+  "name": "Pripombe zavezanca",
+  "description": "Merchant objections to inspection findings",
+  "phase": "record",
+  "globalVariablesSet": [
+    "HG-OBJECTION_COUNT",
+    "HG-UNRESOLVED_OBJECTIONS"
+  ],
+  "globalVariablesRequired": [],
+  "localVariables": [],
+  "entityMapping": {
+    "entity": "DisputedSection",
+    "mode": "create_multiple",
+    "parentField": "inspectionId"
+  },
+  "sections": [
+    {
+      "id": "S-1",
+      "title": "Pregled zapisnika",
+      "description": "Inspector presents compiled record to merchant for review",
+      "fields": [
+        {
+          "id": "recordReviewInfo",
+          "label": "",
+          "type": "info-display",
+          "displayTemplate": {
+            "variant": "info",
+            "icon": "file-text",
+            "title": "Pregled zapisnika",
+            "content": "Zavezanec ima pravico pregledati zapisnik in podati pripombe na posamezne dele."
+          }
+        },
+        {
+          "id": "merchantAcknowledged",
+          "label": "Zavezanec je pregledal zapisnik",
+          "type": "checkbox",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "S-2",
+      "title": "Pripombe",
+      "description": "Merchant objections to specific sections",
+      "condition": ["=", "@entity.formValues.merchantAcknowledged", true],
+      "repeatable": true,
+      "minItems": 0,
+      "addButtonLabel": "Dodaj pripombo",
+      "fields": [
+        {
+          "id": "sectionReference",
+          "label": "Del zapisnika",
+          "type": "dropdown",
+          "required": true,
+          "options": [
+            { "value": "S-1", "label": "1. Splošni podatki" },
+            { "value": "S-2", "label": "2. Podatki o zavezancu" },
+            { "value": "S-3", "label": "3. Prisotne osebe" },
+            { "value": "S-4", "label": "4. Predmet pregleda" },
+            { "value": "S-5", "label": "5. Ugotovitve pri pregledu" },
+            { "value": "S-6", "label": "6. Ugotovitve" },
+            { "value": "S-7", "label": "7. Odločbe in ukrepi" }
+          ],
+          "entityField": "sectionReference"
+        },
+        {
+          "id": "merchantObjection",
+          "label": "Pripomba zavezanca",
+          "type": "textarea",
+          "required": true,
+          "minLength": 10,
+          "maxLength": 2000,
+          "placeholder": "Zavezanec navaja...",
+          "entityField": "merchantObjection"
+        },
+        {
+          "id": "inspectorResponse",
+          "label": "Odgovor inšpektorja",
+          "type": "textarea",
+          "required": false,
+          "maxLength": 2000,
+          "placeholder": "Inšpektor pojasnjuje...",
+          "entityField": "inspectorResponse"
+        },
+        {
+          "id": "status",
+          "label": "Status",
+          "type": "dropdown",
+          "required": true,
+          "defaultValue": "pending",
+          "options": [
+            { "value": "pending", "label": "V obravnavi" },
+            { "value": "under_review", "label": "V pregledu" },
+            { "value": "resolved", "label": "Rešeno" },
+            { "value": "dismissed", "label": "Zavrnjeno" }
+          ],
+          "entityField": "status"
+        }
+      ],
+      "hiddenCalculations": [
+        {
+          "variable": "HG-OBJECTION_COUNT",
+          "expression": ["array/length", "@entity.objections"],
+          "scope": "global"
+        },
+        {
+          "variable": "HG-UNRESOLVED_OBJECTIONS",
+          "expression": ["array/length", ["array/filter", "@entity.objections", ["lambda", ["o"], ["!=", "@o.status", "resolved"]]]],
+          "scope": "global"
+        }
+      ]
+    },
+    {
+      "id": "S-3",
+      "title": "Brez pripomb",
+      "description": "No objections confirmation",
+      "condition": ["and",
+        ["=", "@entity.formValues.merchantAcknowledged", true],
+        ["=", "@entity.globalVariables.HG_OBJECTION_COUNT", 0]
+      ],
+      "fields": [
+        {
+          "id": "noObjectionsConfirm",
+          "label": "Zavezanec nima pripomb na zapisnik",
+          "type": "checkbox",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "validationRules": [
+    {
+      "condition": ["or",
+        ["=", "@entity.globalVariables.HG_UNRESOLVED_OBJECTIONS", 0],
+        ["=", "@entity.formValues.proceedWithUnresolved", true]
+      ],
+      "message": "Vse pripombe morajo biti rešene pred zaključkom"
+    }
+  ],
+  "lawReferences": [
+    {
+      "law": "ZIN",
+      "article": "25",
+      "description": "Zavezanec ima pravico do pripomb na zapisnik"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+# Build stage
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Copy workspace files
+COPY package*.json ./
+COPY packages/server/package*.json ./packages/server/
+COPY packages/shared/package*.json ./packages/shared/
+
+# Install dependencies
+RUN npm ci --workspace=@{{APP_NAME}}/server --workspace=@{{APP_NAME}}/shared
+
+# Copy source
+COPY packages/shared ./packages/shared
+COPY packages/server ./packages/server
+COPY tsconfig.base.json ./
+
+# Generate Prisma client
+RUN npx prisma generate --schema=packages/server/prisma/schema.prisma
+
+# Build
+RUN npm run build -w @{{APP_NAME}}/shared
+RUN npm run build -w @{{APP_NAME}}/server
+
+# Production stage
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install production dependencies only
+COPY --from=builder /app/packages/server/package*.json ./
+RUN npm ci --omit=dev
+
+# Copy built files
+COPY --from=builder /app/packages/server/dist ./dist
+COPY --from=builder /app/packages/server/prisma ./prisma
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+
+# Set environment
+ENV NODE_ENV=production
+
+# Expose port
+EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+  CMD wget --quiet --tries=1 --spider http://localhost:3000/health || exit 1
+
+# Run migrations and start
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/index.js"]

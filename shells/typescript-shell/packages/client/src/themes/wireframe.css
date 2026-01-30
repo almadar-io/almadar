@@ -1,0 +1,126 @@
+/**
+ * Wireframe Theme
+ * 
+ * Sharp corners, thick borders, offset shadows.
+ * Classic blueprint/wireframe aesthetic with bold, tactile interactions.
+ */
+
+[data-design-theme="wireframe"] {
+  /* Shadows - Hard offset shadows (brutalist) */
+  --shadow-main: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-sm: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-lg: 6px 6px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-inner: inset 2px 2px 0px 0px rgba(0, 0, 0, 0.1);
+  --shadow-none: none;
+  --shadow-hover: 6px 6px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-active: 1px 1px 0px 0px rgba(0, 0, 0, 1);
+
+  /* Border radius - Sharp corners (brutalist) */
+  --radius-none: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-full: 9999px;
+
+  /* Border width - Thick, bold */
+  --border-width: 2px;
+  --border-width-thin: 1px;
+  --border-width-thick: 3px;
+
+  /* Colors - High contrast black/white */
+  --color-primary: #000000;
+  --color-primary-hover: #333333;
+  --color-primary-foreground: #ffffff;
+
+  --color-secondary: #ffffff;
+  --color-secondary-hover: #f0f0f0;
+  --color-secondary-foreground: #000000;
+
+  --color-accent: #000000;
+  --color-accent-foreground: #ffffff;
+
+  --color-muted: #f5f5f5;
+  --color-muted-foreground: #737373;
+
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+  --color-card: #ffffff;
+  --color-card-foreground: #000000;
+  --color-border: #000000;
+  --color-input: #000000;
+  --color-ring: #000000;
+
+  /* Gradient - None for wireframe (solid colors) */
+  --gradient-primary: none;
+  --gradient-card: none;
+  --gradient-hover: none;
+
+  /* Typography - Bold, monospace-inspired */
+  --font-family: 'Inter', 'SF Mono', 'Monaco', system-ui, sans-serif;
+  --font-weight-normal: 500;
+  --font-weight-medium: 600;
+  --font-weight-bold: 800;
+  --letter-spacing: 0;
+  --line-height: 1.5;
+  --text-transform: none;
+
+  /* Icon styling - Thick strokes */
+  --icon-stroke-width: 2.5;
+  --icon-color: currentColor;
+
+  /* Transitions - Snappy, mechanical */
+  --transition-fast: 50ms;
+  --transition-normal: 100ms;
+  --transition-slow: 200ms;
+  --transition-timing: linear;
+
+  /* Hover/Active transforms */
+  --hover-scale: 1;
+  --hover-translate-y: -2px;
+  --hover-translate-x: 2px;
+  --active-scale: 1;
+  --active-translate-y: 2px;
+
+  /* Focus ring */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: #000000;
+
+  /* Card specific */
+  --card-hover-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 1);
+  --card-hover-transform: translate(-2px, -2px);
+
+  /* Button specific */
+  --button-active-transform: translate(2px, 2px);
+
+  /* Decorative */
+  --divider-style: solid;
+  --divider-pattern: none;
+}
+
+/* Dark mode for wireframe */
+.dark[data-design-theme="wireframe"],
+[data-design-theme="wireframe"].dark {
+  --color-primary: #ffffff;
+  --color-primary-hover: #e5e5e5;
+  --color-primary-foreground: #000000;
+
+  --color-secondary: #1a1a1a;
+  --color-secondary-hover: #262626;
+  --color-secondary-foreground: #ffffff;
+
+  --color-background: #0a0a0a;
+  --color-foreground: #ffffff;
+  --color-card: #1a1a1a;
+  --color-card-foreground: #ffffff;
+  --color-border: #ffffff;
+  --color-muted: #262626;
+  --color-muted-foreground: #a3a3a3;
+  --focus-ring-color: #ffffff;
+
+  --shadow-main: 4px 4px 0px 0px rgba(255, 255, 255, 0.8);
+  --shadow-sm: 2px 2px 0px 0px rgba(255, 255, 255, 0.8);
+  --shadow-hover: 6px 6px 0px 0px rgba(255, 255, 255, 0.8);
+  --card-hover-shadow: 6px 6px 0px 0px rgba(255, 255, 255, 0.8);
+}

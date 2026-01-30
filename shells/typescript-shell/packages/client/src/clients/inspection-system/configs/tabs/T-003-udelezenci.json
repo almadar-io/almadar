@@ -1,0 +1,78 @@
+{
+  "tabId": "T-003",
+  "name": "Prisotne osebe",
+  "description": "Participants present during inspection",
+  "phase": "introduction",
+  "globalVariablesSet": [
+    "HG-PARTICIPANT_COUNT"
+  ],
+  "globalVariablesRequired": [],
+  "localVariables": [],
+  "entityMapping": {
+    "entity": "Participant",
+    "mode": "create_multiple",
+    "parentField": "inspectionId"
+  },
+  "sections": [
+    {
+      "id": "S-1",
+      "title": "Predstavniki zavezanca",
+      "description": "Company representatives present during inspection",
+      "repeatable": true,
+      "minItems": 1,
+      "addButtonLabel": "Dodaj udeleženca",
+      "fields": [
+        {
+          "id": "name",
+          "label": "Ime",
+          "type": "text",
+          "required": true,
+          "entityField": "name"
+        },
+        {
+          "id": "surname",
+          "label": "Priimek",
+          "type": "text",
+          "required": true,
+          "entityField": "surname"
+        },
+        {
+          "id": "positionInCompany",
+          "label": "Položaj v podjetju",
+          "type": "text",
+          "required": true,
+          "placeholder": "npr. direktor, vodja trgovine",
+          "entityField": "positionInCompany"
+        },
+        {
+          "id": "contactInfo",
+          "label": "Kontaktni podatki",
+          "type": "text",
+          "required": false,
+          "placeholder": "Telefon ali e-pošta",
+          "entityField": "contactInfo"
+        }
+      ],
+      "hiddenCalculations": [
+        {
+          "variable": "HG-PARTICIPANT_COUNT",
+          "expression": ["array/length", "@entity.participants"],
+          "scope": "global"
+        }
+      ]
+    }
+  ],
+  "validationRules": [
+    {
+      "condition": [">=", "@entity.globalVariables.HG_PARTICIPANT_COUNT", 1],
+      "message": "Vsaj ena prisotna oseba je obvezna (ZIN 22. člen)"
+    }
+  ],
+  "lawReferences": [
+    {
+      "law": "ZIN",
+      "article": "22",
+      "description": "Pri pregledu mora biti prisoten vsaj en predstavnik zavezanca"
+    }
+  ]
+}
