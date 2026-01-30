@@ -59,7 +59,15 @@
           }
         }
       ],
-      "pages": []
+      "pages": [
+        {
+          "name": "AccountListPage",
+          "path": "/accounts",
+          "traits": [
+            { "ref": "AccountActions", "linkedEntity": "Account" }
+          ]
+        }
+      ]
     }
   ]
 }

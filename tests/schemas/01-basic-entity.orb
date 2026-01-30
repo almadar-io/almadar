@@ -23,7 +23,12 @@
         ]
       },
       "traits": [],
-      "pages": []
+      "pages": [
+        {
+          "name": "ItemListPage",
+          "path": "/items"
+        }
+      ]
     }
   ]
 }
