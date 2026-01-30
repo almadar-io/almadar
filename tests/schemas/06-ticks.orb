@@ -81,7 +81,9 @@
             {
               "name": "idleCheck",
               "interval": 1000,
-              "event": "TICK"
+              "effects": [
+                ["emit", "TICK", {}]
+              ]
             }
           ]
         }

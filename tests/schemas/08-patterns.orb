@@ -120,7 +120,7 @@
                 "event": "SAVE",
                 "to": "viewing",
                 "effects": [
-                  ["persist", "upsert", "Product", "@entity"],
+                  ["persist", "update", "Product", "@entity"],
                   ["notify", "success", "Product saved successfully"]
                 ]
               },
@@ -134,7 +134,7 @@
                 "event": "SAVE",
                 "to": "listing",
                 "effects": [
-                  ["persist", "upsert", "Product", "@entity"],
+                  ["persist", "update", "Product", "@entity"],
                   ["notify", "success", "Product created successfully"],
                   ["navigate", "/products"]
                 ]
