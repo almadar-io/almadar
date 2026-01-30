@@ -1,0 +1,138 @@
+name: Language Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  language-tests:
+    name: Language Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        shell: [typescript, python]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download almadar CLI
+        uses: actions/download-artifact@v4
+        with:
+          name: almadar-${{ runner.os }}-x64
+          path: ./bin
+        continue-on-error: true
+
+      - name: Get latest CLI release (if no artifact)
+        if: failure()
+        run: |
+          # Download from latest release
+          if [[ "$RUNNER_OS" == "Linux" ]]; then
+            curl -fsSL -o almadar.tar.gz https://github.com/almadar-lang/almadar/releases/latest/download/almadar-linux-x64.tar.gz
+            tar -xzf almadar.tar.gz -C ./bin
+          elif [[ "$RUNNER_OS" == "macOS" ]]; then
+            curl -fsSL -o almadar.tar.gz https://github.com/almadar-lang/almadar/releases/latest/download/almadar-darwin-x64.tar.gz
+            tar -xzf almadar.tar.gz -C ./bin
+          elif [[ "$RUNNER_OS" == "Windows" ]]; then
+            curl -fsSL -o almadar.zip https://github.com/almadar-lang/almadar/releases/latest/download/almadar-windows-x64.zip
+            unzip almadar.zip -d ./bin
+          fi
+        shell: bash
+
+      - name: Add CLI to PATH
+        run: |
+          echo "${{ github.workspace }}/bin" >> $GITHUB_PATH
+          chmod +x ${{ github.workspace }}/bin/almadar* || true
+        shell: bash
+
+      - name: Verify almadar CLI
+        run: almadar --version || echo "CLI not available, tests will be skipped"
+        shell: bash
+
+      - name: Run language tests (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          chmod +x tests/run-tests.sh
+          ./tests/run-tests.sh --shell ${{ matrix.shell }} --verbose
+        shell: bash
+
+      - name: Run language tests (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          # Windows-compatible test runner
+          $schemas = Get-ChildItem -Path tests/schemas -Filter "*.orb"
+          $failed = 0
+          $passed = 0
+
+          foreach ($schema in $schemas) {
+            Write-Host "Testing $($schema.Name)..."
+
+            # Validate
+            $result = & almadar validate $schema.FullName 2>&1
+            if ($LASTEXITCODE -ne 0) {
+              Write-Host "FAILED (validation)" -ForegroundColor Red
+              $failed++
+              continue
+            }
+
+            # Compile
+            $tempDir = New-TemporaryFile | ForEach-Object { Remove-Item $_; New-Item -ItemType Directory -Path $_ }
+            $result = & almadar compile $schema.FullName --shell ${{ matrix.shell }} --output $tempDir 2>&1
+            if ($LASTEXITCODE -ne 0) {
+              Write-Host "FAILED (compilation)" -ForegroundColor Red
+              Remove-Item -Recurse -Force $tempDir
+              $failed++
+              continue
+            }
+
+            Remove-Item -Recurse -Force $tempDir
+            Write-Host "PASSED" -ForegroundColor Green
+            $passed++
+          }
+
+          Write-Host ""
+          Write-Host "Results: $passed passed, $failed failed"
+
+          if ($failed -gt 0) {
+            exit 1
+          }
+        shell: pwsh
+
+  validate-schemas:
+    name: Validate Test Schemas
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check JSON validity
+        run: |
+          echo "Checking test schema JSON validity..."
+          for file in tests/schemas/*.orb; do
+            echo "  $file"
+            python3 -c "import json; json.load(open('$file'))" || exit 1
+          done
+          echo "All schemas are valid JSON!"
+
+  schema-count:
+    name: Schema Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Count test schemas
+        run: |
+          count=$(ls tests/schemas/*.orb 2>/dev/null | wc -l)
+          echo "Total test schemas: $count"
+
+          # List all schemas
+          echo ""
+          echo "Test schemas:"
+          for file in tests/schemas/*.orb; do
+            name=$(basename "$file")
+            desc=$(python3 -c "import json; print(json.load(open('$file')).get('description', 'No description'))")
+            echo "  - $name: $desc"
+          done

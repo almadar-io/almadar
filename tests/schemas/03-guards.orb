@@ -1,0 +1,84 @@
+{
+  "name": "guards-test",
+  "version": "1.0.0",
+  "description": "Test: Guard conditions on transitions",
+  "orbitals": [
+    {
+      "name": "AccountManager",
+      "entity": {
+        "name": "Account",
+        "persistence": "persistent",
+        "collection": "accounts",
+        "fields": [
+          { "name": "id", "type": "string", "required": true },
+          { "name": "balance", "type": "number", "default": 0 },
+          { "name": "isVerified", "type": "boolean", "default": false }
+        ]
+      },
+      "traits": [
+        { "ref": "AccountActions", "linkedEntity": "Account" }
+      ],
+      "pages": []
+    }
+  ],
+  "traits": [
+    {
+      "name": "AccountActions",
+      "category": "interaction",
+      "stateMachine": {
+        "states": [
+          { "name": "active", "initial": true },
+          { "name": "withdrawn" },
+          { "name": "frozen" }
+        ],
+        "events": [
+          { "name": "WITHDRAW", "label": "Withdraw Funds", "payload": [
+            { "name": "amount", "type": "number", "required": true }
+          ]},
+          { "name": "FREEZE", "label": "Freeze Account" },
+          { "name": "UNFREEZE", "label": "Unfreeze Account" }
+        ],
+        "transitions": [
+          {
+            "from": "active",
+            "event": "WITHDRAW",
+            "to": "active",
+            "guards": [
+              {
+                "name": "hasSufficientBalance",
+                "condition": [">=", "@entity.balance", "@payload.amount"]
+              },
+              {
+                "name": "isVerified",
+                "condition": ["=", "@entity.isVerified", true]
+              }
+            ],
+            "effects": [
+              ["set", "balance", ["-", "@entity.balance", "@payload.amount"]]
+            ]
+          },
+          {
+            "from": "active",
+            "event": "FREEZE",
+            "to": "frozen"
+          },
+          {
+            "from": "frozen",
+            "event": "UNFREEZE",
+            "to": "active"
+          }
+        ],
+        "guards": [
+          {
+            "name": "hasSufficientBalance",
+            "condition": [">=", "@entity.balance", "@payload.amount"]
+          },
+          {
+            "name": "isVerified",
+            "condition": ["=", "@entity.isVerified", true]
+          }
+        ]
+      }
+    }
+  ]
+}

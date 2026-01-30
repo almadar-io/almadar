@@ -1,0 +1,231 @@
+{
+  "name": "full-app-test",
+  "version": "1.0.0",
+  "description": "Test: Complete application with multiple orbitals",
+  "orbitals": [
+    {
+      "name": "TaskManager",
+      "entity": {
+        "name": "Task",
+        "persistence": "persistent",
+        "collection": "tasks",
+        "fields": [
+          { "name": "id", "type": "string", "required": true },
+          { "name": "title", "type": "string", "required": true },
+          { "name": "description", "type": "string" },
+          { "name": "priority", "type": "enum", "values": ["low", "medium", "high"], "default": "medium" },
+          { "name": "dueDate", "type": "date" },
+          { "name": "assigneeId", "type": "string" },
+          { "name": "projectId", "type": "string" }
+        ]
+      },
+      "traits": [
+        { "ref": "TaskLifecycle", "linkedEntity": "Task" },
+        { "ref": "TaskCRUD", "linkedEntity": "Task" }
+      ],
+      "pages": [
+        {
+          "name": "TaskListPage",
+          "path": "/tasks",
+          "traits": [
+            { "ref": "TaskCRUD", "linkedEntity": "Task" }
+          ]
+        }
+      ],
+      "emits": ["TASK_COMPLETED", "TASK_CREATED"]
+    },
+    {
+      "name": "ProjectManager",
+      "entity": {
+        "name": "Project",
+        "persistence": "persistent",
+        "collection": "projects",
+        "fields": [
+          { "name": "id", "type": "string", "required": true },
+          { "name": "name", "type": "string", "required": true },
+          { "name": "description", "type": "string" },
+          { "name": "taskCount", "type": "number", "default": 0 },
+          { "name": "completedCount", "type": "number", "default": 0 }
+        ]
+      },
+      "traits": [
+        { "ref": "ProjectStats", "linkedEntity": "Project" }
+      ],
+      "pages": [
+        {
+          "name": "ProjectListPage",
+          "path": "/projects",
+          "traits": []
+        }
+      ],
+      "listens": [
+        { "event": "TASK_COMPLETED", "from": "TaskManager" },
+        { "event": "TASK_CREATED", "from": "TaskManager" }
+      ]
+    },
+    {
+      "name": "UserManager",
+      "entity": {
+        "name": "User",
+        "persistence": "persistent",
+        "collection": "users",
+        "fields": [
+          { "name": "id", "type": "string", "required": true },
+          { "name": "name", "type": "string", "required": true },
+          { "name": "email", "type": "string", "required": true },
+          { "name": "role", "type": "enum", "values": ["admin", "member", "guest"], "default": "member" }
+        ]
+      },
+      "traits": [],
+      "pages": []
+    }
+  ],
+  "traits": [
+    {
+      "name": "TaskLifecycle",
+      "category": "interaction",
+      "stateMachine": {
+        "states": [
+          { "name": "todo", "initial": true },
+          { "name": "inProgress" },
+          { "name": "review" },
+          { "name": "done" }
+        ],
+        "events": [
+          { "name": "START", "label": "Start Task" },
+          { "name": "SUBMIT_FOR_REVIEW", "label": "Submit for Review" },
+          { "name": "APPROVE", "label": "Approve" },
+          { "name": "REJECT", "label": "Request Changes" },
+          { "name": "COMPLETE", "label": "Complete" }
+        ],
+        "transitions": [
+          { "from": "todo", "event": "START", "to": "inProgress" },
+          { "from": "inProgress", "event": "SUBMIT_FOR_REVIEW", "to": "review" },
+          { "from": "review", "event": "APPROVE", "to": "done", "effects": [
+            ["emit", "TASK_COMPLETED", { "taskId": "@entity.id", "projectId": "@entity.projectId" }]
+          ]},
+          { "from": "review", "event": "REJECT", "to": "inProgress" },
+          { "from": "inProgress", "event": "COMPLETE", "to": "done", "effects": [
+            ["emit", "TASK_COMPLETED", { "taskId": "@entity.id", "projectId": "@entity.projectId" }]
+          ]}
+        ]
+      }
+    },
+    {
+      "name": "TaskCRUD",
+      "category": "interaction",
+      "stateMachine": {
+        "states": [
+          { "name": "listing", "initial": true },
+          { "name": "creating" },
+          { "name": "editing" }
+        ],
+        "events": [
+          { "name": "MOUNT", "label": "Mount" },
+          { "name": "CREATE", "label": "Create Task" },
+          { "name": "EDIT", "label": "Edit Task" },
+          { "name": "SAVE", "label": "Save" },
+          { "name": "CANCEL", "label": "Cancel" },
+          { "name": "DELETE", "label": "Delete Task" }
+        ],
+        "transitions": [
+          {
+            "from": "listing",
+            "event": "MOUNT",
+            "to": "listing",
+            "effects": [
+              ["fetch", "tasks", { "collection": "tasks" }],
+              ["render-ui", "main", {
+                "type": "entity-table",
+                "props": {
+                  "entity": "Task",
+                  "columns": ["title", "priority", "dueDate"]
+                }
+              }]
+            ]
+          },
+          {
+            "from": "listing",
+            "event": "CREATE",
+            "to": "creating",
+            "effects": [
+              ["render-ui", "main", {
+                "type": "form",
+                "props": { "entity": "Task" }
+              }]
+            ]
+          },
+          {
+            "from": "creating",
+            "event": "SAVE",
+            "to": "listing",
+            "effects": [
+              ["persist", "task", { "collection": "tasks" }],
+              ["emit", "TASK_CREATED", { "taskId": "@entity.id", "projectId": "@entity.projectId" }],
+              ["notify", "success", "Task created"]
+            ]
+          },
+          { "from": "creating", "event": "CANCEL", "to": "listing" },
+          {
+            "from": "listing",
+            "event": "EDIT",
+            "to": "editing"
+          },
+          {
+            "from": "editing",
+            "event": "SAVE",
+            "to": "listing",
+            "effects": [
+              ["persist", "task", { "collection": "tasks" }]
+            ]
+          },
+          { "from": "editing", "event": "CANCEL", "to": "listing" },
+          {
+            "from": "listing",
+            "event": "DELETE",
+            "to": "listing",
+            "effects": [
+              ["delete", "task", { "collection": "tasks" }],
+              ["notify", "info", "Task deleted"]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "ProjectStats",
+      "category": "interaction",
+      "stateMachine": {
+        "states": [
+          { "name": "idle", "initial": true }
+        ],
+        "events": [
+          { "name": "TASK_COMPLETED", "label": "Task Completed" },
+          { "name": "TASK_CREATED", "label": "Task Created" }
+        ],
+        "transitions": [
+          {
+            "from": "idle",
+            "event": "TASK_CREATED",
+            "to": "idle",
+            "effects": [
+              ["increment", "taskCount", 1]
+            ]
+          },
+          {
+            "from": "idle",
+            "event": "TASK_COMPLETED",
+            "to": "idle",
+            "effects": [
+              ["increment", "completedCount", 1]
+            ]
+          }
+        ]
+      },
+      "listens": [
+        { "event": "TASK_COMPLETED", "scope": "external" },
+        { "event": "TASK_CREATED", "scope": "external" }
+      ]
+    }
+  ]
+}

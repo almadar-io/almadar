@@ -1,0 +1,94 @@
+{
+  "name": "relations-test",
+  "version": "1.0.0",
+  "description": "Test: Entity relations (one-to-many, many-to-one)",
+  "orbitals": [
+    {
+      "name": "AuthorManager",
+      "entity": {
+        "name": "Author",
+        "persistence": "persistent",
+        "collection": "authors",
+        "fields": [
+          { "name": "id", "type": "string", "required": true },
+          { "name": "name", "type": "string", "required": true },
+          { "name": "email", "type": "string" },
+          {
+            "name": "books",
+            "type": "relation",
+            "relation": {
+              "type": "one-to-many",
+              "target": "Book",
+              "foreignKey": "authorId"
+            }
+          }
+        ]
+      },
+      "traits": [],
+      "pages": []
+    },
+    {
+      "name": "BookManager",
+      "entity": {
+        "name": "Book",
+        "persistence": "persistent",
+        "collection": "books",
+        "fields": [
+          { "name": "id", "type": "string", "required": true },
+          { "name": "title", "type": "string", "required": true },
+          { "name": "isbn", "type": "string" },
+          { "name": "publishedYear", "type": "number" },
+          {
+            "name": "authorId",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "author",
+            "type": "relation",
+            "relation": {
+              "type": "many-to-one",
+              "target": "Author",
+              "foreignKey": "authorId"
+            }
+          },
+          {
+            "name": "categories",
+            "type": "relation",
+            "relation": {
+              "type": "many-to-many",
+              "target": "Category",
+              "through": "book_categories"
+            }
+          }
+        ]
+      },
+      "traits": [],
+      "pages": []
+    },
+    {
+      "name": "CategoryManager",
+      "entity": {
+        "name": "Category",
+        "persistence": "persistent",
+        "collection": "categories",
+        "fields": [
+          { "name": "id", "type": "string", "required": true },
+          { "name": "name", "type": "string", "required": true },
+          {
+            "name": "books",
+            "type": "relation",
+            "relation": {
+              "type": "many-to-many",
+              "target": "Book",
+              "through": "book_categories"
+            }
+          }
+        ]
+      },
+      "traits": [],
+      "pages": []
+    }
+  ],
+  "traits": []
+}

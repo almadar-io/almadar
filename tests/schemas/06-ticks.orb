@@ -1,0 +1,100 @@
+{
+  "name": "ticks-test",
+  "version": "1.0.0",
+  "description": "Test: Scheduled effects via ticks",
+  "orbitals": [
+    {
+      "name": "SessionManager",
+      "entity": {
+        "name": "Session",
+        "persistence": "runtime",
+        "runtime": true,
+        "fields": [
+          { "name": "id", "type": "string", "required": true },
+          { "name": "lastActivity", "type": "timestamp" },
+          { "name": "isExpired", "type": "boolean", "default": false },
+          { "name": "idleSeconds", "type": "number", "default": 0 }
+        ]
+      },
+      "traits": [
+        { "ref": "SessionTimeout", "linkedEntity": "Session" }
+      ],
+      "pages": []
+    }
+  ],
+  "traits": [
+    {
+      "name": "SessionTimeout",
+      "category": "interaction",
+      "stateMachine": {
+        "states": [
+          { "name": "active", "initial": true },
+          { "name": "idle" },
+          { "name": "expired" }
+        ],
+        "events": [
+          { "name": "ACTIVITY", "label": "User Activity" },
+          { "name": "TICK", "label": "Tick" },
+          { "name": "EXPIRE", "label": "Expire Session" }
+        ],
+        "transitions": [
+          {
+            "from": "active",
+            "event": "ACTIVITY",
+            "to": "active",
+            "effects": [
+              ["set", "lastActivity", "@now"],
+              ["set", "idleSeconds", 0]
+            ]
+          },
+          {
+            "from": "active",
+            "event": "TICK",
+            "to": "idle",
+            "guards": [
+              {
+                "name": "isIdle",
+                "condition": [">", "@entity.idleSeconds", 300]
+              }
+            ],
+            "effects": [
+              ["increment", "idleSeconds", 1]
+            ]
+          },
+          {
+            "from": "active",
+            "event": "TICK",
+            "to": "active",
+            "effects": [
+              ["increment", "idleSeconds", 1]
+            ]
+          },
+          {
+            "from": "idle",
+            "event": "ACTIVITY",
+            "to": "active",
+            "effects": [
+              ["set", "lastActivity", "@now"],
+              ["set", "idleSeconds", 0]
+            ]
+          },
+          {
+            "from": "idle",
+            "event": "EXPIRE",
+            "to": "expired",
+            "effects": [
+              ["set", "isExpired", true]
+            ]
+          }
+        ]
+      },
+      "ticks": [
+        {
+          "name": "idleCheck",
+          "interval": 1000,
+          "event": "TICK"
+        }
+      ]
+    }
+  ]
+}
