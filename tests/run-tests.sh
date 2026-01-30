@@ -59,6 +59,16 @@ fi
 # Get almadar version
 echo "Almadar CLI version: $(almadar --version 2>/dev/null || echo 'unknown')"
 echo ""
+
+# Debug: Show environment
+echo "Debug: ORBITAL_SHELLS_DIR=$ORBITAL_SHELLS_DIR"
+if [ -d "$ORBITAL_SHELLS_DIR" ]; then
+  echo "Debug: Shells directory exists"
+  ls -la "$ORBITAL_SHELLS_DIR"
+else
+  echo "Debug: Shells directory NOT FOUND"
+fi
+echo ""
 echo "--------------------------------------"
 
 # Run tests
