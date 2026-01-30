@@ -25,7 +25,10 @@ jobs:
           echo "${{ github.workspace }}/cli/dist/linux-x64" >> $GITHUB_PATH
 
       - name: Verify almadar CLI
-        run: almadar --version
+        run: |
+          almadar --version
+          echo "Binary hash: $(sha256sum cli/dist/linux-x64/almadar)"
+          echo "Binary size: $(ls -la cli/dist/linux-x64/almadar)"
         shell: bash
 
       - name: Run language tests
