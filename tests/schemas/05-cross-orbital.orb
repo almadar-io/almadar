@@ -41,12 +41,31 @@
               { "name": "hasItems" }
             ],
             "events": [
+              { "key": "INIT", "name": "Initialize" },
               { "key": "ADD_ITEM", "name": "Add Item", "payload": [
                 { "name": "price", "type": "number", "required": true }
               ]},
               { "key": "CLEAR", "name": "Clear Cart" }
             ],
             "transitions": [
+              {
+                "from": "empty",
+                "event": "INIT",
+                "to": "empty",
+                "effects": [
+                  ["render-ui", "main", {
+                    "type": "stats",
+                    "props": {
+                      "title": "Shopping Cart",
+                      "value": "@entity.itemCount",
+                      "subtitle": "Total: $@entity.total",
+                      "actions": [
+                        { "event": "ADD_ITEM", "label": "Add Item" }
+                      ]
+                    }
+                  }]
+                ]
+              },
               {
                 "from": "empty",
                 "event": "ADD_ITEM",
@@ -114,10 +133,26 @@
               { "name": "notified" }
             ],
             "events": [
+              { "key": "INIT", "name": "Initialize" },
               { "key": "ITEM_ADDED", "name": "Item Added" },
               { "key": "CART_CLEARED", "name": "Cart Cleared" }
             ],
             "transitions": [
+              {
+                "from": "idle",
+                "event": "INIT",
+                "to": "idle",
+                "effects": [
+                  ["render-ui", "main", {
+                    "type": "stats",
+                    "props": {
+                      "title": "Notifications",
+                      "value": "@entity.count",
+                      "subtitle": "@entity.message"
+                    }
+                  }]
+                ]
+              },
               {
                 "from": "idle",
                 "event": "ITEM_ADDED",
