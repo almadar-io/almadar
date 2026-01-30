@@ -8,7 +8,6 @@
       "entity": {
         "name": "Cart",
         "persistence": "runtime",
-        "runtime": true,
         "fields": [
           { "name": "id", "type": "string", "required": true },
           { "name": "itemCount", "type": "number", "default": 0 },
@@ -37,8 +36,8 @@
                 "event": "ADD_ITEM",
                 "to": "hasItems",
                 "effects": [
-                  ["increment", "itemCount", 1],
-                  ["set", "total", ["+", "@entity.total", "@payload.price"]],
+                  ["increment", "@entity.itemCount", 1],
+                  ["set", "@entity.total", ["+", "@entity.total", "@payload.price"]],
                   ["emit", "ITEM_ADDED", { "itemCount": "@entity.itemCount", "total": "@entity.total" }]
                 ]
               },
@@ -47,8 +46,8 @@
                 "event": "ADD_ITEM",
                 "to": "hasItems",
                 "effects": [
-                  ["increment", "itemCount", 1],
-                  ["set", "total", ["+", "@entity.total", "@payload.price"]],
+                  ["increment", "@entity.itemCount", 1],
+                  ["set", "@entity.total", ["+", "@entity.total", "@payload.price"]],
                   ["emit", "ITEM_ADDED", { "itemCount": "@entity.itemCount", "total": "@entity.total" }]
                 ]
               },
@@ -57,8 +56,8 @@
                 "event": "CLEAR",
                 "to": "empty",
                 "effects": [
-                  ["set", "itemCount", 0],
-                  ["set", "total", 0],
+                  ["set", "@entity.itemCount", 0],
+                  ["set", "@entity.total", 0],
                   ["emit", "CART_CLEARED", {}]
                 ]
               }
@@ -74,7 +73,6 @@
       "entity": {
         "name": "Notification",
         "persistence": "runtime",
-        "runtime": true,
         "fields": [
           { "name": "id", "type": "string", "required": true },
           { "name": "message", "type": "string" },
@@ -101,8 +99,8 @@
                 "event": "ITEM_ADDED",
                 "to": "notified",
                 "effects": [
-                  ["increment", "count", 1],
-                  ["set", "message", "Item added to cart"]
+                  ["increment", "@entity.count", 1],
+                  ["set", "@entity.message", "Item added to cart"]
                 ]
               },
               {
@@ -110,7 +108,7 @@
                 "event": "ITEM_ADDED",
                 "to": "notified",
                 "effects": [
-                  ["increment", "count", 1]
+                  ["increment", "@entity.count", 1]
                 ]
               },
               {
@@ -118,8 +116,8 @@
                 "event": "CART_CLEARED",
                 "to": "idle",
                 "effects": [
-                  ["set", "message", "Cart cleared"],
-                  ["set", "count", 0]
+                  ["set", "@entity.message", "Cart cleared"],
+                  ["set", "@entity.count", 0]
                 ]
               }
             ]

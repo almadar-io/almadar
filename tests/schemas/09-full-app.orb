@@ -62,7 +62,7 @@
               { "name": "editing" }
             ],
             "events": [
-              { "key": "MOUNT", "name": "Mount" },
+              { "key": "INIT", "name": "Initialize" },
               { "key": "CREATE", "name": "Create Task" },
               { "key": "EDIT", "name": "Edit Task" },
               { "key": "SAVE", "name": "Save" },
@@ -72,10 +72,10 @@
             "transitions": [
               {
                 "from": "listing",
-                "event": "MOUNT",
+                "event": "INIT",
                 "to": "listing",
                 "effects": [
-                  ["fetch", "tasks", { "collection": "tasks" }],
+                  ["fetch", "Task"],
                   ["render-ui", "main", {
                     "type": "entity-table",
                     "props": {
@@ -101,7 +101,7 @@
                 "event": "SAVE",
                 "to": "listing",
                 "effects": [
-                  ["persist", "task", { "collection": "tasks" }],
+                  ["persist", "upsert", "Task", "@entity"],
                   ["emit", "TASK_CREATED", { "taskId": "@entity.id", "projectId": "@entity.projectId" }],
                   ["notify", "success", "Task created"]
                 ]
@@ -117,7 +117,7 @@
                 "event": "SAVE",
                 "to": "listing",
                 "effects": [
-                  ["persist", "task", { "collection": "tasks" }]
+                  ["persist", "upsert", "Task", "@entity"]
                 ]
               },
               { "from": "editing", "event": "CANCEL", "to": "listing" },
@@ -126,7 +126,7 @@
                 "event": "DELETE",
                 "to": "listing",
                 "effects": [
-                  ["delete", "task", { "collection": "tasks" }],
+                  ["persist", "delete", "Task", "@entity.id"],
                   ["notify", "info", "Task deleted"]
                 ]
               }
@@ -178,7 +178,7 @@
                 "event": "TASK_CREATED",
                 "to": "idle",
                 "effects": [
-                  ["increment", "taskCount", 1]
+                  ["increment", "@entity.taskCount", 1]
                 ]
               },
               {
@@ -186,7 +186,7 @@
                 "event": "TASK_COMPLETED",
                 "to": "idle",
                 "effects": [
-                  ["increment", "completedCount", 1]
+                  ["increment", "@entity.completedCount", 1]
                 ]
               }
             ]
@@ -201,7 +201,9 @@
         {
           "name": "ProjectListPage",
           "path": "/projects",
-          "traits": []
+          "traits": [
+            { "ref": "ProjectStats", "linkedEntity": "Project" }
+          ]
         }
       ],
       "listens": [

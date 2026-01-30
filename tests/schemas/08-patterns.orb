@@ -31,7 +31,7 @@
               { "name": "creating" }
             ],
             "events": [
-              { "key": "MOUNT", "name": "Page Mount" },
+              { "key": "INIT", "name": "Initialize" },
               { "key": "VIEW", "name": "View Product", "payload": [
                 { "name": "id", "type": "string", "required": true }
               ]},
@@ -44,10 +44,10 @@
             "transitions": [
               {
                 "from": "listing",
-                "event": "MOUNT",
+                "event": "INIT",
                 "to": "listing",
                 "effects": [
-                  ["fetch", "products", { "collection": "products" }],
+                  ["fetch", "Product"],
                   ["render-ui", "main", {
                     "type": "entity-table",
                     "props": {
@@ -63,7 +63,7 @@
                 "event": "VIEW",
                 "to": "viewing",
                 "effects": [
-                  ["fetch", "product", { "collection": "products", "id": "@payload.id" }],
+                  ["fetch", "Product", "@payload.id"],
                   ["render-ui", "main", {
                     "type": "entity-detail",
                     "props": {
@@ -120,7 +120,7 @@
                 "event": "SAVE",
                 "to": "viewing",
                 "effects": [
-                  ["persist", "product", { "collection": "products" }],
+                  ["persist", "upsert", "Product", "@entity"],
                   ["notify", "success", "Product saved successfully"]
                 ]
               },
@@ -134,7 +134,7 @@
                 "event": "SAVE",
                 "to": "listing",
                 "effects": [
-                  ["persist", "product", { "collection": "products" }],
+                  ["persist", "upsert", "Product", "@entity"],
                   ["notify", "success", "Product created successfully"],
                   ["navigate", "/products"]
                 ]

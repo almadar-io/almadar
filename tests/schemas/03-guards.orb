@@ -37,15 +37,9 @@
                 "from": "active",
                 "event": "WITHDRAW",
                 "to": "active",
-                "guards": [
-                  {
-                    "name": "hasSufficientBalance",
-                    "condition": [">=", "@entity.balance", "@payload.amount"]
-                  },
-                  {
-                    "name": "isVerified",
-                    "condition": ["=", "@entity.isVerified", true]
-                  }
+                "guard": ["and",
+                  [">=", "@entity.balance", "@payload.amount"],
+                  ["=", "@entity.isVerified", true]
                 ],
                 "effects": [
                   ["set", "@entity.balance", ["-", "@entity.balance", "@payload.amount"]]
@@ -60,16 +54,6 @@
                 "from": "frozen",
                 "event": "UNFREEZE",
                 "to": "active"
-              }
-            ],
-            "guards": [
-              {
-                "name": "hasSufficientBalance",
-                "condition": [">=", "@entity.balance", "@payload.amount"]
-              },
-              {
-                "name": "isVerified",
-                "condition": ["=", "@entity.isVerified", true]
               }
             ]
           }
