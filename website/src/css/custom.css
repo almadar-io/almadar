@@ -139,8 +139,20 @@ body {
 .navbar {
     box-shadow: none;
     border-bottom: 1px solid var(--almadar-midnight-light);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Apply backdrop-filter only on desktop - it breaks mobile sidebar when applied to navbar */
+/* See: https://github.com/facebook/docusaurus/issues/6996 */
+@media (min-width: 997px) {
+    .navbar {
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+}
+
+/* Fix: Ensure navbar stays above announcement bar on mobile */
+.navbar--fixed-top {
+    z-index: calc(var(--ifm-z-index-fixed) + 1);
 }
 
 [data-theme="dark"] .navbar {
@@ -164,6 +176,72 @@ body {
 
 [data-theme="dark"] .navbar__link--active {
     color: var(--almadar-sand-gold);
+}
+
+/* === Mobile Sidebar Theming === */
+/* Theme colors for mobile navigation sidebar */
+
+[data-theme="dark"] .navbar-sidebar {
+    background-color: var(--almadar-midnight);
+}
+
+[data-theme="dark"] .navbar-sidebar__brand {
+    background-color: var(--almadar-midnight);
+}
+
+[data-theme="dark"] .navbar-sidebar__items {
+    background-color: var(--almadar-midnight);
+}
+
+[data-theme="dark"] .navbar-sidebar__item {
+    background-color: var(--almadar-midnight);
+}
+
+/* Ensure mobile menu toggle is visible */
+.navbar__toggle {
+    color: var(--ifm-navbar-link-color);
+}
+
+[data-theme="dark"] .navbar__toggle {
+    color: var(--almadar-parchment);
+}
+
+/* Mobile sidebar backdrop */
+.navbar-sidebar__backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Back button in secondary menu */
+[data-theme="dark"] .navbar-sidebar__back {
+    background: rgba(20, 184, 166, 0.1);
+    color: var(--almadar-parchment);
+}
+
+/* Close button */
+[data-theme="dark"] .navbar-sidebar__close {
+    color: var(--almadar-parchment);
+}
+
+/* Mobile menu items styling */
+.navbar-sidebar .menu__link {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+[data-theme="dark"] .navbar-sidebar .menu__link {
+    color: var(--almadar-parchment);
+}
+
+[data-theme="dark"] .navbar-sidebar .menu__link:hover {
+    background: rgba(20, 184, 166, 0.1);
+    color: var(--almadar-teal-light);
+}
+
+[data-theme="dark"] .navbar-sidebar .menu__link--active {
+    background: rgba(20, 184, 166, 0.15);
+    color: var(--almadar-teal-light);
 }
 
 /* === Hero Section === */
