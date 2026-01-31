@@ -25,4 +25,4 @@ npm install @almadar/std
 
 ## License
 
-MIT
+BSL 1.1 - See [LICENSE](./LICENSE)

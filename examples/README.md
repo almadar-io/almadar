@@ -38,4 +38,4 @@ almadar dev
 
 ## License
 
-MIT
+BSL 1.1 - See [LICENSE](./LICENSE)

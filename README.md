@@ -46,9 +46,12 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
 ## License
 
-- Standard library, patterns, examples: MIT
+BSL 1.1 (Business Source License) - See [LICENSE](./LICENSE)
+
+- Source code: BSL 1.1 (converts to Apache 2.0 on 2030-02-01)
 - Documentation: CC BY 4.0
-- CLI binaries: Proprietary (free to use)
+- Non-production use: Free
+- Production use: Requires license (contact licensing@almadar.io)
 
 ---
 
