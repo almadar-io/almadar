@@ -96,10 +96,11 @@ const config: Config = {
           label: "GitHub",
           position: "right",
         },
-        {
-          type: "localeDropdown",
-          position: "right",
-        },
+        // Locale dropdown disabled until Arabic content is ready
+        // {
+        //   type: "localeDropdown",
+        //   position: "right",
+        // },
       ],
     },
     footer: {
