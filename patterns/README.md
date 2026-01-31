@@ -38,4 +38,4 @@ Patterns are rendered via `render-ui` effects in traits:
 
 ## License
 
-MIT
+BSL 1.1 - See [LICENSE](./LICENSE)

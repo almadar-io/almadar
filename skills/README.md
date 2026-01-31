@@ -53,4 +53,4 @@ Each skill contains a `SKILL.md` file with:
 
 ## License
 
-MIT
+BSL 1.1 - See [LICENSE](./LICENSE)

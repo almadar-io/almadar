@@ -1,7 +1,7 @@
 /**
  * Generate Standard Library Documentation Data
  *
- * Uses the TypeScript docs generator from @almadar-builder/shared to generate
+ * Uses the TypeScript docs generator from @kflow-builder/shared to generate
  * JSON data files that Handlebars templates can consume to render docs.
  *
  * Usage: node scripts/generate-std-docs.js

@@ -51,4 +51,4 @@ See [CLI Reference](https://almadar.io/docs/en/reference/cli) for full documenta
 
 ## License
 
-Proprietary - Free to use. See https://almadar.io/legal/cli-license
+BSL 1.1 - See [LICENSE](../LICENSE) for details.
