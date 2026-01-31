@@ -7,7 +7,7 @@
         "generate:docs": "node scripts/generate-std-docs.js",
         "build": "npm run generate:docs && node scripts/build.js",
         "dev": "node scripts/build.js --watch",
-        "serve": "npx http-server dist -c-1 -p 8081",
+        "serve": "npx http-server build -c-1 -p 8081",
         "start": "npm run build && npm run serve"
     },
     "dependencies": {

@@ -26,7 +26,7 @@ const DIRS = {
     partials: path.join(ROOT, 'src', 'partials'),
     styles: path.join(ROOT, 'src', 'styles'),
     static: path.join(ROOT, 'static'),
-    dist: path.join(ROOT, 'dist'),
+    dist: path.join(ROOT, 'build'),
 };
 
 // Ensure directories exist
