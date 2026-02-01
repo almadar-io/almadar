@@ -12,13 +12,13 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import Handlebars from "handlebars";
-import * as esbuild from "esbuild";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT = path.join(__dirname, "..");
 
 // Directories
+// Note: We build to static/ so Docusaurus includes these files in its build
 const DIRS = {
   src: path.join(ROOT, "src"),
   pages: path.join(ROOT, "src", "pages"),
@@ -26,7 +26,7 @@ const DIRS = {
   partials: path.join(ROOT, "src", "partials"),
   styles: path.join(ROOT, "src", "styles"),
   static: path.join(ROOT, "static"),
-  dist: path.join(ROOT, "build"),
+  dist: path.join(ROOT, "static"), // Build to static/ so Docusaurus serves them
 };
 
 // Ensure directories exist
@@ -322,8 +322,8 @@ async function buildLegacyPages() {
     console.log("  ✓ Copied data files");
   }
 
-  // Bundle visualizer
-  await bundleVisualizer();
+  // Copy visualizer
+  copyVisualizer();
 
   console.log("\n✅ Legacy build complete!");
   console.log(`   Added to: ${DIRS.dist}`);
@@ -345,7 +345,7 @@ async function buildFull() {
   buildStyles();
   buildPages();
   copyStatic();
-  await bundleVisualizer();
+  copyVisualizer();
 
   console.log("\n✅ Build complete!");
   console.log(`   Output: ${DIRS.dist}`);
