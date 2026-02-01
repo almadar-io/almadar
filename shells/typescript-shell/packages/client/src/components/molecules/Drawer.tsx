@@ -15,30 +15,30 @@
  * @packageDocumentation
  */
 
-import React, { useEffect, useRef } from 'react';
-import { X } from 'lucide-react';
-import { Icon } from '../atoms/Icon';
-import { Box } from '../atoms/Box';
-import { Typography } from '../atoms/Typography';
-import { Overlay } from '../atoms/Overlay';
-import { cn } from '../../lib/cn';
+import React, { useEffect, useRef } from "react";
+import { X } from "lucide-react";
+import { Icon } from "../atoms/Icon";
+import { Box } from "../atoms/Box";
+import { Typography } from "../atoms/Typography";
+import { Overlay } from "../atoms/Overlay";
+import { cn } from "../../lib/cn";
 
 // ============================================================================
 // Types
 // ============================================================================
 
-export type DrawerPosition = 'left' | 'right';
-export type DrawerSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
+export type DrawerPosition = "left" | "right";
+export type DrawerSize = "sm" | "md" | "lg" | "xl" | "full";
 
 export interface DrawerProps {
-  /** Whether the drawer is open */
-  isOpen: boolean;
-  /** Callback when drawer should close */
-  onClose: () => void;
+  /** Whether the drawer is open (defaults to true when rendered by slot wrapper) */
+  isOpen?: boolean;
+  /** Callback when drawer should close (injected by slot wrapper) */
+  onClose?: () => void;
   /** Drawer title */
   title?: string;
-  /** Drawer content */
-  children: React.ReactNode;
+  /** Drawer content (can be empty if using slot content) */
+  children?: React.ReactNode;
   /** Footer content */
   footer?: React.ReactNode;
   /** Position (left or right) */
@@ -60,11 +60,11 @@ export interface DrawerProps {
 // ============================================================================
 
 const sizeWidths: Record<DrawerSize, string> = {
-  sm: 'w-80',      // 320px
-  md: 'w-96',      // 384px
-  lg: 'w-[480px]', // 480px
-  xl: 'w-[640px]', // 640px
-  full: 'w-screen',
+  sm: "w-80", // 320px
+  md: "w-96", // 384px
+  lg: "w-[480px]", // 480px
+  xl: "w-[640px]", // 640px
+  full: "w-screen",
 };
 
 // ============================================================================
@@ -72,13 +72,13 @@ const sizeWidths: Record<DrawerSize, string> = {
 // ============================================================================
 
 export const Drawer: React.FC<DrawerProps> = ({
-  isOpen,
-  onClose,
+  isOpen = true,
+  onClose = () => {},
   title,
-  children,
+  children = null,
   footer,
-  position = 'right',
-  width = 'md',
+  position = "right",
+  width = "md",
   showCloseButton = true,
   closeOnOverlayClick = true,
   closeOnEscape = true,
@@ -92,7 +92,7 @@ export const Drawer: React.FC<DrawerProps> = ({
     if (isOpen) {
       previousActiveElement.current = document.activeElement as HTMLElement;
       const focusableElements = drawerRef.current?.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
       );
       const firstElement = focusableElements?.[0] as HTMLElement;
       firstElement?.focus();
@@ -106,24 +106,24 @@ export const Drawer: React.FC<DrawerProps> = ({
     if (!isOpen || !closeOnEscape) return;
 
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         onClose();
       }
     };
 
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
   }, [isOpen, closeOnEscape, onClose]);
 
   // Prevent body scroll when open
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isOpen]);
 
@@ -137,20 +137,16 @@ export const Drawer: React.FC<DrawerProps> = ({
   };
 
   // Resolve width
-  const widthClass = width in sizeWidths
-    ? sizeWidths[width as DrawerSize]
-    : '';
+  const widthClass = width in sizeWidths ? sizeWidths[width as DrawerSize] : "";
   const widthStyle = width in sizeWidths ? undefined : { width };
 
   // Position classes
-  const positionClasses = position === 'right'
-    ? 'right-0 border-l'
-    : 'left-0 border-r';
+  const positionClasses =
+    position === "right" ? "right-0 border-l" : "left-0 border-r";
 
   // Animation classes
-  const animationClasses = position === 'right'
-    ? 'animate-slide-in-right'
-    : 'animate-slide-in-left';
+  const animationClasses =
+    position === "right" ? "animate-slide-in-right" : "animate-slide-in-left";
 
   return (
     <>
@@ -168,24 +164,24 @@ export const Drawer: React.FC<DrawerProps> = ({
         border
         shadow="xl"
         className={cn(
-          'fixed top-0 bottom-0 z-50',
-          'flex flex-col max-h-screen',
+          "fixed top-0 bottom-0 z-50",
+          "flex flex-col max-h-screen",
           positionClasses,
           widthClass,
           animationClasses,
-          className
+          className,
         )}
         style={widthStyle}
         role="dialog"
         aria-modal="true"
-        {...(title && { 'aria-labelledby': 'drawer-title' })}
+        {...(title && { "aria-labelledby": "drawer-title" })}
       >
         {/* Header */}
         {(title || showCloseButton) && (
           <div
             className={cn(
-              'px-6 py-4 flex items-center justify-between shrink-0',
-              'border-b-[length:var(--border-width)] border-[var(--color-border)]'
+              "px-6 py-4 flex items-center justify-between shrink-0",
+              "border-b-[length:var(--border-width)] border-[var(--color-border)]",
             )}
           >
             {title && (
@@ -198,9 +194,9 @@ export const Drawer: React.FC<DrawerProps> = ({
                 type="button"
                 onClick={onClose}
                 className={cn(
-                  'p-1 transition-colors rounded-[var(--radius-sm)]',
-                  'hover:bg-[var(--color-muted)]',
-                  !title && 'ml-auto'
+                  "p-1 transition-colors rounded-[var(--radius-sm)]",
+                  "hover:bg-[var(--color-muted)]",
+                  !title && "ml-auto",
                 )}
                 aria-label="Close drawer"
               >
@@ -211,16 +207,14 @@ export const Drawer: React.FC<DrawerProps> = ({
         )}
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-6">
-          {children}
-        </div>
+        <div className="flex-1 overflow-y-auto p-6">{children}</div>
 
         {/* Footer */}
         {footer && (
           <div
             className={cn(
-              'px-6 py-4 shrink-0 bg-[var(--color-muted)]',
-              'border-t-[length:var(--border-width)] border-[var(--color-border)]'
+              "px-6 py-4 shrink-0 bg-[var(--color-muted)]",
+              "border-t-[length:var(--border-width)] border-[var(--color-border)]",
             )}
           >
             {footer}
@@ -257,4 +251,4 @@ export const Drawer: React.FC<DrawerProps> = ({
   );
 };
 
-Drawer.displayName = 'Drawer';
+Drawer.displayName = "Drawer";

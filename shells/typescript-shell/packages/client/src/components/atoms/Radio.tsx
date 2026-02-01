@@ -1,13 +1,16 @@
 /**
  * Radio Atom Component
- * 
+ *
  * A radio button component with label support and accessibility.
  */
 
-import React from 'react';
-import { cn } from '../../lib/cn';
+import React from "react";
+import { cn } from "../../lib/cn";
 
-export interface RadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
+export interface RadioProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "type" | "size"
+> {
   /**
    * Label text displayed next to the radio button
    */
@@ -27,7 +30,7 @@ export interface RadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
    * Size of the radio button
    * @default 'md'
    */
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
 }
 
 export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
@@ -36,28 +39,28 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
       label,
       helperText,
       error,
-      size = 'md',
+      size = "md",
       className,
       id,
       checked,
       disabled,
       ...props
     },
-    ref
+    ref,
   ) => {
     const radioId = id || `radio-${Math.random().toString(36).substr(2, 9)}`;
     const hasError = !!error;
 
     const sizeClasses = {
-      sm: 'w-4 h-4',
-      md: 'w-5 h-5',
-      lg: 'w-6 h-6',
+      sm: "w-4 h-4",
+      md: "w-5 h-5",
+      lg: "w-6 h-6",
     };
 
     const dotSizeClasses = {
-      sm: 'w-2 h-2',
-      md: 'w-2.5 h-2.5',
-      lg: 'w-3 h-3',
+      sm: "w-2 h-2",
+      md: "w-2.5 h-2.5",
+      lg: "w-3 h-3",
     };
 
     return (
@@ -70,10 +73,7 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
               id={radioId}
               checked={checked}
               disabled={disabled}
-              className={cn(
-                'sr-only peer',
-                className
-              )}
+              className={cn("sr-only peer", className)}
               aria-invalid={hasError}
               aria-describedby={
                 error
@@ -87,30 +87,30 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
             <label
               htmlFor={radioId}
               className={cn(
-                'flex items-center justify-center',
-                'border-2 transition-all cursor-pointer',
+                "flex items-center justify-center",
+                "border-[length:var(--border-width)] transition-all cursor-pointer",
                 sizeClasses[size],
                 hasError
-                  ? 'border-red-600 peer-focus:ring-red-500/20'
-                  : 'border-black peer-focus:ring-black/20',
+                  ? "border-[var(--color-error)] peer-focus:ring-[var(--color-error)]/20"
+                  : "border-[var(--color-border)] peer-focus:ring-[var(--color-ring)]/20",
                 checked
                   ? hasError
-                    ? 'border-red-600'
-                    : 'border-black bg-black'
-                  : '',
-                'peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-offset-2',
-                disabled && 'opacity-50 cursor-not-allowed',
-                !disabled && 'hover:border-neutral-600'
+                    ? "border-[var(--color-error)]"
+                    : "border-[var(--color-primary)] bg-[var(--color-primary)]"
+                  : "",
+                "peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-offset-2",
+                disabled && "opacity-50 cursor-not-allowed",
+                !disabled && "hover:border-[var(--color-border-hover)]",
               )}
             >
               {checked && (
                 <div
                   className={cn(
-                    'transition-all',
+                    "transition-all",
                     dotSizeClasses[size],
                     hasError
-                      ? 'bg-red-600'
-                      : 'bg-white'
+                      ? "bg-[var(--color-error)]"
+                      : "bg-[var(--color-primary-foreground)]",
                   )}
                 />
               )}
@@ -122,11 +122,11 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
               <label
                 htmlFor={radioId}
                 className={cn(
-                  'block text-sm font-medium cursor-pointer select-none',
+                  "block text-sm font-medium cursor-pointer select-none",
                   hasError
-                    ? 'text-red-600'
-                    : 'text-black',
-                  disabled && 'opacity-50 cursor-not-allowed'
+                    ? "text-[var(--color-error)]"
+                    : "text-[var(--color-foreground)]",
+                  disabled && "opacity-50 cursor-not-allowed",
                 )}
               >
                 {label}
@@ -140,7 +140,7 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
             {error && (
               <p
                 id={`${radioId}-error`}
-                className="text-sm text-red-600 font-medium"
+                className="text-sm text-[var(--color-error)] font-medium"
                 role="alert"
               >
                 {error}
@@ -149,7 +149,7 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
             {!error && helperText && (
               <p
                 id={`${radioId}-helper`}
-                className="text-sm text-neutral-600"
+                className="text-sm text-[var(--color-muted-foreground)]"
               >
                 {helperText}
               </p>
@@ -158,8 +158,7 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
         )}
       </>
     );
-  }
+  },
 );
 
-Radio.displayName = 'Radio';
-
+Radio.displayName = "Radio";

@@ -1,25 +1,25 @@
 /**
  * ListTemplate
- * 
+ *
  * A presentational template for list-based features like todos, shopping lists, notes.
  * Supports add, toggle, delete, and filter operations.
  */
 
-import React, { useState } from 'react';
-import { cn } from '../../lib/cn';
-import { Container } from '../molecules/Container';
-import { VStack, HStack } from '../atoms/Stack';
-import { Typography } from '../atoms/Typography';
-import { Button } from '../atoms/Button';
-import { Input } from '../atoms/Input';
-import { Checkbox } from '../atoms/Checkbox';
-import { Spinner } from '../atoms/Spinner';
-import { Alert } from '../molecules/Alert';
-import { EmptyState } from '../molecules/EmptyState';
-import { Plus, Trash2, RefreshCw, ListTodo } from 'lucide-react';
+import React, { useState } from "react";
+import { cn } from "../../lib/cn";
+import { Container } from "../molecules/Container";
+import { VStack, HStack } from "../atoms/Stack";
+import { Typography } from "../atoms/Typography";
+import { Button } from "../atoms/Button";
+import { Input } from "../atoms/Input";
+import { Checkbox } from "../atoms/Checkbox";
+import { Spinner } from "../atoms/Spinner";
+import { Alert } from "../molecules/Alert";
+import { EmptyState } from "../molecules/EmptyState";
+import { Plus, Trash2, RefreshCw, ListTodo } from "lucide-react";
 
-export type FilterValue = 'all' | 'active' | 'completed';
-export type ListVariant = 'minimal' | 'standard' | 'full';
+export type FilterValue = "all" | "active" | "completed";
+export type ListVariant = "minimal" | "standard" | "full";
 
 export interface ListTemplateItem {
   id: string;
@@ -67,38 +67,38 @@ export const ListTemplate: React.FC<ListTemplateProps> = ({
   items = [],
   isLoading = false,
   error = null,
-  filter = 'all',
+  filter = "all",
   onAdd,
   onToggle,
   onDelete,
   onFilterChange,
   onRetry,
-  title = 'My List',
-  placeholder = 'Add a new item...',
+  title = "My List",
+  placeholder = "Add a new item...",
   showFilters = true,
   showCount = true,
-  emptyMessage = 'No items yet',
-  variant = 'standard',
+  emptyMessage = "No items yet",
+  variant = "standard",
   className,
 }) => {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (inputValue.trim() && onAdd) {
       onAdd(inputValue.trim());
-      setInputValue('');
+      setInputValue("");
     }
   };
 
-  const filteredItems = items.filter(item => {
-    if (filter === 'active') return !item.completed;
-    if (filter === 'completed') return item.completed;
+  const filteredItems = items.filter((item) => {
+    if (filter === "active") return !item.completed;
+    if (filter === "completed") return item.completed;
     return true;
   });
 
-  const activeCount = items.filter(item => !item.completed).length;
-  const completedCount = items.filter(item => item.completed).length;
+  const activeCount = items.filter((item) => !item.completed).length;
+  const completedCount = items.filter((item) => item.completed).length;
 
   const renderError = () => (
     <Alert
@@ -106,36 +106,43 @@ export const ListTemplate: React.FC<ListTemplateProps> = ({
       title="Failed to load items"
       actions={
         onRetry && (
-          <Button variant="ghost" size="sm" onClick={onRetry} leftIcon={<RefreshCw className="h-4 w-4" />}>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onRetry}
+            leftIcon={<RefreshCw className="h-4 w-4" />}
+          >
             Retry
           </Button>
         )
       }
     >
-      {typeof error === 'string' ? error : error?.message || 'An error occurred'}
+      {typeof error === "string"
+        ? error
+        : error?.message || "An error occurred"}
     </Alert>
   );
 
   const renderFilters = () => (
     <HStack gap="sm">
       <Button
-        variant={filter === 'all' ? 'primary' : 'ghost'}
+        variant={filter === "all" ? "primary" : "ghost"}
         size="sm"
-        onClick={() => onFilterChange?.('all')}
+        onClick={() => onFilterChange?.("all")}
       >
         All ({items.length})
       </Button>
       <Button
-        variant={filter === 'active' ? 'primary' : 'ghost'}
+        variant={filter === "active" ? "primary" : "ghost"}
         size="sm"
-        onClick={() => onFilterChange?.('active')}
+        onClick={() => onFilterChange?.("active")}
       >
         Active ({activeCount})
       </Button>
       <Button
-        variant={filter === 'completed' ? 'primary' : 'ghost'}
+        variant={filter === "completed" ? "primary" : "ghost"}
         size="sm"
-        onClick={() => onFilterChange?.('completed')}
+        onClick={() => onFilterChange?.("completed")}
       >
         Completed ({completedCount})
       </Button>
@@ -148,9 +155,9 @@ export const ListTemplate: React.FC<ListTemplateProps> = ({
       gap="md"
       align="center"
       className={cn(
-        'p-3 rounded-lg border border-gray-200 dark:border-gray-700',
-        'hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors',
-        item.completed && 'opacity-60'
+        "p-3 rounded-[var(--radius-lg)] border border-[var(--color-border)] dark:border-[var(--color-border)]",
+        "hover:bg-[var(--color-muted)] dark:hover:bg-[var(--color-muted)] transition-colors",
+        item.completed && "opacity-60",
       )}
     >
       <Checkbox
@@ -160,7 +167,10 @@ export const ListTemplate: React.FC<ListTemplateProps> = ({
       />
       <Typography
         variant="body"
-        className={cn('flex-1', item.completed && 'line-through text-gray-500')}
+        className={cn(
+          "flex-1",
+          item.completed && "line-through text-[var(--color-muted-foreground)]",
+        )}
       >
         {item.title}
       </Typography>
@@ -169,7 +179,7 @@ export const ListTemplate: React.FC<ListTemplateProps> = ({
           variant="ghost"
           size="sm"
           onClick={() => onDelete(item.id)}
-          className="text-red-500 hover:text-red-700 hover:bg-red-50"
+          className="text-[var(--color-error)] hover:text-[var(--color-error)] hover:bg-[var(--color-error)]/10"
         >
           <Trash2 className="h-4 w-4" />
         </Button>
@@ -207,13 +217,16 @@ export const ListTemplate: React.FC<ListTemplateProps> = ({
       ) : error ? (
         renderError()
       ) : filteredItems.length === 0 ? (
-        <Typography variant="body" color="muted" align="center" className="py-8">
+        <Typography
+          variant="body"
+          color="muted"
+          align="center"
+          className="py-8"
+        >
           {emptyMessage}
         </Typography>
       ) : (
-        <VStack gap="sm">
-          {filteredItems.map(renderItem)}
-        </VStack>
+        <VStack gap="sm">{filteredItems.map(renderItem)}</VStack>
       )}
     </VStack>
   );
@@ -222,7 +235,7 @@ export const ListTemplate: React.FC<ListTemplateProps> = ({
     <Container size="md" padding="lg" className={className}>
       <VStack gap="lg">
         <Typography variant="h2">{title}</Typography>
-        
+
         {error && renderError()}
 
         <form onSubmit={handleSubmit}>
@@ -233,7 +246,11 @@ export const ListTemplate: React.FC<ListTemplateProps> = ({
               placeholder={placeholder}
               className="flex-1"
             />
-            <Button type="submit" disabled={!inputValue.trim()} leftIcon={<Plus className="h-4 w-4" />}>
+            <Button
+              type="submit"
+              disabled={!inputValue.trim()}
+              leftIcon={<Plus className="h-4 w-4" />}
+            >
               Add
             </Button>
           </HStack>
@@ -248,14 +265,12 @@ export const ListTemplate: React.FC<ListTemplateProps> = ({
         ) : filteredItems.length === 0 ? (
           renderEmpty()
         ) : (
-          <VStack gap="sm">
-            {filteredItems.map(renderItem)}
-          </VStack>
+          <VStack gap="sm">{filteredItems.map(renderItem)}</VStack>
         )}
 
         {showCount && items.length > 0 && (
           <Typography variant="small" color="muted">
-            {activeCount} item{activeCount !== 1 ? 's' : ''} remaining
+            {activeCount} item{activeCount !== 1 ? "s" : ""} remaining
           </Typography>
         )}
       </VStack>
@@ -269,7 +284,8 @@ export const ListTemplate: React.FC<ListTemplateProps> = ({
           <Typography variant="h2">{title}</Typography>
           {showCount && (
             <Typography variant="small" color="muted">
-              {items.length} total • {activeCount} active • {completedCount} done
+              {items.length} total • {activeCount} active • {completedCount}{" "}
+              done
             </Typography>
           )}
         </HStack>
@@ -284,14 +300,18 @@ export const ListTemplate: React.FC<ListTemplateProps> = ({
               placeholder={placeholder}
               className="flex-1"
             />
-            <Button type="submit" disabled={!inputValue.trim()} leftIcon={<Plus className="h-4 w-4" />}>
+            <Button
+              type="submit"
+              disabled={!inputValue.trim()}
+              leftIcon={<Plus className="h-4 w-4" />}
+            >
               Add Item
             </Button>
           </HStack>
         </form>
 
         {showFilters && items.length > 0 && (
-          <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+          <div className="border-b border-[var(--color-border)] dark:border-[var(--color-border)] pb-4">
             {renderFilters()}
           </div>
         )}
@@ -303,9 +323,7 @@ export const ListTemplate: React.FC<ListTemplateProps> = ({
         ) : filteredItems.length === 0 ? (
           renderEmpty()
         ) : (
-          <VStack gap="sm">
-            {filteredItems.map(renderItem)}
-          </VStack>
+          <VStack gap="sm">{filteredItems.map(renderItem)}</VStack>
         )}
 
         {items.length > 0 && completedCount > 0 && (
@@ -313,9 +331,11 @@ export const ListTemplate: React.FC<ListTemplateProps> = ({
             <Button
               variant="ghost"
               size="sm"
-              className="text-gray-500"
+              className="text-[var(--color-muted-foreground)]"
               onClick={() => {
-                items.filter(i => i.completed).forEach(i => onDelete?.(i.id));
+                items
+                  .filter((i) => i.completed)
+                  .forEach((i) => onDelete?.(i.id));
               }}
             >
               Clear completed
@@ -327,15 +347,15 @@ export const ListTemplate: React.FC<ListTemplateProps> = ({
   );
 
   switch (variant) {
-    case 'minimal':
+    case "minimal":
       return renderMinimal();
-    case 'full':
+    case "full":
       return renderFull();
     default:
       return renderStandard();
   }
 };
 
-ListTemplate.displayName = 'ListTemplate';
+ListTemplate.displayName = "ListTemplate";
 
 export default ListTemplate;

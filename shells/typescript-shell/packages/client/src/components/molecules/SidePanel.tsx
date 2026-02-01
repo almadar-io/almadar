@@ -1,15 +1,15 @@
 /**
  * SidePanel Molecule Component
- * 
+ *
  * A side panel that slides in from the right (or left) with header and content.
  * Uses Button, Typography atoms.
  */
 
-import React from 'react';
-import { X } from 'lucide-react';
-import { Button } from '../atoms/Button';
-import { Typography } from '../atoms/Typography';
-import { cn } from '../../lib/cn';
+import React from "react";
+import { X } from "lucide-react";
+import { Button } from "../atoms/Button";
+import { Typography } from "../atoms/Typography";
+import { cn } from "../../lib/cn";
 
 export interface SidePanelProps {
   /**
@@ -42,7 +42,7 @@ export interface SidePanelProps {
    * Panel position
    * @default 'right'
    */
-  position?: 'left' | 'right';
+  position?: "left" | "right";
 
   /**
    * Show overlay on mobile
@@ -61,8 +61,8 @@ export const SidePanel: React.FC<SidePanelProps> = ({
   children,
   isOpen,
   onClose,
-  width = 'w-96',
-  position = 'right',
+  width = "w-96",
+  position = "right",
   showOverlay = true,
   className,
 }) => {
@@ -81,19 +81,19 @@ export const SidePanel: React.FC<SidePanelProps> = ({
       {/* Side Panel */}
       <aside
         className={cn(
-          'fixed top-16 lg:top-0 bottom-0 z-[60]',
-          'bg-white',
-          'border-l-2 border-black',
-          position === 'left' && 'border-l-0 border-r-2',
-          'flex flex-col',
-          'transition-transform duration-300 ease-in-out',
+          "fixed top-16 lg:top-0 bottom-0 z-[60]",
+          "bg-[var(--color-card)]",
+          "border-l-2 border-[var(--color-border)]",
+          position === "left" && "border-l-0 border-r-2",
+          "flex flex-col",
+          "transition-transform duration-300 ease-in-out",
           width,
-          position === 'right' ? 'right-0' : 'left-0',
-          className
+          position === "right" ? "right-0" : "left-0",
+          className,
         )}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b-2 border-black sticky top-0 bg-white z-10">
+        <div className="flex items-center justify-between p-4 border-b-2 border-[var(--color-border)] sticky top-0 bg-[var(--color-card)] z-10">
           <Typography variant="h6">{title}</Typography>
           <Button
             variant="ghost"
@@ -107,13 +107,10 @@ export const SidePanel: React.FC<SidePanelProps> = ({
         </div>
 
         {/* Content */}
-        <div className="p-4 flex-1 overflow-y-auto">
-          {children}
-        </div>
+        <div className="p-4 flex-1 overflow-y-auto">{children}</div>
       </aside>
     </>
   );
 };
 
-SidePanel.displayName = 'SidePanel';
-
+SidePanel.displayName = "SidePanel";

@@ -3,7 +3,7 @@
  *
  * Provides query state management for search/filter components.
  * This is a stub implementation for the design system.
- * In a real application, this would connect to the almadar query singleton.
+ * In a real application, this would connect to the orbital query singleton.
  *
  * @packageDocumentation
  */

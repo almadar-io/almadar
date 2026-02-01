@@ -7,30 +7,30 @@
  * @packageDocumentation
  */
 
-import React from 'react';
-import { Sun, Moon } from 'lucide-react';
-import { cn } from '../../lib/cn';
-import { useTheme } from '../../contexts/ThemeContext';
+import React from "react";
+import { Sun, Moon } from "lucide-react";
+import { cn } from "../../lib/cn";
+import { useTheme } from "../../context/ThemeContext";
 
 export interface ThemeToggleProps {
   /** Additional CSS classes */
   className?: string;
   /** Size variant */
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
   /** Show label text */
   showLabel?: boolean;
 }
 
 const sizeClasses = {
-  sm: 'p-1.5',
-  md: 'p-2',
-  lg: 'p-2.5',
+  sm: "p-1.5",
+  md: "p-2",
+  lg: "p-2.5",
 };
 
 const iconSizes = {
-  sm: 'h-4 w-4',
-  md: 'h-5 w-5',
-  lg: 'h-6 w-6',
+  sm: "h-4 w-4",
+  md: "h-5 w-5",
+  lg: "h-6 w-6",
 };
 
 /**
@@ -50,40 +50,42 @@ const iconSizes = {
  */
 export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   className,
-  size = 'md',
+  size = "md",
   showLabel = false,
 }) => {
-  const { resolvedTheme, toggleTheme } = useTheme();
-  const isDark = resolvedTheme === 'dark';
+  const { resolvedMode, toggleMode } = useTheme();
+  const isDark = resolvedMode === "dark";
 
   return (
     <button
       type="button"
-      onClick={toggleTheme}
+      onClick={toggleMode}
       className={cn(
-        'inline-flex items-center justify-center gap-2',
-        'text-black',
-        'hover:bg-neutral-100 border-2 border-transparent hover:border-black',
-        'focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2',
-        'transition-colors duration-200',
+        "inline-flex items-center justify-center gap-2",
+        "text-[var(--color-foreground)]",
+        "hover:bg-[var(--color-muted)] border-[length:var(--border-width)] border-transparent hover:border-[var(--color-border)]",
+        "focus:outline-none focus:ring-2 focus:ring-[var(--color-ring)] focus:ring-offset-2",
+        "transition-colors duration-200",
         sizeClasses[size],
-        className
+        className,
       )}
-      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-      title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      title={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >
       {isDark ? (
-        <Sun className={cn(iconSizes[size], 'text-black')} />
+        <Sun
+          className={cn(iconSizes[size], "text-[var(--color-foreground)]")}
+        />
       ) : (
-        <Moon className={cn(iconSizes[size], 'text-black')} />
+        <Moon
+          className={cn(iconSizes[size], "text-[var(--color-foreground)]")}
+        />
       )}
       {showLabel && (
-        <span className="text-sm font-medium">
-          {isDark ? 'Light' : 'Dark'}
-        </span>
+        <span className="text-sm font-medium">{isDark ? "Light" : "Dark"}</span>
       )}
     </button>
   );
 };
 
-ThemeToggle.displayName = 'ThemeToggle';
+ThemeToggle.displayName = "ThemeToggle";

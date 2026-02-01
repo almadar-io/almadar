@@ -1,15 +1,31 @@
-import React from 'react';
-import { cn } from '../../lib/cn';
-import { X, ChevronDown, type LucideIcon } from 'lucide-react';
+import React from "react";
+import { cn } from "../../lib/cn";
+import { X, ChevronDown, type LucideIcon } from "lucide-react";
 
 export interface SelectOption {
   value: string;
   label: string;
 }
 
-export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'> {
+export interface InputProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "type" | "onChange"
+> {
   /** Input type - supports 'select' and 'textarea' in addition to standard types */
-  type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search' | 'date' | 'datetime-local' | 'time' | 'checkbox' | 'select' | 'textarea';
+  type?:
+    | "text"
+    | "email"
+    | "password"
+    | "number"
+    | "tel"
+    | "url"
+    | "search"
+    | "date"
+    | "datetime-local"
+    | "time"
+    | "checkbox"
+    | "select"
+    | "textarea";
   error?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -24,33 +40,56 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
   /** Rows for textarea type */
   rows?: number;
   /** onChange handler - accepts events from input, select, or textarea */
-  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>;
+  onChange?: React.ChangeEventHandler<
+    HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+  >;
 }
 
-export const Input = React.forwardRef<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement, InputProps>(
-  ({ className, type = 'text', error, leftIcon, rightIcon, icon: IconComponent, clearable, onClear, value, options, rows = 3, onChange, ...props }, ref) => {
+export const Input = React.forwardRef<
+  HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
+  InputProps
+>(
+  (
+    {
+      className,
+      type = "text",
+      error,
+      leftIcon,
+      rightIcon,
+      icon: IconComponent,
+      clearable,
+      onClear,
+      value,
+      options,
+      rows = 3,
+      onChange,
+      ...props
+    },
+    ref,
+  ) => {
     // Resolve left icon: prefer leftIcon ReactNode, fallback to icon Lucide component
-    const resolvedLeftIcon = leftIcon || (IconComponent && <IconComponent className="h-4 w-4" />);
+    const resolvedLeftIcon =
+      leftIcon || (IconComponent && <IconComponent className="h-4 w-4" />);
     const showClearButton = clearable && value && String(value).length > 0;
 
     const baseClassName = cn(
-      'block w-full rounded-[var(--radius-sm)] transition-all duration-[var(--transition-fast)]',
-      'border-[length:var(--border-width-thin)] border-[var(--color-border)]',
-      'px-3 py-2 text-sm',
-      'bg-[var(--color-card)] hover:bg-[var(--color-muted)] focus:bg-[var(--color-card)]',
-      'text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)]',
-      'focus:outline-none focus:ring-1 focus:ring-[var(--color-ring)] focus:border-[var(--color-ring)]',
-      'disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-[var(--color-muted)]',
+      "block w-full rounded-[var(--radius-sm)] transition-all duration-[var(--transition-fast)]",
+      "border-[length:var(--border-width-thin)] border-[var(--color-border)]",
+      "px-3 py-2 text-sm",
+      "bg-[var(--color-card)] hover:bg-[var(--color-muted)] focus:bg-[var(--color-card)]",
+      "text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)]",
+      "focus:outline-none focus:ring-1 focus:ring-[var(--color-ring)] focus:border-[var(--color-ring)]",
+      "disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-[var(--color-muted)]",
       error
-        ? 'border-red-500 focus:border-red-600 focus:ring-red-600'
-        : '',
-      resolvedLeftIcon && 'pl-10',
-      (rightIcon || showClearButton) && 'pr-10',
-      className
+        ? "border-[var(--color-error)] focus:border-[var(--color-error)] focus:ring-[var(--color-error)]"
+        : "",
+      resolvedLeftIcon && "pl-10",
+      (rightIcon || showClearButton) && "pr-10",
+      className,
     );
 
     // Handle select type
-    if (type === 'select') {
+    if (type === "select") {
       return (
         <div className="relative">
           {resolvedLeftIcon && (
@@ -62,7 +101,7 @@ export const Input = React.forwardRef<HTMLInputElement | HTMLSelectElement | HTM
             ref={ref as React.Ref<HTMLSelectElement>}
             value={value as string}
             onChange={onChange as React.ChangeEventHandler<HTMLSelectElement>}
-            className={cn(baseClassName, 'appearance-none pr-10', className)}
+            className={cn(baseClassName, "appearance-none pr-10", className)}
             {...(props as React.SelectHTMLAttributes<HTMLSelectElement>)}
           >
             <option value="">Select...</option>
@@ -80,7 +119,7 @@ export const Input = React.forwardRef<HTMLInputElement | HTMLSelectElement | HTM
     }
 
     // Handle textarea type
-    if (type === 'textarea') {
+    if (type === "textarea") {
       return (
         <div className="relative">
           <textarea
@@ -96,7 +135,7 @@ export const Input = React.forwardRef<HTMLInputElement | HTMLSelectElement | HTM
     }
 
     // Handle checkbox type
-    if (type === 'checkbox') {
+    if (type === "checkbox") {
       return (
         <input
           ref={ref as React.Ref<HTMLInputElement>}
@@ -104,11 +143,11 @@ export const Input = React.forwardRef<HTMLInputElement | HTMLSelectElement | HTM
           checked={props.checked}
           onChange={onChange}
           className={cn(
-            'h-4 w-4 rounded-[var(--radius-sm)]',
-            'border-[var(--color-border)]',
-            'text-[var(--color-primary)] focus:ring-[var(--color-ring)]',
-            'disabled:opacity-50 disabled:cursor-not-allowed',
-            className
+            "h-4 w-4 rounded-[var(--radius-sm)]",
+            "border-[var(--color-border)]",
+            "text-[var(--color-primary)] focus:ring-[var(--color-ring)]",
+            "disabled:opacity-50 disabled:cursor-not-allowed",
+            className,
           )}
           {...props}
         />
@@ -147,7 +186,7 @@ export const Input = React.forwardRef<HTMLInputElement | HTMLSelectElement | HTM
         )}
       </div>
     );
-  }
+  },
 );
 
-Input.displayName = 'Input';
+Input.displayName = "Input";

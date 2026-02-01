@@ -1,0 +1,10 @@
+# Graph-generated feature modules will be created here
+# Example structure:
+# features/
+#   patients/
+#     patients.controller.ts
+#     patients.service.ts
+#     patients.repository.ts
+#     patients.schema.ts
+#     patients.routes.ts
+#     index.ts

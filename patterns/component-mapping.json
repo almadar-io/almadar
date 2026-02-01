@@ -594,6 +594,176 @@
       "importPath": "@/clients/inspection-system/organisms/SignatureCapture",
       "category": "form",
       "client": "inspection-system"
+    },
+    "vstack": {
+      "component": "VStack",
+      "importPath": "@/components/atoms",
+      "category": "layout"
+    },
+    "hstack": {
+      "component": "HStack",
+      "importPath": "@/components/atoms",
+      "category": "layout"
+    },
+    "box": {
+      "component": "Box",
+      "importPath": "@/components/atoms",
+      "category": "layout"
+    },
+    "grid": {
+      "component": "Grid",
+      "importPath": "@/components/molecules",
+      "category": "layout"
+    },
+    "center": {
+      "component": "Center",
+      "importPath": "@/components/atoms",
+      "category": "layout"
+    },
+    "spacer": {
+      "component": "Spacer",
+      "importPath": "@/components/atoms",
+      "category": "layout"
+    },
+    "divider": {
+      "component": "Divider",
+      "importPath": "@/components/atoms",
+      "category": "layout"
+    },
+    "button": {
+      "component": "Button",
+      "importPath": "@/components/atoms",
+      "category": "atom"
+    },
+    "icon-button": {
+      "component": "Button",
+      "importPath": "@/components/atoms",
+      "category": "atom"
+    },
+    "text": {
+      "component": "Typography",
+      "importPath": "@/components/atoms",
+      "category": "atom"
+    },
+    "heading": {
+      "component": "Typography",
+      "importPath": "@/components/atoms",
+      "category": "atom"
+    },
+    "badge": {
+      "component": "Badge",
+      "importPath": "@/components/atoms",
+      "category": "atom"
+    },
+    "avatar": {
+      "component": "Avatar",
+      "importPath": "@/components/atoms",
+      "category": "atom"
+    },
+    "icon": {
+      "component": "Icon",
+      "importPath": "@/components/atoms",
+      "category": "atom"
+    },
+    "spinner": {
+      "component": "Spinner",
+      "importPath": "@/components/atoms",
+      "category": "atom"
+    },
+    "input": {
+      "component": "Input",
+      "importPath": "@/components/atoms",
+      "category": "form"
+    },
+    "textarea": {
+      "component": "Textarea",
+      "importPath": "@/components/atoms",
+      "category": "form"
+    },
+    "select": {
+      "component": "Select",
+      "importPath": "@/components/atoms",
+      "category": "form"
+    },
+    "checkbox": {
+      "component": "Checkbox",
+      "importPath": "@/components/atoms",
+      "category": "form"
+    },
+    "radio": {
+      "component": "Radio",
+      "importPath": "@/components/atoms",
+      "category": "form"
+    },
+    "switch": {
+      "component": "Switch",
+      "importPath": "@/components/atoms",
+      "category": "form"
+    },
+    "label": {
+      "component": "Label",
+      "importPath": "@/components/atoms",
+      "category": "form"
+    },
+    "alert": {
+      "component": "Alert",
+      "importPath": "@/components/molecules/Alert",
+      "category": "state"
+    },
+    "accordion": {
+      "component": "Accordion",
+      "importPath": "@/components/molecules/Accordion",
+      "category": "display"
+    },
+    "tooltip": {
+      "component": "Tooltip",
+      "importPath": "@/components/molecules",
+      "category": "atom"
+    },
+    "popover": {
+      "component": "Popover",
+      "importPath": "@/components/molecules",
+      "category": "atom"
+    },
+    "menu": {
+      "component": "Menu",
+      "importPath": "@/components/molecules",
+      "category": "navigation"
+    },
+    "link": {
+      "component": "Button",
+      "importPath": "@/components/atoms",
+      "category": "atom"
+    },
+    "image": {
+      "component": "Box",
+      "importPath": "@/components/atoms",
+      "category": "atom"
+    },
+    "progress-bar": {
+      "component": "ProgressBar",
+      "importPath": "@/components/atoms",
+      "category": "display"
+    },
+    "button-group": {
+      "component": "ButtonGroup",
+      "importPath": "@/components/molecules/ButtonGroup",
+      "category": "atom"
+    },
+    "container": {
+      "component": "Container",
+      "importPath": "@/components/molecules",
+      "category": "layout"
+    },
+    "simple-grid": {
+      "component": "SimpleGrid",
+      "importPath": "@/components/molecules",
+      "category": "layout"
+    },
+    "float-button": {
+      "component": "FloatingActionButton",
+      "importPath": "@/components/molecules",
+      "category": "atom"
     }
   }
 }

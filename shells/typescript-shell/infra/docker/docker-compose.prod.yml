@@ -6,7 +6,7 @@ version: '3.8'
 
 services:
   client:
-    image: ${REGISTRY}/{{APP_NAME}}-client:${TAG:-latest}
+    image: ${REGISTRY}/Theme Kitchen Sink-client:${TAG:-latest}
     restart: unless-stopped
     ports:
       - "80:80"
@@ -24,7 +24,7 @@ services:
           memory: 256M
 
   server:
-    image: ${REGISTRY}/{{APP_NAME}}-server:${TAG:-latest}
+    image: ${REGISTRY}/Theme Kitchen Sink-server:${TAG:-latest}
     restart: unless-stopped
     ports:
       - "3000:3000"

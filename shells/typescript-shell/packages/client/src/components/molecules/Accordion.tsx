@@ -1,17 +1,17 @@
 /**
  * Accordion Molecule Component
- * 
+ *
  * A collapsible content component with single or multiple open items.
  * Uses Button, Icon, Typography, and Divider atoms.
  */
 
-import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import React, { useState } from "react";
+import { ChevronDown } from "lucide-react";
 
-import { Icon } from '../atoms/Icon';
-import { Typography } from '../atoms/Typography';
+import { Icon } from "../atoms/Icon";
+import { Typography } from "../atoms/Typography";
 
-import { cn } from '../../lib/cn';
+import { cn } from "../../lib/cn";
 
 export interface AccordionItem {
   /**
@@ -87,18 +87,21 @@ export interface AccordionProps {
 function generateItemId(item: AccordionItem, index: number): string {
   if (item.id) return item.id;
   const headerText = item.header ?? item.title;
-  if (typeof headerText === 'string') {
-    return `accordion-${headerText.toLowerCase().replace(/\s+/g, '-')}-${index}`;
+  if (typeof headerText === "string") {
+    return `accordion-${headerText.toLowerCase().replace(/\s+/g, "-")}-${index}`;
   }
   return `accordion-item-${index}`;
 }
 
 // Normalize item to ensure id and header are set
-function normalizeItem(item: AccordionItem, index: number): AccordionItem & { id: string; header: React.ReactNode } {
+function normalizeItem(
+  item: AccordionItem,
+  index: number,
+): AccordionItem & { id: string; header: React.ReactNode } {
   return {
     ...item,
     id: generateItemId(item, index),
-    header: item.header ?? item.title ?? '',
+    header: item.header ?? item.title ?? "",
   };
 }
 
@@ -112,21 +115,25 @@ export const Accordion: React.FC<AccordionProps> = ({
   className,
 }) => {
   // Normalize items to ensure id and header are always present
-  const normalizedItems = items.map((item, index) => normalizeItem(item, index));
+  const normalizedItems = items.map((item, index) =>
+    normalizeItem(item, index),
+  );
 
   // Resolve default open items - prefer defaultOpenItems (string IDs), fall back to defaultOpen (indices)
   const resolveDefaultOpen = (): string[] => {
     if (defaultOpenItems) return defaultOpenItems;
     if (defaultOpen) {
       return defaultOpen
-        .filter(index => index >= 0 && index < normalizedItems.length)
-        .map(index => normalizedItems[index].id);
+        .filter((index) => index >= 0 && index < normalizedItems.length)
+        .map((index) => normalizedItems[index].id);
     }
-    return normalizedItems.filter(item => item.defaultOpen).map(item => item.id);
+    return normalizedItems
+      .filter((item) => item.defaultOpen)
+      .map((item) => item.id);
   };
 
   const [internalOpenItems, setInternalOpenItems] = useState<Set<string>>(
-    new Set(resolveDefaultOpen())
+    new Set(resolveDefaultOpen()),
   );
 
   const openItemsSet = controlledOpenItems
@@ -154,32 +161,32 @@ export const Accordion: React.FC<AccordionProps> = ({
   };
 
   return (
-    <div className={cn('w-full', className)}>
+    <div className={cn("w-full", className)}>
       {normalizedItems.map((item, index) => {
         const isOpen = openItemsSet.has(item.id);
         const isDisabled = item.disabled;
 
         return (
-          <div key={item.id} className={index > 0 ? 'mt-2' : ''}>
-            <div className="border-2 border-black overflow-hidden">
+          <div key={item.id} className={index > 0 ? "mt-2" : ""}>
+            <div className="border-2 border-[var(--color-border)] overflow-hidden">
               <button
                 type="button"
                 onClick={() => !isDisabled && handleToggle(item.id)}
                 disabled={isDisabled}
                 className={cn(
-                  'w-full flex items-center justify-between px-4 py-3',
-                  'bg-white',
-                  'hover:bg-neutral-100',
-                  'transition-colors duration-200',
-                  'focus:outline-none focus:ring-2 focus:ring-black focus:ring-inset',
-                  'disabled:opacity-50 disabled:cursor-not-allowed',
-                  isOpen && 'bg-neutral-100 font-bold'
+                  "w-full flex items-center justify-between px-4 py-3",
+                  "bg-[var(--color-card)]",
+                  "hover:bg-[var(--color-muted)]",
+                  "transition-colors duration-200",
+                  "focus:outline-none focus:ring-2 focus:ring-[var(--color-ring)] focus:ring-inset",
+                  "disabled:opacity-50 disabled:cursor-not-allowed",
+                  isOpen && "bg-[var(--color-muted)] font-bold",
                 )}
                 aria-expanded={isOpen}
                 aria-controls={`accordion-content-${item.id}`}
               >
                 <div className="flex-1 text-left">
-                  {typeof item.header === 'string' ? (
+                  {typeof item.header === "string" ? (
                     <Typography variant="body" weight="medium">
                       {item.header}
                     </Typography>
@@ -191,8 +198,8 @@ export const Accordion: React.FC<AccordionProps> = ({
                   icon={ChevronDown}
                   size="sm"
                   className={cn(
-                    'transition-transform duration-200',
-                    isOpen && 'transform rotate-180'
+                    "transition-transform duration-200",
+                    isOpen && "transform rotate-180",
                   )}
                 />
               </button>
@@ -200,7 +207,7 @@ export const Accordion: React.FC<AccordionProps> = ({
               {isOpen && (
                 <div
                   id={`accordion-content-${item.id}`}
-                  className="px-4 py-3 bg-white border-t-2 border-black"
+                  className="px-4 py-3 bg-[var(--color-card)] border-t-2 border-[var(--color-border)]"
                 >
                   {item.content}
                 </div>
@@ -213,5 +220,4 @@ export const Accordion: React.FC<AccordionProps> = ({
   );
 };
 
-Accordion.displayName = 'Accordion';
-
+Accordion.displayName = "Accordion";

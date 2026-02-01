@@ -1,326 +1,321 @@
 /**
- * ThemeContext
+ * Unified ThemeContext - Single provider for theme and color mode
  *
- * React context for providing design tokens and theme preferences throughout the application.
- * Patterns can use tokens via the `token` prop which resolves to Tailwind classes.
+ * Combines design theme selection (ocean, wireframe, etc.) with
+ * color mode (light/dark) into a single, simple system.
  *
- * Usage:
- * ```tsx
- * // In App.tsx or layout
- * <ThemeProvider designTokens={schema.designTokens} design={schema.design}>
- *   <App />
- * </ThemeProvider>
- *
- * // In pattern components
- * const { resolveToken, design } = useTheme();
- * const classes = resolveToken('surfaces.glass'); // Returns Tailwind classes
- * ```
+ * Uses a single data attribute: data-theme="ocean-light" or data-theme="ocean-dark"
  *
  * @packageDocumentation
  */
 
-import React, { createContext, useContext, useMemo, useCallback } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
 
-// ============================================================================
-// Types
-// ============================================================================
+/** Color mode preference */
+export type ColorMode = "light" | "dark" | "system";
 
-/**
- * Design tokens - reusable Tailwind class collections.
- */
-export interface DesignTokens {
-  /** Surface styles: backgrounds, borders, shadows */
-  surfaces?: Record<string, string>;
-  /** Text styles: typography, colors */
-  text?: Record<string, string>;
-  /** Interactive element styles: buttons, links */
-  interactive?: Record<string, string>;
-  /** Effect styles: shadows, animations, transitions */
-  effects?: Record<string, string>;
-  /** Additional custom categories */
-  [category: string]: Record<string, string> | undefined;
+/** Resolved color mode (what's actually applied) */
+export type ResolvedMode = "light" | "dark";
+
+/** Theme definition */
+export interface ThemeDefinition {
+  /** Theme identifier (e.g., "ocean", "wireframe") */
+  name: string;
+  /** Display name for UI (e.g., "Ocean Blue") */
+  displayName?: string;
+  /** Whether this theme has light mode styles */
+  hasLightMode?: boolean;
+  /** Whether this theme has dark mode styles */
+  hasDarkMode?: boolean;
 }
 
-/**
- * Design preferences for visual styling.
- */
-export interface DesignPreferences {
-  /** Design style */
-  style?: 'minimal' | 'modern' | 'playful' | 'data-driven' | 'immersive';
-  /** Primary color (hex) */
-  primaryColor?: string;
-  /** Target device */
-  device?: 'mobile' | 'tablet' | 'desktop' | 'all';
-  /** Dark mode */
-  darkMode?: boolean;
-}
-
-/**
- * Theme context value.
- */
-export interface ThemeContextValue {
-  /** Design tokens registry */
-  designTokens: DesignTokens;
-  /** Design preferences */
-  design: DesignPreferences;
-  /** Resolve a token path to Tailwind classes */
-  resolveToken: (tokenPath: string | string[]) => string;
-  /** Check if dark mode is enabled */
-  isDarkMode: boolean;
-  /** Get primary color */
-  primaryColor: string;
-}
-
-// ============================================================================
-// Default Values
-// ============================================================================
-
-const DEFAULT_DESIGN_TOKENS: DesignTokens = {
-  surfaces: {
-    card: 'bg-white dark:bg-gray-800 rounded-lg shadow-sm',
-    glass: 'bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl',
-    elevated: 'bg-white dark:bg-gray-800 rounded-xl shadow-lg',
-    muted: 'bg-gray-50 dark:bg-gray-900 rounded-lg',
+/** Built-in themes available in the design system */
+export const BUILT_IN_THEMES: ThemeDefinition[] = [
+  {
+    name: "wireframe",
+    displayName: "Wireframe",
+    hasLightMode: true,
+    hasDarkMode: true,
   },
-  text: {
-    heading: 'text-xl font-semibold text-gray-900 dark:text-white',
-    subheading: 'text-lg font-medium text-gray-700 dark:text-gray-200',
-    body: 'text-base text-gray-600 dark:text-gray-400',
-    muted: 'text-sm text-gray-500 dark:text-gray-500',
-    label: 'text-sm font-medium text-gray-700 dark:text-gray-300',
+  {
+    name: "minimalist",
+    displayName: "Minimalist",
+    hasLightMode: true,
+    hasDarkMode: true,
   },
-  interactive: {
-    primary: 'bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-4 py-2 font-medium transition-colors',
-    secondary: 'bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg px-4 py-2 font-medium transition-colors dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200',
-    ghost: 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-lg px-4 py-2 transition-colors',
-    danger: 'bg-red-600 hover:bg-red-700 text-white rounded-lg px-4 py-2 font-medium transition-colors',
-    link: 'text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 underline-offset-4 hover:underline',
+  {
+    name: "almadar",
+    displayName: "Almadar",
+    hasLightMode: true,
+    hasDarkMode: true,
   },
-  effects: {
-    shadow: 'shadow-lg',
-    'shadow-xl': 'shadow-xl',
-    glow: 'shadow-lg shadow-blue-500/20',
-    'hover-lift': 'hover:-translate-y-0.5 transition-transform duration-200',
-    'hover-scale': 'hover:scale-105 transition-transform duration-200',
-    'fade-in': 'animate-fade-in',
-  },
-};
+];
 
-const DEFAULT_DESIGN_PREFERENCES: DesignPreferences = {
-  style: 'modern',
-  primaryColor: '#3b82f6',
-  device: 'all',
-  darkMode: false,
-};
+/** Theme context value */
+interface ThemeContextValue {
+  /** Current theme name */
+  theme: string;
+  /** Current color mode setting (may be 'system') */
+  mode: ColorMode;
+  /** Resolved color mode (always 'light' or 'dark') */
+  resolvedMode: ResolvedMode;
+  /** Set the theme */
+  setTheme: (theme: string) => void;
+  /** Set the color mode */
+  setMode: (mode: ColorMode) => void;
+  /** Toggle between light and dark modes */
+  toggleMode: () => void;
+  /** Available themes */
+  availableThemes: ThemeDefinition[];
+  /** The full theme string applied to data-theme (e.g., "ocean-light") */
+  appliedTheme: string;
+}
 
-// ============================================================================
-// Token Resolver
-// ============================================================================
+const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
+
+/** Storage keys */
+const THEME_STORAGE_KEY = "theme";
+const MODE_STORAGE_KEY = "theme-mode";
 
 /**
- * Resolve a token path (e.g., "surfaces.glass") to Tailwind classes.
- *
- * @param tokenPath - Token path like "surfaces.glass" or array of paths
- * @param tokens - Design tokens registry
- * @returns Resolved Tailwind classes or empty string if not found
+ * Get the system preferred color scheme
  */
-export function resolveTokenPath(
-  tokenPath: string | string[],
-  tokens: DesignTokens
-): string {
-  // Handle array of token paths - resolve each and join
-  if (Array.isArray(tokenPath)) {
-    return tokenPath
-      .map((path) => resolveTokenPath(path, tokens))
-      .filter(Boolean)
-      .join(' ');
-  }
-
-  // Handle single token path
-  const parts = tokenPath.split('.');
-  if (parts.length !== 2) {
-    // Invalid path format, return empty
-    return '';
-  }
-
-  const [category, name] = parts;
-  const categoryTokens = tokens[category];
-
-  if (!categoryTokens || typeof categoryTokens !== 'object') {
-    return '';
-  }
-
-  return categoryTokens[name] ?? '';
+function getSystemMode(): ResolvedMode {
+  if (typeof window === "undefined") return "light";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
 }
 
 /**
- * Merge resolved tokens with custom className.
- *
- * @param tokenPath - Token path(s) to resolve
- * @param className - Additional custom classes
- * @param tokens - Design tokens registry
- * @returns Combined class string
+ * Resolve the color mode (handle 'system' preference)
  */
-export function mergeTokenClasses(
-  tokenPath: string | string[] | undefined,
-  className: string | undefined,
-  tokens: DesignTokens
-): string {
-  const parts: string[] = [];
-
-  if (tokenPath) {
-    const resolved = resolveTokenPath(tokenPath, tokens);
-    if (resolved) parts.push(resolved);
+function resolveMode(mode: ColorMode): ResolvedMode {
+  if (mode === "system") {
+    return getSystemMode();
   }
-
-  if (className) {
-    parts.push(className);
-  }
-
-  return parts.join(' ');
+  return mode;
 }
-
-// ============================================================================
-// Context
-// ============================================================================
-
-const ThemeContext = createContext<ThemeContextValue | null>(null);
-
-// ============================================================================
-// Provider
-// ============================================================================
 
 export interface ThemeProviderProps {
-  /** Design tokens registry */
-  designTokens?: DesignTokens;
-  /** Design preferences */
-  design?: DesignPreferences;
-  /** Children to render */
   children: React.ReactNode;
+  /** Available themes (will be merged with built-in themes) */
+  themes?: readonly ThemeDefinition[] | ThemeDefinition[];
+  /** Default theme name */
+  defaultTheme?: string;
+  /** Default color mode */
+  defaultMode?: ColorMode;
 }
 
 /**
- * Provider component that provides theme context to the application.
+ * Unified ThemeProvider component
  *
- * Merges provided tokens with defaults so there's always a fallback.
+ * @example
+ * ```tsx
+ * // Basic usage with built-in themes
+ * <ThemeProvider defaultTheme="wireframe" defaultMode="light">
+ *   <App />
+ * </ThemeProvider>
+ *
+ * // With custom themes from orbital schema
+ * import { THEMES } from './generated/theme-manifest';
+ * <ThemeProvider themes={THEMES} defaultTheme="ocean" defaultMode="system">
+ *   <App />
+ * </ThemeProvider>
+ * ```
  */
-export function ThemeProvider({
-  designTokens,
-  design,
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
-}: ThemeProviderProps): React.ReactElement {
-  // Merge provided tokens with defaults
-  const mergedTokens = useMemo<DesignTokens>(() => {
-    if (!designTokens) return DEFAULT_DESIGN_TOKENS;
+  themes = [],
+  defaultTheme = "wireframe",
+  defaultMode = "system",
+}) => {
+  // Merge built-in themes with custom themes
+  const availableThemes = useMemo(() => {
+    const themeMap = new Map<string, ThemeDefinition>();
+    // Add built-in themes first
+    BUILT_IN_THEMES.forEach((t) => themeMap.set(t.name, t));
+    // Custom themes override built-in if same name
+    themes.forEach((t) => themeMap.set(t.name, t));
+    return Array.from(themeMap.values());
+  }, [themes]);
 
-    return {
-      ...DEFAULT_DESIGN_TOKENS,
-      ...designTokens,
-      // Deep merge each category
-      surfaces: { ...DEFAULT_DESIGN_TOKENS.surfaces, ...designTokens.surfaces },
-      text: { ...DEFAULT_DESIGN_TOKENS.text, ...designTokens.text },
-      interactive: { ...DEFAULT_DESIGN_TOKENS.interactive, ...designTokens.interactive },
-      effects: { ...DEFAULT_DESIGN_TOKENS.effects, ...designTokens.effects },
-    };
-  }, [designTokens]);
+  // Initialize theme from storage or default
+  const [theme, setThemeState] = useState<string>(() => {
+    if (typeof window === "undefined") return defaultTheme;
+    const stored = localStorage.getItem(THEME_STORAGE_KEY);
+    // Validate stored theme exists
+    const validThemes = [
+      ...BUILT_IN_THEMES.map((t) => t.name),
+      ...themes.map((t) => t.name),
+    ];
+    if (stored && validThemes.includes(stored)) {
+      return stored;
+    }
+    return defaultTheme;
+  });
 
-  // Merge design preferences with defaults
-  const mergedDesign = useMemo<DesignPreferences>(() => ({
-    ...DEFAULT_DESIGN_PREFERENCES,
-    ...design,
-  }), [design]);
+  // Initialize mode from storage or default
+  const [mode, setModeState] = useState<ColorMode>(() => {
+    if (typeof window === "undefined") return defaultMode;
+    const stored = localStorage.getItem(MODE_STORAGE_KEY);
+    if (stored === "light" || stored === "dark" || stored === "system") {
+      return stored;
+    }
+    return defaultMode;
+  });
 
-  // Create resolver function
-  const resolveToken = useCallback(
-    (tokenPath: string | string[]) => resolveTokenPath(tokenPath, mergedTokens),
-    [mergedTokens]
+  // Resolved mode (handles 'system' preference)
+  const [resolvedMode, setResolvedMode] = useState<ResolvedMode>(() =>
+    resolveMode(mode),
   );
 
-  // Build context value
-  const contextValue = useMemo<ThemeContextValue>(() => ({
-    designTokens: mergedTokens,
-    design: mergedDesign,
-    resolveToken,
-    isDarkMode: mergedDesign.darkMode ?? false,
-    primaryColor: mergedDesign.primaryColor ?? '#3b82f6',
-  }), [mergedTokens, mergedDesign, resolveToken]);
+  // The applied theme string (e.g., "ocean-light")
+  const appliedTheme = useMemo(
+    () => `${theme}-${resolvedMode}`,
+    [theme, resolvedMode],
+  );
+
+  // Update resolved mode when mode changes or system preference changes
+  useEffect(() => {
+    const updateResolved = () => {
+      setResolvedMode(resolveMode(mode));
+    };
+
+    updateResolved();
+
+    // Listen for system theme changes
+    if (mode === "system") {
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      const handleChange = () => updateResolved();
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    }
+    return undefined;
+  }, [mode]);
+
+  // Apply theme to document
+  useEffect(() => {
+    const root = document.documentElement;
+    root.setAttribute("data-theme", appliedTheme);
+
+    // Also set class for Tailwind dark: variant compatibility
+    root.classList.remove("light", "dark");
+    root.classList.add(resolvedMode);
+  }, [appliedTheme, resolvedMode]);
+
+  // Set theme
+  const setTheme = useCallback(
+    (newTheme: string) => {
+      const validTheme = availableThemes.find((t) => t.name === newTheme);
+      if (validTheme) {
+        setThemeState(newTheme);
+        if (typeof window !== "undefined") {
+          localStorage.setItem(THEME_STORAGE_KEY, newTheme);
+        }
+      } else {
+        console.warn(
+          `Theme "${newTheme}" not found. Available: ${availableThemes.map((t) => t.name).join(", ")}`,
+        );
+      }
+    },
+    [availableThemes],
+  );
+
+  // Set mode
+  const setMode = useCallback((newMode: ColorMode) => {
+    setModeState(newMode);
+    if (typeof window !== "undefined") {
+      localStorage.setItem(MODE_STORAGE_KEY, newMode);
+    }
+  }, []);
+
+  // Toggle between light and dark
+  const toggleMode = useCallback(() => {
+    const newMode: ColorMode = resolvedMode === "dark" ? "light" : "dark";
+    setMode(newMode);
+  }, [resolvedMode, setMode]);
+
+  const contextValue = useMemo<ThemeContextValue>(
+    () => ({
+      theme,
+      mode,
+      resolvedMode,
+      setTheme,
+      setMode,
+      toggleMode,
+      availableThemes,
+      appliedTheme,
+    }),
+    [
+      theme,
+      mode,
+      resolvedMode,
+      setTheme,
+      setMode,
+      toggleMode,
+      availableThemes,
+      appliedTheme,
+    ],
+  );
 
   return (
     <ThemeContext.Provider value={contextValue}>
       {children}
     </ThemeContext.Provider>
   );
-}
-
-// ============================================================================
-// Hook
-// ============================================================================
+};
 
 /**
- * Hook to access the theme context.
+ * Hook for accessing theme context
  *
- * Returns default values if used outside of ThemeProvider (for resilience).
+ * @returns Theme context value
  *
  * @example
  * ```tsx
- * function MyComponent() {
- *   const { resolveToken, isDarkMode } = useTheme();
- *   const cardClasses = resolveToken('surfaces.card');
- *   return <div className={cardClasses}>...</div>;
- * }
+ * const { theme, resolvedMode, toggleMode, setTheme } = useTheme();
+ *
+ * // Toggle dark mode
+ * <button onClick={toggleMode}>
+ *   {resolvedMode === 'dark' ? 'Light' : 'Dark'}
+ * </button>
+ *
+ * // Change theme
+ * <select value={theme} onChange={(e) => setTheme(e.target.value)}>
+ *   {availableThemes.map(t => (
+ *     <option key={t.name} value={t.name}>{t.displayName || t.name}</option>
+ *   ))}
+ * </select>
  * ```
  */
 export function useTheme(): ThemeContextValue {
   const context = useContext(ThemeContext);
-
-  // Return defaults if not in provider (for resilience)
-  if (!context) {
+  if (context === undefined) {
+    // Return a default implementation for storybook/testing
     return {
-      designTokens: DEFAULT_DESIGN_TOKENS,
-      design: DEFAULT_DESIGN_PREFERENCES,
-      resolveToken: (tokenPath) => resolveTokenPath(tokenPath, DEFAULT_DESIGN_TOKENS),
-      isDarkMode: false,
-      primaryColor: '#3b82f6',
+      theme: "wireframe",
+      mode: "light",
+      resolvedMode: "light",
+      setTheme: () => {},
+      setMode: () => {},
+      toggleMode: () => {},
+      availableThemes: BUILT_IN_THEMES,
+      appliedTheme: "wireframe-light",
     };
   }
-
   return context;
 }
 
-// ============================================================================
-// Utility Hook for Pattern Props
-// ============================================================================
+// Legacy exports for backward compatibility
+export type Theme = ColorMode;
+export type ResolvedTheme = ResolvedMode;
+export type DesignTheme = ThemeDefinition;
 
-/**
- * Hook to resolve pattern styling props (token + className).
- *
- * Use this in pattern components to combine token resolution with custom classes.
- *
- * @example
- * ```tsx
- * function CardPattern({ token, className, ...props }) {
- *   const classes = usePatternClasses(token, className);
- *   return <div className={classes}>...</div>;
- * }
- * ```
- */
-export function usePatternClasses(
-  token?: string | string[],
-  className?: string
-): string {
-  const { designTokens } = useTheme();
-  return useMemo(
-    () => mergeTokenClasses(token, className, designTokens),
-    [token, className, designTokens]
-  );
-}
-
-// ============================================================================
-// Exports
-// ============================================================================
-
-export {
-  ThemeContext,
-  DEFAULT_DESIGN_TOKENS,
-  DEFAULT_DESIGN_PREFERENCES,
-};
+export default ThemeContext;

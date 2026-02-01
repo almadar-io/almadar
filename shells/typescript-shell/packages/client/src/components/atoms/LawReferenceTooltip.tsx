@@ -5,12 +5,12 @@
  * Shows law name, article number, and relevant clause text.
  */
 
-import React from 'react';
-import { Box } from './Box';
-import { VStack } from './Stack';
-import { Typography } from './Typography';
-import { Divider } from './Divider';
-import { cn } from '../../lib/cn';
+import React from "react";
+import { Box } from "./Box";
+import { VStack } from "./Stack";
+import { Typography } from "./Typography";
+import { Divider } from "./Divider";
+import { cn } from "../../lib/cn";
 
 /**
  * Law reference definition
@@ -34,7 +34,7 @@ export interface LawReferenceTooltipProps {
   /** Children element that triggers the tooltip */
   children: React.ReactNode;
   /** Tooltip position */
-  position?: 'top' | 'bottom' | 'left' | 'right';
+  position?: "top" | "bottom" | "left" | "right";
   /** Additional CSS classes */
   className?: string;
 }
@@ -43,20 +43,22 @@ export interface LawReferenceTooltipProps {
  * Position styles for tooltip placement
  */
 const positionStyles = {
-  top: 'bottom-full left-1/2 -translate-x-1/2 mb-2',
-  bottom: 'top-full left-1/2 -translate-x-1/2 mt-2',
-  left: 'right-full top-1/2 -translate-y-1/2 mr-2',
-  right: 'left-full top-1/2 -translate-y-1/2 ml-2',
+  top: "bottom-full left-1/2 -translate-x-1/2 mb-2",
+  bottom: "top-full left-1/2 -translate-x-1/2 mt-2",
+  left: "right-full top-1/2 -translate-y-1/2 mr-2",
+  right: "left-full top-1/2 -translate-y-1/2 ml-2",
 };
 
 /**
  * Arrow styles based on position
  */
 const arrowStyles = {
-  top: 'top-full left-1/2 -translate-x-1/2 border-t-slate-800 border-l-transparent border-r-transparent border-b-transparent',
-  bottom: 'bottom-full left-1/2 -translate-x-1/2 border-b-slate-800 border-l-transparent border-r-transparent border-t-transparent',
-  left: 'left-full top-1/2 -translate-y-1/2 border-l-slate-800 border-t-transparent border-b-transparent border-r-transparent',
-  right: 'right-full top-1/2 -translate-y-1/2 border-r-slate-800 border-t-transparent border-b-transparent border-l-transparent',
+  top: "top-full left-1/2 -translate-x-1/2 border-t-[var(--color-foreground)] border-l-transparent border-r-transparent border-b-transparent",
+  bottom:
+    "bottom-full left-1/2 -translate-x-1/2 border-b-[var(--color-foreground)] border-l-transparent border-r-transparent border-t-transparent",
+  left: "left-full top-1/2 -translate-y-1/2 border-l-[var(--color-foreground)] border-t-transparent border-b-transparent border-r-transparent",
+  right:
+    "right-full top-1/2 -translate-y-1/2 border-r-[var(--color-foreground)] border-t-transparent border-b-transparent border-l-transparent",
 };
 
 /**
@@ -77,7 +79,7 @@ const arrowStyles = {
 export const LawReferenceTooltip: React.FC<LawReferenceTooltipProps> = ({
   reference,
   children,
-  position = 'top',
+  position = "top",
   className,
 }) => {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -118,20 +120,27 @@ export const LawReferenceTooltip: React.FC<LawReferenceTooltipProps> = ({
           shadow="lg"
           position="absolute"
           className={cn(
-            'z-50 w-64 bg-slate-800 text-white',
-            positionStyles[position]
+            "z-50 w-64 bg-[var(--color-foreground)] text-[var(--color-background)]",
+            positionStyles[position],
           )}
           role="tooltip"
         >
           <VStack gap="xs">
             {/* Law header */}
-            <Typography variant="label" weight="semibold" className="text-amber-400">
+            <Typography
+              variant="label"
+              weight="semibold"
+              className="text-amber-400"
+            >
               {reference.law} {reference.article}
             </Typography>
 
             {/* Law name */}
             {reference.lawName && (
-              <Typography variant="caption" className="text-slate-300">
+              <Typography
+                variant="caption"
+                className="text-[var(--color-muted-foreground)]"
+              >
                 {reference.lawName}
               </Typography>
             )}
@@ -139,8 +148,11 @@ export const LawReferenceTooltip: React.FC<LawReferenceTooltipProps> = ({
             {/* Clause text */}
             {reference.clause && (
               <>
-                <Divider className="border-slate-600" />
-                <Typography variant="caption" className="text-slate-100 leading-relaxed">
+                <Divider className="border-[var(--color-border)]" />
+                <Typography
+                  variant="caption"
+                  className="text-[var(--color-background)] leading-relaxed"
+                >
                   {reference.clause}
                 </Typography>
               </>
@@ -167,7 +179,7 @@ export const LawReferenceTooltip: React.FC<LawReferenceTooltipProps> = ({
           <Box
             as="span"
             position="absolute"
-            className={cn('w-0 h-0 border-4', arrowStyles[position])}
+            className={cn("w-0 h-0 border-4", arrowStyles[position])}
           />
         </Box>
       )}
@@ -175,4 +187,4 @@ export const LawReferenceTooltip: React.FC<LawReferenceTooltipProps> = ({
   );
 };
 
-LawReferenceTooltip.displayName = 'LawReferenceTooltip';
+LawReferenceTooltip.displayName = "LawReferenceTooltip";

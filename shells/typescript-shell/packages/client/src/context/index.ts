@@ -14,22 +14,21 @@ export {
   type RenderUIConfig,
   type SlotAnimation,
   type SlotChangeCallback,
-} from './UISlotContext';
+} from "./UISlotContext";
 
 export {
   ThemeProvider,
-  ThemeContext,
   useTheme,
-  usePatternClasses,
-  resolveTokenPath,
-  mergeTokenClasses,
-  DEFAULT_DESIGN_TOKENS,
-  DEFAULT_DESIGN_PREFERENCES,
-  type DesignTokens,
-  type DesignPreferences,
-  type ThemeContextValue,
+  BUILT_IN_THEMES,
+  type ThemeDefinition,
   type ThemeProviderProps,
-} from './ThemeContext';
+  type ColorMode,
+  type ResolvedMode,
+  type DesignTheme,
+} from "./ThemeContext";
+export { default as ThemeContext } from "./ThemeContext";
+
+export { DesignThemeProvider, useDesignTheme } from "./DesignThemeContext";
 
 export {
   UserProvider,
@@ -42,4 +41,4 @@ export {
   type UserData,
   type UserContextValue,
   type UserProviderProps,
-} from './UserContext';
+} from "./UserContext";

@@ -1,16 +1,16 @@
 /**
  * TextHighlight Atom Component
- * 
+ *
  * A styled span component for highlighting text with annotations (questions or notes).
  * Uses different colors for different annotation types:
  * - Questions: Blue highlight
  * - Notes: Yellow highlight
  */
 
-import React from 'react';
-import { cn } from '../../lib/cn';
+import React from "react";
+import { cn } from "../../lib/cn";
 
-export type HighlightType = 'question' | 'note';
+export type HighlightType = "question" | "note";
 
 export interface TextHighlightProps {
   /**
@@ -68,20 +68,20 @@ export const TextHighlight: React.FC<TextHighlightProps> = ({
   className,
   children,
 }) => {
-  const baseStyles = 'cursor-pointer transition-all duration-150';
+  const baseStyles = "cursor-pointer transition-all duration-150";
 
   const typeStyles = {
     question: cn(
       // Blue border for questions
-      'bg-white border-b-2 border-blue-600',
-      'hover:bg-neutral-100',
-      isActive && 'bg-blue-100 ring-2 ring-blue-600'
+      "bg-[var(--color-card)] border-b-2 border-primary-600",
+      "hover:bg-[var(--color-muted)]",
+      isActive && "bg-primary-100 ring-2 ring-primary-600",
     ),
     note: cn(
       // Yellow border for notes
-      'bg-white border-b-2 border-amber-500',
-      'hover:bg-neutral-100',
-      isActive && 'bg-amber-100 ring-2 ring-amber-500'
+      "bg-[var(--color-card)] border-b-2 border-amber-500",
+      "hover:bg-[var(--color-muted)]",
+      isActive && "bg-amber-100 ring-2 ring-amber-500",
     ),
   };
 
@@ -97,7 +97,7 @@ export const TextHighlight: React.FC<TextHighlightProps> = ({
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
+        if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           onClick?.();
         }
@@ -108,5 +108,4 @@ export const TextHighlight: React.FC<TextHighlightProps> = ({
   );
 };
 
-TextHighlight.displayName = 'TextHighlight';
-
+TextHighlight.displayName = "TextHighlight";

@@ -1,12 +1,17 @@
-import * as React from 'react';
-import { cn } from '../../../lib/cn';
-import { DPad, type DPadDirection } from '../../molecules/game/DPad';
-import { ActionButtons, type ActionButtonConfig } from '../../molecules/game/ActionButtons';
-import { ControlButton } from '../../atoms/game/ControlButton';
+import * as React from "react";
+import { cn } from "../../../lib/cn";
+import { DPad, type DPadDirection } from "../../molecules/game/DPad";
+import {
+  ActionButtons,
+  type ActionButtonConfig,
+} from "../../molecules/game/ActionButtons";
+import { ControlButton } from "../../atoms/game/ControlButton";
 
 export interface GameControl {
   /** Unique identifier */
-  id: string;
+  id?: string;
+  /** Alias for id (schema compatibility) */
+  key?: string;
   /** Event to emit on press */
   event: string;
   /** Display label */
@@ -14,20 +19,20 @@ export interface GameControl {
   /** Icon component or emoji */
   icon?: React.ReactNode;
   /** Button variant */
-  variant?: 'primary' | 'secondary' | 'ghost' | string;
+  variant?: "primary" | "secondary" | "ghost" | string;
 }
 
 export interface GameControlsProps {
   /** Control layout type */
-  layout: 'dpad' | 'joystick' | 'buttons' | 'custom' | string;
+  layout: "dpad" | "joystick" | "buttons" | "custom" | string;
   /** Position on screen */
-  position: 'bottom-left' | 'bottom-right' | 'bottom-center' | 'split' | string;
+  position: "bottom-left" | "bottom-right" | "bottom-center" | "split" | string;
   /** Controls to display - accepts readonly for compatibility with generated const arrays */
   controls?: readonly GameControl[];
   /** Called when control is pressed/released */
   onControl?: (event: string, pressed: boolean) => void;
   /** Size variant */
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
   /** Additional CSS classes */
   className?: string;
   /** Whether controls are visible */
@@ -36,11 +41,15 @@ export interface GameControlsProps {
   opacity?: number;
 }
 
+/** Resolve control id, supporting both id and key aliases */
+const resolveControlId = (control: GameControl): string =>
+  control.id ?? control.key ?? control.event;
+
 const positionMap: Record<string, string> = {
-  'bottom-left': 'absolute bottom-4 left-4',
-  'bottom-right': 'absolute bottom-4 right-4',
-  'bottom-center': 'absolute bottom-4 left-1/2 -translate-x-1/2',
-  split: 'absolute bottom-4 left-0 right-0 flex justify-between px-4',
+  "bottom-left": "absolute bottom-4 left-4",
+  "bottom-right": "absolute bottom-4 right-4",
+  "bottom-center": "absolute bottom-4 left-1/2 -translate-x-1/2",
+  split: "absolute bottom-4 left-0 right-0 flex justify-between px-4",
 };
 
 export function GameControls({
@@ -48,7 +57,7 @@ export function GameControls({
   position,
   controls = [],
   onControl = () => {},
-  size = 'md',
+  size = "md",
   className,
   visible = true,
   opacity = 0.9,
@@ -57,10 +66,10 @@ export function GameControls({
 
   // Direction mapping for DPad
   const directionToEvent: Record<DPadDirection, string | undefined> = {
-    up: controls.find((c) => c.id === 'up')?.event,
-    down: controls.find((c) => c.id === 'down')?.event,
-    left: controls.find((c) => c.id === 'left')?.event,
-    right: controls.find((c) => c.id === 'right')?.event,
+    up: controls.find((c) => resolveControlId(c) === "up")?.event,
+    down: controls.find((c) => resolveControlId(c) === "down")?.event,
+    left: controls.find((c) => resolveControlId(c) === "left")?.event,
+    right: controls.find((c) => resolveControlId(c) === "right")?.event,
   };
 
   const handleDirection = (direction: DPadDirection, pressed: boolean) => {
@@ -72,28 +81,28 @@ export function GameControls({
 
   // Separate directional and action controls
   const directionControls = controls.filter((c) =>
-    ['up', 'down', 'left', 'right'].includes(c.id)
+    ["up", "down", "left", "right"].includes(resolveControlId(c)),
   );
   const actionControls = controls.filter(
-    (c) => !['up', 'down', 'left', 'right'].includes(c.id)
+    (c) => !["up", "down", "left", "right"].includes(resolveControlId(c)),
   );
 
   // Split layout: DPad on left, actions on right
-  if (position === 'split') {
+  if (position === "split") {
     return (
       <div className={cn(positionMap[position], className)} style={{ opacity }}>
         {/* Left side: DPad or direction buttons */}
-        {layout === 'dpad' && directionControls.length > 0 ? (
+        {layout === "dpad" && directionControls.length > 0 ? (
           <DPad size={size} onDirection={handleDirection} />
         ) : (
           <div className="flex gap-2">
             {directionControls.map((control) => (
               <ControlButton
-                key={control.id}
+                key={resolveControlId(control)}
                 icon={control.icon}
                 label={control.label}
                 size={size}
-                variant={control.variant ?? 'secondary'}
+                variant={control.variant ?? "secondary"}
                 onPress={() => onControl(control.event, true)}
                 onRelease={() => onControl(control.event, false)}
               />
@@ -104,16 +113,18 @@ export function GameControls({
         {/* Right side: Action buttons */}
         <ActionButtons
           buttons={actionControls.map((c) => ({
-            id: c.id,
+            id: resolveControlId(c),
             label: c.label,
             icon: c.icon,
             variant: c.variant,
           }))}
           onAction={(id, pressed) => {
-            const control = actionControls.find((c) => c.id === id);
+            const control = actionControls.find(
+              (c) => resolveControlId(c) === id,
+            );
             if (control) onControl(control.event, pressed);
           }}
-          layout={actionControls.length === 4 ? 'diamond' : 'horizontal'}
+          layout={actionControls.length === 4 ? "diamond" : "horizontal"}
           size={size}
         />
       </div>
@@ -121,7 +132,7 @@ export function GameControls({
   }
 
   // Non-split layouts
-  if (layout === 'dpad') {
+  if (layout === "dpad") {
     return (
       <div className={cn(positionMap[position], className)} style={{ opacity }}>
         <DPad size={size} onDirection={handleDirection} />
@@ -129,17 +140,17 @@ export function GameControls({
     );
   }
 
-  if (layout === 'buttons' || layout === 'custom') {
+  if (layout === "buttons" || layout === "custom") {
     return (
       <div className={cn(positionMap[position], className)} style={{ opacity }}>
         <div className="flex gap-2 flex-wrap">
           {controls.map((control) => (
             <ControlButton
-              key={control.id}
+              key={resolveControlId(control)}
               icon={control.icon}
               label={control.label}
               size={size}
-              variant={control.variant ?? 'secondary'}
+              variant={control.variant ?? "secondary"}
               onPress={() => onControl(control.event, true)}
               onRelease={() => onControl(control.event, false)}
             />
@@ -159,4 +170,4 @@ export function GameControls({
   );
 }
 
-GameControls.displayName = 'GameControls';
+GameControls.displayName = "GameControls";

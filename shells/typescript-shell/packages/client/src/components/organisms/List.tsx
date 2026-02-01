@@ -10,27 +10,34 @@
  * - Delightful hover micro-interactions
  * - Elegant status indicators
  *
- * Almadar Component Interface Compliance:
+ * Orbital Component Interface Compliance:
  * - Entity binding with auto-fetch when entity is a string
  * - Event emission via useEventBus (UI:* events)
  * - Event listening for UI:SEARCH and UI:CLEAR_SEARCH
  * - isLoading and error state props
  */
 
-import React, { useEffect, useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import type { LucideIcon } from 'lucide-react';
-import { Calendar, MoreHorizontal, Package, ChevronRight, Pencil, Eye } from 'lucide-react';
-import { Typography, Checkbox, Divider } from '../atoms';
-import { HStack } from '../atoms/Stack';
-import { Menu, type MenuItem } from '../molecules/Menu';
-import { EmptyState } from '../molecules/EmptyState';
-import { LoadingState } from '../molecules/LoadingState';
-import { ErrorState } from '../molecules/ErrorState';
-import { cn } from '../../lib/cn';
-import { useEntityList } from '../../hooks/useEntityData';
-import { useEventBus, type KFlowEvent } from '../../hooks/useEventBus';
-import { useQuerySingleton } from '../../hooks/useQuerySingleton';
+import React, { useEffect, useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import type { LucideIcon } from "lucide-react";
+import {
+  Calendar,
+  MoreHorizontal,
+  Package,
+  ChevronRight,
+  Pencil,
+  Eye,
+} from "lucide-react";
+import { Typography, Checkbox, Divider } from "../atoms";
+import { HStack } from "../atoms/Stack";
+import { Menu, type MenuItem } from "../molecules/Menu";
+import { EmptyState } from "../molecules/EmptyState";
+import { LoadingState } from "../molecules/LoadingState";
+import { ErrorState } from "../molecules/ErrorState";
+import { cn } from "../../lib/cn";
+import { useEntityList } from "../../hooks/useEntityData";
+import { useEventBus, type KFlowEvent } from "../../hooks/useEventBus";
+import { useQuerySingleton } from "../../hooks/useQuerySingleton";
 
 export interface ListItem {
   id: string;
@@ -57,9 +64,24 @@ export interface SchemaItemAction {
   event?: string;
   navigatesTo?: string;
   /** Action placement - accepts all common placement values */
-  placement?: 'row' | 'bulk' | 'card' | 'footer' | string;
+  placement?: "row" | "bulk" | "card" | "footer" | string;
   action?: string;
-  variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'default';
+  variant?: "primary" | "secondary" | "ghost" | "danger" | "default";
+  /** Click handler from generated code */
+  onClick?: (row: unknown) => void;
+}
+
+/**
+ * Field definition - can be a simple string or object with key/header
+ */
+export type FieldDef = string | { key: string; header?: string };
+
+/**
+ * Normalize fields to simple string array
+ */
+function normalizeFields(fields: readonly FieldDef[] | undefined): string[] {
+  if (!fields) return [];
+  return fields.map((f) => (typeof f === "string" ? f : f.key));
 }
 
 export interface ListProps {
@@ -79,14 +101,16 @@ export interface ListProps {
   /** Item actions - schema-driven or function-based */
   itemActions?: ((item: ListItem) => MenuItem[]) | readonly SchemaItemAction[];
   showDividers?: boolean;
-  variant?: 'default' | 'card';
+  variant?: "default" | "card";
   emptyMessage?: string;
   className?: string;
   renderItem?: (item: ListItem, index: number) => React.ReactNode;
   children?: React.ReactNode;
   onItemAction?: (action: string, item: ListItem, index: number) => void;
   onRowClick?: (item: ListItem) => void;
-  /** Field names - accepts readonly for generated const arrays */
+  /** Fields to display - accepts string[] or {key, header}[] for unified interface */
+  fields?: readonly FieldDef[];
+  /** Alias for fields - backwards compatibility */
   fieldNames?: readonly string[];
   /**
    * Query singleton binding for filter/sort state.
@@ -96,109 +120,145 @@ export interface ListProps {
   query?: string;
 }
 
-// Refined color palette for status indicators
-const STATUS_STYLES: Record<string, { bg: string; text: string; dot: string; border: string }> = {
+// Refined color palette for status indicators using CSS variables
+const STATUS_STYLES: Record<
+  string,
+  { bg: string; text: string; dot: string; border: string }
+> = {
   complete: {
-    bg: 'bg-emerald-50/80 dark:bg-emerald-400/10',
-    text: 'text-emerald-700 dark:text-emerald-400',
-    dot: 'bg-emerald-500 ring-4 ring-emerald-500/20',
-    border: 'border-emerald-200/60 dark:border-emerald-500/20'
+    bg: "bg-[var(--color-success)]/10",
+    text: "text-[var(--color-success)]",
+    dot: "bg-[var(--color-success)] ring-4 ring-[var(--color-success)]/20",
+    border: "border-[var(--color-success)]/30",
   },
   active: {
-    bg: 'bg-blue-50/80 dark:bg-blue-400/10',
-    text: 'text-blue-700 dark:text-blue-400',
-    dot: 'bg-blue-500 ring-4 ring-blue-500/20',
-    border: 'border-blue-200/60 dark:border-blue-500/20'
+    bg: "bg-[var(--color-info)]/10",
+    text: "text-[var(--color-info)]",
+    dot: "bg-[var(--color-info)] ring-4 ring-[var(--color-info)]/20",
+    border: "border-[var(--color-info)]/30",
   },
   pending: {
-    bg: 'bg-amber-50/80 dark:bg-amber-400/10',
-    text: 'text-amber-700 dark:text-amber-400',
-    dot: 'bg-amber-500 ring-4 ring-amber-500/20',
-    border: 'border-amber-200/60 dark:border-amber-500/20'
+    bg: "bg-[var(--color-warning)]/10",
+    text: "text-[var(--color-warning)]",
+    dot: "bg-[var(--color-warning)] ring-4 ring-[var(--color-warning)]/20",
+    border: "border-[var(--color-warning)]/30",
   },
   blocked: {
-    bg: 'bg-rose-50/80 dark:bg-rose-400/10',
-    text: 'text-rose-700 dark:text-rose-400',
-    dot: 'bg-rose-500 ring-4 ring-rose-500/20',
-    border: 'border-rose-200/60 dark:border-rose-500/20'
+    bg: "bg-[var(--color-error)]/10",
+    text: "text-[var(--color-error)]",
+    dot: "bg-[var(--color-error)] ring-4 ring-[var(--color-error)]/20",
+    border: "border-[var(--color-error)]/30",
   },
   high: {
-    bg: 'bg-orange-50/80 dark:bg-orange-400/10',
-    text: 'text-orange-700 dark:text-orange-400',
-    dot: 'bg-orange-500 ring-4 ring-orange-500/20',
-    border: 'border-orange-200/60 dark:border-orange-500/20'
+    bg: "bg-[var(--color-warning)]/10",
+    text: "text-[var(--color-warning)]",
+    dot: "bg-[var(--color-warning)] ring-4 ring-[var(--color-warning)]/20",
+    border: "border-[var(--color-warning)]/30",
   },
   medium: {
-    bg: 'bg-yellow-50/80 dark:bg-yellow-400/10',
-    text: 'text-yellow-700 dark:text-yellow-400',
-    dot: 'bg-yellow-500 ring-4 ring-yellow-500/20',
-    border: 'border-yellow-200/60 dark:border-yellow-500/20'
+    bg: "bg-[var(--color-accent)]/10",
+    text: "text-[var(--color-accent)]",
+    dot: "bg-[var(--color-accent)] ring-4 ring-[var(--color-accent)]/20",
+    border: "border-[var(--color-accent)]/30",
   },
   low: {
-    bg: 'bg-slate-50/80 dark:bg-slate-400/10',
-    text: 'text-slate-600 dark:text-slate-400',
-    dot: 'bg-slate-500 ring-4 ring-slate-500/20',
-    border: 'border-slate-200/60 dark:border-slate-500/20'
+    bg: "bg-[var(--color-muted)]",
+    text: "text-[var(--color-muted-foreground)]",
+    dot: "bg-[var(--color-muted-foreground)] ring-4 ring-[var(--color-muted-foreground)]/20",
+    border: "border-[var(--color-border)]",
   },
   default: {
-    bg: 'bg-gray-50/80 dark:bg-gray-400/10',
-    text: 'text-gray-600 dark:text-gray-400',
-    dot: 'bg-gray-500 ring-4 ring-gray-500/20',
-    border: 'border-gray-200/60 dark:border-gray-500/20'
+    bg: "bg-[var(--color-muted)]",
+    text: "text-[var(--color-muted-foreground)]",
+    dot: "bg-[var(--color-muted-foreground)] ring-4 ring-[var(--color-muted-foreground)]/20",
+    border: "border-[var(--color-border)]",
   },
 };
 
 function getStatusStyle(fieldName: string, value: string) {
   const val = String(value).toLowerCase();
 
-  if (val.includes('complete') || val.includes('done')) return STATUS_STYLES.complete;
-  if (val.includes('active') || val.includes('progress')) return STATUS_STYLES.active;
-  if (val.includes('pending') || val.includes('waiting')) return STATUS_STYLES.pending;
-  if (val.includes('block') || val.includes('cancel')) return STATUS_STYLES.blocked;
-  if (val.includes('high') || val.includes('urgent')) return STATUS_STYLES.high;
-  if (val.includes('medium') || val.includes('normal')) return STATUS_STYLES.medium;
-  if (val.includes('low')) return STATUS_STYLES.low;
+  if (val.includes("complete") || val.includes("done"))
+    return STATUS_STYLES.complete;
+  if (val.includes("active") || val.includes("progress"))
+    return STATUS_STYLES.active;
+  if (val.includes("pending") || val.includes("waiting"))
+    return STATUS_STYLES.pending;
+  if (val.includes("block") || val.includes("cancel"))
+    return STATUS_STYLES.blocked;
+  if (val.includes("high") || val.includes("urgent")) return STATUS_STYLES.high;
+  if (val.includes("medium") || val.includes("normal"))
+    return STATUS_STYLES.medium;
+  if (val.includes("low")) return STATUS_STYLES.low;
 
   return STATUS_STYLES.default;
 }
 
 function formatValue(value: unknown, fieldName: string): string {
-  if (typeof value === 'number') {
-    if (fieldName.toLowerCase().includes('progress') || fieldName.toLowerCase().includes('percent')) {
+  if (typeof value === "number") {
+    if (
+      fieldName.toLowerCase().includes("progress") ||
+      fieldName.toLowerCase().includes("percent")
+    ) {
       return `${value}%`;
     }
-    if (fieldName.toLowerCase().includes('budget') || fieldName.toLowerCase().includes('cost')) {
-      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(value);
+    if (
+      fieldName.toLowerCase().includes("budget") ||
+      fieldName.toLowerCase().includes("cost")
+    ) {
+      return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: 0,
+      }).format(value);
     }
     return value.toLocaleString();
   }
   if (value instanceof Date) {
-    return value.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    return value.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    });
   }
-  if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}/.test(value)) {
-    return new Date(value).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  if (typeof value === "string" && /^\d{4}-\d{2}-\d{2}/.test(value)) {
+    return new Date(value).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    });
   }
   return String(value);
 }
 
 function formatFieldLabel(fieldName: string): string {
   return fieldName
-    .replace(/([A-Z])/g, ' $1')
-    .replace(/^./, str => str.toUpperCase())
-    .replace(/Id$/, '')
+    .replace(/([A-Z])/g, " $1")
+    .replace(/^./, (str) => str.toUpperCase())
+    .replace(/Id$/, "")
     .trim();
 }
 
 // Custom Badge component with refined styling
-const StatusBadge: React.FC<{ value: string; fieldName: string }> = ({ value, fieldName }) => {
+const StatusBadge: React.FC<{ value: string; fieldName: string }> = ({
+  value,
+  fieldName,
+}) => {
   const style = getStatusStyle(fieldName, value);
   return (
-    <span className={cn(
-      'inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide',
-      'border shadow-sm backdrop-blur-sm transition-colors',
-      style.bg, style.text, style.border
-    )}>
-      <span className={cn('w-1.5 h-1.5 rounded-full shadow-sm', style.dot)} />
+    <span
+      className={cn(
+        "inline-flex items-center gap-2 px-2.5 py-1 rounded-[var(--radius-full)] text-xs font-semibold tracking-wide",
+        "border shadow-[var(--shadow-sm)] backdrop-blur-sm transition-colors",
+        style.bg,
+        style.text,
+        style.border,
+      )}
+    >
+      <span
+        className={cn(
+          "w-1.5 h-1.5 rounded-[var(--radius-full)] shadow-[var(--shadow-sm)]",
+          style.dot,
+        )}
+      />
       {value}
     </span>
   );
@@ -209,18 +269,22 @@ const ProgressIndicator: React.FC<{ value: number }> = ({ value }) => {
   const clampedValue = Math.min(100, Math.max(0, value));
   return (
     <div className="flex items-center gap-2 min-w-[100px]">
-      <div className="flex-1 h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+      <div className="flex-1 h-1.5 bg-[var(--color-muted)] rounded-[var(--radius-full)] overflow-hidden">
         <div
           className={cn(
-            'h-full rounded-full transition-all duration-500',
-            clampedValue >= 100 ? 'bg-emerald-500' :
-              clampedValue >= 70 ? 'bg-blue-500' :
-                clampedValue >= 40 ? 'bg-amber-500' : 'bg-gray-400'
+            "h-full rounded-[var(--radius-full)] transition-all duration-500",
+            clampedValue >= 100
+              ? "bg-[var(--color-success)]"
+              : clampedValue >= 70
+                ? "bg-[var(--color-info)]"
+                : clampedValue >= 40
+                  ? "bg-[var(--color-warning)]"
+                  : "bg-[var(--color-muted-foreground)]",
           )}
           style={{ width: `${clampedValue}%` }}
         />
       </div>
-      <span className="text-xs font-medium text-gray-500 dark:text-gray-400 tabular-nums w-8 text-right">
+      <span className="text-xs font-medium text-[var(--color-muted-foreground)] tabular-nums w-8 text-right">
         {clampedValue}%
       </span>
     </div>
@@ -236,11 +300,12 @@ export const List: React.FC<ListProps> = ({
   selectedItems = [],
   onSelectionChange,
   itemActions,
-  emptyMessage = 'No items to display',
+  emptyMessage = "No items to display",
   className,
   renderItem: customRenderItem,
   onItemAction,
   onRowClick,
+  fields,
   fieldNames,
   type,
   query,
@@ -248,15 +313,21 @@ export const List: React.FC<ListProps> = ({
   const navigate = useNavigate();
   const eventBus = useEventBus();
 
+  // Support fields and fieldNames (alias) - normalize to string[]
+  const effectiveFieldNames =
+    normalizeFields(fields).length > 0 ? normalizeFields(fields) : fieldNames;
+
   // Query singleton for filter/sort state
   const queryState = useQuerySingleton(query);
 
   // Search state for event bus integration - initialize from query singleton if available
-  const [searchTerm, setSearchTerm] = useState(queryState?.search ?? '');
-  const [filters, setFilters] = useState<Record<string, unknown>>(queryState?.filters ?? {});
+  const [searchTerm, setSearchTerm] = useState(queryState?.search ?? "");
+  const [filters, setFilters] = useState<Record<string, unknown>>(
+    queryState?.filters ?? {},
+  );
 
   // Determine if entity is a string name (for auto-fetch) or data array (backwards compatible)
-  const isEntityName = typeof entity === 'string';
+  const isEntityName = typeof entity === "string";
   const entityName = isEntityName ? entity : undefined;
 
   // Auto-fetch data when entity is a string name and no external data provided
@@ -266,12 +337,9 @@ export const List: React.FC<ListProps> = ({
     data: fetchedData,
     isLoading: fetchLoading,
     error: fetchError,
-  } = useEntityList(
-    shouldAutoFetch ? entityName : undefined,
-    {
-      skip: !shouldAutoFetch,
-    }
-  );
+  } = useEntityList(shouldAutoFetch ? entityName : undefined, {
+    skip: !shouldAutoFetch,
+  });
 
   // Sync with query singleton changes (e.g., from FilterGroup or SearchInput)
   useEffect(() => {
@@ -286,14 +354,14 @@ export const List: React.FC<ListProps> = ({
     const handleSearch = (event: KFlowEvent) => {
       // Only handle if no query binding (avoid double-handling when query singleton is used)
       if (query) return;
-      const term = (event.payload?.searchTerm as string) ?? '';
+      const term = (event.payload?.searchTerm as string) ?? "";
       setSearchTerm(term);
     };
 
     const handleClearSearch = (event: KFlowEvent) => {
       // Only handle if no query binding
       if (query) return;
-      setSearchTerm('');
+      setSearchTerm("");
     };
 
     const handleFilter = (event: KFlowEvent) => {
@@ -301,7 +369,7 @@ export const List: React.FC<ListProps> = ({
       if (query) return;
       const { field, value } = event.payload ?? {};
       if (field) {
-        setFilters(prev => ({ ...prev, [field as string]: value }));
+        setFilters((prev) => ({ ...prev, [field as string]: value }));
       }
     };
 
@@ -309,13 +377,16 @@ export const List: React.FC<ListProps> = ({
       // Only handle if no query binding
       if (query) return;
       setFilters({});
-      setSearchTerm('');
+      setSearchTerm("");
     };
 
-    const unsubSearch = eventBus.on('UI:SEARCH', handleSearch);
-    const unsubClear = eventBus.on('UI:CLEAR_SEARCH', handleClearSearch);
-    const unsubFilter = eventBus.on('UI:FILTER', handleFilter);
-    const unsubClearFilters = eventBus.on('UI:CLEAR_FILTERS', handleClearFilters);
+    const unsubSearch = eventBus.on("UI:SEARCH", handleSearch);
+    const unsubClear = eventBus.on("UI:CLEAR_SEARCH", handleClearSearch);
+    const unsubFilter = eventBus.on("UI:FILTER", handleFilter);
+    const unsubClearFilters = eventBus.on(
+      "UI:CLEAR_FILTERS",
+      handleClearFilters,
+    );
 
     return () => {
       unsubSearch();
@@ -327,12 +398,18 @@ export const List: React.FC<ListProps> = ({
 
   // Combine loading and error states
   const isLoading = externalLoading || (shouldAutoFetch && fetchLoading);
-  const error = externalError || (fetchError instanceof Error ? fetchError : fetchError ? new Error(String(fetchError)) : null);
+  const error =
+    externalError ||
+    (fetchError instanceof Error
+      ? fetchError
+      : fetchError
+        ? new Error(String(fetchError))
+        : null);
 
   // Normalize data: handle arrays, single objects, and entity arrays
   const normalizeData = (d: typeof data | typeof entity) => {
     if (Array.isArray(d)) return d;
-    if (d && typeof d === 'object' && 'id' in d) return [d];
+    if (d && typeof d === "object" && "id" in d) return [d];
     return [];
   };
 
@@ -355,41 +432,52 @@ export const List: React.FC<ListProps> = ({
     });
   }, [rawItems, searchTerm, shouldAutoFetch]);
 
-  const getItemActions = React.useCallback((item: ListItem): MenuItem[] => {
-    if (!itemActions) return [];
+  const getItemActions = React.useCallback(
+    (item: ListItem): MenuItem[] => {
+      if (!itemActions) return [];
 
-    if (typeof itemActions === 'function') {
-      return itemActions(item);
-    }
+      if (typeof itemActions === "function") {
+        return itemActions(item);
+      }
 
-    return (itemActions as SchemaItemAction[]).map((action, idx) => ({
-      id: `${item.id}-action-${idx}`,
-      label: action.label,
-      onClick: () => {
-        // Handle navigation if navigatesTo is defined
-        if (action.navigatesTo) {
-          const url = action.navigatesTo.replace(/\{\{(\w+)\}\}/g, (_, key) =>
-            String(item[key] || item.id || '')
-          );
-          navigate(url);
-          return;
-        }
-        // Dispatch event via event bus if defined (for trait state machine integration)
-        if (action.event) {
-          eventBus.emit(`UI:${action.event}`, { row: item, entity: entityName });
-        }
-        // Legacy callback support
-        if (action.action && onItemAction) {
-          onItemAction(action.action, item, idx);
-        }
-      },
-    }));
-  }, [itemActions, navigate, onItemAction, eventBus, entityName]);
+      return (itemActions as SchemaItemAction[]).map((action, idx) => ({
+        id: `${item.id}-action-${idx}`,
+        label: action.label,
+        onClick: () => {
+          // Handle navigation if navigatesTo is defined
+          if (action.navigatesTo) {
+            const url = action.navigatesTo.replace(/\{\{(\w+)\}\}/g, (_, key) =>
+              String(item[key] || item.id || ""),
+            );
+            navigate(url);
+            return;
+          }
+          // Dispatch event via event bus if defined (for trait state machine integration)
+          if (action.event) {
+            eventBus.emit(`UI:${action.event}`, {
+              row: item,
+              entity: entityName,
+            });
+          }
+          // Legacy callback support
+          if (action.action && onItemAction) {
+            onItemAction(action.action, item, idx);
+          }
+        },
+      }));
+    },
+    [itemActions, navigate, onItemAction, eventBus, entityName],
+  );
 
   const normalizedItemActions = itemActions ? getItemActions : undefined;
 
   if (isLoading) {
-    return <LoadingState message={`Loading ${type || 'items'}...`} className={className} />;
+    return (
+      <LoadingState
+        message={`Loading ${type || "items"}...`}
+        className={className}
+      />
+    );
   }
 
   // Show error state
@@ -397,7 +485,7 @@ export const List: React.FC<ListProps> = ({
     return (
       <EmptyState
         icon={Package}
-        title={`Error loading ${type || 'items'}`}
+        title={`Error loading ${type || "items"}`}
         description={error.message}
         className={className}
       />
@@ -406,43 +494,55 @@ export const List: React.FC<ListProps> = ({
 
   const safeItems: ListItem[] = Array.isArray(filteredItems)
     ? filteredItems.map((item, index) => {
-      if (typeof item === 'object' && item !== null) {
-        const normalizedItem = {
-          ...item,
-          id: (item as ListItem).id || `item-${index}`,
-        } as ListItem;
+        if (typeof item === "object" && item !== null) {
+          const normalizedItem = {
+            ...item,
+            id: (item as ListItem).id || `item-${index}`,
+          } as ListItem;
 
-        if (fieldNames && fieldNames.length > 0) {
-          const firstField = fieldNames[0];
+          if (effectiveFieldNames && effectiveFieldNames.length > 0) {
+            const firstField = effectiveFieldNames[0];
 
-          if (!normalizedItem.title && item[firstField as keyof typeof item]) {
-            normalizedItem.title = String(item[firstField as keyof typeof item]);
+            if (
+              !normalizedItem.title &&
+              item[firstField as keyof typeof item]
+            ) {
+              normalizedItem.title = String(
+                item[firstField as keyof typeof item],
+              );
+            }
+
+            normalizedItem._fields = effectiveFieldNames.reduce(
+              (acc, field) => {
+                const value = item[field as keyof typeof item];
+                if (value !== undefined && value !== null) {
+                  acc[field] = value;
+                }
+                return acc;
+              },
+              {} as Record<string, unknown>,
+            );
           }
 
-          normalizedItem._fields = fieldNames.reduce((acc, field) => {
-            const value = item[field as keyof typeof item];
-            if (value !== undefined && value !== null) {
-              acc[field] = value;
-            }
-            return acc;
-          }, {} as Record<string, unknown>);
+          return normalizedItem;
         }
-
-        return normalizedItem;
-      }
-      return { id: `item-${index}`, title: String(item) } as ListItem;
-    })
+        return { id: `item-${index}`, title: String(item) } as ListItem;
+      })
     : [];
 
   const handleSelect = (itemId: string, checked: boolean) => {
     if (!selectable || !onSelectionChange) return;
     const newSelection = checked
       ? [...selectedItems, itemId]
-      : selectedItems.filter(id => id !== itemId);
+      : selectedItems.filter((id) => id !== itemId);
     onSelectionChange(newSelection);
   };
 
-  const defaultRenderItem = (item: ListItem, index: number, isLast: boolean) => {
+  const defaultRenderItem = (
+    item: ListItem,
+    index: number,
+    isLast: boolean,
+  ) => {
     const isSelected = selectedItems.includes(item.id);
 
     // Get all actions once
@@ -450,56 +550,76 @@ export const List: React.FC<ListProps> = ({
     const hasActions = actions.length > 0;
 
     // Find specific actions for UI promotion
-    const viewAction = actions.find(a => a.label.toLowerCase().includes('view') || a.label.toLowerCase() === 'open');
-    const editAction = actions.find(a => a.label.toLowerCase().includes('edit'));
+    const viewAction = actions.find(
+      (a) =>
+        a.label.toLowerCase().includes("view") ||
+        a.label.toLowerCase() === "open",
+    );
+    const editAction = actions.find((a) =>
+      a.label.toLowerCase().includes("edit"),
+    );
 
     // Determine row click handler: Explicit item click > Generic row click > View action
-    const handleClick = item.onClick ||
+    const handleClick =
+      item.onClick ||
       (onRowClick ? () => onRowClick(item) : undefined) ||
       viewAction?.onClick;
 
     // Categorize fields
-    const primaryField = fieldNames?.[0];
-    const statusField = fieldNames?.find(f => f.toLowerCase().includes('status'));
-    const priorityField = fieldNames?.find(f => f.toLowerCase().includes('priority'));
-    const progressField = fieldNames?.find(f =>
-      f.toLowerCase().includes('progress') || f.toLowerCase().includes('percent')
+    const primaryField = effectiveFieldNames?.[0];
+    const statusField = effectiveFieldNames?.find((f) =>
+      f.toLowerCase().includes("status"),
     );
-    const dateFields = fieldNames?.filter(f =>
-      f.toLowerCase().includes('date') || f.toLowerCase().includes('due')
-    ) || [];
-    const metadataFields = fieldNames?.filter(f =>
-      f !== primaryField &&
-      f !== statusField &&
-      f !== priorityField &&
-      f !== progressField &&
-      !dateFields.includes(f)
-    ).slice(0, 2) || [];
+    const priorityField = effectiveFieldNames?.find((f) =>
+      f.toLowerCase().includes("priority"),
+    );
+    const progressField = effectiveFieldNames?.find(
+      (f) =>
+        f.toLowerCase().includes("progress") ||
+        f.toLowerCase().includes("percent"),
+    );
+    const dateFields =
+      effectiveFieldNames?.filter(
+        (f) =>
+          f.toLowerCase().includes("date") || f.toLowerCase().includes("due"),
+      ) || [];
+    const metadataFields =
+      effectiveFieldNames
+        ?.filter(
+          (f) =>
+            f !== primaryField &&
+            f !== statusField &&
+            f !== priorityField &&
+            f !== progressField &&
+            !dateFields.includes(f),
+        )
+        .slice(0, 2) || [];
 
     // Get status for left indicator
     const statusValue = statusField ? item._fields?.[statusField] : null;
-    const statusStyle = statusValue ? getStatusStyle(statusField!, String(statusValue)) : null;
+    const statusStyle = statusValue
+      ? getStatusStyle(statusField!, String(statusValue))
+      : null;
 
     // Get progress value
     const progressValue = progressField ? item._fields?.[progressField] : null;
-    const hasProgress = typeof progressValue === 'number';
+    const hasProgress = typeof progressValue === "number";
 
     return (
       <div key={item.id}>
         <div
           className={cn(
-            'group flex items-center gap-5 px-6 py-5',
-            'transition-all duration-300 ease-out',
-            handleClick && 'cursor-pointer',
+            "group flex items-center gap-5 px-6 py-5",
+            "transition-all duration-300 ease-out",
+            handleClick && "cursor-pointer",
             // Hover state
-            'hover:bg-gray-50/80 dark:hover:bg-gray-800/60',
+            "hover:bg-[var(--color-muted)]/80",
             // Selected state
-            isSelected && 'bg-blue-50/80 dark:bg-blue-900/20 shadow-inner',
-            item.disabled && 'opacity-50 cursor-not-allowed grayscale'
+            isSelected && "bg-[var(--color-primary)]/10 shadow-inner",
+            item.disabled && "opacity-50 cursor-not-allowed grayscale",
           )}
           onClick={handleClick}
         >
-
           {/* Checkbox if selectable */}
           {selectable && (
             <div className="flex-shrink-0 pt-0.5">
@@ -509,7 +629,9 @@ export const List: React.FC<ListProps> = ({
                 onClick={(e) => e.stopPropagation()}
                 className={cn(
                   "transition-transform active:scale-95",
-                  isSelected ? "border-blue-500 bg-blue-500" : "border-gray-300 dark:border-gray-600"
+                  isSelected
+                    ? "border-[var(--color-primary)] bg-[var(--color-primary)]"
+                    : "border-[var(--color-border)]",
                 )}
               />
             </div>
@@ -519,33 +641,45 @@ export const List: React.FC<ListProps> = ({
           <div className="flex-1 min-w-0 space-y-2.5">
             {/* Primary row: Title + Badges */}
             <div className="flex items-center gap-4">
-              <h3 className={cn(
-                'text-[15px] font-semibold text-gray-900 dark:text-gray-50 truncate flex-1',
-                'tracking-tight leading-snug',
-                item.completed && 'line-through text-gray-400 dark:text-gray-500'
-              )}>
-                {item.title || 'Untitled'}
+              <h3
+                className={cn(
+                  "text-[15px] font-semibold text-[var(--color-foreground)] truncate flex-1",
+                  "tracking-tight leading-snug",
+                  item.completed &&
+                    "line-through text-[var(--color-muted-foreground)]",
+                )}
+              >
+                {item.title || "Untitled"}
               </h3>
 
               {/* Status & Priority badges */}
               <div className="flex items-center gap-2 flex-shrink-0">
                 {!!statusValue && (
-                  <StatusBadge value={String(statusValue)} fieldName={statusField!} />
+                  <StatusBadge
+                    value={String(statusValue)}
+                    fieldName={statusField!}
+                  />
                 )}
                 {!!(priorityField && item._fields?.[priorityField]) && (
-                  <StatusBadge value={String(item._fields![priorityField])} fieldName={priorityField} />
+                  <StatusBadge
+                    value={String(item._fields![priorityField])}
+                    fieldName={priorityField}
+                  />
                 )}
               </div>
             </div>
 
             {/* Secondary row: Metadata */}
-            <div className="flex items-center gap-6 text-[13px] font-medium text-gray-500 dark:text-gray-400">
+            <div className="flex items-center gap-6 text-[13px] font-medium text-[var(--color-muted-foreground)]">
               {/* Date fields with icon */}
-              {dateFields.slice(0, 1).map(field => {
+              {dateFields.slice(0, 1).map((field) => {
                 const value = item._fields?.[field];
                 if (!value) return null;
                 return (
-                  <span key={field} className="flex items-center gap-2 text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
+                  <span
+                    key={field}
+                    className="flex items-center gap-2 text-[var(--color-muted-foreground)] group-hover:text-[var(--color-foreground)] transition-colors"
+                  >
                     <Calendar className="w-3.5 h-3.5" />
                     <span>{formatValue(value, field)}</span>
                   </span>
@@ -557,9 +691,16 @@ export const List: React.FC<ListProps> = ({
                 const value = item._fields?.[field];
                 if (value === undefined || value === null) return null;
                 return (
-                  <span key={field} className="truncate flex items-center gap-1.5 text-gray-400 dark:text-gray-500">
-                    <span className="opacity-75">{formatFieldLabel(field)}:</span>
-                    <span className="text-gray-600 dark:text-gray-300">{formatValue(value, field)}</span>
+                  <span
+                    key={field}
+                    className="truncate flex items-center gap-1.5 text-[var(--color-muted-foreground)]"
+                  >
+                    <span className="opacity-75">
+                      {formatFieldLabel(field)}:
+                    </span>
+                    <span className="text-[var(--color-foreground)]">
+                      {formatValue(value, field)}
+                    </span>
                   </span>
                 );
               })}
@@ -575,10 +716,12 @@ export const List: React.FC<ListProps> = ({
 
           {/* Actions - visible on hover */}
           {/* Actions - visible on hover */}
-          <div className={cn(
-            'flex items-center gap-1 flex-shrink-0 transition-opacity duration-200',
-            'opacity-0 group-hover:opacity-100'
-          )}>
+          <div
+            className={cn(
+              "flex items-center gap-1 flex-shrink-0 transition-opacity duration-200",
+              "opacity-0 group-hover:opacity-100",
+            )}
+          >
             {/* Direct Edit Action */}
             {editAction && (
               <button
@@ -587,10 +730,10 @@ export const List: React.FC<ListProps> = ({
                   editAction.onClick?.();
                 }}
                 className={cn(
-                  'p-2 rounded-lg transition-all duration-200',
-                  'hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400',
-                  'text-gray-400 dark:text-gray-500',
-                  'active:scale-95'
+                  "p-2 rounded-[var(--radius-lg)] transition-all duration-200",
+                  "hover:bg-[var(--color-primary)]/10 hover:text-[var(--color-primary)]",
+                  "text-[var(--color-muted-foreground)]",
+                  "active:scale-95",
                 )}
                 title={editAction.label}
               >
@@ -606,10 +749,10 @@ export const List: React.FC<ListProps> = ({
                   viewAction.onClick?.();
                 }}
                 className={cn(
-                  'p-2 rounded-lg transition-all duration-200',
-                  'hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100',
-                  'text-gray-400 dark:text-gray-500',
-                  'active:scale-95'
+                  "p-2 rounded-[var(--radius-lg)] transition-all duration-200",
+                  "hover:bg-[var(--color-muted)] hover:text-[var(--color-foreground)]",
+                  "text-[var(--color-muted-foreground)]",
+                  "active:scale-95",
                 )}
                 title={viewAction.label}
               >
@@ -619,21 +762,24 @@ export const List: React.FC<ListProps> = ({
 
             {/* Overflow Menu for filtered actions */}
             {(() => {
-              const filteredActions = actions.filter(a =>
-                !a.label.toLowerCase().includes('edit') &&
-                !a.label.toLowerCase().includes('view') &&
-                !a.label.toLowerCase().includes('open')
+              const filteredActions = actions.filter(
+                (a) =>
+                  !a.label.toLowerCase().includes("edit") &&
+                  !a.label.toLowerCase().includes("view") &&
+                  !a.label.toLowerCase().includes("open"),
               );
 
               return filteredActions.length > 0 ? (
                 <Menu
                   trigger={
-                    <button className={cn(
-                      'p-2 rounded-lg transition-all duration-200',
-                      'hover:bg-gray-100 dark:hover:bg-gray-700 hover:shadow-sm',
-                      'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300',
-                      'active:scale-95'
-                    )}>
+                    <button
+                      className={cn(
+                        "p-2 rounded-[var(--radius-lg)] transition-all duration-200",
+                        "hover:bg-[var(--color-muted)] hover:shadow-[var(--shadow-sm)]",
+                        "text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]",
+                        "active:scale-95",
+                      )}
+                    >
                       <MoreHorizontal className="w-4 h-4" />
                     </button>
                   }
@@ -644,14 +790,14 @@ export const List: React.FC<ListProps> = ({
             })()}
 
             {handleClick && (
-              <ChevronRight className="w-4 h-4 text-gray-300 dark:text-gray-600 group-hover:text-gray-400 group-hover:translate-x-0.5 transition-all" />
+              <ChevronRight className="w-4 h-4 text-[var(--color-muted-foreground)]/50 group-hover:text-[var(--color-muted-foreground)] group-hover:translate-x-0.5 transition-all" />
             )}
           </div>
         </div>
 
         {/* Subtle divider - inset */}
         {!isLast && (
-          <div className="ml-[calc(1.5rem)] mr-6 border-b border-gray-100/80 dark:border-gray-800/40" />
+          <div className="ml-[calc(1.5rem)] mr-6 border-b border-[var(--color-border)]/40" />
         )}
       </div>
     );
@@ -661,7 +807,7 @@ export const List: React.FC<ListProps> = ({
     return (
       <EmptyState
         icon={Package}
-        title={`No ${type || 'items'} found`}
+        title={`No ${type || "items"} found`}
         description={emptyMessage}
         className={className}
       />
@@ -669,22 +815,24 @@ export const List: React.FC<ListProps> = ({
   }
 
   return (
-    <div className={cn(
-      // Container with refined styling
-      'bg-white dark:bg-gray-900/50 backdrop-blur-sm',
-      'rounded-2xl', // Increased rounding
-      'border border-gray-200 dark:border-gray-800/60',
-      'shadow-lg shadow-gray-200/20 dark:shadow-none', // Softer, improved shadow
-      'overflow-hidden',
-      className
-    )}>
+    <div
+      className={cn(
+        // Container with refined styling
+        "bg-[var(--color-card)] backdrop-blur-sm",
+        "rounded-[var(--radius-xl)]", // Increased rounding
+        "border border-[var(--color-border)]",
+        "shadow-[var(--shadow-lg)]", // Softer, improved shadow
+        "overflow-hidden",
+        className,
+      )}
+    >
       {safeItems.map((item, index) =>
         customRenderItem
           ? customRenderItem(item, index)
-          : defaultRenderItem(item, index, index === safeItems.length - 1)
+          : defaultRenderItem(item, index, index === safeItems.length - 1),
       )}
     </div>
   );
 };
 
-List.displayName = 'List';
+List.displayName = "List";

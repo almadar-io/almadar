@@ -1,31 +1,40 @@
 /**
  * FormTemplate
- * 
+ *
  * A presentational template for form-based features like contact forms, feedback, surveys.
  * Supports submission, validation, and success/error states.
  */
 
-import React from 'react';
-import { cn } from '../../lib/cn';
-import { Container } from '../molecules/Container';
-import { VStack, HStack } from '../atoms/Stack';
-import { Typography } from '../atoms/Typography';
-import { Button } from '../atoms/Button';
-import { Input } from '../atoms/Input';
-import { Textarea } from '../atoms/Textarea';
-import { Select } from '../atoms/Select';
-import { Checkbox } from '../atoms/Checkbox';
-import { Alert } from '../molecules/Alert';
-import { FormField } from '../molecules/FormField';
-import { Card, CardContent } from '../atoms/Card';
-import { Send, RotateCcw, CheckCircle } from 'lucide-react';
+import React from "react";
+import { cn } from "../../lib/cn";
+import { Container } from "../molecules/Container";
+import { VStack, HStack } from "../atoms/Stack";
+import { Typography } from "../atoms/Typography";
+import { Button } from "../atoms/Button";
+import { Input } from "../atoms/Input";
+import { Textarea } from "../atoms/Textarea";
+import { Select } from "../atoms/Select";
+import { Checkbox } from "../atoms/Checkbox";
+import { Alert } from "../molecules/Alert";
+import { FormField } from "../molecules/FormField";
+import { Card, CardContent } from "../atoms/Card";
+import { Send, RotateCcw, CheckCircle } from "lucide-react";
 
-export type FormVariant = 'minimal' | 'standard' | 'full';
+export type FormVariant = "minimal" | "standard" | "full";
 
 export interface FormFieldConfig {
   name: string;
   label: string;
-  type: 'text' | 'email' | 'password' | 'tel' | 'url' | 'number' | 'textarea' | 'select' | 'checkbox';
+  type:
+    | "text"
+    | "email"
+    | "password"
+    | "tel"
+    | "url"
+    | "number"
+    | "textarea"
+    | "select"
+    | "checkbox";
   placeholder?: string;
   required?: boolean;
   options?: Array<{ value: string; label: string }>;
@@ -70,9 +79,28 @@ export interface FormTemplateProps {
 }
 
 const defaultFields: FormFieldConfig[] = [
-  { name: 'name', label: 'Name', type: 'text', required: true, placeholder: 'Your name' },
-  { name: 'email', label: 'Email', type: 'email', required: true, placeholder: 'your@email.com' },
-  { name: 'message', label: 'Message', type: 'textarea', required: true, placeholder: 'Your message...', rows: 4 },
+  {
+    name: "name",
+    label: "Name",
+    type: "text",
+    required: true,
+    placeholder: "Your name",
+  },
+  {
+    name: "email",
+    label: "Email",
+    type: "email",
+    required: true,
+    placeholder: "your@email.com",
+  },
+  {
+    name: "message",
+    label: "Message",
+    type: "textarea",
+    required: true,
+    placeholder: "Your message...",
+    rows: 4,
+  },
 ];
 
 export const FormTemplate: React.FC<FormTemplateProps> = ({
@@ -85,13 +113,13 @@ export const FormTemplate: React.FC<FormTemplateProps> = ({
   onFieldChange,
   onReset,
   onDismissSuccess,
-  title = 'Contact Us',
+  title = "Contact Us",
   subtitle,
-  submitLabel = 'Submit',
-  successMessage = 'Thank you! Your submission has been received.',
+  submitLabel = "Submit",
+  successMessage = "Thank you! Your submission has been received.",
   showReset = false,
   fields = defaultFields,
-  variant = 'standard',
+  variant = "standard",
   className,
 }) => {
   const handleSubmit = (e: React.FormEvent) => {
@@ -108,32 +136,49 @@ export const FormTemplate: React.FC<FormTemplateProps> = ({
     };
 
     switch (field.type) {
-      case 'textarea':
+      case "textarea":
         return (
-          <FormField key={field.name} label={field.label} required={field.required} error={fieldError}>
+          <FormField
+            key={field.name}
+            label={field.label}
+            required={field.required}
+            error={fieldError}
+          >
             <Textarea
-              value={(value as string) || ''}
+              value={(value as string) || ""}
               onChange={(e) => handleChange(e.target.value)}
               placeholder={field.placeholder}
               rows={field.rows || 4}
-              className={cn(fieldError && 'border-red-500')}
-            />
-          </FormField>
-        );
-      
-      case 'select':
-        return (
-          <FormField key={field.name} label={field.label} required={field.required} error={fieldError}>
-            <Select
-              value={(value as string) || ''}
-              onChange={(e) => handleChange(e.target.value)}
-              options={field.options?.map(o => ({ value: o.value, label: o.label })) || []}
-              placeholder={field.placeholder || `Select ${field.label.toLowerCase()}`}
+              className={cn(fieldError && "border-red-500")}
             />
           </FormField>
         );
 
-      case 'checkbox':
+      case "select":
+        return (
+          <FormField
+            key={field.name}
+            label={field.label}
+            required={field.required}
+            error={fieldError}
+          >
+            <Select
+              value={(value as string) || ""}
+              onChange={(e) => handleChange(e.target.value)}
+              options={
+                field.options?.map((o) => ({
+                  value: o.value,
+                  label: o.label,
+                })) || []
+              }
+              placeholder={
+                field.placeholder || `Select ${field.label.toLowerCase()}`
+              }
+            />
+          </FormField>
+        );
+
+      case "checkbox":
         return (
           <div key={field.name} className="flex items-center gap-2">
             <Checkbox
@@ -141,19 +186,26 @@ export const FormTemplate: React.FC<FormTemplateProps> = ({
               onChange={(e) => handleChange(e.target.checked)}
             />
             <Typography variant="body">{field.label}</Typography>
-            {field.required && <span className="text-red-500">*</span>}
+            {field.required && (
+              <span className="text-[var(--color-error)]">*</span>
+            )}
           </div>
         );
 
       default:
         return (
-          <FormField key={field.name} label={field.label} required={field.required} error={fieldError}>
+          <FormField
+            key={field.name}
+            label={field.label}
+            required={field.required}
+            error={fieldError}
+          >
             <Input
               type={field.type}
-              value={(value as string) || ''}
+              value={(value as string) || ""}
               onChange={(e) => handleChange(e.target.value)}
               placeholder={field.placeholder}
-              className={cn(fieldError && 'border-red-500')}
+              className={cn(fieldError && "border-red-500")}
             />
           </FormField>
         );
@@ -162,10 +214,12 @@ export const FormTemplate: React.FC<FormTemplateProps> = ({
 
   const renderSuccess = () => (
     <VStack gap="lg" align="center" className="py-8">
-      <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
-        <CheckCircle className="w-8 h-8 text-green-600" />
+      <div className="w-16 h-16 rounded-[var(--radius-full)] bg-[var(--color-success)]/10 flex items-center justify-center">
+        <CheckCircle className="w-8 h-8 text-[var(--color-success)]" />
       </div>
-      <Typography variant="h3" align="center">Success!</Typography>
+      <Typography variant="h3" align="center">
+        Success!
+      </Typography>
       <Typography variant="body" color="muted" align="center">
         {successMessage}
       </Typography>
@@ -182,13 +236,15 @@ export const FormTemplate: React.FC<FormTemplateProps> = ({
       <VStack gap="lg">
         {error && (
           <Alert variant="error" title="Submission Failed">
-            {typeof error === 'string' ? error : error?.message || 'Please try again.'}
+            {typeof error === "string"
+              ? error
+              : error?.message || "Please try again."}
           </Alert>
         )}
 
         {fields.map(renderField)}
 
-        <HStack gap="md" justify={showReset ? 'between' : 'end'}>
+        <HStack gap="md" justify={showReset ? "between" : "end"}>
           {showReset && (
             <Button
               type="button"
@@ -240,7 +296,9 @@ export const FormTemplate: React.FC<FormTemplateProps> = ({
         <CardContent className="p-8">
           <VStack gap="xl">
             <VStack gap="sm" align="center">
-              <Typography variant="h2" align="center">{title}</Typography>
+              <Typography variant="h2" align="center">
+                {title}
+              </Typography>
               {subtitle && (
                 <Typography variant="body" color="muted" align="center">
                   {subtitle}
@@ -256,15 +314,15 @@ export const FormTemplate: React.FC<FormTemplateProps> = ({
   );
 
   switch (variant) {
-    case 'minimal':
+    case "minimal":
       return renderMinimal();
-    case 'full':
+    case "full":
       return renderFull();
     default:
       return renderStandard();
   }
 };
 
-FormTemplate.displayName = 'FormTemplate';
+FormTemplate.displayName = "FormTemplate";
 
 export default FormTemplate;

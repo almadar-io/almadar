@@ -37,7 +37,7 @@ import { SignatureCapture } from "../organisms/SignatureCapture";
 import { StatCard } from "../../../components/organisms/StatCard";
 
 // Evaluator
-import { SExpressionEvaluator, createMinimalContext } from "../../../../evaluator";
+import { SExpressionEvaluator, createMinimalContext } from "@orbital/shared";
 
 import {
   ArrowLeft,
@@ -249,7 +249,7 @@ const phases: PhaseDefinition[] = [
 ];
 
 // =============================================================================
-// S-Expression Evaluator (using real evaluator from almadar-shared)
+// S-Expression Evaluator (using real evaluator from orbital-shared)
 // =============================================================================
 
 // Create a singleton evaluator instance

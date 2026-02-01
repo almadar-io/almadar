@@ -33,13 +33,13 @@ export default defineConfig({
         replacement: path.resolve(__dirname, './packages/server/src/routes$1'),
       },
       // Client package aliases
-      { find: '@almadar/client', replacement: path.resolve(__dirname, './packages/client/src') },
+      { find: '@orbital/client', replacement: path.resolve(__dirname, './packages/client/src') },
       { find: /^@\/(.*)$/, replacement: path.resolve(__dirname, './packages/client/src/$1') },
       { find: '@', replacement: path.resolve(__dirname, './packages/client/src') },
       // Server package aliases (without slash)
-      { find: '@almadar/server', replacement: path.resolve(__dirname, './packages/server/src') },
+      { find: '@orbital/server', replacement: path.resolve(__dirname, './packages/server/src') },
       // Shared package aliases
-      { find: '@almadar/shared', replacement: path.resolve(__dirname, './packages/shared/src') },
+      { find: '@orbital/shared', replacement: path.resolve(__dirname, './packages/shared/src') },
       { find: '@shared', replacement: path.resolve(__dirname, './packages/shared/src') },
       // Component alias for client
       {

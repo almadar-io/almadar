@@ -1,18 +1,18 @@
 /**
  * Alert Molecule Component
- * 
+ *
  * A component for displaying alert messages with different variants and actions.
  * Uses theme-aware CSS variables for styling.
  */
 
-import React from 'react';
-import { X, AlertCircle, CheckCircle, AlertTriangle, Info } from 'lucide-react';
-import { cn } from '../../lib/cn';
-import { Box } from '../atoms/Box';
-import { Icon } from '../atoms/Icon';
-import { Typography } from '../atoms/Typography';
+import React from "react";
+import { X, AlertCircle, CheckCircle, AlertTriangle, Info } from "lucide-react";
+import { cn } from "../../lib/cn";
+import { Box } from "../atoms/Box";
+import { Icon } from "../atoms/Icon";
+import { Typography } from "../atoms/Typography";
 
-export type AlertVariant = 'info' | 'success' | 'warning' | 'error';
+export type AlertVariant = "info" | "success" | "warning" | "error";
 
 export interface AlertProps {
   /** Alert content (children or message) */
@@ -29,17 +29,17 @@ export interface AlertProps {
 }
 
 const variantBorderClasses: Record<AlertVariant, string> = {
-  info: 'border-blue-600',
-  success: 'border-emerald-600',
-  warning: 'border-amber-500',
-  error: 'border-red-600',
+  info: "border-[var(--color-info)]",
+  success: "border-[var(--color-success)]",
+  warning: "border-[var(--color-warning)]",
+  error: "border-[var(--color-error)]",
 };
 
 const variantIconColors: Record<AlertVariant, string> = {
-  info: 'text-blue-600',
-  success: 'text-emerald-600',
-  warning: 'text-amber-500',
-  error: 'text-red-600',
+  info: "text-[var(--color-info)]",
+  success: "text-[var(--color-success)]",
+  warning: "text-[var(--color-warning)]",
+  error: "text-[var(--color-error)]",
 };
 
 const iconMap: Record<AlertVariant, typeof Info> = {
@@ -52,7 +52,7 @@ const iconMap: Record<AlertVariant, typeof Info> = {
 export const Alert: React.FC<AlertProps> = ({
   children,
   message,
-  variant = 'info',
+  variant = "info",
   title,
   dismissible = false,
   onDismiss,
@@ -77,7 +77,11 @@ export const Alert: React.FC<AlertProps> = ({
       <div className="flex items-start gap-3">
         {/* Icon */}
         <div className="flex-shrink-0 mt-0.5">
-          <Icon icon={iconMap[variant]} size="md" className={variantIconColors[variant]} />
+          <Icon
+            icon={iconMap[variant]}
+            size="md"
+            className={variantIconColors[variant]}
+          />
         </div>
 
         {/* Content */}
@@ -87,14 +91,8 @@ export const Alert: React.FC<AlertProps> = ({
               {title}
             </Typography>
           )}
-          <Typography variant="body2">
-            {content}
-          </Typography>
-          {actions && (
-            <div className="mt-3 flex gap-2">
-              {actions}
-            </div>
-          )}
+          <Typography variant="body2">{content}</Typography>
+          {actions && <div className="mt-3 flex gap-2">{actions}</div>}
         </div>
 
         {/* Dismiss Button */}
@@ -103,8 +101,8 @@ export const Alert: React.FC<AlertProps> = ({
             type="button"
             onClick={handleDismiss}
             className={cn(
-              'flex-shrink-0 p-1 transition-colors rounded-[var(--radius-sm)]',
-              'hover:bg-[var(--color-muted)]'
+              "flex-shrink-0 p-1 transition-colors rounded-[var(--radius-sm)]",
+              "hover:bg-[var(--color-muted)]",
             )}
             aria-label="Dismiss alert"
           >
@@ -116,4 +114,4 @@ export const Alert: React.FC<AlertProps> = ({
   );
 };
 
-Alert.displayName = 'Alert';
+Alert.displayName = "Alert";

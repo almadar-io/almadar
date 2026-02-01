@@ -12,7 +12,7 @@ import {
   createMinimalContext,
   type SExpr,
   type EvaluationContext as SharedEvaluationContext,
-} from '../../evaluator';
+} from '@orbital/shared';
 
 /**
  * Context for conditional evaluation

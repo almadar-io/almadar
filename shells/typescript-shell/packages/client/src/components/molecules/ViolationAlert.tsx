@@ -10,13 +10,13 @@
  * - penalty: Penalty proceedings (error, severe)
  */
 
-import React from 'react';
-import { cn } from '../../lib/cn';
-import { Box } from '../atoms/Box';
-import { VStack, HStack } from '../atoms/Stack';
-import { Typography } from '../atoms/Typography';
-import { Button } from '../atoms/Button';
-import { Icon } from '../atoms/Icon';
+import React from "react";
+import { cn } from "../../lib/cn";
+import { Box } from "../atoms/Box";
+import { VStack, HStack } from "../atoms/Stack";
+import { Typography } from "../atoms/Typography";
+import { Button } from "../atoms/Button";
+import { Icon } from "../atoms/Icon";
 
 export interface ViolationRecord {
   /** Unique violation identifier */
@@ -28,7 +28,7 @@ export interface ViolationRecord {
   /** Violation message */
   message: string;
   /** Action type determines severity */
-  actionType: 'measure' | 'admin' | 'penalty';
+  actionType: "measure" | "admin" | "penalty";
   /** Administrative action reference (e.g., "ZVPOT-1 234/1-4") */
   adminAction?: string;
   /** Penalty action reference (e.g., "ZVPOT-1 240/1-9") */
@@ -43,7 +43,7 @@ export interface ViolationAlertProps {
   /** Violation data */
   violation: ViolationRecord;
   /** Visual severity (derived from actionType if not specified) */
-  severity?: 'warning' | 'error';
+  severity?: "warning" | "error";
   /** Dismissible alert */
   dismissible?: boolean;
   /** Dismiss handler */
@@ -57,15 +57,15 @@ export interface ViolationAlertProps {
 }
 
 const actionTypeLabels: Record<string, string> = {
-  measure: 'Corrective Measure',
-  admin: 'Administrative Action',
-  penalty: 'Penalty Proceedings',
+  measure: "Corrective Measure",
+  admin: "Administrative Action",
+  penalty: "Penalty Proceedings",
 };
 
 const actionTypeIcons: Record<string, string> = {
-  measure: 'alert-triangle',
-  admin: 'alert-circle',
-  penalty: 'shield-alert',
+  measure: "alert-triangle",
+  admin: "alert-circle",
+  penalty: "shield-alert",
 };
 
 export const ViolationAlert: React.FC<ViolationAlertProps> = ({
@@ -78,27 +78,31 @@ export const ViolationAlert: React.FC<ViolationAlertProps> = ({
   className,
 }) => {
   // Derive severity from actionType if not explicitly set
-  const effectiveSeverity = severity ?? (violation.actionType === 'measure' ? 'warning' : 'error');
+  const effectiveSeverity =
+    severity ?? (violation.actionType === "measure" ? "warning" : "error");
 
-  const bgColor = effectiveSeverity === 'warning'
-    ? 'bg-amber-50 border-amber-200'
-    : 'bg-red-50 border-red-200';
+  const bgColor =
+    effectiveSeverity === "warning"
+      ? "bg-[var(--color-warning)]/10 border-[var(--color-warning)]/30"
+      : "bg-[var(--color-error)]/10 border-[var(--color-error)]/30";
 
-  const textColor = effectiveSeverity === 'warning'
-    ? 'text-amber-800'
-    : 'text-red-800';
+  const textColor =
+    effectiveSeverity === "warning"
+      ? "text-[var(--color-warning)]"
+      : "text-[var(--color-error)]";
 
-  const iconColor = effectiveSeverity === 'warning'
-    ? 'text-amber-500'
-    : 'text-red-500';
+  const iconColor =
+    effectiveSeverity === "warning"
+      ? "text-[var(--color-warning)]"
+      : "text-[var(--color-error)]";
 
   if (compact) {
     return (
       <Box
         className={cn(
-          'px-3 py-2 rounded-md border',
+          "px-3 py-2 rounded-[var(--radius-md)] border",
           bgColor,
-          className
+          className,
         )}
       >
         <HStack gap="sm" align="center" justify="between">
@@ -108,7 +112,11 @@ export const ViolationAlert: React.FC<ViolationAlertProps> = ({
               size="sm"
               className={iconColor}
             />
-            <Typography variant="caption" className={textColor} weight="semibold">
+            <Typography
+              variant="caption"
+              className={textColor}
+              weight="semibold"
+            >
               {violation.law} Art. {violation.article}
             </Typography>
             <Typography variant="caption" className={textColor}>
@@ -116,7 +124,12 @@ export const ViolationAlert: React.FC<ViolationAlertProps> = ({
             </Typography>
           </HStack>
           {dismissible && onDismiss && (
-            <Button variant="ghost" size="sm" onClick={onDismiss} className="p-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onDismiss}
+              className="p-1"
+            >
               <Icon name="x" size="sm" className={iconColor} />
             </Button>
           )}
@@ -128,9 +141,9 @@ export const ViolationAlert: React.FC<ViolationAlertProps> = ({
   return (
     <Box
       className={cn(
-        'p-4 rounded-lg border',
+        "p-4 rounded-[var(--radius-lg)] border",
         bgColor,
-        className
+        className,
       )}
     >
       <VStack gap="sm">
@@ -146,13 +159,21 @@ export const ViolationAlert: React.FC<ViolationAlertProps> = ({
               <Typography variant="label" weight="bold" className={textColor}>
                 {violation.law} Art. {violation.article}
               </Typography>
-              <Typography variant="caption" className={cn(textColor, 'opacity-75')}>
+              <Typography
+                variant="caption"
+                className={cn(textColor, "opacity-75")}
+              >
                 {actionTypeLabels[violation.actionType]}
               </Typography>
             </VStack>
           </HStack>
           {dismissible && onDismiss && (
-            <Button variant="ghost" size="sm" onClick={onDismiss} className="p-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onDismiss}
+              className="p-1"
+            >
               <Icon name="x" size="sm" className={iconColor} />
             </Button>
           )}
@@ -165,24 +186,45 @@ export const ViolationAlert: React.FC<ViolationAlertProps> = ({
 
         {/* Action references */}
         {(violation.adminAction || violation.penaltyAction) && (
-          <Box className={cn('pt-2 border-t', effectiveSeverity === 'warning' ? 'border-amber-200' : 'border-red-200')}>
+          <Box
+            className={cn(
+              "pt-2 border-t",
+              effectiveSeverity === "warning"
+                ? "border-[var(--color-warning)]/30"
+                : "border-[var(--color-error)]/30",
+            )}
+          >
             <VStack gap="xs">
               {violation.adminAction && (
                 <HStack gap="xs" align="center">
-                  <Typography variant="caption" className={cn(textColor, 'opacity-75')}>
+                  <Typography
+                    variant="caption"
+                    className={cn(textColor, "opacity-75")}
+                  >
                     Admin:
                   </Typography>
-                  <Typography variant="caption" weight="semibold" className={textColor}>
+                  <Typography
+                    variant="caption"
+                    weight="semibold"
+                    className={textColor}
+                  >
                     {violation.adminAction}
                   </Typography>
                 </HStack>
               )}
               {violation.penaltyAction && (
                 <HStack gap="xs" align="center">
-                  <Typography variant="caption" className={cn(textColor, 'opacity-75')}>
+                  <Typography
+                    variant="caption"
+                    className={cn(textColor, "opacity-75")}
+                  >
                     Penalty:
                   </Typography>
-                  <Typography variant="caption" weight="semibold" className={textColor}>
+                  <Typography
+                    variant="caption"
+                    weight="semibold"
+                    className={textColor}
+                  >
                     {violation.penaltyAction}
                   </Typography>
                 </HStack>
@@ -197,7 +239,7 @@ export const ViolationAlert: React.FC<ViolationAlertProps> = ({
             variant="ghost"
             size="sm"
             onClick={() => onNavigateToField(violation.fieldId!)}
-            className={cn(textColor, 'self-start')}
+            className={cn(textColor, "self-start")}
           >
             <Icon name="arrow-right" size="sm" className="mr-1" />
             Go to field
@@ -208,4 +250,4 @@ export const ViolationAlert: React.FC<ViolationAlertProps> = ({
   );
 };
 
-ViolationAlert.displayName = 'ViolationAlert';
+ViolationAlert.displayName = "ViolationAlert";

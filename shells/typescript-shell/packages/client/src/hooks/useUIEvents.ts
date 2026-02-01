@@ -8,9 +8,9 @@
  * This hook translates them to state machine dispatch calls.
  */
 
-import { useEffect, useState, useMemo, useContext } from 'react';
-import { useEventBus, type KFlowEvent } from './useEventBus';
-import { SelectionContext } from '../providers/SelectionProvider';
+import { useEffect, useState, useMemo, useContext } from "react";
+import { useEventBus, type KFlowEvent } from "./useEventBus";
+import { SelectionContext } from "../providers/SelectionProvider";
 
 /**
  * Map of UI events to state machine events.
@@ -18,28 +18,28 @@ import { SelectionContext } from '../providers/SelectionProvider';
  */
 const UI_EVENT_MAP: Record<string, string> = {
   // Form/CRUD events
-  'UI:SAVE': 'SAVE',
-  'UI:CANCEL': 'CANCEL',
-  'UI:CLOSE': 'CLOSE',
-  'UI:VIEW': 'VIEW',
-  'UI:EDIT': 'EDIT',
-  'UI:DELETE': 'DELETE',
-  'UI:CREATE': 'CREATE',
-  'UI:SELECT': 'SELECT',
-  'UI:DESELECT': 'DESELECT',
-  'UI:SUBMIT': 'SAVE',
-  'UI:UPDATE_STATUS': 'UPDATE_STATUS',
-  'UI:SEARCH': 'SEARCH',
-  'UI:CLEAR_SEARCH': 'CLEAR_SEARCH',
-  'UI:ADD': 'CREATE',
+  "UI:SAVE": "SAVE",
+  "UI:CANCEL": "CANCEL",
+  "UI:CLOSE": "CLOSE",
+  "UI:VIEW": "VIEW",
+  "UI:EDIT": "EDIT",
+  "UI:DELETE": "DELETE",
+  "UI:CREATE": "CREATE",
+  "UI:SELECT": "SELECT",
+  "UI:DESELECT": "DESELECT",
+  "UI:SUBMIT": "SAVE",
+  "UI:UPDATE_STATUS": "UPDATE_STATUS",
+  "UI:SEARCH": "SEARCH",
+  "UI:CLEAR_SEARCH": "CLEAR_SEARCH",
+  "UI:ADD": "CREATE",
   // Game events (for closed circuit with GameMenu, GamePauseOverlay, GameOverScreen)
-  'UI:PAUSE': 'PAUSE',
-  'UI:RESUME': 'RESUME',
-  'UI:RESTART': 'RESTART',
-  'UI:GAME_OVER': 'GAME_OVER',
-  'UI:START': 'START',
-  'UI:QUIT': 'QUIT',
-  'UI:INIT': 'INIT',
+  "UI:PAUSE": "PAUSE",
+  "UI:RESUME": "RESUME",
+  "UI:RESTART": "RESTART",
+  "UI:GAME_OVER": "GAME_OVER",
+  "UI:START": "START",
+  "UI:QUIT": "QUIT",
+  "UI:INIT": "INIT",
 };
 
 /**
@@ -52,7 +52,7 @@ const UI_EVENT_MAP: Record<string, string> = {
 export function useUIEvents<E extends string>(
   dispatch: (event: E, payload?: unknown) => void,
   validEvents?: readonly E[],
-  eventBusInstance?: ReturnType<typeof useEventBus>
+  eventBusInstance?: ReturnType<typeof useEventBus>,
 ): void {
   const defaultEventBus = useEventBus();
   const eventBus = eventBusInstance ?? defaultEventBus;
@@ -60,11 +60,13 @@ export function useUIEvents<E extends string>(
   // Stabilize validEvents to prevent re-subscriptions when array reference changes
   // but contents are the same. This is critical because generated trait hooks
   // pass inline arrays which create new references on every render.
-  const validEventsKey = validEvents ? validEvents.slice().sort().join(',') : '';
+  const validEventsKey = validEvents
+    ? validEvents.slice().sort().join(",")
+    : "";
   const stableValidEvents = useMemo(
     () => validEvents,
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [validEventsKey]
+    [validEventsKey],
   );
 
   useEffect(() => {
@@ -94,28 +96,37 @@ export function useUIEvents<E extends string>(
         }
       }
     };
-    const genericUnsubscribe = eventBus.on('UI:DISPATCH', genericHandler);
+    const genericUnsubscribe = eventBus.on("UI:DISPATCH", genericHandler);
     unsubscribes.push(genericUnsubscribe);
 
-    // Listen for direct state machine events (for internal trait events)
-    // This allows effects to emit events like 'ADDED' directly on the event bus
-    // and have them dispatched to the state machine
+    // Listen for custom UI events not in the static map
+    // Components emit events with UI: prefix (e.g., UI:OPEN_MODAL)
+    // We need to listen for both the prefixed and non-prefixed versions
     if (stableValidEvents) {
       stableValidEvents.forEach((smEvent) => {
         // Skip events already handled by UI_EVENT_MAP
-        const alreadyMapped = Object.values(UI_EVENT_MAP).includes(smEvent);
+        const uiPrefixedEvent = `UI:${smEvent}`;
+        const alreadyMapped =
+          Object.keys(UI_EVENT_MAP).includes(uiPrefixedEvent);
         if (!alreadyMapped) {
           const directHandler = (event: KFlowEvent) => {
             dispatch(smEvent, event.payload);
           };
-          const unsubscribe = eventBus.on(smEvent, directHandler);
-          unsubscribes.push(unsubscribe);
+          // Listen for UI:EVENT (what components emit)
+          const unsubscribePrefixed = eventBus.on(
+            uiPrefixedEvent,
+            directHandler,
+          );
+          unsubscribes.push(unsubscribePrefixed);
+          // Also listen for EVENT directly (for internal trait events)
+          const unsubscribeDirect = eventBus.on(smEvent, directHandler);
+          unsubscribes.push(unsubscribeDirect);
         }
       });
     }
 
     return () => {
-      unsubscribes.forEach(unsub => unsub());
+      unsubscribes.forEach((unsub) => unsub());
     };
   }, [eventBus, dispatch, stableValidEvents]);
 }
@@ -146,7 +157,7 @@ export function useUIEvents<E extends string>(
  * ```
  */
 export function useSelectedEntity<T>(
-  eventBusInstance?: ReturnType<typeof useEventBus>
+  eventBusInstance?: ReturnType<typeof useEventBus>,
 ): [T | null, (entity: T | null) => void] {
   const defaultEventBus = useEventBus();
   const eventBus = eventBusInstance ?? defaultEventBus;
@@ -177,11 +188,11 @@ export function useSelectedEntity<T>(
       setLocalSelected(null);
     };
 
-    const unsubSelect = eventBus.on('UI:SELECT', handleSelect);
-    const unsubView = eventBus.on('UI:VIEW', handleSelect);
-    const unsubDeselect = eventBus.on('UI:DESELECT', handleDeselect);
-    const unsubClose = eventBus.on('UI:CLOSE', handleDeselect);
-    const unsubCancel = eventBus.on('UI:CANCEL', handleDeselect);
+    const unsubSelect = eventBus.on("UI:SELECT", handleSelect);
+    const unsubView = eventBus.on("UI:VIEW", handleSelect);
+    const unsubDeselect = eventBus.on("UI:DESELECT", handleDeselect);
+    const unsubClose = eventBus.on("UI:CLOSE", handleDeselect);
+    const unsubCancel = eventBus.on("UI:CANCEL", handleDeselect);
 
     return () => {
       unsubSelect();
@@ -204,8 +215,14 @@ export function useSelectedEntity<T>(
  * Internal hook to safely access SelectionContext without throwing.
  * Returns null if SelectionProvider is not in the tree.
  */
-function useSelectionContext<T>(): { selected: T | null; setSelected: (entity: T | null) => void } | null {
+function useSelectionContext<T>(): {
+  selected: T | null;
+  setSelected: (entity: T | null) => void;
+} | null {
   // useContext returns null if the context is not available (no provider in tree)
   const context = useContext(SelectionContext);
-  return context as { selected: T | null; setSelected: (entity: T | null) => void } | null;
+  return context as {
+    selected: T | null;
+    setSelected: (entity: T | null) => void;
+  } | null;
 }

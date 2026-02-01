@@ -1,6 +1,6 @@
-import React from 'react';
-import { cn } from '../../lib/cn';
-import { Card, CardHeader, CardTitle, CardContent } from '../atoms';
+import React from "react";
+import { cn } from "../../lib/cn";
+import { Card, CardHeader, CardTitle, CardContent } from "../atoms";
 
 export interface FormSectionProps {
   /** Section title */
@@ -33,9 +33,9 @@ export const FormSection: React.FC<FormSectionProps> = ({
   const [collapsed, setCollapsed] = React.useState(defaultCollapsed);
 
   const gridClass = {
-    1: 'grid-cols-1',
-    2: 'grid-cols-1 md:grid-cols-2',
-    3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
+    1: "grid-cols-1",
+    2: "grid-cols-1 md:grid-cols-2",
+    3: "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
   }[columns];
 
   const content = (
@@ -45,21 +45,23 @@ export const FormSection: React.FC<FormSectionProps> = ({
           {title && (
             <div
               className={cn(
-                'flex items-center justify-between',
-                collapsible && 'cursor-pointer'
+                "flex items-center justify-between",
+                collapsible && "cursor-pointer",
               )}
               onClick={() => collapsible && setCollapsed(!collapsed)}
             >
-              <h3 className="text-base font-semibold text-gray-900">{title}</h3>
+              <h3 className="text-base font-semibold text-[var(--color-foreground)]">
+                {title}
+              </h3>
               {collapsible && (
                 <button
                   type="button"
-                  className="p-1 rounded hover:bg-gray-100"
+                  className="p-1 rounded hover:bg-[var(--color-muted)]"
                 >
                   <svg
                     className={cn(
-                      'h-5 w-5 text-gray-400 transition-transform',
-                      collapsed && 'rotate-180'
+                      "h-5 w-5 text-[var(--color-muted-foreground)] transition-transform",
+                      collapsed && "rotate-180",
                     )}
                     fill="none"
                     viewBox="0 0 24 24"
@@ -77,22 +79,20 @@ export const FormSection: React.FC<FormSectionProps> = ({
             </div>
           )}
           {description && (
-            <p className="mt-1 text-sm text-gray-500">{description}</p>
+            <p className="mt-1 text-sm text-[var(--color-muted-foreground)]">
+              {description}
+            </p>
           )}
         </div>
       )}
       {(!collapsible || !collapsed) && (
-        <div className={cn('grid gap-4', gridClass)}>{children}</div>
+        <div className={cn("grid gap-4", gridClass)}>{children}</div>
       )}
     </>
   );
 
   if (card) {
-    return (
-      <Card className={cn('p-6', className)}>
-        {content}
-      </Card>
-    );
+    return <Card className={cn("p-6", className)}>{content}</Card>;
   }
 
   return <div className={className}>{content}</div>;
@@ -116,9 +116,10 @@ export const FormLayout: React.FC<FormLayoutProps> = ({
   return (
     <div
       className={cn(
-        'space-y-8',
-        dividers && '[&>*+*]:pt-8 [&>*+*]:border-t [&>*+*]:border-gray-200',
-        className
+        "space-y-8",
+        dividers &&
+          "[&>*+*]:pt-8 [&>*+*]:border-t [&>*+*]:border-[var(--color-border)]",
+        className,
       )}
     >
       {children}
@@ -134,30 +135,31 @@ export interface FormActionsProps {
   /** Sticky at bottom */
   sticky?: boolean;
   /** Alignment */
-  align?: 'left' | 'right' | 'between' | 'center';
+  align?: "left" | "right" | "between" | "center";
   className?: string;
 }
 
 export const FormActions: React.FC<FormActionsProps> = ({
   children,
   sticky = false,
-  align = 'right',
+  align = "right",
   className,
 }) => {
   const alignClass = {
-    left: 'justify-start',
-    right: 'justify-end',
-    between: 'justify-between',
-    center: 'justify-center',
+    left: "justify-start",
+    right: "justify-end",
+    between: "justify-between",
+    center: "justify-center",
   }[align];
 
   return (
     <div
       className={cn(
-        'flex items-center gap-3 pt-6 border-t border-gray-200',
+        "flex items-center gap-3 pt-6 border-t border-[var(--color-border)]",
         alignClass,
-        sticky && 'sticky bottom-0 bg-white py-4 -mx-6 px-6 shadow-[0_-4px_6px_-1px_rgb(0,0,0,0.05)]',
-        className
+        sticky &&
+          "sticky bottom-0 bg-[var(--color-card)] py-4 -mx-6 px-6 shadow-[0_-4px_6px_-1px_rgb(0,0,0,0.05)]",
+        className,
       )}
     >
       {children}

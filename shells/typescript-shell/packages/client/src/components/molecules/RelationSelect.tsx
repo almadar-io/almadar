@@ -7,16 +7,27 @@
  * Composed from: Box, HStack, VStack, Input, Button, Spinner, Typography atoms
  */
 
-import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
-import { Search, ChevronDown, X } from 'lucide-react';
-import { cn } from '../../lib/cn';
-import { Box } from '../atoms/Box';
-import { HStack, VStack } from '../atoms/Stack';
-import { Input } from '../atoms/Input';
-import { Button } from '../atoms/Button';
-import { Spinner } from '../atoms/Spinner';
-import { Typography } from '../atoms/Typography';
-import { debug, debugGroup, debugGroupEnd, isDebugEnabled } from '../../lib/debug';
+import React, {
+  useState,
+  useCallback,
+  useMemo,
+  useRef,
+  useEffect,
+} from "react";
+import { Search, ChevronDown, X } from "lucide-react";
+import { cn } from "../../lib/cn";
+import { Box } from "../atoms/Box";
+import { HStack, VStack } from "../atoms/Stack";
+import { Input } from "../atoms/Input";
+import { Button } from "../atoms/Button";
+import { Spinner } from "../atoms/Spinner";
+import { Typography } from "../atoms/Typography";
+import {
+  debug,
+  debugGroup,
+  debugGroupEnd,
+  isDebugEnabled,
+} from "../../lib/debug";
 
 // Helper to check if specific debug category is enabled
 const isRelationsDebugEnabled = () => isDebugEnabled();
@@ -65,7 +76,7 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
   value,
   onChange,
   options = [],
-  placeholder = 'Select...',
+  placeholder = "Select...",
   required = false,
   disabled = false,
   isLoading = false,
@@ -73,25 +84,25 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
   clearable = true,
   name,
   className,
-  searchPlaceholder = 'Search...',
-  emptyMessage = 'No options found',
+  searchPlaceholder = "Search...",
+  emptyMessage = "No options found",
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   // Debug: Log component initialization
   useEffect(() => {
     if (isRelationsDebugEnabled()) {
-      debugGroup(`RelationSelect: ${name || 'unnamed'}`);
+      debugGroup(`RelationSelect: ${name || "unnamed"}`);
       debug(`Options count: ${options.length}`);
-      debug(`Current value: ${value || 'none'}`);
+      debug(`Current value: ${value || "none"}`);
       debug(`Is loading: ${isLoading}`);
       if (options.length > 0) {
-        debug('Sample options:', options.slice(0, 3));
+        debug("Sample options:", options.slice(0, 3));
       } else {
-        debug('⚠️ No options available!');
+        debug("⚠️ No options available!");
       }
       debugGroupEnd();
     }
@@ -113,21 +124,24 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
     return options.filter(
       (opt) =>
         opt.label.toLowerCase().includes(query) ||
-        opt.description?.toLowerCase().includes(query)
+        opt.description?.toLowerCase().includes(query),
     );
   }, [options, searchQuery]);
 
   // Handle outside click to close dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
-        setSearchQuery('');
+        setSearchQuery("");
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   // Focus search input when dropdown opens
@@ -141,7 +155,7 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
     if (!disabled) {
       setIsOpen((prev) => !prev);
       if (!isOpen) {
-        setSearchQuery('');
+        setSearchQuery("");
       }
     }
   }, [disabled, isOpen]);
@@ -151,9 +165,9 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
       if (option.disabled) return;
       onChange?.(option.value);
       setIsOpen(false);
-      setSearchQuery('');
+      setSearchQuery("");
     },
-    [onChange]
+    [onChange],
   );
 
   const handleClear = useCallback(
@@ -161,25 +175,25 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
       e.stopPropagation();
       onChange?.(undefined);
     },
-    [onChange]
+    [onChange],
   );
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         setIsOpen(false);
-        setSearchQuery('');
-      } else if (e.key === 'Enter' && filteredOptions.length === 1) {
+        setSearchQuery("");
+      } else if (e.key === "Enter" && filteredOptions.length === 1) {
         handleSelect(filteredOptions[0]);
       }
     },
-    [filteredOptions, handleSelect]
+    [filteredOptions, handleSelect],
   );
 
   return (
-    <div ref={containerRef} className={cn('relative', className)}>
+    <div ref={containerRef} className={cn("relative", className)}>
       {/* Hidden input for form submission */}
-      <input type="hidden" name={name} value={value || ''} />
+      <input type="hidden" name={name} value={value || ""} />
 
       {/* Trigger button */}
       <Button
@@ -188,14 +202,16 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
         onClick={handleToggle}
         disabled={disabled}
         className={cn(
-          'w-full justify-between font-normal',
-          error && 'border-red-300 focus:border-red-500 focus:ring-red-500',
-          isOpen && 'ring-2 ring-primary-500 border-primary-500'
+          "w-full justify-between font-normal",
+          error && "border-red-300 focus:border-red-500 focus:ring-red-500",
+          isOpen && "ring-2 ring-primary-500 border-primary-500",
         )}
       >
         <Typography
           variant="body"
-          className={cn(!selectedOption && 'text-gray-400')}
+          className={cn(
+            !selectedOption && "text-[var(--color-muted-foreground)]",
+          )}
         >
           {isLoading ? (
             <HStack gap="xs" align="center">
@@ -211,16 +227,16 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
         <HStack gap="xs" align="center">
           {clearable && selectedOption && !disabled && (
             <span
-              className="p-0.5 hover:bg-gray-100 rounded cursor-pointer"
+              className="p-0.5 hover:bg-[var(--color-muted)] rounded cursor-pointer"
               onClick={handleClear}
             >
-              <X className="h-4 w-4 text-gray-400" />
+              <X className="h-4 w-4 text-[var(--color-muted-foreground)]" />
             </span>
           )}
           <ChevronDown
             className={cn(
-              'h-4 w-4 text-gray-400 transition-transform',
-              isOpen && 'transform rotate-180'
+              "h-4 w-4 text-[var(--color-muted-foreground)] transition-transform",
+              isOpen && "transform rotate-180",
             )}
           />
         </HStack>
@@ -237,7 +253,7 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
           className="z-50 w-full mt-1"
         >
           {/* Search input */}
-          <Box padding="sm" className="border-b border-gray-200">
+          <Box padding="sm" className="border-b border-[var(--color-border)]">
             <Input
               ref={searchInputRef}
               type="text"
@@ -258,7 +274,11 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
               </Box>
             ) : filteredOptions.length === 0 ? (
               <Box padding="md">
-                <Typography variant="body" color="muted" className="text-center">
+                <Typography
+                  variant="body"
+                  color="muted"
+                  className="text-center"
+                >
                   {emptyMessage}
                 </Typography>
               </Box>
@@ -272,9 +292,10 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
                     paddingX="sm"
                     paddingY="sm"
                     className={cn(
-                      'text-left text-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50',
-                      option.value === value && 'bg-primary-50 text-primary-700',
-                      option.disabled && 'opacity-50 cursor-not-allowed'
+                      "text-left text-sm hover:bg-[var(--color-muted)] focus:outline-none focus:bg-[var(--color-muted)]",
+                      option.value === value &&
+                        "bg-primary-50 text-primary-700",
+                      option.disabled && "opacity-50 cursor-not-allowed",
                     )}
                     onClick={() => handleSelect(option)}
                   >
@@ -304,4 +325,4 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
   );
 };
 
-RelationSelect.displayName = 'RelationSelect';
+RelationSelect.displayName = "RelationSelect";

@@ -12,30 +12,38 @@
  * - Nested sections with collapsible support
  */
 
-import React from 'react';
-import { cn } from '../../lib/cn';
-import { Input } from '../atoms/Input';
-import { Button } from '../atoms/Button';
-import { Select, type SelectOption } from '../atoms/Select';
-import { Textarea } from '../atoms/Textarea';
-import { Checkbox } from '../atoms/Checkbox';
-import { Box } from '../atoms/Box';
-import { VStack, HStack } from '../atoms/Stack';
-import { Typography } from '../atoms/Typography';
-import { Icon } from '../atoms/Icon';
-import { RelationSelect, type RelationOption } from '../molecules/RelationSelect';
-import { Alert } from '../molecules/Alert';
-import { useEventBus } from '../../hooks/useEventBus';
-import { debug, debugGroup, debugGroupEnd, isDebugEnabled } from '../../lib/debug';
+import React from "react";
+import { cn } from "../../lib/cn";
+import { Input } from "../atoms/Input";
+import { Button } from "../atoms/Button";
+import { Select, type SelectOption } from "../atoms/Select";
+import { Textarea } from "../atoms/Textarea";
+import { Checkbox } from "../atoms/Checkbox";
+import { Box } from "../atoms/Box";
+import { VStack, HStack } from "../atoms/Stack";
+import { Typography } from "../atoms/Typography";
+import { Icon } from "../atoms/Icon";
+import {
+  RelationSelect,
+  type RelationOption,
+} from "../molecules/RelationSelect";
+import { Alert } from "../molecules/Alert";
+import { useEventBus } from "../../hooks/useEventBus";
+import {
+  debug,
+  debugGroup,
+  debugGroupEnd,
+  isDebugEnabled,
+} from "../../lib/debug";
 import {
   evaluate,
   createMinimalContext,
   type SExpr,
   type EvaluationContext as SharedEvaluationContext,
-} from '../../evaluator';
+} from "@orbital/shared";
 
 /**
- * S-Expression type for conditional logic (re-export from @almadar/shared)
+ * S-Expression type for conditional logic (re-export from @orbital/shared)
  */
 export type SExpression = SExpr;
 
@@ -52,7 +60,9 @@ export interface FormEvaluationContext {
 /**
  * Convert form context to shared evaluator context
  */
-function toSharedContext(formCtx: FormEvaluationContext): SharedEvaluationContext {
+function toSharedContext(
+  formCtx: FormEvaluationContext,
+): SharedEvaluationContext {
   return createMinimalContext(
     {
       formValues: formCtx.formValues,
@@ -61,14 +71,17 @@ function toSharedContext(formCtx: FormEvaluationContext): SharedEvaluationContex
       ...formCtx.entity,
     },
     {},
-    'active'
+    "active",
   );
 }
 
 /**
  * Evaluate an S-expression using the shared evaluator
  */
-function evaluateFormExpression(expr: SExpression, formCtx: FormEvaluationContext): unknown {
+function evaluateFormExpression(
+  expr: SExpression,
+  formCtx: FormEvaluationContext,
+): unknown {
   const ctx = toSharedContext(formCtx);
   return evaluate(expr, ctx);
 }
@@ -88,7 +101,7 @@ export interface HiddenCalculation {
 export interface ViolationDefinition {
   law: string;
   article: string;
-  actionType: 'measure' | 'admin' | 'penalty';
+  actionType: "measure" | "admin" | "penalty";
   message: string;
 }
 
@@ -141,7 +154,7 @@ export interface RelationConfig {
   /** Field on target entity to display (defaults to 'name') */
   displayField?: string;
   /** Cardinality: one-to-one or one-to-many */
-  cardinality?: 'one' | 'many';
+  cardinality?: "one" | "many";
 }
 
 /**
@@ -185,17 +198,25 @@ export interface SchemaField {
   disabled?: boolean;
 }
 
-export interface FormProps extends Omit<React.FormHTMLAttributes<HTMLFormElement>, 'onSubmit'> {
+export interface FormProps extends Omit<
+  React.FormHTMLAttributes<HTMLFormElement>,
+  "onSubmit"
+> {
   /** Form fields (traditional React children) */
   children?: React.ReactNode;
   /** Submit handler - receives form data, or event name string for trait dispatch */
-  onSubmit?: ((e: React.FormEvent<HTMLFormElement>, data?: Record<string, unknown>) => void) | string;
+  onSubmit?:
+    | ((
+        e: React.FormEvent<HTMLFormElement>,
+        data?: Record<string, unknown>,
+      ) => void)
+    | string;
   /** Cancel handler - function or event name string for trait dispatch */
   onCancel?: (() => void) | string;
   /** Form layout */
-  layout?: 'vertical' | 'horizontal' | 'inline';
+  layout?: "vertical" | "horizontal" | "inline";
   /** Gap between fields */
-  gap?: 'sm' | 'md' | 'lg';
+  gap?: "sm" | "md" | "lg";
   /** Additional CSS classes */
   className?: string;
 
@@ -203,7 +224,7 @@ export interface FormProps extends Omit<React.FormHTMLAttributes<HTMLFormElement
   /** Entity type name (schema format) */
   entity?: string;
   /** Form mode - 'create' for new records, 'edit' for updating existing */
-  mode?: 'create' | 'edit';
+  mode?: "create" | "edit";
   /** Fields definition (schema format) - accepts readonly for generated const arrays */
   fields?: readonly Readonly<SchemaField>[];
   /** Initial form data */
@@ -245,19 +266,23 @@ export interface FormProps extends Omit<React.FormHTMLAttributes<HTMLFormElement
   /** Nested form sections with optional conditions */
   sections?: FormSection[];
   /** Callback when any field value changes */
-  onFieldChange?: (change: { fieldId: string; value: unknown; formValues: Record<string, unknown> }) => void;
+  onFieldChange?: (change: {
+    fieldId: string;
+    value: unknown;
+    formValues: Record<string, unknown>;
+  }) => void;
 }
 
 const layoutStyles = {
-  vertical: 'flex flex-col',
-  horizontal: 'flex flex-row flex-wrap items-end',
-  inline: 'flex flex-row flex-wrap items-center',
+  vertical: "flex flex-col",
+  horizontal: "flex flex-row flex-wrap items-end",
+  inline: "flex flex-row flex-wrap items-center",
 };
 
 const gapStyles = {
-  sm: 'gap-2',
-  md: 'gap-4',
-  lg: 'gap-6',
+  sm: "gap-2",
+  md: "gap-4",
+  lg: "gap-6",
 };
 
 /**
@@ -274,7 +299,7 @@ function getEnumOptions(field: SchemaField): SelectOption[] {
   if (field.values && field.values.length > 0) {
     return field.values.map((v) => ({
       value: v,
-      label: v.charAt(0).toUpperCase() + v.slice(1).replace(/_/g, ' '),
+      label: v.charAt(0).toUpperCase() + v.slice(1).replace(/_/g, " "),
     }));
   }
 
@@ -283,7 +308,7 @@ function getEnumOptions(field: SchemaField): SelectOption[] {
   if (validation?.enum && Array.isArray(validation.enum)) {
     return (validation.enum as string[]).map((v) => ({
       value: v,
-      label: v.charAt(0).toUpperCase() + v.slice(1).replace(/_/g, ' '),
+      label: v.charAt(0).toUpperCase() + v.slice(1).replace(/_/g, " "),
     }));
   }
 
@@ -300,39 +325,43 @@ function determineInputType(field: SchemaField): string {
   }
 
   // Check for relation type
-  if (field.type === 'relation' || field.relation) {
-    return 'relation';
+  if (field.type === "relation" || field.relation) {
+    return "relation";
   }
 
   // Check for enum type
-  if (field.type === 'enum' || field.values || getEnumOptions(field).length > 0) {
-    return 'select';
+  if (
+    field.type === "enum" ||
+    field.values ||
+    getEnumOptions(field).length > 0
+  ) {
+    return "select";
   }
 
   // Map type to inputType
   switch (field.type?.toLowerCase()) {
-    case 'email':
-      return 'email';
-    case 'password':
-      return 'password';
-    case 'url':
-      return 'url';
-    case 'number':
-    case 'integer':
-    case 'float':
-      return 'number';
-    case 'date':
-      return 'date';
-    case 'datetime':
-    case 'timestamp':
-      return 'datetime-local';
-    case 'boolean':
-      return 'checkbox';
-    case 'textarea':
-    case 'text':
-      return field.max && field.max > 200 ? 'textarea' : 'text';
+    case "email":
+      return "email";
+    case "password":
+      return "password";
+    case "url":
+      return "url";
+    case "number":
+    case "integer":
+    case "float":
+      return "number";
+    case "date":
+      return "date";
+    case "datetime":
+    case "timestamp":
+      return "datetime-local";
+    case "boolean":
+      return "checkbox";
+    case "textarea":
+    case "text":
+      return field.max && field.max > 200 ? "textarea" : "text";
     default:
-      return 'text';
+      return "text";
   }
 }
 
@@ -340,8 +369,8 @@ export const Form: React.FC<FormProps> = ({
   children,
   onSubmit,
   onCancel,
-  layout = 'vertical',
-  gap = 'md',
+  layout = "vertical",
+  gap = "md",
   className,
   // Schema-based props
   entity,
@@ -349,12 +378,12 @@ export const Form: React.FC<FormProps> = ({
   initialData = {},
   isLoading = false,
   error,
-  submitLabel = 'Save',
-  cancelLabel = 'Cancel',
+  submitLabel = "Save",
+  cancelLabel = "Cancel",
   showCancel,
   title,
-  submitEvent = 'SAVE',
-  cancelEvent = 'CANCEL',
+  submitEvent = "SAVE",
+  cancelEvent = "CANCEL",
   relationsData = {},
   relationsLoading = {},
   // Inspection form extensions
@@ -367,19 +396,25 @@ export const Form: React.FC<FormProps> = ({
   ...props
 }) => {
   const eventBus = useEventBus();
-  const [formData, setFormData] = React.useState<Record<string, unknown>>(initialData);
-  const [collapsedSections, setCollapsedSections] = React.useState<Set<string>>(new Set());
+  const [formData, setFormData] =
+    React.useState<Record<string, unknown>>(initialData);
+  const [collapsedSections, setCollapsedSections] = React.useState<Set<string>>(
+    new Set(),
+  );
 
   // Default to showing cancel button for schema-based forms
   const shouldShowCancel = showCancel ?? (fields && fields.length > 0);
 
   // Build evaluation context from form data and external context
-  const evalContext: FormEvaluationContext = React.useMemo(() => ({
-    formValues: formData,
-    globalVariables: externalContext?.globalVariables ?? {},
-    localVariables: externalContext?.localVariables ?? {},
-    entity: externalContext?.entity ?? {},
-  }), [formData, externalContext]);
+  const evalContext: FormEvaluationContext = React.useMemo(
+    () => ({
+      formValues: formData,
+      globalVariables: externalContext?.globalVariables ?? {},
+      localVariables: externalContext?.localVariables ?? {},
+      entity: externalContext?.entity ?? {},
+    }),
+    [formData, externalContext],
+  );
 
   // Sync form data when initialData changes (e.g., when data loads from API)
   React.useEffect(() => {
@@ -391,59 +426,75 @@ export const Form: React.FC<FormProps> = ({
   /**
    * Process hidden calculations when triggered fields change
    */
-  const processCalculations = React.useCallback((changedFieldId: string, newFormData: Record<string, unknown>) => {
-    if (!hiddenCalculations.length) return;
+  const processCalculations = React.useCallback(
+    (changedFieldId: string, newFormData: Record<string, unknown>) => {
+      if (!hiddenCalculations.length) return;
 
-    const context: FormEvaluationContext = {
-      formValues: newFormData,
-      globalVariables: externalContext?.globalVariables ?? {},
-      localVariables: externalContext?.localVariables ?? {},
-      entity: externalContext?.entity ?? {},
-    };
+      const context: FormEvaluationContext = {
+        formValues: newFormData,
+        globalVariables: externalContext?.globalVariables ?? {},
+        localVariables: externalContext?.localVariables ?? {},
+        entity: externalContext?.entity ?? {},
+      };
 
-    hiddenCalculations.forEach(calc => {
-      if (calc.triggerFields.includes(changedFieldId)) {
-        const value = evaluateFormExpression(calc.expression, context);
-        eventBus.emit('UI:GLOBAL_VARIABLE_SET', {
-          variable: calc.variableName,
-          value,
-        });
-        debug('forms', `Calculation triggered: ${calc.variableName} = ${value}`);
-      }
-    });
-  }, [hiddenCalculations, externalContext, eventBus]);
+      hiddenCalculations.forEach((calc) => {
+        if (calc.triggerFields.includes(changedFieldId)) {
+          const value = evaluateFormExpression(calc.expression, context);
+          eventBus.emit("UI:GLOBAL_VARIABLE_SET", {
+            variable: calc.variableName,
+            value,
+          });
+          debug(
+            "forms",
+            `Calculation triggered: ${calc.variableName} = ${value}`,
+          );
+        }
+      });
+    },
+    [hiddenCalculations, externalContext, eventBus],
+  );
 
   /**
    * Check violation triggers when form data changes
    */
-  const checkViolations = React.useCallback((changedFieldId: string, newFormData: Record<string, unknown>) => {
-    if (!violationTriggers.length) return;
+  const checkViolations = React.useCallback(
+    (changedFieldId: string, newFormData: Record<string, unknown>) => {
+      if (!violationTriggers.length) return;
 
-    const context: FormEvaluationContext = {
-      formValues: newFormData,
-      globalVariables: externalContext?.globalVariables ?? {},
-      localVariables: externalContext?.localVariables ?? {},
-      entity: externalContext?.entity ?? {},
-    };
+      const context: FormEvaluationContext = {
+        formValues: newFormData,
+        globalVariables: externalContext?.globalVariables ?? {},
+        localVariables: externalContext?.localVariables ?? {},
+        entity: externalContext?.entity ?? {},
+      };
 
-    violationTriggers.forEach(trigger => {
-      const conditionMet = evaluateFormExpression(trigger.condition, context);
-      if (conditionMet) {
-        eventBus.emit('UI:VIOLATION_DETECTED', {
-          fieldId: trigger.fieldId ?? changedFieldId,
-          ...trigger.violation,
-        });
-        debug('forms', `Violation detected: ${trigger.violation.law} ${trigger.violation.article}`);
-      }
-    });
-  }, [violationTriggers, externalContext, eventBus]);
+      violationTriggers.forEach((trigger) => {
+        const conditionMet = evaluateFormExpression(trigger.condition, context);
+        if (conditionMet) {
+          eventBus.emit("UI:VIOLATION_DETECTED", {
+            fieldId: trigger.fieldId ?? changedFieldId,
+            ...trigger.violation,
+          });
+          debug(
+            "forms",
+            `Violation detected: ${trigger.violation.law} ${trigger.violation.article}`,
+          );
+        }
+      });
+    },
+    [violationTriggers, externalContext, eventBus],
+  );
 
   const handleChange = (name: string, value: unknown) => {
     const newFormData = { ...formData, [name]: value };
     setFormData(newFormData);
 
     // Emit field change event
-    eventBus.emit('UI:FIELD_CHANGED', { fieldId: name, value, formValues: newFormData });
+    eventBus.emit("UI:FIELD_CHANGED", {
+      fieldId: name,
+      value,
+      formValues: newFormData,
+    });
 
     // Call external handler if provided
     onFieldChange?.({ fieldId: name, value, formValues: newFormData });
@@ -456,25 +507,31 @@ export const Form: React.FC<FormProps> = ({
   /**
    * Check if a field should be visible based on its condition
    */
-  const isFieldVisible = React.useCallback((fieldName: string): boolean => {
-    const condition = conditionalFields[fieldName];
-    if (!condition) return true;
-    return Boolean(evaluateFormExpression(condition, evalContext));
-  }, [conditionalFields, evalContext]);
+  const isFieldVisible = React.useCallback(
+    (fieldName: string): boolean => {
+      const condition = conditionalFields[fieldName];
+      if (!condition) return true;
+      return Boolean(evaluateFormExpression(condition, evalContext));
+    },
+    [conditionalFields, evalContext],
+  );
 
   /**
    * Check if a section should be visible based on its condition
    */
-  const isSectionVisible = React.useCallback((section: FormSection): boolean => {
-    if (!section.condition) return true;
-    return Boolean(evaluateFormExpression(section.condition, evalContext));
-  }, [evalContext]);
+  const isSectionVisible = React.useCallback(
+    (section: FormSection): boolean => {
+      if (!section.condition) return true;
+      return Boolean(evaluateFormExpression(section.condition, evalContext));
+    },
+    [evalContext],
+  );
 
   /**
    * Toggle section collapsed state
    */
   const toggleSection = (sectionId: string) => {
-    setCollapsedSections(prev => {
+    setCollapsedSections((prev) => {
       const next = new Set(prev);
       if (next.has(sectionId)) {
         next.delete(sectionId);
@@ -490,9 +547,9 @@ export const Form: React.FC<FormProps> = ({
     // Dispatch submit event for trait state machine integration
     eventBus.emit(`UI:${submitEvent}`, { data: formData, entity });
     // Handle onSubmit - can be a function or event name string
-    if (typeof onSubmit === 'function') {
+    if (typeof onSubmit === "function") {
       onSubmit(e, formData);
-    } else if (typeof onSubmit === 'string') {
+    } else if (typeof onSubmit === "string") {
       eventBus.emit(`UI:${onSubmit}`, { data: formData, entity });
     }
   };
@@ -500,11 +557,11 @@ export const Form: React.FC<FormProps> = ({
   const handleCancel = () => {
     // Dispatch cancel event for trait state machine integration
     eventBus.emit(`UI:${cancelEvent}`);
-    eventBus.emit('UI:CLOSE');
+    eventBus.emit("UI:CLOSE");
     // Handle onCancel - can be a function or event name string
-    if (typeof onCancel === 'function') {
+    if (typeof onCancel === "function") {
       onCancel();
-    } else if (typeof onCancel === 'string') {
+    } else if (typeof onCancel === "string") {
       eventBus.emit(`UI:${onCancel}`);
     }
   };
@@ -512,40 +569,50 @@ export const Form: React.FC<FormProps> = ({
   /**
    * Render a single field with conditional visibility
    */
-  const renderField = React.useCallback((field: SchemaField) => {
-    const fieldName = field.name || field.field;
-    if (!fieldName) return null;
+  const renderField = React.useCallback(
+    (field: SchemaField) => {
+      const fieldName = field.name || field.field;
+      if (!fieldName) return null;
 
-    // Check conditional visibility
-    if (!isFieldVisible(fieldName)) {
-      return null;
-    }
+      // Check conditional visibility
+      if (!isFieldVisible(fieldName)) {
+        return null;
+      }
 
-    const inputType = determineInputType(field);
-    const label = field.label || fieldName.charAt(0).toUpperCase() + fieldName.slice(1).replace(/([A-Z])/g, ' $1');
-    const currentValue = formData[fieldName] ?? field.defaultValue ?? '';
+      const inputType = determineInputType(field);
+      const label =
+        field.label ||
+        fieldName.charAt(0).toUpperCase() +
+          fieldName.slice(1).replace(/([A-Z])/g, " $1");
+      const currentValue = formData[fieldName] ?? field.defaultValue ?? "";
 
-    return (
-      <VStack key={fieldName} gap="xs">
-        {inputType !== 'checkbox' && (
-          <Typography as="label" variant="label" weight="bold" className="text-black">
-            {label}
-            {field.required && <Typography as="span" color="error" className="ml-1">*</Typography>}
-          </Typography>
-        )}
-        {renderFieldInput(field, fieldName, inputType, currentValue, label)}
-      </VStack>
-    );
-  }, [formData, isFieldVisible, relationsData, relationsLoading, isLoading]);
+      return (
+        <VStack key={fieldName} gap="xs">
+          {inputType !== "checkbox" && (
+            <Typography as="label" variant="label" weight="bold">
+              {label}
+              {field.required && (
+                <Typography as="span" color="error" className="ml-1">
+                  *
+                </Typography>
+              )}
+            </Typography>
+          )}
+          {renderFieldInput(field, fieldName, inputType, currentValue, label)}
+        </VStack>
+      );
+    },
+    [formData, isFieldVisible, relationsData, relationsLoading, isLoading],
+  );
 
   // Generate form fields from schema
   const schemaFields = React.useMemo(() => {
     if (!fields || fields.length === 0) return null;
 
     if (isDebugEnabled()) {
-      debugGroup(`Form: ${entity || 'unknown'}`);
+      debugGroup(`Form: ${entity || "unknown"}`);
       debug(`Fields count: ${fields.length}`);
-      debug('Conditional fields:', Object.keys(conditionalFields));
+      debug("Conditional fields:", Object.keys(conditionalFields));
       debugGroupEnd();
     }
 
@@ -556,48 +623,53 @@ export const Form: React.FC<FormProps> = ({
   const sectionElements = React.useMemo(() => {
     if (!sections || sections.length === 0) return null;
 
-    return sections.map(section => {
-      if (!isSectionVisible(section)) {
-        return null;
-      }
+    return sections
+      .map((section) => {
+        if (!isSectionVisible(section)) {
+          return null;
+        }
 
-      const isCollapsed = collapsedSections.has(section.id);
+        const isCollapsed = collapsedSections.has(section.id);
 
-      return (
-        <Box
-          key={section.id}
-          border
-          rounded="lg"
-          overflow="hidden"
-        >
-          <Box
-            className={cn(
-              'px-4 py-3 bg-gray-50 flex items-center justify-between',
-              section.collapsible && 'cursor-pointer hover:bg-gray-100'
-            )}
-            onClick={section.collapsible ? () => toggleSection(section.id) : undefined}
-          >
-            <Typography variant="label" weight="semibold">
-              {section.title}
-            </Typography>
-            {section.collapsible && (
-              <Icon
-                name="chevron-down"
-                size="md"
-                className={cn('text-gray-500 transition-transform', isCollapsed && 'rotate-180')}
-              />
+        return (
+          <Box key={section.id} border rounded="lg" overflow="hidden">
+            <Box
+              className={cn(
+                "px-4 py-3 bg-[var(--color-muted)] flex items-center justify-between",
+                section.collapsible &&
+                  "cursor-pointer hover:bg-[var(--color-muted)]/80",
+              )}
+              onClick={
+                section.collapsible
+                  ? () => toggleSection(section.id)
+                  : undefined
+              }
+            >
+              <Typography variant="label" weight="semibold">
+                {section.title}
+              </Typography>
+              {section.collapsible && (
+                <Icon
+                  name="chevron-down"
+                  size="md"
+                  className={cn(
+                    "text-[var(--color-muted-foreground)] transition-transform",
+                    isCollapsed && "rotate-180",
+                  )}
+                />
+              )}
+            </Box>
+            {!isCollapsed && (
+              <Box padding="md">
+                <VStack gap={gap === "sm" ? "sm" : gap === "lg" ? "lg" : "md"}>
+                  {section.fields.map(renderField).filter(Boolean)}
+                </VStack>
+              </Box>
             )}
           </Box>
-          {!isCollapsed && (
-            <Box padding="md">
-              <VStack gap={gap === 'sm' ? 'sm' : gap === 'lg' ? 'lg' : 'md'}>
-                {section.fields.map(renderField).filter(Boolean)}
-              </VStack>
-            </Box>
-          )}
-        </Box>
-      );
-    }).filter(Boolean);
+        );
+      })
+      .filter(Boolean);
   }, [sections, isSectionVisible, collapsedSections, renderField, gap]);
 
   /**
@@ -608,7 +680,7 @@ export const Form: React.FC<FormProps> = ({
     fieldName: string,
     inputType: string,
     currentValue: unknown,
-    label: string
+    label: string,
   ): React.ReactNode {
     const commonProps = {
       id: fieldName,
@@ -619,17 +691,17 @@ export const Form: React.FC<FormProps> = ({
     };
 
     switch (inputType) {
-      case 'checkbox':
+      case "checkbox":
         return (
           <Checkbox
             {...commonProps}
-            label={label + (field.required ? ' *' : '')}
+            label={label + (field.required ? " *" : "")}
             checked={Boolean(currentValue)}
             onChange={(e) => handleChange(fieldName, e.target.checked)}
           />
         );
 
-      case 'textarea':
+      case "textarea":
         return (
           <Textarea
             {...commonProps}
@@ -640,7 +712,7 @@ export const Form: React.FC<FormProps> = ({
           />
         );
 
-      case 'select': {
+      case "select": {
         const options = getEnumOptions(field);
         return (
           <Select
@@ -653,7 +725,7 @@ export const Form: React.FC<FormProps> = ({
         );
       }
 
-      case 'relation': {
+      case "relation": {
         // Get relation options from relationsData
         const relationOptions = relationsData[fieldName] || [];
         const relationLoading = relationsLoading[fieldName] || false;
@@ -672,19 +744,28 @@ export const Form: React.FC<FormProps> = ({
         );
       }
 
-      case 'number':
+      case "number":
         return (
           <Input
             {...commonProps}
             type="number"
-            value={currentValue !== undefined && currentValue !== '' ? String(currentValue) : ''}
-            onChange={(e) => handleChange(fieldName, e.target.value ? Number(e.target.value) : undefined)}
+            value={
+              currentValue !== undefined && currentValue !== ""
+                ? String(currentValue)
+                : ""
+            }
+            onChange={(e) =>
+              handleChange(
+                fieldName,
+                e.target.value ? Number(e.target.value) : undefined,
+              )
+            }
             min={field.min}
             max={field.max}
           />
         );
 
-      case 'date':
+      case "date":
         return (
           <Input
             {...commonProps}
@@ -694,7 +775,7 @@ export const Form: React.FC<FormProps> = ({
           />
         );
 
-      case 'datetime-local':
+      case "datetime-local":
         return (
           <Input
             {...commonProps}
@@ -704,7 +785,7 @@ export const Form: React.FC<FormProps> = ({
           />
         );
 
-      case 'email':
+      case "email":
         return (
           <Input
             {...commonProps}
@@ -714,7 +795,7 @@ export const Form: React.FC<FormProps> = ({
           />
         );
 
-      case 'url':
+      case "url":
         return (
           <Input
             {...commonProps}
@@ -724,7 +805,7 @@ export const Form: React.FC<FormProps> = ({
           />
         );
 
-      case 'password':
+      case "password":
         return (
           <Input
             {...commonProps}
@@ -734,7 +815,7 @@ export const Form: React.FC<FormProps> = ({
           />
         );
 
-      case 'text':
+      case "text":
       default:
         return (
           <Input
@@ -752,24 +833,20 @@ export const Form: React.FC<FormProps> = ({
 
   return (
     <form
-      className={cn(
-        layoutStyles[layout],
-        gapStyles[gap],
-        className
-      )}
+      className={cn(layoutStyles[layout], gapStyles[gap], className)}
       onSubmit={handleSubmit}
       {...props}
     >
       {/* Error state */}
       {error && (
         <Alert variant="error" className="mb-4">
-          {error.message || 'An error occurred'}
+          {error.message || "An error occurred"}
         </Alert>
       )}
 
       {/* Render sections (inspection forms with nested sections) */}
       {sectionElements && sectionElements.length > 0 && (
-        <VStack gap={gap === 'sm' ? 'sm' : gap === 'lg' ? 'lg' : 'md'}>
+        <VStack gap={gap === "sm" ? "sm" : gap === "lg" ? "lg" : "md"}>
           {sectionElements}
         </VStack>
       )}
@@ -781,7 +858,8 @@ export const Form: React.FC<FormProps> = ({
       {children}
 
       {/* Action buttons for schema-based forms */}
-      {((schemaFields && schemaFields.length > 0) || (sectionElements && sectionElements.length > 0)) && (
+      {((schemaFields && schemaFields.length > 0) ||
+        (sectionElements && sectionElements.length > 0)) && (
         <HStack gap="sm" className="pt-4">
           <Button
             type="submit"
@@ -790,7 +868,7 @@ export const Form: React.FC<FormProps> = ({
             data-event={submitEvent}
             data-testid={`action-${submitEvent}`}
           >
-            {isLoading ? 'Saving...' : submitLabel}
+            {isLoading ? "Saving..." : submitLabel}
           </Button>
           {shouldShowCancel && (
             <Button
@@ -814,35 +892,35 @@ export const Form: React.FC<FormProps> = ({
  * Format date value for date input
  */
 function formatDateValue(value: unknown): string {
-  if (!value) return '';
+  if (!value) return "";
 
   if (value instanceof Date) {
-    return value.toISOString().split('T')[0];
+    return value.toISOString().split("T")[0];
   }
 
-  if (typeof value === 'string') {
+  if (typeof value === "string") {
     // Try to parse as date
     const date = new Date(value);
     if (!isNaN(date.getTime())) {
-      return date.toISOString().split('T')[0];
+      return date.toISOString().split("T")[0];
     }
     return value;
   }
 
-  return '';
+  return "";
 }
 
 /**
  * Format datetime value for datetime-local input
  */
 function formatDateTimeValue(value: unknown): string {
-  if (!value) return '';
+  if (!value) return "";
 
   if (value instanceof Date) {
     return value.toISOString().slice(0, 16);
   }
 
-  if (typeof value === 'string') {
+  if (typeof value === "string") {
     // Try to parse as date
     const date = new Date(value);
     if (!isNaN(date.getTime())) {
@@ -851,7 +929,7 @@ function formatDateTimeValue(value: unknown): string {
     return value;
   }
 
-  return '';
+  return "";
 }
 
-Form.displayName = 'Form';
+Form.displayName = "Form";

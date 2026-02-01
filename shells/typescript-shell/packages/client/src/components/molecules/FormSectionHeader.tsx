@@ -5,13 +5,13 @@
  * Provides consistent styling and interaction for section headers.
  */
 
-import React from 'react';
-import { cn } from '../../lib/cn';
-import { Box } from '../atoms/Box';
-import { HStack } from '../atoms/Stack';
-import { Typography } from '../atoms/Typography';
-import { Badge } from '../atoms/Badge';
-import { Icon } from '../atoms/Icon';
+import React from "react";
+import { cn } from "../../lib/cn";
+import { Box } from "../atoms/Box";
+import { HStack } from "../atoms/Stack";
+import { Typography } from "../atoms/Typography";
+import { Badge } from "../atoms/Badge";
+import { Icon } from "../atoms/Icon";
 
 export interface FormSectionHeaderProps {
   /** Section title */
@@ -25,7 +25,7 @@ export interface FormSectionHeaderProps {
   /** Badge text (e.g., "3 fields", "Required", "Complete") */
   badge?: string;
   /** Badge variant */
-  badgeVariant?: 'default' | 'primary' | 'success' | 'warning' | 'danger';
+  badgeVariant?: "default" | "primary" | "success" | "warning" | "danger";
   /** Icon name to show before title */
   icon?: string;
   /** Whether section has validation errors */
@@ -42,7 +42,7 @@ export const FormSectionHeader: React.FC<FormSectionHeaderProps> = ({
   isCollapsed = false,
   onToggle,
   badge,
-  badgeVariant = 'default',
+  badgeVariant = "default",
   icon,
   hasErrors = false,
   isComplete = false,
@@ -52,24 +52,25 @@ export const FormSectionHeader: React.FC<FormSectionHeaderProps> = ({
 
   // Determine effective badge variant based on state
   const effectiveBadgeVariant = hasErrors
-    ? 'danger'
+    ? "danger"
     : isComplete
-      ? 'success'
+      ? "success"
       : badgeVariant;
 
   // Determine status icon
   const statusIcon = hasErrors
-    ? 'alert-circle'
+    ? "alert-circle"
     : isComplete
-      ? 'check-circle'
+      ? "check-circle"
       : null;
 
   return (
     <Box
       className={cn(
-        'px-4 py-3 bg-gray-50 rounded-t-lg',
-        isClickable && 'cursor-pointer hover:bg-gray-100 transition-colors',
-        className
+        "px-4 py-3 bg-[var(--color-muted)] rounded-t-lg",
+        isClickable &&
+          "cursor-pointer hover:bg-[var(--color-surface-hover)] transition-colors",
+        className,
       )}
       onClick={isClickable ? onToggle : undefined}
     >
@@ -77,7 +78,11 @@ export const FormSectionHeader: React.FC<FormSectionHeaderProps> = ({
         <HStack gap="sm" align="center">
           {/* Custom icon */}
           {icon && (
-            <Icon name={icon} size="md" className="text-gray-500" />
+            <Icon
+              name={icon}
+              size="md"
+              className="text-[var(--color-muted-foreground)]"
+            />
           )}
 
           {/* Status icon */}
@@ -85,7 +90,11 @@ export const FormSectionHeader: React.FC<FormSectionHeaderProps> = ({
             <Icon
               name={statusIcon}
               size="md"
-              className={hasErrors ? 'text-red-500' : 'text-green-500'}
+              className={
+                hasErrors
+                  ? "text-[var(--color-error)]"
+                  : "text-[var(--color-success)]"
+              }
             />
           )}
 
@@ -116,8 +125,8 @@ export const FormSectionHeader: React.FC<FormSectionHeaderProps> = ({
               name="chevron-down"
               size="md"
               className={cn(
-                'text-gray-500 transition-transform',
-                isCollapsed && '-rotate-90'
+                "text-[var(--color-muted-foreground)] transition-transform",
+                isCollapsed && "-rotate-90",
               )}
             />
           )}
@@ -127,4 +136,4 @@ export const FormSectionHeader: React.FC<FormSectionHeaderProps> = ({
   );
 };
 
-FormSectionHeader.displayName = 'FormSectionHeader';
+FormSectionHeader.displayName = "FormSectionHeader";
