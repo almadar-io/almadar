@@ -1,30 +1,30 @@
 /**
  * SettingsTemplate
- * 
+ *
  * A presentational template for settings/preferences features.
  * Supports sections with various input types and save/reset operations.
  */
 
-import React from 'react';
-import { cn } from '../../lib/cn';
-import { Container } from '../molecules/Container';
-import { VStack, HStack } from '../atoms/Stack';
-import { Typography } from '../atoms/Typography';
-import { Button } from '../atoms/Button';
-import { Input } from '../atoms/Input';
-import { Select } from '../atoms/Select';
-import { Checkbox } from '../atoms/Checkbox';
-import { Card, CardHeader, CardContent } from '../atoms/Card';
-import { Alert } from '../molecules/Alert';
-import { Divider } from '../atoms/Divider';
-import { Save, RotateCcw, Undo2 } from 'lucide-react';
+import React from "react";
+import { cn } from "../../lib/cn";
+import { Container } from "../molecules/Container";
+import { VStack, HStack } from "../atoms/Stack";
+import { Typography } from "../atoms/Typography";
+import { Button } from "../atoms/Button";
+import { Input } from "../atoms/Input";
+import { Select } from "../atoms/Select";
+import { Checkbox } from "../atoms/Checkbox";
+import { Card, CardHeader, CardContent } from "../atoms/Card";
+import { Alert } from "../molecules/Alert";
+import { Divider } from "../atoms/Divider";
+import { Save, RotateCcw, Undo2 } from "lucide-react";
 
-export type SettingsVariant = 'minimal' | 'standard' | 'full';
+export type SettingsVariant = "minimal" | "standard" | "full";
 
 export interface SettingsFieldConfig {
   key: string;
   label: string;
-  type: 'text' | 'email' | 'number' | 'select' | 'toggle' | 'checkbox';
+  type: "text" | "email" | "number" | "select" | "toggle" | "checkbox";
   description?: string;
   placeholder?: string;
   options?: string[] | Array<{ value: string; label: string }>;
@@ -71,19 +71,39 @@ export interface SettingsTemplateProps {
 
 const defaultSections: SettingsSectionConfig[] = [
   {
-    title: 'General',
-    description: 'General application settings',
+    title: "General",
+    description: "General application settings",
     fields: [
-      { key: 'theme', label: 'Theme', type: 'select', options: ['light', 'dark', 'system'] },
-      { key: 'language', label: 'Language', type: 'select', options: ['en', 'es', 'fr', 'de'] },
+      {
+        key: "theme",
+        label: "Theme",
+        type: "select",
+        options: ["light", "dark", "system"],
+      },
+      {
+        key: "language",
+        label: "Language",
+        type: "select",
+        options: ["en", "es", "fr", "de"],
+      },
     ],
   },
   {
-    title: 'Notifications',
-    description: 'Notification preferences',
+    title: "Notifications",
+    description: "Notification preferences",
     fields: [
-      { key: 'emailNotifications', label: 'Email Notifications', type: 'toggle', description: 'Receive email notifications' },
-      { key: 'pushNotifications', label: 'Push Notifications', type: 'toggle', description: 'Receive push notifications' },
+      {
+        key: "emailNotifications",
+        label: "Email Notifications",
+        type: "toggle",
+        description: "Receive email notifications",
+      },
+      {
+        key: "pushNotifications",
+        label: "Push Notifications",
+        type: "toggle",
+        description: "Receive push notifications",
+      },
     ],
   },
 ];
@@ -99,10 +119,10 @@ export const SettingsTemplate: React.FC<SettingsTemplateProps> = ({
   onReset,
   onRevert,
   onDismissSuccess,
-  title = 'Settings',
+  title = "Settings",
   sections = defaultSections,
   showResetToDefaults = true,
-  variant = 'standard',
+  variant = "standard",
   className,
 }) => {
   const handleSave = () => {
@@ -112,13 +132,22 @@ export const SettingsTemplate: React.FC<SettingsTemplateProps> = ({
   const renderField = (field: SettingsFieldConfig) => {
     const value = settings[field.key];
 
-    if (field.type === 'toggle' || field.type === 'checkbox') {
+    if (field.type === "toggle" || field.type === "checkbox") {
       return (
-        <HStack key={field.key} justify="between" align="center" className="py-2">
+        <HStack
+          key={field.key}
+          justify="between"
+          align="center"
+          className="py-2"
+        >
           <VStack gap="xs">
-            <Typography variant="body" weight="medium">{field.label}</Typography>
+            <Typography variant="body" weight="medium">
+              {field.label}
+            </Typography>
             {field.description && (
-              <Typography variant="small" color="muted">{field.description}</Typography>
+              <Typography variant="small" color="muted">
+                {field.description}
+              </Typography>
             )}
           </VStack>
           <label className="relative inline-flex items-center cursor-pointer">
@@ -128,31 +157,38 @@ export const SettingsTemplate: React.FC<SettingsTemplateProps> = ({
               onChange={(e) => onChange?.(field.key, e.target.checked)}
               className="sr-only peer"
             />
-            <div className={cn(
-              "w-11 h-6 rounded-full transition-colors",
-              "bg-gray-200 peer-checked:bg-primary-600",
-              "after:content-[''] after:absolute after:top-[2px] after:left-[2px]",
-              "after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all",
-              "peer-checked:after:translate-x-5"
-            )} />
+            <div
+              className={cn(
+                "w-11 h-6 rounded-[var(--radius-full)] transition-colors",
+                "bg-[var(--color-muted)] peer-checked:bg-primary-600",
+                "after:content-[''] after:absolute after:top-[2px] after:left-[2px]",
+                "after:bg-[var(--color-card)] after:rounded-[var(--radius-full)] after:h-5 after:w-5 after:transition-all",
+                "peer-checked:after:translate-x-5",
+              )}
+            />
           </label>
         </HStack>
       );
     }
 
-    if (field.type === 'select') {
-      const options = field.options?.map(opt => 
-        typeof opt === 'string' ? { value: opt, label: opt } : opt
-      ) || [];
-      
+    if (field.type === "select") {
+      const options =
+        field.options?.map((opt) =>
+          typeof opt === "string" ? { value: opt, label: opt } : opt,
+        ) || [];
+
       return (
         <VStack key={field.key} gap="xs" className="py-2">
-          <Typography variant="body" weight="medium">{field.label}</Typography>
+          <Typography variant="body" weight="medium">
+            {field.label}
+          </Typography>
           {field.description && (
-            <Typography variant="small" color="muted">{field.description}</Typography>
+            <Typography variant="small" color="muted">
+              {field.description}
+            </Typography>
           )}
           <Select
-            value={(value as string) || ''}
+            value={(value as string) || ""}
             onChange={(e) => onChange?.(field.key, e.target.value)}
             options={options}
             className="mt-1"
@@ -163,13 +199,17 @@ export const SettingsTemplate: React.FC<SettingsTemplateProps> = ({
 
     return (
       <VStack key={field.key} gap="xs" className="py-2">
-        <Typography variant="body" weight="medium">{field.label}</Typography>
+        <Typography variant="body" weight="medium">
+          {field.label}
+        </Typography>
         {field.description && (
-          <Typography variant="small" color="muted">{field.description}</Typography>
+          <Typography variant="small" color="muted">
+            {field.description}
+          </Typography>
         )}
         <Input
           type={field.type}
-          value={(value as string) || ''}
+          value={(value as string) || ""}
           onChange={(e) => onChange?.(field.key, e.target.value)}
           placeholder={field.placeholder}
           className="mt-1"
@@ -183,11 +223,13 @@ export const SettingsTemplate: React.FC<SettingsTemplateProps> = ({
       <CardHeader>
         <Typography variant="h4">{section.title}</Typography>
         {section.description && (
-          <Typography variant="small" color="muted">{section.description}</Typography>
+          <Typography variant="small" color="muted">
+            {section.description}
+          </Typography>
         )}
       </CardHeader>
       <CardContent>
-        <VStack gap="sm" className="divide-y divide-gray-100">
+        <VStack gap="sm" className="divide-y divide-[var(--color-border)]">
           {section.fields.map(renderField)}
         </VStack>
       </CardContent>
@@ -198,7 +240,9 @@ export const SettingsTemplate: React.FC<SettingsTemplateProps> = ({
     <VStack gap="lg" className={className}>
       {error && (
         <Alert variant="error">
-          {typeof error === 'string' ? error : error?.message || 'Failed to save settings'}
+          {typeof error === "string"
+            ? error
+            : error?.message || "Failed to save settings"}
         </Alert>
       )}
 
@@ -209,7 +253,7 @@ export const SettingsTemplate: React.FC<SettingsTemplateProps> = ({
       )}
 
       <VStack gap="md">
-        {sections.flatMap(section => section.fields).map(renderField)}
+        {sections.flatMap((section) => section.fields).map(renderField)}
       </VStack>
 
       <HStack gap="md" justify="end">
@@ -218,7 +262,11 @@ export const SettingsTemplate: React.FC<SettingsTemplateProps> = ({
             Revert
           </Button>
         )}
-        <Button onClick={handleSave} isLoading={isSaving} disabled={!hasChanges}>
+        <Button
+          onClick={handleSave}
+          isLoading={isSaving}
+          disabled={!hasChanges}
+        >
           Save
         </Button>
       </HStack>
@@ -232,13 +280,17 @@ export const SettingsTemplate: React.FC<SettingsTemplateProps> = ({
           <Typography variant="h2">{title}</Typography>
           <HStack gap="sm">
             {hasChanges && onRevert && (
-              <Button variant="ghost" onClick={onRevert} leftIcon={<Undo2 className="h-4 w-4" />}>
+              <Button
+                variant="ghost"
+                onClick={onRevert}
+                leftIcon={<Undo2 className="h-4 w-4" />}
+              >
                 Revert
               </Button>
             )}
-            <Button 
-              onClick={handleSave} 
-              isLoading={isSaving} 
+            <Button
+              onClick={handleSave}
+              isLoading={isSaving}
               disabled={!hasChanges}
               leftIcon={<Save className="h-4 w-4" />}
             >
@@ -249,7 +301,9 @@ export const SettingsTemplate: React.FC<SettingsTemplateProps> = ({
 
         {error && (
           <Alert variant="error">
-            {typeof error === 'string' ? error : error?.message || 'Failed to save settings'}
+            {typeof error === "string"
+              ? error
+              : error?.message || "Failed to save settings"}
           </Alert>
         )}
 
@@ -259,9 +313,7 @@ export const SettingsTemplate: React.FC<SettingsTemplateProps> = ({
           </Alert>
         )}
 
-        <VStack gap="lg">
-          {sections.map(renderSection)}
-        </VStack>
+        <VStack gap="lg">{sections.map(renderSection)}</VStack>
 
         {showResetToDefaults && onReset && (
           <>
@@ -273,10 +325,14 @@ export const SettingsTemplate: React.FC<SettingsTemplateProps> = ({
                   Restore all settings to their default values
                 </Typography>
               </VStack>
-              <Button 
-                variant="danger" 
+              <Button
+                variant="danger"
                 onClick={() => {
-                  if (confirm('Are you sure you want to reset all settings to defaults?')) {
+                  if (
+                    confirm(
+                      "Are you sure you want to reset all settings to defaults?",
+                    )
+                  ) {
                     onReset();
                   }
                 }}
@@ -303,13 +359,17 @@ export const SettingsTemplate: React.FC<SettingsTemplateProps> = ({
           </VStack>
           <HStack gap="sm">
             {hasChanges && onRevert && (
-              <Button variant="secondary" onClick={onRevert} leftIcon={<Undo2 className="h-4 w-4" />}>
+              <Button
+                variant="secondary"
+                onClick={onRevert}
+                leftIcon={<Undo2 className="h-4 w-4" />}
+              >
                 Discard Changes
               </Button>
             )}
-            <Button 
-              onClick={handleSave} 
-              isLoading={isSaving} 
+            <Button
+              onClick={handleSave}
+              isLoading={isSaving}
               disabled={!hasChanges}
               leftIcon={<Save className="h-4 w-4" />}
             >
@@ -320,7 +380,9 @@ export const SettingsTemplate: React.FC<SettingsTemplateProps> = ({
 
         {error && (
           <Alert variant="error" title="Save Failed">
-            {typeof error === 'string' ? error : error?.message || 'Failed to save settings. Please try again.'}
+            {typeof error === "string"
+              ? error
+              : error?.message || "Failed to save settings. Please try again."}
           </Alert>
         )}
 
@@ -341,19 +403,32 @@ export const SettingsTemplate: React.FC<SettingsTemplateProps> = ({
         </div>
 
         {showResetToDefaults && onReset && (
-          <Card className="border-red-200 bg-red-50">
+          <Card className="border-[var(--color-error)]/30 bg-[var(--color-error)]/10">
             <CardContent className="p-6">
               <HStack justify="between" align="center">
                 <VStack gap="xs">
-                  <Typography variant="h5" className="text-red-900">Danger Zone</Typography>
-                  <Typography variant="small" className="text-red-700">
-                    Reset all settings to their factory defaults. This action cannot be undone.
+                  <Typography
+                    variant="h5"
+                    className="text-[var(--color-error)]"
+                  >
+                    Danger Zone
+                  </Typography>
+                  <Typography
+                    variant="small"
+                    className="text-[var(--color-error)]/80"
+                  >
+                    Reset all settings to their factory defaults. This action
+                    cannot be undone.
                   </Typography>
                 </VStack>
-                <Button 
-                  variant="danger" 
+                <Button
+                  variant="danger"
                   onClick={() => {
-                    if (confirm('Are you sure you want to reset ALL settings? This cannot be undone.')) {
+                    if (
+                      confirm(
+                        "Are you sure you want to reset ALL settings? This cannot be undone.",
+                      )
+                    ) {
                       onReset();
                     }
                   }}
@@ -370,15 +445,15 @@ export const SettingsTemplate: React.FC<SettingsTemplateProps> = ({
   );
 
   switch (variant) {
-    case 'minimal':
+    case "minimal":
       return renderMinimal();
-    case 'full':
+    case "full":
       return renderFull();
     default:
       return renderStandard();
   }
 };
 
-SettingsTemplate.displayName = 'SettingsTemplate';
+SettingsTemplate.displayName = "SettingsTemplate";
 
 export default SettingsTemplate;

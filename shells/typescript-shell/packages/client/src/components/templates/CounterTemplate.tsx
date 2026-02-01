@@ -1,20 +1,20 @@
 /**
  * CounterTemplate
- * 
+ *
  * A presentational template for counter/incrementer features.
  * Supports increment, decrement, and reset operations.
  */
 
-import React from 'react';
-import { cn } from '../../lib/cn';
-import { Container } from '../molecules/Container';
-import { VStack, HStack } from '../atoms/Stack';
-import { Typography } from '../atoms/Typography';
-import { Button } from '../atoms/Button';
-import { Minus, Plus, RotateCcw } from 'lucide-react';
+import React from "react";
+import { cn } from "../../lib/cn";
+import { Container } from "../molecules/Container";
+import { VStack, HStack } from "../atoms/Stack";
+import { Typography } from "../atoms/Typography";
+import { Button } from "../atoms/Button";
+import { Minus, Plus, RotateCcw } from "lucide-react";
 
-export type CounterSize = 'sm' | 'md' | 'lg';
-export type CounterVariant = 'minimal' | 'standard' | 'full';
+export type CounterSize = "sm" | "md" | "lg";
+export type CounterVariant = "minimal" | "standard" | "full";
 
 export interface CounterTemplateProps {
   /** Current count value */
@@ -43,10 +43,13 @@ export interface CounterTemplateProps {
   className?: string;
 }
 
-const sizeStyles: Record<CounterSize, { display: string; button: 'sm' | 'md' | 'lg' }> = {
-  sm: { display: 'text-4xl', button: 'sm' },
-  md: { display: 'text-6xl', button: 'md' },
-  lg: { display: 'text-8xl', button: 'lg' },
+const sizeStyles: Record<
+  CounterSize,
+  { display: string; button: "sm" | "md" | "lg" }
+> = {
+  sm: { display: "text-4xl", button: "sm" },
+  md: { display: "text-6xl", button: "md" },
+  lg: { display: "text-8xl", button: "lg" },
 };
 
 export const CounterTemplate: React.FC<CounterTemplateProps> = ({
@@ -57,10 +60,10 @@ export const CounterTemplate: React.FC<CounterTemplateProps> = ({
   onIncrement,
   onDecrement,
   onReset,
-  title = 'Counter',
+  title = "Counter",
   showReset = true,
-  size = 'md',
-  variant = 'standard',
+  size = "md",
+  variant = "standard",
   className,
 }) => {
   const canDecrement = count - step >= min;
@@ -75,11 +78,14 @@ export const CounterTemplate: React.FC<CounterTemplateProps> = ({
         disabled={!canDecrement}
         leftIcon={<Minus className="h-4 w-4" />}
       >
-        {step > 1 ? `-${step}` : ''}
+        {step > 1 ? `-${step}` : ""}
       </Button>
       <Typography
         variant="h1"
-        className={cn(sizeStyles[size].display, 'font-bold tabular-nums min-w-[3ch] text-center')}
+        className={cn(
+          sizeStyles[size].display,
+          "font-bold tabular-nums min-w-[3ch] text-center",
+        )}
       >
         {count}
       </Typography>
@@ -90,7 +96,7 @@ export const CounterTemplate: React.FC<CounterTemplateProps> = ({
         disabled={!canIncrement}
         leftIcon={<Plus className="h-4 w-4" />}
       >
-        {step > 1 ? `+${step}` : ''}
+        {step > 1 ? `+${step}` : ""}
       </Button>
     </HStack>
   );
@@ -98,12 +104,18 @@ export const CounterTemplate: React.FC<CounterTemplateProps> = ({
   const renderStandard = () => (
     <Container size="sm" padding="lg" className={className}>
       <VStack gap="lg" align="center">
-        <Typography variant="h2" className="text-gray-700">
+        <Typography
+          variant="h2"
+          className="text-[var(--color-muted-foreground)]"
+        >
           {title}
         </Typography>
         <Typography
           variant="h1"
-          className={cn(sizeStyles[size].display, 'font-bold tabular-nums text-primary-600')}
+          className={cn(
+            sizeStyles[size].display,
+            "font-bold tabular-nums text-primary-600",
+          )}
         >
           {count}
         </Typography>
@@ -140,19 +152,26 @@ export const CounterTemplate: React.FC<CounterTemplateProps> = ({
   const renderFull = () => (
     <Container size="sm" padding="lg" className={className}>
       <VStack gap="xl" align="center">
-        <Typography variant="h2" className="text-gray-700">
+        <Typography
+          variant="h2"
+          className="text-[var(--color-muted-foreground)]"
+        >
           {title}
         </Typography>
         <VStack gap="sm" align="center">
           <Typography
             variant="h1"
-            className={cn(sizeStyles[size].display, 'font-bold tabular-nums text-primary-600')}
+            className={cn(
+              sizeStyles[size].display,
+              "font-bold tabular-nums text-primary-600",
+            )}
           >
             {count}
           </Typography>
           {(min !== -Infinity || max !== Infinity) && (
             <Typography variant="small" color="muted">
-              Range: {min === -Infinity ? '-∞' : min} to {max === Infinity ? '∞' : max}
+              Range: {min === -Infinity ? "-∞" : min} to{" "}
+              {max === Infinity ? "∞" : max}
             </Typography>
           )}
         </VStack>
@@ -164,7 +183,7 @@ export const CounterTemplate: React.FC<CounterTemplateProps> = ({
             disabled={!canDecrement}
             leftIcon={<Minus className="h-4 w-4" />}
           >
-            {step > 1 ? step : ''}
+            {step > 1 ? step : ""}
           </Button>
           <Button
             variant="primary"
@@ -173,7 +192,7 @@ export const CounterTemplate: React.FC<CounterTemplateProps> = ({
             disabled={!canIncrement}
             leftIcon={<Plus className="h-4 w-4" />}
           >
-            {step > 1 ? step : ''}
+            {step > 1 ? step : ""}
           </Button>
         </HStack>
         {showReset && (
@@ -191,15 +210,15 @@ export const CounterTemplate: React.FC<CounterTemplateProps> = ({
   );
 
   switch (variant) {
-    case 'minimal':
+    case "minimal":
       return renderMinimal();
-    case 'full':
+    case "full":
       return renderFull();
     default:
       return renderStandard();
   }
 };
 
-CounterTemplate.displayName = 'CounterTemplate';
+CounterTemplate.displayName = "CounterTemplate";
 
 export default CounterTemplate;

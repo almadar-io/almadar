@@ -10,7 +10,11 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '../../lib/cn';
-import { useEntityList, usePaginatedEntityList, type PaginationParams } from '../../hooks/useEntityData';
+import {
+  useEntityList,
+  usePaginatedEntityList,
+  type PaginationParams,
+} from '../../hooks/useEntityData';
 import { useEventBus, type KFlowEvent } from '../../hooks/useEventBus';
 import { useQuerySingleton } from '../../hooks/useQuerySingleton';
 import { Button } from '../atoms';
@@ -38,6 +42,19 @@ export interface CardItemAction {
   variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | string;
 }
 
+/**
+ * Field definition - can be a simple string or object with key/header
+ */
+export type FieldDef = string | { key: string; header?: string };
+
+/**
+ * Normalize fields to simple string array
+ */
+function normalizeFields(fields: readonly FieldDef[] | undefined): string[] {
+  if (!fields) return [];
+  return fields.map((f) => (typeof f === 'string' ? f : f.key));
+}
+
 export interface CardGridProps {
   /** Minimum width of each card (default: 280px) */
   minCardWidth?: number;
@@ -53,10 +70,12 @@ export interface CardGridProps {
   children?: React.ReactNode;
   /** Entity type for data-bound usage */
   entity?: string;
-  /** Field names to display - accepts readonly for generated const arrays */
+  /** Fields to display - accepts string[] or {key, header}[] for unified interface */
+  fields?: readonly FieldDef[];
+  /** Alias for fields - backwards compatibility */
   fieldNames?: readonly string[];
-  /** Alias for fieldNames - used by generated code */
-  columns?: readonly string[];
+  /** Alias for fields - backwards compatibility */
+  columns?: readonly FieldDef[];
   /** Data array for data-bound usage - accepts readonly for generated const arrays */
   data?: readonly unknown[] | unknown;
   /** Loading state indicator */
@@ -115,6 +134,7 @@ export const CardGrid: React.FC<CardGridProps> = ({
   className,
   children,
   entity,
+  fields,
   fieldNames,
   columns,
   data: externalData,
@@ -134,8 +154,11 @@ export const CardGrid: React.FC<CardGridProps> = ({
   // Query singleton for filter/sort state
   const queryState = useQuerySingleton(query);
 
-  // Support both fieldNames and columns (alias)
-  const effectiveFieldNames = fieldNames ?? columns;
+  // Support fields, fieldNames, and columns (aliases) - normalize to string[]
+  const effectiveFieldNames =
+    normalizeFields(fields).length > 0
+      ? normalizeFields(fields)
+      : (fieldNames ?? normalizeFields(columns));
 
   // Pagination state - initialize from query singleton if available
   const [paginationParams, setPaginationParams] = useState<PaginationParams>(() => ({
@@ -159,7 +182,12 @@ export const CardGrid: React.FC<CardGridProps> = ({
         page: 1, // Reset to page 1 when filters change
       }));
     }
-  }, [queryState?.search, queryState?.sortField, queryState?.sortDirection, JSON.stringify(queryState?.filters)]);
+  }, [
+    queryState?.search,
+    queryState?.sortField,
+    queryState?.sortDirection,
+    JSON.stringify(queryState?.filters),
+  ]);
 
   // Listen for search and filter events from the event bus
   useEffect(() => {
@@ -192,7 +220,12 @@ export const CardGrid: React.FC<CardGridProps> = ({
     const handleClearFilters = (event: KFlowEvent) => {
       // Only handle if no query binding
       if (query) return;
-      setPaginationParams((prev) => ({ ...prev, filters: {}, search: '', page: 1 }));
+      setPaginationParams((prev) => ({
+        ...prev,
+        filters: {},
+        search: '',
+        page: 1,
+      }));
     };
 
     const unsubSearch = eventBus.on('UI:SEARCH', handleSearch);
@@ -243,15 +276,20 @@ export const CardGrid: React.FC<CardGridProps> = ({
   console.log('[CardGrid] data:', data);
   if (Array.isArray(data) && data.length > 0) {
     console.log('[CardGrid] First record:', JSON.stringify(data[0]));
-    console.log('[CardGrid] All statuses:', data.map((d: any) => d.status));
+    console.log(
+      '[CardGrid] All statuses:',
+      data.map((d: any) => d.status)
+    );
   }
 
   // Pagination info (only available when using paginated hook)
-  const paginationInfo = enablePagination ? {
-    page: paginationParams.page,
-    totalPages: paginatedResult.totalPages,
-    total: paginatedResult.totalCount,
-  } : null;
+  const paginationInfo = enablePagination
+    ? {
+        page: paginationParams.page,
+        totalPages: paginatedResult.totalPages,
+        total: paginatedResult.totalCount,
+      }
+    : null;
 
   // Normalize data to array
   const rawData = Array.isArray(data) ? data : data ? [data] : [];
@@ -284,7 +322,11 @@ export const CardGrid: React.FC<CardGridProps> = ({
 
   // Handle page size change
   const handlePageSizeChange = useCallback((newPageSize: number) => {
-    setPaginationParams((prev) => ({ ...prev, pageSize: newPageSize, page: 1 }));
+    setPaginationParams((prev) => ({
+      ...prev,
+      pageSize: newPageSize,
+      page: 1,
+    }));
   }, []);
 
   // Render data-bound cards if data is provided
@@ -296,7 +338,7 @@ export const CardGrid: React.FC<CardGridProps> = ({
     // Show loading state
     if (isLoading) {
       return (
-        <div className="col-span-full text-center py-8 text-gray-500">
+        <div className="col-span-full text-center py-8 text-[var(--color-muted-foreground)]">
           Loading {entity || 'items'}...
         </div>
       );
@@ -305,7 +347,7 @@ export const CardGrid: React.FC<CardGridProps> = ({
     // Show error state
     if (error) {
       return (
-        <div className="col-span-full text-center py-8 text-red-500">
+        <div className="col-span-full text-center py-8 text-[var(--color-error)]">
           Error loading {entity || 'items'}: {error.message}
         </div>
       );
@@ -313,7 +355,7 @@ export const CardGrid: React.FC<CardGridProps> = ({
 
     if (normalizedData.length === 0) {
       return (
-        <div className="col-span-full text-center py-8 text-gray-500">
+        <div className="col-span-full text-center py-8 text-[var(--color-muted-foreground)]">
           No {entity || 'items'} found
         </div>
       );
@@ -350,8 +392,8 @@ export const CardGrid: React.FC<CardGridProps> = ({
         <div
           key={id}
           className={cn(
-            "bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 shadow-sm",
-            onCardClick && "cursor-pointer hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
+            'bg-[var(--color-card)] rounded-[var(--radius-lg)] border border-[var(--color-border)] p-4 shadow-[var(--shadow-sm)]',
+            onCardClick && 'cursor-pointer hover:border-[var(--color-primary)] transition-colors'
           )}
           onClick={() => onCardClick?.(itemData)}
         >
@@ -360,21 +402,25 @@ export const CardGrid: React.FC<CardGridProps> = ({
             if (value === undefined || value === null) return null;
             return (
               <div key={field} className="mb-2 last:mb-0">
-                <span className="text-xs text-gray-500 dark:text-gray-400 uppercase">
+                <span className="text-xs text-[var(--color-muted-foreground)] uppercase">
                   {field}
                 </span>
-                <div className="text-sm text-gray-900 dark:text-gray-100">
-                  {String(value)}
-                </div>
+                <div className="text-sm text-[var(--color-foreground)]">{String(value)}</div>
               </div>
             );
           })}
           {/* Item Actions */}
           {itemActions && itemActions.length > 0 && (
-            <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700 flex gap-2">
+            <div className="mt-3 pt-3 border-t border-[var(--color-border)] flex gap-2">
               {itemActions.map((action, actionIdx) => {
                 // Cast variant to Button's expected type, defaulting to 'secondary'
-                const buttonVariant = (action.variant || 'secondary') as 'primary' | 'secondary' | 'ghost' | 'danger' | 'success' | 'warning';
+                const buttonVariant = (action.variant || 'secondary') as
+                  | 'primary'
+                  | 'secondary'
+                  | 'ghost'
+                  | 'danger'
+                  | 'success'
+                  | 'warning';
                 return (
                   <Button
                     key={actionIdx}

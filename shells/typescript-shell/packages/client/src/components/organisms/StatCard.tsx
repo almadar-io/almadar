@@ -1,18 +1,25 @@
-import React from 'react';
-import { cn } from '../../lib/cn';
-import { Card } from '../atoms';
-import { TrendingUp, TrendingDown, Minus, LucideIcon } from 'lucide-react';
-import { useEntityList } from '../../hooks/useEntityData';
-import { useEventBus } from '../../hooks/useEventBus';
+import React from "react";
+import { cn } from "../../lib/cn";
+import { Card, Typography } from "../atoms";
+import { TrendingUp, TrendingDown, Minus, LucideIcon } from "lucide-react";
+import { useEntityList } from "../../hooks/useEntityData";
+import { useEventBus } from "../../hooks/useEventBus";
 
 /**
  * Schema metric definition
+ * Supports both computed metrics (with field) and static metrics (with value)
  */
 export interface MetricDefinition {
-  field: string;
+  /** Field name for computed metrics (optional if value is provided) */
+  field?: string;
+  /** Display label */
   label: string;
+  /** Static value for display (alternative to field-based computation) */
+  value?: string | number;
+  /** Icon name for display */
+  icon?: string;
   /** Value format (e.g., 'currency', 'percent', 'number') */
-  format?: 'currency' | 'percent' | 'number' | string;
+  format?: "currency" | "percent" | "number" | string;
 }
 
 export interface StatCardProps {
@@ -27,7 +34,7 @@ export interface StatCardProps {
   /** Manual trend percentage (overrides calculation) */
   trend?: number;
   /** Trend direction (overrides calculation) */
-  trendDirection?: 'up' | 'down' | 'neutral';
+  trendDirection?: "up" | "down" | "neutral";
   /** Whether up is good (green) or bad (red) */
   invertTrend?: boolean;
   /** Icon to display */
@@ -72,8 +79,8 @@ export const StatCard: React.FC<StatCardProps> = ({
   trendDirection: manualDirection,
   invertTrend = false,
   icon: Icon,
-  iconBg = 'bg-neutral-100',
-  iconColor = 'text-black',
+  iconBg = "bg-[var(--color-muted)]",
+  iconColor = "text-[var(--color-foreground)]",
   subtitle,
   action,
   className,
@@ -99,65 +106,83 @@ export const StatCard: React.FC<StatCardProps> = ({
   const shouldAutoFetch = !!entity && !externalData && !!metrics;
   const { data: fetchedData, isLoading: fetchLoading } = useEntityList(
     shouldAutoFetch ? entity : undefined,
-    { skip: !shouldAutoFetch }
+    { skip: !shouldAutoFetch },
   );
 
   // Use external data if provided, otherwise use fetched data
-  const data = (externalData ?? fetchedData ?? []) as readonly Record<string, unknown>[];
+  const data = (externalData ?? fetchedData ?? []) as readonly Record<
+    string,
+    unknown
+  >[];
 
   // Determine loading and error state
   const isLoading = externalLoading ?? (shouldAutoFetch ? fetchLoading : false);
   const error = externalError;
 
   // Helper to compute a single metric value
-  const computeMetricValue = React.useCallback((metric: MetricDefinition, items: readonly Record<string, unknown>[]) => {
-    const field = metric.field;
+  const computeMetricValue = React.useCallback(
+    (metric: MetricDefinition, items: readonly Record<string, unknown>[]) => {
+      // If static value is provided, use it directly
+      if (metric.value !== undefined) {
+        return metric.value;
+      }
 
-    if (field === 'count') {
-      return items.length;
-    }
+      const field = metric.field;
 
-    // Handle explicit field:value format (e.g., "status:active")
-    if (field.includes(':')) {
-      const [fieldName, fieldValue] = field.split(':');
-      return items.filter(item => item[fieldName] === fieldValue).length;
-    }
+      // If no field specified, return 0
+      if (!field) {
+        return 0;
+      }
 
-    // Check if field exists on any item
-    const fieldExistsOnItems = items.some(item => field in item);
+      if (field === "count") {
+        return items.length;
+      }
 
-    if (fieldExistsOnItems) {
-      // Sum numeric field
-      return items.reduce((acc, item) => {
-        const val = item[field];
-        return acc + (typeof val === 'number' ? val : 0);
-      }, 0);
-    }
+      // Handle explicit field:value format (e.g., "status:active")
+      if (field.includes(":")) {
+        const [fieldName, fieldValue] = field.split(":");
+        return items.filter((item) => item[fieldName] === fieldValue).length;
+      }
 
-    // Auto-detect: field name might be a status value
-    // Check common status field names: status, state, phase
-    const statusFields = ['status', 'state', 'phase'];
-    for (const statusField of statusFields) {
-      const hasStatusField = items.some(item => statusField in item);
-      if (hasStatusField) {
-        // Count items where statusField === field (the metric field is actually a value)
-        const count = items.filter(item => item[statusField] === field).length;
-        if (count > 0 || items.length === 0) {
-          return count;
+      // Check if field exists on any item
+      const fieldExistsOnItems = items.some((item) => field in item);
+
+      if (fieldExistsOnItems) {
+        // Sum numeric field
+        return items.reduce((acc, item) => {
+          const val = item[field];
+          return acc + (typeof val === "number" ? val : 0);
+        }, 0);
+      }
+
+      // Auto-detect: field name might be a status value
+      // Check common status field names: status, state, phase
+      const statusFields = ["status", "state", "phase"];
+      for (const statusField of statusFields) {
+        const hasStatusField = items.some((item) => statusField in item);
+        if (hasStatusField) {
+          // Count items where statusField === field (the metric field is actually a value)
+          const count = items.filter(
+            (item) => item[statusField] === field,
+          ).length;
+          if (count > 0 || items.length === 0) {
+            return count;
+          }
         }
       }
-    }
 
-    // Fallback: return 0
-    return 0;
-  }, []);
+      // Fallback: return 0
+      return 0;
+    },
+    [],
+  );
 
   // Schema-driven: calculate stats from data and metrics (supports multiple metrics)
   const schemaStats = React.useMemo(() => {
     if (!metrics || metrics.length === 0) return null;
 
     // Compute all metrics
-    return metrics.map(metric => ({
+    return metrics.map((metric) => ({
       label: metric.label,
       value: computeMetricValue(metric, data),
       format: metric.format,
@@ -168,12 +193,15 @@ export const StatCard: React.FC<StatCardProps> = ({
   if (schemaStats && schemaStats.length > 1) {
     if (isLoading) {
       return (
-        <div className={cn('grid gap-4', className)} style={{ gridTemplateColumns: `repeat(${schemaStats.length}, 1fr)` }}>
+        <div
+          className={cn("grid gap-4", className)}
+          style={{ gridTemplateColumns: `repeat(${schemaStats.length}, 1fr)` }}
+        >
           {schemaStats.map((_, idx) => (
             <Card key={idx} className="p-4">
               <div className="animate-pulse space-y-2">
-                <div className="h-3 bg-neutral-200 rounded w-16" />
-                <div className="h-6 bg-neutral-200 rounded w-12" />
+                <div className="h-3 bg-[var(--color-muted)] rounded w-16" />
+                <div className="h-6 bg-[var(--color-muted)] rounded w-12" />
               </div>
             </Card>
           ))}
@@ -182,11 +210,18 @@ export const StatCard: React.FC<StatCardProps> = ({
     }
 
     return (
-      <div className={cn('grid gap-4', className)} style={{ gridTemplateColumns: `repeat(${schemaStats.length}, 1fr)` }}>
+      <div
+        className={cn("grid gap-4", className)}
+        style={{ gridTemplateColumns: `repeat(${schemaStats.length}, 1fr)` }}
+      >
         {schemaStats.map((stat, idx) => (
           <Card key={idx} className="p-4">
-            <p className="text-xs font-bold text-neutral-600 uppercase tracking-wide">{stat.label}</p>
-            <p className="text-xl font-bold text-black">{stat.value}</p>
+            <Typography variant="overline" color="secondary">
+              {stat.label}
+            </Typography>
+            <Typography variant="h4" className="text-xl">
+              {stat.value}
+            </Typography>
           </Card>
         ))}
       </div>
@@ -194,41 +229,47 @@ export const StatCard: React.FC<StatCardProps> = ({
   }
 
   // Use schema stats if available (single metric), otherwise use props
-  const label = schemaStats?.[0]?.label || propLabel || entity || 'Stat';
+  const label = schemaStats?.[0]?.label || propLabel || entity || "Stat";
   const value = schemaStats?.[0]?.value ?? propValue ?? 0;
   // Calculate trend if not provided manually
   const calculatedTrend = useMemo(() => {
     if (manualTrend !== undefined) return manualTrend;
-    if (previousValue === undefined || currentValue === undefined) return undefined;
+    if (previousValue === undefined || currentValue === undefined)
+      return undefined;
     if (previousValue === 0) return currentValue > 0 ? 100 : 0;
     return ((currentValue - previousValue) / previousValue) * 100;
   }, [manualTrend, previousValue, currentValue]);
 
-  const trendDirection = manualDirection || (
-    calculatedTrend === undefined || calculatedTrend === 0
-      ? 'neutral'
+  const trendDirection =
+    manualDirection ||
+    (calculatedTrend === undefined || calculatedTrend === 0
+      ? "neutral"
       : calculatedTrend > 0
-        ? 'up'
-        : 'down'
-  );
+        ? "up"
+        : "down");
 
   const isPositive = invertTrend
-    ? trendDirection === 'down'
-    : trendDirection === 'up';
+    ? trendDirection === "down"
+    : trendDirection === "up";
 
-  const TrendIcon = trendDirection === 'up'
-    ? TrendingUp
-    : trendDirection === 'down'
-      ? TrendingDown
-      : Minus;
+  const TrendIcon =
+    trendDirection === "up"
+      ? TrendingUp
+      : trendDirection === "down"
+        ? TrendingDown
+        : Minus;
 
   // Show error state
   if (error) {
     return (
-      <Card className={cn('p-6', className)}>
+      <Card className={cn("p-6", className)}>
         <div className="space-y-1">
-          <p className="text-sm font-bold text-neutral-600 uppercase tracking-wide">{label}</p>
-          <p className="text-sm text-red-500">Error: {error.message}</p>
+          <Typography variant="overline" color="secondary">
+            {label}
+          </Typography>
+          <Typography variant="small" color="error">
+            Error: {error.message}
+          </Typography>
         </div>
       </Card>
     );
@@ -236,47 +277,59 @@ export const StatCard: React.FC<StatCardProps> = ({
 
   if (isLoading) {
     return (
-      <Card className={cn('p-6', className)}>
+      <Card className={cn("p-6", className)}>
         <div className="animate-pulse space-y-3">
-          <div className="h-4 bg-neutral-200 rounded w-24" />
-          <div className="h-8 bg-neutral-200 rounded w-32" />
-          <div className="h-4 bg-neutral-200 rounded w-20" />
+          <div className="h-4 bg-[var(--color-muted)] rounded w-24" />
+          <div className="h-8 bg-[var(--color-muted)] rounded w-32" />
+          <div className="h-4 bg-[var(--color-muted)] rounded w-20" />
         </div>
       </Card>
     );
   }
 
   return (
-    <Card className={cn('p-6', className)}>
+    <Card className={cn("p-6", className)}>
       <div className="flex items-start justify-between">
         <div className="space-y-1">
-          <p className="text-sm font-bold text-neutral-600 uppercase tracking-wide">{label}</p>
-          <p className="text-2xl font-bold text-black">{value}</p>
+          <Typography variant="overline" color="secondary">
+            {label}
+          </Typography>
+          <Typography variant="h4" className="text-2xl">
+            {value}
+          </Typography>
 
           {/* Trend indicator */}
           {calculatedTrend !== undefined && (
             <div className="flex items-center gap-1">
               <div
                 className={cn(
-                  'flex items-center gap-0.5 text-sm font-bold',
-                  isPositive ? 'text-emerald-600' : trendDirection === 'neutral' ? 'text-neutral-600' : 'text-red-600'
+                  "flex items-center gap-0.5 text-sm font-bold",
+                  isPositive
+                    ? "text-[var(--color-success)]"
+                    : trendDirection === "neutral"
+                      ? "text-[var(--color-muted-foreground)]"
+                      : "text-[var(--color-error)]",
                 )}
               >
                 <TrendIcon className="h-4 w-4" />
                 <span>{Math.abs(calculatedTrend).toFixed(1)}%</span>
               </div>
-              <span className="text-sm text-neutral-600">vs last period</span>
+              <Typography variant="small" color="secondary" as="span">
+                vs last period
+              </Typography>
             </div>
           )}
 
           {subtitle && !calculatedTrend && (
-            <p className="text-sm text-neutral-600">{subtitle}</p>
+            <Typography variant="small" color="secondary">
+              {subtitle}
+            </Typography>
           )}
         </div>
 
         {Icon && (
-          <div className={cn('p-3', iconBg)}>
-            <Icon className={cn('h-6 w-6', iconColor)} />
+          <div className={cn("p-3", iconBg)}>
+            <Icon className={cn("h-6 w-6", iconColor)} />
           </div>
         )}
       </div>
@@ -284,7 +337,7 @@ export const StatCard: React.FC<StatCardProps> = ({
       {action && (
         <button
           onClick={handleActionClick}
-          className="mt-4 text-sm font-bold text-black hover:underline"
+          className="mt-4 text-sm font-bold text-[var(--color-foreground)] hover:underline"
         >
           {action.label} →
         </button>

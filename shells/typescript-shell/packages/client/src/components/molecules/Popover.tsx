@@ -1,16 +1,16 @@
 /**
  * Popover Molecule Component
- * 
+ *
  * A popover component with position variants and click/hover triggers.
  * Uses Button, Typography, and Icon atoms.
  */
 
-import React, { useState, useRef, useEffect } from 'react';
-import { Typography } from '../atoms/Typography';
-import { cn } from '../../lib/cn';
+import React, { useState, useRef, useEffect } from "react";
+import { Typography } from "../atoms/Typography";
+import { cn } from "../../lib/cn";
 
-export type PopoverPosition = 'top' | 'bottom' | 'left' | 'right';
-export type PopoverTrigger = 'click' | 'hover';
+export type PopoverPosition = "top" | "bottom" | "left" | "right";
+export type PopoverTrigger = "click" | "hover";
 
 export interface PopoverProps {
   /**
@@ -48,24 +48,26 @@ export interface PopoverProps {
 }
 
 const positionClasses: Record<PopoverPosition, string> = {
-  top: 'bottom-full left-1/2 -translate-x-1/2 mb-2',
-  bottom: 'top-full left-1/2 -translate-x-1/2 mt-2',
-  left: 'right-full top-1/2 -translate-y-1/2 mr-2',
-  right: 'left-full top-1/2 -translate-y-1/2 ml-2',
+  top: "bottom-full left-1/2 -translate-x-1/2 mb-2",
+  bottom: "top-full left-1/2 -translate-x-1/2 mt-2",
+  left: "right-full top-1/2 -translate-y-1/2 mr-2",
+  right: "left-full top-1/2 -translate-y-1/2 ml-2",
 };
 
 const arrowClasses: Record<PopoverPosition, string> = {
-  top: 'top-full left-1/2 -translate-x-1/2 border-t-white border-l-transparent border-r-transparent border-b-transparent',
-  bottom: 'bottom-full left-1/2 -translate-x-1/2 border-b-white border-l-transparent border-r-transparent border-t-transparent',
-  left: 'left-full top-1/2 -translate-y-1/2 border-l-white border-t-transparent border-b-transparent border-r-transparent',
-  right: 'right-full top-1/2 -translate-y-1/2 border-r-white border-t-transparent border-b-transparent border-l-transparent',
+  top: "top-full left-1/2 -translate-x-1/2 border-t-white border-l-transparent border-r-transparent border-b-transparent",
+  bottom:
+    "bottom-full left-1/2 -translate-x-1/2 border-b-white border-l-transparent border-r-transparent border-t-transparent",
+  left: "left-full top-1/2 -translate-y-1/2 border-l-white border-t-transparent border-b-transparent border-r-transparent",
+  right:
+    "right-full top-1/2 -translate-y-1/2 border-r-white border-t-transparent border-b-transparent border-l-transparent",
 };
 
 export const Popover: React.FC<PopoverProps> = ({
   content,
   children,
-  position = 'bottom',
-  trigger = 'click',
+  position = "bottom",
+  trigger = "click",
   showArrow = true,
   className,
 }) => {
@@ -104,7 +106,7 @@ export const Popover: React.FC<PopoverProps> = ({
   }, [isOpen]);
 
   useEffect(() => {
-    if (trigger !== 'click') {
+    if (trigger !== "click") {
       return;
     }
 
@@ -120,27 +122,34 @@ export const Popover: React.FC<PopoverProps> = ({
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen, trigger]);
 
   const triggerProps =
-    trigger === 'click'
+    trigger === "click"
       ? {
-        onClick: handleToggle,
-      }
+          onClick: handleToggle,
+        }
       : {
-        onMouseEnter: handleOpen,
-        onMouseLeave: handleClose,
-      };
+          onMouseEnter: handleOpen,
+          onMouseLeave: handleClose,
+        };
 
   // Wrap non-element children in a span
-  const childElement = React.isValidElement(children) ? children : <span>{children}</span>;
+  const childElement = React.isValidElement(children) ? (
+    children
+  ) : (
+    <span>{children}</span>
+  );
 
-  const triggerElement = React.cloneElement(childElement as React.ReactElement<any>, {
-    ref: triggerRef,
-    ...triggerProps,
-  });
+  const triggerElement = React.cloneElement(
+    childElement as React.ReactElement<any>,
+    {
+      ref: triggerRef,
+      ...triggerProps,
+    },
+  );
 
   return (
     <>
@@ -149,24 +158,28 @@ export const Popover: React.FC<PopoverProps> = ({
         <div
           ref={popoverRef}
           className={cn(
-            'fixed z-50 p-4',
-            'bg-white border-2 border-black shadow-wireframe',
+            "fixed z-50 p-4",
+            "bg-[var(--color-card)] border-2 border-[var(--color-border)] shadow-[var(--shadow-lg)]",
             positionClasses[position],
-            className
+            className,
           )}
           style={{
-            left: position === 'left' || position === 'right'
-              ? triggerRect.left + (position === 'left' ? 0 : triggerRect.width)
-              : triggerRect.left + triggerRect.width / 2,
-            top: position === 'top' || position === 'bottom'
-              ? triggerRect.top + (position === 'top' ? 0 : triggerRect.height)
-              : triggerRect.top + triggerRect.height / 2,
+            left:
+              position === "left" || position === "right"
+                ? triggerRect.left +
+                  (position === "left" ? 0 : triggerRect.width)
+                : triggerRect.left + triggerRect.width / 2,
+            top:
+              position === "top" || position === "bottom"
+                ? triggerRect.top +
+                  (position === "top" ? 0 : triggerRect.height)
+                : triggerRect.top + triggerRect.height / 2,
           }}
           role="dialog"
-          onMouseEnter={trigger === 'hover' ? handleOpen : undefined}
-          onMouseLeave={trigger === 'hover' ? handleClose : undefined}
+          onMouseEnter={trigger === "hover" ? handleOpen : undefined}
+          onMouseLeave={trigger === "hover" ? handleClose : undefined}
         >
-          {typeof content === 'string' ? (
+          {typeof content === "string" ? (
             <Typography variant="body">{content}</Typography>
           ) : (
             content
@@ -174,8 +187,8 @@ export const Popover: React.FC<PopoverProps> = ({
           {showArrow && (
             <div
               className={cn(
-                'absolute w-0 h-0 border-4',
-                arrowClasses[position]
+                "absolute w-0 h-0 border-4",
+                arrowClasses[position],
               )}
             />
           )}
@@ -185,4 +198,4 @@ export const Popover: React.FC<PopoverProps> = ({
   );
 };
 
-Popover.displayName = 'Popover';
+Popover.displayName = "Popover";

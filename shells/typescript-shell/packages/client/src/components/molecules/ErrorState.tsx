@@ -1,28 +1,43 @@
-import React from 'react';
-import { cn } from '../../lib/cn';
-import { Button } from '../atoms';
-import { AlertCircle } from 'lucide-react';
+import React from "react";
+import { cn } from "../../lib/cn";
+import { Button } from "../atoms";
+import { AlertCircle } from "lucide-react";
 
 export interface ErrorStateProps {
   title?: string;
-  message: string;
+  /** Error message to display */
+  message?: string;
+  /** Alias for message (schema compatibility) */
+  description?: string;
   onRetry?: () => void;
   className?: string;
 }
 
 export const ErrorState: React.FC<ErrorStateProps> = ({
-  title = 'Something went wrong',
+  title = "Something went wrong",
   message,
+  description,
   onRetry,
   className,
 }) => {
+  // Resolve alias: description → message
+  const resolvedMessage = message ?? description ?? "An error occurred";
   return (
-    <div className={cn('flex flex-col items-center justify-center py-12 text-center', className)}>
-      <div className="mb-4 rounded-full bg-red-100 p-3">
-        <AlertCircle className="h-8 w-8 text-red-600" />
+    <div
+      className={cn(
+        "flex flex-col items-center justify-center py-12 text-center",
+        className,
+      )}
+    >
+      <div className="mb-4 rounded-[var(--radius-full)] bg-[var(--color-error)]/10 p-3">
+        <AlertCircle className="h-8 w-8 text-[var(--color-error)]" />
       </div>
-      <h3 className="text-lg font-medium text-gray-900">{title}</h3>
-      <p className="mt-1 text-sm text-gray-500 max-w-sm">{message}</p>
+      <h3 className="text-lg font-medium text-[var(--color-foreground)]">
+        {title}
+      </h3>
+      <p className="mt-1 text-sm text-[var(--color-muted-foreground)] max-w-sm">
+        {resolvedMessage}
+      </p>
       {onRetry && (
         <Button variant="secondary" className="mt-4" onClick={onRetry}>
           Try again

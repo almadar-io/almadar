@@ -26,13 +26,14 @@ The correct schema format uses **orbitals** array at root:
       "traits": [ ... ],
       "pages": [ ... ]
     }
-  ],
-  "traits": [ ... ]       // ← Optional: schema-level shared traits
+  ]
 }
 ```
 
 **DO NOT** confuse with legacy format that had `dataEntities`, `traits`, `pages` at root level.
 The `orbitals[]` format IS the standard format - do not "fix" it to something else.
+
+**NOTE**: There is NO schema-level `traits[]` array. All traits belong inside orbitals.
 
 ### Core Formula
 ```
@@ -1729,8 +1730,9 @@ For schemas exceeding 40KB, use the **chunking tools** instead of direct editing
 | Type | When to Use |
 |------|-------------|
 | `orbital` | Adding fields, modifying inline traits |
-| `trait` | Editing schema-level traits (`schema.traits[]`) |
 | `inline-trait` | Editing trait inside an almadar (requires `parentOrbital`) |
+
+**Note**: There is no schema-level `traits[]` array. All traits belong inside orbitals.
 
 ### When to Use Chunking
 

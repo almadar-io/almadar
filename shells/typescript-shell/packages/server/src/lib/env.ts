@@ -8,11 +8,11 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   PORT: z
     .string()
-    .default('{{SERVER_PORT}}')
+    .default('3030')
     .transform((val) => parseInt(val, 10)),
   CORS_ORIGIN: z
     .string()
-    .default('http://localhost:{{CLIENT_PORT}}')
+    .default('http://localhost:5173')
     .transform((val) => (val.includes(',') ? val.split(',').map((s) => s.trim()) : val)),
   
   // Database (Prisma/SQL) - optional

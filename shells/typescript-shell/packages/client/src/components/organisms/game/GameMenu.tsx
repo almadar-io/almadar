@@ -1,7 +1,10 @@
-import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { cn } from '../../../lib/cn';
-import { useEventBus, type EventBusContextType } from '../../../hooks/useEventBus';
+import * as React from "react";
+import { useNavigate } from "react-router-dom";
+import { cn } from "../../../lib/cn";
+import {
+  useEventBus,
+  type EventBusContextType,
+} from "../../../hooks/useEventBus";
 
 export interface MenuOption {
   /** Optional ID (generated from index if not provided) */
@@ -13,7 +16,7 @@ export interface MenuOption {
   /** Page to navigate to */
   navigatesTo?: string;
   /** Button variant */
-  variant?: 'primary' | 'secondary' | 'ghost' | string;
+  variant?: "primary" | "secondary" | "ghost" | string;
   /** Whether the option is disabled */
   disabled?: boolean;
   /** Sub-label or description */
@@ -29,6 +32,8 @@ export interface GameMenuProps {
   subtitle?: string;
   /** Menu options - accepts readonly for compatibility with generated const arrays */
   options?: readonly MenuOption[];
+  /** Alias for options (schema compatibility) */
+  menuItems?: readonly MenuOption[];
   /** Called when an option is selected (legacy callback, prefer event bus) */
   onSelect?: (option: MenuOption) => void;
   /** Event bus for emitting UI events (optional, uses hook if not provided) */
@@ -43,11 +48,9 @@ export interface GameMenuProps {
 
 const variantMap = {
   primary:
-    'bg-blue-600 hover:bg-blue-500 text-white border-blue-400 shadow-lg shadow-blue-500/25',
-  secondary:
-    'bg-gray-700 hover:bg-gray-600 text-white border-gray-500',
-  ghost:
-    'bg-transparent hover:bg-white/10 text-white border-white/20',
+    "bg-blue-600 hover:bg-blue-500 text-white border-blue-400 shadow-lg shadow-blue-500/25",
+  secondary: "bg-gray-700 hover:bg-gray-600 text-white border-gray-500",
+  ghost: "bg-transparent hover:bg-white/10 text-white border-white/20",
 };
 
 /**
@@ -68,13 +71,16 @@ function useSafeNavigate(): (to: string) => void {
 export function GameMenu({
   title,
   subtitle,
-  options = [],
+  options,
+  menuItems,
   onSelect,
   eventBus: eventBusProp,
   background,
   logo,
   className,
 }: GameMenuProps) {
+  // Resolve alias: menuItems → options
+  const resolvedOptions = options ?? menuItems ?? [];
   const navigate = useSafeNavigate();
 
   // Use provided eventBus or get from context (with fallback for outside provider)
@@ -104,17 +110,19 @@ export function GameMenu({
         navigate(option.navigatesTo);
       }
     },
-    [eventBus, onSelect, navigate]
+    [eventBus, onSelect, navigate],
   );
 
   return (
     <div
       className={cn(
-        'min-h-screen w-full flex flex-col items-center justify-center p-8',
-        className
+        "min-h-screen w-full flex flex-col items-center justify-center p-8",
+        className,
       )}
       style={{
-        background: background ?? 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0e17 100%)',
+        background:
+          background ??
+          "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0e17 100%)",
       }}
     >
       {/* Logo/Title Section */}
@@ -129,7 +137,7 @@ export function GameMenu({
         <h1
           className="text-5xl md:text-7xl font-bold text-white tracking-tight"
           style={{
-            textShadow: '0 4px 12px rgba(0,0,0,0.5)',
+            textShadow: "0 4px 12px rgba(0,0,0,0.5)",
           }}
         >
           {title}
@@ -143,18 +151,21 @@ export function GameMenu({
 
       {/* Menu Options */}
       <div className="flex flex-col gap-4 w-full max-w-md">
-        {options.map((option, index) => (
+        {resolvedOptions.map((option, index) => (
           <button
             key={index}
             onClick={() => handleOptionClick(option)}
             disabled={option.disabled}
             className={cn(
-              'w-full py-4 px-8 rounded-xl border-2 font-bold text-lg',
-              'transition-all duration-200 transform',
-              'hover:scale-105 active:scale-95',
-              'focus:outline-none focus:ring-4 focus:ring-white/25',
-              variantMap[(option.variant ?? 'secondary') as keyof typeof variantMap] ?? variantMap.secondary,
-              option.disabled && 'opacity-50 cursor-not-allowed hover:scale-100'
+              "w-full py-4 px-8 rounded-xl border-2 font-bold text-lg",
+              "transition-all duration-200 transform",
+              "hover:scale-105 active:scale-95",
+              "focus:outline-none focus:ring-4 focus:ring-white/25",
+              variantMap[
+                (option.variant ?? "secondary") as keyof typeof variantMap
+              ] ?? variantMap.secondary,
+              option.disabled &&
+                "opacity-50 cursor-not-allowed hover:scale-100",
             )}
             style={{
               animationDelay: `${index * 100}ms`,
@@ -174,4 +185,4 @@ export function GameMenu({
   );
 }
 
-GameMenu.displayName = 'GameMenu';
+GameMenu.displayName = "GameMenu";

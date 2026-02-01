@@ -1,12 +1,12 @@
 {
   "projects": {
-    "default": "{{FIREBASE_PROJECT_ID}}"
+    "default": "theme-kitchen-sink-project"
   },
   "targets": {
-    "{{FIREBASE_PROJECT_ID}}": {
+    "theme-kitchen-sink-project": {
       "hosting": {
-        "{{SITE_NAME}}": [
-          "{{SITE_NAME}}"
+        "theme-kitchen-sink": [
+          "theme-kitchen-sink"
         ]
       }
     }

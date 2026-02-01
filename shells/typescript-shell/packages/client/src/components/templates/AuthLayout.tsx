@@ -1,6 +1,6 @@
-import React from 'react';
-import { Outlet, Link } from 'react-router-dom';
-import { cn } from '../../lib/cn';
+import React from "react";
+import { Outlet, Link } from "react-router-dom";
+import { cn } from "../../lib/cn";
 
 export interface AuthLayoutProps {
   /** App name */
@@ -16,7 +16,7 @@ export interface AuthLayoutProps {
 }
 
 export const AuthLayout: React.FC<AuthLayoutProps> = ({
-  appName = '{{APP_TITLE}}',
+  appName = "{{APP_TITLE}}",
   logo,
   backgroundImage,
   showBranding = true,
@@ -28,12 +28,15 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
       {showBranding && (
         <div
           className={cn(
-            'hidden lg:flex lg:w-1/2 bg-primary-600 relative overflow-hidden',
-            'flex-col justify-between p-12'
+            "hidden lg:flex lg:w-1/2 bg-primary-600 relative overflow-hidden",
+            "flex-col justify-between p-12",
           )}
           style={
             backgroundImage
-              ? { backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }
+              ? {
+                  backgroundImage: `url(${backgroundImage})`,
+                  backgroundSize: "cover",
+                }
               : undefined
           }
         >
@@ -44,7 +47,7 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
           <div className="relative z-10">
             <Link to="/" className="flex items-center gap-3">
               {logo || (
-                <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur">
+                <div className="w-10 h-10 bg-white/20 rounded-[var(--radius-xl)] flex items-center justify-center backdrop-blur">
                   <span className="text-white font-bold text-lg">
                     {appName.charAt(0).toUpperCase()}
                   </span>
@@ -66,12 +69,13 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
                 </p>
 
                 {/* Testimonial or feature list */}
-                <div className="mt-12 p-6 bg-white/10 rounded-2xl backdrop-blur">
+                <div className="mt-12 p-6 bg-white/10 rounded-[var(--radius-xl)] backdrop-blur">
                   <p className="text-white/90 italic">
-                    "This platform has transformed how we work. Highly recommended!"
+                    "This platform has transformed how we work. Highly
+                    recommended!"
                   </p>
                   <div className="mt-4 flex items-center gap-3">
-                    <div className="w-10 h-10 bg-white/20 rounded-full" />
+                    <div className="w-10 h-10 bg-white/20 rounded-[var(--radius-full)]" />
                     <div>
                       <p className="text-white font-medium">Jane Doe</p>
                       <p className="text-white/60 text-sm">CEO, Example Co.</p>
@@ -83,16 +87,16 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
           </div>
 
           {/* Decorative elements */}
-          <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-white/5 rounded-full" />
-          <div className="absolute -top-16 -right-16 w-64 h-64 bg-white/5 rounded-full" />
+          <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-white/5 rounded-[var(--radius-full)]" />
+          <div className="absolute -top-16 -right-16 w-64 h-64 bg-white/5 rounded-[var(--radius-full)]" />
         </div>
       )}
 
       {/* Auth form panel */}
       <div
         className={cn(
-          'flex-1 flex items-center justify-center p-6 sm:p-12',
-          'bg-white'
+          "flex-1 flex items-center justify-center p-6 sm:p-12",
+          "bg-[var(--color-background)]",
         )}
       >
         <div className="w-full max-w-md">
@@ -100,13 +104,15 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
           <div className="lg:hidden mb-8 text-center">
             <Link to="/" className="inline-flex items-center gap-3">
               {logo || (
-                <div className="w-12 h-12 bg-primary-600 rounded-xl flex items-center justify-center">
+                <div className="w-12 h-12 bg-primary-600 rounded-[var(--radius-xl)] flex items-center justify-center">
                   <span className="text-white font-bold text-xl">
                     {appName.charAt(0).toUpperCase()}
                   </span>
                 </div>
               )}
-              <span className="text-2xl font-bold text-gray-900">{appName}</span>
+              <span className="text-2xl font-bold text-[var(--color-foreground)]">
+                {appName}
+              </span>
             </Link>
           </div>
 

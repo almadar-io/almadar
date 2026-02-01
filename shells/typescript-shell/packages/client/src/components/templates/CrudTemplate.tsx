@@ -1,25 +1,25 @@
 /**
  * CrudTemplate
- * 
+ *
  * A presentational template for CRUD (Create, Read, Update, Delete) features.
  * Includes data table, search, and modal forms for create/edit.
  */
 
-import React, { useState } from 'react';
-import { cn } from '../../lib/cn';
-import { Container } from '../molecules/Container';
-import { VStack, HStack } from '../atoms/Stack';
-import { Typography } from '../atoms/Typography';
-import { Button } from '../atoms/Button';
-import { Input } from '../atoms/Input';
-import { Alert } from '../molecules/Alert';
-import { Modal } from '../molecules/Modal';
-import { FormField } from '../molecules/FormField';
-import { DataTable, type Column, type RowAction } from '../organisms/DataTable';
-import { PageHeader } from '../organisms/PageHeader';
-import { Plus, Search, RefreshCw, Edit, Trash2, Eye } from 'lucide-react';
+import React, { useState } from "react";
+import { cn } from "../../lib/cn";
+import { Container } from "../molecules/Container";
+import { VStack, HStack } from "../atoms/Stack";
+import { Typography } from "../atoms/Typography";
+import { Button } from "../atoms/Button";
+import { Input } from "../atoms/Input";
+import { Alert } from "../molecules/Alert";
+import { Modal } from "../molecules/Modal";
+import { FormField } from "../molecules/FormField";
+import { DataTable, type Column, type RowAction } from "../organisms/DataTable";
+import { PageHeader } from "../organisms/PageHeader";
+import { Plus, Search, RefreshCw, Edit, Trash2, Eye } from "lucide-react";
 
-export type CrudVariant = 'minimal' | 'standard' | 'full';
+export type CrudVariant = "minimal" | "standard" | "full";
 
 export interface CrudItem {
   id: string;
@@ -37,7 +37,7 @@ export interface ColumnConfig {
 export interface FieldConfig {
   key: string;
   label: string;
-  type?: 'text' | 'email' | 'number' | 'textarea' | 'select';
+  type?: "text" | "email" | "number" | "textarea" | "select";
   required?: boolean;
   placeholder?: string;
   options?: Array<{ value: string; label: string }>;
@@ -59,7 +59,7 @@ export interface CrudTemplateProps {
   /** Current sort field */
   sortBy?: string;
   /** Current sort order */
-  sortOrder?: 'asc' | 'desc';
+  sortOrder?: "asc" | "desc";
   /** Called to load/refresh items */
   onLoad?: () => void;
   /** Called when creating a new item */
@@ -75,7 +75,7 @@ export interface CrudTemplateProps {
   /** Called when search query changes */
   onSearch?: (query: string) => void;
   /** Called when sort changes */
-  onSort?: (field: string, order: 'asc' | 'desc') => void;
+  onSort?: (field: string, order: "asc" | "desc") => void;
   /** Called to open create/edit modal */
   onOpenModal?: () => void;
   /** Called to close modal */
@@ -101,17 +101,22 @@ export interface CrudTemplateProps {
 }
 
 const defaultColumns: ColumnConfig[] = [
-  { key: 'name', label: 'Name', sortable: true },
-  { key: 'status', label: 'Status', sortable: true },
-  { key: 'createdAt', label: 'Created', sortable: true },
+  { key: "name", label: "Name", sortable: true },
+  { key: "status", label: "Status", sortable: true },
+  { key: "createdAt", label: "Created", sortable: true },
 ];
 
 const defaultFields: FieldConfig[] = [
-  { key: 'name', label: 'Name', type: 'text', required: true },
-  { key: 'status', label: 'Status', type: 'select', options: [
-    { value: 'active', label: 'Active' },
-    { value: 'inactive', label: 'Inactive' },
-  ]},
+  { key: "name", label: "Name", type: "text", required: true },
+  {
+    key: "status",
+    label: "Status",
+    type: "select",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" },
+    ],
+  },
 ];
 
 export const CrudTemplate: React.FC<CrudTemplateProps> = ({
@@ -120,9 +125,9 @@ export const CrudTemplate: React.FC<CrudTemplateProps> = ({
   error = null,
   selectedItem = null,
   isModalOpen = false,
-  searchQuery = '',
+  searchQuery = "",
   sortBy,
-  sortOrder = 'asc',
+  sortOrder = "asc",
   onLoad,
   onCreate,
   onUpdate,
@@ -133,14 +138,14 @@ export const CrudTemplate: React.FC<CrudTemplateProps> = ({
   onSort,
   onOpenModal,
   onCloseModal,
-  title = 'Items',
-  entityName = 'Item',
+  title = "Items",
+  entityName = "Item",
   columns = defaultColumns,
   fields = defaultFields,
   showSearch = true,
-  searchPlaceholder = 'Search...',
+  searchPlaceholder = "Search...",
   showViewAction = false,
-  variant = 'standard',
+  variant = "standard",
   className,
 }) => {
   // Internal state for the form
@@ -156,7 +161,7 @@ export const CrudTemplate: React.FC<CrudTemplateProps> = ({
   }, [isModalOpen, selectedItem]);
 
   const handleFormChange = (key: string, value: unknown) => {
-    setFormData(prev => ({ ...prev, [key]: value }));
+    setFormData((prev) => ({ ...prev, [key]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -170,7 +175,7 @@ export const CrudTemplate: React.FC<CrudTemplateProps> = ({
   };
 
   // Convert columns to DataTable format
-  const tableColumns: Column<CrudItem>[] = columns.map(col => ({
+  const tableColumns: Column<CrudItem>[] = columns.map((col) => ({
     key: col.key,
     header: col.label,
     sortable: col.sortable,
@@ -180,60 +185,86 @@ export const CrudTemplate: React.FC<CrudTemplateProps> = ({
 
   // Row actions
   const rowActions: RowAction<CrudItem>[] = [
-    ...(showViewAction && onView ? [{
-      label: 'View',
-      icon: Eye,
-      onClick: (row: CrudItem) => onView(row.id),
-    }] : []),
-    ...(onSelect ? [{
-      label: 'Edit',
-      icon: Edit,
-      onClick: (row: CrudItem) => {
-        onSelect(row.id);
-        onOpenModal?.();
-      },
-    }] : []),
-    ...(onDelete ? [{
-      label: 'Delete',
-      icon: Trash2,
-      variant: 'danger' as const,
-      onClick: (row: CrudItem) => {
-        if (confirm(`Are you sure you want to delete this ${entityName.toLowerCase()}?`)) {
-          onDelete(row.id);
-        }
-      },
-    }] : []),
+    ...(showViewAction && onView
+      ? [
+          {
+            label: "View",
+            icon: Eye,
+            onClick: (row: CrudItem) => onView(row.id),
+          },
+        ]
+      : []),
+    ...(onSelect
+      ? [
+          {
+            label: "Edit",
+            icon: Edit,
+            onClick: (row: CrudItem) => {
+              onSelect(row.id);
+              onOpenModal?.();
+            },
+          },
+        ]
+      : []),
+    ...(onDelete
+      ? [
+          {
+            label: "Delete",
+            icon: Trash2,
+            variant: "danger" as const,
+            onClick: (row: CrudItem) => {
+              if (
+                confirm(
+                  `Are you sure you want to delete this ${entityName.toLowerCase()}?`,
+                )
+              ) {
+                onDelete(row.id);
+              }
+            },
+          },
+        ]
+      : []),
   ];
 
   const renderField = (field: FieldConfig) => {
-    const value = formData[field.key] as string || '';
+    const value = (formData[field.key] as string) || "";
 
-    if (field.type === 'select' && field.options) {
+    if (field.type === "select" && field.options) {
       return (
-        <FormField key={field.key} label={field.label} required={field.required}>
+        <FormField
+          key={field.key}
+          label={field.label}
+          required={field.required}
+        >
           <select
             value={value}
             onChange={(e) => handleFormChange(field.key, e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500"
+            className="w-full px-3 py-2 border border-[var(--color-border)] rounded-[var(--radius-md)] focus:ring-2 focus:ring-primary-500"
           >
             <option value="">Select {field.label.toLowerCase()}</option>
-            {field.options.map(opt => (
-              <option key={opt.value} value={opt.value}>{opt.label}</option>
+            {field.options.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
             ))}
           </select>
         </FormField>
       );
     }
 
-    if (field.type === 'textarea') {
+    if (field.type === "textarea") {
       return (
-        <FormField key={field.key} label={field.label} required={field.required}>
+        <FormField
+          key={field.key}
+          label={field.label}
+          required={field.required}
+        >
           <textarea
             value={value}
             onChange={(e) => handleFormChange(field.key, e.target.value)}
             placeholder={field.placeholder}
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500"
+            className="w-full px-3 py-2 border border-[var(--color-border)] rounded-[var(--radius-md)] focus:ring-2 focus:ring-primary-500"
           />
         </FormField>
       );
@@ -242,7 +273,7 @@ export const CrudTemplate: React.FC<CrudTemplateProps> = ({
     return (
       <FormField key={field.key} label={field.label} required={field.required}>
         <Input
-          type={field.type || 'text'}
+          type={field.type || "text"}
           value={value}
           onChange={(e) => handleFormChange(field.key, e.target.value)}
           placeholder={field.placeholder}
@@ -263,15 +294,13 @@ export const CrudTemplate: React.FC<CrudTemplateProps> = ({
             Cancel
           </Button>
           <Button type="submit" form="crud-form">
-            {selectedItem ? 'Save Changes' : 'Create'}
+            {selectedItem ? "Save Changes" : "Create"}
           </Button>
         </HStack>
       }
     >
       <form id="crud-form" onSubmit={handleSubmit}>
-        <VStack gap="md">
-          {fields.map(renderField)}
-        </VStack>
+        <VStack gap="md">{fields.map(renderField)}</VStack>
       </form>
     </Modal>
   );
@@ -279,12 +308,24 @@ export const CrudTemplate: React.FC<CrudTemplateProps> = ({
   const renderMinimal = () => (
     <VStack gap="md" className={className}>
       {error && (
-        <Alert variant="error" actions={onLoad && (
-          <Button variant="ghost" size="sm" onClick={onLoad} leftIcon={<RefreshCw className="h-4 w-4" />}>
-            Retry
-          </Button>
-        )}>
-          {typeof error === 'string' ? error : error?.message || 'Failed to load data'}
+        <Alert
+          variant="error"
+          actions={
+            onLoad && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onLoad}
+                leftIcon={<RefreshCw className="h-4 w-4" />}
+              >
+                Retry
+              </Button>
+            )
+          }
+        >
+          {typeof error === "string"
+            ? error
+            : error?.message || "Failed to load data"}
         </Alert>
       )}
 
@@ -298,7 +339,11 @@ export const CrudTemplate: React.FC<CrudTemplateProps> = ({
         onSort={onSort ? (key, dir) => onSort(key, dir) : undefined}
         emptyTitle={`No ${title.toLowerCase()}`}
         emptyDescription={`Get started by creating your first ${entityName.toLowerCase()}.`}
-        emptyAction={onOpenModal ? { label: `Add ${entityName}`, onClick: onOpenModal } : undefined}
+        emptyAction={
+          onOpenModal
+            ? { label: `Add ${entityName}`, onClick: onOpenModal }
+            : undefined
+        }
       />
 
       {renderModal()}
@@ -311,19 +356,34 @@ export const CrudTemplate: React.FC<CrudTemplateProps> = ({
         <HStack justify="between" align="center">
           <Typography variant="h2">{title}</Typography>
           {onOpenModal && (
-            <Button onClick={onOpenModal} leftIcon={<Plus className="h-4 w-4" />}>
+            <Button
+              onClick={onOpenModal}
+              leftIcon={<Plus className="h-4 w-4" />}
+            >
               Add {entityName}
             </Button>
           )}
         </HStack>
 
         {error && (
-          <Alert variant="error" actions={onLoad && (
-            <Button variant="ghost" size="sm" onClick={onLoad} leftIcon={<RefreshCw className="h-4 w-4" />}>
-              Retry
-            </Button>
-          )}>
-            {typeof error === 'string' ? error : error?.message || 'Failed to load data'}
+          <Alert
+            variant="error"
+            actions={
+              onLoad && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={onLoad}
+                  leftIcon={<RefreshCw className="h-4 w-4" />}
+                >
+                  Retry
+                </Button>
+              )
+            }
+          >
+            {typeof error === "string"
+              ? error
+              : error?.message || "Failed to load data"}
           </Alert>
         )}
 
@@ -341,7 +401,11 @@ export const CrudTemplate: React.FC<CrudTemplateProps> = ({
           searchPlaceholder={searchPlaceholder}
           emptyTitle={`No ${title.toLowerCase()}`}
           emptyDescription={`Get started by creating your first ${entityName.toLowerCase()}.`}
-          emptyAction={onOpenModal ? { label: `Add ${entityName}`, onClick: onOpenModal } : undefined}
+          emptyAction={
+            onOpenModal
+              ? { label: `Add ${entityName}`, onClick: onOpenModal }
+              : undefined
+          }
         />
 
         {renderModal()}
@@ -356,24 +420,34 @@ export const CrudTemplate: React.FC<CrudTemplateProps> = ({
           title={title}
           subtitle={`Manage your ${title.toLowerCase()}`}
           actions={[
-            ...(onOpenModal ? [{
-              label: `Add ${entityName}`,
-              icon: Plus,
-              onClick: onOpenModal,
-              variant: 'primary' as const,
-            }] : []),
-            ...(onLoad ? [{
-              label: 'Refresh',
-              icon: RefreshCw,
-              onClick: onLoad,
-              variant: 'ghost' as const,
-            }] : []),
+            ...(onOpenModal
+              ? [
+                  {
+                    label: `Add ${entityName}`,
+                    icon: Plus,
+                    onClick: onOpenModal,
+                    variant: "primary" as const,
+                  },
+                ]
+              : []),
+            ...(onLoad
+              ? [
+                  {
+                    label: "Refresh",
+                    icon: RefreshCw,
+                    onClick: onLoad,
+                    variant: "ghost" as const,
+                  },
+                ]
+              : []),
           ]}
         />
 
         {error && (
           <Alert variant="error" dismissible onDismiss={() => {}}>
-            {typeof error === 'string' ? error : error?.message || 'Failed to load data'}
+            {typeof error === "string"
+              ? error
+              : error?.message || "Failed to load data"}
           </Alert>
         )}
 
@@ -390,19 +464,31 @@ export const CrudTemplate: React.FC<CrudTemplateProps> = ({
           onSearch={onSearch}
           searchPlaceholder={searchPlaceholder}
           selectable
-          bulkActions={onDelete ? [{
-            label: 'Delete Selected',
-            icon: Trash2,
-            variant: 'danger',
-            onClick: (rows) => {
-              if (confirm(`Delete ${rows.length} ${title.toLowerCase()}?`)) {
-                rows.forEach(row => onDelete(row.id));
-              }
-            },
-          }] : undefined}
+          bulkActions={
+            onDelete
+              ? [
+                  {
+                    label: "Delete Selected",
+                    icon: Trash2,
+                    variant: "danger",
+                    onClick: (rows) => {
+                      if (
+                        confirm(`Delete ${rows.length} ${title.toLowerCase()}?`)
+                      ) {
+                        rows.forEach((row) => onDelete(row.id));
+                      }
+                    },
+                  },
+                ]
+              : undefined
+          }
           emptyTitle={`No ${title.toLowerCase()} yet`}
           emptyDescription={`Create your first ${entityName.toLowerCase()} to get started.`}
-          emptyAction={onOpenModal ? { label: `Create ${entityName}`, onClick: onOpenModal } : undefined}
+          emptyAction={
+            onOpenModal
+              ? { label: `Create ${entityName}`, onClick: onOpenModal }
+              : undefined
+          }
         />
 
         {renderModal()}
@@ -411,15 +497,15 @@ export const CrudTemplate: React.FC<CrudTemplateProps> = ({
   );
 
   switch (variant) {
-    case 'minimal':
+    case "minimal":
       return renderMinimal();
-    case 'full':
+    case "full":
       return renderFull();
     default:
       return renderStandard();
   }
 };
 
-CrudTemplate.displayName = 'CrudTemplate';
+CrudTemplate.displayName = "CrudTemplate";
 
 export default CrudTemplate;

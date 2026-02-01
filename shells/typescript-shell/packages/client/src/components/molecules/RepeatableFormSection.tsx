@@ -11,15 +11,15 @@
  * - Emits: UI:SECTION_REMOVED { sectionType, index, itemId }
  */
 
-import React, { useCallback } from 'react';
-import { cn } from '../../lib/cn';
-import { Box } from '../atoms/Box';
-import { VStack, HStack } from '../atoms/Stack';
-import { Typography } from '../atoms/Typography';
-import { Button } from '../atoms/Button';
-import { Card } from '../atoms/Card';
-import { Icon } from '../atoms/Icon';
-import { useEventBus } from '../../hooks/useEventBus';
+import React, { useCallback } from "react";
+import { cn } from "../../lib/cn";
+import { Box } from "../atoms/Box";
+import { VStack, HStack } from "../atoms/Stack";
+import { Typography } from "../atoms/Typography";
+import { Button } from "../atoms/Button";
+import { Card } from "../atoms/Card";
+import { Icon } from "../atoms/Icon";
+import { useEventBus } from "../../hooks/useEventBus";
 
 export interface RepeatableItem {
   id: string;
@@ -77,8 +77,8 @@ export const RepeatableFormSection: React.FC<RepeatableFormSectionProps> = ({
   minItems = 0,
   maxItems = Infinity,
   allowReorder = false,
-  addLabel = 'Add Item',
-  emptyMessage = 'No items added yet',
+  addLabel = "Add Item",
+  emptyMessage = "No items added yet",
   readOnly = false,
   className,
   onAdd,
@@ -107,27 +107,33 @@ export const RepeatableFormSection: React.FC<RepeatableFormSectionProps> = ({
       eventPayload.addedAt = new Date().toISOString();
     }
 
-    eventBus.emit('UI:SECTION_ADDED', eventPayload);
-  }, [sectionType, items.length, onAdd, eventBus, trackAddedInState, currentState]);
+    eventBus.emit("UI:SECTION_ADDED", eventPayload);
+  }, [
+    sectionType,
+    items.length,
+    onAdd,
+    eventBus,
+    trackAddedInState,
+    currentState,
+  ]);
 
   const handleRemove = useCallback(
     (itemId: string, index: number) => {
       onRemove?.(itemId, index);
-      eventBus.emit('UI:SECTION_REMOVED', { sectionType, index, itemId });
+      eventBus.emit("UI:SECTION_REMOVED", { sectionType, index, itemId });
     },
-    [sectionType, onRemove, eventBus]
+    [sectionType, onRemove, eventBus],
   );
 
   return (
-    <VStack gap="md" className={cn('w-full', className)}>
+    <VStack gap="md" className={cn("w-full", className)}>
       {/* Header */}
       <HStack justify="between" align="center">
         <HStack gap="sm" align="center">
-          <Typography variant="h4">
-            {title}
-          </Typography>
+          <Typography variant="h4">{title}</Typography>
           <Typography variant="caption" color="muted">
-            ({items.length}{maxItems !== Infinity ? `/${maxItems}` : ''})
+            ({items.length}
+            {maxItems !== Infinity ? `/${maxItems}` : ""})
           </Typography>
         </HStack>
 
@@ -143,7 +149,9 @@ export const RepeatableFormSection: React.FC<RepeatableFormSectionProps> = ({
       {items.length === 0 ? (
         <Card className="p-6">
           <VStack align="center" gap="sm">
-            <Typography variant="body" color="muted">{emptyMessage}</Typography>
+            <Typography variant="body" color="muted">
+              {emptyMessage}
+            </Typography>
             {canAdd && (
               <Button variant="primary" size="sm" onClick={handleAdd}>
                 <Icon name="plus" size="sm" className="mr-1" />
@@ -159,11 +167,22 @@ export const RepeatableFormSection: React.FC<RepeatableFormSectionProps> = ({
               <VStack gap="sm">
                 {/* Audit info header */}
                 {showAuditInfo && (item.addedInState || item.addedAt) && (
-                  <HStack justify="between" align="center" className="pb-2 border-b border-gray-100">
+                  <HStack
+                    justify="between"
+                    align="center"
+                    className="pb-2 border-b border-[var(--color-border)]"
+                  >
                     <HStack gap="sm" align="center">
                       {item.addedInState && (
                         <Typography variant="caption" color="muted">
-                          Added in: <Typography as="span" variant="caption" weight="semibold">{item.addedInState}</Typography>
+                          Added in:{" "}
+                          <Typography
+                            as="span"
+                            variant="caption"
+                            weight="semibold"
+                          >
+                            {item.addedInState}
+                          </Typography>
                         </Typography>
                       )}
                     </HStack>
@@ -178,7 +197,7 @@ export const RepeatableFormSection: React.FC<RepeatableFormSectionProps> = ({
                 <HStack gap="sm" align="start">
                   {/* Drag handle */}
                   {allowReorder && !readOnly && (
-                    <Box className="pt-2 cursor-move text-gray-400 hover:text-gray-600">
+                    <Box className="pt-2 cursor-move text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]">
                       <Icon name="grip-vertical" size="md" />
                     </Box>
                   )}
@@ -192,7 +211,7 @@ export const RepeatableFormSection: React.FC<RepeatableFormSectionProps> = ({
                       variant="ghost"
                       size="sm"
                       onClick={() => handleRemove(item.id, index)}
-                      className="text-red-400 hover:text-red-600 hover:bg-red-50"
+                      className="text-[var(--color-error)] hover:text-[var(--color-error)] hover:bg-[var(--color-error)]/10"
                     >
                       <Icon name="trash-2" size="sm" />
                     </Button>
@@ -207,11 +226,11 @@ export const RepeatableFormSection: React.FC<RepeatableFormSectionProps> = ({
       {/* Min items warning */}
       {items.length < minItems && (
         <Typography variant="caption" color="warning">
-          At least {minItems} item{minItems !== 1 ? 's' : ''} required
+          At least {minItems} item{minItems !== 1 ? "s" : ""} required
         </Typography>
       )}
     </VStack>
   );
 };
 
-RepeatableFormSection.displayName = 'RepeatableFormSection';
+RepeatableFormSection.displayName = "RepeatableFormSection";

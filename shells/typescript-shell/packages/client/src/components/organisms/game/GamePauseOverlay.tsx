@@ -1,6 +1,9 @@
-import * as React from 'react';
-import { cn } from '../../../lib/cn';
-import { useEventBus, type EventBusContextType } from '../../../hooks/useEventBus';
+import * as React from "react";
+import { cn } from "../../../lib/cn";
+import {
+  useEventBus,
+  type EventBusContextType,
+} from "../../../hooks/useEventBus";
 
 export interface PauseOption {
   /** Display label */
@@ -10,12 +13,14 @@ export interface PauseOption {
   /** Page to navigate to */
   navigatesTo?: string;
   /** Button variant */
-  variant?: 'primary' | 'secondary' | 'ghost' | 'destructive';
+  variant?: "primary" | "secondary" | "ghost" | "destructive";
 }
 
 export interface GamePauseOverlayProps {
   /** Pause menu options */
-  options: PauseOption[];
+  options?: PauseOption[];
+  /** Alias for options (schema compatibility) */
+  menuItems?: PauseOption[];
   /** Called when an option is selected (legacy callback, prefer event bus) */
   onSelect?: (option: PauseOption) => void;
   /** Event bus for emitting UI events (optional, uses hook if not provided) */
@@ -31,25 +36,25 @@ export interface GamePauseOverlayProps {
 }
 
 const variantMap = {
-  primary:
-    'bg-blue-600 hover:bg-blue-500 text-white border-blue-400',
-  secondary:
-    'bg-gray-700 hover:bg-gray-600 text-white border-gray-500',
-  ghost:
-    'bg-transparent hover:bg-white/10 text-white border-white/20',
-  destructive:
-    'bg-red-600 hover:bg-red-500 text-white border-red-400',
+  primary: "bg-blue-600 hover:bg-blue-500 text-white border-blue-400",
+  secondary: "bg-gray-700 hover:bg-gray-600 text-white border-gray-500",
+  ghost: "bg-transparent hover:bg-white/10 text-white border-white/20",
+  destructive: "bg-red-600 hover:bg-red-500 text-white border-red-400",
 };
 
 export function GamePauseOverlay({
   options,
+  menuItems,
   onSelect,
   eventBus: eventBusProp,
-  title = 'PAUSED',
+  title = "PAUSED",
   className,
   visible = true,
   onDismiss,
 }: GamePauseOverlayProps) {
+  // Resolve alias: menuItems → options
+  const resolvedOptions = options ?? menuItems ?? [];
+
   // Use provided eventBus or get from context (with fallback for outside provider)
   let eventBusFromHook: EventBusContextType | null = null;
   try {
@@ -72,7 +77,7 @@ export function GamePauseOverlay({
         onSelect(option);
       }
     },
-    [eventBus, onSelect]
+    [eventBus, onSelect],
   );
 
   // Handle escape key to dismiss (also emits RESUME event)
@@ -80,10 +85,10 @@ export function GamePauseOverlay({
     if (!visible) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         // Emit RESUME event on escape (matches pause overlay circuit contract)
         if (eventBus) {
-          eventBus.emit('UI:RESUME', {});
+          eventBus.emit("UI:RESUME", {});
         }
         if (onDismiss) {
           onDismiss();
@@ -91,8 +96,8 @@ export function GamePauseOverlay({
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [visible, onDismiss, eventBus]);
 
   if (!visible) return null;
@@ -100,10 +105,10 @@ export function GamePauseOverlay({
   return (
     <div
       className={cn(
-        'absolute inset-0 z-50 flex items-center justify-center',
-        'bg-black/75 backdrop-blur-sm',
-        'animate-in fade-in duration-200',
-        className
+        "absolute inset-0 z-50 flex items-center justify-center",
+        "bg-black/75 backdrop-blur-sm",
+        "animate-in fade-in duration-200",
+        className,
       )}
       onClick={(e) => {
         if (e.target === e.currentTarget && onDismiss) {
@@ -115,23 +120,23 @@ export function GamePauseOverlay({
         {/* Title */}
         <h2
           className="text-4xl font-bold text-white text-center mb-8 tracking-widest"
-          style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}
+          style={{ textShadow: "0 2px 8px rgba(0,0,0,0.5)" }}
         >
           {title}
         </h2>
 
         {/* Options */}
         <div className="flex flex-col gap-3">
-          {options.map((option, index) => (
+          {resolvedOptions.map((option, index) => (
             <button
               key={index}
               onClick={() => handleOptionClick(option)}
               className={cn(
-                'w-full py-3 px-6 rounded-lg border-2 font-bold',
-                'transition-all duration-150',
-                'hover:scale-105 active:scale-95',
-                'focus:outline-none focus:ring-2 focus:ring-white/25',
-                variantMap[option.variant ?? 'secondary']
+                "w-full py-3 px-6 rounded-lg border-2 font-bold",
+                "transition-all duration-150",
+                "hover:scale-105 active:scale-95",
+                "focus:outline-none focus:ring-2 focus:ring-white/25",
+                variantMap[option.variant ?? "secondary"],
               )}
             >
               {option.label}
@@ -150,4 +155,4 @@ export function GamePauseOverlay({
   );
 }
 
-GamePauseOverlay.displayName = 'GamePauseOverlay';
+GamePauseOverlay.displayName = "GamePauseOverlay";

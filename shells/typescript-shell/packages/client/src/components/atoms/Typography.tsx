@@ -28,6 +28,8 @@ export type TypographySize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
 export interface TypographyProps {
   /** Typography variant */
   variant?: TypographyVariant;
+  /** Heading level (1-6) - alternative to variant for headings */
+  level?: 1 | 2 | 3 | 4 | 5 | 6;
   /** Text color */
   color?:
     | "primary"
@@ -53,6 +55,8 @@ export interface TypographyProps {
   className?: string;
   /** Inline style */
   style?: React.CSSProperties;
+  /** Text content (alternative to children) */
+  content?: React.ReactNode;
   /** Children elements */
   children?: React.ReactNode;
 }
@@ -80,9 +84,9 @@ const colorStyles = {
   primary: "text-[var(--color-foreground)]",
   secondary: "text-[var(--color-muted-foreground)]",
   muted: "text-[var(--color-muted-foreground)]",
-  error: "text-red-600",
-  success: "text-emerald-600",
-  warning: "text-amber-600",
+  error: "text-[var(--color-error)]",
+  success: "text-[var(--color-success)]",
+  warning: "text-[var(--color-warning)]",
   inherit: "text-inherit",
 };
 
@@ -123,7 +127,8 @@ const typographySizeStyles: Record<TypographySize, string> = {
 };
 
 export const Typography: React.FC<TypographyProps> = ({
-  variant = "body1",
+  variant: variantProp,
+  level,
   color = "primary",
   align,
   weight,
@@ -133,8 +138,12 @@ export const Typography: React.FC<TypographyProps> = ({
   id,
   className,
   style,
+  content,
   children,
 }) => {
+  // Determine variant: explicit variant takes precedence, then level, then default
+  const variant: TypographyVariant =
+    variantProp ?? (level ? (`h${level}` as TypographyVariant) : "body1");
   const Component = as || defaultElements[variant];
 
   return (
@@ -151,7 +160,7 @@ export const Typography: React.FC<TypographyProps> = ({
       )}
       style={style}
     >
-      {children}
+      {children ?? content}
     </Component>
   );
 };

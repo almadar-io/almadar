@@ -1,7 +1,10 @@
-import * as React from 'react';
-import { cn } from '../../../lib/cn';
-import { StatBadge } from '../../molecules/game/StatBadge';
-import { useEventBus, type EventBusContextType } from '../../../hooks/useEventBus';
+import * as React from "react";
+import { cn } from "../../../lib/cn";
+import { StatBadge } from "../../molecules/game/StatBadge";
+import {
+  useEventBus,
+  type EventBusContextType,
+} from "../../../hooks/useEventBus";
 
 export interface GameOverStat {
   /** Stat label */
@@ -15,7 +18,7 @@ export interface GameOverStat {
    */
   bind?: string;
   /** Display format */
-  format?: 'number' | 'time' | 'text';
+  format?: "number" | "time" | "text";
   /** Icon */
   icon?: React.ReactNode;
 }
@@ -28,7 +31,7 @@ export interface GameOverAction {
   /** Page to navigate to */
   navigatesTo?: string;
   /** Button variant */
-  variant?: 'primary' | 'secondary' | 'ghost';
+  variant?: "primary" | "secondary" | "ghost";
 }
 
 export interface GameOverScreenProps {
@@ -39,50 +42,52 @@ export interface GameOverScreenProps {
   /** Stats to display */
   stats?: GameOverStat[];
   /** Action buttons */
-  actions: GameOverAction[];
+  actions?: GameOverAction[];
+  /** Alias for actions (schema compatibility) */
+  menuItems?: GameOverAction[];
   /** Called when an action is selected (legacy callback, prefer event bus) */
   onAction?: (action: GameOverAction) => void;
   /** Event bus for emitting UI events (optional, uses hook if not provided) */
   eventBus?: EventBusContextType;
   /** Victory or defeat variant */
-  variant?: 'victory' | 'defeat' | 'neutral';
+  variant?: "victory" | "defeat" | "neutral";
   /** High score (optional, shows "NEW HIGH SCORE!" if exceeded) */
-  highScore?: number;
-  /** Current score for high score comparison */
-  currentScore?: number;
+  highScore?: number | string;
+  /** Current score for high score comparison (accepts string for schema bindings) */
+  currentScore?: number | string;
   /** Additional CSS classes */
   className?: string;
 }
 
 const variantColors = {
   victory: {
-    bg: 'from-green-900/90 to-emerald-950/90',
-    title: 'text-green-400',
-    accent: 'border-green-500',
+    bg: "from-green-900/90 to-emerald-950/90",
+    title: "text-green-400",
+    accent: "border-green-500",
   },
   defeat: {
-    bg: 'from-red-900/90 to-gray-950/90',
-    title: 'text-red-400',
-    accent: 'border-red-500',
+    bg: "from-red-900/90 to-gray-950/90",
+    title: "text-red-400",
+    accent: "border-red-500",
   },
   neutral: {
-    bg: 'from-gray-900/90 to-gray-950/90',
-    title: 'text-white',
-    accent: 'border-gray-500',
+    bg: "from-gray-900/90 to-gray-950/90",
+    title: "text-white",
+    accent: "border-gray-500",
   },
 };
 
 const buttonVariants = {
-  primary: 'bg-blue-600 hover:bg-blue-500 text-white border-blue-400',
-  secondary: 'bg-gray-700 hover:bg-gray-600 text-white border-gray-500',
-  ghost: 'bg-transparent hover:bg-white/10 text-white border-white/20',
+  primary: "bg-blue-600 hover:bg-blue-500 text-white border-blue-400",
+  secondary: "bg-gray-700 hover:bg-gray-600 text-white border-gray-500",
+  ghost: "bg-transparent hover:bg-white/10 text-white border-white/20",
 };
 
 function formatTime(ms: number): string {
   const seconds = Math.floor(ms / 1000);
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
-  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 }
 
 export function GameOverScreen({
@@ -90,13 +95,16 @@ export function GameOverScreen({
   message,
   stats = [],
   actions,
+  menuItems,
   onAction,
   eventBus: eventBusProp,
-  variant = 'neutral',
+  variant = "neutral",
   highScore,
   currentScore,
   className,
 }: GameOverScreenProps) {
+  // Resolve alias: menuItems → actions
+  const resolvedActions = actions ?? menuItems ?? [];
   // Use provided eventBus or get from context (with fallback for outside provider)
   let eventBusFromHook: EventBusContextType | null = null;
   try {
@@ -119,25 +127,33 @@ export function GameOverScreen({
         onAction(action);
       }
     },
-    [eventBus, onAction]
+    [eventBus, onAction],
   );
 
   const colors = variantColors[variant];
-  const isNewHighScore = highScore !== undefined &&
-    currentScore !== undefined &&
-    currentScore > highScore;
+  // Convert string scores to numbers for comparison
+  const numericCurrentScore =
+    typeof currentScore === "string" ? parseFloat(currentScore) : currentScore;
+  const numericHighScore =
+    typeof highScore === "string" ? parseFloat(highScore) : highScore;
+  const isNewHighScore =
+    numericHighScore !== undefined &&
+    numericCurrentScore !== undefined &&
+    !isNaN(numericCurrentScore) &&
+    !isNaN(numericHighScore) &&
+    numericCurrentScore > numericHighScore;
 
   return (
     <div
       className={cn(
-        'min-h-screen w-full flex flex-col items-center justify-center p-8',
-        'bg-gradient-to-b',
+        "min-h-screen w-full flex flex-col items-center justify-center p-8",
+        "bg-gradient-to-b",
         colors.bg,
-        className
+        className,
       )}
     >
       {/* Victory/Defeat Animation */}
-      {variant === 'victory' && (
+      {variant === "victory" && (
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,197,94,0.2),transparent_70%)]" />
         </div>
@@ -146,10 +162,10 @@ export function GameOverScreen({
       {/* Title */}
       <h1
         className={cn(
-          'text-6xl md:text-8xl font-bold mb-4 tracking-tight animate-bounce-once',
-          colors.title
+          "text-6xl md:text-8xl font-bold mb-4 tracking-tight animate-bounce-once",
+          colors.title,
         )}
-        style={{ textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}
+        style={{ textShadow: "0 4px 20px rgba(0,0,0,0.5)" }}
       >
         {title}
       </h1>
@@ -172,18 +188,20 @@ export function GameOverScreen({
 
       {/* Stats */}
       {stats.length > 0 && (
-        <div className={cn(
-          'mb-8 p-6 rounded-xl border-2 bg-black/30',
-          colors.accent
-        )}>
+        <div
+          className={cn(
+            "mb-8 p-6 rounded-xl border-2 bg-black/30",
+            colors.accent,
+          )}
+        >
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {stats.map((stat, index) => {
               // Use value if provided, or show placeholder for bind (runtime binding not implemented)
               let displayValue: string | number = stat.value ?? 0;
-              if (stat.format === 'time' && typeof displayValue === 'number') {
+              if (stat.format === "time" && typeof displayValue === "number") {
                 displayValue = formatTime(displayValue);
               }
-              
+
               return (
                 <div key={index} className="text-center">
                   <div className="text-gray-400 text-sm mb-1">{stat.label}</div>
@@ -200,16 +218,16 @@ export function GameOverScreen({
 
       {/* Actions */}
       <div className="flex flex-col sm:flex-row gap-4">
-        {actions.map((action, index) => (
+        {resolvedActions.map((action, index) => (
           <button
             key={index}
             onClick={() => handleActionClick(action)}
             className={cn(
-              'px-8 py-4 rounded-xl border-2 font-bold text-lg',
-              'transition-all duration-200',
-              'hover:scale-105 active:scale-95',
-              'focus:outline-none focus:ring-4 focus:ring-white/25',
-              buttonVariants[action.variant ?? 'secondary']
+              "px-8 py-4 rounded-xl border-2 font-bold text-lg",
+              "transition-all duration-200",
+              "hover:scale-105 active:scale-95",
+              "focus:outline-none focus:ring-4 focus:ring-white/25",
+              buttonVariants[action.variant ?? "secondary"],
             )}
           >
             {action.label}
@@ -220,4 +238,4 @@ export function GameOverScreen({
   );
 }
 
-GameOverScreen.displayName = 'GameOverScreen';
+GameOverScreen.displayName = "GameOverScreen";

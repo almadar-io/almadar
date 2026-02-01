@@ -1,16 +1,16 @@
 /**
  * Pagination Molecule Component
- * 
+ *
  * A pagination component with page numbers, previous/next buttons, and ellipsis.
  * Uses Button, Icon, Typography, and Input atoms.
  */
 
-import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from '../atoms/Button';
-import { Typography } from '../atoms/Typography';
-import { Input } from '../atoms/Input';
-import { cn } from '../../lib/cn';
+import React, { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "../atoms/Button";
+import { Typography } from "../atoms/Typography";
+import { Input } from "../atoms/Input";
+import { cn } from "../../lib/cn";
 
 export interface PaginationProps {
   /**
@@ -24,9 +24,9 @@ export interface PaginationProps {
   totalPages: number;
 
   /**
-   * Callback when page changes
+   * Callback when page changes (optional - can be a no-op if not interactive)
    */
-  onPageChange: (page: number) => void;
+  onPageChange?: (page: number) => void;
 
   /**
    * Show page size selector
@@ -81,7 +81,7 @@ export interface PaginationProps {
 export const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   totalPages,
-  onPageChange,
+  onPageChange = () => {},
   showPageSize = false,
   pageSizeOptions = [10, 20, 50, 100],
   pageSize,
@@ -92,18 +92,18 @@ export const Pagination: React.FC<PaginationProps> = ({
   maxVisiblePages = 7,
   className,
 }) => {
-  const [jumpToPage, setJumpToPage] = useState('');
+  const [jumpToPage, setJumpToPage] = useState("");
 
   const handleJumpToPage = () => {
     const page = parseInt(jumpToPage, 10);
     if (page >= 1 && page <= totalPages) {
       onPageChange(page);
-      setJumpToPage('');
+      setJumpToPage("");
     }
   };
 
   const getPageNumbers = () => {
-    const pages: (number | 'ellipsis')[] = [];
+    const pages: (number | "ellipsis")[] = [];
     const halfVisible = Math.floor(maxVisiblePages / 2);
 
     if (totalPages <= maxVisiblePages) {
@@ -115,21 +115,25 @@ export const Pagination: React.FC<PaginationProps> = ({
         for (let i = 1; i <= maxVisiblePages - 2; i++) {
           pages.push(i);
         }
-        pages.push('ellipsis');
+        pages.push("ellipsis");
         pages.push(totalPages);
       } else if (currentPage >= totalPages - halfVisible) {
         pages.push(1);
-        pages.push('ellipsis');
+        pages.push("ellipsis");
         for (let i = totalPages - maxVisiblePages + 3; i <= totalPages; i++) {
           pages.push(i);
         }
       } else {
         pages.push(1);
-        pages.push('ellipsis');
-        for (let i = currentPage - halfVisible + 2; i <= currentPage + halfVisible - 2; i++) {
+        pages.push("ellipsis");
+        for (
+          let i = currentPage - halfVisible + 2;
+          i <= currentPage + halfVisible - 2;
+          i++
+        ) {
           pages.push(i);
         }
-        pages.push('ellipsis');
+        pages.push("ellipsis");
         pages.push(totalPages);
       }
     }
@@ -140,7 +144,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   const pageNumbers = getPageNumbers();
 
   return (
-    <div className={cn('flex items-center justify-between gap-4', className)}>
+    <div className={cn("flex items-center justify-between gap-4", className)}>
       <div className="flex items-center gap-2">
         {showTotal && totalItems !== undefined && (
           <Typography variant="small" color="secondary">
@@ -156,7 +160,7 @@ export const Pagination: React.FC<PaginationProps> = ({
             <select
               value={pageSize}
               onChange={(e) => onPageSizeChange(Number(e.target.value))}
-              className="px-2 py-1 text-sm border-2 border-black bg-white text-black font-medium focus:outline-none focus:ring-2 focus:ring-black"
+              className="px-2 py-1 text-sm border-[length:var(--border-width)] border-[var(--color-border)] bg-[var(--color-card)] text-[var(--color-foreground)] font-medium focus:outline-none focus:ring-2 focus:ring-[var(--color-ring)]"
             >
               {pageSizeOptions.map((size) => (
                 <option key={size} value={size}>
@@ -181,9 +185,14 @@ export const Pagination: React.FC<PaginationProps> = ({
 
         <div className="flex items-center gap-1">
           {pageNumbers.map((page, index) => {
-            if (page === 'ellipsis') {
+            if (page === "ellipsis") {
               return (
-                <Typography key={`ellipsis-${index}`} variant="small" color="muted" className="px-2">
+                <Typography
+                  key={`ellipsis-${index}`}
+                  variant="small"
+                  color="muted"
+                  className="px-2"
+                >
                   ...
                 </Typography>
               );
@@ -194,7 +203,7 @@ export const Pagination: React.FC<PaginationProps> = ({
             return (
               <Button
                 key={page}
-                variant={isActive ? 'primary' : 'ghost'}
+                variant={isActive ? "primary" : "ghost"}
                 size="sm"
                 onClick={() => onPageChange(page)}
                 className="min-w-[2.5rem]"
@@ -228,7 +237,7 @@ export const Pagination: React.FC<PaginationProps> = ({
             placeholder="Page"
             className="w-20"
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === "Enter") {
                 handleJumpToPage();
               }
             }}
@@ -242,5 +251,4 @@ export const Pagination: React.FC<PaginationProps> = ({
   );
 };
 
-Pagination.displayName = 'Pagination';
-
+Pagination.displayName = "Pagination";

@@ -1,14 +1,14 @@
 /**
  * Divider Atom Component
- * 
+ *
  * A divider component for separating content sections.
  */
 
-import React from 'react';
-import { cn } from '../../lib/cn';
+import React from "react";
+import { cn } from "../../lib/cn";
 
-export type DividerOrientation = 'horizontal' | 'vertical';
-export type DividerVariant = 'solid' | 'dashed' | 'dotted';
+export type DividerOrientation = "horizontal" | "vertical";
+export type DividerVariant = "solid" | "dashed" | "dotted";
 
 export interface DividerProps {
   /**
@@ -35,24 +35,24 @@ export interface DividerProps {
 }
 
 const variantStyles: Record<DividerVariant, string> = {
-  solid: 'border-solid',
-  dashed: 'border-dashed',
-  dotted: 'border-dotted',
+  solid: "border-solid",
+  dashed: "border-dashed",
+  dotted: "border-dotted",
 };
 
 export const Divider: React.FC<DividerProps> = ({
-  orientation = 'horizontal',
+  orientation = "horizontal",
   label,
-  variant = 'solid',
+  variant = "solid",
   className,
 }) => {
-  if (orientation === 'vertical') {
+  if (orientation === "vertical") {
     return (
       <div
         className={cn(
-          'w-0 h-full border-l border-black',
+          "w-0 h-full border-l border-[var(--color-border)]",
           variantStyles[variant],
-          className
+          className,
         )}
         role="separator"
         aria-orientation="vertical"
@@ -63,15 +63,25 @@ export const Divider: React.FC<DividerProps> = ({
   if (label) {
     return (
       <div
-        className={cn('flex items-center gap-3 my-4', className)}
+        className={cn("flex items-center gap-3 my-4", className)}
         role="separator"
         aria-label={label}
       >
-        <div className={cn('flex-1 h-0 border-t border-black', variantStyles[variant])} />
-        <span className="text-sm text-black font-bold uppercase tracking-wide">
+        <div
+          className={cn(
+            "flex-1 h-0 border-t border-[var(--color-border)]",
+            variantStyles[variant],
+          )}
+        />
+        <span className="text-sm text-[var(--color-foreground)] font-bold uppercase tracking-wide">
           {label}
         </span>
-        <div className={cn('flex-1 h-0 border-t border-black', variantStyles[variant])} />
+        <div
+          className={cn(
+            "flex-1 h-0 border-t border-[var(--color-border)]",
+            variantStyles[variant],
+          )}
+        />
       </div>
     );
   }
@@ -79,9 +89,9 @@ export const Divider: React.FC<DividerProps> = ({
   return (
     <div
       className={cn(
-        'w-full h-0 border-t border-black my-4',
+        "w-full h-0 border-t border-[var(--color-border)] my-4",
         variantStyles[variant],
-        className
+        className,
       )}
       role="separator"
       aria-orientation="horizontal"
@@ -89,5 +99,4 @@ export const Divider: React.FC<DividerProps> = ({
   );
 };
 
-Divider.displayName = 'Divider';
-
+Divider.displayName = "Divider";

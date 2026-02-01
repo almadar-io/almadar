@@ -7,10 +7,9 @@
  * @packageDocumentation
  */
 
-import React from 'react';
-import { useEventBus } from '../../hooks/useEventBus';
-import { usePatternClasses } from '../../context/ThemeContext';
-import { cn } from '../../lib/cn';
+import React from "react";
+import { useEventBus } from "../../hooks/useEventBus";
+import { cn } from "../../lib/cn";
 
 // ============================================================================
 // Types
@@ -20,11 +19,31 @@ import { cn } from '../../lib/cn';
  * Allowed HTML elements for custom patterns.
  */
 export const ALLOWED_CUSTOM_COMPONENTS = [
-  'div', 'span', 'button', 'a', 'p',
-  'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-  'header', 'footer', 'section', 'article', 'nav', 'main', 'aside',
-  'ul', 'ol', 'li',
-  'img', 'label', 'input', 'form',
+  "div",
+  "span",
+  "button",
+  "a",
+  "p",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "header",
+  "footer",
+  "section",
+  "article",
+  "nav",
+  "main",
+  "aside",
+  "ul",
+  "ol",
+  "li",
+  "img",
+  "label",
+  "input",
+  "form",
 ] as const;
 
 export type AllowedCustomComponent = (typeof ALLOWED_CUSTOM_COMPONENTS)[number];
@@ -32,14 +51,18 @@ export type AllowedCustomComponent = (typeof ALLOWED_CUSTOM_COMPONENTS)[number];
 /**
  * Check if a component name is allowed.
  */
-export function isAllowedComponent(component: string): component is AllowedCustomComponent {
-  return ALLOWED_CUSTOM_COMPONENTS.includes(component as AllowedCustomComponent);
+export function isAllowedComponent(
+  component: string,
+): component is AllowedCustomComponent {
+  return ALLOWED_CUSTOM_COMPONENTS.includes(
+    component as AllowedCustomComponent,
+  );
 }
 
 /**
  * Interactive elements that require action prop for closed circuit.
  */
-const INTERACTIVE_ELEMENTS = new Set<string>(['button', 'a']);
+const INTERACTIVE_ELEMENTS = new Set<string>(["button", "a"]);
 
 /**
  * Check if an element is interactive (requires action for closed circuit).
@@ -116,13 +139,21 @@ export function CustomPattern({
   htmlProps,
 }: CustomPatternProps): React.ReactElement | null {
   const { emit } = useEventBus();
-  const tokenClasses = usePatternClasses(token, className);
+  // Note: token prop is deprecated/unused - use className with CSS variables instead
+  const classes = cn(className);
 
   // Validate component
   if (!isAllowedComponent(component)) {
-    console.warn(`CustomPattern: Unknown component "${component}", falling back to div`);
+    console.warn(
+      `CustomPattern: Unknown component "${component}", falling back to div`,
+    );
     return (
-      <div className={cn(tokenClasses, 'p-4 border border-dashed border-red-300 text-red-500')}>
+      <div
+        className={cn(
+          classes,
+          "p-4 border border-dashed border-[var(--color-error)]/50 text-[var(--color-error)]",
+        )}
+      >
         Unknown component: {component}
       </div>
     );
@@ -133,7 +164,7 @@ export function CustomPattern({
     if (disabled) return;
 
     // For links without action, let browser handle navigation
-    if (component === 'a' && href && !action) {
+    if (component === "a" && href && !action) {
       return;
     }
 
@@ -146,7 +177,7 @@ export function CustomPattern({
 
   // Build common props
   const commonProps: Record<string, unknown> = {
-    className: tokenClasses || undefined,
+    className: classes || undefined,
     ...htmlProps,
   };
 
@@ -157,8 +188,8 @@ export function CustomPattern({
 
   // Handle disabled state
   if (disabled) {
-    commonProps['aria-disabled'] = true;
-    if (component === 'button') {
+    commonProps["aria-disabled"] = true;
+    if (component === "button") {
       commonProps.disabled = true;
     }
   }
@@ -168,49 +199,53 @@ export function CustomPattern({
 
   // Render based on component type
   switch (component) {
-    case 'button':
+    case "button":
       return (
-        <button {...(commonProps as React.ButtonHTMLAttributes<HTMLButtonElement>)}>
+        <button
+          {...(commonProps as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+        >
           {renderContent}
         </button>
       );
 
-    case 'a':
+    case "a":
       return (
         <a
-          href={href ?? '#'}
-          target={external ? '_blank' : undefined}
-          rel={external ? 'noopener noreferrer' : undefined}
+          href={href ?? "#"}
+          target={external ? "_blank" : undefined}
+          rel={external ? "noopener noreferrer" : undefined}
           {...(commonProps as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
         >
           {renderContent}
         </a>
       );
 
-    case 'img':
+    case "img":
       return (
         <img
           src={src}
-          alt={alt ?? ''}
+          alt={alt ?? ""}
           {...(commonProps as React.ImgHTMLAttributes<HTMLImageElement>)}
         />
       );
 
-    case 'input':
+    case "input":
       return (
         <input
           {...(commonProps as React.InputHTMLAttributes<HTMLInputElement>)}
         />
       );
 
-    case 'label':
+    case "label":
       return (
-        <label {...(commonProps as React.LabelHTMLAttributes<HTMLLabelElement>)}>
+        <label
+          {...(commonProps as React.LabelHTMLAttributes<HTMLLabelElement>)}
+        >
           {renderContent}
         </label>
       );
 
-    case 'form':
+    case "form":
       return (
         <form
           onSubmit={(e) => {
@@ -226,62 +261,138 @@ export function CustomPattern({
       );
 
     // Heading elements
-    case 'h1':
-      return <h1 {...(commonProps as React.HTMLAttributes<HTMLHeadingElement>)}>{renderContent}</h1>;
-    case 'h2':
-      return <h2 {...(commonProps as React.HTMLAttributes<HTMLHeadingElement>)}>{renderContent}</h2>;
-    case 'h3':
-      return <h3 {...(commonProps as React.HTMLAttributes<HTMLHeadingElement>)}>{renderContent}</h3>;
-    case 'h4':
-      return <h4 {...(commonProps as React.HTMLAttributes<HTMLHeadingElement>)}>{renderContent}</h4>;
-    case 'h5':
-      return <h5 {...(commonProps as React.HTMLAttributes<HTMLHeadingElement>)}>{renderContent}</h5>;
-    case 'h6':
-      return <h6 {...(commonProps as React.HTMLAttributes<HTMLHeadingElement>)}>{renderContent}</h6>;
+    case "h1":
+      return (
+        <h1 {...(commonProps as React.HTMLAttributes<HTMLHeadingElement>)}>
+          {renderContent}
+        </h1>
+      );
+    case "h2":
+      return (
+        <h2 {...(commonProps as React.HTMLAttributes<HTMLHeadingElement>)}>
+          {renderContent}
+        </h2>
+      );
+    case "h3":
+      return (
+        <h3 {...(commonProps as React.HTMLAttributes<HTMLHeadingElement>)}>
+          {renderContent}
+        </h3>
+      );
+    case "h4":
+      return (
+        <h4 {...(commonProps as React.HTMLAttributes<HTMLHeadingElement>)}>
+          {renderContent}
+        </h4>
+      );
+    case "h5":
+      return (
+        <h5 {...(commonProps as React.HTMLAttributes<HTMLHeadingElement>)}>
+          {renderContent}
+        </h5>
+      );
+    case "h6":
+      return (
+        <h6 {...(commonProps as React.HTMLAttributes<HTMLHeadingElement>)}>
+          {renderContent}
+        </h6>
+      );
 
     // List elements
-    case 'ul':
-      return <ul {...(commonProps as React.HTMLAttributes<HTMLUListElement>)}>{renderContent}</ul>;
-    case 'ol':
-      return <ol {...(commonProps as React.HTMLAttributes<HTMLOListElement>)}>{renderContent}</ol>;
-    case 'li':
-      return <li {...(commonProps as React.HTMLAttributes<HTMLLIElement>)}>{renderContent}</li>;
+    case "ul":
+      return (
+        <ul {...(commonProps as React.HTMLAttributes<HTMLUListElement>)}>
+          {renderContent}
+        </ul>
+      );
+    case "ol":
+      return (
+        <ol {...(commonProps as React.HTMLAttributes<HTMLOListElement>)}>
+          {renderContent}
+        </ol>
+      );
+    case "li":
+      return (
+        <li {...(commonProps as React.HTMLAttributes<HTMLLIElement>)}>
+          {renderContent}
+        </li>
+      );
 
     // Semantic elements
-    case 'header':
-      return <header {...(commonProps as React.HTMLAttributes<HTMLElement>)}>{renderContent}</header>;
-    case 'footer':
-      return <footer {...(commonProps as React.HTMLAttributes<HTMLElement>)}>{renderContent}</footer>;
-    case 'section':
-      return <section {...(commonProps as React.HTMLAttributes<HTMLElement>)}>{renderContent}</section>;
-    case 'article':
-      return <article {...(commonProps as React.HTMLAttributes<HTMLElement>)}>{renderContent}</article>;
-    case 'nav':
-      return <nav {...(commonProps as React.HTMLAttributes<HTMLElement>)}>{renderContent}</nav>;
-    case 'main':
-      return <main {...(commonProps as React.HTMLAttributes<HTMLElement>)}>{renderContent}</main>;
-    case 'aside':
-      return <aside {...(commonProps as React.HTMLAttributes<HTMLElement>)}>{renderContent}</aside>;
+    case "header":
+      return (
+        <header {...(commonProps as React.HTMLAttributes<HTMLElement>)}>
+          {renderContent}
+        </header>
+      );
+    case "footer":
+      return (
+        <footer {...(commonProps as React.HTMLAttributes<HTMLElement>)}>
+          {renderContent}
+        </footer>
+      );
+    case "section":
+      return (
+        <section {...(commonProps as React.HTMLAttributes<HTMLElement>)}>
+          {renderContent}
+        </section>
+      );
+    case "article":
+      return (
+        <article {...(commonProps as React.HTMLAttributes<HTMLElement>)}>
+          {renderContent}
+        </article>
+      );
+    case "nav":
+      return (
+        <nav {...(commonProps as React.HTMLAttributes<HTMLElement>)}>
+          {renderContent}
+        </nav>
+      );
+    case "main":
+      return (
+        <main {...(commonProps as React.HTMLAttributes<HTMLElement>)}>
+          {renderContent}
+        </main>
+      );
+    case "aside":
+      return (
+        <aside {...(commonProps as React.HTMLAttributes<HTMLElement>)}>
+          {renderContent}
+        </aside>
+      );
 
     // Generic elements
-    case 'span':
-      return <span {...(commonProps as React.HTMLAttributes<HTMLSpanElement>)}>{renderContent}</span>;
-    case 'p':
-      return <p {...(commonProps as React.HTMLAttributes<HTMLParagraphElement>)}>{renderContent}</p>;
-    case 'div':
+    case "span":
+      return (
+        <span {...(commonProps as React.HTMLAttributes<HTMLSpanElement>)}>
+          {renderContent}
+        </span>
+      );
+    case "p":
+      return (
+        <p {...(commonProps as React.HTMLAttributes<HTMLParagraphElement>)}>
+          {renderContent}
+        </p>
+      );
+    case "div":
     default:
-      return <div {...(commonProps as React.HTMLAttributes<HTMLDivElement>)}>{renderContent}</div>;
+      return (
+        <div {...(commonProps as React.HTMLAttributes<HTMLDivElement>)}>
+          {renderContent}
+        </div>
+      );
   }
 }
 
-CustomPattern.displayName = 'CustomPattern';
+CustomPattern.displayName = "CustomPattern";
 
 // ============================================================================
 // Recursive Custom Pattern Renderer
 // ============================================================================
 
 export interface CustomPatternConfig {
-  type: 'custom';
+  type: "custom";
   component: AllowedCustomComponent;
   className?: string;
   token?: string | string[];
@@ -300,11 +411,13 @@ export interface CustomPatternConfig {
 /**
  * Check if a pattern config is a custom pattern.
  */
-export function isCustomPatternConfig(config: unknown): config is CustomPatternConfig {
+export function isCustomPatternConfig(
+  config: unknown,
+): config is CustomPatternConfig {
   return (
-    typeof config === 'object' &&
+    typeof config === "object" &&
     config !== null &&
-    (config as Record<string, unknown>).type === 'custom'
+    (config as Record<string, unknown>).type === "custom"
   );
 }
 
@@ -315,7 +428,7 @@ export function isCustomPatternConfig(config: unknown): config is CustomPatternC
  */
 export function renderCustomPattern(
   config: CustomPatternConfig,
-  key?: string | number
+  key?: string | number,
 ): React.ReactElement {
   const {
     component,
@@ -335,7 +448,7 @@ export function renderCustomPattern(
 
   // Recursively render children
   const renderedChildren = children?.map((child, index) =>
-    renderCustomPattern(child, index)
+    renderCustomPattern(child, index),
   );
 
   return (

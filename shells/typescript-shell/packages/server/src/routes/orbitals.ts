@@ -64,12 +64,12 @@ export const ENTITY_EVENTS = {
 const orbitalRegistry = new Map<string, OrbitalRegistration>();
 
 /**
- * Register an almadar (development only)
+ * Register an orbital (development only)
  * @deprecated Use compiled event handlers in production
  */
 export function registerOrbital(registration: OrbitalRegistration): void {
   orbitalRegistry.set(registration.name, registration);
-  logger.info(`[Orbitals] Registered almadar (dev mode): ${registration.name}`);
+  logger.info(`[Orbitals] Registered orbital (dev mode): ${registration.name}`);
 }
 
 /**
