@@ -242,63 +242,21 @@ function copyStatic() {
   }
 }
 
-// Bundle visualizer from shared package (optional - may not exist in almadar repo)
-async function bundleVisualizer() {
-  console.log("\n📦 Bundling visualizer...");
+// Copy pre-bundled visualizer from static/js
+function copyVisualizer() {
+  console.log("\n📦 Copying visualizer...");
 
-  const sharedVisualizerPath = path.join(
-    ROOT,
-    "..",
-    "shared",
-    "src",
-    "orbitals",
-    "visualizer",
-    "browser.ts",
-  );
+  const srcPath = path.join(DIRS.static, "js", "orbital-visualizer.js");
   const outPath = path.join(DIRS.dist, "js", "orbital-visualizer.js");
 
-  // Check for fallback first
-  const fallbackPath = path.join(DIRS.static, "js", "orbital-visualizer.js");
-
-  // If source doesn't exist and no fallback, skip bundling
-  if (!fs.existsSync(sharedVisualizerPath)) {
-    if (fs.existsSync(fallbackPath)) {
-      ensureDir(path.join(DIRS.dist, "js"));
-      fs.copyFileSync(fallbackPath, outPath);
-      console.log("  ⚠ Using fallback static visualizer");
-    } else {
-      console.log(
-        "  ⚠ Visualizer source not found, skipping (not available in this repo)",
-      );
-    }
+  if (!fs.existsSync(srcPath)) {
+    console.log("  ⚠ Visualizer not found at static/js/orbital-visualizer.js");
     return;
   }
 
   ensureDir(path.join(DIRS.dist, "js"));
-
-  try {
-    await esbuild.build({
-      entryPoints: [sharedVisualizerPath],
-      bundle: true,
-      outfile: outPath,
-      format: "iife",
-      globalName: "OrbitalVisualizerModule",
-      target: ["es2020"],
-      minify: false, // Keep readable for debugging
-      sourcemap: true,
-      // Exclude zod - the visualizer doesn't actually use zod schemas at runtime,
-      // only the type definitions which are stripped during compilation
-      external: ["zod"],
-    });
-    console.log("  ✓ orbital-visualizer.js bundled from shared package");
-  } catch (err) {
-    console.error("  ✗ Failed to bundle visualizer:", err.message);
-    // Fallback: copy static version if exists
-    if (fs.existsSync(fallbackPath)) {
-      fs.copyFileSync(fallbackPath, outPath);
-      console.log("  ⚠ Using fallback static visualizer");
-    }
-  }
+  fs.copyFileSync(srcPath, outPath);
+  console.log("  ✓ orbital-visualizer.js copied");
 }
 
 // Build only specific pages needed for Docusaurus integration
