@@ -19,6 +19,22 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
+      label: "Reference",
+      items: [
+        {
+          type: "link",
+          label: "Standard Library",
+          href: "/stdlib.html",
+        },
+        {
+          type: "link",
+          label: "Behaviors",
+          href: "/behaviors.html",
+        },
+      ],
+    },
+    {
+      type: "category",
       label: "Community",
       items: ["community/contributing"],
     },
