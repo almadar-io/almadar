@@ -24,12 +24,12 @@ const sidebars: SidebarsConfig = {
         {
           type: "link",
           label: "Standard Library",
-          href: "/stdlib.html",
+          href: "pathname:///stdlib.html",
         },
         {
           type: "link",
           label: "Behaviors",
-          href: "/behaviors.html",
+          href: "pathname:///behaviors.html",
         },
       ],
     },
