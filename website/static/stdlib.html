@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standard Library Reference</title>
+    <meta name="description" content="Complete reference for all Orbital Standard Library modules and operators.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <nav>
+        <div class="container nav-content">
+            <a href="index.html" class="logo-container">
+                <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Outer lobes -->
+                    <ellipse cx="50" cy="28" rx="16" ry="20" fill="none" stroke="white" stroke-width="1.5" opacity="0.9" />
+                    <ellipse cx="50" cy="72" rx="16" ry="20" fill="none" stroke="white" stroke-width="1.5" opacity="0.9" />
+                    <!-- Middle lobes -->
+                    <ellipse cx="50" cy="32" rx="11" ry="14" fill="none" stroke="white" stroke-width="1.5" opacity="0.7" />
+                    <ellipse cx="50" cy="68" rx="11" ry="14" fill="none" stroke="white" stroke-width="1.5" opacity="0.7" />
+                    <!-- Inner lobes -->
+                    <ellipse cx="50" cy="36" rx="6" ry="8" fill="none" stroke="white" stroke-width="1.5" opacity="0.5" />
+                    <ellipse cx="50" cy="64" rx="6" ry="8" fill="none" stroke="white" stroke-width="1.5" opacity="0.5" />
+                    <!-- Center nucleus -->
+                    <circle cx="50" cy="50" r="5" fill="white" />
+                </svg>            Almadar
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-item">Home</a>
+                <a href="index.html#about" class="nav-item">About</a>
+                <a href="index.html#technology" class="nav-item">Technology</a>
+                <a href="index.html#process" class="nav-item">Process</a>
+                <a href="index.html#team" class="nav-item">Team</a>
+                <a href="index.html#contact" class="nav-btn">Contact</a>
+            </div>
+    
+            <!-- Mobile Menu Toggle (Hamburger) -->
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <a href="index.html" class="mobile-nav-item">Home</a>
+            <a href="index.html#about" class="mobile-nav-item">About</a>
+            <a href="index.html#technology" class="mobile-nav-item">Technology</a>
+            <a href="index.html#process" class="mobile-nav-item">Process</a>
+            <a href="index.html#team" class="mobile-nav-item">Team</a>
+            <a href="index.html#contact" class="mobile-nav-btn">Contact</a>
+        </div>
+    </div>
+    <div class="stdlib-layout">
+        <!-- Sidebar -->
+        <aside class="stdlib-sidebar">
+            <div class="sidebar-header">
+                <a href="docs.html" class="back-link">← Back to Docs</a>
+            </div>
+
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search" placeholder="Search..." autocomplete="off">
+            </div>
+
+            <div id="sidebar-nav"></div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="stdlib-content">
+            
+<section id="stdlib-reference">
+    <h1 class="gradient-text">Standard Library Reference</h1>
+    <p>
+        The Orbital Standard Library provides <strong>domain-agnostic</strong> building blocks
+        for S-expressions. These are fundamental operations that compose to form complex logic.
+    </p>
+
+    <div class="info-box tip">
+        <div class="info-box-title">💡 Auto-Generated</div>
+        <p>This documentation is automatically generated from the std library source code.</p>
+    </div>
+
+    <!-- Quick Search (mobile) -->
+    <div class="mobile-search">
+        <input type="text" id="mobile-search" placeholder="Search operators...">
+    </div>
+</section>
+
+<!-- Module Sections (populated by JavaScript) -->
+<div id="modules-container"></div>
+
+<!-- Load and render documentation -->
+<script>
+    let allModulesData = null;
+
+    document.addEventListener('DOMContentLoaded', async function () {
+        try {
+            // Load the generated JSON data
+            const response = await fetch('data/stdlib-modules.json');
+            const data = await response.json();
+            allModulesData = data;
+
+            // Build sidebar navigation
+            buildSidebar(data.modules);
+
+            // Render modules
+            const container = document.getElementById('modules-container');
+            container.innerHTML = data.modules.map(renderModule).join('');
+
+            // Setup search
+            setupSearch();
+
+            // Setup scroll spy
+            setupScrollSpy();
+
+        } catch (error) {
+            console.error('Failed to load stdlib documentation:', error);
+        }
+    });
+
+    function buildSidebar(modules) {
+        const nav = document.getElementById('sidebar-nav');
+        nav.innerHTML = modules.map(module => `
+        <div class="sidebar-section">
+            <a href="#${module.id}" class="sidebar-link" data-module="${module.id}">
+                <span class="icon">${module.icon}</span>
+                <span>${module.displayName}</span>
+                <span class="count">${module.operatorCount}</span>
+            </a>
+        </div>
+    `).join('');
+    }
+
+    function setupSearch() {
+        const sidebarSearch = document.getElementById('sidebar-search');
+        const mobileSearch = document.getElementById('mobile-search');
+
+        const doSearch = (query) => {
+            const q = query.toLowerCase().trim();
+
+            if (!q) {
+                // Show all
+                document.querySelectorAll('.operator-card').forEach(card => {
+                    card.style.display = '';
+                });
+                document.querySelectorAll('.module-section').forEach(section => {
+                    section.style.display = '';
+                });
+                return;
+            }
+
+            // Filter operators
+            let visibleModules = new Set();
+            document.querySelectorAll('.operator-card').forEach(card => {
+                const name = card.dataset.name?.toLowerCase() || '';
+                const desc = card.dataset.desc?.toLowerCase() || '';
+                if (name.includes(q) || desc.includes(q)) {
+                    card.style.display = '';
+                    visibleModules.add(card.closest('.module-section')?.id);
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Show/hide modules based on visible operators
+            document.querySelectorAll('.module-section').forEach(section => {
+                const hasVisible = section.querySelectorAll('.operator-card:not([style*="display: none"])').length > 0;
+                section.style.display = hasVisible ? '' : 'none';
+            });
+        };
+
+        if (sidebarSearch) {
+            sidebarSearch.addEventListener('input', (e) => doSearch(e.target.value));
+        }
+        if (mobileSearch) {
+            mobileSearch.addEventListener('input', (e) => doSearch(e.target.value));
+        }
+    }
+
+    function setupScrollSpy() {
+        const sections = document.querySelectorAll('.module-section');
+        const navLinks = document.querySelectorAll('.sidebar-link');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === '#' + entry.target.id) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        sections.forEach(section => observer.observe(section));
+    }
+
+    function renderModule(module) {
+        return `
+        <section id="${module.id}" class="module-section">
+            <h2>
+                <span class="module-icon">${module.icon}</span>
+                ${module.displayName}
+            </h2>
+            <p>${module.description}</p>
+            <p class="module-meta">${module.operatorCount} operators</p>
+            
+            <div class="operators-grid">
+                ${module.operators.map(renderOperator).join('')}
+            </div>
+        </section>
+    `;
+    }
+
+    function renderOperator(op) {
+        const paramsHtml = op.params.length > 0
+            ? `<div class="op-params">
+            <table class="params-table">
+                <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                <tbody>
+                    ${op.params.map(p => `
+                        <tr>
+                            <td><code>${p.name}</code>${p.optional ? ' <em>(opt)</em>' : ''}</td>
+                            <td><code>${p.type}</code></td>
+                            <td>${p.description}${p.defaultValue !== undefined ? ` (default: <code>${p.defaultValue}</code>)` : ''}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+           </div>`
+            : '';
+
+        return `
+        <div class="operator-card${op.pureFunction ? ' pure' : ' effect'}" data-name="${op.name}" data-desc="${op.description}">
+            <div class="op-header">
+                <code class="op-name">${op.name}</code>
+                <span class="op-badge ${op.pureFunction ? 'pure' : 'effect'}">
+                    ${op.pureFunction ? '✨ Pure' : '⚡ Effect'}
+                </span>
+            </div>
+            <p class="op-description">${op.description}</p>
+            ${paramsHtml}
+            ${op.example ? `
+                <div class="op-example">
+                    <div class="example-label">Example:</div>
+                    <code class="example-code">${escapeHtml(op.example)}</code>
+                </div>
+            ` : ''}
+            <div class="op-meta">
+                <span>Returns: <code>${op.returnTypeHuman}</code></span>
+                <span>Args: ${op.arityHuman}</span>
+            </div>
+        </div>
+    `;
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+</script>
+
+<style>
+    /* Mobile Search */
+    .mobile-search {
+        display: none;
+        margin: 1.5rem 0;
+    }
+
+    .mobile-search input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border-subtle, #333);
+        border-radius: 8px;
+        background: var(--surface-elevated, #1a1a2e);
+        color: var(--text-primary, #fff);
+        font-size: 1rem;
+    }
+
+    @media (max-width: 900px) {
+        .mobile-search {
+            display: block;
+        }
+    }
+
+    /* Module Sections */
+    .module-section {
+        margin-top: 3rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-subtle, #333);
+    }
+
+    .module-section:first-child {
+        margin-top: 2rem;
+        border-top: none;
+    }
+
+    .module-section h2 {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .module-icon {
+        font-size: 1.25rem;
+    }
+
+    .module-meta {
+        font-size: 0.875rem;
+        color: var(--text-muted, #888);
+    }
+
+    /* Operators Grid */
+    .operators-grid {
+        display: grid;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .operator-card {
+        background: var(--surface-base, #0d0d1a);
+        border-radius: 8px;
+        padding: 1.25rem;
+        border: 1px solid var(--border-subtle, #333);
+    }
+
+    .operator-card.pure {
+        border-left: 3px solid var(--success, #00d26a);
+    }
+
+    .operator-card.effect {
+        border-left: 3px solid var(--warning, #ffb800);
+    }
+
+    .op-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .op-name {
+        font-size: 1rem;
+        color: var(--accent-primary, #00d4ff);
+        font-weight: 600;
+    }
+
+    .op-badge {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+    }
+
+    .op-badge.pure {
+        background: rgba(0, 210, 106, 0.15);
+        color: #00d26a;
+    }
+
+    .op-badge.effect {
+        background: rgba(255, 184, 0, 0.15);
+        color: #ffb800;
+    }
+
+    .op-description {
+        margin: 0.5rem 0;
+        color: var(--text-secondary, #ccc);
+    }
+
+    .op-params {
+        margin: 0.75rem 0;
+        overflow-x: auto;
+    }
+
+    .params-table {
+        width: 100%;
+        font-size: 0.8rem;
+        border-collapse: collapse;
+    }
+
+    .params-table th,
+    .params-table td {
+        text-align: left;
+        padding: 0.4rem 0.5rem;
+        border-bottom: 1px solid var(--border-subtle, #333);
+    }
+
+    .params-table th {
+        color: var(--text-muted, #888);
+        font-weight: 500;
+    }
+
+    .op-example {
+        background: var(--surface-elevated, #1a1a2e);
+        border-radius: 4px;
+        padding: 0.75rem;
+        margin: 0.75rem 0;
+    }
+
+    .example-label {
+        font-size: 0.7rem;
+        color: var(--text-muted, #888);
+        margin-bottom: 0.25rem;
+    }
+
+    .example-code {
+        font-family: 'Fira Code', monospace;
+        font-size: 0.8rem;
+        color: var(--text-primary, #fff);
+    }
+
+    .op-meta {
+        display: flex;
+        gap: 1.25rem;
+        font-size: 0.75rem;
+        color: var(--text-muted, #888);
+        margin-top: 0.75rem;
+    }
+</style>
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Almadar Inc. All rights reserved.</p>
+        </div>
+    </footer>    <script>
+        (function () {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileNavItems = mobileMenu.querySelectorAll('.mobile-nav-item, .mobile-nav-btn');
+    
+            // Toggle menu
+            mobileMenuToggle.addEventListener('click', function () {
+                mobileMenuToggle.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+            });
+    
+            // Close menu when clicking a link
+            mobileNavItems.forEach(function (item) {
+                item.addEventListener('click', function () {
+                    mobileMenuToggle.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+    
+            // Close menu on escape key
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                    mobileMenuToggle.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+    
+            // Close menu when resizing to desktop
+            window.addEventListener('resize', function () {
+                if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
+                    mobileMenuToggle.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        })();
+    </script>
+    <style>
+        /* Standalone Stdlib Layout - matches docs.css */
+        .stdlib-layout {
+            display: flex;
+            min-height: calc(100vh - 80px);
+            padding-top: 80px;
+        }
+
+        .stdlib-sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            background: var(--bg-darker, #0d0d1a);
+            border-right: 1px solid var(--border, #333);
+            position: fixed;
+            top: 80px;
+            left: 0;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+            padding: 0;
+            z-index: 50;
+        }
+
+        .sidebar-header {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border-subtle, #333);
+        }
+
+        .back-link {
+            color: var(--accent-primary, #00d4ff);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .sidebar-search {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border-subtle, #333);
+        }
+
+        .sidebar-search input {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            border: 1px solid var(--border-subtle, #333);
+            border-radius: 6px;
+            background: var(--surface-elevated, #1a1a2e);
+            color: var(--text-primary, #fff);
+            font-size: 0.875rem;
+        }
+
+        .sidebar-search input:focus {
+            outline: none;
+            border-color: var(--accent-primary, #00d4ff);
+        }
+
+        #sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .sidebar-section {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-title {
+            padding: 0.5rem 1.25rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted, #888);
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.25rem;
+            color: var(--text-secondary, #ccc);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: all 0.15s ease;
+        }
+
+        .sidebar-link:hover {
+            background: var(--surface-hover, #252540);
+            color: var(--text-primary, #fff);
+        }
+
+        .sidebar-link.active {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent-primary, #00d4ff);
+            border-left: 2px solid var(--accent-primary, #00d4ff);
+        }
+
+        .sidebar-link .icon {
+            font-size: 1rem;
+        }
+
+        .sidebar-link .count {
+            margin-left: auto;
+            font-size: 0.75rem;
+            color: var(--text-muted, #888);
+            background: var(--surface-elevated, #1a1a2e);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+
+        .stdlib-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem 3rem;
+            max-width: 900px;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .stdlib-sidebar {
+                display: none;
+            }
+
+            .stdlib-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</body>
+
+</html>
