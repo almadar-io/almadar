@@ -318,15 +318,22 @@ body {
 
 .button--secondary {
     background: transparent;
-    border: 2px solid var(--almadar-midnight-light);
-    color: var(--almadar-parchment);
+    border: 2px solid #1e293b;
+    color: #1e293b;
 }
 
 [data-theme="dark"] .button--secondary {
     border-color: var(--almadar-midnight-light);
+    color: var(--almadar-parchment);
 }
 
 .button--secondary:hover {
+    background: #1e293b;
+    border-color: #1e293b;
+    color: #ffffff;
+}
+
+[data-theme="dark"] .button--secondary:hover {
     background: var(--almadar-midnight-light);
     border-color: var(--almadar-teal);
     color: var(--almadar-parchment);
