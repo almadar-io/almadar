@@ -6,6 +6,10 @@
     padding: 6rem 0;
     position: relative;
     overflow: hidden;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f8fafc 100%);
+}
+
+[data-theme="dark"] .heroBanner {
     background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #020617 100%);
 }
 
@@ -19,6 +23,21 @@
     background:
         radial-gradient(
             circle at 20% 80%,
+            rgba(20, 184, 166, 0.08) 0%,
+            transparent 40%
+        ),
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(6, 182, 212, 0.05) 0%,
+            transparent 40%
+        );
+    pointer-events: none;
+}
+
+[data-theme="dark"] .heroBanner::before {
+    background:
+        radial-gradient(
+            circle at 20% 80%,
             rgba(20, 184, 166, 0.12) 0%,
             transparent 40%
         ),
@@ -27,7 +46,6 @@
             rgba(6, 182, 212, 0.08) 0%,
             transparent 40%
         );
-    pointer-events: none;
 }
 
 .heroContainer {
@@ -55,6 +73,14 @@ html[dir="rtl"] .heroText {
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 1.5rem;
+    color: #1e293b;
+    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+[data-theme="dark"] .heroTitle {
     color: #f8fafc;
     background: linear-gradient(135deg, #f8fafc 0%, #94a3b8 100%);
     -webkit-background-clip: text;
@@ -65,9 +91,13 @@ html[dir="rtl"] .heroText {
 .heroSubtitle {
     font-size: 1.25rem;
     line-height: 1.7;
-    color: #94a3b8;
+    color: #475569;
     margin-bottom: 2.5rem;
     max-width: 540px;
+}
+
+[data-theme="dark"] .heroSubtitle {
+    color: #94a3b8;
 }
 
 .buttons {
@@ -91,6 +121,10 @@ html[dir="rtl"] .heroText {
 /* Features Section */
 .features {
     padding: 6rem 0;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+[data-theme="dark"] .features {
     background: linear-gradient(180deg, #0f172a 0%, #020617 100%);
 }
 
@@ -102,15 +136,23 @@ html[dir="rtl"] .heroText {
 .sectionTitle {
     font-size: 2.5rem;
     font-weight: 800;
-    color: #f8fafc;
+    color: #1e293b;
     margin-bottom: 1rem;
+}
+
+[data-theme="dark"] .sectionTitle {
+    color: #f8fafc;
 }
 
 .sectionSubtitle {
     font-size: 1.2rem;
-    color: #94a3b8;
+    color: #475569;
     max-width: 600px;
     margin: 0 auto;
+}
+
+[data-theme="dark"] .sectionSubtitle {
+    color: #94a3b8;
 }
 
 .featureGrid {
@@ -120,31 +162,48 @@ html[dir="rtl"] .heroText {
 }
 
 .featureCard {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid #1e293b;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
     border-radius: 24px;
     padding: 2rem;
     transition: all 0.3s ease;
 }
 
+[data-theme="dark"] .featureCard {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: #1e293b;
+}
+
 .featureCard:hover {
     border-color: #14b8a6;
     transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(20, 184, 166, 0.15);
+}
+
+[data-theme="dark"] .featureCard:hover {
     box-shadow: 0 12px 40px rgba(20, 184, 166, 0.1);
 }
 
 .featureCard h3 {
-    color: #f8fafc;
+    color: #1e293b;
     font-size: 1.2rem;
     margin-bottom: 0.75rem;
     font-weight: 600;
 }
 
+[data-theme="dark"] .featureCard h3 {
+    color: #f8fafc;
+}
+
 .featureCard p {
-    color: #94a3b8;
+    color: #475569;
     line-height: 1.6;
     margin: 0;
     font-size: 0.95rem;
+}
+
+[data-theme="dark"] .featureCard p {
+    color: #94a3b8;
 }
 
 .featureIcon {
@@ -156,6 +215,10 @@ html[dir="rtl"] .heroText {
 /* Philosophy Section */
 .philosophy {
     padding: 6rem 0;
+    background: #f8fafc;
+}
+
+[data-theme="dark"] .philosophy {
     background: #020617;
 }
 
@@ -169,15 +232,23 @@ html[dir="rtl"] .heroText {
 .philosophyText h2 {
     font-size: 2.25rem;
     font-weight: 800;
-    color: #f8fafc;
+    color: #1e293b;
     margin-bottom: 1.5rem;
 }
 
+[data-theme="dark"] .philosophyText h2 {
+    color: #f8fafc;
+}
+
 .philosophyText p {
-    color: #94a3b8;
+    color: #475569;
     font-size: 1.1rem;
     line-height: 1.7;
     margin-bottom: 2rem;
+}
+
+[data-theme="dark"] .philosophyText p {
+    color: #94a3b8;
 }
 
 .tag {
@@ -209,14 +280,23 @@ html[dir="rtl"] .heroText {
 }
 
 .philosophyFeature span {
+    color: #475569;
+}
+
+[data-theme="dark"] .philosophyFeature span {
     color: #94a3b8;
 }
 
 .codePreview {
-    background: #0f172a;
-    border: 1px solid #1e293b;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
     border-radius: 16px;
     overflow: hidden;
+}
+
+[data-theme="dark"] .codePreview {
+    background: #0f172a;
+    border-color: #1e293b;
 }
 
 .codeHeader {
@@ -224,8 +304,13 @@ html[dir="rtl"] .heroText {
     justify-content: space-between;
     align-items: center;
     padding: 0.75rem 1rem;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+[data-theme="dark"] .codeHeader {
     background: rgba(255, 255, 255, 0.03);
-    border-bottom: 1px solid #1e293b;
+    border-bottom-color: #1e293b;
 }
 
 .codeLang {
@@ -250,10 +335,14 @@ html[dir="rtl"] .heroText {
 .effectsLegend {
     padding: 1rem 1.25rem;
     background: rgba(20, 184, 166, 0.05);
-    border-top: 1px solid #1e293b;
+    border-top: 1px solid #e2e8f0;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+}
+
+[data-theme="dark"] .effectsLegend {
+    border-top-color: #1e293b;
 }
 
 .effectItem {
@@ -261,6 +350,10 @@ html[dir="rtl"] .heroText {
     align-items: center;
     gap: 0.5rem;
     font-size: 0.85rem;
+    color: #475569;
+}
+
+[data-theme="dark"] .effectItem {
     color: #94a3b8;
 }
 
@@ -281,6 +374,10 @@ html[dir="rtl"] .heroText {
 /* CTA Section */
 .cta {
     padding: 6rem 0;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+[data-theme="dark"] .cta {
     background: linear-gradient(180deg, #020617 0%, #0f172a 100%);
 }
 
@@ -290,7 +387,7 @@ html[dir="rtl"] .heroText {
         rgba(20, 184, 166, 0.08) 0%,
         rgba(6, 182, 212, 0.04) 100%
     );
-    border: 1px solid rgba(20, 184, 166, 0.2);
+    border: 1px solid rgba(20, 184, 166, 0.3);
     border-radius: 24px;
     padding: 4rem;
     text-align: center;
@@ -298,26 +395,43 @@ html[dir="rtl"] .heroText {
     margin: 0 auto;
 }
 
+[data-theme="dark"] .ctaCard {
+    border-color: rgba(20, 184, 166, 0.2);
+}
+
 .ctaCard h2 {
     font-size: 2.5rem;
     font-weight: 800;
-    color: #f8fafc;
+    color: #1e293b;
     margin-bottom: 1rem;
 }
 
+[data-theme="dark"] .ctaCard h2 {
+    color: #f8fafc;
+}
+
 .ctaCard p {
-    color: #94a3b8;
+    color: #475569;
     font-size: 1.2rem;
     margin-bottom: 2rem;
 }
 
+[data-theme="dark"] .ctaCard p {
+    color: #94a3b8;
+}
+
 .ctaCode {
-    background: #0f172a;
-    border: 1px solid #1e293b;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
     border-radius: 12px;
     padding: 1rem 2rem;
     display: inline-block;
     margin-bottom: 2rem;
+}
+
+[data-theme="dark"] .ctaCode {
+    background: #0f172a;
+    border-color: #1e293b;
 }
 
 .ctaCode code {
