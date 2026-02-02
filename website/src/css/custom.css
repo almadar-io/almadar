@@ -532,14 +532,36 @@ article,
     font-family: var(--ifm-font-family-base);
 }
 
-[data-theme="dark"] .blog-wrapper {
-    background: var(--almadar-midnight);
-}
-
+/* Light mode blog styles */
 .blog-post-page h1,
 .blog-post-page h2,
 .blog-post-page h3 {
     font-family: var(--ifm-heading-font-family);
+    color: var(--ifm-heading-color);
+}
+
+article h1,
+article h2,
+article h3 {
+    color: var(--ifm-heading-color);
+}
+
+.avatar__name {
+    color: var(--ifm-font-color-base);
+}
+
+.avatar__subtitle {
+    color: var(--ifm-color-secondary-darkest);
+}
+
+/* Dark mode blog overrides */
+[data-theme="dark"] .blog-wrapper {
+    background: var(--almadar-midnight);
+}
+
+[data-theme="dark"] .blog-post-page h1,
+[data-theme="dark"] .blog-post-page h2,
+[data-theme="dark"] .blog-post-page h3 {
     color: var(--almadar-parchment);
 }
 
@@ -561,10 +583,10 @@ article,
     color: var(--almadar-parchment-muted);
 }
 
-/* Blog cards */
+/* Blog cards - Light mode */
 article.margin-bottom--xl {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--almadar-midnight-light);
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
     border-radius: var(--radius-xl);
     padding: 2rem;
     margin-bottom: 2rem !important;
@@ -574,25 +596,40 @@ article.margin-bottom--xl {
 article.margin-bottom--xl:hover {
     border-color: var(--almadar-teal);
     transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(20, 184, 166, 0.15);
+}
+
+/* Blog cards - Dark mode */
+[data-theme="dark"] article.margin-bottom--xl {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: var(--almadar-midnight-light);
+}
+
+[data-theme="dark"] article.margin-bottom--xl:hover {
     box-shadow: 0 8px 30px rgba(20, 184, 166, 0.1);
 }
 
-[data-theme="dark"] article.margin-bottom--xl {
-    background: rgba(255, 255, 255, 0.02);
-}
-
-/* Blog post title */
+/* Blog post title - Light mode */
 article.margin-bottom--xl header h2 {
     margin-top: 0;
 }
 
 article.margin-bottom--xl header h2 a {
-    color: var(--almadar-parchment);
+    color: #1e293b;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 article.margin-bottom--xl header h2 a:hover {
+    color: var(--almadar-teal);
+}
+
+/* Blog post title - Dark mode */
+[data-theme="dark"] article.margin-bottom--xl header h2 a {
+    color: var(--almadar-parchment);
+}
+
+[data-theme="dark"] article.margin-bottom--xl header h2 a:hover {
     color: var(--almadar-teal-light);
 }
 
