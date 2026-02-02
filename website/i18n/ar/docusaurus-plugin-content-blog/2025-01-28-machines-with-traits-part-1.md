@@ -1,3 +1,10 @@
+---
+slug: machines-with-traits-part-1
+title: "الآلات بسمات: كيف سيغير المدار مستقبل الروبوتات"
+authors: [almadar]
+tags: [robotics, vision, automation, state-machines]
+---
+
 # الآلات بسمات: كيف سيغير المدار مستقبل الروبوتات
 
 > **رؤية لمستقبل الأتمتة في العالم العربي**
@@ -11,6 +18,8 @@
 هذا هو عالم **المدار** (Almadar).
 
 في هذه السلسلة، سنستكشف كيف يمكن للغة المدار أن تُحدث ثورة في مجال الروبوتات والأتمتة الصناعية، وكيف يمكن للعالم العربي أن يقود هذا التحول.
+
+<!-- truncate -->
 
 ---
 
@@ -218,8 +227,8 @@ class RobotArm:
 
 ### للمطورين
 
-1. **حمّل المُصرّف** — `npm install -g @almadar/almadar-cli`
-2. **اقرأ التوثيق** — [دليل البداية](../../getting-started/introduction.md)
+1. **حمّل المُصرّف** — `npm install -g @almadar/cli`
+2. **اقرأ التوثيق** — [دليل البداية](/ar/docs/getting-started/introduction)
 3. **جرّب المثال** — ابنِ أول سمة روبوتية
 
 ### للشركات
@@ -251,15 +260,9 @@ class RobotArm:
 
 ## في الجزء القادم
 
-[الجزء الثاني: بناء متحكم روبوت صناعي](part-2-robotics.md) — سنبني معاً ذراعاً روبوتية كاملة بلغة المدار، خطوة بخطوة.
+[الجزء الثاني: بناء متحكم روبوت صناعي](/ar/blog/machines-with-traits-part-2) — سنبني معاً ذراعاً روبوتية كاملة بلغة المدار، خطوة بخطوة.
 
 ---
 
 *كُتب بواسطة فريق المدار*  
-*يناير ٢٠٢٦*
-
----
-
-**شارك هذا المقال:**
-
-[Twitter](https://twitter.com/intent/tweet?text=الآلات%20بسمات%20-%20مستقبل%20الروبوتات%20بلغة%20المدار&url=https://orbital.almadar.io/ar/blogs/machines-with-traits/part-1-vision) | [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https://orbital.almadar.io/ar/blogs/machines-with-traits/part-1-vision)
+*يناير ٢٠٢٥*
