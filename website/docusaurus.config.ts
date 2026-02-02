@@ -92,8 +92,18 @@ const config: Config = {
           position: "left",
         },
         {
+          href: "https://discord.gg/YtWJCpnk",
+          label: "Discord",
+          position: "right",
+        },
+        {
           href: "https://github.com/almadar-io/almadar",
           label: "GitHub",
+          position: "right",
+        },
+        {
+          href: "https://x.com/almadarLang",
+          label: "X",
           position: "right",
         },
         {
@@ -122,16 +132,20 @@ const config: Config = {
           title: "Community",
           items: [
             {
-              label: "GitHub Discussions",
-              href: "https://github.com/almadar-io/almadar/discussions",
+              label: "Discord",
+              href: "https://discord.gg/YtWJCpnk",
             },
             {
-              label: "Discord",
-              href: "https://discord.gg/almadar",
+              label: "GitHub",
+              href: "https://github.com/almadar-io/almadar",
+            },
+            {
+              label: "X (Twitter)",
+              href: "https://x.com/almadarLang",
             },
             {
               label: "LinkedIn",
-              href: "https://linkedin.com/company/almadar-io",
+              href: "https://www.linkedin.com/company/almadar-io",
             },
           ],
         },
