@@ -132,7 +132,6 @@ almadar dev
 ## Community
 
 - [Discord](https://discord.gg/almadar)
-- [Twitter](https://twitter.com/AlmadarLang)
 - [GitHub Discussions](https://github.com/almadar-io/almadar/discussions)
 
 ## Contributing
