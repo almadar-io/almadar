@@ -13,6 +13,7 @@ on:
 
 jobs:
   # Package pre-built binaries from cli/dist/
+  # Binaries are built locally and synced via almadar-sync script
   package:
     name: Package ${{ matrix.name }}
     runs-on: ubuntu-latest
@@ -45,7 +46,7 @@ jobs:
             echo "exists=false" >> $GITHUB_OUTPUT
             echo "Binary not found: $BINARY_PATH"
             echo "Available binaries:"
-            ls -la cli/dist/ || echo "No dist directory"
+            ls -la cli/dist/ 2>/dev/null || echo "No dist directory"
           fi
 
       - name: Package binary (Unix)
@@ -103,17 +104,6 @@ jobs:
           find artifacts -type f \( -name "*.tar.gz" -o -name "*.zip" \) -exec cp {} release/ \; 2>/dev/null || true
           echo "Release assets:"
           ls -la release/ || echo "No release assets found"
-
-      - name: Check for assets
-        id: assets
-        run: |
-          if [ -z "$(ls -A release/ 2>/dev/null)" ]; then
-            echo "has_assets=false" >> $GITHUB_OUTPUT
-            echo "WARNING: No binary assets found. Release will be created without downloadable binaries."
-            echo "To add binaries, run the almadar-sync script with cross-compiled binaries."
-          else
-            echo "has_assets=true" >> $GITHUB_OUTPUT
-          fi
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
@@ -173,7 +163,6 @@ jobs:
     name: Publish to npm
     needs: release
     runs-on: ubuntu-latest
-    # Only run if NPM_TOKEN is configured
     if: ${{ vars.PUBLISH_NPM == 'true' }}
     steps:
       - uses: actions/checkout@v4
@@ -191,7 +180,6 @@ jobs:
           else
             VERSION="${GITHUB_REF#refs/tags/}"
           fi
-          # Remove 'v' prefix for npm version
           echo "version=${VERSION#v}" >> $GITHUB_OUTPUT
 
       - name: Download all artifacts
@@ -199,11 +187,12 @@ jobs:
         with:
           path: artifacts
 
-      - name: Prepare npm packages
+      - name: Prepare and publish npm packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           VERSION=${{ steps.version.outputs.version }}
 
-          # Platform packages
           declare -A PLATFORMS=(
             ["linux-x64"]="linux x64"
             ["linux-arm64"]="linux arm64"
@@ -217,85 +206,50 @@ jobs:
           for platform in "${!PLATFORMS[@]}"; do
             read os cpu <<< "${PLATFORMS[$platform]}"
 
-            # Check if artifact exists
             ARTIFACT_DIR="artifacts/almadar-${platform}"
             if [ ! -d "$ARTIFACT_DIR" ]; then
-              echo "Skipping $platform - no artifact found"
+              echo "Skipping $platform - no artifact"
               continue
             fi
 
             mkdir -p "npm-packages/@almadar/cli-${platform}"
             cd "npm-packages/@almadar/cli-${platform}"
 
-            # Extract binary
             if [[ "$platform" == windows* ]]; then
               unzip "../../${ARTIFACT_DIR}/almadar-${platform}.zip" || true
-              EXT=".exe"
             else
               tar -xzf "../../${ARTIFACT_DIR}/almadar-${platform}.tar.gz" || true
-              EXT=""
             fi
 
-            # Create package.json
             cat > package.json << EOF
           {
             "name": "@almadar/cli-${platform}",
             "version": "${VERSION}",
             "description": "Almadar CLI binary for ${platform}",
             "license": "MIT",
-            "repository": {
-              "type": "git",
-              "url": "https://github.com/almadar-io/almadar.git"
-            },
+            "repository": { "type": "git", "url": "https://github.com/almadar-io/almadar.git" },
             "os": ["${os}"],
             "cpu": ["${cpu}"]
           }
           EOF
 
+            npm publish --access public || echo "Failed to publish @almadar/cli-${platform}"
             cd ../..
           done
 
-          # Main package (only if cli/npm exists)
+          # Main package
           if [ -d "cli/npm" ]; then
             mkdir -p "npm-packages/@almadar/cli"
             cp -r cli/npm/* "npm-packages/@almadar/cli/"
             cd "npm-packages/@almadar/cli"
-
-            # Update version in package.json
-            if command -v jq &> /dev/null; then
-              jq --arg v "$VERSION" '.version = $v | .optionalDependencies |= with_entries(.value = $v)' package.json > tmp.json
-              mv tmp.json package.json
-            fi
-
-            cd ../..
-          fi
-
-      - name: Publish platform packages
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          for dir in npm-packages/@almadar/cli-*; do
-            if [ -d "$dir" ]; then
-              cd "$dir"
-              npm publish --access public || echo "Failed to publish $dir"
-              cd - > /dev/null
-            fi
-          done
-
-      - name: Publish main package
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          if [ -d "npm-packages/@almadar/cli" ]; then
-            cd npm-packages/@almadar/cli
-            npm publish --access public || echo "Failed to publish main package"
+            jq --arg v "$VERSION" '.version = $v | .optionalDependencies |= with_entries(.value = $v)' package.json > tmp.json && mv tmp.json package.json
+            npm publish --access public || echo "Failed to publish @almadar/cli"
           fi
 
   update-homebrew:
     name: Update Homebrew Tap
     needs: release
     runs-on: ubuntu-latest
-    # Only run if HOMEBREW_TAP_TOKEN is configured
     if: ${{ vars.PUBLISH_HOMEBREW == 'true' }}
     steps:
       - uses: actions/checkout@v4
@@ -309,63 +263,54 @@ jobs:
             echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
           fi
 
-      - name: Download release assets and compute SHA256
+      - name: Download and compute SHA256
         id: sha
         run: |
           VERSION=${{ steps.version.outputs.version }}
           BASE_URL="https://github.com/almadar-io/almadar/releases/download/${VERSION}"
 
-          # Download and compute SHA256 for each platform
           for platform in darwin-x64 darwin-arm64 linux-x64 linux-arm64; do
             if curl -fsSL "${BASE_URL}/almadar-${platform}.tar.gz" -o "almadar-${platform}.tar.gz" 2>/dev/null; then
               SHA=$(sha256sum "almadar-${platform}.tar.gz" | cut -d' ' -f1)
               echo "${platform}=${SHA}" >> $GITHUB_OUTPUT
-              echo "SHA256 for ${platform}: ${SHA}"
             else
-              echo "Could not download ${platform}"
               echo "${platform}=MISSING" >> $GITHUB_OUTPUT
             fi
           done
 
-      - name: Clone Homebrew tap
-        run: |
-          git clone https://x-access-token:${{ secrets.HOMEBREW_TAP_TOKEN }}@github.com/almadar-io/homebrew-tap.git tap || echo "Could not clone homebrew-tap"
-
-      - name: Update formula
-        if: ${{ hashFiles('tap/Formula') != '' }}
+      - name: Update Homebrew formula
         run: |
           VERSION=${{ steps.version.outputs.version }}
-          VERSION_NUM=${VERSION#v}  # Remove 'v' prefix
+          VERSION_NUM=${VERSION#v}
 
-          cat > tap/Formula/almadar.rb << 'EOF'
-          # Homebrew formula for Almadar CLI
-          # Auto-generated by release workflow
+          git clone https://x-access-token:${{ secrets.HOMEBREW_TAP_TOKEN }}@github.com/almadar-io/homebrew-tap.git tap || exit 0
 
+          cat > tap/Formula/almadar.rb << EOF
           class Almadar < Formula
             desc "Compile Almadar schemas to full-stack applications"
             homepage "https://almadar.io"
-            version "VERSION_PLACEHOLDER"
+            version "${VERSION_NUM}"
             license "MIT"
 
             on_macos do
               on_intel do
-                url "https://github.com/almadar-io/almadar/releases/download/vVERSION_PLACEHOLDER/almadar-darwin-x64.tar.gz"
-                sha256 "SHA_DARWIN_X64"
+                url "https://github.com/almadar-io/almadar/releases/download/${VERSION}/almadar-darwin-x64.tar.gz"
+                sha256 "${{ steps.sha.outputs.darwin-x64 }}"
               end
               on_arm do
-                url "https://github.com/almadar-io/almadar/releases/download/vVERSION_PLACEHOLDER/almadar-darwin-arm64.tar.gz"
-                sha256 "SHA_DARWIN_ARM64"
+                url "https://github.com/almadar-io/almadar/releases/download/${VERSION}/almadar-darwin-arm64.tar.gz"
+                sha256 "${{ steps.sha.outputs.darwin-arm64 }}"
               end
             end
 
             on_linux do
               on_intel do
-                url "https://github.com/almadar-io/almadar/releases/download/vVERSION_PLACEHOLDER/almadar-linux-x64.tar.gz"
-                sha256 "SHA_LINUX_X64"
+                url "https://github.com/almadar-io/almadar/releases/download/${VERSION}/almadar-linux-x64.tar.gz"
+                sha256 "${{ steps.sha.outputs.linux-x64 }}"
               end
               on_arm do
-                url "https://github.com/almadar-io/almadar/releases/download/vVERSION_PLACEHOLDER/almadar-linux-arm64.tar.gz"
-                sha256 "SHA_LINUX_ARM64"
+                url "https://github.com/almadar-io/almadar/releases/download/${VERSION}/almadar-linux-arm64.tar.gz"
+                sha256 "${{ steps.sha.outputs.linux-arm64 }}"
               end
             end
 
@@ -379,21 +324,9 @@ jobs:
           end
           EOF
 
-          # Replace placeholders
-          sed -i "s/VERSION_PLACEHOLDER/${VERSION_NUM}/g" tap/Formula/almadar.rb
-          sed -i "s/SHA_DARWIN_X64/${{ steps.sha.outputs.darwin-x64 }}/g" tap/Formula/almadar.rb
-          sed -i "s/SHA_DARWIN_ARM64/${{ steps.sha.outputs.darwin-arm64 }}/g" tap/Formula/almadar.rb
-          sed -i "s/SHA_LINUX_X64/${{ steps.sha.outputs.linux-x64 }}/g" tap/Formula/almadar.rb
-          sed -i "s/SHA_LINUX_ARM64/${{ steps.sha.outputs.linux-arm64 }}/g" tap/Formula/almadar.rb
-
-          cat tap/Formula/almadar.rb
-
-      - name: Commit and push
-        if: ${{ hashFiles('tap/Formula') != '' }}
-        run: |
           cd tap
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add Formula/almadar.rb
-          git diff --staged --quiet || git commit -m "Update almadar to ${{ steps.version.outputs.version }}"
-          git push || echo "Could not push to homebrew-tap"
+          git diff --staged --quiet || git commit -m "Update almadar to ${VERSION}"
+          git push || echo "Could not push"
