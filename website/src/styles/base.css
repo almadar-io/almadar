@@ -1,7 +1,8 @@
 /**
- * Base Styles
- * 
+ * Base Styles - Modern Heritage Theme
+ *
  * Reset, typography, and foundational layout styles.
+ * Adapted for light mode with heritage accents.
  */
 
 * {
@@ -13,7 +14,7 @@
 
 body {
     font-family: var(--font-family);
-    background-color: var(--bg-dark);
+    background-color: var(--bg-primary);
     color: var(--text-main);
     overflow-x: hidden;
     line-height: 1.6;
@@ -25,7 +26,10 @@ body {
     padding: 0 2rem;
 }
 
-/* Typography */
+/* ===========================
+   Typography
+   =========================== */
+
 h1,
 h2,
 h3,
@@ -34,6 +38,7 @@ h5,
 h6 {
     line-height: 1.2;
     font-weight: 700;
+    color: var(--text-main);
 }
 
 h1 {
@@ -53,11 +58,19 @@ p {
 }
 
 a {
-    color: inherit;
+    color: var(--text-accent);
     text-decoration: none;
+    transition: color var(--transition-fast);
 }
 
-/* Gradient Text */
+a:hover {
+    color: var(--color-primary-hover);
+}
+
+/* ===========================
+   Gradient Text
+   =========================== */
+
 .gradient-text {
     background: var(--brand-gradient);
     -webkit-background-clip: text;
@@ -65,13 +78,167 @@ a {
     background-clip: text;
 }
 
-/* Highlight */
+/* ===========================
+   Heritage Accents
+   =========================== */
+
 .highlight {
     color: var(--teal);
     font-weight: bold;
 }
 
-/* Section Spacing */
+.gold-accent {
+    color: var(--sand-gold);
+}
+
+/* Heritage gold line - subtle accent */
+.heritage-line {
+    height: 1px;
+    background: var(--heritage-gradient);
+    width: 100%;
+    max-width: 200px;
+}
+
+/* Heritage line below headings */
+.heritage-underline::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--sand-gold);
+    margin-top: 1rem;
+}
+
+/* ===========================
+   Section Spacing
+   =========================== */
+
 section {
     padding: var(--section-padding) 0;
+}
+
+/* ===========================
+   Cards & Surfaces
+   =========================== */
+
+.card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+/* ===========================
+   Dark Sections
+   =========================== */
+
+.dark-section {
+    background-color: var(--midnight);
+    color: var(--text-light);
+}
+
+.dark-section h1,
+.dark-section h2,
+.dark-section h3,
+.dark-section h4,
+.dark-section h5,
+.dark-section h6 {
+    color: var(--text-light);
+}
+
+.dark-section p {
+    color: #94a3b8;
+}
+
+.dark-section a {
+    color: var(--teal);
+}
+
+/* ===========================
+   Geometric Patterns (Digital Mashrabiya)
+   =========================== */
+
+.pattern-grid {
+    background-image: var(--pattern-grid);
+    background-repeat: repeat;
+}
+
+.pattern-mashrabiya {
+    background-image: var(--pattern-mashrabiya);
+    background-repeat: repeat;
+}
+
+/* Decorative geometric corner */
+.geometric-corner {
+    position: relative;
+}
+
+.geometric-corner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 120px;
+    background-image: var(--pattern-mashrabiya);
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* ===========================
+   Buttons - Modern Heritage Style
+   =========================== */
+
+.btn-primary {
+    background: var(--brand-gradient);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-main);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.btn-secondary:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+}
+
+/* Gold accent button for heritage CTAs */
+.btn-gold {
+    background: var(--sand-gold);
+    color: var(--midnight);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity var(--transition-fast);
+}
+
+.btn-gold:hover {
+    opacity: 0.9;
 }

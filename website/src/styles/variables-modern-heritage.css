@@ -1,0 +1,103 @@
+/**
+ * Almadar "Modern Heritage" Design Tokens
+ *
+ * A Global Tech Brand Strategy that honors heritage subtly.
+ * Concept: "Digital Mashrabiya" - geometric grids echoing modern Saudi architecture
+ * (KAFD district), rendered in flat, clean tech lines.
+ *
+ * Palette:
+ * - Background: White/Parchment (#f8fafc)
+ * - Lines: Teal (#14b8a6)
+ * - Solids: Midnight Blue (#0f172a)
+ * - Accent: Sand Gold (#c9a227)
+ *
+ * To revert to dark theme: swap this file with variables-dark.css
+ */
+
+:root {
+    /* === Modern Heritage Palette === */
+
+    /* Primary Brand Colors */
+    --teal: #14b8a6;
+    --cyan: #06b6d4;
+    --midnight: #0f172a;
+    --sand-gold: #c9a227;
+
+    /* Brand Gradient - subtle teal to cyan */
+    --brand-gradient: linear-gradient(135deg, var(--teal) 0%, var(--cyan) 100%);
+
+    /* Heritage Accent Gradient - gold line effect */
+    --heritage-gradient: linear-gradient(90deg, transparent 0%, var(--sand-gold) 50%, transparent 100%);
+
+    /* === Light Mode (Primary) === */
+
+    /* Background Colors */
+    --bg-primary: #f8fafc;        /* White/Parchment - main background */
+    --bg-secondary: #ffffff;       /* Pure white - cards, elevated surfaces */
+    --bg-tertiary: #f1f5f9;       /* Subtle gray - subtle contrast */
+    --bg-dark: var(--midnight);    /* Midnight blue - dark sections, footer */
+    --bg-darker: #020617;          /* Deep midnight - hover states on dark */
+
+    /* Text Colors */
+    --text-main: var(--midnight);  /* Midnight blue on light backgrounds */
+    --text-muted: #64748b;         /* Slate gray for secondary text */
+    --text-light: #f8fafc;         /* Light text on dark backgrounds */
+    --text-accent: var(--teal);    /* Teal for links and accents */
+
+    /* Border Colors */
+    --border: #e2e8f0;             /* Light border for cards */
+    --border-subtle: #f1f5f9;      /* Very subtle dividers */
+    --border-accent: var(--teal);  /* Teal accent borders */
+    --border-gold: var(--sand-gold); /* Heritage gold accent line */
+
+    /* === Semantic Colors === */
+    --color-primary: var(--teal);
+    --color-primary-hover: #0d9488;
+    --color-accent: var(--sand-gold);
+    --color-accent-subtle: rgba(201, 162, 39, 0.1);
+
+    /* === Spacing === */
+    --container-max-width: 1200px;
+    --section-padding: 6rem;
+    --section-padding-sm: 4rem;
+
+    /* === Typography === */
+    --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+    /* === Border Radius === */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+
+    /* === Shadows (light mode appropriate) === */
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+    --shadow-md: 0 4px 6px rgba(15, 23, 42, 0.07);
+    --shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.1);
+    --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.1), 0 1px 2px rgba(15, 23, 42, 0.06);
+
+    /* === Transitions === */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.25s ease;
+    --transition-slow: 0.4s ease;
+
+    /* === Geometric Pattern (Digital Mashrabiya) === */
+    --pattern-grid: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0v60M0 30h60' stroke='%2314b8a6' stroke-width='0.5' fill='none' opacity='0.1'/%3E%3C/svg%3E");
+    --pattern-mashrabiya: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L40 20L20 40L0 20Z' stroke='%2314b8a6' stroke-width='0.5' fill='none' opacity='0.08'/%3E%3C/svg%3E");
+}
+
+/* === Dark Section Overrides === */
+.dark-section,
+[data-theme="dark"] {
+    --bg-primary: var(--midnight);
+    --bg-secondary: #1e293b;
+    --bg-tertiary: #334155;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border: #334155;
+    --border-subtle: #1e293b;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
