@@ -2,8 +2,6 @@
 node_modules/
 
 # Build outputs
-dist/
-!cli/dist/
 build/
 .docusaurus/
 .firebase/
@@ -26,3 +24,5 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+
+website/dist/
