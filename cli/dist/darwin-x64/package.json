@@ -1,0 +1,9 @@
+{
+  "name": "@almadar/cli-darwin-x64",
+  "version": "0.3.0",
+  "description": "Almadar CLI binary for darwin-x64",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/almadar-io/almadar.git" },
+  "os": ["darwin"],
+  "cpu": ["x64"]
+}
