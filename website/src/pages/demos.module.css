@@ -1,0 +1,55 @@
+.main {
+    padding: 4rem 0;
+    min-height: 80vh;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.header h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--almadar-midnight);
+}
+
+[data-theme='dark'] .header h1 {
+    color: var(--ifm-color-primary-light);
+}
+
+.header p {
+    font-size: 1.25rem;
+    color: var(--ifm-color-content-secondary);
+}
+
+.demoWrapper {
+    margin-bottom: 6rem;
+}
+
+.demoMeta {
+    margin-bottom: 1.5rem;
+}
+
+.demoMeta h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.demoMeta p {
+    font-size: 1.1rem;
+    max-width: 800px;
+    color: var(--ifm-color-content-secondary);
+}
+
+.badge {
+    display: inline-block;
+    background-color: var(--ifm-color-emphasis-200);
+    color: var(--ifm-color-emphasis-700);
+    font-weight: bold;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}

@@ -5,10 +5,11 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "start": "docusaurus start",
-    "build": "npm run build:legacy && docusaurus build",
+    "start": "npm run copy-storybook && docusaurus start",
+    "build": "npm run copy-storybook && npm run build:legacy && docusaurus build",
     "build:docusaurus": "docusaurus build",
     "build:legacy": "node scripts/build.js",
+    "copy-storybook": "mkdir -p static/storybook && cp -r ../../orbital-shared/design-system/storybook-static/* static/storybook/",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
