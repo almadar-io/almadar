@@ -1,58 +1,78 @@
 /**
- * Almadar Brand Theme for Docusaurus
+ * Almadar "Modern Heritage" Theme for Docusaurus
  *
- * Theme: Arabic manuscript meets sci-fi
- * Colors: Sand Gold, Midnight Blue, Cosmic Teal
+ * A Global Tech Brand Strategy that honors heritage subtly.
+ * Concept: "Digital Mashrabiya" - geometric grids echoing modern Saudi architecture
+ * (KAFD district), rendered in flat, clean tech lines.
+ *
+ * Palette:
+ * - Background: White/Parchment (#f8fafc)
+ * - Lines/Primary: Teal (#14b8a6)
+ * - Solids/Text: Midnight Blue (#0f172a)
+ * - Heritage Accent: Sand Gold (#c9a227)
+ *
+ * To revert to dark theme: replace this file with custom-dark.css
  */
 
 /* === Google Fonts === */
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
 
-/* === Brand Colors === */
+/* === Modern Heritage Brand Colors === */
 :root {
-    /* Sand Gold - Primary accent */
-    --almadar-sand-gold: #c9a227;
-    --almadar-sand-gold-light: #e8c547;
-    --almadar-sand-gold-dark: #8b6914;
-
-    /* Midnight Blue - Background */
-    --almadar-midnight: #0f172a;
-    --almadar-midnight-light: #1e293b;
-    --almadar-midnight-dark: #020617;
-
-    /* Cosmic Teal - Interactive */
+    /* Primary Brand Colors */
     --almadar-teal: #14b8a6;
     --almadar-teal-light: #2dd4bf;
+    --almadar-teal-dark: #0d9488;
     --almadar-cyan: #06b6d4;
 
-    /* Parchment - Light text */
+    /* Heritage Accent - Sand Gold */
+    --almadar-sand-gold: #c9a227;
+    --almadar-sand-gold-light: #e8c547;
+    --almadar-sand-gold-dark: #a88620;
+
+    /* Text Colors - Midnight Blue family */
+    --almadar-midnight: #0f172a;
+    --almadar-midnight-light: #1e293b;
+    --almadar-slate: #334155;
+    --almadar-slate-muted: #64748b;
+
+    /* Background - Parchment family */
     --almadar-parchment: #f8fafc;
-    --almadar-parchment-muted: #94a3b8;
+    --almadar-parchment-warm: #f1f5f9;
+    --almadar-white: #ffffff;
 
-    /* Brand Gradient */
-    --almadar-gradient: linear-gradient(
-        135deg,
-        var(--almadar-teal) 0%,
-        var(--almadar-cyan) 100%
-    );
-    --almadar-gradient-gold: linear-gradient(
-        135deg,
-        var(--almadar-sand-gold) 0%,
-        var(--almadar-sand-gold-light) 100%
-    );
+    /* Brand Gradients */
+    --almadar-gradient: linear-gradient(135deg, var(--almadar-teal) 0%, var(--almadar-cyan) 100%);
+    --almadar-gradient-gold: linear-gradient(90deg, transparent 0%, var(--almadar-sand-gold) 50%, transparent 100%);
 
-    /* Docusaurus theme variables - Light mode */
+    /* Docusaurus theme variables - Light mode (PRIMARY) */
     --ifm-color-primary: #14b8a6;
     --ifm-color-primary-dark: #129a8c;
-    --ifm-color-primary-darker: #118f82;
+    --ifm-color-primary-darker: #0d9488;
     --ifm-color-primary-darkest: #0d756b;
-    --ifm-color-primary-light: #16d6c0;
-    --ifm-color-primary-lighter: #17e1ca;
-    --ifm-color-primary-lightest: #2dd4bf;
+    --ifm-color-primary-light: #2dd4bf;
+    --ifm-color-primary-lighter: #5eead4;
+    --ifm-color-primary-lightest: #99f6e4;
+
+    /* Light mode backgrounds */
+    --ifm-background-color: var(--almadar-parchment);
+    --ifm-background-surface-color: var(--almadar-white);
+    --ifm-navbar-background-color: rgba(248, 250, 252, 0.9);
+    --ifm-footer-background-color: var(--almadar-midnight);
+
+    /* Light mode text */
+    --ifm-font-color-base: var(--almadar-midnight);
+    --ifm-heading-color: var(--almadar-midnight);
 
     --ifm-link-color: var(--almadar-teal);
+    --ifm-link-hover-color: var(--almadar-teal-dark);
+
     --ifm-code-font-size: 95%;
     --docusaurus-highlighted-code-line-bg: rgba(20, 184, 166, 0.1);
+
+    /* Borders */
+    --ifm-toc-border-color: #e2e8f0;
+    --ifm-hr-border-color: #e2e8f0;
 
     /* Spacing */
     --section-padding: 5rem;
@@ -63,16 +83,25 @@
     --radius-lg: 16px;
     --radius-xl: 24px;
 
+    /* Shadows - Light mode appropriate */
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+    --shadow-md: 0 4px 6px rgba(15, 23, 42, 0.07);
+    --shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.1);
+    --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.1), 0 1px 2px rgba(15, 23, 42, 0.06);
+
     /* Transitions */
-    --transition-fast: 0.2s ease;
-    --transition-normal: 0.3s ease;
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.25s ease;
+
+    /* Geometric Pattern (Digital Mashrabiya) */
+    --pattern-mashrabiya: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L40 20L20 40L0 20Z' stroke='%2314b8a6' stroke-width='0.5' fill='none' opacity='0.08'/%3E%3C/svg%3E");
 }
 
-/* Dark mode */
+/* Dark mode - Secondary */
 [data-theme="dark"] {
     --ifm-color-primary: #2dd4bf;
     --ifm-color-primary-dark: #14b8a6;
-    --ifm-color-primary-darker: #129a8c;
+    --ifm-color-primary-darker: #0d9488;
     --ifm-color-primary-darkest: #0d756b;
     --ifm-color-primary-light: #5eead4;
     --ifm-color-primary-lighter: #99f6e4;
@@ -80,8 +109,8 @@
 
     --ifm-background-color: var(--almadar-midnight);
     --ifm-background-surface-color: var(--almadar-midnight-light);
-    --ifm-navbar-background-color: rgba(2, 6, 23, 0.8);
-    --ifm-footer-background-color: var(--almadar-midnight-dark);
+    --ifm-navbar-background-color: rgba(2, 6, 23, 0.9);
+    --ifm-footer-background-color: #020617;
 
     --ifm-font-color-base: var(--almadar-parchment);
     --ifm-heading-color: var(--almadar-parchment);
@@ -89,16 +118,16 @@
     --ifm-link-color: var(--almadar-teal-light);
     --ifm-link-hover-color: var(--almadar-sand-gold);
 
+    --ifm-toc-border-color: #334155;
+    --ifm-hr-border-color: #334155;
+
     --docusaurus-highlighted-code-line-bg: rgba(20, 184, 166, 0.2);
 }
 
 /* === Typography === */
 :root {
-    --ifm-font-family-base:
-        "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Roboto, sans-serif;
-    --ifm-font-family-monospace:
-        "IBM Plex Mono", "Fira Code", SFMono-Regular, Menlo, Monaco, monospace;
+    --ifm-font-family-base: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --ifm-font-family-monospace: "IBM Plex Mono", "Fira Code", SFMono-Regular, Menlo, Monaco, monospace;
     --ifm-heading-font-family: "Plus Jakarta Sans", var(--ifm-font-family-base);
     --ifm-heading-font-weight: 700;
 }
@@ -120,7 +149,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Gradient Text Utility */
+/* === Utility Classes === */
 .gradient-text {
     background: var(--almadar-gradient);
     -webkit-background-clip: text;
@@ -135,42 +164,65 @@ body {
     background-clip: text;
 }
 
-/* === Navbar === */
+/* Heritage gold accent line */
+.heritage-line {
+    height: 2px;
+    background: var(--almadar-sand-gold);
+    width: 60px;
+}
+
+.heritage-underline::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--almadar-sand-gold);
+    margin-top: 1rem;
+}
+
+/* === Navbar - Light Mode Primary === */
 .navbar {
-    box-shadow: none;
-    border-bottom: 1px solid var(--almadar-midnight-light);
-}
-
-/* Apply backdrop-filter only on desktop - it breaks mobile sidebar when applied to navbar */
-/* See: https://github.com/facebook/docusaurus/issues/6996 */
-@media (min-width: 997px) {
-    .navbar {
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-    }
-}
-
-/* Fix: Ensure navbar stays above announcement bar on mobile */
-.navbar--fixed-top {
-    z-index: calc(var(--ifm-z-index-fixed) + 1);
+    box-shadow: var(--shadow-sm);
+    border-bottom: 1px solid #e2e8f0;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 [data-theme="dark"] .navbar {
-    background: rgba(2, 6, 23, 0.85);
+    border-bottom-color: var(--almadar-midnight-light);
+    box-shadow: none;
 }
 
 .navbar__title {
     font-weight: 700;
     letter-spacing: 0.5px;
     font-size: 1.25rem;
+    color: var(--almadar-midnight);
+}
+
+[data-theme="dark"] .navbar__title {
+    color: var(--almadar-parchment);
 }
 
 .navbar__link {
     font-weight: 500;
     transition: color var(--transition-fast);
+    color: var(--almadar-slate);
 }
 
 .navbar__link:hover {
+    color: var(--almadar-teal);
+}
+
+.navbar__link--active {
+    color: var(--almadar-teal);
+}
+
+[data-theme="dark"] .navbar__link {
+    color: var(--almadar-parchment);
+}
+
+[data-theme="dark"] .navbar__link:hover {
     color: var(--almadar-teal-light);
 }
 
@@ -178,51 +230,23 @@ body {
     color: var(--almadar-sand-gold);
 }
 
-/* === Mobile Sidebar Theming === */
-/* Theme colors for mobile navigation sidebar */
-
-[data-theme="dark"] .navbar-sidebar {
-    background-color: var(--almadar-midnight);
-}
-
-[data-theme="dark"] .navbar-sidebar__brand {
-    background-color: var(--almadar-midnight);
-}
-
-[data-theme="dark"] .navbar-sidebar__items {
-    background-color: var(--almadar-midnight);
-}
-
-[data-theme="dark"] .navbar-sidebar__item {
-    background-color: var(--almadar-midnight);
-}
-
-/* Ensure mobile menu toggle is visible */
+/* Mobile navbar */
 .navbar__toggle {
-    color: var(--ifm-navbar-link-color);
+    color: var(--almadar-midnight);
 }
 
 [data-theme="dark"] .navbar__toggle {
     color: var(--almadar-parchment);
 }
 
-/* Mobile sidebar backdrop */
-.navbar-sidebar__backdrop {
-    background-color: rgba(0, 0, 0, 0.6);
+.navbar-sidebar {
+    background-color: var(--almadar-white);
 }
 
-/* Back button in secondary menu */
-[data-theme="dark"] .navbar-sidebar__back {
-    background: rgba(20, 184, 166, 0.1);
-    color: var(--almadar-parchment);
+[data-theme="dark"] .navbar-sidebar {
+    background-color: var(--almadar-midnight);
 }
 
-/* Close button */
-[data-theme="dark"] .navbar-sidebar__close {
-    color: var(--almadar-parchment);
-}
-
-/* Mobile menu items styling */
 .navbar-sidebar .menu__link {
     padding: 0.75rem 1rem;
     font-size: 1rem;
@@ -230,69 +254,79 @@ body {
     transition: all var(--transition-fast);
 }
 
-[data-theme="dark"] .navbar-sidebar .menu__link {
-    color: var(--almadar-parchment);
-}
-
-[data-theme="dark"] .navbar-sidebar .menu__link:hover {
-    background: rgba(20, 184, 166, 0.1);
-    color: var(--almadar-teal-light);
-}
-
-[data-theme="dark"] .navbar-sidebar .menu__link--active {
-    background: rgba(20, 184, 166, 0.15);
-    color: var(--almadar-teal-light);
-}
-
 /* === Hero Section === */
 .hero {
-    background: linear-gradient(
-        135deg,
-        var(--almadar-midnight-dark) 0%,
-        var(--almadar-midnight) 50%,
-        var(--almadar-midnight-dark) 100%
-    );
+    background: var(--almadar-parchment);
     position: relative;
     overflow: hidden;
-    min-height: 90vh;
+    min-height: 85vh;
     display: flex;
     align-items: center;
 }
 
+/* Subtle geometric pattern on right side */
 .hero::before {
     content: "";
     position: absolute;
     top: 0;
-    left: 0;
     right: 0;
-    bottom: 0;
-    background:
-        radial-gradient(
-            circle at 20% 80%,
-            rgba(20, 184, 166, 0.15) 0%,
-            transparent 40%
-        ),
-        radial-gradient(
-            circle at 80% 20%,
-            rgba(6, 182, 212, 0.1) 0%,
-            transparent 40%
-        );
+    width: 50%;
+    height: 100%;
+    background-image: var(--pattern-mashrabiya);
+    background-repeat: repeat;
+    opacity: 0.5;
     pointer-events: none;
 }
 
+/* Subtle gold horizon line */
+.hero::after {
+    content: "";
+    position: absolute;
+    bottom: 30%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--almadar-sand-gold) 20%, var(--almadar-sand-gold) 80%, transparent 100%);
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+[data-theme="dark"] .hero {
+    background: linear-gradient(
+        135deg,
+        #020617 0%,
+        var(--almadar-midnight) 50%,
+        #020617 100%
+    );
+}
+
+[data-theme="dark"] .hero::before {
+    background:
+        radial-gradient(circle at 20% 80%, rgba(20, 184, 166, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 40%);
+}
+
 .hero__title {
-    color: var(--almadar-parchment);
+    color: var(--almadar-midnight);
     font-size: 3.5rem;
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 1.5rem;
 }
 
+[data-theme="dark"] .hero__title {
+    color: var(--almadar-parchment);
+}
+
 .hero__subtitle {
-    color: var(--almadar-parchment-muted);
+    color: var(--almadar-slate-muted);
     font-size: 1.35rem;
     line-height: 1.6;
     max-width: 600px;
+}
+
+[data-theme="dark"] .hero__subtitle {
+    color: #94a3b8;
 }
 
 /* === Buttons === */
@@ -318,8 +352,14 @@ body {
 
 .button--secondary {
     background: transparent;
-    border: 2px solid #1e293b;
-    color: #1e293b;
+    border: 2px solid #e2e8f0;
+    color: var(--almadar-midnight);
+}
+
+.button--secondary:hover {
+    border-color: var(--almadar-teal);
+    color: var(--almadar-teal);
+    background: transparent;
 }
 
 [data-theme="dark"] .button--secondary {
@@ -327,42 +367,61 @@ body {
     color: var(--almadar-parchment);
 }
 
-.button--secondary:hover {
-    background: #1e293b;
-    border-color: #1e293b;
-    color: #ffffff;
+[data-theme="dark"] .button--secondary:hover {
+    border-color: var(--almadar-teal);
+    color: var(--almadar-teal-light);
 }
 
-[data-theme="dark"] .button--secondary:hover {
-    background: var(--almadar-midnight-light);
-    border-color: var(--almadar-teal);
-    color: var(--almadar-parchment);
+/* Gold accent button for heritage CTAs */
+.button--gold {
+    background: var(--almadar-sand-gold);
+    border: none;
+    color: var(--almadar-midnight);
+}
+
+.button--gold:hover {
+    background: var(--almadar-sand-gold-light);
+    color: var(--almadar-midnight);
 }
 
 /* === Feature Cards === */
 .feature-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--almadar-midnight-light);
+    background: var(--almadar-white);
+    border: 1px solid #e2e8f0;
     border-radius: var(--radius-xl);
     padding: 2rem;
     transition: all var(--transition-normal);
+    box-shadow: var(--shadow-card);
 }
 
 .feature-card:hover {
     border-color: var(--almadar-teal);
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(20, 184, 166, 0.1);
+    box-shadow: var(--shadow-lg);
 }
 
 .feature-card h3 {
-    color: var(--almadar-parchment);
+    color: var(--almadar-midnight);
     font-size: 1.25rem;
     margin-bottom: 0.75rem;
 }
 
 .feature-card p {
-    color: var(--almadar-parchment-muted);
+    color: var(--almadar-slate-muted);
     line-height: 1.6;
+}
+
+[data-theme="dark"] .feature-card {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: var(--almadar-midnight-light);
+}
+
+[data-theme="dark"] .feature-card h3 {
+    color: var(--almadar-parchment);
+}
+
+[data-theme="dark"] .feature-card p {
+    color: #94a3b8;
 }
 
 .feature-icon {
@@ -372,13 +431,15 @@ body {
 }
 
 /* === Code Blocks === */
-[data-theme="dark"] .prism-code {
-    background-color: var(--almadar-midnight-dark) !important;
-}
-
 code {
     border-radius: var(--radius-sm);
     font-size: 0.9em;
+}
+
+/* Light mode inline code */
+code {
+    background-color: rgba(20, 184, 166, 0.1);
+    color: var(--almadar-teal-dark);
 }
 
 [data-theme="dark"] code {
@@ -386,10 +447,24 @@ code {
     color: var(--almadar-teal-light);
 }
 
+[data-theme="dark"] .prism-code {
+    background-color: #020617 !important;
+}
+
 /* === Sidebar === */
 .menu__link {
     border-radius: var(--radius-sm);
     transition: all var(--transition-fast);
+}
+
+.menu__link--active {
+    background: rgba(20, 184, 166, 0.1);
+    color: var(--almadar-teal);
+}
+
+.menu__link:hover:not(.menu__link--active) {
+    background: var(--almadar-parchment-warm);
+    color: var(--almadar-midnight);
 }
 
 [data-theme="dark"] .menu__link--active {
@@ -404,7 +479,7 @@ code {
 
 /* === Footer === */
 .footer {
-    background: var(--almadar-midnight-dark);
+    background: var(--almadar-midnight);
     border-top: 1px solid var(--almadar-midnight-light);
 }
 
@@ -414,7 +489,7 @@ code {
 }
 
 .footer__link-item {
-    color: var(--almadar-parchment-muted);
+    color: #94a3b8;
     transition: color var(--transition-fast);
 }
 
@@ -423,29 +498,34 @@ code {
 }
 
 .footer__copyright {
-    color: var(--almadar-parchment-muted);
-    opacity: 0.7;
+    color: #64748b;
 }
 
 /* === Cards/Boxes === */
+.card {
+    background: var(--almadar-white);
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+}
+
 [data-theme="dark"] .card {
     background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--almadar-midnight-light);
-    border-radius: var(--radius-lg);
+    border-color: var(--almadar-midnight-light);
 }
 
 /* === Alerts/Admonitions === */
-[data-theme="dark"] .alert {
+.alert {
     border-radius: var(--radius-md);
 }
 
-[data-theme="dark"] .alert--info {
-    background: rgba(20, 184, 166, 0.1);
+.alert--info {
+    background: rgba(20, 184, 166, 0.08);
     border-left: 4px solid var(--almadar-teal);
 }
 
-[data-theme="dark"] .alert--warning {
-    background: rgba(201, 162, 39, 0.1);
+.alert--warning {
+    background: rgba(201, 162, 39, 0.08);
     border-left: 4px solid var(--almadar-sand-gold);
 }
 
@@ -454,9 +534,78 @@ code {
     transition: color var(--transition-fast);
 }
 
+.table-of-contents__link--active {
+    color: var(--almadar-teal);
+    font-weight: 500;
+}
+
 [data-theme="dark"] .table-of-contents__link--active {
     color: var(--almadar-teal-light);
+}
+
+/* === Blog Styles === */
+.blog-wrapper,
+article,
+.blog-post-page {
+    font-family: var(--ifm-font-family-base);
+}
+
+/* Blog cards - Light mode */
+article.margin-bottom--xl {
+    background: var(--almadar-white);
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    margin-bottom: 2rem !important;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-card);
+}
+
+article.margin-bottom--xl:hover {
+    border-color: var(--almadar-teal);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+[data-theme="dark"] article.margin-bottom--xl {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: var(--almadar-midnight-light);
+}
+
+article.margin-bottom--xl header h2 a {
+    color: var(--almadar-midnight);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+article.margin-bottom--xl header h2 a:hover {
+    color: var(--almadar-teal);
+}
+
+[data-theme="dark"] article.margin-bottom--xl header h2 a {
+    color: var(--almadar-parchment);
+}
+
+[data-theme="dark"] article.margin-bottom--xl header h2 a:hover {
+    color: var(--almadar-teal-light);
+}
+
+/* Blog tags */
+.blog-tags a,
+.tag {
+    background: rgba(20, 184, 166, 0.1);
+    color: var(--almadar-teal);
+    padding: 0.25rem 0.75rem;
+    border-radius: 99px;
+    font-size: 0.8rem;
     font-weight: 500;
+    display: inline-block;
+}
+
+/* Gold tag variant for heritage */
+.tag--gold {
+    background: rgba(201, 162, 39, 0.1);
+    color: var(--almadar-sand-gold);
 }
 
 /* === RTL Support === */
@@ -464,7 +613,6 @@ html[dir="rtl"] {
     text-align: right;
 }
 
-/* Navbar RTL - flip the entire layout */
 html[dir="rtl"] .navbar {
     direction: rtl;
 }
@@ -501,19 +649,31 @@ html[dir="rtl"] .alert {
     border-right: 4px solid;
 }
 
-/* === Scrollbar (dark mode) === */
-[data-theme="dark"] ::-webkit-scrollbar {
+/* === Scrollbar === */
+::-webkit-scrollbar {
     width: 8px;
     height: 8px;
 }
 
+::-webkit-scrollbar-track {
+    background: var(--almadar-parchment-warm);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--almadar-teal);
+}
+
 [data-theme="dark"] ::-webkit-scrollbar-track {
-    background: var(--almadar-midnight-dark);
+    background: #020617;
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb {
     background: var(--almadar-midnight-light);
-    border-radius: 4px;
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
@@ -523,6 +683,10 @@ html[dir="rtl"] .alert {
 /* === Selection === */
 ::selection {
     background-color: rgba(20, 184, 166, 0.3);
+    color: var(--almadar-midnight);
+}
+
+[data-theme="dark"] ::selection {
     color: var(--almadar-parchment);
 }
 
@@ -530,160 +694,6 @@ html[dir="rtl"] .alert {
 :focus-visible {
     outline: 2px solid var(--almadar-teal);
     outline-offset: 2px;
-}
-
-/* === Blog Styles === */
-.blog-wrapper,
-article,
-.blog-post-page {
-    font-family: var(--ifm-font-family-base);
-}
-
-/* Light mode blog styles */
-.blog-post-page h1,
-.blog-post-page h2,
-.blog-post-page h3 {
-    font-family: var(--ifm-heading-font-family);
-    color: var(--ifm-heading-color);
-}
-
-article h1,
-article h2,
-article h3 {
-    color: var(--ifm-heading-color);
-}
-
-.avatar__name {
-    color: var(--ifm-font-color-base);
-}
-
-.avatar__subtitle {
-    color: var(--ifm-color-secondary-darkest);
-}
-
-/* Dark mode blog overrides */
-[data-theme="dark"] .blog-wrapper {
-    background: var(--almadar-midnight);
-}
-
-[data-theme="dark"] .blog-post-page h1,
-[data-theme="dark"] .blog-post-page h2,
-[data-theme="dark"] .blog-post-page h3 {
-    color: var(--almadar-parchment);
-}
-
-[data-theme="dark"] article {
-    color: var(--almadar-parchment-muted);
-}
-
-[data-theme="dark"] article h1,
-[data-theme="dark"] article h2,
-[data-theme="dark"] article h3 {
-    color: var(--almadar-parchment);
-}
-
-[data-theme="dark"] .avatar__name {
-    color: var(--almadar-parchment);
-}
-
-[data-theme="dark"] .avatar__subtitle {
-    color: var(--almadar-parchment-muted);
-}
-
-/* Blog cards - Light mode */
-article.margin-bottom--xl {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: var(--radius-xl);
-    padding: 2rem;
-    margin-bottom: 2rem !important;
-    transition: all 0.3s ease;
-}
-
-article.margin-bottom--xl:hover {
-    border-color: var(--almadar-teal);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(20, 184, 166, 0.15);
-}
-
-/* Blog cards - Dark mode */
-[data-theme="dark"] article.margin-bottom--xl {
-    background: rgba(255, 255, 255, 0.02);
-    border-color: var(--almadar-midnight-light);
-}
-
-[data-theme="dark"] article.margin-bottom--xl:hover {
-    box-shadow: 0 8px 30px rgba(20, 184, 166, 0.1);
-}
-
-/* Blog post title - Light mode */
-article.margin-bottom--xl header h2 {
-    margin-top: 0;
-}
-
-article.margin-bottom--xl header h2 a {
-    color: #1e293b;
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-article.margin-bottom--xl header h2 a:hover {
-    color: var(--almadar-teal);
-}
-
-/* Blog post title - Dark mode */
-[data-theme="dark"] article.margin-bottom--xl header h2 a {
-    color: var(--almadar-parchment);
-}
-
-[data-theme="dark"] article.margin-bottom--xl header h2 a:hover {
-    color: var(--almadar-teal-light);
-}
-
-/* Blog post metadata */
-article.margin-bottom--xl .margin-vert--md {
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--almadar-midnight-light);
-    margin-bottom: 1rem;
-}
-
-/* Blog post content preview */
-article.margin-bottom--xl .markdown {
-    color: var(--almadar-parchment-muted);
-}
-
-/* Read more link */
-article.margin-bottom--xl .read-more a,
-article.margin-bottom--xl footer a {
-    color: var(--almadar-teal);
-    font-weight: 600;
-    text-decoration: none;
-}
-
-article.margin-bottom--xl .read-more a:hover,
-article.margin-bottom--xl footer a:hover {
-    color: var(--almadar-teal-light);
-}
-
-/* Blog tags */
-.blog-tags a {
-    background: rgba(20, 184, 166, 0.1);
-    color: var(--almadar-teal);
-    padding: 0.25rem 0.75rem;
-    border-radius: 99px;
-    font-size: 0.8rem;
-    font-weight: 500;
-}
-
-/* === Tags === */
-.tag {
-    background: rgba(20, 184, 166, 0.1);
-    color: var(--almadar-teal);
-    padding: 0.25rem 0.75rem;
-    border-radius: 99px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    display: inline-block;
 }
 
 /* === Responsive === */
