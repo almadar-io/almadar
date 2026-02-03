@@ -3,11 +3,13 @@ import { cn } from "../../lib/cn";
 import { Spinner } from "../atoms";
 
 export interface LoadingStateProps {
+  title?: string;
   message?: string;
   className?: string;
 }
 
 export const LoadingState: React.FC<LoadingStateProps> = ({
+  title,
   message = "Loading...",
   className,
 }) => {
@@ -19,7 +21,17 @@ export const LoadingState: React.FC<LoadingStateProps> = ({
       )}
     >
       <Spinner size="lg" />
-      <p className="mt-4 text-sm text-[var(--color-muted-foreground)]">
+      {title && (
+        <h3 className="mt-4 text-lg font-semibold text-[var(--color-foreground)]">
+          {title}
+        </h3>
+      )}
+      <p
+        className={cn(
+          "text-sm text-[var(--color-muted-foreground)]",
+          title ? "mt-2" : "mt-4",
+        )}
+      >
         {message}
       </p>
     </div>

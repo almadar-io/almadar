@@ -28,10 +28,10 @@ export interface SchemaAction {
 }
 
 export interface PageHeaderProps {
-  /** Page title */
-  title: string;
+  /** Page title - accepts unknown to handle generated code accessing dynamic entity data */
+  title?: string | number | unknown;
   /** Optional subtitle/description */
-  subtitle?: string;
+  subtitle?: string | number | unknown;
   /** Show back button */
   showBack?: boolean;
   /** Event to emit when back is clicked (default: BACK) */
@@ -163,7 +163,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
           <div>
             <div className="flex items-center gap-3">
               <h1 className="text-2xl font-bold text-[var(--color-foreground)]">
-                {title}
+                {title != null ? String(title) : ""}
               </h1>
               {status && (
                 <span
@@ -176,9 +176,9 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
                 </span>
               )}
             </div>
-            {subtitle && (
+            {subtitle != null && subtitle !== "" && (
               <p className="mt-1 text-sm text-[var(--color-muted-foreground)]">
-                {subtitle}
+                {String(subtitle)}
               </p>
             )}
           </div>

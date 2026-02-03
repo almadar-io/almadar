@@ -24,6 +24,9 @@ import { Drawer } from "../molecules/Drawer";
 import { Toast } from "../molecules/Toast";
 import { cn } from "../../lib/cn";
 
+// Shared renderer imports (synced from almadar-shared/design-system/renderer)
+import { isKnownPattern, isPortalSlot, SLOT_DEFINITIONS } from "../../renderer";
+
 // Pattern component imports
 import { PageHeader } from "./PageHeader";
 import { DataTable } from "./DataTable";
@@ -82,6 +85,166 @@ import {
 // Custom pattern import
 import { CustomPattern } from "./CustomPattern";
 
+// ============================================================================
+// Component Registry
+// ============================================================================
+
+/**
+ * Maps component names to actual React components.
+ * The pattern resolver returns a component name (e.g., "DataTable"),
+ * and this registry provides the actual component.
+ *
+ * Component names match those in almadar-shared/patterns/component-mapping.json
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const COMPONENT_REGISTRY: Record<string, React.ComponentType<any>> = {
+  // Display patterns
+  PageHeader,
+  DataTable,
+  CardGrid,
+  DetailPanel,
+  MasterDetail,
+  List: DataTable, // List uses DataTable component
+  StatCard,
+  // Form patterns
+  Form,
+  ButtonGroup,
+  SearchInput,
+  // State patterns
+  EmptyState,
+  LoadingState,
+  Breadcrumb,
+  // Layout patterns
+  VStackPattern,
+  HStackPattern,
+  BoxPattern,
+  GridPattern,
+  CenterPattern,
+  SpacerPattern,
+  DividerPattern,
+  // Component patterns - Interactive
+  ButtonPattern,
+  IconButtonPattern,
+  LinkPattern,
+  // Component patterns - Display
+  TextPattern,
+  HeadingPattern,
+  BadgePattern,
+  AvatarPattern,
+  IconPattern,
+  ImagePattern,
+  CardPattern,
+  ProgressBarPattern,
+  SpinnerPattern,
+  // Component patterns - Form inputs
+  InputPattern,
+  TextareaPattern,
+  SelectPattern,
+  CheckboxPattern,
+  RadioPattern,
+  LabelPattern,
+  // Component patterns - Feedback
+  AlertPattern,
+  TooltipPattern,
+  PopoverPattern,
+  // Component patterns - Navigation
+  MenuPattern,
+  AccordionPattern,
+  // Component patterns - Layout
+  ContainerPattern,
+  SimpleGridPattern,
+  FloatButtonPattern,
+  // Custom pattern
+  CustomPattern,
+};
+
+/**
+ * Maps pattern types to component names.
+ * This provides a local fallback when the shared resolver is not initialized.
+ * Ideally, this should come from the shared resolver (almadar-shared/patterns/component-mapping.json).
+ */
+const PATTERN_TO_COMPONENT: Record<string, string> = {
+  "page-header": "PageHeader",
+  "entity-table": "DataTable",
+  "entity-cards": "CardGrid",
+  "entity-detail": "DetailPanel",
+  "detail-panel": "DetailPanel",
+  "entity-list": "List",
+  "master-detail": "MasterDetail",
+  "search-bar": "SearchInput",
+  "empty-state": "EmptyState",
+  "loading-state": "LoadingState",
+  breadcrumb: "Breadcrumb",
+  stats: "StatCard",
+  "form-section": "Form",
+  form: "Form",
+  "form-actions": "ButtonGroup",
+  "filter-group": "ButtonGroup",
+  "button-group": "ButtonGroup",
+  // Layout patterns
+  vstack: "VStackPattern",
+  hstack: "HStackPattern",
+  box: "BoxPattern",
+  grid: "GridPattern",
+  center: "CenterPattern",
+  spacer: "SpacerPattern",
+  divider: "DividerPattern",
+  // Component patterns - Interactive
+  button: "ButtonPattern",
+  "icon-button": "IconButtonPattern",
+  link: "LinkPattern",
+  // Component patterns - Display
+  text: "TextPattern",
+  heading: "HeadingPattern",
+  badge: "BadgePattern",
+  avatar: "AvatarPattern",
+  icon: "IconPattern",
+  image: "ImagePattern",
+  card: "CardPattern",
+  "progress-bar": "ProgressBarPattern",
+  spinner: "SpinnerPattern",
+  // Component patterns - Form inputs
+  input: "InputPattern",
+  textarea: "TextareaPattern",
+  select: "SelectPattern",
+  checkbox: "CheckboxPattern",
+  radio: "RadioPattern",
+  label: "LabelPattern",
+  // Component patterns - Feedback
+  alert: "AlertPattern",
+  tooltip: "TooltipPattern",
+  popover: "PopoverPattern",
+  // Component patterns - Navigation
+  menu: "MenuPattern",
+  accordion: "AccordionPattern",
+  // Component patterns - Layout
+  container: "ContainerPattern",
+  "simple-grid": "SimpleGridPattern",
+  "float-button": "FloatButtonPattern",
+  // Custom pattern
+  custom: "CustomPattern",
+};
+
+/**
+ * Get the React component for a pattern type.
+ * Uses shared resolver if available, falls back to local mapping.
+ */
+function getComponentForPattern(
+  patternType: string
+): React.ComponentType<any> | null {
+  // Get component name from local mapping
+  // TODO: When shared resolver is initialized at app startup, use:
+  // const resolved = resolvePattern({ type: patternType });
+  // const componentName = resolved.component;
+  const componentName = PATTERN_TO_COMPONENT[patternType];
+
+  if (!componentName) {
+    return null;
+  }
+
+  return COMPONENT_REGISTRY[componentName] ?? null;
+}
+
 // Patterns that support nested children
 const PATTERNS_WITH_CHILDREN = new Set([
   "vstack",
@@ -96,68 +259,6 @@ const PATTERNS_WITH_CHILDREN = new Set([
   "simple-grid",
   "custom", // Custom patterns support nested children
 ]);
-
-// Pattern registry - maps pattern types to React components
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const PATTERN_REGISTRY: Record<string, React.ComponentType<any>> = {
-  "page-header": PageHeader,
-  "entity-table": DataTable,
-  "entity-cards": CardGrid,
-  "entity-detail": DetailPanel,
-  "detail-panel": DetailPanel,
-  "master-detail": MasterDetail,
-  "search-bar": SearchInput,
-  "empty-state": EmptyState,
-  "loading-state": LoadingState,
-  breadcrumb: Breadcrumb,
-  stats: StatCard,
-  "form-section": Form,
-  "form-actions": ButtonGroup,
-  "filter-group": ButtonGroup,
-  "button-group": ButtonGroup,
-  // Layout patterns
-  vstack: VStackPattern,
-  hstack: HStackPattern,
-  box: BoxPattern,
-  grid: GridPattern,
-  center: CenterPattern,
-  spacer: SpacerPattern,
-  divider: DividerPattern,
-  // Component patterns - Interactive
-  button: ButtonPattern,
-  "icon-button": IconButtonPattern,
-  link: LinkPattern,
-  // Component patterns - Display
-  text: TextPattern,
-  heading: HeadingPattern,
-  badge: BadgePattern,
-  avatar: AvatarPattern,
-  icon: IconPattern,
-  image: ImagePattern,
-  card: CardPattern,
-  "progress-bar": ProgressBarPattern,
-  spinner: SpinnerPattern,
-  // Component patterns - Form inputs
-  input: InputPattern,
-  textarea: TextareaPattern,
-  select: SelectPattern,
-  checkbox: CheckboxPattern,
-  radio: RadioPattern,
-  label: LabelPattern,
-  // Component patterns - Feedback
-  alert: AlertPattern,
-  tooltip: TooltipPattern,
-  popover: PopoverPattern,
-  // Component patterns - Navigation
-  menu: MenuPattern,
-  accordion: AccordionPattern,
-  // Component patterns - Layout
-  container: ContainerPattern,
-  "simple-grid": SimpleGridPattern,
-  "float-button": FloatButtonPattern,
-  // Custom pattern for freeform design
-  custom: CustomPattern,
-};
 
 // ============================================================================
 // Slot Component
@@ -418,7 +519,7 @@ function SlotContentRenderer({
   content,
   onDismiss,
 }: SlotContentRendererProps): React.ReactElement {
-  const PatternComponent = PATTERN_REGISTRY[content.pattern];
+  const PatternComponent = getComponentForPattern(content.pattern);
 
   // If we have a registered component, render it with props
   if (PatternComponent) {

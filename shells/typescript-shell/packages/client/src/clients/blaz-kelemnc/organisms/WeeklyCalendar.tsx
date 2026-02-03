@@ -20,13 +20,7 @@ import { Button } from "../../../components/atoms/Button";
 import { Card } from "../../../components/atoms/Card";
 import { Badge } from "../../../components/atoms/Badge";
 import { useEventBus } from "../../../hooks/useEventBus";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Calendar,
-  Users,
-  User,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Calendar, Users, User } from "lucide-react";
 
 export interface CalendarEvent {
   id: string;
@@ -42,14 +36,20 @@ export interface CalendarEvent {
 export interface WeeklyCalendarProps {
   /** Start of week to display */
   weekStart?: Date;
+  /** Current week data */
+  currentWeek?: unknown;
   /** Events to display */
   events?: CalendarEvent[];
+  /** Sessions data */
+  sessions?: unknown;
   /** Working hours start (24h format) */
   workingHoursStart?: number;
   /** Working hours end (24h format) */
   workingHoursEnd?: number;
   /** Slot duration in minutes */
   slotDuration?: number;
+  /** Show trainee info */
+  showTraineeInfo?: boolean;
   /** Entity context for events */
   entity?: string;
   /** Additional CSS classes */
@@ -81,7 +81,7 @@ const getWeekDays = (startDate: Date): Date[] => {
 const generateTimeSlots = (
   start: number,
   end: number,
-  durationMinutes: number
+  durationMinutes: number,
 ): string[] => {
   const slots: string[] = [];
   for (let hour = start; hour < end; hour++) {
@@ -97,7 +97,7 @@ const generateTimeSlots = (
 const eventInSlot = (
   event: CalendarEvent,
   day: Date,
-  slotTime: string
+  slotTime: string,
 ): boolean => {
   const eventStart = new Date(event.startTime);
   const [slotHour, slotMinute] = slotTime.split(":").map(Number);
@@ -128,13 +128,16 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
   const eventBus = useEventBus();
 
   const [currentWeekStart, setCurrentWeekStart] = useState<Date>(
-    weekStart ? getStartOfWeek(weekStart) : getStartOfWeek(new Date())
+    weekStart ? getStartOfWeek(weekStart) : getStartOfWeek(new Date()),
   );
 
-  const weekDays = useMemo(() => getWeekDays(currentWeekStart), [currentWeekStart]);
+  const weekDays = useMemo(
+    () => getWeekDays(currentWeekStart),
+    [currentWeekStart],
+  );
   const timeSlots = useMemo(
     () => generateTimeSlots(workingHoursStart, workingHoursEnd, slotDuration),
-    [workingHoursStart, workingHoursEnd, slotDuration]
+    [workingHoursStart, workingHoursEnd, slotDuration],
   );
 
   // Navigate weeks
@@ -142,7 +145,10 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
     setCurrentWeekStart((prev) => {
       const newDate = new Date(prev);
       newDate.setDate(newDate.getDate() - 7);
-      eventBus.emit("UI:WEEK_CHANGE", { weekStart: newDate, direction: "prev" });
+      eventBus.emit("UI:WEEK_CHANGE", {
+        weekStart: newDate,
+        direction: "prev",
+      });
       return newDate;
     });
   }, [eventBus]);
@@ -151,7 +157,10 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
     setCurrentWeekStart((prev) => {
       const newDate = new Date(prev);
       newDate.setDate(newDate.getDate() + 7);
-      eventBus.emit("UI:WEEK_CHANGE", { weekStart: newDate, direction: "next" });
+      eventBus.emit("UI:WEEK_CHANGE", {
+        weekStart: newDate,
+        direction: "next",
+      });
       return newDate;
     });
   }, [eventBus]);
@@ -166,11 +175,15 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
   const handleDayClick = useCallback(
     (day: Date) => {
       const dayEvents = events.filter(
-        (e) => new Date(e.startTime).toDateString() === day.toDateString()
+        (e) => new Date(e.startTime).toDateString() === day.toDateString(),
       );
-      eventBus.emit("UI:DAY_SELECTED", { date: day, events: dayEvents, entity });
+      eventBus.emit("UI:DAY_SELECTED", {
+        date: day,
+        events: dayEvents,
+        entity,
+      });
     },
-    [eventBus, events, entity]
+    [eventBus, events, entity],
   );
 
   // Handle slot click
@@ -181,7 +194,7 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
       slotDate.setHours(hour, minute, 0, 0);
       eventBus.emit("UI:SLOT_CLICK", { date: slotDate, entity });
     },
-    [eventBus, entity]
+    [eventBus, entity],
   );
 
   // Render event in slot
@@ -197,7 +210,7 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
         border
         className={cn(
           "cursor-pointer hover:shadow-sm transition-shadow text-xs truncate",
-          typeColors
+          typeColors,
         )}
         onClick={(e) => {
           e.stopPropagation();
@@ -253,9 +266,11 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
             <Box className="grid grid-cols-8 border-b">
               <Box className="p-2" /> {/* Time column */}
               {weekDays.map((day) => {
-                const isToday = day.toDateString() === new Date().toDateString();
+                const isToday =
+                  day.toDateString() === new Date().toDateString();
                 const dayEvents = events.filter(
-                  (e) => new Date(e.startTime).toDateString() === day.toDateString()
+                  (e) =>
+                    new Date(e.startTime).toDateString() === day.toDateString(),
                 );
 
                 return (
@@ -263,7 +278,7 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
                     key={day.toISOString()}
                     className={cn(
                       "p-2 text-center cursor-pointer hover:bg-neutral-50 border-l",
-                      isToday && "bg-blue-50"
+                      isToday && "bg-blue-50",
                     )}
                     onClick={() => handleDayClick(day)}
                   >
@@ -271,7 +286,7 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
                       variant="small"
                       className={cn(
                         "font-medium",
-                        isToday ? "text-blue-600" : "text-neutral-500"
+                        isToday ? "text-blue-600" : "text-neutral-500",
                       )}
                     >
                       {day.toLocaleDateString("en-US", { weekday: "short" })}
@@ -281,7 +296,7 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
                       rounded="full"
                       className={cn(
                         "h-8 w-8 mx-auto items-center justify-center",
-                        isToday && "bg-blue-600 text-white"
+                        isToday && "bg-blue-600 text-white",
                       )}
                     >
                       <Typography variant="body" className="font-semibold">
@@ -289,7 +304,7 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
                       </Typography>
                     </Box>
                     {dayEvents.length > 0 && (
-                      <Badge variant="secondary" size="sm" className="mt-1">
+                      <Badge variant="default" size="sm" className="mt-1">
                         {dayEvents.length}
                       </Badge>
                     )}
@@ -312,7 +327,7 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
                   {/* Day cells */}
                   {weekDays.map((day) => {
                     const slotEvents = events.filter((e) =>
-                      eventInSlot(e, day, time)
+                      eventInSlot(e, day, time),
                     );
                     const isToday =
                       day.toDateString() === new Date().toDateString();
@@ -322,13 +337,11 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
                         key={`${day.toISOString()}-${time}`}
                         className={cn(
                           "p-1 min-h-[60px] border-l cursor-pointer hover:bg-neutral-50 transition-colors",
-                          isToday && "bg-blue-50/30"
+                          isToday && "bg-blue-50/30",
                         )}
                         onClick={() => handleSlotClick(day, time)}
                       >
-                        <VStack gap="xs">
-                          {slotEvents.map(renderEvent)}
-                        </VStack>
+                        <VStack gap="xs">{slotEvents.map(renderEvent)}</VStack>
                       </Box>
                     );
                   })}

@@ -32,11 +32,15 @@ export type DocumentStatus = "draft" | "final" | "signed" | "archived";
 
 export interface DocumentPreviewProps {
   /** Document ID */
-  id: string;
+  id?: string;
   /** Document title */
   title: string;
+  /** Document subtitle */
+  subtitle?: string;
   /** Document type */
   type?: string;
+  /** Read-only mode */
+  isReadOnly?: boolean;
   /** Preview URL */
   previewUrl?: string;
   /** Download URL */
@@ -63,10 +67,7 @@ export interface DocumentPreviewProps {
   onView?: () => void;
 }
 
-const statusConfig: Record<
-  DocumentStatus,
-  { color: string; label: string }
-> = {
+const statusConfig: Record<DocumentStatus, { color: string; label: string }> = {
   draft: { color: "warning", label: "Draft" },
   final: { color: "success", label: "Final" },
   signed: { color: "primary", label: "Signed" },
@@ -137,19 +138,18 @@ export const DocumentPreview: React.FC<DocumentPreviewProps> = ({
         <Box padding="md" className="border-b">
           <HStack justify="between" align="start">
             <HStack gap="sm" align="start">
-              <Box
-                rounded="lg"
-                padding="sm"
-                className="bg-red-50 text-red-600"
-              >
+              <Box rounded="lg" padding="sm" className="bg-red-50 text-red-600">
                 <FileText className="h-6 w-6" />
               </Box>
               <VStack gap="xs">
-                <Typography variant="body" className="font-medium text-neutral-800">
+                <Typography
+                  variant="body"
+                  className="font-medium text-neutral-800"
+                >
                   {title}
                 </Typography>
                 <HStack gap="sm" wrap>
-                  <Badge variant="outline">{type}</Badge>
+                  <Badge variant="default">{type}</Badge>
                   <Badge variant={statusStyle.color as any}>
                     {statusStyle.label}
                   </Badge>

@@ -58,17 +58,31 @@ export interface LiftData {
   notes?: string;
 }
 
+/** Operation definition for action buttons */
+export interface LiftOperation {
+  label: string;
+  event?: string;
+  action?: string;
+  variant?: "primary" | "secondary" | "danger" | "ghost";
+}
+
 export interface LiftTrackerProps {
   /** Array of lift entries to display */
-  lifts: LiftData[];
+  lifts?: LiftData[];
   /** Trainee ID for context */
   traineeId?: string;
   /** Trainer ID for context */
   trainerId?: string;
   /** Show summary cards for each exercise */
   showSummary?: boolean;
+  /** Show progress chart */
+  showProgressChart?: boolean;
+  /** Group by exercise name */
+  groupByExercise?: boolean;
   /** Entity context for events */
   entity?: string;
+  /** Operations/actions available */
+  operations?: LiftOperation[];
   /** Max entries to show before collapse */
   maxVisible?: number;
   /** Additional CSS classes */
@@ -87,7 +101,7 @@ const formatDate = (date: string | Date): string => {
 // Calculate trend compared to previous entry for same exercise
 const calculateTrend = (
   lifts: LiftData[],
-  exerciseName: string
+  exerciseName: string,
 ): { direction: "up" | "down" | "same"; percentage: number } | null => {
   const exerciseLifts = lifts
     .filter((l) => l.exerciseName === exerciseName)
@@ -116,7 +130,7 @@ const groupByExercise = (lifts: LiftData[]): Record<string, LiftData[]> => {
       acc[lift.exerciseName].push(lift);
       return acc;
     },
-    {} as Record<string, LiftData[]>
+    {} as Record<string, LiftData[]>,
   );
 };
 
@@ -132,12 +146,17 @@ export const LiftTracker: React.FC<LiftTrackerProps> = ({
   const eventBus = useEventBus();
   const [expanded, setExpanded] = useState(false);
 
+  // Ensure lifts is always an array
+  const liftData = lifts ?? [];
+
   // Sort lifts by date descending
-  const sortedLifts = [...lifts].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  const sortedLifts = [...liftData].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
 
-  const visibleLifts = expanded ? sortedLifts : sortedLifts.slice(0, maxVisible);
+  const visibleLifts = expanded
+    ? sortedLifts
+    : sortedLifts.slice(0, maxVisible);
   const hasMore = sortedLifts.length > maxVisible;
 
   // Emit LOG_LIFT event (matches LiftManagement trait)
@@ -154,7 +173,7 @@ export const LiftTracker: React.FC<LiftTrackerProps> = ({
     (lift: LiftData) => {
       eventBus.emit("UI:VIEW", { row: lift, entity });
     },
-    [eventBus, entity]
+    [eventBus, entity],
   );
 
   // Emit EDIT event (matches LiftManagement trait)
@@ -162,7 +181,7 @@ export const LiftTracker: React.FC<LiftTrackerProps> = ({
     (lift: LiftData) => {
       eventBus.emit("UI:EDIT", { row: lift, entity });
     },
-    [eventBus, entity]
+    [eventBus, entity],
   );
 
   // Emit DELETE event (matches LiftManagement trait)
@@ -170,20 +189,20 @@ export const LiftTracker: React.FC<LiftTrackerProps> = ({
     (lift: LiftData) => {
       eventBus.emit("UI:DELETE", { row: lift, entity });
     },
-    [eventBus, entity]
+    [eventBus, entity],
   );
 
   // Get unique exercises with their latest lifts for summary
-  const groupedLifts = groupByExercise(lifts);
+  const groupedLifts = groupByExercise(liftData);
   const exerciseSummaries = Object.entries(groupedLifts).map(
     ([exerciseName, entries]) => {
       const latest = entries.sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
       )[0];
-      const trend = calculateTrend(lifts, exerciseName);
+      const trend = calculateTrend(liftData, exerciseName);
       const maxWeight = Math.max(...entries.map((e) => e.weight));
       return { exerciseName, latest, trend, maxWeight, count: entries.length };
-    }
+    },
   );
 
   return (
@@ -203,7 +222,7 @@ export const LiftTracker: React.FC<LiftTrackerProps> = ({
             <VStack gap="none">
               <Typography variant="h4">Lift Progress</Typography>
               <Typography variant="small" className="text-neutral-500">
-                {lifts.length} entries logged
+                {liftData.length} entries logged
               </Typography>
             </VStack>
           </HStack>
@@ -240,7 +259,9 @@ export const LiftTracker: React.FC<LiftTrackerProps> = ({
                     {summary.trend && summary.trend.direction !== "same" && (
                       <Badge
                         variant={
-                          summary.trend.direction === "up" ? "success" : "error"
+                          summary.trend.direction === "up"
+                            ? "success"
+                            : "danger"
                         }
                         size="sm"
                       >
@@ -289,7 +310,10 @@ export const LiftTracker: React.FC<LiftTrackerProps> = ({
                         <Typography variant="body" className="font-medium">
                           {lift.exerciseName}
                         </Typography>
-                        <Typography variant="small" className="text-neutral-500">
+                        <Typography
+                          variant="small"
+                          className="text-neutral-500"
+                        >
                           {formatDate(lift.date)}
                         </Typography>
                       </VStack>
@@ -300,7 +324,10 @@ export const LiftTracker: React.FC<LiftTrackerProps> = ({
                           <Typography variant="body" className="font-semibold">
                             {lift.weight}kg
                           </Typography>
-                          <Typography variant="small" className="text-neutral-500">
+                          <Typography
+                            variant="small"
+                            className="text-neutral-500"
+                          >
                             {lift.sets}x{lift.reps}
                           </Typography>
                         </VStack>

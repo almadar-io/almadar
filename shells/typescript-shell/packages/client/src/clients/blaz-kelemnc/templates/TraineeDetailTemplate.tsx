@@ -142,7 +142,11 @@ export const TraineeDetailTemplate: React.FC<TraineeDetailTemplateProps> = ({
   // Loading state
   if (isLoading) {
     return (
-      <VStack align="center" justify="center" className={cn("p-6 min-h-[400px]", className)}>
+      <VStack
+        align="center"
+        justify="center"
+        className={cn("p-6 min-h-[400px]", className)}
+      >
         <Spinner size="lg" />
         <Typography variant="body" className="text-neutral-500">
           Loading trainee details...
@@ -154,7 +158,11 @@ export const TraineeDetailTemplate: React.FC<TraineeDetailTemplateProps> = ({
   // Error state
   if (error) {
     return (
-      <VStack align="center" justify="center" className={cn("p-6 min-h-[400px]", className)}>
+      <VStack
+        align="center"
+        justify="center"
+        className={cn("p-6 min-h-[400px]", className)}
+      >
         <Typography variant="body" className="text-red-500">
           Error: {error.message}
         </Typography>
@@ -165,7 +173,11 @@ export const TraineeDetailTemplate: React.FC<TraineeDetailTemplateProps> = ({
   // No data state
   if (!data) {
     return (
-      <VStack align="center" justify="center" className={cn("p-6 min-h-[400px]", className)}>
+      <VStack
+        align="center"
+        justify="center"
+        className={cn("p-6 min-h-[400px]", className)}
+      >
         <User className="h-12 w-12 text-neutral-300" />
         <Typography variant="h3" className="text-neutral-500">
           Trainee not found
@@ -205,7 +217,9 @@ export const TraineeDetailTemplate: React.FC<TraineeDetailTemplateProps> = ({
               <Typography variant="h1">{data.name}</Typography>
               <Badge
                 className={
-                  isTrainee ? "bg-green-100 text-green-700" : "bg-blue-100 text-blue-700"
+                  isTrainee
+                    ? "bg-green-100 text-green-700"
+                    : "bg-blue-100 text-blue-700"
                 }
               >
                 <RoleIcon className="h-3 w-3 mr-1" />
@@ -277,7 +291,9 @@ export const TraineeDetailTemplate: React.FC<TraineeDetailTemplateProps> = ({
                   <Typography variant="body" className="text-neutral-500">
                     Joined
                   </Typography>
-                  <Typography variant="body">{formatDate(data.createdAt)}</Typography>
+                  <Typography variant="body">
+                    {formatDate(data.createdAt)}
+                  </Typography>
                 </HStack>
               )}
             </VStack>
@@ -287,7 +303,7 @@ export const TraineeDetailTemplate: React.FC<TraineeDetailTemplateProps> = ({
         {/* Credits (for trainees) */}
         {isTrainee && creditData && (
           <Box className="flex-1 min-w-[300px]">
-            <CreditMeter data={creditData} variant="detailed" showActions={true} />
+            <CreditMeter data={creditData} size="lg" showActionButton={true} />
           </Box>
         )}
       </HStack>
@@ -318,7 +334,9 @@ export const TraineeDetailTemplate: React.FC<TraineeDetailTemplateProps> = ({
             <Card className="p-4 flex-1 min-w-[150px]">
               <VStack gap="xs" align="center">
                 <Activity className="h-6 w-6 text-purple-500" />
-                <Typography variant="h2">{stats.avgWellnessScore.toFixed(1)}</Typography>
+                <Typography variant="h2">
+                  {stats.avgWellnessScore.toFixed(1)}
+                </Typography>
                 <Typography variant="small" className="text-neutral-500">
                   Avg Wellness
                 </Typography>
@@ -351,9 +369,9 @@ export const TraineeDetailTemplate: React.FC<TraineeDetailTemplateProps> = ({
         <Card className="p-4">
           <ProgressChart
             data={progressData}
-            title="Progress Over Time"
+            metric="Progress Over Time"
             chartType="line"
-            showLegend={true}
+            showDateSelector={true}
           />
         </Card>
       )}

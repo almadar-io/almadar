@@ -124,7 +124,7 @@ export interface ThemeProviderProps {
  *   <App />
  * </ThemeProvider>
  *
- * // With custom themes from orbital schema
+ * // With custom themes from almadar schema
  * import { THEMES } from './generated/theme-manifest';
  * <ThemeProvider themes={THEMES} defaultTheme="ocean" defaultMode="system">
  *   <App />

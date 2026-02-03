@@ -1,0 +1,122 @@
+{
+  "version": "1.0.0",
+  "client": "kflow",
+  "description": "KFlow client-specific pattern to component mappings",
+  "mappings": {
+    "concept-card": {
+      "component": "ConceptCard",
+      "importPath": "@kflow/design-system/organisms/ConceptCard",
+      "category": "learning"
+    },
+    "flashcard": {
+      "component": "FlashCard",
+      "importPath": "@kflow/design-system/organisms/FlashCard",
+      "category": "learning"
+    },
+    "flashcard-stack": {
+      "component": "FlashCardStack",
+      "importPath": "@kflow/design-system/organisms/FlashCardStack",
+      "category": "learning"
+    },
+    "force-graph": {
+      "component": "ForceDirectedGraph",
+      "importPath": "@kflow/design-system/organisms/ForceDirectedGraph",
+      "category": "visualization"
+    },
+    "knowledge-graph": {
+      "component": "ForceDirectedGraph",
+      "importPath": "@kflow/design-system/organisms/ForceDirectedGraph",
+      "category": "visualization"
+    },
+    "graph-legend": {
+      "component": "GraphLegend",
+      "importPath": "@kflow/design-system/molecules/GraphLegend",
+      "category": "visualization"
+    },
+    "mindmap-canvas": {
+      "component": "MindMapCanvas",
+      "importPath": "@kflow/design-system/organisms/MindMapCanvas",
+      "category": "visualization"
+    },
+    "mindmap-node": {
+      "component": "MindMapNode",
+      "importPath": "@kflow/design-system/molecules/MindMapNode",
+      "category": "visualization"
+    },
+    "segment-renderer": {
+      "component": "SegmentRenderer",
+      "importPath": "@kflow/design-system/organisms/SegmentRenderer",
+      "category": "learning"
+    },
+    "lesson-content": {
+      "component": "SegmentRenderer",
+      "importPath": "@kflow/design-system/organisms/SegmentRenderer",
+      "category": "learning"
+    },
+    "activation-block": {
+      "component": "ActivationBlock",
+      "importPath": "@kflow/design-system/molecules/learning/ActivationBlock",
+      "category": "learning-science"
+    },
+    "reflection-block": {
+      "component": "ReflectionBlock",
+      "importPath": "@kflow/design-system/molecules/learning/ReflectionBlock",
+      "category": "learning-science"
+    },
+    "connection-block": {
+      "component": "ConnectionBlock",
+      "importPath": "@kflow/design-system/molecules/learning/ConnectionBlock",
+      "category": "learning-science"
+    },
+    "bloom-quiz": {
+      "component": "BloomQuizBlock",
+      "importPath": "@kflow/design-system/molecules/learning/BloomQuizBlock",
+      "category": "learning-science"
+    },
+    "code-block": {
+      "component": "CodeBlock",
+      "importPath": "@kflow/design-system/molecules/markdown/CodeBlock",
+      "category": "content"
+    },
+    "markdown-content": {
+      "component": "MarkdownContent",
+      "importPath": "@kflow/design-system/molecules/markdown/MarkdownContent",
+      "category": "content"
+    },
+    "note-list": {
+      "component": "NoteList",
+      "importPath": "@kflow/design-system/organisms/NoteList",
+      "category": "notes"
+    },
+    "note-item": {
+      "component": "NoteListItem",
+      "importPath": "@kflow/design-system/molecules/NoteListItem",
+      "category": "notes"
+    },
+    "note-content": {
+      "component": "NoteContent",
+      "importPath": "@kflow/design-system/molecules/NoteContent",
+      "category": "notes"
+    },
+    "layer-navigator": {
+      "component": "LayerNavigator",
+      "importPath": "@kflow/design-system/molecules/LayerNavigator",
+      "category": "navigation"
+    },
+    "learning-goal": {
+      "component": "LearningGoalDisplay",
+      "importPath": "@kflow/design-system/molecules/LearningGoalDisplay",
+      "category": "learning"
+    },
+    "concept-meta-tags": {
+      "component": "ConceptMetaTags",
+      "importPath": "@kflow/design-system/molecules/ConceptMetaTags",
+      "category": "learning"
+    },
+    "streaming-display": {
+      "component": "StreamingDisplay",
+      "importPath": "@kflow/design-system/molecules/StreamingDisplay",
+      "category": "content"
+    }
+  }
+}

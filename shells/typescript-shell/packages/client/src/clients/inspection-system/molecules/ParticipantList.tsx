@@ -24,16 +24,16 @@ import { Plus, Trash2, Edit, User, Briefcase, Phone } from "lucide-react";
 
 export interface Participant {
   id: string;
-  name: string;
-  surname: string;
-  positionInCompany: string;
+  name?: string;
+  surname?: string;
+  positionInCompany?: string;
   contactInfo?: string;
   addedAt?: string;
 }
 
 export interface ParticipantListProps {
   /** Inspection ID */
-  inspectionId: string;
+  inspectionId?: string;
   /** List of participants */
   participants: Participant[];
   /** Allow adding participants */
@@ -50,8 +50,8 @@ export interface ParticipantListProps {
   readOnly?: boolean;
   /** Additional CSS classes */
   className?: string;
-  /** Add handler */
-  onAdd?: () => void;
+  /** Add handler - can receive participant data */
+  onAdd?: (participant?: Participant) => void;
   /** Remove handler */
   onRemove?: (participantId: string) => void;
   /** Edit handler */
@@ -84,7 +84,7 @@ export const ParticipantList: React.FC<ParticipantListProps> = ({
       onRemove?.(participantId);
       eventBus.emit("UI:REMOVE_PARTICIPANT", { participantId, inspectionId });
     },
-    [inspectionId, onRemove, eventBus]
+    [inspectionId, onRemove, eventBus],
   );
 
   const handleEdit = useCallback(
@@ -92,10 +92,11 @@ export const ParticipantList: React.FC<ParticipantListProps> = ({
       onEdit?.(participant);
       eventBus.emit("UI:EDIT_PARTICIPANT", { participant });
     },
-    [onEdit, eventBus]
+    [onEdit, eventBus],
   );
 
-  const canRemove = !readOnly && allowRemove && participants.length > minParticipants;
+  const canRemove =
+    !readOnly && allowRemove && participants.length > minParticipants;
 
   return (
     <VStack gap="md" className={cn("w-full", className)}>
@@ -105,11 +106,16 @@ export const ParticipantList: React.FC<ParticipantListProps> = ({
           <Typography variant="h4" className="text-neutral-800">
             {title}
           </Typography>
-          <Badge variant="neutral">{participants.length}</Badge>
+          <Badge variant="default">{participants.length}</Badge>
         </HStack>
 
         {!readOnly && allowAdd && (
-          <Button variant="secondary" size="sm" onClick={handleAdd} className="gap-1">
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={handleAdd}
+            className="gap-1"
+          >
             <Plus className="h-4 w-4" />
             Add Participant
           </Button>
@@ -123,7 +129,12 @@ export const ParticipantList: React.FC<ParticipantListProps> = ({
             <User className="h-8 w-8" />
             <Typography variant="body">No participants added yet</Typography>
             {!readOnly && allowAdd && (
-              <Button variant="primary" size="sm" onClick={handleAdd} className="gap-1">
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={handleAdd}
+                className="gap-1"
+              >
                 <Plus className="h-4 w-4" />
                 Add First Participant
               </Button>
@@ -141,17 +152,28 @@ export const ParticipantList: React.FC<ParticipantListProps> = ({
                     size="md"
                   />
                   <VStack gap="xs">
-                    <Typography variant="body" className="font-medium text-neutral-800">
+                    <Typography
+                      variant="body"
+                      className="font-medium text-neutral-800"
+                    >
                       {participant.name} {participant.surname}
                     </Typography>
-                    <HStack gap="xs" align="center" className="text-neutral-500">
+                    <HStack
+                      gap="xs"
+                      align="center"
+                      className="text-neutral-500"
+                    >
                       <Briefcase className="h-3 w-3" />
                       <Typography variant="small">
                         {participant.positionInCompany}
                       </Typography>
                     </HStack>
                     {participant.contactInfo && (
-                      <HStack gap="xs" align="center" className="text-neutral-500">
+                      <HStack
+                        gap="xs"
+                        align="center"
+                        className="text-neutral-500"
+                      >
                         <Phone className="h-3 w-3" />
                         <Typography variant="small">
                           {participant.contactInfo}
@@ -194,7 +216,8 @@ export const ParticipantList: React.FC<ParticipantListProps> = ({
       {/* Minimum participants warning */}
       {participants.length < minParticipants && (
         <Typography variant="small" className="text-amber-600">
-          At least {minParticipants} participant{minParticipants !== 1 ? "s" : ""} required
+          At least {minParticipants} participant
+          {minParticipants !== 1 ? "s" : ""} required
         </Typography>
       )}
     </VStack>

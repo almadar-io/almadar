@@ -53,7 +53,7 @@ export {
   type UseEntityMutationsOptions,
 } from './useEntityMutations';
 
-// Orbital mutations (event-based, recommended)
+// Almadar mutations (event-based, recommended)
 export {
   useOrbitalMutations,
   useSendOrbitalEvent,

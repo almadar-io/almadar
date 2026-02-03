@@ -1,11 +1,11 @@
 /**
- * Orbital Events Route E2E Tests
+ * Almadar Events Route E2E Tests
  *
- * End-to-end tests for the full orbital event flow:
+ * End-to-end tests for the full almadar event flow:
  * - Event processing through state machines
  * - Effect execution (emit, persist, set)
  * - ENTITY_* standard events for CRUD operations
- * - Cross-orbital communication
+ * - Cross-almadar communication
  *
  * @packageDocumentation
  */
@@ -43,7 +43,7 @@ vi.mock('@/middleware/traitExecution', () => ({
     })),
 }));
 
-describe('Orbital Events Route E2E', () => {
+describe('Almadar Events Route E2E', () => {
     let app: Express;
 
     beforeEach(() => {
@@ -96,7 +96,7 @@ describe('Orbital Events Route E2E', () => {
             expect(res.body.success).toBe(false);
         });
 
-        it('returns orbital info with traits', async () => {
+        it('returns almadar info with traits', async () => {
             const registration: OrbitalRegistration = {
                 name: 'TestOrbital',
                 entityType: 'TestEntity',
@@ -349,7 +349,7 @@ describe('Orbital Events Route E2E', () => {
         });
     });
 
-    describe('Cross-Orbital Communication', () => {
+    describe('Cross-Almadar Communication', () => {
         it('emitted events can be received by other orbitals', async () => {
             // Register two orbitals
             const orderOrbital: OrbitalRegistration = {

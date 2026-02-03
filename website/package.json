@@ -9,7 +9,7 @@
     "build": "npm run copy-storybook && npm run build:legacy && docusaurus build",
     "build:docusaurus": "docusaurus build",
     "build:legacy": "node scripts/build.js",
-    "copy-storybook": "if [ -d ../../orbital-shared/design-system ]; then mkdir -p static/storybook && (test -d ../../orbital-shared/design-system/storybook-static || (cd ../../orbital-shared/design-system && npm run build-storybook)) && cp -r ../../orbital-shared/design-system/storybook-static/* static/storybook/; else echo \"Skipping Storybook copy: Source not found\"; fi",
+    "copy-storybook": "if [ -d ../../almadar-shared/design-system ]; then mkdir -p static/storybook && (test -d ../../almadar-shared/design-system/storybook-static || (cd ../../almadar-shared/design-system && npm run build-storybook)) && cp -r ../../almadar-shared/design-system/storybook-static/* static/storybook/; else echo \"Skipping Storybook copy: Source not found\"; fi",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",

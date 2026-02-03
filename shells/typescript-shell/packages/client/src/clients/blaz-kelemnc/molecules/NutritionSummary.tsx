@@ -75,10 +75,11 @@ const getPercentage = (value: number, target: number): number => {
 
 // Get compliance status
 const getComplianceStatus = (
-  percentage: number
+  percentage: number,
 ): { status: "under" | "on-track" | "over"; color: string } => {
   if (percentage < 80) return { status: "under", color: "text-amber-600" };
-  if (percentage <= 110) return { status: "on-track", color: "text-emerald-600" };
+  if (percentage <= 110)
+    return { status: "on-track", color: "text-emerald-600" };
   return { status: "over", color: "text-red-600" };
 };
 
@@ -137,13 +138,29 @@ export const NutritionSummary: React.FC<NutritionSummaryProps> = ({
             </VStack>
           </HStack>
           <HStack gap="sm">
-            <Badge variant="secondary" size="sm" className={macroConfig.protein.bgColor}>
-              <span className={macroConfig.protein.color}>{summary.protein}g P</span>
+            <Badge
+              variant="default"
+              size="sm"
+              className={macroConfig.protein.bgColor}
+            >
+              <span className={macroConfig.protein.color}>
+                {summary.protein}g P
+              </span>
             </Badge>
-            <Badge variant="secondary" size="sm" className={macroConfig.carbs.bgColor}>
-              <span className={macroConfig.carbs.color}>{summary.carbs}g C</span>
+            <Badge
+              variant="default"
+              size="sm"
+              className={macroConfig.carbs.bgColor}
+            >
+              <span className={macroConfig.carbs.color}>
+                {summary.carbs}g C
+              </span>
             </Badge>
-            <Badge variant="secondary" size="sm" className={macroConfig.fat.bgColor}>
+            <Badge
+              variant="default"
+              size="sm"
+              className={macroConfig.fat.bgColor}
+            >
               <span className={macroConfig.fat.color}>{summary.fat}g F</span>
             </Badge>
           </HStack>
@@ -177,7 +194,7 @@ export const NutritionSummary: React.FC<NutritionSummaryProps> = ({
                 overallCompliance.status === "on-track"
                   ? "success"
                   : overallCompliance.status === "over"
-                    ? "error"
+                    ? "danger"
                     : "warning"
               }
             >
@@ -247,7 +264,10 @@ export const NutritionSummary: React.FC<NutritionSummaryProps> = ({
                   <Typography variant="small" className={config.color}>
                     {config.label}
                   </Typography>
-                  <Typography variant="h4" className={cn("font-bold", config.color)}>
+                  <Typography
+                    variant="h4"
+                    className={cn("font-bold", config.color)}
+                  >
                     {value}g
                   </Typography>
                   {target && percentage !== undefined && (
@@ -258,7 +278,10 @@ export const NutritionSummary: React.FC<NutritionSummaryProps> = ({
                       <Box rounded="full" className="h-1.5 w-full bg-white/50">
                         <Box
                           rounded="full"
-                          className={cn("h-full transition-all", config.barColor)}
+                          className={cn(
+                            "h-full transition-all",
+                            config.barColor,
+                          )}
                           style={{ width: `${Math.min(100, percentage)}%` }}
                         />
                       </Box>
@@ -276,7 +299,10 @@ export const NutritionSummary: React.FC<NutritionSummaryProps> = ({
             <Typography variant="small" className="text-neutral-500">
               Macro Ratio
             </Typography>
-            <Box rounded="full" className="h-3 w-full overflow-hidden bg-neutral-100">
+            <Box
+              rounded="full"
+              className="h-3 w-full overflow-hidden bg-neutral-100"
+            >
               <HStack gap="none" className="h-full">
                 <Box
                   className={cn("h-full", macroConfig.protein.barColor)}
@@ -301,19 +327,25 @@ export const NutritionSummary: React.FC<NutritionSummaryProps> = ({
             <HStack justify="between">
               <Typography variant="small" className={macroConfig.protein.color}>
                 {Math.round(
-                  (summary.protein / (summary.protein + summary.carbs + summary.fat)) * 100
+                  (summary.protein /
+                    (summary.protein + summary.carbs + summary.fat)) *
+                    100,
                 )}
                 % P
               </Typography>
               <Typography variant="small" className={macroConfig.carbs.color}>
                 {Math.round(
-                  (summary.carbs / (summary.protein + summary.carbs + summary.fat)) * 100
+                  (summary.carbs /
+                    (summary.protein + summary.carbs + summary.fat)) *
+                    100,
                 )}
                 % C
               </Typography>
               <Typography variant="small" className={macroConfig.fat.color}>
                 {Math.round(
-                  (summary.fat / (summary.protein + summary.carbs + summary.fat)) * 100
+                  (summary.fat /
+                    (summary.protein + summary.carbs + summary.fat)) *
+                    100,
                 )}
                 % F
               </Typography>

@@ -88,7 +88,12 @@ export interface TraineeComparisonProps {
 
 // Metric configuration
 const metricConfig = {
-  totalLifts: { label: "Total Lifts", icon: Dumbbell, format: (v: number) => v.toString() },
+  totalLifts: {
+    label: "Total Lifts",
+    icon: Dumbbell,
+    format: (v: number) => v.toString(),
+    higherIsBetter: true,
+  },
   avgWeightImprovement: {
     label: "Avg. Improvement",
     icon: TrendingUp,
@@ -101,21 +106,36 @@ const metricConfig = {
     format: (v: number) => `${v.toFixed(0)}%`,
     higherIsBetter: true,
   },
-  totalSessions: { label: "Sessions", icon: Calendar, format: (v: number) => v.toString() },
+  totalSessions: {
+    label: "Sessions",
+    icon: Calendar,
+    format: (v: number) => v.toString(),
+    higherIsBetter: true,
+  },
   avgWellnessScore: {
     label: "Wellness Score",
     icon: Activity,
     format: (v: number) => v.toFixed(1),
     higherIsBetter: true,
   },
-  milestonesAchieved: { label: "Milestones", icon: Award, format: (v: number) => v.toString() },
+  milestonesAchieved: {
+    label: "Milestones",
+    icon: Award,
+    format: (v: number) => v.toString(),
+    higherIsBetter: true,
+  },
   currentStreak: {
     label: "Current Streak",
     icon: TrendingUp,
     format: (v: number) => `${v} days`,
     higherIsBetter: true,
   },
-  bestLift: { label: "Best Lift", icon: Dumbbell, format: (v: number) => `${v}kg` },
+  bestLift: {
+    label: "Best Lift",
+    icon: Dumbbell,
+    format: (v: number) => `${v}kg`,
+    higherIsBetter: true,
+  },
   bodyFatChange: {
     label: "Body Fat",
     icon: Activity,
@@ -126,13 +146,14 @@ const metricConfig = {
     label: "Weight",
     icon: Activity,
     format: (v: number) => `${v > 0 ? "+" : ""}${v.toFixed(1)}kg`,
+    higherIsBetter: false,
   },
 };
 
 // Get ranking for a metric
 const getRanking = (
   trainees: TraineeComparisonData[],
-  metric: keyof TraineeComparisonData["metrics"]
+  metric: keyof TraineeComparisonData["metrics"],
 ): Map<string, number> => {
   const config = metricConfig[metric];
   const sorted = [...trainees].sort((a, b) => {
@@ -144,7 +165,10 @@ const getRanking = (
 };
 
 // Get trend indicator
-const getTrendIcon = (value: number | undefined, higherIsBetter: boolean = true) => {
+const getTrendIcon = (
+  value: number | undefined,
+  higherIsBetter: boolean = true,
+) => {
   if (value === undefined || Math.abs(value) < 0.1) {
     return { icon: Minus, color: "text-neutral-400" };
   }
@@ -177,7 +201,7 @@ export const TraineeComparison: React.FC<TraineeComparisonProps> = ({
     (trainee: TraineeComparisonData) => {
       eventBus.emit("UI:SELECT_TRAINEE", { row: trainee, entity });
     },
-    [eventBus, entity]
+    [eventBus, entity],
   );
 
   // Handle metric change
@@ -186,7 +210,7 @@ export const TraineeComparison: React.FC<TraineeComparisonProps> = ({
       setSelectedMetric(metric);
       eventBus.emit("UI:METRIC_CHANGE", { metric, entity });
     },
-    [eventBus, entity]
+    [eventBus, entity],
   );
 
   // Handle scroll
@@ -205,52 +229,62 @@ export const TraineeComparison: React.FC<TraineeComparisonProps> = ({
     const isSelected = metric === selectedMetric;
 
     return (
-      <HStack
+      <Box
         key={metric}
-        gap="md"
-        align="center"
-        className={cn(
-          "py-2 px-3 rounded-lg cursor-pointer transition-colors",
-          isSelected ? "bg-blue-50" : "hover:bg-neutral-50"
-        )}
+        as="button"
         onClick={() => handleMetricChange(metric)}
+        className={cn(
+          "py-2 px-3 rounded-lg cursor-pointer transition-colors w-full",
+          isSelected ? "bg-blue-50" : "hover:bg-neutral-50",
+        )}
       >
-        <HStack gap="sm" align="center" className="w-40">
-          <Icon className={cn("h-4 w-4", isSelected ? "text-blue-600" : "text-neutral-400")} />
-          <Typography
-            variant="small"
-            className={isSelected ? "font-medium text-blue-700" : "text-neutral-600"}
-          >
-            {config.label}
-          </Typography>
-        </HStack>
-        {visibleTrainees.map((trainee) => {
-          const value = trainee.metrics[metric];
-          const rank = rankings.get(trainee.id) || 0;
-          const trend = getTrendIcon(value, config.higherIsBetter);
-          const TrendIcon = trend.icon;
+        <HStack gap="md" align="center">
+          <HStack gap="sm" align="center" className="w-40">
+            <Icon
+              className={cn(
+                "h-4 w-4",
+                isSelected ? "text-blue-600" : "text-neutral-400",
+              )}
+            />
+            <Typography
+              variant="small"
+              className={
+                isSelected ? "font-medium text-blue-700" : "text-neutral-600"
+              }
+            >
+              {config.label}
+            </Typography>
+          </HStack>
+          {visibleTrainees.map((trainee) => {
+            const value = trainee.metrics[metric];
+            const rank = rankings.get(trainee.id) || 0;
+            const trend = getTrendIcon(value, config.higherIsBetter);
+            const TrendIcon = trend.icon;
 
-          return (
-            <Box key={trainee.id} className="flex-1 text-center">
-              <HStack gap="xs" justify="center" align="center">
-                <Typography
-                  variant="body"
-                  className={cn(
-                    "font-medium",
-                    isSelected && rank === 1 ? "text-green-600" : "",
-                    isSelected && rank === trainees.length ? "text-red-600" : ""
+            return (
+              <Box key={trainee.id} className="flex-1 text-center">
+                <HStack gap="xs" justify="center" align="center">
+                  <Typography
+                    variant="body"
+                    className={cn(
+                      "font-medium",
+                      isSelected && rank === 1 ? "text-green-600" : "",
+                      isSelected && rank === trainees.length
+                        ? "text-red-600"
+                        : "",
+                    )}
+                  >
+                    {value !== undefined ? config.format(value) : "-"}
+                  </Typography>
+                  {isSelected && value !== undefined && (
+                    <TrendIcon className={cn("h-3 w-3", trend.color)} />
                   )}
-                >
-                  {value !== undefined ? config.format(value) : "-"}
-                </Typography>
-                {isSelected && value !== undefined && (
-                  <TrendIcon className={cn("h-3 w-3", trend.color)} />
-                )}
-              </HStack>
-            </Box>
-          );
-        })}
-      </HStack>
+                </HStack>
+              </Box>
+            );
+          })}
+        </HStack>
+      </Box>
     );
   };
 
@@ -309,45 +343,50 @@ export const TraineeComparison: React.FC<TraineeComparisonProps> = ({
         </HStack>
 
         {/* Trainee Headers */}
-        <HStack gap="md" align="center" className="border-b border-neutral-100 pb-3">
+        <HStack
+          gap="md"
+          align="center"
+          className="border-b border-neutral-100 pb-3"
+        >
           <Box className="w-40" />
           {visibleTrainees.map((trainee) => {
             const rank = rankings.get(trainee.id) || 0;
             return (
-              <VStack
+              <Box
                 key={trainee.id}
-                gap="xs"
-                align="center"
-                className="flex-1 cursor-pointer hover:opacity-80"
+                as="button"
                 onClick={() => handleSelectTrainee(trainee)}
+                className="flex-1 cursor-pointer hover:opacity-80"
               >
-                <Box
-                  display="flex"
-                  rounded="full"
-                  className="items-center justify-center h-10 w-10 bg-neutral-100"
-                >
-                  {trainee.profileImage ? (
-                    <img
-                      src={trainee.profileImage}
-                      alt={trainee.name}
-                      className="h-10 w-10 rounded-full object-cover"
-                    />
-                  ) : (
-                    <User className="h-5 w-5 text-neutral-400" />
-                  )}
-                </Box>
-                <VStack gap="none" align="center">
-                  <Typography variant="label" className="text-center">
-                    {trainee.name}
-                  </Typography>
-                  {rank === 1 && (
-                    <Badge variant="primary" size="sm">
-                      <Award className="h-3 w-3 mr-1" />
-                      Top
-                    </Badge>
-                  )}
+                <VStack gap="xs" align="center">
+                  <Box
+                    display="flex"
+                    rounded="full"
+                    className="items-center justify-center h-10 w-10 bg-neutral-100"
+                  >
+                    {trainee.profileImage ? (
+                      <img
+                        src={trainee.profileImage}
+                        alt={trainee.name}
+                        className="h-10 w-10 rounded-full object-cover"
+                      />
+                    ) : (
+                      <User className="h-5 w-5 text-neutral-400" />
+                    )}
+                  </Box>
+                  <VStack gap="none" align="center">
+                    <Typography variant="label" className="text-center">
+                      {trainee.name}
+                    </Typography>
+                    {rank === 1 && (
+                      <Badge variant="primary" size="sm">
+                        <Award className="h-3 w-3 mr-1" />
+                        Top
+                      </Badge>
+                    )}
+                  </VStack>
                 </VStack>
-              </VStack>
+              </Box>
             );
           })}
         </HStack>
@@ -367,7 +406,11 @@ export const TraineeComparison: React.FC<TraineeComparisonProps> = ({
         </VStack>
 
         {/* Legend */}
-        <HStack gap="md" justify="center" className="border-t border-neutral-100 pt-3">
+        <HStack
+          gap="md"
+          justify="center"
+          className="border-t border-neutral-100 pt-3"
+        >
           <HStack gap="xs" align="center">
             <TrendingUp className="h-3 w-3 text-green-500" />
             <Typography variant="small" className="text-neutral-500">

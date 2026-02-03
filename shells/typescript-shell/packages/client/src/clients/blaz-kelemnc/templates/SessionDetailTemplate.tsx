@@ -106,7 +106,17 @@ export interface SessionDetailTemplateProps {
   className?: string;
 }
 
-const statusConfig = {
+type SessionAction = "START" | "COMPLETE" | "CANCEL";
+
+const statusConfig: Record<
+  string,
+  {
+    label: string;
+    color: string;
+    icon: typeof Calendar;
+    actions: SessionAction[];
+  }
+> = {
   scheduled: {
     label: "Scheduled",
     color: "bg-blue-100 text-blue-700",
@@ -149,7 +159,9 @@ const formatDuration = (minutes: number): string => {
   if (minutes < 60) return `${minutes} minutes`;
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
-  return mins > 0 ? `${hours}h ${mins}m` : `${hours} hour${hours > 1 ? "s" : ""}`;
+  return mins > 0
+    ? `${hours}h ${mins}m`
+    : `${hours} hour${hours > 1 ? "s" : ""}`;
 };
 
 export const SessionDetailTemplate: React.FC<SessionDetailTemplateProps> = ({
@@ -197,7 +209,11 @@ export const SessionDetailTemplate: React.FC<SessionDetailTemplateProps> = ({
   // Loading state
   if (isLoading) {
     return (
-      <VStack align="center" justify="center" className={cn("p-6 min-h-[400px]", className)}>
+      <VStack
+        align="center"
+        justify="center"
+        className={cn("p-6 min-h-[400px]", className)}
+      >
         <Spinner size="lg" />
         <Typography variant="body" className="text-neutral-500">
           Loading session details...
@@ -209,7 +225,11 @@ export const SessionDetailTemplate: React.FC<SessionDetailTemplateProps> = ({
   // Error state
   if (error) {
     return (
-      <VStack align="center" justify="center" className={cn("p-6 min-h-[400px]", className)}>
+      <VStack
+        align="center"
+        justify="center"
+        className={cn("p-6 min-h-[400px]", className)}
+      >
         <Typography variant="body" className="text-red-500">
           Error: {error.message}
         </Typography>
@@ -220,7 +240,11 @@ export const SessionDetailTemplate: React.FC<SessionDetailTemplateProps> = ({
   // No data state
   if (!data) {
     return (
-      <VStack align="center" justify="center" className={cn("p-6 min-h-[400px]", className)}>
+      <VStack
+        align="center"
+        justify="center"
+        className={cn("p-6 min-h-[400px]", className)}
+      >
         <Calendar className="h-12 w-12 text-neutral-300" />
         <Typography variant="h3" className="text-neutral-500">
           Session not found
@@ -251,11 +275,15 @@ export const SessionDetailTemplate: React.FC<SessionDetailTemplateProps> = ({
             <HStack gap="md" align="center" className="text-neutral-500">
               <HStack gap="xs" align="center">
                 <Calendar className="h-4 w-4" />
-                <Typography variant="body">{formatDateTime(data.scheduledAt)}</Typography>
+                <Typography variant="body">
+                  {formatDateTime(data.scheduledAt)}
+                </Typography>
               </HStack>
               <HStack gap="xs" align="center">
                 <Clock className="h-4 w-4" />
-                <Typography variant="body">{formatDuration(data.duration)}</Typography>
+                <Typography variant="body">
+                  {formatDuration(data.duration)}
+                </Typography>
               </HStack>
             </HStack>
           </VStack>
@@ -316,7 +344,8 @@ export const SessionDetailTemplate: React.FC<SessionDetailTemplateProps> = ({
                       <>
                         <Users className="h-4 w-4 text-blue-500" />
                         <Typography variant="body">
-                          Group Session ({data.maxParticipants || "unlimited"} max)
+                          Group Session ({data.maxParticipants || "unlimited"}{" "}
+                          max)
                         </Typography>
                       </>
                     ) : (
@@ -331,7 +360,9 @@ export const SessionDetailTemplate: React.FC<SessionDetailTemplateProps> = ({
                   <Typography variant="body" className="text-neutral-500">
                     Duration
                   </Typography>
-                  <Typography variant="body">{formatDuration(data.duration)}</Typography>
+                  <Typography variant="body">
+                    {formatDuration(data.duration)}
+                  </Typography>
                 </HStack>
                 {data.location && (
                   <HStack justify="between">
@@ -379,7 +410,10 @@ export const SessionDetailTemplate: React.FC<SessionDetailTemplateProps> = ({
                   <Youtube className="h-4 w-4 text-red-500" />
                   <Typography variant="h4">Session Video</Typography>
                 </HStack>
-                <ExerciseVideoLink url={data.youtubeLink} title="Watch Session Recording" />
+                <ExerciseVideoLink
+                  videoUrl={data.youtubeLink}
+                  exerciseName="Session Recording"
+                />
               </VStack>
             </Card>
           )}
@@ -423,7 +457,9 @@ export const SessionDetailTemplate: React.FC<SessionDetailTemplateProps> = ({
                             <User className="h-4 w-4 text-neutral-400" />
                           )}
                         </Box>
-                        <Typography variant="body">{participant.name}</Typography>
+                        <Typography variant="body">
+                          {participant.name}
+                        </Typography>
                       </HStack>
                       {participant.attended !== undefined && (
                         <Badge
@@ -450,7 +486,9 @@ export const SessionDetailTemplate: React.FC<SessionDetailTemplateProps> = ({
               <VStack gap="md">
                 <HStack gap="xs" align="center">
                   <Dumbbell className="h-4 w-4 text-neutral-400" />
-                  <Typography variant="h4">Exercises ({exercises.length})</Typography>
+                  <Typography variant="h4">
+                    Exercises ({exercises.length})
+                  </Typography>
                 </HStack>
                 <VStack gap="sm">
                   {exercises.map((exercise, index) => (

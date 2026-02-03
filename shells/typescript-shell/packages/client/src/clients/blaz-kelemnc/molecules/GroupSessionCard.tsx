@@ -113,7 +113,8 @@ export const GroupSessionCard: React.FC<GroupSessionCardProps> = ({
   const eventBus = useEventBus();
   const status = session.status || "scheduled";
   const config = statusConfig[status];
-  const currentCount = session.currentParticipants ?? session.participants?.length ?? 0;
+  const currentCount =
+    session.currentParticipants ?? session.participants?.length ?? 0;
   const spotsLeft = session.maxParticipants - currentCount;
   const isFull = spotsLeft <= 0;
 
@@ -128,7 +129,7 @@ export const GroupSessionCard: React.FC<GroupSessionCardProps> = ({
       e.stopPropagation();
       eventBus.emit("UI:MANAGE_ATTENDEES", { row: session, entity });
     },
-    [eventBus, session, entity]
+    [eventBus, session, entity],
   );
 
   if (compact) {
@@ -154,10 +155,7 @@ export const GroupSessionCard: React.FC<GroupSessionCardProps> = ({
               </Typography>
             </VStack>
           </HStack>
-          <Badge
-            variant={isFull ? "error" : "success"}
-            size="sm"
-          >
+          <Badge variant={isFull ? "danger" : "success"} size="sm">
             {isFull ? "Full" : `${spotsLeft} spots`}
           </Badge>
         </HStack>
@@ -170,7 +168,7 @@ export const GroupSessionCard: React.FC<GroupSessionCardProps> = ({
       className={cn(
         "p-4 cursor-pointer hover:shadow-md transition-shadow",
         status === "cancelled" && "opacity-60",
-        className
+        className,
       )}
       onClick={handleView}
     >
@@ -188,14 +186,16 @@ export const GroupSessionCard: React.FC<GroupSessionCardProps> = ({
             </Box>
             <VStack gap="none">
               <Typography variant="h4">{session.title}</Typography>
-              <Badge variant="secondary" size="sm" className={config.bgColor}>
+              <Badge variant="default" size="sm" className={config.bgColor}>
                 <span className={config.color}>{config.label}</span>
               </Badge>
             </VStack>
           </HStack>
 
           {/* Capacity badge */}
-          <Badge variant={isFull ? "error" : spotsLeft <= 3 ? "warning" : "success"}>
+          <Badge
+            variant={isFull ? "danger" : spotsLeft <= 3 ? "warning" : "success"}
+          >
             {isFull
               ? "Full"
               : `${spotsLeft} spot${spotsLeft !== 1 ? "s" : ""} left`}
@@ -238,63 +238,65 @@ export const GroupSessionCard: React.FC<GroupSessionCardProps> = ({
         </VStack>
 
         {/* Participants */}
-        {showAttendees && session.participants && session.participants.length > 0 && (
-          <VStack gap="sm">
-            <HStack justify="between" align="center">
-              <Typography variant="label" className="text-neutral-600">
-                Participants ({currentCount}/{session.maxParticipants})
-              </Typography>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleManageAttendees}
-              >
-                <UserPlus className="h-4 w-4 mr-1" />
-                Manage
-              </Button>
-            </HStack>
+        {showAttendees &&
+          session.participants &&
+          session.participants.length > 0 && (
+            <VStack gap="sm">
+              <HStack justify="between" align="center">
+                <Typography variant="label" className="text-neutral-600">
+                  Participants ({currentCount}/{session.maxParticipants})
+                </Typography>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleManageAttendees}
+                >
+                  <UserPlus className="h-4 w-4 mr-1" />
+                  Manage
+                </Button>
+              </HStack>
 
-            {/* Participant Avatars */}
-            <HStack gap="xs" className="flex-wrap">
-              {session.participants.slice(0, 5).map((participant) => (
-                <Box
-                  key={participant.id}
-                  title={participant.name}
-                  className="relative"
-                >
-                  {participant.profileImage ? (
-                    <img
-                      src={participant.profileImage}
-                      alt={participant.name}
-                      className="h-8 w-8 rounded-full object-cover border-2 border-white"
-                    />
-                  ) : (
-                    <Box
-                      display="flex"
-                      rounded="full"
-                      className="h-8 w-8 items-center justify-center bg-neutral-200 border-2 border-white"
-                    >
-                      <Typography variant="small" className="font-medium">
-                        {participant.name.charAt(0)}
-                      </Typography>
-                    </Box>
-                  )}
-                </Box>
-              ))}
-              {session.participants.length > 5 && (
-                <Box
-                  display="flex"
-                  rounded="full"
-                  className="h-8 w-8 items-center justify-center bg-neutral-100 border-2 border-white"
-                >
-                  <Typography variant="small" className="text-neutral-600">
-                    +{session.participants.length - 5}
-                  </Typography>
-                </Box>
-              )}
-            </HStack>
-          </VStack>
-        )}
+              {/* Participant Avatars */}
+              <HStack gap="xs" className="flex-wrap">
+                {session.participants.slice(0, 5).map((participant) => (
+                  <Box
+                    key={participant.id}
+                    title={participant.name}
+                    className="relative"
+                  >
+                    {participant.profileImage ? (
+                      <img
+                        src={participant.profileImage}
+                        alt={participant.name}
+                        className="h-8 w-8 rounded-full object-cover border-2 border-white"
+                      />
+                    ) : (
+                      <Box
+                        display="flex"
+                        rounded="full"
+                        className="h-8 w-8 items-center justify-center bg-neutral-200 border-2 border-white"
+                      >
+                        <Typography variant="small" className="font-medium">
+                          {participant.name.charAt(0)}
+                        </Typography>
+                      </Box>
+                    )}
+                  </Box>
+                ))}
+                {session.participants.length > 5 && (
+                  <Box
+                    display="flex"
+                    rounded="full"
+                    className="h-8 w-8 items-center justify-center bg-neutral-100 border-2 border-white"
+                  >
+                    <Typography variant="small" className="text-neutral-600">
+                      +{session.participants.length - 5}
+                    </Typography>
+                  </Box>
+                )}
+              </HStack>
+            </VStack>
+          )}
 
         {/* Actions */}
         <HStack gap="sm" className="border-t border-neutral-100 pt-3">
@@ -303,11 +305,7 @@ export const GroupSessionCard: React.FC<GroupSessionCardProps> = ({
             View Details
           </Button>
           {!isFull && status === "scheduled" && (
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={handleManageAttendees}
-            >
+            <Button variant="primary" size="sm" onClick={handleManageAttendees}>
               <UserPlus className="h-4 w-4 mr-1" />
               Add Participant
             </Button>

@@ -1,12 +1,12 @@
 {
-  "name": "@orbital/server",
+  "name": "@almadar/server",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "nodemon --watch src --watch ../shared/src --ext ts,js,json --exec tsx src/index.ts",
     "build": "tsc -b",
-    "bundle": "esbuild src/index.ts --bundle --platform=node --target=node20 --format=esm --outfile=dist/index.js --alias:@orbital/shared=../shared/src/index.ts --external:express --external:cors --external:helmet --external:zod --external:dotenv --external:firebase-admin --external:@faker-js/faker",
+    "bundle": "esbuild src/index.ts --bundle --platform=node --target=node20 --format=esm --outfile=dist/index.js --alias:@almadar/shared=../shared/src/index.ts --external:express --external:cors --external:helmet --external:zod --external:dotenv --external:firebase-admin --external:@faker-js/faker",
     "start": "node dist/index.js",
     "clean": "rm -rf dist",
     "test": "vitest --run",
@@ -14,7 +14,7 @@
     "lint": "eslint src/"
   },
   "dependencies": {
-    "@orbital/shared": "*",
+    "@almadar/shared": "*",
     "@faker-js/faker": "^9.3.0",
     "ws": "^8.18.0",
     "express": "^4.21.0",

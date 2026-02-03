@@ -216,7 +216,7 @@ export const WorkoutPlanCard: React.FC<WorkoutPlanCardProps> = ({
           </HStack>
           <HStack gap="sm" align="center">
             {exerciseCount > 0 && (
-              <Badge variant="secondary" size="sm">
+              <Badge variant="default" size="sm">
                 {exerciseCount} exercises
               </Badge>
             )}

@@ -30,7 +30,10 @@ import { LawReferenceBadge } from "../atoms/LawReferenceBadge";
 
 // Molecules
 import { ProgressHeader, ProgressStep } from "../molecules/ProgressHeader";
-import { ComplianceSummary, ComplianceStats } from "../molecules/ComplianceSummary";
+import {
+  ComplianceSummary,
+  ComplianceStats,
+} from "../molecules/ComplianceSummary";
 import { RuleCheckItem, RuleCheckItemProps } from "../molecules/RuleCheckItem";
 import { EntitySearch, SearchResult } from "../molecules/EntitySearch";
 import { ParticipantList, Participant } from "../molecules/ParticipantList";
@@ -40,10 +43,16 @@ import { RepeatableFormSection } from "../molecules/RepeatableFormSection";
 import { PhotoAttachment, Photo } from "../molecules/PhotoAttachment";
 import { ObjectionRecorder } from "../molecules/ObjectionRecorder";
 import { DocumentPreview } from "../molecules/DocumentPreview";
-import { InspectionTimeline, TimelineItem } from "../molecules/InspectionTimeline";
+import {
+  InspectionTimeline,
+  TimelineItem,
+} from "../molecules/InspectionTimeline";
 
 // Organisms
-import { FloatingActionMenu, QuickAction } from "../organisms/FloatingActionMenu";
+import {
+  FloatingActionMenu,
+  QuickAction,
+} from "../organisms/FloatingActionMenu";
 import { SignatureCapture } from "../organisms/SignatureCapture";
 
 import {
@@ -63,6 +72,11 @@ import {
   Briefcase,
   Search,
   Plus,
+  UserPlus,
+  FilePlus,
+  Camera,
+  Pause,
+  Play,
 } from "lucide-react";
 
 // =============================================================================
@@ -86,7 +100,10 @@ export type ContentStep = "rule-checking";
 
 export type PreparationStep = "findings" | "decisions";
 
-export type RecordStep = "document-generation" | "merchant-review" | "objections";
+export type RecordStep =
+  | "document-generation"
+  | "merchant-review"
+  | "objections";
 
 export type ClosingStep = "end-time" | "signatures" | "complete";
 
@@ -187,7 +204,12 @@ export interface InspectionData {
   findings: Finding[];
   decisions: Decision[];
   objections: Objection[];
-  collectedDocuments: Array<{ id: string; name: string; type: string; fileUrl: string }>;
+  collectedDocuments: Array<{
+    id: string;
+    name: string;
+    type: string;
+    fileUrl: string;
+  }>;
   startDateTime?: string;
   endDateTime?: string;
   inspectorSignature?: string;
@@ -245,10 +267,26 @@ const phases: PhaseConfig[] = [
     label: "Introduction",
     icon: Briefcase,
     steps: [
-      { id: "case-info", label: "Case Info", documentSection: "1. SPLOŠNI PODATKI" },
-      { id: "company-data", label: "Company Data", documentSection: "2. PODATKI O ZAVEZANCU" },
-      { id: "participants", label: "Participants", documentSection: "3. PRISOTNE OSEBE" },
-      { id: "field-selection", label: "Field Selection", documentSection: "4. PREDMET PREGLEDA" },
+      {
+        id: "case-info",
+        label: "Case Info",
+        documentSection: "1. SPLOŠNI PODATKI",
+      },
+      {
+        id: "company-data",
+        label: "Company Data",
+        documentSection: "2. PODATKI O ZAVEZANCU",
+      },
+      {
+        id: "participants",
+        label: "Participants",
+        documentSection: "3. PRISOTNE OSEBE",
+      },
+      {
+        id: "field-selection",
+        label: "Field Selection",
+        documentSection: "4. PREDMET PREGLEDA",
+      },
     ],
   },
   {
@@ -256,7 +294,11 @@ const phases: PhaseConfig[] = [
     label: "Inspection",
     icon: ClipboardCheck,
     steps: [
-      { id: "rule-checking", label: "Rule Checking", documentSection: "5. UGOTOVITVE PRI PREGLEDU" },
+      {
+        id: "rule-checking",
+        label: "Rule Checking",
+        documentSection: "5. UGOTOVITVE PRI PREGLEDU",
+      },
     ],
   },
   {
@@ -265,7 +307,11 @@ const phases: PhaseConfig[] = [
     icon: FileText,
     steps: [
       { id: "findings", label: "Findings", documentSection: "6. UGOTOVITVE" },
-      { id: "decisions", label: "Decisions", documentSection: "7. ODLOČBE IN UKREPI" },
+      {
+        id: "decisions",
+        label: "Decisions",
+        documentSection: "7. ODLOČBE IN UKREPI",
+      },
     ],
   },
   {
@@ -275,7 +321,11 @@ const phases: PhaseConfig[] = [
     steps: [
       { id: "document-generation", label: "Generate Document" },
       { id: "merchant-review", label: "Merchant Review" },
-      { id: "objections", label: "Objections", documentSection: "9. PRIPOMBE ZAVEZANCA" },
+      {
+        id: "objections",
+        label: "Objections",
+        documentSection: "9. PRIPOMBE ZAVEZANCA",
+      },
     ],
   },
   {
@@ -333,7 +383,9 @@ function mapPhaseToIndicator(phase: ProcessPhase): InspectionPhase {
 // Component
 // =============================================================================
 
-export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps> = ({
+export const InspectionProcessTemplate: React.FC<
+  InspectionProcessTemplateProps
+> = ({
   data,
   availableInspectors = [],
   availableFields = [],
@@ -360,41 +412,41 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
   const totalRules = data.rules.length;
   const checkedRules = Object.keys(data.ruleChecks).length;
   const compliant = Object.values(data.ruleChecks).filter(
-    (r) => r.answer === "compliant"
+    (r) => r.answer === "compliant",
   ).length;
   const nonCompliant = Object.values(data.ruleChecks).filter(
-    (r) => r.answer === "non-compliant"
+    (r) => r.answer === "non-compliant",
   ).length;
   const notChecked = totalRules - checkedRules;
 
   const complianceStats: ComplianceStats = {
+    total: totalRules,
     compliant,
     nonCompliant,
     notChecked,
-    totalRules,
-    criticalCount: Object.values(data.ruleChecks).filter(
+    critical: Object.values(data.ruleChecks).filter(
       (r) =>
         r.answer === "non-compliant" &&
-        data.rules.find((rule) => rule.id === r.ruleId)?.severity === "critical"
+        data.rules.find((rule) => rule.id === r.ruleId)?.severity ===
+          "critical",
     ).length,
-    majorCount: Object.values(data.ruleChecks).filter(
+    major: Object.values(data.ruleChecks).filter(
       (r) =>
         r.answer === "non-compliant" &&
-        data.rules.find((rule) => rule.id === r.ruleId)?.severity === "major"
+        data.rules.find((rule) => rule.id === r.ruleId)?.severity === "major",
     ).length,
-    minorCount: Object.values(data.ruleChecks).filter(
+    minor: Object.values(data.ruleChecks).filter(
       (r) =>
         r.answer === "non-compliant" &&
-        data.rules.find((rule) => rule.id === r.ruleId)?.severity === "minor"
+        data.rules.find((rule) => rule.id === r.ruleId)?.severity === "minor",
     ).length,
   };
 
   // Build progress steps for header
   const progressSteps: ProgressStep[] = allSteps.map((step, index) => ({
     id: step,
-    label: phases
-      .flatMap((p) => p.steps)
-      .find((s) => s.id === step)?.label || step,
+    label:
+      phases.flatMap((p) => p.steps).find((s) => s.id === step)?.label || step,
     completed: index < currentStepIndex,
     current: step === currentStep,
   }));
@@ -436,33 +488,29 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
     {
       id: "add-participant",
       label: "Add Participant",
-      icon: "user-plus",
-      action: "add_participant",
+      icon: UserPlus,
     },
     {
       id: "collect-document",
       label: "Collect Document",
-      icon: "file-plus",
-      action: "collect_document",
+      icon: FilePlus,
     },
     {
       id: "take-photo",
       label: "Take Photo",
-      icon: "camera",
-      action: "take_photo",
+      icon: Camera,
     },
     {
       id: "pause",
       label: isPaused ? "Resume" : "Pause",
-      icon: isPaused ? "play" : "pause",
-      action: isPaused ? "resume" : "pause",
+      icon: isPaused ? Play : Pause,
     },
     {
       id: "sos",
       label: "SOS Exception",
-      icon: "alert-triangle",
-      action: "sos",
-      variant: "danger",
+      icon: AlertTriangle,
+      color: "text-red-600",
+      bgColor: "bg-red-100",
     },
   ];
 
@@ -479,7 +527,9 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
             <Typography variant="small" className="text-neutral-500 mb-1">
               Case Number
             </Typography>
-            <Typography variant="h4">{data.caseNumber || "Auto-generated"}</Typography>
+            <Typography variant="h4">
+              {data.caseNumber || "Auto-generated"}
+            </Typography>
           </Box>
 
           <Box>
@@ -495,12 +545,18 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
                 sublabel: `${i.department} - ${i.badgeNumber}`,
               }))}
               selectedId={data.inspector?.id}
-              onSearch={(q) => eventBus.emit("UI:SEARCH_INSPECTOR", { query: q })}
-              onSelect={(result) =>
-                onDataUpdate?.({
-                  inspector: availableInspectors.find((i) => i.id === result.id),
-                })
+              onSearch={(q) =>
+                eventBus.emit("UI:SEARCH_INSPECTOR", { query: q })
               }
+              onSelect={(result) => {
+                if (result) {
+                  onDataUpdate?.({
+                    inspector: availableInspectors.find(
+                      (i) => i.id === result.id,
+                    ),
+                  });
+                }
+              }}
               allowCreate={false}
             />
           </Box>
@@ -513,7 +569,9 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
               type="datetime-local"
               className="w-full p-2 border rounded"
               value={data.startDateTime || ""}
-              onChange={(e) => onDataUpdate?.({ startDateTime: e.target.value })}
+              onChange={(e) =>
+                onDataUpdate?.({ startDateTime: e.target.value })
+              }
             />
           </Box>
 
@@ -522,20 +580,26 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
               Accompanying Persons
             </Typography>
             <RepeatableFormSection
+              sectionType="accompanying-persons"
               title="Accompanying Persons"
               items={data.accompanyingPersons.map((p) => ({
                 id: p.id,
-                data: p,
+                data: p as unknown as Record<string, unknown>,
               }))}
-              renderItem={(item) => (
-                <HStack gap="md" className="flex-1">
-                  <Typography>{item.data.name}</Typography>
-                  <Badge variant="secondary">{item.data.organization}</Badge>
-                  <Typography variant="small" className="text-neutral-500">
-                    {item.data.role}
-                  </Typography>
-                </HStack>
-              )}
+              renderItem={(item) => {
+                const itemData = item.data as
+                  | { name?: string; organization?: string; role?: string }
+                  | undefined;
+                return (
+                  <HStack gap="md" className="flex-1">
+                    <Typography>{itemData?.name}</Typography>
+                    <Badge variant="default">{itemData?.organization}</Badge>
+                    <Typography variant="small" className="text-neutral-500">
+                      {itemData?.role}
+                    </Typography>
+                  </HStack>
+                );
+              }}
               renderForm={(onAdd) => (
                 <VStack gap="sm" align="stretch">
                   <input
@@ -560,9 +624,15 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
                     variant="primary"
                     size="sm"
                     onClick={() => {
-                      const name = (document.getElementById("acc-name") as HTMLInputElement)?.value;
-                      const org = (document.getElementById("acc-org") as HTMLInputElement)?.value;
-                      const role = (document.getElementById("acc-role") as HTMLInputElement)?.value;
+                      const name = (
+                        document.getElementById("acc-name") as HTMLInputElement
+                      )?.value;
+                      const org = (
+                        document.getElementById("acc-org") as HTMLInputElement
+                      )?.value;
+                      const role = (
+                        document.getElementById("acc-role") as HTMLInputElement
+                      )?.value;
                       if (name && org) {
                         onAdd({ name, organization: org, role });
                       }
@@ -573,11 +643,12 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
                 </VStack>
               )}
               onAdd={(person) => {
+                const p = person as Record<string, unknown> | undefined;
                 const newPerson: AccompanyingPerson = {
                   id: `acc-${Date.now()}`,
-                  name: person.name,
-                  organization: person.organization,
-                  role: person.role || "",
+                  name: String(p?.name ?? ""),
+                  organization: String(p?.organization ?? ""),
+                  role: String(p?.role ?? ""),
                 };
                 onDataUpdate?.({
                   accompanyingPersons: [...data.accompanyingPersons, newPerson],
@@ -585,7 +656,9 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
               }}
               onRemove={(id) => {
                 onDataUpdate?.({
-                  accompanyingPersons: data.accompanyingPersons.filter((p) => p.id !== id),
+                  accompanyingPersons: data.accompanyingPersons.filter(
+                    (p) => p.id !== id,
+                  ),
                 });
               }}
             />
@@ -608,6 +681,7 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
             selectedId={data.company?.id}
             onSearch={(q) => onCompanySearch?.(q)}
             onSelect={(result) =>
+              result &&
               eventBus.emit("UI:COMPANY_SELECTED", { companyId: result.id })
             }
             onCreateNew={() => eventBus.emit("UI:CREATE_NEW_COMPANY", {})}
@@ -644,7 +718,8 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
                     Address
                   </Typography>
                   <Typography>
-                    {data.company.address.street}, {data.company.address.postalCode}{" "}
+                    {data.company.address.street},{" "}
+                    {data.company.address.postalCode}{" "}
                     {data.company.address.city}
                   </Typography>
                 </Box>
@@ -660,7 +735,8 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
     <VStack gap="lg" align="stretch">
       <Typography variant="h3">Participants</Typography>
       <Typography variant="body" className="text-neutral-600">
-        At least one company representative must be present during the inspection.
+        At least one company representative must be present during the
+        inspection.
       </Typography>
       <Card className="p-4">
         <ParticipantList
@@ -725,7 +801,7 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
     <VStack gap="lg" align="stretch">
       <HStack justify="between" align="center">
         <Typography variant="h3">Rule Checking</Typography>
-        <Badge variant="secondary">
+        <Badge variant="default">
           {checkedRules} / {totalRules} checked
         </Badge>
       </HStack>
@@ -787,7 +863,7 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
                 <HStack key={ruleId} gap="sm" className="text-red-600">
                   <Badge
                     variant={
-                      rule?.severity === "critical" ? "error" : "warning"
+                      rule?.severity === "critical" ? "danger" : "warning"
                     }
                   >
                     {rule?.severity}
@@ -801,29 +877,38 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
 
       {/* Add findings */}
       <RepeatableFormSection
+        sectionType="findings"
         title="Formal Findings"
-        items={data.findings.map((f) => ({ id: f.id, data: f }))}
-        renderItem={(item) => (
-          <VStack gap="sm" align="stretch" className="flex-1">
-            <HStack justify="between">
-              <Typography fontWeight="medium">{item.data.description}</Typography>
-              <Badge
-                variant={
-                  item.data.severity === "critical"
-                    ? "error"
-                    : item.data.severity === "major"
-                    ? "warning"
-                    : "secondary"
-                }
-              >
-                {item.data.severity}
-              </Badge>
-            </HStack>
-            <Typography variant="small" className="text-neutral-500">
-              {item.data.recommendation}
-            </Typography>
-          </VStack>
-        )}
+        items={data.findings.map((f) => ({
+          id: f.id,
+          data: f as unknown as Record<string, unknown>,
+        }))}
+        renderItem={(item) => {
+          const d = item.data as Record<string, unknown> | undefined;
+          return (
+            <VStack gap="sm" align="stretch" className="flex-1">
+              <HStack justify="between">
+                <Typography weight="medium">
+                  {String(d?.description ?? "")}
+                </Typography>
+                <Badge
+                  variant={
+                    d?.severity === "critical"
+                      ? "danger"
+                      : d?.severity === "major"
+                        ? "warning"
+                        : "default"
+                  }
+                >
+                  {String(d?.severity ?? "")}
+                </Badge>
+              </HStack>
+              <Typography variant="small" className="text-neutral-500">
+                {String(d?.recommendation ?? "")}
+              </Typography>
+            </VStack>
+          );
+        }}
         renderForm={(onAdd) => (
           <VStack gap="sm" align="stretch">
             <textarea
@@ -846,9 +931,17 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
               variant="primary"
               size="sm"
               onClick={() => {
-                const desc = (document.getElementById("finding-desc") as HTMLTextAreaElement)?.value;
-                const severity = (document.getElementById("finding-severity") as HTMLSelectElement)?.value;
-                const rec = (document.getElementById("finding-rec") as HTMLTextAreaElement)?.value;
+                const desc = (
+                  document.getElementById("finding-desc") as HTMLTextAreaElement
+                )?.value;
+                const severity = (
+                  document.getElementById(
+                    "finding-severity",
+                  ) as HTMLSelectElement
+                )?.value;
+                const rec = (
+                  document.getElementById("finding-rec") as HTMLTextAreaElement
+                )?.value;
                 if (desc) {
                   onAdd({ description: desc, severity, recommendation: rec });
                 }
@@ -859,17 +952,20 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
           </VStack>
         )}
         onAdd={(findingData) => {
+          const fd = findingData as Record<string, unknown> | undefined;
           const newFinding: Finding = {
             id: `finding-${Date.now()}`,
-            description: findingData.description,
-            severity: findingData.severity as Finding["severity"],
+            description: String(fd?.description ?? ""),
+            severity: (fd?.severity as Finding["severity"]) ?? "observation",
             relatedRuleIds: [],
-            recommendation: findingData.recommendation || "",
+            recommendation: String(fd?.recommendation ?? ""),
           };
           onDataUpdate?.({ findings: [...data.findings, newFinding] });
         }}
         onRemove={(id) => {
-          onDataUpdate?.({ findings: data.findings.filter((f) => f.id !== id) });
+          onDataUpdate?.({
+            findings: data.findings.filter((f) => f.id !== id),
+          });
         }}
       />
     </VStack>
@@ -880,30 +976,39 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
       <Typography variant="h3">Decisions & Orders</Typography>
 
       <RepeatableFormSection
+        sectionType="decisions"
         title="Required Actions"
-        items={data.decisions.map((d) => ({ id: d.id, data: d }))}
-        renderItem={(item) => (
-          <VStack gap="sm" align="stretch" className="flex-1">
-            <Typography fontWeight="medium">{item.data.orderText}</Typography>
-            <HStack gap="md">
-              <Badge variant="secondary">
-                <Clock className="h-3 w-3 mr-1" />
-                Due: {item.data.deadline}
-              </Badge>
-              <Badge
-                variant={
-                  item.data.status === "completed"
-                    ? "success"
-                    : item.data.status === "acknowledged"
-                    ? "primary"
-                    : "warning"
-                }
-              >
-                {item.data.status}
-              </Badge>
-            </HStack>
-          </VStack>
-        )}
+        items={data.decisions.map((d) => ({
+          id: d.id,
+          data: d as unknown as Record<string, unknown>,
+        }))}
+        renderItem={(item) => {
+          const d = item.data as Record<string, unknown> | undefined;
+          return (
+            <VStack gap="sm" align="stretch" className="flex-1">
+              <Typography weight="medium">
+                {String(d?.orderText ?? "")}
+              </Typography>
+              <HStack gap="md">
+                <Badge variant="default">
+                  <Clock className="h-3 w-3 mr-1" />
+                  Due: {String(d?.deadline ?? "")}
+                </Badge>
+                <Badge
+                  variant={
+                    d?.status === "completed"
+                      ? "success"
+                      : d?.status === "acknowledged"
+                        ? "primary"
+                        : "warning"
+                  }
+                >
+                  {String(d?.status ?? "")}
+                </Badge>
+              </HStack>
+            </VStack>
+          );
+        }}
         renderForm={(onAdd) => (
           <VStack gap="sm" align="stretch">
             <textarea
@@ -920,8 +1025,16 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
               variant="primary"
               size="sm"
               onClick={() => {
-                const text = (document.getElementById("decision-text") as HTMLTextAreaElement)?.value;
-                const deadline = (document.getElementById("decision-deadline") as HTMLInputElement)?.value;
+                const text = (
+                  document.getElementById(
+                    "decision-text",
+                  ) as HTMLTextAreaElement
+                )?.value;
+                const deadline = (
+                  document.getElementById(
+                    "decision-deadline",
+                  ) as HTMLInputElement
+                )?.value;
                 if (text && deadline) {
                   onAdd({ orderText: text, deadline });
                 }
@@ -932,17 +1045,20 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
           </VStack>
         )}
         onAdd={(decisionData) => {
+          const dd = decisionData as Record<string, unknown> | undefined;
           const newDecision: Decision = {
             id: `decision-${Date.now()}`,
-            orderText: decisionData.orderText,
-            deadline: decisionData.deadline,
+            orderText: String(dd?.orderText ?? ""),
+            deadline: String(dd?.deadline ?? ""),
             relatedFindingIds: [],
             status: "pending",
           };
           onDataUpdate?.({ decisions: [...data.decisions, newDecision] });
         }}
         onRemove={(id) => {
-          onDataUpdate?.({ decisions: data.decisions.filter((d) => d.id !== id) });
+          onDataUpdate?.({
+            decisions: data.decisions.filter((d) => d.id !== id),
+          });
         }}
       />
     </VStack>
@@ -952,7 +1068,8 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
     <VStack gap="lg" align="stretch">
       <Typography variant="h3">Document Generation</Typography>
       <Typography variant="body" className="text-neutral-600">
-        Review the compiled inspection document before presenting to the merchant.
+        Review the compiled inspection document before presenting to the
+        merchant.
       </Typography>
 
       <DocumentPreview
@@ -960,8 +1077,12 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
         subtitle={`Case #${data.caseNumber}`}
         previewUrl={`/api/inspections/${data.id}/preview`}
         downloadUrl={`/api/inspections/${data.id}/download`}
-        onDownload={() => eventBus.emit("UI:DOWNLOAD_DOCUMENT", { inspectionId: data.id })}
-        onPrint={() => eventBus.emit("UI:PRINT_DOCUMENT", { inspectionId: data.id })}
+        onDownload={() =>
+          eventBus.emit("UI:DOWNLOAD_DOCUMENT", { inspectionId: data.id })
+        }
+        onPrint={() =>
+          eventBus.emit("UI:PRINT_DOCUMENT", { inspectionId: data.id })
+        }
       />
 
       <Card className="p-4">
@@ -977,7 +1098,9 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
                 .map((step) => (
                   <HStack key={step.id} gap="sm" className="ml-4">
                     <CheckCircle className="h-4 w-4 text-green-500" />
-                    <Typography variant="small">{step.documentSection}</Typography>
+                    <Typography variant="small">
+                      {step.documentSection}
+                    </Typography>
                   </HStack>
                 ))}
             </Box>
@@ -999,7 +1122,8 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
           <HStack gap="sm">
             <Scale className="h-5 w-5 text-blue-600" />
             <Typography className="text-blue-700 font-medium">
-              The merchant has the right to review all findings and raise objections.
+              The merchant has the right to review all findings and raise
+              objections.
             </Typography>
           </HStack>
         </VStack>
@@ -1033,7 +1157,9 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
             <Card key={objection.id} className="p-4">
               <VStack gap="sm" align="stretch">
                 <HStack justify="between">
-                  <Badge variant="secondary">Section: {objection.sectionRef}</Badge>
+                  <Badge variant="default">
+                    Section: {objection.sectionRef}
+                  </Badge>
                   <Badge
                     variant={
                       objection.status === "resolved" ? "success" : "warning"
@@ -1048,7 +1174,9 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
                     <Typography variant="small" className="text-neutral-500">
                       Inspector Response:
                     </Typography>
-                    <Typography variant="small">{objection.response}</Typography>
+                    <Typography variant="small">
+                      {objection.response}
+                    </Typography>
                   </Box>
                 )}
               </VStack>
@@ -1058,11 +1186,19 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
       )}
 
       <ObjectionRecorder
-        onSubmit={(sectionRef, text) => {
+        onSubmit={(sectionRefOrObj, text) => {
+          const sectionRef =
+            typeof sectionRefOrObj === "string"
+              ? sectionRefOrObj
+              : (sectionRefOrObj?.participantId ?? "");
+          const objText =
+            typeof sectionRefOrObj === "string"
+              ? (text ?? "")
+              : (sectionRefOrObj?.text ?? "");
           const newObjection: Objection = {
             id: `obj-${Date.now()}`,
             sectionRef,
-            objectionText: text,
+            objectionText: objText,
             status: "pending",
           };
           onDataUpdate?.({ objections: [...data.objections, newObjection] });
@@ -1105,7 +1241,8 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
     <VStack gap="lg" align="stretch">
       <Typography variant="h3">Signatures</Typography>
       <Typography variant="body" className="text-neutral-600">
-        Both the inspector and merchant representative must sign the inspection record.
+        Both the inspector and merchant representative must sign the inspection
+        record.
       </Typography>
 
       <Card className="p-4">
@@ -1143,7 +1280,8 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
           <HStack gap="sm">
             <AlertTriangle className="h-5 w-5 text-yellow-600" />
             <Typography className="text-yellow-700">
-              Both signatures are required to complete the inspection (ZIN Art. 28)
+              Both signatures are required to complete the inspection (ZIN Art.
+              28)
             </Typography>
           </HStack>
         </Card>
@@ -1157,47 +1295,54 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
         <CheckCircle className="h-16 w-16 text-green-600" />
       </Box>
       <Typography variant="h2">Inspection Complete</Typography>
-      <Typography variant="body" className="text-neutral-600 text-center max-w-md">
-        The inspection has been successfully completed. You can download the final
-        document or archive it to the information system.
+      <Typography
+        variant="body"
+        className="text-neutral-600 text-center max-w-md"
+      >
+        The inspection has been successfully completed. You can download the
+        final document or archive it to the information system.
       </Typography>
 
       <Card className="p-4 w-full max-w-md">
         <VStack gap="sm" align="stretch">
           <HStack justify="between">
             <Typography>Case Number</Typography>
-            <Typography fontWeight="medium">{data.caseNumber}</Typography>
+            <Typography weight="medium">{data.caseNumber}</Typography>
           </HStack>
           <HStack justify="between">
             <Typography>Company</Typography>
-            <Typography fontWeight="medium">{data.company?.name}</Typography>
+            <Typography weight="medium">{data.company?.name}</Typography>
           </HStack>
           <HStack justify="between">
             <Typography>Rules Checked</Typography>
-            <Typography fontWeight="medium">{checkedRules}</Typography>
+            <Typography weight="medium">{checkedRules}</Typography>
           </HStack>
           <HStack justify="between">
             <Typography>Findings</Typography>
-            <Typography fontWeight="medium">{data.findings.length}</Typography>
+            <Typography weight="medium">{data.findings.length}</Typography>
           </HStack>
           <HStack justify="between">
             <Typography>Decisions</Typography>
-            <Typography fontWeight="medium">{data.decisions.length}</Typography>
+            <Typography weight="medium">{data.decisions.length}</Typography>
           </HStack>
         </VStack>
       </Card>
 
       <HStack gap="md">
         <Button
-          variant="secondary"
-          onClick={() => eventBus.emit("UI:DOWNLOAD_FINAL", { inspectionId: data.id })}
+          variant="default"
+          onClick={() =>
+            eventBus.emit("UI:DOWNLOAD_FINAL", { inspectionId: data.id })
+          }
         >
           <FileText className="h-4 w-4 mr-2" />
           Download PDF
         </Button>
         <Button
           variant="primary"
-          onClick={() => eventBus.emit("UI:ARCHIVE_INSPECTION", { inspectionId: data.id })}
+          onClick={() =>
+            eventBus.emit("UI:ARCHIVE_INSPECTION", { inspectionId: data.id })
+          }
         >
           <CheckCircle className="h-4 w-4 mr-2" />
           Archive to System
@@ -1302,9 +1447,11 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
         <Box className="max-w-6xl mx-auto p-2">
           <HStack gap="none" className="overflow-x-auto">
             {phases.map((phase, phaseIndex) => {
-              const phaseStepIndices = phase.steps.map((s) => getStepIndex(s.id));
+              const phaseStepIndices = phase.steps.map((s) =>
+                getStepIndex(s.id),
+              );
               const isPhaseComplete = phaseStepIndices.every(
-                (i) => i < currentStepIndex
+                (i) => i < currentStepIndex,
               );
               const isCurrentPhase = phase.id === currentPhase;
               const Icon = phase.icon;
@@ -1316,7 +1463,7 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
                     "flex-1 p-3 border-b-2 transition-all",
                     isCurrentPhase && "border-blue-500 bg-blue-50",
                     isPhaseComplete && !isCurrentPhase && "border-green-500",
-                    !isCurrentPhase && !isPhaseComplete && "border-transparent"
+                    !isCurrentPhase && !isPhaseComplete && "border-transparent",
                   )}
                 >
                   <HStack gap="sm" justify="center">
@@ -1326,16 +1473,16 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
                       <Icon
                         className={cn(
                           "h-5 w-5",
-                          isCurrentPhase ? "text-blue-600" : "text-neutral-400"
+                          isCurrentPhase ? "text-blue-600" : "text-neutral-400",
                         )}
                       />
                     )}
                     <Typography
                       variant="small"
-                      fontWeight={isCurrentPhase ? "semibold" : "normal"}
+                      weight={isCurrentPhase ? "semibold" : "normal"}
                       className={cn(
                         isCurrentPhase && "text-blue-700",
-                        isPhaseComplete && !isCurrentPhase && "text-green-700"
+                        isPhaseComplete && !isCurrentPhase && "text-green-700",
                       )}
                     >
                       {phase.label}
@@ -1355,12 +1502,15 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
           subtitle={`Step ${currentStepIndex + 1} of ${allSteps.length}`}
           phase={mapPhaseToIndicator(currentPhase)}
           steps={progressSteps.slice(
-            getStepIndex(phases.find((p) => p.id === currentPhase)?.steps[0].id || "case-info"),
+            getStepIndex(
+              phases.find((p) => p.id === currentPhase)?.steps[0].id ||
+                "case-info",
+            ),
             getStepIndex(
               phases.find((p) => p.id === currentPhase)?.steps[
                 phases.find((p) => p.id === currentPhase)!.steps.length - 1
-              ].id || "case-info"
-            ) + 1
+              ].id || "case-info",
+            ) + 1,
           )}
           compact
         />
@@ -1376,7 +1526,7 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
         <Box className="max-w-6xl mx-auto p-4">
           <HStack justify="between" align="center">
             <Button
-              variant="secondary"
+              variant="default"
               onClick={handlePrevious}
               disabled={isFirstStep}
               className="gap-2"
@@ -1386,7 +1536,11 @@ export const InspectionProcessTemplate: React.FC<InspectionProcessTemplateProps>
             </Button>
 
             <HStack gap="sm">
-              <Button variant="ghost" onClick={handleSaveDraft} className="gap-2">
+              <Button
+                variant="ghost"
+                onClick={handleSaveDraft}
+                className="gap-2"
+              >
                 <Save className="h-4 w-4" />
                 Save Draft
               </Button>

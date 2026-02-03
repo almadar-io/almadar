@@ -19,7 +19,13 @@ import { Typography } from "../../../components/atoms/Typography";
 import { Button } from "../../../components/atoms/Button";
 import { Card } from "../../../components/atoms/Card";
 import { useEventBus } from "../../../hooks/useEventBus";
-import { Sparkles, RefreshCw, Lightbulb, AlertCircle, CheckCircle } from "lucide-react";
+import {
+  Sparkles,
+  RefreshCw,
+  Lightbulb,
+  AlertCircle,
+  CheckCircle,
+} from "lucide-react";
 
 export interface AIAnalysisData {
   id?: string;
@@ -59,12 +65,18 @@ export const AIAnalysisPanel: React.FC<AIAnalysisPanelProps> = ({
   const eventBus = useEventBus();
 
   const handleRegenerate = useCallback(() => {
+    if (!analysis) return;
     eventBus.emit("UI:REGENERATE_ANALYSIS", {
       resourceType: analysis.resourceType,
       resourceId: analysis.resourceId,
       entity,
     });
   }, [eventBus, analysis, entity]);
+
+  // Guard against undefined analysis
+  if (!analysis) {
+    return null;
+  }
 
   if (compact) {
     return (
@@ -84,7 +96,12 @@ export const AIAnalysisPanel: React.FC<AIAnalysisPanelProps> = ({
   }
 
   return (
-    <Card className={cn("p-4 bg-gradient-to-br from-purple-50 to-indigo-50", className)}>
+    <Card
+      className={cn(
+        "p-4 bg-gradient-to-br from-purple-50 to-indigo-50",
+        className,
+      )}
+    >
       <VStack gap="md">
         {/* Header */}
         <HStack justify="between" align="center">
@@ -119,7 +136,9 @@ export const AIAnalysisPanel: React.FC<AIAnalysisPanelProps> = ({
               onClick={handleRegenerate}
               disabled={isLoading}
             >
-              <RefreshCw className={cn("h-4 w-4 mr-1", isLoading && "animate-spin")} />
+              <RefreshCw
+                className={cn("h-4 w-4 mr-1", isLoading && "animate-spin")}
+              />
               {isLoading ? "Analyzing..." : "Regenerate"}
             </Button>
           )}
@@ -210,7 +229,11 @@ export const AIAnalysisPanel: React.FC<AIAnalysisPanelProps> = ({
 
         {/* Confidence indicator */}
         {analysis.confidence !== undefined && (
-          <HStack gap="sm" align="center" className="pt-2 border-t border-purple-100">
+          <HStack
+            gap="sm"
+            align="center"
+            className="pt-2 border-t border-purple-100"
+          >
             <Typography variant="small" className="text-neutral-500">
               Confidence:
             </Typography>

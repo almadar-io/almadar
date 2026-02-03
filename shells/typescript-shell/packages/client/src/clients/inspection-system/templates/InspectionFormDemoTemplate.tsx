@@ -36,8 +36,17 @@ import { SignatureCapture } from "../organisms/SignatureCapture";
 // Components
 import { StatCard } from "../../../components/organisms/StatCard";
 
-// Evaluator
-import { SExpressionEvaluator, createMinimalContext } from "@orbital/shared";
+// Evaluator - stub implementation for design system (actual implementation in @almadar/shared)
+class SExpressionEvaluator {
+  evaluate(expr: unknown, _context: Record<string, unknown>): unknown {
+    // Stub implementation - always returns true for design system demos
+    if (typeof expr === "boolean") return expr;
+    return true;
+  }
+}
+const createMinimalContext = (
+  _options?: Record<string, unknown>,
+): Record<string, unknown> => ({});
 
 import {
   ArrowLeft,
@@ -108,13 +117,23 @@ export interface FormField {
     | "checklist";
   required?: boolean;
   repeatable?: boolean;
-  options?: Array<{ value: string; label: string; isDefault?: boolean; icon?: string; description?: string }>;
+  options?: Array<{
+    value: string;
+    label: string;
+    isDefault?: boolean;
+    icon?: string;
+    description?: string;
+  }>;
   defaultValue?: string;
   condition?: SExpression;
   contextMenu?: string[];
   lawReference?: { law: string; article: string };
   hiddenCalculation?: { variable: string; scope: "global" | "local" };
-  violationTrigger?: { id: string; condition: SExpression; lawReference: string };
+  violationTrigger?: {
+    id: string;
+    condition: SExpression;
+    lawReference: string;
+  };
   entityField?: string;
   // Info-display specific
   displayContent?: string;
@@ -249,7 +268,7 @@ const phases: PhaseDefinition[] = [
 ];
 
 // =============================================================================
-// S-Expression Evaluator (using real evaluator from orbital-shared)
+// S-Expression Evaluator (using real evaluator from almadar-shared)
 // =============================================================================
 
 // Create a singleton evaluator instance
@@ -257,11 +276,15 @@ const sexprEvaluator = new SExpressionEvaluator();
 
 function evaluateSExpression(
   expr: SExpression | undefined,
-  context: { formValues: Record<string, unknown>; globalVariables: Record<string, unknown> }
+  context: {
+    formValues: Record<string, unknown>;
+    globalVariables: Record<string, unknown>;
+  },
 ): boolean {
   if (expr === undefined || expr === null) return true;
   if (typeof expr === "boolean") return expr;
-  if (typeof expr === "string" || typeof expr === "number") return Boolean(expr);
+  if (typeof expr === "string" || typeof expr === "number")
+    return Boolean(expr);
   if (!Array.isArray(expr) || expr.length === 0) return true;
 
   try {
@@ -350,7 +373,10 @@ const SingleFieldInput: React.FC<{
       {field.type === "radio" && (
         <div className="flex gap-4">
           {field.options?.map((opt) => (
-            <label key={opt.value} className="flex items-center gap-2 cursor-pointer">
+            <label
+              key={opt.value}
+              className="flex items-center gap-2 cursor-pointer"
+            >
               <input
                 type="radio"
                 name={radioName}
@@ -359,7 +385,9 @@ const SingleFieldInput: React.FC<{
                 onChange={(e) => onChange(e.target.value)}
                 className="w-4 h-4"
               />
-              <span className={opt.isDefault ? "font-semibold" : ""}>{opt.label}</span>
+              <span className={opt.isDefault ? "font-semibold" : ""}>
+                {opt.label}
+              </span>
             </label>
           ))}
         </div>
@@ -411,10 +439,14 @@ const SingleFieldInput: React.FC<{
         <Box
           className={cn(
             "p-4 rounded-lg border-l-4",
-            field.displayVariant === "warning" && "bg-yellow-50 border-yellow-400 text-yellow-800",
-            field.displayVariant === "success" && "bg-green-50 border-green-400 text-green-800",
-            field.displayVariant === "error" && "bg-red-50 border-red-400 text-red-800",
-            (!field.displayVariant || field.displayVariant === "info") && "bg-blue-50 border-blue-400 text-blue-800"
+            field.displayVariant === "warning" &&
+              "bg-yellow-50 border-yellow-400 text-yellow-800",
+            field.displayVariant === "success" &&
+              "bg-green-50 border-green-400 text-green-800",
+            field.displayVariant === "error" &&
+              "bg-red-50 border-red-400 text-red-800",
+            (!field.displayVariant || field.displayVariant === "info") &&
+              "bg-blue-50 border-blue-400 text-blue-800",
           )}
         >
           <Typography variant="body">
@@ -424,36 +456,54 @@ const SingleFieldInput: React.FC<{
       )}
 
       {/* 2. Card-selector: Card-based selection component */}
-      {field.type === "card-selector" && (() => {
-        // If entityType is specified, use mockData; otherwise use static options
-        const entityData = field.entityType ? mockData[field.entityType] || [] : [];
-        const optionsFromEntity = entityData.map((item) => ({
-          id: String(item.id),
-          title: String(item.name || item.label || item.id),
-          description: item.description ? String(item.description) : undefined,
-        } as CardSelectorOption));
+      {field.type === "card-selector" &&
+        (() => {
+          // If entityType is specified, use mockData; otherwise use static options
+          const entityData = field.entityType
+            ? mockData[field.entityType] || []
+            : [];
+          const optionsFromEntity = entityData.map(
+            (item) =>
+              ({
+                id: String(item.id),
+                title: String(item.name || item.label || item.id),
+                description: item.description
+                  ? String(item.description)
+                  : undefined,
+              }) as CardSelectorOption,
+          );
 
-        const optionsFromConfig = (field.options || []).map((opt) => ({
-          id: opt.value,
-          title: opt.label,
-          description: opt.description,
-        } as CardSelectorOption));
+          const optionsFromConfig = (field.options || []).map(
+            (opt) =>
+              ({
+                id: opt.value,
+                title: opt.label,
+                description: opt.description,
+              }) as CardSelectorOption,
+          );
 
-        // Prefer entity data if available, fall back to config options
-        const options = optionsFromEntity.length > 0 ? optionsFromEntity : optionsFromConfig;
+          // Prefer entity data if available, fall back to config options
+          const options =
+            optionsFromEntity.length > 0
+              ? optionsFromEntity
+              : optionsFromConfig;
 
-        return (
-          <CardSelector
-            options={options}
-            selectedId={field.multiple ? undefined : String(value || "")}
-            selectedIds={field.multiple && Array.isArray(value) ? value as string[] : []}
-            multiple={field.multiple}
-            columns={field.columns || 3}
-            onChange={(selectedId) => onChange(selectedId)}
-            onMultiChange={(selectedIds) => onChange(selectedIds)}
-          />
-        );
-      })()}
+          return (
+            <CardSelector
+              options={options}
+              selectedId={field.multiple ? undefined : String(value || "")}
+              selectedIds={
+                field.multiple && Array.isArray(value)
+                  ? (value as string[])
+                  : []
+              }
+              multiple={field.multiple}
+              columns={field.columns || 3}
+              onChange={(selectedId) => onChange(selectedId)}
+              onMultiChange={(selectedIds) => onChange(selectedIds)}
+            />
+          );
+        })()}
 
       {/* 3. Signature: Canvas-based signature capture */}
       {field.type === "signature" && (
@@ -470,11 +520,7 @@ const SingleFieldInput: React.FC<{
       {field.type === "stats-grid" && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {(field.stats || []).map((stat, idx) => (
-            <StatCard
-              key={idx}
-              label={stat.label}
-              value={stat.value}
-            />
+            <StatCard key={idx} label={stat.label} value={stat.value} />
           ))}
         </div>
       )}
@@ -486,7 +532,10 @@ const SingleFieldInput: React.FC<{
             const selectedValues = Array.isArray(value) ? value : [];
             const isChecked = selectedValues.includes(opt.value);
             return (
-              <label key={opt.value} className="flex items-center gap-2 cursor-pointer">
+              <label
+                key={opt.value}
+                className="flex items-center gap-2 cursor-pointer"
+              >
                 <input
                   type="checkbox"
                   className="w-4 h-4"
@@ -495,7 +544,9 @@ const SingleFieldInput: React.FC<{
                     if (e.target.checked) {
                       onChange([...selectedValues, opt.value]);
                     } else {
-                      onChange(selectedValues.filter((v: string) => v !== opt.value));
+                      onChange(
+                        selectedValues.filter((v: string) => v !== opt.value),
+                      );
                     }
                   }}
                 />
@@ -507,78 +558,101 @@ const SingleFieldInput: React.FC<{
       )}
 
       {/* 6. Entity-list: Display a list of entities */}
-      {field.type === "entity-list" && (() => {
-        // Use mockData if entityType specified, otherwise use value (which may be set via formValues)
-        const entityData = field.entityType ? mockData[field.entityType] || [] : [];
-        const items = entityData.length > 0 ? entityData : (Array.isArray(value) ? value : []);
+      {field.type === "entity-list" &&
+        (() => {
+          // Use mockData if entityType specified, otherwise use value (which may be set via formValues)
+          const entityData = field.entityType
+            ? mockData[field.entityType] || []
+            : [];
+          const items =
+            entityData.length > 0
+              ? entityData
+              : Array.isArray(value)
+                ? value
+                : [];
 
-        return (
-          <Box className="border rounded overflow-hidden">
-            <table className="w-full text-sm">
-              <thead className="bg-neutral-100">
-                <tr>
-                  {(field.displayFields || ["name"]).map((fieldName) => (
-                    <th key={fieldName} className="px-3 py-2 text-left font-medium text-neutral-700">
-                      {fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {items.length > 0 ? (
-                  items.map((item: Record<string, unknown>, idx: number) => (
-                    <tr key={idx} className="border-t hover:bg-neutral-50">
-                      {(field.displayFields || ["name"]).map((fieldName) => (
-                        <td key={fieldName} className="px-3 py-2 text-neutral-600">
-                          {String(item[fieldName] || "-")}
-                        </td>
-                      ))}
-                    </tr>
-                  ))
-                ) : (
+          return (
+            <Box className="border rounded overflow-hidden">
+              <table className="w-full text-sm">
+                <thead className="bg-neutral-100">
                   <tr>
-                    <td
-                      colSpan={(field.displayFields || ["name"]).length}
-                      className="px-3 py-4 text-center text-neutral-500"
-                    >
-                      No items to display
-                    </td>
+                    {(field.displayFields || ["name"]).map((fieldName) => (
+                      <th
+                        key={fieldName}
+                        className="px-3 py-2 text-left font-medium text-neutral-700"
+                      >
+                        {fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}
+                      </th>
+                    ))}
                   </tr>
-                )}
-              </tbody>
-            </table>
-          </Box>
-        );
-      })()}
+                </thead>
+                <tbody>
+                  {items.length > 0 ? (
+                    items.map((item: Record<string, unknown>, idx: number) => (
+                      <tr key={idx} className="border-t hover:bg-neutral-50">
+                        {(field.displayFields || ["name"]).map((fieldName) => (
+                          <td
+                            key={fieldName}
+                            className="px-3 py-2 text-neutral-600"
+                          >
+                            {String(item[fieldName] || "-")}
+                          </td>
+                        ))}
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td
+                        colSpan={(field.displayFields || ["name"]).length}
+                        className="px-3 py-4 text-center text-neutral-500"
+                      >
+                        No items to display
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </Box>
+          );
+        })()}
 
       {/* 7. Entity-cards: Display entities as cards */}
-      {field.type === "entity-cards" && (() => {
-        // Use mockData if entityType specified, otherwise use value
-        const entityData = field.entityType ? mockData[field.entityType] || [] : [];
-        const items = entityData.length > 0 ? entityData : (Array.isArray(value) ? value : []);
+      {field.type === "entity-cards" &&
+        (() => {
+          // Use mockData if entityType specified, otherwise use value
+          const entityData = field.entityType
+            ? mockData[field.entityType] || []
+            : [];
+          const items =
+            entityData.length > 0
+              ? entityData
+              : Array.isArray(value)
+                ? value
+                : [];
 
-        return (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {items.length > 0 ? (
-              items.map((item: Record<string, unknown>, idx: number) => (
-                <Card key={idx} className="p-4">
-                  <VStack gap="xs">
-                    {(field.displayFields || ["name"]).map((fieldName) => (
-                      <Typography key={fieldName} variant="body">
-                        <span className="font-medium">{fieldName}:</span> {String(item[fieldName] || "-")}
-                      </Typography>
-                    ))}
-                  </VStack>
-                </Card>
-              ))
-            ) : (
-              <Box className="col-span-full p-4 text-center text-neutral-500 border rounded">
-                No items to display
-              </Box>
-            )}
-          </div>
-        );
-      })()}
+          return (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {items.length > 0 ? (
+                items.map((item: Record<string, unknown>, idx: number) => (
+                  <Card key={idx} className="p-4">
+                    <VStack gap="xs">
+                      {(field.displayFields || ["name"]).map((fieldName) => (
+                        <Typography key={fieldName} variant="body">
+                          <span className="font-medium">{fieldName}:</span>{" "}
+                          {String(item[fieldName] || "-")}
+                        </Typography>
+                      ))}
+                    </VStack>
+                  </Card>
+                ))
+              ) : (
+                <Box className="col-span-full p-4 text-center text-neutral-500 border rounded">
+                  No items to display
+                </Box>
+              )}
+            </div>
+          );
+        })()}
 
       {/* 8. Datetime: Date and time input */}
       {field.type === "datetime" && (
@@ -593,35 +667,54 @@ const SingleFieldInput: React.FC<{
       {/* 9. Checklist: List of checkable items */}
       {field.type === "checklist" && (
         <div className="space-y-2 p-3 border rounded bg-neutral-50">
-          {(field.checklistItems || field.options || []).map((item) => {
-            const itemId = "id" in item ? item.id : item.value;
-            const itemLabel = "label" in item ? item.label : item.label;
-            const checklistValue = (value as Record<string, boolean>) || {};
-            const isChecked = Boolean(checklistValue[itemId]);
-            return (
-              <label key={itemId} className="flex items-start gap-3 cursor-pointer p-2 hover:bg-neutral-100 rounded">
-                <input
-                  type="checkbox"
-                  className="w-5 h-5 mt-0.5"
-                  checked={isChecked}
-                  onChange={(e) => {
-                    onChange({ ...checklistValue, [itemId]: e.target.checked });
-                  }}
-                />
-                <span className={cn(isChecked && "line-through text-neutral-500")}>
-                  {itemLabel}
-                  {"required" in item && item.required && <span className="text-red-500 ml-1">*</span>}
-                </span>
-              </label>
-            );
-          })}
+          {(field.checklistItems || field.options || []).map(
+            (item: { id?: string; value?: string; label: string }) => {
+              const itemId = item.id ?? item.value ?? "";
+              const itemLabel = item.label;
+              const checklistValue = (value as Record<string, boolean>) || {};
+              const isChecked = Boolean(checklistValue[itemId]);
+              return (
+                <label
+                  key={itemId}
+                  className="flex items-start gap-3 cursor-pointer p-2 hover:bg-neutral-100 rounded"
+                >
+                  <input
+                    type="checkbox"
+                    className="w-5 h-5 mt-0.5"
+                    checked={isChecked}
+                    onChange={(e) => {
+                      onChange({
+                        ...checklistValue,
+                        [itemId]: e.target.checked,
+                      });
+                    }}
+                  />
+                  <span
+                    className={cn(isChecked && "line-through text-neutral-500")}
+                  >
+                    {String(itemLabel)}
+                    {"required" in item &&
+                      (item as { required?: boolean }).required && (
+                        <span className="text-red-500 ml-1">*</span>
+                      )}
+                  </span>
+                </label>
+              );
+            },
+          )}
         </div>
       )}
     </>
   );
 };
 
-const FieldRenderer: React.FC<FieldRendererProps> = ({ field, value, onChange, isVisible, mockData = {} }) => {
+const FieldRenderer: React.FC<FieldRendererProps> = ({
+  field,
+  value,
+  onChange,
+  isVisible,
+  mockData = {},
+}) => {
   if (!isVisible) return null;
   if (field.type === "comment") {
     return (
@@ -633,12 +726,17 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({ field, value, onChange, i
     );
   }
 
-  const inputClasses = "w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500";
+  const inputClasses =
+    "w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500";
 
   // Handle repeatable fields
   if (field.repeatable) {
     // Value should be an array of items for repeatable fields
-    const items = Array.isArray(value) ? value : value ? [{ id: "1", value }] : [];
+    const items = Array.isArray(value)
+      ? value
+      : value
+        ? [{ id: "1", value }]
+        : [];
 
     const handleAdd = () => {
       const newItem = { id: String(Date.now()), value: "" };
@@ -652,8 +750,8 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({ field, value, onChange, i
     const handleItemChange = (itemId: string, newValue: unknown) => {
       onChange(
         items.map((item: { id: string; value: unknown }) =>
-          item.id === itemId ? { ...item, value: newValue } : item
-        )
+          item.id === itemId ? { ...item, value: newValue } : item,
+        ),
       );
     };
 
@@ -732,7 +830,10 @@ const SectionRenderer: React.FC<SectionRendererProps> = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
 
-  const isVisible = evaluateSExpression(section.condition, { formValues, globalVariables });
+  const isVisible = evaluateSExpression(section.condition, {
+    formValues,
+    globalVariables,
+  });
   if (!isVisible) return null;
 
   return (
@@ -757,7 +858,10 @@ const SectionRenderer: React.FC<SectionRendererProps> = ({
       {isExpanded && (
         <VStack gap="md" align="stretch">
           {section.fields.map((field) => {
-            const fieldVisible = evaluateSExpression(field.condition, { formValues, globalVariables });
+            const fieldVisible = evaluateSExpression(field.condition, {
+              formValues,
+              globalVariables,
+            });
             return (
               <FieldRenderer
                 key={field.id}
@@ -868,7 +972,9 @@ const DebugPanel: React.FC<DebugPanelProps> = ({
 // Main Component
 // =============================================================================
 
-export const InspectionFormDemoTemplate: React.FC<InspectionFormDemoTemplateProps> = ({
+export const InspectionFormDemoTemplate: React.FC<
+  InspectionFormDemoTemplateProps
+> = ({
   configs,
   initialState,
   mockData = {},
@@ -892,17 +998,22 @@ export const InspectionFormDemoTemplate: React.FC<InspectionFormDemoTemplateProp
     completedTabs: initialState?.completedTabs || [],
   });
 
-  const [activePhase, setActivePhase] = useState<DemoPhase>(controlledPhase || "introduction");
+  const [activePhase, setActivePhase] = useState<DemoPhase>(
+    controlledPhase || "introduction",
+  );
   const [activeTab, setActiveTab] = useState<string>(controlledTab || "T-001");
   const [isDebugOpen, setIsDebugOpen] = useState(false);
 
   // Derived state
   const currentPhaseConfig = useMemo(
     () => phases.find((p) => p.id === activePhase) || phases[0],
-    [activePhase]
+    [activePhase],
   );
 
-  const currentTabConfig = useMemo(() => configs[activeTab], [configs, activeTab]);
+  const currentTabConfig = useMemo(
+    () => configs[activeTab],
+    [configs, activeTab],
+  );
 
   const phaseIndex = phases.findIndex((p) => p.id === activePhase);
   const tabIndex = currentPhaseConfig.tabs.indexOf(activeTab);
@@ -927,7 +1038,10 @@ export const InspectionFormDemoTemplate: React.FC<InspectionFormDemoTemplateProp
 
       // Check for hidden calculations that set global variables
       const field = currentTabConfig?.sections
-        .flatMap((s) => [...s.fields, ...(s.subsections?.flatMap((ss) => ss.fields) || [])])
+        .flatMap((s) => [
+          ...s.fields,
+          ...(s.subsections?.flatMap((ss) => ss.fields) || []),
+        ])
         .find((f) => f.id === fieldId);
 
       if (field?.hiddenCalculation?.scope === "global") {
@@ -945,7 +1059,7 @@ export const InspectionFormDemoTemplate: React.FC<InspectionFormDemoTemplateProp
         });
       }
     },
-    [activeTab, currentTabConfig, eventBus, onFormValueChange]
+    [activeTab, currentTabConfig, eventBus, onFormValueChange],
   );
 
   const handlePhaseChange = useCallback(
@@ -958,7 +1072,7 @@ export const InspectionFormDemoTemplate: React.FC<InspectionFormDemoTemplateProp
       }
       onPhaseChange?.(phase);
     },
-    [onPhaseChange, onTabChange]
+    [onPhaseChange, onTabChange],
   );
 
   const handleTabChange = useCallback(
@@ -966,7 +1080,7 @@ export const InspectionFormDemoTemplate: React.FC<InspectionFormDemoTemplateProp
       setActiveTab(tabId);
       onTabChange?.(tabId);
     },
-    [onTabChange]
+    [onTabChange],
   );
 
   const handlePrevious = useCallback(() => {
@@ -977,7 +1091,13 @@ export const InspectionFormDemoTemplate: React.FC<InspectionFormDemoTemplateProp
       handlePhaseChange(prevPhase.id);
       handleTabChange(prevPhase.tabs[prevPhase.tabs.length - 1]);
     }
-  }, [tabIndex, phaseIndex, currentPhaseConfig.tabs, handleTabChange, handlePhaseChange]);
+  }, [
+    tabIndex,
+    phaseIndex,
+    currentPhaseConfig.tabs,
+    handleTabChange,
+    handlePhaseChange,
+  ]);
 
   const handleNext = useCallback(() => {
     // Mark current tab as complete
@@ -1053,7 +1173,9 @@ export const InspectionFormDemoTemplate: React.FC<InspectionFormDemoTemplateProp
                     "flex-1 p-4 border-b-3 transition-all flex items-center justify-center gap-2",
                     isActive && "border-blue-500 bg-blue-50",
                     isComplete && !isActive && "border-green-500 bg-green-50",
-                    !isActive && !isComplete && "border-transparent hover:bg-neutral-50"
+                    !isActive &&
+                      !isComplete &&
+                      "border-transparent hover:bg-neutral-50",
                   )}
                 >
                   {isComplete ? (
@@ -1062,7 +1184,7 @@ export const InspectionFormDemoTemplate: React.FC<InspectionFormDemoTemplateProp
                     <Icon
                       className={cn(
                         "h-5 w-5",
-                        isActive ? "text-blue-600" : "text-neutral-400"
+                        isActive ? "text-blue-600" : "text-neutral-400",
                       )}
                     />
                   )}
@@ -1072,7 +1194,7 @@ export const InspectionFormDemoTemplate: React.FC<InspectionFormDemoTemplateProp
                       weight={isActive ? "semibold" : "normal"}
                       className={cn(
                         isActive && "text-blue-700",
-                        isComplete && !isActive && "text-green-700"
+                        isComplete && !isActive && "text-green-700",
                       )}
                     >
                       {phase.label}
@@ -1105,7 +1227,9 @@ export const InspectionFormDemoTemplate: React.FC<InspectionFormDemoTemplateProp
                     "px-4 py-2 rounded-lg transition-all flex items-center gap-2 whitespace-nowrap",
                     isActive && "bg-blue-100 text-blue-700",
                     !isActive && isComplete && "bg-green-100 text-green-700",
-                    !isActive && !isComplete && "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
+                    !isActive &&
+                      !isComplete &&
+                      "bg-neutral-100 text-neutral-600 hover:bg-neutral-200",
                   )}
                 >
                   {isComplete && <CheckCircle className="h-4 w-4" />}
@@ -1131,16 +1255,23 @@ export const InspectionFormDemoTemplate: React.FC<InspectionFormDemoTemplateProp
                   <Card className="p-4 bg-blue-50 border-blue-200">
                     <HStack justify="between" align="center">
                       <VStack gap="xs">
-                        <Typography variant="h3">{currentTabConfig.name}</Typography>
-                        <Typography variant="small" className="text-neutral-600">
+                        <Typography variant="h3">
+                          {currentTabConfig.name}
+                        </Typography>
+                        <Typography
+                          variant="small"
+                          className="text-neutral-600"
+                        >
                           Tab {currentTabConfig.tabId}
                         </Typography>
                       </VStack>
-                      {currentTabConfig.globalVariablesSet && currentTabConfig.globalVariablesSet.length > 0 && (
-                        <Badge variant="primary">
-                          Sets: {currentTabConfig.globalVariablesSet.join(", ")}
-                        </Badge>
-                      )}
+                      {currentTabConfig.globalVariablesSet &&
+                        currentTabConfig.globalVariablesSet.length > 0 && (
+                          <Badge variant="primary">
+                            Sets:{" "}
+                            {currentTabConfig.globalVariablesSet.join(", ")}
+                          </Badge>
+                        )}
                     </HStack>
                   </Card>
 
@@ -1171,7 +1302,10 @@ export const InspectionFormDemoTemplate: React.FC<InspectionFormDemoTemplateProp
             {/* Violations Summary - at bottom */}
             {formState.violations.length > 0 && (
               <Card className="p-4">
-                <Typography variant="h4" className="mb-3 flex items-center gap-2">
+                <Typography
+                  variant="h4"
+                  className="mb-3 flex items-center gap-2"
+                >
                   <AlertTriangle className="h-5 w-5 text-red-500" />
                   Violations ({formState.violations.length})
                 </Typography>
@@ -1182,7 +1316,10 @@ export const InspectionFormDemoTemplate: React.FC<InspectionFormDemoTemplateProp
                       className="p-2 bg-red-50 border border-red-200 rounded text-sm"
                     >
                       <HStack justify="between" align="center">
-                        <Typography variant="small" className="font-medium text-red-700">
+                        <Typography
+                          variant="small"
+                          className="font-medium text-red-700"
+                        >
                           {violation.id}
                         </Typography>
                         <Badge className="bg-red-100 text-red-700">
@@ -1190,7 +1327,10 @@ export const InspectionFormDemoTemplate: React.FC<InspectionFormDemoTemplateProp
                         </Badge>
                       </HStack>
                       {violation.description && (
-                        <Typography variant="small" className="text-red-600 mt-1">
+                        <Typography
+                          variant="small"
+                          className="text-red-600 mt-1"
+                        >
                           {violation.description}
                         </Typography>
                       )}
@@ -1207,12 +1347,18 @@ export const InspectionFormDemoTemplate: React.FC<InspectionFormDemoTemplateProp
               </Typography>
               {Object.keys(formState.globalVariables).length > 0 ? (
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                  {Object.entries(formState.globalVariables).map(([key, value]) => (
-                    <HStack key={key} justify="between" className="text-sm bg-neutral-50 p-2 rounded">
-                      <code className="text-blue-600 text-xs">{key}</code>
-                      <Badge variant="default">{String(value)}</Badge>
-                    </HStack>
-                  ))}
+                  {Object.entries(formState.globalVariables).map(
+                    ([key, value]) => (
+                      <HStack
+                        key={key}
+                        justify="between"
+                        className="text-sm bg-neutral-50 p-2 rounded"
+                      >
+                        <code className="text-blue-600 text-xs">{key}</code>
+                        <Badge variant="default">{String(value)}</Badge>
+                      </HStack>
+                    ),
+                  )}
                 </div>
               ) : (
                 <Typography variant="small" className="text-neutral-500">

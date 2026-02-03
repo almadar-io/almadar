@@ -10,7 +10,7 @@
  * - Delightful hover micro-interactions
  * - Elegant status indicators
  *
- * Orbital Component Interface Compliance:
+ * Almadar Component Interface Compliance:
  * - Entity binding with auto-fetch when entity is a string
  * - Event emission via useEventBus (UI:* events)
  * - Event listening for UI:SEARCH and UI:CLEAR_SEARCH

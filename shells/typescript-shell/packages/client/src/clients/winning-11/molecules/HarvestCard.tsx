@@ -32,6 +32,9 @@ export interface HarvestCardAction {
   variant?: "primary" | "secondary" | "ghost" | "danger";
 }
 
+/** Alias for HarvestEntity for backwards compatibility */
+export type HarvestCardData = HarvestEntity;
+
 export interface HarvestEntity {
   /** Unique identifier */
   id?: string;

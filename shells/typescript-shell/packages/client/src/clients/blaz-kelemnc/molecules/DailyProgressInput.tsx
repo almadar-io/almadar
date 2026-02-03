@@ -40,6 +40,14 @@ export interface WellnessEntryData {
   tiredness: number;
 }
 
+/** Operation definition for action buttons */
+export interface DailyProgressOperation {
+  label: string;
+  event?: string;
+  action?: string;
+  variant?: "primary" | "secondary" | "danger" | "ghost";
+}
+
 export interface DailyProgressInputProps {
   /** Existing entry to edit */
   existingEntry?: WellnessEntryData;
@@ -49,16 +57,27 @@ export interface DailyProgressInputProps {
   traineeId?: string;
   /** Show date selector */
   showDateSelector?: boolean;
+  /** Show trends */
+  showTrends?: boolean;
+  /** Chart type */
+  chartType?: "line" | "bar" | string;
+  /** Metrics to display */
+  metrics?: string[];
   /** Compact mode */
   compact?: boolean;
   /** Entity context for events */
   entity?: string;
+  /** Operations/actions available */
+  operations?: DailyProgressOperation[];
   /** Additional CSS classes */
   className?: string;
 }
 
 interface MetricConfig {
-  key: keyof Pick<WellnessEntryData, "sleepScore" | "hungeriness" | "tiredness">;
+  key: keyof Pick<
+    WellnessEntryData,
+    "sleepScore" | "hungeriness" | "tiredness"
+  >;
   label: string;
   icon: typeof Moon;
   lowLabel: string;
@@ -143,7 +162,7 @@ export const DailyProgressInput: React.FC<DailyProgressInputProps> = ({
       setValues((prev) => ({ ...prev, [key]: value }));
       setHasChanges(true);
     },
-    []
+    [],
   );
 
   // Emit SAVE event (matches WellnessTracking trait)
@@ -184,7 +203,10 @@ export const DailyProgressInput: React.FC<DailyProgressInputProps> = ({
               <Typography variant="small" className="text-neutral-600">
                 {config.label}
               </Typography>
-              <Typography variant="small" className={cn("font-semibold", config.color)}>
+              <Typography
+                variant="small"
+                className={cn("font-semibold", config.color)}
+              >
                 {value}/10
               </Typography>
             </HStack>
@@ -193,7 +215,9 @@ export const DailyProgressInput: React.FC<DailyProgressInputProps> = ({
               min={1}
               max={10}
               value={value}
-              onChange={(e) => handleValueChange(config.key, parseInt(e.target.value))}
+              onChange={(e) =>
+                handleValueChange(config.key, parseInt(e.target.value))
+              }
               className="w-full h-1.5 bg-neutral-200 rounded-full appearance-none cursor-pointer accent-current"
               style={{ accentColor: "currentColor" }}
             />
@@ -230,7 +254,9 @@ export const DailyProgressInput: React.FC<DailyProgressInputProps> = ({
               min={1}
               max={10}
               value={value}
-              onChange={(e) => handleValueChange(config.key, parseInt(e.target.value))}
+              onChange={(e) =>
+                handleValueChange(config.key, parseInt(e.target.value))
+              }
               className="w-full h-2 bg-neutral-200 rounded-full appearance-none cursor-pointer"
               style={{
                 background: `linear-gradient(to right, currentColor ${(value - 1) * 11.1}%, #e5e7eb ${(value - 1) * 11.1}%)`,
@@ -268,9 +294,7 @@ export const DailyProgressInput: React.FC<DailyProgressInputProps> = ({
               </Button>
             )}
           </HStack>
-          <VStack gap="sm">
-            {metricsConfig.map(renderMetricSlider)}
-          </VStack>
+          <VStack gap="sm">{metricsConfig.map(renderMetricSlider)}</VStack>
         </VStack>
       </Card>
     );
@@ -301,9 +325,7 @@ export const DailyProgressInput: React.FC<DailyProgressInputProps> = ({
         </HStack>
 
         {/* Metric Sliders */}
-        <VStack gap="sm">
-          {metricsConfig.map(renderMetricSlider)}
-        </VStack>
+        <VStack gap="sm">{metricsConfig.map(renderMetricSlider)}</VStack>
 
         {/* Save Button */}
         <Button

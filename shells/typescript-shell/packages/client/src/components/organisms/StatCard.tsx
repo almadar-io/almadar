@@ -25,8 +25,10 @@ export interface MetricDefinition {
 export interface StatCardProps {
   /** Main label */
   label?: string;
-  /** Primary value */
-  value?: string | number;
+  /** Title (alias for label) */
+  title?: string;
+  /** Primary value - accepts array/unknown from generated code (will use first element or length) */
+  value?: string | number | (string | number | undefined)[] | unknown;
   /** Previous value for comparison */
   previousValue?: number;
   /** Current value as number for trend calculation */
@@ -72,6 +74,7 @@ export interface StatCardProps {
 
 export const StatCard: React.FC<StatCardProps> = ({
   label: propLabel,
+  title: propTitle,
   value: propValue,
   previousValue,
   currentValue,
@@ -91,6 +94,8 @@ export const StatCard: React.FC<StatCardProps> = ({
   isLoading: externalLoading,
   error: externalError,
 }) => {
+  // Use title as fallback for label
+  const labelToUse = propLabel ?? propTitle;
   const eventBus = useEventBus();
 
   // Handle action click with event bus integration
@@ -229,8 +234,12 @@ export const StatCard: React.FC<StatCardProps> = ({
   }
 
   // Use schema stats if available (single metric), otherwise use props
-  const label = schemaStats?.[0]?.label || propLabel || entity || "Stat";
-  const value = schemaStats?.[0]?.value ?? propValue ?? 0;
+  const label = schemaStats?.[0]?.label || labelToUse || entity || "Stat";
+  // Handle array values (use first element or array length)
+  const normalizedPropValue = Array.isArray(propValue)
+    ? (propValue[0] ?? propValue.length)
+    : propValue;
+  const value = schemaStats?.[0]?.value ?? normalizedPropValue ?? 0;
   // Calculate trend if not provided manually
   const calculatedTrend = useMemo(() => {
     if (manualTrend !== undefined) return manualTrend;

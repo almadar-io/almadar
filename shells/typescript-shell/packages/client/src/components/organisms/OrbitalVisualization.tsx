@@ -4,7 +4,7 @@
  * Visualizes KFlow schemas as atomic orbitals based on complexity.
  * Uses CSS 3D transforms for lightweight rendering without Three.js.
  *
- * Orbital Types (based on complexity score):
+ * Almadar Types (based on complexity score):
  * - 1s (1-3): Simple sphere - Red
  * - 2s (4-8): Larger sphere - Orange
  * - 2p (9-15): Dumbbell shape - Yellow
@@ -55,7 +55,7 @@ interface OrbitalConfig {
 const ORBITAL_CONFIGS: Record<string, OrbitalConfig> = {
   "1s": {
     type: "1s",
-    name: "1s Orbital",
+    name: "1s Almadar",
     color: "#C45B5B",
     glowColor: "rgba(196, 91, 91, 0.3)",
     lobes: 1,
@@ -64,7 +64,7 @@ const ORBITAL_CONFIGS: Record<string, OrbitalConfig> = {
   },
   "2s": {
     type: "2s",
-    name: "2s Orbital",
+    name: "2s Almadar",
     color: "#D4875B",
     glowColor: "rgba(212, 135, 91, 0.3)",
     lobes: 1,
@@ -73,7 +73,7 @@ const ORBITAL_CONFIGS: Record<string, OrbitalConfig> = {
   },
   "2p": {
     type: "2p",
-    name: "2p Orbital",
+    name: "2p Almadar",
     color: "#C9B458",
     glowColor: "rgba(201, 180, 88, 0.3)",
     lobes: 2,
@@ -82,7 +82,7 @@ const ORBITAL_CONFIGS: Record<string, OrbitalConfig> = {
   },
   "3s": {
     type: "3s",
-    name: "3s Orbital",
+    name: "3s Almadar",
     color: "#5BA87A",
     glowColor: "rgba(91, 168, 122, 0.3)",
     lobes: 1,
@@ -91,7 +91,7 @@ const ORBITAL_CONFIGS: Record<string, OrbitalConfig> = {
   },
   "3p": {
     type: "3p",
-    name: "3p Orbital",
+    name: "3p Almadar",
     color: "#5B8DC4",
     glowColor: "rgba(91, 141, 196, 0.3)",
     lobes: 2,
@@ -100,7 +100,7 @@ const ORBITAL_CONFIGS: Record<string, OrbitalConfig> = {
   },
   "3d": {
     type: "3d",
-    name: "3d Orbital",
+    name: "3d Almadar",
     color: "#6B5B8A",
     glowColor: "rgba(107, 91, 138, 0.3)",
     lobes: 4,
@@ -109,7 +109,7 @@ const ORBITAL_CONFIGS: Record<string, OrbitalConfig> = {
   },
   "4f": {
     type: "4f",
-    name: "4f Orbital",
+    name: "4f Almadar",
     color: "#8A5B9C",
     glowColor: "rgba(138, 91, 156, 0.3)",
     lobes: 6,
@@ -149,7 +149,7 @@ function calculateComplexity(
 }
 
 /**
- * Get orbital type based on complexity score
+ * Get almadar type based on complexity score
  */
 function getOrbitalType(complexity: number): string {
   if (complexity <= 3) return "1s";
@@ -208,7 +208,7 @@ interface DumbbellOrbitalProps {
   rotation?: number;
 }
 
-/** Renders a p-orbital dumbbell shape */
+/** Renders a p-almadar dumbbell shape */
 const DumbbellOrbital: React.FC<DumbbellOrbitalProps> = ({
   config,
   size,
@@ -282,7 +282,7 @@ interface CloverleafOrbitalProps {
   animated: boolean;
 }
 
-/** Renders a d-orbital cloverleaf shape */
+/** Renders a d-almadar cloverleaf shape */
 const CloverleafOrbital: React.FC<CloverleafOrbitalProps> = ({
   config,
   size,
@@ -353,7 +353,7 @@ export const OrbitalVisualization: React.FC<OrbitalVisualizationProps> = ({
   onClick,
   className = "",
 }) => {
-  // Calculate complexity and orbital type
+  // Calculate complexity and almadar type
   const complexity = useMemo(() => {
     if (overrideComplexity !== undefined) return overrideComplexity;
     return calculateComplexity(schema);
@@ -363,7 +363,7 @@ export const OrbitalVisualization: React.FC<OrbitalVisualizationProps> = ({
   const config = ORBITAL_CONFIGS[orbitalType];
   const pixelSize = SIZE_MAP[size];
 
-  // Render appropriate orbital shape
+  // Render appropriate almadar shape
   const renderOrbital = () => {
     switch (config.lobes) {
       case 1:
@@ -421,7 +421,7 @@ export const OrbitalVisualization: React.FC<OrbitalVisualizationProps> = ({
       role={onClick ? "button" : undefined}
       tabIndex={onClick ? 0 : undefined}
     >
-      {/* Orbital container */}
+      {/* Almadar container */}
       <div
         className="relative"
         style={{
@@ -445,7 +445,7 @@ export const OrbitalVisualization: React.FC<OrbitalVisualizationProps> = ({
           }}
         />
 
-        {/* Orbital shape */}
+        {/* Almadar shape */}
         {renderOrbital()}
       </div>
 

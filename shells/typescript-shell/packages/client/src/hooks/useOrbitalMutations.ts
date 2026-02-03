@@ -1,7 +1,7 @@
 /**
- * useOrbitalMutations - Event-based entity mutations via orbital events route
+ * useOrbitalMutations - Event-based entity mutations via almadar events route
  *
- * This hook provides entity mutations that go through the orbital events route
+ * This hook provides entity mutations that go through the almadar events route
  * instead of direct CRUD API calls. This ensures all mutations:
  * 1. Go through trait state machines
  * 2. Enforce guards
@@ -55,7 +55,7 @@ export interface OrbitalEventResponse {
 }
 
 /**
- * Send an event to an orbital via the events route
+ * Send an event to an almadar via the events route
  */
 async function sendOrbitalEvent(
   orbitalName: string,
@@ -69,10 +69,10 @@ async function sendOrbitalEvent(
 }
 
 /**
- * Hook for event-based entity mutations via orbital events route
+ * Hook for event-based entity mutations via almadar events route
  *
  * @param entityName - The entity type name (for cache invalidation)
- * @param orbitalName - The orbital to send events to
+ * @param orbitalName - The almadar to send events to
  * @param options - Optional configuration
  */
 export function useOrbitalMutations(

@@ -78,11 +78,22 @@ export interface TimeSlot {
   available: boolean;
 }
 
+/** Operation definition for action buttons */
+export interface SessionOperation {
+  label: string;
+  event?: string;
+  action?: string;
+  variant?: "primary" | "secondary" | "danger" | "ghost" | "success";
+  hidden?: (string | number | undefined)[];
+}
+
 export interface SessionSchedulerProps {
   /** Already booked sessions to display */
-  sessions: TrainingSessionData[];
+  sessions?: TrainingSessionData[] | unknown;
   /** Available time slots (optional - for booking mode) */
   availableSlots?: TimeSlot[];
+  /** Trainees list */
+  trainees?: unknown[];
   /** Trainee ID for booking context */
   traineeId?: string;
   /** Trainer ID for booking context */
@@ -91,8 +102,14 @@ export interface SessionSchedulerProps {
   weekStartDate?: Date;
   /** Show booking mode (available slots) */
   bookingMode?: boolean;
+  /** Default view mode */
+  defaultView?: "week" | "month" | "day" | string;
+  /** Show trainee info */
+  showTraineeInfo?: boolean;
   /** Entity context for events */
   entity?: string;
+  /** Operations/actions available */
+  operations?: SessionOperation[];
   /** Additional CSS classes */
   className?: string;
 }
@@ -147,7 +164,9 @@ const formatTime = (date: Date | string): string => {
 };
 
 // Format date for display
-const formatDayDate = (date: Date): { day: string; date: string; isToday: boolean } => {
+const formatDayDate = (
+  date: Date,
+): { day: string; date: string; isToday: boolean } => {
   const today = new Date();
   const isToday = date.toDateString() === today.toDateString();
   return {
@@ -169,7 +188,7 @@ const getStartOfWeek = (date: Date): Date => {
 
 // Group sessions by date
 const groupSessionsByDate = (
-  sessions: TrainingSessionData[]
+  sessions: TrainingSessionData[],
 ): Map<string, TrainingSessionData[]> => {
   const grouped = new Map<string, TrainingSessionData[]>();
   sessions.forEach((session) => {
@@ -196,11 +215,22 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
 
   // Week navigation state
   const [currentWeekStart, setCurrentWeekStart] = useState<Date>(
-    weekStartDate ? getStartOfWeek(weekStartDate) : getStartOfWeek(new Date())
+    weekStartDate ? getStartOfWeek(weekStartDate) : getStartOfWeek(new Date()),
   );
 
-  const weekDays = useMemo(() => getWeekDays(currentWeekStart), [currentWeekStart]);
-  const sessionsByDate = useMemo(() => groupSessionsByDate(sessions), [sessions]);
+  // Normalize sessions to array
+  const sessionData: TrainingSessionData[] = Array.isArray(sessions)
+    ? (sessions as TrainingSessionData[])
+    : [];
+
+  const weekDays = useMemo(
+    () => getWeekDays(currentWeekStart),
+    [currentWeekStart],
+  );
+  const sessionsByDate = useMemo(
+    () => groupSessionsByDate(sessionData),
+    [sessionData],
+  );
 
   // Navigate to previous week
   const handlePrevWeek = useCallback(() => {
@@ -235,7 +265,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
         entity,
       });
     },
-    [eventBus, traineeId, trainerId, entity]
+    [eventBus, traineeId, trainerId, entity],
   );
 
   // Emit VIEW event
@@ -243,7 +273,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
     (session: TrainingSessionData) => {
       eventBus.emit("UI:VIEW", { row: session, entity });
     },
-    [eventBus, entity]
+    [eventBus, entity],
   );
 
   // Emit EDIT event
@@ -251,7 +281,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
     (session: TrainingSessionData) => {
       eventBus.emit("UI:EDIT", { row: session, entity });
     },
-    [eventBus, entity]
+    [eventBus, entity],
   );
 
   // Emit CANCEL event
@@ -259,7 +289,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
     (session: TrainingSessionData) => {
       eventBus.emit("UI:CANCEL", { row: session, entity });
     },
-    [eventBus, entity]
+    [eventBus, entity],
   );
 
   // Emit START event
@@ -267,7 +297,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
     (session: TrainingSessionData) => {
       eventBus.emit("UI:START", { row: session, entity });
     },
-    [eventBus, entity]
+    [eventBus, entity],
   );
 
   // Emit COMPLETE event
@@ -275,7 +305,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
     (session: TrainingSessionData) => {
       eventBus.emit("UI:COMPLETE", { row: session, entity });
     },
-    [eventBus, entity]
+    [eventBus, entity],
   );
 
   // Render a single session card
@@ -292,7 +322,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
         border
         className={cn(
           "cursor-pointer hover:shadow-md transition-shadow bg-white",
-          status === "cancelled" && "opacity-60"
+          status === "cancelled" && "opacity-60",
         )}
         onClick={() => handleView(session)}
       >
@@ -301,7 +331,10 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
             <VStack gap="none" className="flex-1 min-w-0">
               <Typography
                 variant="label"
-                className={cn("truncate", status === "cancelled" && "line-through")}
+                className={cn(
+                  "truncate",
+                  status === "cancelled" && "line-through",
+                )}
               >
                 {session.title}
               </Typography>
@@ -312,7 +345,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
                 </Typography>
               </HStack>
             </VStack>
-            <Badge variant="secondary" size="sm" className={config.bgColor}>
+            <Badge variant="default" size="sm" className={config.bgColor}>
               <StatusIcon className={cn("h-3 w-3", config.color)} />
             </Badge>
           </HStack>
@@ -320,13 +353,13 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
           {/* Session indicators */}
           <HStack gap="xs">
             {session.isGroupSession && (
-              <Badge variant="secondary" size="sm">
+              <Badge variant="default" size="sm">
                 <Users className="h-3 w-3 mr-1" />
                 Group
               </Badge>
             )}
             {session.youtubeLink && (
-              <Badge variant="secondary" size="sm">
+              <Badge variant="default" size="sm">
                 <Youtube className="h-3 w-3 text-red-500" />
               </Badge>
             )}
@@ -431,7 +464,11 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
             <ChevronLeft className="h-4 w-4" />
           </Button>
           <Typography variant="body" className="font-medium">
-            Week of {currentWeekStart.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+            Week of{" "}
+            {currentWeekStart.toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+            })}
           </Typography>
           <Button variant="ghost" size="sm" onClick={handleNextWeek}>
             <ChevronRight className="h-4 w-4" />
@@ -444,7 +481,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
             const { day: dayName, date, isToday } = formatDayDate(day);
             const daySessions = sessionsByDate.get(day.toDateString()) || [];
             const activeSessions = daySessions.filter(
-              (s) => s.status !== "cancelled"
+              (s) => s.status !== "cancelled",
             );
 
             return (
@@ -455,7 +492,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
                   "min-h-[120px] p-2 rounded-lg border",
                   isToday
                     ? "bg-blue-50 border-blue-200"
-                    : "bg-neutral-50 border-neutral-200"
+                    : "bg-neutral-50 border-neutral-200",
                 )}
               >
                 {/* Day Header */}
@@ -464,7 +501,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
                     variant="small"
                     className={cn(
                       "font-medium",
-                      isToday ? "text-blue-600" : "text-neutral-500"
+                      isToday ? "text-blue-600" : "text-neutral-500",
                     )}
                   >
                     {dayName}
@@ -474,7 +511,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
                     rounded="full"
                     className={cn(
                       "h-7 w-7 items-center justify-center",
-                      isToday ? "bg-blue-600 text-white" : ""
+                      isToday ? "bg-blue-600 text-white" : "",
                     )}
                   >
                     <Typography
@@ -520,21 +557,23 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
         </Box>
 
         {/* Upcoming Sessions Summary */}
-        {sessions.filter((s) => s.status === "scheduled").length > 0 && (
+        {sessionData.filter(
+          (s: TrainingSessionData) => s.status === "scheduled",
+        ).length > 0 && (
           <VStack gap="sm">
             <Typography variant="label" className="text-neutral-600">
               Upcoming Sessions
             </Typography>
             <VStack gap="xs">
-              {sessions
-                .filter((s) => s.status === "scheduled")
+              {sessionData
+                .filter((s: TrainingSessionData) => s.status === "scheduled")
                 .sort(
-                  (a, b) =>
+                  (a: TrainingSessionData, b: TrainingSessionData) =>
                     new Date(a.scheduledAt).getTime() -
-                    new Date(b.scheduledAt).getTime()
+                    new Date(b.scheduledAt).getTime(),
                 )
                 .slice(0, 3)
-                .map((session) => (
+                .map((session: TrainingSessionData) => (
                   <Box
                     key={session.id}
                     rounded="lg"
@@ -557,7 +596,10 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
                           <Typography variant="body" className="font-medium">
                             {session.title}
                           </Typography>
-                          <Typography variant="small" className="text-neutral-500">
+                          <Typography
+                            variant="small"
+                            className="text-neutral-500"
+                          >
                             {new Date(session.scheduledAt).toLocaleDateString(
                               "en-US",
                               {
@@ -566,14 +608,14 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
                                 day: "numeric",
                                 hour: "numeric",
                                 minute: "2-digit",
-                              }
+                              },
                             )}
                           </Typography>
                         </VStack>
                       </HStack>
                       <HStack gap="xs">
                         {session.isGroupSession && (
-                          <Badge variant="secondary" size="sm">
+                          <Badge variant="default" size="sm">
                             <Users className="h-3 w-3" />
                           </Badge>
                         )}

@@ -40,8 +40,11 @@ export interface ObjectionRecorderProps {
   readOnly?: boolean;
   /** Additional CSS classes */
   className?: string;
-  /** Objection submitted handler */
-  onSubmit?: (objection: { participantId: string; text: string }) => void;
+  /** Objection submitted handler - can receive objection object or sectionRef + text */
+  onSubmit?: (
+    objectionOrSectionRef: { participantId: string; text: string } | string,
+    text?: string,
+  ) => void;
 }
 
 export const ObjectionRecorder: React.FC<ObjectionRecorderProps> = ({
@@ -126,14 +129,12 @@ export const ObjectionRecorder: React.FC<ObjectionRecorderProps> = ({
                 value={selectedParticipant}
                 onChange={(e) => setSelectedParticipant(e.target.value)}
                 className="w-full"
-              >
-                <option value="">Select participant...</option>
-                {participants.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name}
-                  </option>
-                ))}
-              </Select>
+                placeholder="Select participant..."
+                options={participants.map((p) => ({
+                  value: p.id,
+                  label: p.name,
+                }))}
+              />
             </VStack>
 
             <VStack gap="xs">

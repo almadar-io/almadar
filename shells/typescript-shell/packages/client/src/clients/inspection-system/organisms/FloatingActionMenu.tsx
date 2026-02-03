@@ -9,11 +9,11 @@
  */
 
 import React, { useState, useCallback, useRef, useEffect } from "react";
-import { cn } from "../../../lib/cn";
-import { Box } from "../../../components/atoms/Box";
-import { VStack, HStack } from "../../../components/atoms/Stack";
-import { Typography } from "../../../components/atoms/Typography";
-import { useEventBus } from "../../../hooks/useEventBus";
+import { cn } from "@/lib/cn";
+import { Box } from "@/components/atoms/Box";
+import { VStack, HStack } from "@/components/atoms/Stack";
+import { Typography } from "@/components/atoms/Typography";
+import { useEventBus } from "@/hooks/useEventBus";
 import {
   Plus,
   X,
@@ -33,13 +33,21 @@ export interface FloatingAction {
   bgColor?: string;
 }
 
+// Type alias for backwards compatibility
+export type QuickAction = FloatingAction;
+
 export interface FloatingActionMenuProps {
   /** Available actions */
   actions?: FloatingAction[];
   /** Context data for events */
   context?: Record<string, string>;
-  /** Position */
-  position?: "bottom-right" | "bottom-left" | "bottom-center";
+  /** Position - accepts unknown for generated code compatibility */
+  position?:
+    | "bottom-right"
+    | "bottom-left"
+    | "bottom-center"
+    | string
+    | unknown;
   /** Additional CSS classes */
   className?: string;
   /** Action click handler */
@@ -84,7 +92,7 @@ const defaultActions: FloatingAction[] = [
   },
 ];
 
-const positionClasses = {
+const positionClasses: Record<string, string> = {
   "bottom-right": "right-4 bottom-4",
   "bottom-left": "left-4 bottom-4",
   "bottom-center": "left-1/2 -translate-x-1/2 bottom-4",
@@ -121,17 +129,20 @@ export const FloatingActionMenu: React.FC<FloatingActionMenuProps> = ({
       eventBus.emit("UI:QUICK_ACTION", { action: actionId, context });
       setIsOpen(false);
     },
-    [context, onAction, eventBus]
+    [context, onAction, eventBus],
   );
 
   const handleToggle = useCallback(() => {
     setIsOpen((prev) => !prev);
   }, []);
 
+  // Normalize position to string for index access
+  const positionKey = typeof position === "string" ? position : "bottom-right";
+
   return (
     <Box
       ref={menuRef}
-      className={cn("fixed z-50", positionClasses[position], className)}
+      className={cn("fixed z-50", positionClasses[positionKey], className)}
     >
       <VStack gap="sm" align="end">
         {isOpen && (
@@ -140,12 +151,11 @@ export const FloatingActionMenu: React.FC<FloatingActionMenuProps> = ({
               const Icon = action.icon;
               return (
                 <HStack key={action.id} gap="sm" align="center">
-                  <Box
-                    padding="sm"
-                    rounded="lg"
-                    className="bg-white shadow-lg"
-                  >
-                    <Typography variant="small" className="font-medium whitespace-nowrap">
+                  <Box padding="sm" rounded="lg" className="bg-white shadow-lg">
+                    <Typography
+                      variant="small"
+                      className="font-medium whitespace-nowrap"
+                    >
                       {action.label}
                     </Typography>
                   </Box>
@@ -156,7 +166,7 @@ export const FloatingActionMenu: React.FC<FloatingActionMenuProps> = ({
                     className={cn(
                       "p-3 rounded-full shadow-lg transition-transform hover:scale-110",
                       action.bgColor || "bg-white",
-                      action.color || "text-neutral-700"
+                      action.color || "text-neutral-700",
                     )}
                   >
                     <Icon className="h-5 w-5" />
@@ -174,7 +184,7 @@ export const FloatingActionMenu: React.FC<FloatingActionMenuProps> = ({
             "p-4 rounded-full shadow-lg transition-all",
             isOpen
               ? "bg-neutral-800 text-white rotate-45"
-              : "bg-blue-600 text-white hover:bg-blue-700"
+              : "bg-blue-600 text-white hover:bg-blue-700",
           )}
         >
           {isOpen ? <X className="h-6 w-6" /> : <Plus className="h-6 w-6" />}

@@ -89,7 +89,7 @@ const InspectionCard: React.FC<{
               {inspection.companyName}
             </Typography>
             <HStack gap="sm" wrap>
-              <Badge variant="outline">{inspection.fieldType}</Badge>
+              <Badge variant="default">{inspection.fieldType}</Badge>
               <PhaseIndicator phase={inspection.phase} size="sm" />
             </HStack>
           </VStack>
