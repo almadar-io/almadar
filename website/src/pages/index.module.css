@@ -13,7 +13,69 @@
     background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #020617 100%);
 }
 
+/* Digital Mashrabiya - Geometric Grid Pattern */
 .heroBanner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 55%;
+    height: 100%;
+    background-image:
+        /* Main grid - vertical lines */
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 39px,
+            rgba(20, 184, 166, 0.12) 39px,
+            rgba(20, 184, 166, 0.12) 40px
+        ),
+        /* Main grid - horizontal lines */
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 39px,
+            rgba(20, 184, 166, 0.12) 39px,
+            rgba(20, 184, 166, 0.12) 40px
+        ),
+        /* Diagonal accent for mashrabiya effect */
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 55px,
+            rgba(20, 184, 166, 0.06) 55px,
+            rgba(20, 184, 166, 0.06) 56px
+        );
+    pointer-events: none;
+}
+
+[data-theme="dark"] .heroBanner::before {
+    background-image:
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 39px,
+            rgba(20, 184, 166, 0.2) 39px,
+            rgba(20, 184, 166, 0.2) 40px
+        ),
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 39px,
+            rgba(20, 184, 166, 0.2) 39px,
+            rgba(20, 184, 166, 0.2) 40px
+        ),
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 55px,
+            rgba(20, 184, 166, 0.1) 55px,
+            rgba(20, 184, 166, 0.1) 56px
+        );
+}
+
+/* Subtle teal glow accents */
+.heroBanner::after {
     content: "";
     position: absolute;
     top: 0;
@@ -34,7 +96,7 @@
     pointer-events: none;
 }
 
-[data-theme="dark"] .heroBanner::before {
+[data-theme="dark"] .heroBanner::after {
     background:
         radial-gradient(
             circle at 20% 80%,
@@ -497,6 +559,11 @@ html[dir="rtl"] .heroText {
 
     .orbitalCanvas {
         max-width: 300px;
+    }
+
+    .heroBanner::before {
+        width: 100%;
+        opacity: 0.5;
     }
 }
 
