@@ -40,5 +40,26 @@
         "description": "Real-time compliance rule checking and violation capture workflow.",
         "height": "800px",
         "category": "Gov Tech"
+    },
+    {
+        "id": "kflow-templates-knowledgegraphtemplate--default",
+        "title": "Knowledge Graph Explorer",
+        "description": "Interactive node-link diagram for navigating complex concept hierarchies.",
+        "height": "850px",
+        "category": "EdTech"
+    },
+    {
+        "id": "kflow-templates-conceptdetailtemplate--default",
+        "title": "Concept Deep Dive",
+        "description": "Adaptive learning interface with AI-generated explanations and progress tracking.",
+        "height": "800px",
+        "category": "EdTech"
+    },
+    {
+        "id": "kflow-templates-lessontemplate--default",
+        "title": "Interactive Lesson",
+        "description": "Distraction-free reading environment with integrated quizzes and markers.",
+        "height": "800px",
+        "category": "EdTech"
     }
 ]
