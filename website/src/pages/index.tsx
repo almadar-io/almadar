@@ -47,6 +47,7 @@ const helloWorldSchema = `{
 }`;
 
 import MashrabiyaPattern from "../components/MashrabiyaPattern";
+import DemoCarousel from "../components/DemoCarousel";
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
@@ -333,6 +334,7 @@ export default function Home(): ReactNode {
       <HomepageHeader />
       <main>
         <HomepageFeatures />
+        <DemoCarousel />
         <HomepagePhilosophy />
         <HomepageCTA />
       </main>

@@ -66,7 +66,7 @@ const config: Config = {
     colorMode: {
       defaultMode: "dark",
       disableSwitch: false,
-      respectPrefersColorScheme: true,
+      respectPrefersColorScheme: false,
     },
     navbar: {
       title: "Almadar",
@@ -80,6 +80,11 @@ const config: Config = {
           sidebarId: "docsSidebar",
           position: "left",
           label: "Docs",
+        },
+        {
+          to: "/demos",
+          label: "Demos",
+          position: "left",
         },
         {
           to: "/enterprise",

@@ -28,21 +28,17 @@
     /* Parchment - Light text */
     --almadar-parchment: #f8fafc;
     --almadar-parchment-muted: #94a3b8;
-    
+
     /* New Brand Variables */
     --almadar-bg: #f8fafc;
 
     /* Brand Gradient */
-    --almadar-gradient: linear-gradient(
-        135deg,
-        var(--almadar-teal) 0%,
-        var(--almadar-cyan) 100%
-    );
-    --almadar-gradient-gold: linear-gradient(
-        135deg,
-        var(--almadar-sand-gold) 0%,
-        var(--almadar-sand-gold-light) 100%
-    );
+    --almadar-gradient: linear-gradient(135deg,
+            var(--almadar-teal) 0%,
+            var(--almadar-cyan) 100%);
+    --almadar-gradient-gold: linear-gradient(135deg,
+            var(--almadar-sand-gold) 0%,
+            var(--almadar-sand-gold-light) 100%);
 
     /* Docusaurus theme variables - Light mode */
     --ifm-color-primary: #14b8a6;
@@ -141,7 +137,7 @@ body {
 /* === Navbar === */
 .navbar {
     box-shadow: none;
-    border-bottom: 1px solid var(--almadar-midnight-light);
+    border-bottom: 1px solid #e2e8f0;
 }
 
 /* Apply backdrop-filter only on desktop - it breaks mobile sidebar when applied to navbar */
@@ -160,6 +156,7 @@ body {
 
 [data-theme="dark"] .navbar {
     background: rgba(2, 6, 23, 0.85);
+    border-bottom: none;
 }
 
 .navbar__title {
@@ -249,12 +246,10 @@ body {
 
 /* === Hero Section === */
 .hero {
-    background: linear-gradient(
-        135deg,
-        var(--almadar-midnight-dark) 0%,
-        var(--almadar-midnight) 50%,
-        var(--almadar-midnight-dark) 100%
-    );
+    background: linear-gradient(135deg,
+            var(--almadar-midnight-dark) 0%,
+            var(--almadar-midnight) 50%,
+            var(--almadar-midnight-dark) 100%);
     position: relative;
     overflow: hidden;
     min-height: 90vh;
@@ -270,16 +265,12 @@ body {
     right: 0;
     bottom: 0;
     background:
-        radial-gradient(
-            circle at 20% 80%,
+        radial-gradient(circle at 20% 80%,
             rgba(20, 184, 166, 0.15) 0%,
-            transparent 40%
-        ),
-        radial-gradient(
-            circle at 80% 20%,
+            transparent 40%),
+        radial-gradient(circle at 80% 20%,
             rgba(6, 182, 212, 0.1) 0%,
-            transparent 40%
-        );
+            transparent 40%);
     pointer-events: none;
 }
 
@@ -472,8 +463,8 @@ html[dir="rtl"] .navbar {
     direction: rtl;
 }
 
-html[dir="rtl"] .navbar > .container,
-html[dir="rtl"] .navbar > .container-fluid {
+html[dir="rtl"] .navbar>.container,
+html[dir="rtl"] .navbar>.container-fluid {
     flex-direction: row-reverse;
 }
 

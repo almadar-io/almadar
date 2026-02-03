@@ -1,0 +1,30 @@
+[
+    {
+        "id": "blaz-klemenc-organisms-dashboard--default",
+        "title": "Winning 11 Dashboard",
+        "description": "A comprehensive dashboard view showing trainee metrics, upcoming sessions, and financial status.",
+        "height": "800px",
+        "category": "Complex Applications"
+    },
+    {
+        "id": "blaz-klemenc-molecules-mealplancard--full-featured",
+        "title": "Nutrition Planning",
+        "description": "An interactive meal plan card demonstrating rich content presentation and macro-nutrient tracking.",
+        "height": "600px",
+        "category": "Entity Management"
+    },
+    {
+        "id": "blaz-klemenc-molecules-traineecard--full-featured",
+        "title": "Trainee Profile",
+        "description": "Detailed entity view for managing gym members, including credit status and history.",
+        "height": "500px",
+        "category": "Entity Management"
+    },
+    {
+        "id": "blaz-klemenc-molecules-progresschart--default",
+        "title": "Progress Analytics",
+        "description": "Visual data representation of trainee progress over time using interactive charts.",
+        "height": "400px",
+        "category": "Analytics"
+    }
+]

@@ -1,0 +1,11 @@
+/**
+ * Theme index - exports all built-in theme CSS files
+ *
+ * Each theme provides both light and dark modes via:
+ *   [data-theme="themename-light"] { ... }
+ *   [data-theme="themename-dark"] { ... }
+ */
+
+@import "./wireframe.css";
+@import "./minimalist.css";
+@import "./almadar.css";
