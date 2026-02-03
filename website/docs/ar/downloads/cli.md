@@ -202,6 +202,30 @@ export PATH="$PATH:/path/to/almadar"
 chmod +x /usr/local/bin/almadar
 ```
 
+### قوالب الـ Shell غير موجودة (almadar new/compile)
+
+إذا ظهر خطأ "Shell not found" عند تشغيل `almadar new` أو `almadar compile`، فإن الأداة لا تجد قوالب الـ shell.
+
+**الحل ١: تعيين ORBITAL_SHELLS_DIR**
+
+قم بتحميل قوالب الـ shell من [إصدارات GitHub](https://github.com/almadar-io/almadar/releases) وعيّن متغير البيئة:
+
+```bash
+# تحميل واستخراج القوالب
+curl -L https://github.com/almadar-io/almadar/archive/main.tar.gz | tar -xz
+export ORBITAL_SHELLS_DIR="$PWD/almadar-main/shells"
+
+# أو أضف إلى ~/.bashrc أو ~/.zshrc للحفظ الدائم
+echo 'export ORBITAL_SHELLS_DIR="/path/to/almadar/shells"' >> ~/.bashrc
+```
+
+**الحل ٢: استنساخ المستودع**
+
+```bash
+git clone https://github.com/almadar-io/almadar.git
+export ORBITAL_SHELLS_DIR="$PWD/almadar/shells"
+```
+
 ---
 
 *تحتاج مساعدة؟ انضم إلى [Discord](https://discord.gg/almadar) أو افتح [مشكلة](https://github.com/almadar-io/almadar/issues).*

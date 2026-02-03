@@ -229,6 +229,30 @@ chmod +x /usr/local/bin/almadar
 
 The almadar.exe binary is signed but may trigger Windows Defender on first run. Click "More info" → "Run anyway" or add an exception.
 
+### Shell Templates Not Found (almadar new/compile)
+
+If you see an error like "Shell not found" when running `almadar new` or `almadar compile`, the CLI cannot find the shell templates.
+
+**Solution 1: Set ORBITAL_SHELLS_DIR**
+
+Download the shell templates from the [GitHub releases](https://github.com/almadar-io/almadar/releases) and set the environment variable:
+
+```bash
+# Download and extract shells
+curl -L https://github.com/almadar-io/almadar/archive/main.tar.gz | tar -xz
+export ORBITAL_SHELLS_DIR="$PWD/almadar-main/shells"
+
+# Or add to ~/.bashrc or ~/.zshrc for persistence
+echo 'export ORBITAL_SHELLS_DIR="/path/to/almadar/shells"' >> ~/.bashrc
+```
+
+**Solution 2: Clone the repository**
+
+```bash
+git clone https://github.com/almadar-io/almadar.git
+export ORBITAL_SHELLS_DIR="$PWD/almadar/shells"
+```
+
 ---
 
 *Need help? Join our [Discord](https://discord.gg/almadar) or open an [issue](https://github.com/almadar-io/almadar/issues).*

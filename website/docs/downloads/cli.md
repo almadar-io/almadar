@@ -51,6 +51,17 @@ cd my-app
 almadar dev
 ```
 
+## Troubleshooting
+
+### Shell Templates Not Found
+
+If `almadar new` or `almadar compile` shows "Shell not found", set the shell templates path:
+
+```bash
+git clone https://github.com/almadar-io/almadar.git
+export ORBITAL_SHELLS_DIR="$PWD/almadar/shells"
+```
+
 ## More Information
 
 - [GitHub Repository](https://github.com/almadar-io/almadar)
