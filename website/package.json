@@ -9,7 +9,7 @@
     "build": "npm run copy-storybook && npm run build:legacy && docusaurus build",
     "build:docusaurus": "docusaurus build",
     "build:legacy": "node scripts/build.js",
-    "copy-storybook": "mkdir -p static/storybook && cp -r ../../orbital-shared/design-system/storybook-static/* static/storybook/",
+    "copy-storybook": "mkdir -p static/storybook && (test -d ../../orbital-shared/design-system/storybook-static || (cd ../../orbital-shared/design-system && npm run build-storybook)) && cp -r ../../orbital-shared/design-system/storybook-static/* static/storybook/",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
