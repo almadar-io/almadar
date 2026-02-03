@@ -64,9 +64,9 @@ const config: Config = {
   themeConfig: {
     image: "img/og-image.png",
     colorMode: {
-      defaultMode: "dark",
+      defaultMode: "light",
       disableSwitch: false,
-      respectPrefersColorScheme: false,
+      respectPrefersColorScheme: true,
     },
     navbar: {
       title: "Almadar",
