@@ -28,7 +28,7 @@ export default function Demos(): React.JSX.Element {
                 <div className="container">
                     <div className={styles.header}>
                         <h1>Interactive Showcases</h1>
-                        <p>Experience the power of KFlow through live, interactive templates.</p>
+                        <p className={styles.description}>Experience the power of Almadar through live, interactive templates.</p>
                     </div>
 
                     <div className={styles.grid}>

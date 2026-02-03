@@ -1,30 +1,44 @@
 [
     {
-        "id": "blaz-klemenc-organisms-dashboard--default",
-        "title": "Winning 11 Dashboard",
-        "description": "A comprehensive dashboard view showing trainee metrics, upcoming sessions, and financial status.",
+        "id": "clients-winning-11-templates-admindashboardtemplate--default",
+        "title": "Executive Dashboard",
+        "description": "High-level overview of system health, alerts, and key metrics.",
         "height": "800px",
-        "category": "Complex Applications"
+        "category": "Winning 11"
     },
     {
-        "id": "blaz-klemenc-molecules-mealplancard--full-featured",
-        "title": "Nutrition Planning",
-        "description": "An interactive meal plan card demonstrating rich content presentation and macro-nutrient tracking.",
+        "id": "clients-winning-11-templates-trustintelligencetemplate--default",
+        "title": "Trust Intelligence",
+        "description": "AI-driven analysis of team trust scores and performance trends.",
+        "height": "800px",
+        "category": "Winning 11"
+    },
+    {
+        "id": "clients-inspection-system-templates-inspectionstemplate--default",
+        "title": "Inspection Management",
+        "description": "Centralized hub for tracking compliance checks and field operations.",
+        "height": "800px",
+        "category": "Gov Tech"
+    },
+    {
+        "id": "blaz-klemenc-molecules-mealplancard--default",
+        "title": "Smart Meal Plan",
+        "description": "AI-generated nutrition schedule with macro breakdown.",
         "height": "600px",
-        "category": "Entity Management"
+        "category": "Fitness App"
     },
     {
-        "id": "blaz-klemenc-molecules-traineecard--full-featured",
-        "title": "Trainee Profile",
-        "description": "Detailed entity view for managing gym members, including credit status and history.",
-        "height": "500px",
-        "category": "Entity Management"
+        "id": "clients-winning-11-templates-userprofiletemplate--default",
+        "title": "User Profile 360",
+        "description": "Comprehensive user analysis including activity and trust metrics.",
+        "height": "800px",
+        "category": "Winning 11"
     },
     {
-        "id": "blaz-klemenc-molecules-progresschart--default",
-        "title": "Progress Analytics",
-        "description": "Visual data representation of trainee progress over time using interactive charts.",
-        "height": "400px",
-        "category": "Analytics"
+        "id": "clients-inspection-system-templates-inspectionprocesstemplate--content-rule-checking",
+        "title": "Live Inspection Mode",
+        "description": "Real-time compliance rule checking and violation capture workflow.",
+        "height": "800px",
+        "category": "Gov Tech"
     }
 ]
