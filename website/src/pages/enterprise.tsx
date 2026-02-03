@@ -3,12 +3,17 @@ import Link from "@docusaurus/Link";
 import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
+import MashrabiyaPattern from "../components/MashrabiyaPattern";
 
 import styles from "./enterprise.module.css";
 
 function EnterpriseHero() {
   return (
     <header className={styles.hero}>
+      {/* Background Pattern */}
+      <div className={styles.heroPatternContainer}>
+        <MashrabiyaPattern className={styles.heroPattern} opacity={0.6} />
+      </div>
       <div className="container">
         <div className={styles.heroContent}>
           <span className={styles.tag}>

@@ -1,52 +1,23 @@
 /* ========== variables.css ========== */
 /**
  * Almadar Brand Design Tokens
- * 
- * These CSS custom properties define the visual identity of the Almadar website.
- * All colors, typography, and spacing should reference these variables.
+ *
+ * THEME: Modern Heritage (Light Mode)
+ *
+ * To switch themes:
+ * - Modern Heritage (current): @import './variables-modern-heritage.css'
+ * - Dark Theme (original): @import './variables-dark.css'
  */
 
-:root {
-    /* Almadar Brand Colors */
-    --teal: #14b8a6;
-    --cyan: #06b6d4;
-    --brand-gradient: linear-gradient(135deg, var(--teal) 0%, var(--cyan) 100%);
-
-    /* Background Colors */
-    --bg-dark: #0f172a;
-    --bg-darker: #020617;
-    
-    /* Text Colors */
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-    
-    /* Border */
-    --border: #1e293b;
-    
-    /* Spacing */
-    --container-max-width: 1200px;
-    --section-padding: 6rem;
-    
-    /* Typography */
-    --font-family: 'Plus Jakarta Sans', sans-serif;
-    
-    /* Border Radius */
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
-    --radius-xl: 24px;
-    
-    /* Transitions */
-    --transition-fast: 0.2s ease;
-    --transition-normal: 0.3s ease;
-}
+@import './variables-modern-heritage.css';
 
 
 /* ========== base.css ========== */
 /**
- * Base Styles
- * 
+ * Base Styles - Modern Heritage Theme
+ *
  * Reset, typography, and foundational layout styles.
+ * Adapted for light mode with heritage accents.
  */
 
 * {
@@ -58,7 +29,7 @@
 
 body {
     font-family: var(--font-family);
-    background-color: var(--bg-dark);
+    background-color: var(--bg-primary);
     color: var(--text-main);
     overflow-x: hidden;
     line-height: 1.6;
@@ -70,7 +41,10 @@ body {
     padding: 0 2rem;
 }
 
-/* Typography */
+/* ===========================
+   Typography
+   =========================== */
+
 h1,
 h2,
 h3,
@@ -79,6 +53,7 @@ h5,
 h6 {
     line-height: 1.2;
     font-weight: 700;
+    color: var(--text-main);
 }
 
 h1 {
@@ -98,11 +73,19 @@ p {
 }
 
 a {
-    color: inherit;
+    color: var(--text-accent);
     text-decoration: none;
+    transition: color var(--transition-fast);
 }
 
-/* Gradient Text */
+a:hover {
+    color: var(--color-primary-hover);
+}
+
+/* ===========================
+   Gradient Text
+   =========================== */
+
 .gradient-text {
     background: var(--brand-gradient);
     -webkit-background-clip: text;
@@ -110,33 +93,197 @@ a {
     background-clip: text;
 }
 
-/* Highlight */
+/* ===========================
+   Heritage Accents
+   =========================== */
+
 .highlight {
     color: var(--teal);
     font-weight: bold;
 }
 
-/* Section Spacing */
+.gold-accent {
+    color: var(--sand-gold);
+}
+
+/* Heritage gold line - subtle accent */
+.heritage-line {
+    height: 1px;
+    background: var(--heritage-gradient);
+    width: 100%;
+    max-width: 200px;
+}
+
+/* Heritage line below headings */
+.heritage-underline::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--sand-gold);
+    margin-top: 1rem;
+}
+
+/* ===========================
+   Section Spacing
+   =========================== */
+
 section {
     padding: var(--section-padding) 0;
 }
 
+/* ===========================
+   Cards & Surfaces
+   =========================== */
+
+.card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+/* ===========================
+   Dark Sections
+   =========================== */
+
+.dark-section {
+    background-color: var(--midnight);
+    color: var(--text-light);
+}
+
+.dark-section h1,
+.dark-section h2,
+.dark-section h3,
+.dark-section h4,
+.dark-section h5,
+.dark-section h6 {
+    color: var(--text-light);
+}
+
+.dark-section p {
+    color: #94a3b8;
+}
+
+.dark-section a {
+    color: var(--teal);
+}
+
+/* ===========================
+   Geometric Patterns (Digital Mashrabiya)
+   =========================== */
+
+.pattern-grid {
+    background-image: var(--pattern-grid);
+    background-repeat: repeat;
+}
+
+.pattern-mashrabiya {
+    background-image: var(--pattern-mashrabiya);
+    background-repeat: repeat;
+}
+
+/* Decorative geometric corner */
+.geometric-corner {
+    position: relative;
+}
+
+.geometric-corner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 120px;
+    background-image: var(--pattern-mashrabiya);
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* ===========================
+   Buttons - Modern Heritage Style
+   =========================== */
+
+.btn-primary {
+    background: var(--brand-gradient);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-main);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.btn-secondary:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+}
+
+/* Gold accent button for heritage CTAs */
+.btn-gold {
+    background: var(--sand-gold);
+    color: var(--midnight);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity var(--transition-fast);
+}
+
+.btn-gold:hover {
+    opacity: 0.9;
+}
+
+
 /* ========== navigation.css ========== */
 /**
- * Navigation Styles
- * 
- * Desktop and mobile navigation, including hamburger menu.
+ * Navigation Styles - Modern Heritage Theme
+ *
+ * Desktop and mobile navigation adapted for light mode.
  */
 
-/* Main Navigation Bar */
+/* ===========================
+   Main Navigation Bar
+   =========================== */
+
 nav {
     padding: 1.5rem 0;
     backdrop-filter: blur(10px);
     position: fixed;
     width: 100%;
     z-index: 100;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    background: rgba(15, 23, 42, 0.7);
+    border-bottom: 1px solid var(--border);
+    background: rgba(248, 250, 252, 0.9);
+    transition: background var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+/* Scrolled state - add shadow */
+nav.scrolled {
+    box-shadow: var(--shadow-md);
 }
 
 .nav-content {
@@ -145,14 +292,17 @@ nav {
     align-items: center;
 }
 
-/* Logo */
+/* ===========================
+   Logo
+   =========================== */
+
 .logo-container {
     display: flex;
     align-items: center;
     gap: 1rem;
     font-weight: 800;
     font-size: 1.5rem;
-    color: #fff;
+    color: var(--text-main);
     text-decoration: none;
 }
 
@@ -161,7 +311,10 @@ nav {
     height: 40px;
 }
 
-/* Desktop Navigation Links */
+/* ===========================
+   Desktop Navigation Links
+   =========================== */
+
 .nav-links {
     display: flex;
     align-items: center;
@@ -178,15 +331,15 @@ nav {
 
 .nav-item:hover,
 .nav-item.active {
-    color: #fff;
+    color: var(--text-main);
 }
 
 .nav-btn {
     padding: 0.5rem 1.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
     border-radius: 99px;
-    color: #fff;
+    color: var(--text-main);
     font-weight: 600;
     text-decoration: none;
     transition: all var(--transition-normal);
@@ -195,9 +348,25 @@ nav {
 .nav-btn:hover {
     background: var(--brand-gradient);
     border-color: transparent;
+    color: #fff;
 }
 
-/* Mobile Menu Toggle (Hamburger) */
+/* Gold accent nav button variant */
+.nav-btn-gold {
+    background: transparent;
+    border: 1px solid var(--sand-gold);
+    color: var(--sand-gold);
+}
+
+.nav-btn-gold:hover {
+    background: var(--sand-gold);
+    color: var(--midnight);
+}
+
+/* ===========================
+   Mobile Menu Toggle (Hamburger)
+   =========================== */
+
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;
@@ -222,10 +391,14 @@ nav {
 .mobile-menu-toggle span {
     width: 100%;
     height: 3px;
-    background: #fff;
+    background: var(--text-main);
     border-radius: 3px;
     transition: all var(--transition-normal);
     transform-origin: center;
+}
+
+.mobile-menu-toggle.active span {
+    background: #fff;
 }
 
 .mobile-menu-toggle.active span:nth-child(1) {
@@ -240,7 +413,10 @@ nav {
     transform: translateY(-10px) rotate(-45deg);
 }
 
-/* Mobile Menu Overlay */
+/* ===========================
+   Mobile Menu Overlay
+   =========================== */
+
 .mobile-menu {
     display: none;
     position: fixed;
@@ -248,7 +424,7 @@ nav {
     left: 0;
     width: 100%;
     height: 100vh;
-    background: var(--bg-darker);
+    background: var(--midnight);
     z-index: 105;
     opacity: 0;
     visibility: hidden;
@@ -273,7 +449,7 @@ nav {
 .mobile-nav-item {
     font-size: 1.5rem;
     font-weight: 600;
-    color: var(--text-muted);
+    color: #94a3b8;
     text-decoration: none;
     transition: color var(--transition-fast);
 }
@@ -292,7 +468,10 @@ nav {
     text-decoration: none;
 }
 
-/* Show mobile elements on small screens */
+/* ===========================
+   Show mobile elements on small screens
+   =========================== */
+
 @media (max-width: 768px) {
     .nav-links {
         display: none;
@@ -307,14 +486,51 @@ nav {
     }
 }
 
+/* ===========================
+   Dark Section Navigation Override
+   (When nav is over a dark section)
+   =========================== */
+
+nav.nav-dark {
+    background: rgba(15, 23, 42, 0.9);
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+nav.nav-dark .logo-container {
+    color: #fff;
+}
+
+nav.nav-dark .nav-item {
+    color: #94a3b8;
+}
+
+nav.nav-dark .nav-item:hover,
+nav.nav-dark .nav-item.active {
+    color: #fff;
+}
+
+nav.nav-dark .nav-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+nav.nav-dark .mobile-menu-toggle span {
+    background: #fff;
+}
+
+
 /* ========== components.css ========== */
 /**
- * Component Styles
- * 
- * Reusable UI components: buttons, cards, features, etc.
+ * Component Styles - Modern Heritage Theme
+ *
+ * Reusable UI components adapted for light mode with heritage accents.
  */
 
-/* Buttons */
+/* ===========================
+   Buttons
+   =========================== */
+
 .btn {
     display: inline-flex;
     align-items: center;
@@ -334,6 +550,7 @@ nav {
 .btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 30px rgba(20, 184, 166, 0.3);
+    color: #fff;
 }
 
 .contact-btn {
@@ -341,12 +558,30 @@ nav {
     padding: 1.25rem 3rem;
 }
 
-/* Hero Section */
+/* ===========================
+   Hero Section
+   =========================== */
+
 .hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
     padding-top: 100px;
+    background: var(--bg-primary);
+    position: relative;
+}
+
+/* Subtle geometric pattern in hero */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background-image: var(--pattern-mashrabiya);
+    opacity: 0.3;
+    pointer-events: none;
 }
 
 .hero .container {
@@ -354,15 +589,19 @@ nav {
     grid-template-columns: 1.2fr 1fr;
     gap: 4rem;
     align-items: center;
+    position: relative;
+    z-index: 1;
 }
 
 .hero-text h1 {
     margin-bottom: 1.5rem;
+    color: var(--text-main);
 }
 
 .hero-text p {
     font-size: 1.25rem;
     margin-bottom: 2rem;
+    color: var(--text-muted);
 }
 
 .hero-animation {
@@ -377,9 +616,25 @@ nav {
     height: auto;
 }
 
-/* Feature Grid */
+/* ===========================
+   Feature Grid
+   =========================== */
+
 .features {
-    background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
+    background: var(--bg-tertiary);
+    position: relative;
+}
+
+/* Subtle gold accent line at top of features section */
+.features::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: var(--sand-gold);
 }
 
 .feature-grid {
@@ -389,16 +644,18 @@ nav {
 }
 
 .feature {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: var(--radius-xl);
     padding: 2rem;
     transition: all var(--transition-normal);
+    box-shadow: var(--shadow-sm);
 }
 
 .feature:hover {
     border-color: var(--teal);
     transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
 }
 
 .icon-box {
@@ -407,31 +664,43 @@ nav {
 }
 
 .feature h3 {
-    color: #fff;
+    color: var(--text-main);
     margin-bottom: 0.75rem;
 }
 
-/* Definition Cards */
+.feature p {
+    color: var(--text-muted);
+}
+
+/* ===========================
+   Definition Cards
+   =========================== */
+
 .definition-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: var(--radius-xl);
     padding: 2.5rem;
     margin-bottom: 1.5rem;
     transition: all var(--transition-normal);
+    box-shadow: var(--shadow-sm);
 }
 
 .definition-card:hover {
     border-color: var(--teal);
+    box-shadow: var(--shadow-md);
 }
 
 .definition-card h3 {
-    color: #fff;
+    color: var(--text-main);
     font-size: 1.4rem;
     margin-bottom: 1rem;
 }
 
-/* Tech Card */
+/* ===========================
+   Tech Card
+   =========================== */
+
 .tech-card {
     background: linear-gradient(135deg, rgba(20, 184, 166, 0.08), rgba(6, 182, 212, 0.03));
     border: 1px solid rgba(20, 184, 166, 0.2);
@@ -441,11 +710,14 @@ nav {
 }
 
 .tech-card h2 {
-    color: #fff;
+    color: var(--text-main);
     font-size: 2rem;
 }
 
-/* Case Study Cards */
+/* ===========================
+   Case Study Cards
+   =========================== */
+
 .use-cases {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -458,16 +730,18 @@ nav {
 }
 
 .case-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: var(--radius-xl);
     overflow: hidden;
     transition: all var(--transition-normal);
+    box-shadow: var(--shadow-sm);
 }
 
 .case-card:hover {
     border-color: var(--teal);
     transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
 }
 
 .case-header {
@@ -479,7 +753,7 @@ nav {
 }
 
 .case-header h3 {
-    color: #fff;
+    color: var(--text-main);
 }
 
 .badg {
@@ -538,21 +812,33 @@ nav {
     border: 1px solid var(--border);
 }
 
-/* Team Cards */
+/* ===========================
+   Team Cards
+   =========================== */
+
 .team-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: var(--radius-xl);
     padding: 2rem;
     text-align: center;
     transition: all var(--transition-normal);
+    box-shadow: var(--shadow-sm);
 }
 
 .team-card:hover {
     border-color: var(--teal);
+    box-shadow: var(--shadow-md);
 }
 
-/* Contact Card */
+.team-card h3 {
+    color: var(--text-main);
+}
+
+/* ===========================
+   Contact Card
+   =========================== */
+
 .contact-card {
     background: linear-gradient(135deg, rgba(20, 184, 166, 0.1), rgba(6, 182, 212, 0.05));
     border: 1px solid rgba(20, 184, 166, 0.2);
@@ -563,11 +849,15 @@ nav {
 
 .contact-card h2 {
     font-size: 2.5rem;
+    color: var(--text-main);
 }
 
-/* Process Steps */
+/* ===========================
+   Process Steps
+   =========================== */
+
 .process-section {
-    background: linear-gradient(180deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+    background: var(--bg-tertiary);
 }
 
 .process-step {
@@ -593,6 +883,10 @@ nav {
 
 .step-content {
     max-width: 400px;
+}
+
+.step-content h3 {
+    color: var(--text-main);
 }
 
 .step-content.right {
@@ -624,16 +918,58 @@ nav {
     font-weight: 500;
 }
 
-/* Footer */
+/* Gold accent tag for heritage elements */
+.tag-gold {
+    background: rgba(201, 162, 39, 0.1);
+    color: var(--sand-gold);
+}
+
+/* ===========================
+   Footer
+   =========================== */
+
 footer {
     padding: 2rem 0;
     border-top: 1px solid var(--border);
     text-align: center;
+    background: var(--bg-secondary);
 }
 
 footer p {
     font-size: 0.9rem;
+    color: var(--text-muted);
 }
+
+/* ===========================
+   Dark Section Variants
+   (Use .dark-section class on any section)
+   =========================== */
+
+.dark-section {
+    background: var(--midnight);
+}
+
+.dark-section .feature,
+.dark-section .definition-card,
+.dark-section .case-card,
+.dark-section .team-card {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: #334155;
+}
+
+.dark-section .feature h3,
+.dark-section .definition-card h3,
+.dark-section .case-header h3,
+.dark-section .team-card h3 {
+    color: #fff;
+}
+
+.dark-section .feature p,
+.dark-section .definition-card p,
+.dark-section .case-body p {
+    color: #94a3b8;
+}
+
 
 /* ========== responsive.css ========== */
 /**
@@ -765,23 +1101,30 @@ footer p {
 
 /* ========== docs.css ========== */
 /**
- * Documentation Styles
- * 
+ * Documentation Styles - Modern Heritage Theme
+ *
  * Styles for the documentation pages with sidebar navigation.
+ * Adapted for light mode with heritage accents.
  */
 
-/* Documentation Layout */
+/* ===========================
+   Documentation Layout
+   =========================== */
+
 .docs-layout {
     display: flex;
     min-height: calc(100vh - 80px);
     padding-top: 80px;
 }
 
-/* Sidebar */
+/* ===========================
+   Sidebar
+   =========================== */
+
 .docs-sidebar {
     width: 280px;
     flex-shrink: 0;
-    background: var(--bg-darker);
+    background: var(--bg-secondary);
     border-right: 1px solid var(--border);
     position: fixed;
     top: 80px;
@@ -839,8 +1182,8 @@ footer p {
 }
 
 .sidebar-link:hover {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-main);
+    background: var(--bg-tertiary);
 }
 
 .sidebar-link.active {
@@ -848,12 +1191,16 @@ footer p {
     background: rgba(20, 184, 166, 0.1);
 }
 
-/* Main Content */
+/* ===========================
+   Main Content
+   =========================== */
+
 .docs-content {
     flex: 1;
     margin-left: 280px;
     padding: 2rem 3rem;
     max-width: 900px;
+    background: var(--bg-primary);
 }
 
 .docs-content h1 {
@@ -861,6 +1208,7 @@ footer p {
     margin-bottom: 1rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--border);
+    color: var(--text-main);
 }
 
 .docs-content h2 {
@@ -868,19 +1216,20 @@ footer p {
     margin-top: 3rem;
     margin-bottom: 1rem;
     padding-top: 1rem;
-    color: #fff;
+    color: var(--text-main);
 }
 
 .docs-content h3 {
     font-size: 1.25rem;
     margin-top: 2rem;
     margin-bottom: 0.75rem;
-    color: #fff;
+    color: var(--text-main);
 }
 
 .docs-content p {
     margin-bottom: 1rem;
     line-height: 1.8;
+    color: var(--text-muted);
 }
 
 .docs-content ul,
@@ -898,12 +1247,15 @@ footer p {
     color: var(--teal);
 }
 
-/* Hero Image */
+/* ===========================
+   Hero Image
+   =========================== */
+
 .docs-hero-img {
     text-align: center;
     margin: 2rem 0;
     padding: 2rem;
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--bg-tertiary);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
 }
@@ -921,7 +1273,11 @@ footer p {
     font-style: italic;
 }
 
-/* Code Blocks */
+/* ===========================
+   Code Blocks
+   (Keep dark for readability)
+   =========================== */
+
 .code-block {
     background: #0d1117;
     border: 1px solid var(--border);
@@ -936,9 +1292,9 @@ footer p {
     align-items: center;
     padding: 0.5rem 1rem;
     background: rgba(255, 255, 255, 0.03);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     font-size: 0.8rem;
-    color: var(--text-muted);
+    color: #94a3b8;
 }
 
 .code-lang {
@@ -950,16 +1306,18 @@ pre {
     margin: 0;
     padding: 1.25rem;
     overflow-x: auto;
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-family: var(--font-mono);
     font-size: 0.9rem;
     line-height: 1.6;
+    background: #0d1117;
+    color: #f8f8f2;
 }
 
 code {
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-family: var(--font-mono);
 }
 
-/* Inline code */
+/* Inline code - light mode appropriate */
 p code,
 li code {
     background: rgba(20, 184, 166, 0.1);
@@ -969,7 +1327,10 @@ li code {
     font-size: 0.85em;
 }
 
-/* Syntax Highlighting - matches orbitals/syntax/textmate-grammar scopes */
+/* ===========================
+   Syntax Highlighting
+   (Dracula-like theme for dark code blocks)
+   =========================== */
 
 /* Core @ bindings: @entity, @payload, @state, @now */
 .token-binding {
@@ -1047,7 +1408,10 @@ li code {
     font-style: italic;
 }
 
-/* Tables */
+/* ===========================
+   Tables
+   =========================== */
+
 .docs-table {
     width: 100%;
     border-collapse: collapse;
@@ -1063,8 +1427,8 @@ li code {
 }
 
 .docs-table th {
-    background: rgba(255, 255, 255, 0.03);
-    color: #fff;
+    background: var(--bg-tertiary);
+    color: var(--text-main);
     font-weight: 600;
     font-size: 0.8rem;
     text-transform: uppercase;
@@ -1082,7 +1446,10 @@ li code {
     border-radius: 4px;
 }
 
-/* Info Boxes */
+/* ===========================
+   Info Boxes
+   =========================== */
+
 .info-box {
     padding: 1rem 1.25rem;
     border-radius: var(--radius-md);
@@ -1105,6 +1472,12 @@ li code {
     border-color: #6366f1;
 }
 
+/* Heritage gold info box for special notices */
+.info-box.heritage {
+    background: rgba(201, 162, 39, 0.08);
+    border-color: var(--sand-gold);
+}
+
 .info-box-title {
     font-weight: 700;
     font-size: 0.85rem;
@@ -1125,7 +1498,14 @@ li code {
     color: #6366f1;
 }
 
-/* Behavior Cards */
+.info-box.heritage .info-box-title {
+    color: var(--sand-gold);
+}
+
+/* ===========================
+   Behavior Cards
+   =========================== */
+
 .behavior-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -1134,22 +1514,24 @@ li code {
 }
 
 .behavior-card {
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: 1.25rem;
     transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
 }
 
 .behavior-card:hover {
     border-color: var(--teal);
+    box-shadow: var(--shadow-md);
 }
 
 .behavior-card h4 {
     color: var(--teal);
     font-size: 1rem;
     margin-bottom: 0.5rem;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
 }
 
 .behavior-card p {
@@ -1157,7 +1539,10 @@ li code {
     margin: 0;
 }
 
-/* State Machine Diagrams */
+/* ===========================
+   State Machine Diagrams
+   =========================== */
+
 .state-diagram {
     margin: 2rem 0;
     border-radius: var(--radius-md);
@@ -1212,7 +1597,10 @@ li code {
     }
 }
 
-/* Responsive */
+/* ===========================
+   Responsive
+   =========================== */
+
 @media (max-width: 1024px) {
     .docs-sidebar {
         width: 240px;
@@ -1238,4 +1626,155 @@ li code {
         font-size: 2rem;
     }
 }
+
+
+/* ========== variables-dark.css ========== */
+/**
+ * Almadar Brand Design Tokens
+ * 
+ * These CSS custom properties define the visual identity of the Almadar website.
+ * All colors, typography, and spacing should reference these variables.
+ */
+
+:root {
+    /* Almadar Brand Colors */
+    --teal: #14b8a6;
+    --cyan: #06b6d4;
+    --brand-gradient: linear-gradient(135deg, var(--teal) 0%, var(--cyan) 100%);
+
+    /* Background Colors */
+    --bg-dark: #0f172a;
+    --bg-darker: #020617;
+    
+    /* Text Colors */
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    
+    /* Border */
+    --border: #1e293b;
+    
+    /* Spacing */
+    --container-max-width: 1200px;
+    --section-padding: 6rem;
+    
+    /* Typography */
+    --font-family: 'Plus Jakarta Sans', sans-serif;
+    
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+}
+
+
+/* ========== variables-modern-heritage.css ========== */
+/**
+ * Almadar "Modern Heritage" Design Tokens
+ *
+ * A Global Tech Brand Strategy that honors heritage subtly.
+ * Concept: "Digital Mashrabiya" - geometric grids echoing modern Saudi architecture
+ * (KAFD district), rendered in flat, clean tech lines.
+ *
+ * Palette:
+ * - Background: White/Parchment (#f8fafc)
+ * - Lines: Teal (#14b8a6)
+ * - Solids: Midnight Blue (#0f172a)
+ * - Accent: Sand Gold (#c9a227)
+ *
+ * To revert to dark theme: swap this file with variables-dark.css
+ */
+
+:root {
+    /* === Modern Heritage Palette === */
+
+    /* Primary Brand Colors */
+    --teal: #14b8a6;
+    --cyan: #06b6d4;
+    --midnight: #0f172a;
+    --sand-gold: #c9a227;
+
+    /* Brand Gradient - subtle teal to cyan */
+    --brand-gradient: linear-gradient(135deg, var(--teal) 0%, var(--cyan) 100%);
+
+    /* Heritage Accent Gradient - gold line effect */
+    --heritage-gradient: linear-gradient(90deg, transparent 0%, var(--sand-gold) 50%, transparent 100%);
+
+    /* === Light Mode (Primary) === */
+
+    /* Background Colors */
+    --bg-primary: #f8fafc;        /* White/Parchment - main background */
+    --bg-secondary: #ffffff;       /* Pure white - cards, elevated surfaces */
+    --bg-tertiary: #f1f5f9;       /* Subtle gray - subtle contrast */
+    --bg-dark: var(--midnight);    /* Midnight blue - dark sections, footer */
+    --bg-darker: #020617;          /* Deep midnight - hover states on dark */
+
+    /* Text Colors */
+    --text-main: var(--midnight);  /* Midnight blue on light backgrounds */
+    --text-muted: #64748b;         /* Slate gray for secondary text */
+    --text-light: #f8fafc;         /* Light text on dark backgrounds */
+    --text-accent: var(--teal);    /* Teal for links and accents */
+
+    /* Border Colors */
+    --border: #e2e8f0;             /* Light border for cards */
+    --border-subtle: #f1f5f9;      /* Very subtle dividers */
+    --border-accent: var(--teal);  /* Teal accent borders */
+    --border-gold: var(--sand-gold); /* Heritage gold accent line */
+
+    /* === Semantic Colors === */
+    --color-primary: var(--teal);
+    --color-primary-hover: #0d9488;
+    --color-accent: var(--sand-gold);
+    --color-accent-subtle: rgba(201, 162, 39, 0.1);
+
+    /* === Spacing === */
+    --container-max-width: 1200px;
+    --section-padding: 6rem;
+    --section-padding-sm: 4rem;
+
+    /* === Typography === */
+    --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+    /* === Border Radius === */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+
+    /* === Shadows (light mode appropriate) === */
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+    --shadow-md: 0 4px 6px rgba(15, 23, 42, 0.07);
+    --shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.1);
+    --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.1), 0 1px 2px rgba(15, 23, 42, 0.06);
+
+    /* === Transitions === */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.25s ease;
+    --transition-slow: 0.4s ease;
+
+    /* === Geometric Pattern (Digital Mashrabiya) === */
+    --pattern-grid: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0v60M0 30h60' stroke='%2314b8a6' stroke-width='0.5' fill='none' opacity='0.1'/%3E%3C/svg%3E");
+    --pattern-mashrabiya: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L40 20L20 40L0 20Z' stroke='%2314b8a6' stroke-width='0.5' fill='none' opacity='0.08'/%3E%3C/svg%3E");
+}
+
+/* === Dark Section Overrides === */
+.dark-section,
+[data-theme="dark"] {
+    --bg-primary: var(--midnight);
+    --bg-secondary: #1e293b;
+    --bg-tertiary: #334155;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border: #334155;
+    --border-subtle: #1e293b;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
 

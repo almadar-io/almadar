@@ -1,0 +1,14 @@
+Modern Heritage: A Global Tech Brand Strategy
+The Almadar Brand Guidelines explicitly shifted away from "Islamic/Sci-Fi ornamentation" to a "Minimalist Document System" to ensure the brand looks like a global technology platform rather than a regional agency.
+**However, we can honor the heritage subtly.**We can achieve a "Saudi-inspired" feel using abstract geometry (referencing modern Riyadh architecture or Sadu weaving patterns) while keeping the strict minimalist tech aesthetic. This aligns with the "Clean Arch" concept defined in your guidelines.
+Here is a revised prompt that blends Saudi Heritage geometry with your Global Tech identity:
+Revised Design Specification: "Modern Heritage"
+• Concept: "Digital Mashrabiya." Instead of plain rectangles, we use geometric grids that echo modern Saudi architecture (like the KAFD district), but rendered in flat, clean tech lines.
+• Palette:
+    ◦ Background: White/Parchment (#f8fafc).
+    ◦ Lines: Teal (#14b8a6).
+    ◦ Solids: Midnight Blue (#0f172a).
+    ◦ Accent: A single thin line of Sand Gold (#c9a227) to hint at the desert landscape without dominating.
+--------------------------------------------------------------------------------
+Image Generation Prompt
+A minimalist corporate LinkedIn cover background. The style is "Modern Architectural Tech." The background is clean white parchment (#f8fafc). On the far right side, a geometric composition inspired by modern deconstructivist architecture (like KAFD Riyadh) and abstract Mashrabiya patterns, but simplified into clean, flat vector shapes. Use deep Midnight Blue (#0f172a) for solid blocks and thin precision lines in Teal (#14b8a6). Add a single, subtle horizon line in Sand Gold (#c9a227). The left 70% of the image is pure negative space (white) for text. High-end, professional, geometric, 8k resolution.
