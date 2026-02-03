@@ -51,6 +51,6 @@
     "@almadar/cli-darwin-arm64": "1.0.0",
     "@almadar/cli-linux-x64": "1.0.0",
     "@almadar/cli-linux-arm64": "1.0.0",
-    "@almadar/cli-win32-x64": "1.0.0"
+    "@almadar/cli-windows-x64": "1.0.0"
   }
 }
