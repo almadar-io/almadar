@@ -30,6 +30,7 @@
   "files": [
     "bin",
     "scripts",
+    "shells",
     "README.md"
   ],
   "scripts": {

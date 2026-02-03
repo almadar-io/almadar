@@ -245,6 +245,21 @@ jobs:
             PKG_DIR="${ROOT_DIR}/npm-packages/@almadar/cli"
             mkdir -p "$PKG_DIR"
             cp -r cli/npm/* "$PKG_DIR/"
+
+            # Copy shell templates (excluding node_modules, .git, generated)
+            if [ -d "shells" ]; then
+              echo "Copying shell templates..."
+              mkdir -p "$PKG_DIR/shells"
+              for shell_dir in shells/*/; do
+                shell_name=$(basename "$shell_dir")
+                echo "  Copying $shell_name..."
+                mkdir -p "$PKG_DIR/shells/$shell_name"
+                rsync -a --exclude='node_modules' --exclude='.git' --exclude='generated' --exclude='dist' \
+                  "$shell_dir" "$PKG_DIR/shells/$shell_name/"
+              done
+              echo "Shell templates size: $(du -sh "$PKG_DIR/shells" | cut -f1)"
+            fi
+
             cd "$PKG_DIR"
             jq --arg v "$VERSION" '.version = $v | .optionalDependencies |= with_entries(.value = $v)' package.json > tmp.json && mv tmp.json package.json
             echo "Publishing @almadar/cli..."

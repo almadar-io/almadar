@@ -49,12 +49,43 @@ function getBinaryPath() {
   process.exit(1);
 }
 
+function getShellsDir() {
+  // If user has set ORBITAL_SHELLS_DIR, respect it
+  if (process.env.ORBITAL_SHELLS_DIR) {
+    return process.env.ORBITAL_SHELLS_DIR;
+  }
+
+  // Look for shells bundled with this package
+  const possiblePaths = [
+    // Shells in same package
+    path.join(__dirname, '..', 'shells'),
+    // Global install - shells might be one level up
+    path.join(__dirname, '..', '..', '@almadar', 'cli', 'shells'),
+  ];
+
+  for (const shellsPath of possiblePaths) {
+    if (fs.existsSync(shellsPath) && fs.existsSync(path.join(shellsPath, 'typescript-shell'))) {
+      return shellsPath;
+    }
+  }
+
+  // No bundled shells found - binary will use its fallback or error
+  return null;
+}
+
 const binaryPath = getBinaryPath();
+const shellsDir = getShellsDir();
+
+// Build environment with ORBITAL_SHELLS_DIR if we found shells
+const env = { ...process.env };
+if (shellsDir) {
+  env.ORBITAL_SHELLS_DIR = shellsDir;
+}
 
 try {
   execFileSync(binaryPath, process.argv.slice(2), {
     stdio: 'inherit',
-    env: process.env,
+    env: env,
   });
 } catch (error) {
   if (error.status !== undefined) {
