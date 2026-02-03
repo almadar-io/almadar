@@ -1,65 +1,86 @@
 [
-    {
-        "id": "clients-winning-11-templates-admindashboardtemplate--default",
-        "title": "Executive Dashboard",
-        "description": "High-level overview of system health, alerts, and key metrics.",
-        "height": "800px",
-        "category": "Winning 11"
-    },
-    {
-        "id": "clients-winning-11-templates-trustintelligencetemplate--default",
-        "title": "Trust Intelligence",
-        "description": "AI-driven analysis of team trust scores and performance trends.",
-        "height": "800px",
-        "category": "Winning 11"
-    },
-    {
-        "id": "clients-inspection-system-templates-inspectionstemplate--default",
-        "title": "Inspection Management",
-        "description": "Centralized hub for tracking compliance checks and field operations.",
-        "height": "800px",
-        "category": "Gov Tech"
-    },
-    {
-        "id": "blaz-klemenc-molecules-mealplancard--default",
-        "title": "Smart Meal Plan",
-        "description": "AI-generated nutrition schedule with macro breakdown.",
-        "height": "600px",
-        "category": "Fitness App"
-    },
-    {
-        "id": "clients-winning-11-templates-userprofiletemplate--default",
-        "title": "User Profile 360",
-        "description": "Comprehensive user analysis including activity and trust metrics.",
-        "height": "800px",
-        "category": "Winning 11"
-    },
-    {
-        "id": "clients-inspection-system-templates-inspectionprocesstemplate--content-rule-checking",
-        "title": "Live Inspection Mode",
-        "description": "Real-time compliance rule checking and violation capture workflow.",
-        "height": "800px",
-        "category": "Gov Tech"
-    },
-    {
-        "id": "kflow-templates-knowledgegraphtemplate--default",
-        "title": "Knowledge Graph Explorer",
-        "description": "Interactive node-link diagram for navigating complex concept hierarchies.",
-        "height": "850px",
-        "category": "EdTech"
-    },
-    {
-        "id": "kflow-templates-conceptdetailtemplate--default",
-        "title": "Concept Deep Dive",
-        "description": "Adaptive learning interface with AI-generated explanations and progress tracking.",
-        "height": "800px",
-        "category": "EdTech"
-    },
-    {
-        "id": "kflow-templates-lessontemplate--default",
-        "title": "Interactive Lesson",
-        "description": "Distraction-free reading environment with integrated quizzes and markers.",
-        "height": "800px",
-        "category": "EdTech"
-    }
+  {
+    "id": "builder-templates-studioprojecttemplate--hq-mode",
+    "title": "Almadar Studio",
+    "description": "AI-powered development environment for building full-stack applications from natural language.",
+    "height": "850px",
+    "category": "Dev Tools"
+  },
+  {
+    "id": "builder-organisms-agentchatpanel--running",
+    "title": "AI Agent Panel",
+    "description": "Real-time AI assistant with tool calls, todo tracking, and schema diffs.",
+    "height": "700px",
+    "category": "Dev Tools"
+  },
+  {
+    "id": "builder-organisms-schemadiffviewer--multiple-files",
+    "title": "Schema Diff Viewer",
+    "description": "Visual diff viewer for tracking AI-generated code changes across files.",
+    "height": "500px",
+    "category": "Dev Tools"
+  },
+  {
+    "id": "clients-winning-11-templates-admindashboardtemplate--default",
+    "title": "Executive Dashboard",
+    "description": "High-level overview of system health, alerts, and key metrics.",
+    "height": "800px",
+    "category": "Winning 11"
+  },
+  {
+    "id": "clients-winning-11-templates-trustintelligencetemplate--default",
+    "title": "Trust Intelligence",
+    "description": "AI-driven analysis of team trust scores and performance trends.",
+    "height": "800px",
+    "category": "Winning 11"
+  },
+  {
+    "id": "clients-inspection-system-templates-inspectionstemplate--default",
+    "title": "Inspection Management",
+    "description": "Centralized hub for tracking compliance checks and field operations.",
+    "height": "800px",
+    "category": "Gov Tech"
+  },
+  {
+    "id": "blaz-klemenc-molecules-mealplancard--default",
+    "title": "Smart Meal Plan",
+    "description": "AI-generated nutrition schedule with macro breakdown.",
+    "height": "600px",
+    "category": "Fitness App"
+  },
+  {
+    "id": "clients-winning-11-templates-userprofiletemplate--default",
+    "title": "User Profile 360",
+    "description": "Comprehensive user analysis including activity and trust metrics.",
+    "height": "800px",
+    "category": "Winning 11"
+  },
+  {
+    "id": "clients-inspection-system-templates-inspectionprocesstemplate--content-rule-checking",
+    "title": "Live Inspection Mode",
+    "description": "Real-time compliance rule checking and violation capture workflow.",
+    "height": "800px",
+    "category": "Gov Tech"
+  },
+  {
+    "id": "kflow-templates-knowledgegraphtemplate--default",
+    "title": "Knowledge Graph Explorer",
+    "description": "Interactive node-link diagram for navigating complex concept hierarchies.",
+    "height": "850px",
+    "category": "EdTech"
+  },
+  {
+    "id": "kflow-templates-conceptdetailtemplate--default",
+    "title": "Concept Deep Dive",
+    "description": "Adaptive learning interface with AI-generated explanations and progress tracking.",
+    "height": "800px",
+    "category": "EdTech"
+  },
+  {
+    "id": "kflow-templates-lessontemplate--default",
+    "title": "Interactive Lesson",
+    "description": "Distraction-free reading environment with integrated quizzes and markers.",
+    "height": "800px",
+    "category": "EdTech"
+  }
 ]
