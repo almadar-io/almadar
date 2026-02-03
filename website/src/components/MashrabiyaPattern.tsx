@@ -30,38 +30,45 @@ export default function MashrabiyaPattern({
                     patternUnits="userSpaceOnUse"
                     patternTransform={`scale(${scale})`}
                 >
+                    <style>
+                        {`
+                            @keyframes kf-flow {
+                                from { stroke-dashoffset: 20; }
+                                to { stroke-dashoffset: 0; }
+                            }
+                            .circuit-line {
+                                stroke: var(--almadar-teal);
+                                stroke-dasharray: 5 15;
+                                animation: kf-flow 3s linear infinite;
+                                opacity: 0.6;
+                            }
+                        `}
+                    </style>
                     <g fill="none" stroke="currentColor" strokeWidth="0.8">
                         {/* 
                            Khatam (Eight-Pointed Star) Tessellation 
                            Unit Size: 60x60
                            Center: 30,30
-                           Star Radius: ~22
                         */}
 
-                        {/* Central Diamond (Square rotated 45deg) */}
-                        <path d="M 30 5 L 55 30 L 30 55 L 5 30 Z" />
+                        {/* Base Geometry (Static) */}
+                        <path d="M 30 5 L 55 30 L 30 55 L 5 30 Z" opacity="0.5" />
+                        <rect x="14" y="14" width="32" height="32" opacity="0.5" />
 
-                        {/* Central Box (Square aligned) */}
-                        {/* 
-                            Corners for 45deg rotation at r=18: 
-                            12 to 48 range roughly.
-                            Let's use 14 and 46.
-                        */}
-                        <rect x="14" y="14" width="32" height="32" />
+                        {/* Circuit Current Overlay (Animated) */}
+                        <path
+                            d="M 30 5 L 55 30 L 30 55 L 5 30 Z"
+                            className="circuit-line"
+                            strokeWidth="1"
+                        />
 
-                        {/* 
-                            For visual complexity, we connect the corners to the edges 
-                        */}
-
-                        {/* Horizontal connectors from Diamond tips */}
+                        {/* Connecting traces */}
                         <path d="M 0 30 L 5 30" />
                         <path d="M 55 30 L 60 30" />
-
-                        {/* Vertical connectors from Diamond tips */}
                         <path d="M 30 0 L 30 5" />
                         <path d="M 30 55 L 30 60" />
 
-                        {/* Diagonal connectors from Box corners */}
+                        {/* Diagonal connectors */}
                         <path d="M 0 0 L 14 14" />
                         <path d="M 60 0 L 46 14" />
                         <path d="M 0 60 L 14 46" />
