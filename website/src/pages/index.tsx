@@ -333,8 +333,8 @@ export default function Home(): ReactNode {
     >
       <HomepageHeader />
       <main>
-        <HomepageFeatures />
         <DemoCarousel />
+        <HomepageFeatures />
         <HomepagePhilosophy />
         <HomepageCTA />
       </main>
