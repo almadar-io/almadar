@@ -18,13 +18,13 @@ var OrbitalVisualizerModule = (() => {
   };
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  // src/orbitals/visualizer/browser.ts
+  // builder/packages/shared/src/orbitals/visualizer/browser.ts
   var browser_exports = {};
   __export(browser_exports, {
     OrbitalVisualizer: () => OrbitalVisualizer
   });
 
-  // ../../node_modules/zod/v3/external.js
+  // builder/node_modules/zod/v3/external.js
   var external_exports = {};
   __export(external_exports, {
     BRAND: () => BRAND,
@@ -136,7 +136,7 @@ var OrbitalVisualizerModule = (() => {
     void: () => voidType
   });
 
-  // ../../node_modules/zod/v3/helpers/util.js
+  // builder/node_modules/zod/v3/helpers/util.js
   var util;
   (function(util2) {
     util2.assertEqual = (_) => {
@@ -270,7 +270,7 @@ var OrbitalVisualizerModule = (() => {
     }
   };
 
-  // ../../node_modules/zod/v3/ZodError.js
+  // builder/node_modules/zod/v3/ZodError.js
   var ZodIssueCode = util.arrayToEnum([
     "invalid_type",
     "invalid_literal",
@@ -388,7 +388,7 @@ var OrbitalVisualizerModule = (() => {
     return error;
   };
 
-  // ../../node_modules/zod/v3/locales/en.js
+  // builder/node_modules/zod/v3/locales/en.js
   var errorMap = (issue, _ctx) => {
     let message;
     switch (issue.code) {
@@ -491,7 +491,7 @@ var OrbitalVisualizerModule = (() => {
   };
   var en_default = errorMap;
 
-  // ../../node_modules/zod/v3/errors.js
+  // builder/node_modules/zod/v3/errors.js
   var overrideErrorMap = en_default;
   function setErrorMap(map) {
     overrideErrorMap = map;
@@ -500,7 +500,7 @@ var OrbitalVisualizerModule = (() => {
     return overrideErrorMap;
   }
 
-  // ../../node_modules/zod/v3/helpers/parseUtil.js
+  // builder/node_modules/zod/v3/helpers/parseUtil.js
   var makeIssue = (params) => {
     const { data, path, errorMaps, issueData } = params;
     const fullPath = [...path, ...issueData.path || []];
@@ -610,14 +610,14 @@ var OrbitalVisualizerModule = (() => {
   var isValid = (x) => x.status === "valid";
   var isAsync = (x) => typeof Promise !== "undefined" && x instanceof Promise;
 
-  // ../../node_modules/zod/v3/helpers/errorUtil.js
+  // builder/node_modules/zod/v3/helpers/errorUtil.js
   var errorUtil;
   (function(errorUtil2) {
     errorUtil2.errToObj = (message) => typeof message === "string" ? { message } : message || {};
     errorUtil2.toString = (message) => typeof message === "string" ? message : message?.message;
   })(errorUtil || (errorUtil = {}));
 
-  // ../../node_modules/zod/v3/types.js
+  // builder/node_modules/zod/v3/types.js
   var ParseInputLazyPath = class {
     constructor(parent, value, path, key) {
       this._cachedPath = [];
@@ -4065,7 +4065,7 @@ var OrbitalVisualizerModule = (() => {
   };
   var NEVER = INVALID;
 
-  // src/orbitals/types/expression.ts
+  // builder/packages/shared/src/orbitals/types/expression.ts
   var SExprAtomSchema = external_exports.union([
     external_exports.string(),
     external_exports.number(),
@@ -4095,7 +4095,7 @@ var OrbitalVisualizerModule = (() => {
     return expr.slice(1);
   }
 
-  // src/domain-language/formatters/sexpr-formatter.ts
+  // builder/packages/shared/src/domain-language/formatters/sexpr-formatter.ts
   function formatSExprToDomain(expr, context) {
     const ctx = context ?? { entityName: "" };
     if (!isSExpr(expr)) {
@@ -4725,7 +4725,7 @@ var OrbitalVisualizerModule = (() => {
     return `${op}(${formattedArgs.join(", ")})`;
   }
 
-  // src/orbitals/visualizer/index.ts
+  // builder/packages/shared/src/orbitals/visualizer/index.ts
   var DEFAULT_CONFIG = {
     nodeRadius: 70,
     nodeSpacing: 650,
@@ -5389,7 +5389,7 @@ var OrbitalVisualizerModule = (() => {
     };
   }
 
-  // src/orbitals/visualizer/browser.ts
+  // builder/packages/shared/src/orbitals/visualizer/browser.ts
   function formatSExprHumanReadable(expr, indent = 0) {
     const spaces = "  ".repeat(indent);
     if (typeof expr === "string") {
@@ -5810,7 +5810,7 @@ var OrbitalVisualizerModule = (() => {
           render(container, data, { title });
         }
       } catch (e) {
-        console.error("Failed to parse orbital diagram:", e);
+        console.error("Failed to parse almadar diagram:", e);
         container.innerHTML = '<p style="color: #f85149;">Failed to render diagram</p>';
       }
     });

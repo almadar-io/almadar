@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "exportedAt": "2026-01-29T02:29:19.144Z",
+  "exportedAt": "2026-02-02T18:33:40.865Z",
   "patterns": {
     "entity-table": {
       "type": "entity-table",
@@ -8833,6 +8833,2237 @@
             "boolean"
           ],
           "description": "Show debug panel"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "credit-meter": {
+      "type": "credit-meter",
+      "category": "display",
+      "client": "blaz-klemenc",
+      "description": "Visual indicator for remaining session credits with expiration warning",
+      "suggestedFor": [
+        "credit balance",
+        "session tracking",
+        "expiration alerts"
+      ],
+      "typicalSize": "small",
+      "propsSchema": {
+        "data": {
+          "types": [
+            "object"
+          ],
+          "description": "Credit entity data (CreditData)"
+        },
+        "remainingCredits": {
+          "types": [
+            "number"
+          ],
+          "description": "Current remaining credits"
+        },
+        "totalCredits": {
+          "types": [
+            "number"
+          ],
+          "description": "Total credits purchased"
+        },
+        "expiresAt": {
+          "types": [
+            "string",
+            "object"
+          ],
+          "description": "Credit expiration date"
+        },
+        "size": {
+          "types": [
+            "string"
+          ],
+          "description": "Size variant: sm | md | lg"
+        },
+        "compact": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Compact inline display mode"
+        },
+        "showActionButton": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show action button when low"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "credit-expiration-alert": {
+      "type": "credit-expiration-alert",
+      "category": "display",
+      "client": "blaz-klemenc",
+      "description": "Alert banner for expiring credits",
+      "suggestedFor": [
+        "expiration warnings",
+        "urgent notifications",
+        "credit alerts"
+      ],
+      "typicalSize": "small",
+      "propsSchema": {
+        "daysUntilExpiration": {
+          "types": [
+            "number"
+          ],
+          "description": "Days until credits expire"
+        },
+        "remainingCredits": {
+          "types": [
+            "number"
+          ],
+          "description": "Remaining credits"
+        },
+        "showAction": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show renew action"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "exercise-video-link": {
+      "type": "exercise-video-link",
+      "category": "display",
+      "client": "blaz-klemenc",
+      "description": "Clickable video link for exercise demonstrations",
+      "suggestedFor": [
+        "exercise demos",
+        "video links",
+        "workout guidance"
+      ],
+      "typicalSize": "small",
+      "propsSchema": {
+        "videoUrl": {
+          "required": true,
+          "types": [
+            "string"
+          ],
+          "description": "Video URL"
+        },
+        "title": {
+          "types": [
+            "string"
+          ],
+          "description": "Video title"
+        },
+        "thumbnail": {
+          "types": [
+            "string"
+          ],
+          "description": "Thumbnail image URL"
+        },
+        "duration": {
+          "types": [
+            "string"
+          ],
+          "description": "Video duration"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "shareable-link-generator": {
+      "type": "shareable-link-generator",
+      "category": "form",
+      "client": "blaz-klemenc",
+      "description": "Generate and copy shareable links for training plans",
+      "suggestedFor": [
+        "link sharing",
+        "plan distribution",
+        "client onboarding"
+      ],
+      "typicalSize": "small",
+      "propsSchema": {
+        "baseUrl": {
+          "types": [
+            "string"
+          ],
+          "description": "Base URL for links"
+        },
+        "entityId": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity ID to encode in link"
+        },
+        "entityType": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity type (MealPlan, Session, etc.)"
+        },
+        "expiresIn": {
+          "types": [
+            "number"
+          ],
+          "description": "Link expiration in hours"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "body-measurement-input": {
+      "type": "body-measurement-input",
+      "category": "form",
+      "client": "blaz-klemenc",
+      "description": "Form input for body measurements with unit selection",
+      "suggestedFor": [
+        "body tracking",
+        "measurement input",
+        "progress data"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "measurements": {
+          "types": [
+            "object"
+          ],
+          "description": "Current measurements object"
+        },
+        "showUnits": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show unit selector"
+        },
+        "units": {
+          "types": [
+            "string"
+          ],
+          "description": "Unit system: metric | imperial"
+        },
+        "requiredFields": {
+          "types": [
+            "array"
+          ],
+          "description": "Required measurement fields"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "daily-progress-input": {
+      "type": "daily-progress-input",
+      "category": "form",
+      "client": "blaz-klemenc",
+      "description": "Daily progress logging form for trainees",
+      "suggestedFor": [
+        "daily logging",
+        "progress tracking",
+        "habit tracking"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "date": {
+          "types": [
+            "string",
+            "object"
+          ],
+          "description": "Date for progress entry"
+        },
+        "initialData": {
+          "types": [
+            "object"
+          ],
+          "description": "Initial progress data"
+        },
+        "fields": {
+          "types": [
+            "array"
+          ],
+          "description": "Fields to include in form"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "group-session-card": {
+      "type": "group-session-card",
+      "category": "display",
+      "client": "blaz-klemenc",
+      "description": "Card for group training sessions with participant count",
+      "suggestedFor": [
+        "group sessions",
+        "class display",
+        "session cards"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "session": {
+          "required": true,
+          "types": [
+            "object"
+          ],
+          "description": "Session entity data"
+        },
+        "participantCount": {
+          "types": [
+            "number"
+          ],
+          "description": "Number of participants"
+        },
+        "maxParticipants": {
+          "types": [
+            "number"
+          ],
+          "description": "Maximum participants allowed"
+        },
+        "showActions": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show action buttons"
+        },
+        "itemActions": {
+          "types": [
+            "array"
+          ],
+          "description": "Action buttons for the card"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "lift-tracker": {
+      "type": "lift-tracker",
+      "category": "form",
+      "client": "blaz-klemenc",
+      "description": "Track weight lifting sets, reps, and weights",
+      "suggestedFor": [
+        "strength training",
+        "lift logging",
+        "workout tracking"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "exerciseName": {
+          "required": true,
+          "types": [
+            "string"
+          ],
+          "description": "Name of exercise"
+        },
+        "sets": {
+          "types": [
+            "array"
+          ],
+          "description": "Array of set data"
+        },
+        "showPrevious": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show previous session data"
+        },
+        "previousData": {
+          "types": [
+            "object"
+          ],
+          "description": "Previous session data for comparison"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "meal-plan-card": {
+      "type": "meal-plan-card",
+      "category": "display",
+      "client": "blaz-klemenc",
+      "description": "Card displaying meal plan summary with macros",
+      "suggestedFor": [
+        "meal plans",
+        "nutrition display",
+        "diet cards"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "mealPlan": {
+          "required": true,
+          "types": [
+            "object"
+          ],
+          "description": "MealPlan entity data"
+        },
+        "showMacros": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show macro breakdown"
+        },
+        "showActions": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show action buttons"
+        },
+        "itemActions": {
+          "types": [
+            "array"
+          ],
+          "description": "Action buttons for the card"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "nutrition-summary": {
+      "type": "nutrition-summary",
+      "category": "display",
+      "client": "blaz-klemenc",
+      "description": "Summary display of nutritional data with charts",
+      "suggestedFor": [
+        "nutrition overview",
+        "macro summary",
+        "calorie tracking"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "calories": {
+          "types": [
+            "number"
+          ],
+          "description": "Total calories"
+        },
+        "protein": {
+          "types": [
+            "number"
+          ],
+          "description": "Protein in grams"
+        },
+        "carbs": {
+          "types": [
+            "number"
+          ],
+          "description": "Carbohydrates in grams"
+        },
+        "fat": {
+          "types": [
+            "number"
+          ],
+          "description": "Fat in grams"
+        },
+        "targets": {
+          "types": [
+            "object"
+          ],
+          "description": "Target values for comparison"
+        },
+        "showChart": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show pie/bar chart"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "progress-chart": {
+      "type": "progress-chart",
+      "category": "display",
+      "client": "blaz-klemenc",
+      "description": "Chart showing trainee progress over time",
+      "suggestedFor": [
+        "progress visualization",
+        "trend charts",
+        "measurement graphs"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "data": {
+          "required": true,
+          "types": [
+            "array"
+          ],
+          "description": "Array of data points"
+        },
+        "metric": {
+          "types": [
+            "string"
+          ],
+          "description": "Metric being displayed"
+        },
+        "timeRange": {
+          "types": [
+            "string"
+          ],
+          "description": "Time range: week | month | year"
+        },
+        "showGoal": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show goal line"
+        },
+        "goalValue": {
+          "types": [
+            "number"
+          ],
+          "description": "Target goal value"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "special-exercise-card": {
+      "type": "special-exercise-card",
+      "category": "display",
+      "client": "blaz-klemenc",
+      "description": "Card for special/therapeutic exercises with instructions",
+      "suggestedFor": [
+        "therapeutic exercises",
+        "special routines",
+        "rehab exercises"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "exercise": {
+          "required": true,
+          "types": [
+            "object"
+          ],
+          "description": "Exercise data"
+        },
+        "showVideo": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show video link"
+        },
+        "showInstructions": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show detailed instructions"
+        },
+        "itemActions": {
+          "types": [
+            "array"
+          ],
+          "description": "Action buttons"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "trainee-card": {
+      "type": "trainee-card",
+      "category": "display",
+      "client": "blaz-klemenc",
+      "description": "Summary card for a trainee with credits, next session, and quick actions",
+      "suggestedFor": [
+        "trainee overview",
+        "client cards",
+        "user display"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "trainee": {
+          "required": true,
+          "types": [
+            "object"
+          ],
+          "description": "Trainee/User entity data"
+        },
+        "showActions": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show action buttons"
+        },
+        "compact": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Compact display mode"
+        },
+        "itemActions": {
+          "types": [
+            "array"
+          ],
+          "description": "Action buttons for the card"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "workout-plan-card": {
+      "type": "workout-plan-card",
+      "category": "display",
+      "client": "blaz-klemenc",
+      "description": "Card displaying workout plan with exercise list",
+      "suggestedFor": [
+        "workout plans",
+        "training programs",
+        "exercise lists"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "workoutPlan": {
+          "required": true,
+          "types": [
+            "object"
+          ],
+          "description": "WorkoutPlan entity data"
+        },
+        "showExercises": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show exercise list"
+        },
+        "exerciseLimit": {
+          "types": [
+            "number"
+          ],
+          "description": "Max exercises to show"
+        },
+        "showActions": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show action buttons"
+        },
+        "itemActions": {
+          "types": [
+            "array"
+          ],
+          "description": "Action buttons"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "ai-analysis-panel": {
+      "type": "ai-analysis-panel",
+      "category": "display",
+      "client": "blaz-klemenc",
+      "description": "AI-powered analysis and recommendations panel",
+      "suggestedFor": [
+        "AI insights",
+        "recommendations",
+        "analysis display"
+      ],
+      "typicalSize": "large",
+      "propsSchema": {
+        "traineeId": {
+          "types": [
+            "string"
+          ],
+          "description": "Trainee ID for analysis"
+        },
+        "analysisType": {
+          "types": [
+            "string"
+          ],
+          "description": "Type: progress | nutrition | workout"
+        },
+        "showRecommendations": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show AI recommendations"
+        },
+        "isLoading": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Loading state"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "kinesiology-exam-form": {
+      "type": "kinesiology-exam-form",
+      "category": "form",
+      "client": "blaz-klemenc",
+      "description": "Comprehensive kinesiology examination form",
+      "suggestedFor": [
+        "assessments",
+        "physical exams",
+        "client intake"
+      ],
+      "typicalSize": "large",
+      "propsSchema": {
+        "traineeId": {
+          "types": [
+            "string"
+          ],
+          "description": "Trainee ID"
+        },
+        "initialData": {
+          "types": [
+            "object"
+          ],
+          "description": "Initial form data"
+        },
+        "sections": {
+          "types": [
+            "array"
+          ],
+          "description": "Form sections to include"
+        },
+        "submitEvent": {
+          "types": [
+            "string"
+          ],
+          "description": "Event to emit on submit"
+        },
+        "cancelEvent": {
+          "types": [
+            "string"
+          ],
+          "description": "Event to emit on cancel"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "session-scheduler": {
+      "type": "session-scheduler",
+      "category": "form",
+      "client": "blaz-klemenc",
+      "description": "Interactive session scheduling calendar",
+      "suggestedFor": [
+        "scheduling",
+        "calendar booking",
+        "appointment setting"
+      ],
+      "typicalSize": "large",
+      "propsSchema": {
+        "availableSlots": {
+          "types": [
+            "array"
+          ],
+          "description": "Available time slots"
+        },
+        "existingSessions": {
+          "types": [
+            "array"
+          ],
+          "description": "Existing booked sessions"
+        },
+        "trainerId": {
+          "types": [
+            "string"
+          ],
+          "description": "Trainer ID"
+        },
+        "traineeId": {
+          "types": [
+            "string"
+          ],
+          "description": "Trainee ID (optional)"
+        },
+        "viewMode": {
+          "types": [
+            "string"
+          ],
+          "description": "View mode: day | week | month"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "trainee-comparison": {
+      "type": "trainee-comparison",
+      "category": "display",
+      "client": "blaz-klemenc",
+      "description": "Compare progress of multiple trainees",
+      "suggestedFor": [
+        "comparison views",
+        "group analysis",
+        "performance tracking"
+      ],
+      "typicalSize": "large",
+      "propsSchema": {
+        "trainees": {
+          "required": true,
+          "types": [
+            "array"
+          ],
+          "description": "Array of trainee data"
+        },
+        "metrics": {
+          "types": [
+            "array"
+          ],
+          "description": "Metrics to compare"
+        },
+        "timeRange": {
+          "types": [
+            "string"
+          ],
+          "description": "Time range for comparison"
+        },
+        "showChart": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show comparison chart"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "weekly-calendar": {
+      "type": "weekly-calendar",
+      "category": "display",
+      "client": "blaz-klemenc",
+      "description": "Week view calendar for sessions and schedules",
+      "suggestedFor": [
+        "weekly schedules",
+        "calendar views",
+        "session overview"
+      ],
+      "typicalSize": "large",
+      "propsSchema": {
+        "weekStart": {
+          "types": [
+            "string",
+            "object"
+          ],
+          "description": "Start date of week"
+        },
+        "sessions": {
+          "types": [
+            "array"
+          ],
+          "description": "Sessions to display"
+        },
+        "showTimeSlots": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show time slot grid"
+        },
+        "onSlotClick": {
+          "types": [
+            "function"
+          ],
+          "description": "Click handler for empty slots"
+        },
+        "itemActions": {
+          "types": [
+            "array"
+          ],
+          "description": "Actions for session items"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "mind-map-connections": {
+      "type": "mind-map-connections",
+      "category": "display",
+      "client": "kflow",
+      "description": "SVG connection lines between mind map nodes",
+      "suggestedFor": [
+        "graph connections",
+        "node links",
+        "visual relationships"
+      ],
+      "typicalSize": "small",
+      "propsSchema": {
+        "connections": {
+          "required": true,
+          "types": [
+            "array"
+          ],
+          "description": "Array of connection data"
+        },
+        "animated": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Enable connection animations"
+        },
+        "strokeWidth": {
+          "types": [
+            "number"
+          ],
+          "description": "Line stroke width"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "concept-meta-tags": {
+      "type": "concept-meta-tags",
+      "category": "display",
+      "client": "kflow",
+      "description": "Display concept metadata tags (layer, prerequisites, etc.)",
+      "suggestedFor": [
+        "concept metadata",
+        "tag display",
+        "info badges"
+      ],
+      "typicalSize": "small",
+      "propsSchema": {
+        "layer": {
+          "types": [
+            "number"
+          ],
+          "description": "Layer number"
+        },
+        "prerequisites": {
+          "types": [
+            "array"
+          ],
+          "description": "Prerequisite concept IDs"
+        },
+        "isCompleted": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Completion status"
+        },
+        "hasLesson": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Has associated lesson"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "graph-legend": {
+      "type": "graph-legend",
+      "category": "display",
+      "client": "kflow",
+      "description": "Legend for knowledge graph node types",
+      "suggestedFor": [
+        "graph legends",
+        "node type keys",
+        "color guides"
+      ],
+      "typicalSize": "small",
+      "propsSchema": {
+        "title": {
+          "types": [
+            "string"
+          ],
+          "description": "Legend title"
+        },
+        "items": {
+          "required": true,
+          "types": [
+            "array"
+          ],
+          "description": "Legend items with color and label"
+        },
+        "interactive": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Allow click to filter"
+        },
+        "orientation": {
+          "types": [
+            "string"
+          ],
+          "description": "Orientation: horizontal | vertical"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "layer-navigator": {
+      "type": "layer-navigator",
+      "category": "navigation",
+      "client": "kflow",
+      "description": "Navigation component for switching between knowledge graph layers",
+      "suggestedFor": [
+        "layer navigation",
+        "depth control",
+        "graph traversal"
+      ],
+      "typicalSize": "small",
+      "propsSchema": {
+        "layers": {
+          "required": true,
+          "types": [
+            "array"
+          ],
+          "description": "Available layers (LayerInfo[])"
+        },
+        "currentLayer": {
+          "required": true,
+          "types": [
+            "number"
+          ],
+          "description": "Currently selected layer"
+        },
+        "showNames": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show layer names"
+        },
+        "showCounts": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show concept counts per layer"
+        },
+        "compact": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Compact mode (arrows + current only)"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "learning-goal-display": {
+      "type": "learning-goal-display",
+      "category": "display",
+      "client": "kflow",
+      "description": "Display learning goal with progress tracking",
+      "suggestedFor": [
+        "learning goals",
+        "objective display",
+        "progress tracking"
+      ],
+      "typicalSize": "small",
+      "propsSchema": {
+        "goal": {
+          "required": true,
+          "types": [
+            "string"
+          ],
+          "description": "Learning goal text"
+        },
+        "layerNumber": {
+          "types": [
+            "number"
+          ],
+          "description": "Current layer for context"
+        },
+        "graphId": {
+          "types": [
+            "string"
+          ],
+          "description": "Associated graph ID"
+        },
+        "progress": {
+          "types": [
+            "number"
+          ],
+          "description": "Progress percentage"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "mind-map-header": {
+      "type": "mind-map-header",
+      "category": "display",
+      "client": "kflow",
+      "description": "Header for mind map with title and controls",
+      "suggestedFor": [
+        "mind map headers",
+        "graph titles",
+        "control bars"
+      ],
+      "typicalSize": "small",
+      "propsSchema": {
+        "title": {
+          "required": true,
+          "types": [
+            "string"
+          ],
+          "description": "Mind map title"
+        },
+        "showZoomControls": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show zoom in/out buttons"
+        },
+        "showFitButton": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show fit-to-view button"
+        },
+        "actions": {
+          "types": [
+            "array"
+          ],
+          "description": "Additional action buttons"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "mind-map-node": {
+      "type": "mind-map-node",
+      "category": "display",
+      "client": "kflow",
+      "description": "Individual node in a mind map visualization",
+      "suggestedFor": [
+        "mind map nodes",
+        "concept nodes",
+        "graph vertices"
+      ],
+      "typicalSize": "small",
+      "propsSchema": {
+        "node": {
+          "required": true,
+          "types": [
+            "object"
+          ],
+          "description": "Node data object"
+        },
+        "selected": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Is node selected"
+        },
+        "highlighted": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Is node highlighted"
+        },
+        "expanded": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Is node expanded"
+        },
+        "depth": {
+          "types": [
+            "number"
+          ],
+          "description": "Node depth in tree"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "note-content": {
+      "type": "note-content",
+      "category": "display",
+      "client": "kflow",
+      "description": "Rich content display for notes with markdown support",
+      "suggestedFor": [
+        "note display",
+        "rich content",
+        "markdown rendering"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "content": {
+          "required": true,
+          "types": [
+            "string"
+          ],
+          "description": "Note content (markdown)"
+        },
+        "showCopyButton": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show copy to clipboard button"
+        },
+        "maxHeight": {
+          "types": [
+            "string"
+          ],
+          "description": "Max height with scroll"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "note-list-item": {
+      "type": "note-list-item",
+      "category": "display",
+      "client": "kflow",
+      "description": "List item for notes with preview and actions",
+      "suggestedFor": [
+        "note lists",
+        "content previews",
+        "item display"
+      ],
+      "typicalSize": "small",
+      "propsSchema": {
+        "note": {
+          "required": true,
+          "types": [
+            "object"
+          ],
+          "description": "Note entity data"
+        },
+        "selected": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Is note selected"
+        },
+        "showPreview": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show content preview"
+        },
+        "itemActions": {
+          "types": [
+            "array"
+          ],
+          "description": "Action buttons"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "streaming-display": {
+      "type": "streaming-display",
+      "category": "display",
+      "client": "kflow",
+      "description": "Display for streaming AI-generated content",
+      "suggestedFor": [
+        "streaming content",
+        "AI output",
+        "real-time display"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "content": {
+          "types": [
+            "string"
+          ],
+          "description": "Current streamed content"
+        },
+        "isStreaming": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Is content still streaming"
+        },
+        "showCursor": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show typing cursor"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "connection-block": {
+      "type": "connection-block",
+      "category": "display",
+      "client": "kflow",
+      "description": "Display block for concept connections/relationships",
+      "suggestedFor": [
+        "concept relationships",
+        "connection display",
+        "related items"
+      ],
+      "typicalSize": "small",
+      "propsSchema": {
+        "connections": {
+          "required": true,
+          "types": [
+            "array"
+          ],
+          "description": "Array of connected concepts"
+        },
+        "direction": {
+          "types": [
+            "string"
+          ],
+          "description": "Direction: incoming | outgoing | both"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "quiz-block": {
+      "type": "quiz-block",
+      "category": "form",
+      "client": "kflow",
+      "description": "Interactive quiz block for knowledge testing",
+      "suggestedFor": [
+        "quizzes",
+        "knowledge checks",
+        "assessments"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "question": {
+          "required": true,
+          "types": [
+            "string"
+          ],
+          "description": "Quiz question"
+        },
+        "options": {
+          "types": [
+            "array"
+          ],
+          "description": "Answer options"
+        },
+        "correctAnswer": {
+          "types": [
+            "string",
+            "number"
+          ],
+          "description": "Correct answer index/value"
+        },
+        "showFeedback": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show feedback after answer"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "reflection-block": {
+      "type": "reflection-block",
+      "category": "form",
+      "client": "kflow",
+      "description": "Block for user reflection and note-taking",
+      "suggestedFor": [
+        "reflections",
+        "notes",
+        "journaling"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "prompt": {
+          "types": [
+            "string"
+          ],
+          "description": "Reflection prompt"
+        },
+        "initialContent": {
+          "types": [
+            "string"
+          ],
+          "description": "Initial content"
+        },
+        "minLength": {
+          "types": [
+            "number"
+          ],
+          "description": "Minimum character length"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "activation-block": {
+      "type": "activation-block",
+      "category": "display",
+      "client": "kflow",
+      "description": "Block for activating prior knowledge before a lesson",
+      "suggestedFor": [
+        "prior knowledge",
+        "activation",
+        "warm-up"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "title": {
+          "types": [
+            "string"
+          ],
+          "description": "Activation title"
+        },
+        "content": {
+          "types": [
+            "string"
+          ],
+          "description": "Activation content"
+        },
+        "questions": {
+          "types": [
+            "array"
+          ],
+          "description": "Activation questions"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "bloom-quiz-block": {
+      "type": "bloom-quiz-block",
+      "category": "form",
+      "client": "kflow",
+      "description": "Quiz block categorized by Bloom's taxonomy level",
+      "suggestedFor": [
+        "bloom taxonomy",
+        "leveled quizzes",
+        "cognitive assessment"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "bloomLevel": {
+          "required": true,
+          "types": [
+            "string"
+          ],
+          "description": "Bloom level: remember | understand | apply | analyze | evaluate | create"
+        },
+        "question": {
+          "required": true,
+          "types": [
+            "string"
+          ],
+          "description": "Quiz question"
+        },
+        "options": {
+          "types": [
+            "array"
+          ],
+          "description": "Answer options"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "code-block": {
+      "type": "code-block",
+      "category": "display",
+      "client": "kflow",
+      "description": "Syntax-highlighted code display block",
+      "suggestedFor": [
+        "code display",
+        "syntax highlighting",
+        "code examples"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "code": {
+          "required": true,
+          "types": [
+            "string"
+          ],
+          "description": "Code content"
+        },
+        "language": {
+          "types": [
+            "string"
+          ],
+          "description": "Programming language"
+        },
+        "showLineNumbers": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show line numbers"
+        },
+        "showCopyButton": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show copy button"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "markdown-content": {
+      "type": "markdown-content",
+      "category": "display",
+      "client": "kflow",
+      "description": "Rendered markdown content display",
+      "suggestedFor": [
+        "markdown rendering",
+        "rich text",
+        "content display"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "content": {
+          "required": true,
+          "types": [
+            "string"
+          ],
+          "description": "Markdown content"
+        },
+        "allowHtml": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Allow HTML in markdown"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "concept-card": {
+      "type": "concept-card",
+      "category": "display",
+      "client": "kflow",
+      "description": "Card displaying a concept with header, description, metadata, and children",
+      "suggestedFor": [
+        "concept display",
+        "knowledge cards",
+        "learning items"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "entity": {
+          "required": true,
+          "types": [
+            "object"
+          ],
+          "description": "Concept entity data (ConceptEntity)"
+        },
+        "highlighted": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Is concept highlighted (lesson ready)"
+        },
+        "hideLessonBadge": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Hide lesson status badge"
+        },
+        "icon": {
+          "types": [
+            "object"
+          ],
+          "description": "Optional icon component"
+        },
+        "expanded": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Is expanded (showing children)"
+        },
+        "operations": {
+          "types": [
+            "array"
+          ],
+          "description": "Operation buttons"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "flash-cards-display": {
+      "type": "flash-cards-display",
+      "category": "display",
+      "client": "kflow",
+      "description": "Display and navigation for flash card sets",
+      "suggestedFor": [
+        "flash cards",
+        "study mode",
+        "card review"
+      ],
+      "typicalSize": "large",
+      "propsSchema": {
+        "cards": {
+          "required": true,
+          "types": [
+            "array"
+          ],
+          "description": "Array of flash cards"
+        },
+        "showProgress": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show progress indicator"
+        },
+        "shuffled": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Shuffle cards"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "flash-card-stack": {
+      "type": "flash-card-stack",
+      "category": "display",
+      "client": "kflow",
+      "description": "Stacked flash cards with swipe navigation",
+      "suggestedFor": [
+        "card stacks",
+        "swipe navigation",
+        "study cards"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "cards": {
+          "required": true,
+          "types": [
+            "array"
+          ],
+          "description": "Array of flash cards"
+        },
+        "onSwipeLeft": {
+          "types": [
+            "function"
+          ],
+          "description": "Handler for swipe left (wrong)"
+        },
+        "onSwipeRight": {
+          "types": [
+            "function"
+          ],
+          "description": "Handler for swipe right (correct)"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "flash-card": {
+      "type": "flash-card",
+      "category": "display",
+      "client": "kflow",
+      "description": "Single flip-able flash card",
+      "suggestedFor": [
+        "flash cards",
+        "flip cards",
+        "study items"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "front": {
+          "required": true,
+          "types": [
+            "string"
+          ],
+          "description": "Front content (question)"
+        },
+        "back": {
+          "required": true,
+          "types": [
+            "string"
+          ],
+          "description": "Back content (answer)"
+        },
+        "flipped": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Is card flipped"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "force-directed-graph": {
+      "type": "force-directed-graph",
+      "category": "display",
+      "client": "kflow",
+      "description": "Force-directed graph visualization for knowledge networks",
+      "suggestedFor": [
+        "network graphs",
+        "knowledge maps",
+        "concept visualization"
+      ],
+      "typicalSize": "large",
+      "propsSchema": {
+        "graph": {
+          "required": true,
+          "types": [
+            "object"
+          ],
+          "description": "Graph data with nodes and relationships"
+        },
+        "height": {
+          "types": [
+            "number"
+          ],
+          "description": "Graph height in pixels"
+        },
+        "width": {
+          "types": [
+            "number"
+          ],
+          "description": "Graph width in pixels"
+        },
+        "onNodeClick": {
+          "types": [
+            "function"
+          ],
+          "description": "Node click handler"
+        },
+        "selectedNodeId": {
+          "types": [
+            "string"
+          ],
+          "description": "Currently selected node ID"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "mind-map-canvas": {
+      "type": "mind-map-canvas",
+      "category": "display",
+      "client": "kflow",
+      "description": "Full mind map canvas with pan/zoom and node rendering",
+      "suggestedFor": [
+        "mind maps",
+        "concept trees",
+        "hierarchical visualization"
+      ],
+      "typicalSize": "large",
+      "propsSchema": {
+        "rootNode": {
+          "required": true,
+          "types": [
+            "object"
+          ],
+          "description": "Root node of the mind map"
+        },
+        "selectedNodeId": {
+          "types": [
+            "string"
+          ],
+          "description": "Currently selected node ID"
+        },
+        "expandedNodeIds": {
+          "types": [
+            "array"
+          ],
+          "description": "Array of expanded node IDs"
+        },
+        "zoomLevel": {
+          "types": [
+            "number"
+          ],
+          "description": "Current zoom level"
+        },
+        "panOffset": {
+          "types": [
+            "object"
+          ],
+          "description": "Pan offset {x, y}"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "note-list": {
+      "type": "note-list",
+      "category": "display",
+      "client": "kflow",
+      "description": "List of notes with search and filtering",
+      "suggestedFor": [
+        "note management",
+        "content lists",
+        "note navigation"
+      ],
+      "typicalSize": "large",
+      "propsSchema": {
+        "notes": {
+          "required": true,
+          "types": [
+            "array"
+          ],
+          "description": "Array of note entities"
+        },
+        "selectedNoteId": {
+          "types": [
+            "string"
+          ],
+          "description": "Currently selected note ID"
+        },
+        "showSearch": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show search input"
+        },
+        "showFilters": {
+          "types": [
+            "boolean"
+          ],
+          "description": "Show filter options"
+        },
+        "itemActions": {
+          "types": [
+            "array"
+          ],
+          "description": "Actions for each note"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
+        },
+        "className": {
+          "types": [
+            "string"
+          ],
+          "description": "Additional CSS classes"
+        }
+      }
+    },
+    "segment-renderer": {
+      "type": "segment-renderer",
+      "category": "display",
+      "client": "kflow",
+      "description": "Renders different segment types (text, quiz, code, etc.) in lessons",
+      "suggestedFor": [
+        "lesson segments",
+        "content rendering",
+        "mixed content"
+      ],
+      "typicalSize": "medium",
+      "propsSchema": {
+        "segment": {
+          "required": true,
+          "types": [
+            "object"
+          ],
+          "description": "Segment data with type and content"
+        },
+        "onComplete": {
+          "types": [
+            "function"
+          ],
+          "description": "Completion handler"
+        },
+        "entity": {
+          "types": [
+            "string"
+          ],
+          "description": "Entity context for events"
         },
         "className": {
           "types": [

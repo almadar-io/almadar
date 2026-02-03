@@ -13,21 +13,71 @@
  *
  * All components follow the Closed Circuit pattern:
  * UI Events → Trait State Machine → Effects → UI Update
- *
- * NOTE: Components are exported individually to avoid circular dependencies.
- * Import directly from the specific file when needed, e.g.:
- *   import { CreditMeter } from "./atoms/CreditMeter";
  */
 
-// Atoms - Basic building blocks (no cross-dependencies)
+// Atoms - Basic building blocks
 export * from "./atoms";
 
-// Molecules - Import directly to avoid circular deps with templates
+// Molecules - Composite components
 export * from "./molecules";
 
-// Organisms - Import directly to avoid circular deps with templates
+// Organisms - Complex feature components
 export * from "./organisms";
 
-// Templates are NOT re-exported here to avoid circular dependencies.
-// Import templates directly from their files:
-//   import { TraineesTemplate } from "./templates/TraineesTemplate";
+// Templates - Import directly to avoid type conflicts:
+//   import { TraineesTemplate } from "@blaz-kelemnc/templates/TraineesTemplate";
+// Or import specific templates:
+export {
+  TraineesTemplate,
+  type TraineesTemplateProps,
+} from "./templates/TraineesTemplate";
+
+export {
+  TraineeDetailTemplate,
+  type TraineeDetailTemplateProps,
+  type TraineeStats,
+} from "./templates/TraineeDetailTemplate";
+
+export {
+  SessionsTemplate,
+  type SessionsTemplateProps,
+} from "./templates/SessionsTemplate";
+
+export {
+  SessionDetailTemplate,
+  type SessionDetailTemplateProps,
+  type ParticipantData,
+  type SessionExercise,
+} from "./templates/SessionDetailTemplate";
+
+export {
+  ScheduleTemplate,
+  type ScheduleTemplateProps,
+} from "./templates/ScheduleTemplate";
+
+export {
+  MealPlansTemplate,
+  type MealPlansTemplateProps,
+} from "./templates/MealPlansTemplate";
+
+export {
+  MealPlanDetailTemplate,
+  type MealPlanDetailTemplateProps,
+  type TraineeInfo,
+} from "./templates/MealPlanDetailTemplate";
+
+export {
+  ProgressTemplate,
+  type ProgressTemplateProps,
+  type ProgressEntryData,
+} from "./templates/ProgressTemplate";
+
+export {
+  FitnessTemplate,
+  type FitnessTemplateProps,
+} from "./templates/FitnessTemplate";
+
+export {
+  CreditsTemplate,
+  type CreditsTemplateProps,
+} from "./templates/CreditsTemplate";

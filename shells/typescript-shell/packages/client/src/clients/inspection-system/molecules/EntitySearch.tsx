@@ -24,22 +24,33 @@ import { Search, Plus, Building2, User, FileText, X } from "lucide-react";
 
 export interface EntitySearchItem {
   id: string;
-  name: string;
+  name?: string;
+  /** Alias for name */
+  label?: string;
   subtitle?: string;
+  /** Alias for subtitle */
+  sublabel?: string;
   metadata?: Record<string, string>;
 }
 
+// Type alias for backwards compatibility
+export type SearchResult = EntitySearchItem;
+
 export interface EntitySearchProps {
   /** Entity type being searched */
-  entity: string;
+  entity?: string;
   /** Label for the field */
   label?: string;
   /** Placeholder text */
   placeholder?: string;
   /** Currently selected item */
   selectedItem?: EntitySearchItem | null;
+  /** Currently selected ID (alternative to selectedItem) */
+  selectedId?: string;
   /** Search results */
   items?: EntitySearchItem[];
+  /** Search results (alias for items) */
+  results?: EntitySearchItem[];
   /** Loading state */
   isLoading?: boolean;
   /** Allow creating new entities */
@@ -58,9 +69,11 @@ export interface EntitySearchProps {
   onSearch?: (term: string) => void;
   /** Create handler */
   onCreate?: () => void;
+  /** Create new handler (alias for onCreate) */
+  onCreateNew?: () => void;
 }
 
-const entityIcons: Record<string, typeof Building2> = {
+const entityIcons: Record<string, typeof Building2 | undefined> = {
   Company: Building2,
   Inspector: User,
   Document: FileText,
@@ -72,6 +85,7 @@ export const EntitySearch: React.FC<EntitySearchProps> = ({
   placeholder = "Search...",
   selectedItem,
   items = [],
+  results,
   isLoading = false,
   allowCreate = true,
   createLabel = "Create New",
@@ -81,18 +95,25 @@ export const EntitySearch: React.FC<EntitySearchProps> = ({
   onSelect,
   onSearch,
   onCreate,
+  onCreateNew,
 }) => {
   const eventBus = useEventBus();
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const EntityIcon = entityIcons[entity] || FileText;
+  // Use items or results (alias)
+  const searchItems = items.length > 0 ? items : (results ?? []);
+
+  const EntityIcon = (entity ? entityIcons[entity] : undefined) || FileText;
 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -108,7 +129,7 @@ export const EntitySearch: React.FC<EntitySearchProps> = ({
       onSearch?.(value);
       eventBus.emit("UI:SEARCH", { entity, searchTerm: value });
     },
-    [entity, onSearch, eventBus]
+    [entity, onSearch, eventBus],
   );
 
   const handleSelect = useCallback(
@@ -118,7 +139,7 @@ export const EntitySearch: React.FC<EntitySearchProps> = ({
       setSearchTerm("");
       setIsOpen(false);
     },
-    [entity, onSelect, eventBus]
+    [entity, onSelect, eventBus],
   );
 
   const handleClear = useCallback(() => {
@@ -128,9 +149,10 @@ export const EntitySearch: React.FC<EntitySearchProps> = ({
 
   const handleCreate = useCallback(() => {
     onCreate?.();
+    onCreateNew?.();
     eventBus.emit("UI:CREATE_NEW", { entity });
     setIsOpen(false);
-  }, [entity, onCreate, eventBus]);
+  }, [entity, onCreate, onCreateNew, eventBus]);
 
   // Show selected item
   if (selectedItem) {
@@ -154,11 +176,11 @@ export const EntitySearch: React.FC<EntitySearchProps> = ({
               </Box>
               <VStack gap="none">
                 <Typography variant="body" className="font-medium">
-                  {selectedItem.name}
+                  {selectedItem.name || selectedItem.label}
                 </Typography>
-                {selectedItem.subtitle && (
+                {(selectedItem.subtitle || selectedItem.sublabel) && (
                   <Typography variant="small" className="text-neutral-500">
-                    {selectedItem.subtitle}
+                    {selectedItem.subtitle || selectedItem.sublabel}
                   </Typography>
                 )}
               </VStack>
@@ -180,83 +202,88 @@ export const EntitySearch: React.FC<EntitySearchProps> = ({
   }
 
   return (
-    <VStack gap="xs" className={cn("w-full relative", className)} ref={containerRef}>
-      {label && (
-        <Typography variant="label" className="text-neutral-700">
-          {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
-        </Typography>
-      )}
+    <Box ref={containerRef} className={cn("w-full relative", className)}>
+      <VStack gap="xs">
+        {label && (
+          <Typography variant="label" className="text-neutral-700">
+            {label}
+            {required && <span className="text-red-500 ml-1">*</span>}
+          </Typography>
+        )}
 
-      <Input
-        type="text"
-        value={searchTerm}
-        onChange={(e) => handleSearch(e.target.value)}
-        onFocus={() => setIsOpen(true)}
-        placeholder={placeholder}
-        disabled={disabled}
-        leftIcon={<Search className="h-4 w-4 text-neutral-400" />}
-        className="w-full"
-      />
+        <Input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => handleSearch(e.target.value)}
+          onFocus={() => setIsOpen(true)}
+          placeholder={placeholder}
+          disabled={disabled}
+          leftIcon={<Search className="h-4 w-4 text-neutral-400" />}
+          className="w-full"
+        />
 
-      {/* Dropdown */}
-      {isOpen && !disabled && (
-        <Card className="absolute top-full left-0 right-0 mt-1 z-50 max-h-64 overflow-y-auto shadow-lg">
-          <VStack gap="none">
-            {isLoading ? (
-              <Box padding="md" className="flex justify-center">
-                <Spinner size="sm" />
-              </Box>
-            ) : items.length > 0 ? (
-              items.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => handleSelect(item)}
-                  className="w-full p-3 text-left hover:bg-neutral-50 transition-colors border-b last:border-b-0"
-                >
-                  <HStack gap="sm" align="center">
-                    <EntityIcon className="h-4 w-4 text-neutral-400" />
-                    <VStack gap="none">
-                      <Typography variant="body" className="font-medium">
-                        {item.name}
-                      </Typography>
-                      {item.subtitle && (
-                        <Typography variant="small" className="text-neutral-500">
-                          {item.subtitle}
+        {/* Dropdown */}
+        {isOpen && !disabled && (
+          <Card className="absolute top-full left-0 right-0 mt-1 z-50 max-h-64 overflow-y-auto shadow-lg">
+            <VStack gap="none">
+              {isLoading ? (
+                <Box padding="md" className="flex justify-center">
+                  <Spinner size="sm" />
+                </Box>
+              ) : searchItems.length > 0 ? (
+                searchItems.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => handleSelect(item)}
+                    className="w-full p-3 text-left hover:bg-neutral-50 transition-colors border-b last:border-b-0"
+                  >
+                    <HStack gap="sm" align="center">
+                      <EntityIcon className="h-4 w-4 text-neutral-400" />
+                      <VStack gap="none">
+                        <Typography variant="body" className="font-medium">
+                          {item.name || item.label}
                         </Typography>
-                      )}
-                    </VStack>
+                        {(item.subtitle || item.sublabel) && (
+                          <Typography
+                            variant="small"
+                            className="text-neutral-500"
+                          >
+                            {item.subtitle || item.sublabel}
+                          </Typography>
+                        )}
+                      </VStack>
+                    </HStack>
+                  </button>
+                ))
+              ) : searchTerm ? (
+                <Box padding="md" className="text-center">
+                  <Typography variant="small" className="text-neutral-500">
+                    No results found
+                  </Typography>
+                </Box>
+              ) : null}
+
+              {/* Create new option */}
+              {allowCreate && (
+                <button
+                  type="button"
+                  onClick={handleCreate}
+                  className="w-full p-3 text-left hover:bg-blue-50 transition-colors border-t"
+                >
+                  <HStack gap="sm" align="center" className="text-blue-600">
+                    <Plus className="h-4 w-4" />
+                    <Typography variant="body" className="font-medium">
+                      {createLabel} {entity}
+                    </Typography>
                   </HStack>
                 </button>
-              ))
-            ) : searchTerm ? (
-              <Box padding="md" className="text-center">
-                <Typography variant="small" className="text-neutral-500">
-                  No results found
-                </Typography>
-              </Box>
-            ) : null}
-
-            {/* Create new option */}
-            {allowCreate && (
-              <button
-                type="button"
-                onClick={handleCreate}
-                className="w-full p-3 text-left hover:bg-blue-50 transition-colors border-t"
-              >
-                <HStack gap="sm" align="center" className="text-blue-600">
-                  <Plus className="h-4 w-4" />
-                  <Typography variant="body" className="font-medium">
-                    {createLabel} {entity}
-                  </Typography>
-                </HStack>
-              </button>
-            )}
-          </VStack>
-        </Card>
-      )}
-    </VStack>
+              )}
+            </VStack>
+          </Card>
+        )}
+      </VStack>
+    </Box>
   );
 };
 

@@ -26,21 +26,39 @@ export interface ChartDataPoint {
   label?: string;
 }
 
+/** Operation definition for action buttons */
+export interface ProgressOperation {
+  label: string;
+  event?: string;
+  action?: string;
+  variant?: "primary" | "secondary" | "danger" | "ghost";
+}
+
 export interface ProgressChartProps {
   /** Data points to plot */
-  data: ChartDataPoint[];
+  data?: ChartDataPoint[] | unknown;
   /** Metric being tracked */
-  metric: string;
+  metric?: string;
+  /** Multiple metrics to track */
+  metrics?: string[];
   /** Unit for the metric (e.g., "kg", "reps") */
   unit?: string;
   /** Chart type */
   chartType?: "line" | "bar";
   /** Date range to display */
-  dateRange?: "week" | "month" | "3months" | "year";
+  dateRange?: "week" | "month" | "3months" | "year" | string;
+  /** Time range alias */
+  timeRange?: "week" | "month" | "3months" | "year" | string;
   /** Show date range selector */
   showDateSelector?: boolean;
+  /** Show milestones */
+  showMilestones?: boolean;
+  /** Show trends */
+  showTrends?: boolean;
   /** Entity context for events */
   entity?: string;
+  /** Operations/actions available */
+  operations?: ProgressOperation[];
   /** Additional CSS classes */
   className?: string;
 }
@@ -65,7 +83,14 @@ export const ProgressChart: React.FC<ProgressChartProps> = ({
   className,
 }) => {
   const eventBus = useEventBus();
-  const [selectedRange, setSelectedRange] = useState<DateRange>(dateRange);
+  const [selectedRange, setSelectedRange] = useState<DateRange>(
+    (dateRange as DateRange) || "month",
+  );
+
+  // Normalize data to array
+  const chartData: ChartDataPoint[] = Array.isArray(data)
+    ? (data as ChartDataPoint[])
+    : [];
 
   // Filter data based on selected range
   const filteredData = useMemo(() => {
@@ -87,10 +112,13 @@ export const ProgressChart: React.FC<ProgressChartProps> = ({
         break;
     }
 
-    return data
-      .filter((point) => new Date(point.date) >= cutoffDate)
-      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-  }, [data, selectedRange]);
+    return chartData
+      .filter((point: ChartDataPoint) => new Date(point.date) >= cutoffDate)
+      .sort(
+        (a: ChartDataPoint, b: ChartDataPoint) =>
+          new Date(a.date).getTime() - new Date(b.date).getTime(),
+      );
+  }, [chartData, selectedRange]);
 
   // Calculate stats
   const stats = useMemo(() => {
@@ -98,7 +126,7 @@ export const ProgressChart: React.FC<ProgressChartProps> = ({
       return { current: 0, min: 0, max: 0, avg: 0, trend: 0 };
     }
 
-    const values = filteredData.map((d) => d.value);
+    const values = filteredData.map((d: ChartDataPoint) => d.value);
     const current = values[values.length - 1];
     const min = Math.min(...values);
     const max = Math.max(...values);
@@ -125,7 +153,7 @@ export const ProgressChart: React.FC<ProgressChartProps> = ({
         entity,
       });
     },
-    [eventBus, metric, entity]
+    [eventBus, metric, entity],
   );
 
   // Calculate chart dimensions
@@ -139,7 +167,7 @@ export const ProgressChart: React.FC<ProgressChartProps> = ({
     const { min, max } = stats;
     const range = max - min || 1;
 
-    return filteredData.map((point, index) => {
+    return filteredData.map((point: ChartDataPoint, index: number) => {
       const x = (index / (filteredData.length - 1 || 1)) * 100;
       const y = ((point.value - min) / range) * chartHeight;
       return { x, y, ...point };
@@ -151,7 +179,7 @@ export const ProgressChart: React.FC<ProgressChartProps> = ({
     if (chartPoints.length === 0) return "";
 
     return chartPoints
-      .map((point, index) => {
+      .map((point: { x: number; y: number }, index: number) => {
         const cmd = index === 0 ? "M" : "L";
         return `${cmd} ${point.x} ${chartHeight - point.y}`;
       })
@@ -176,7 +204,13 @@ export const ProgressChart: React.FC<ProgressChartProps> = ({
               )}
               {stats.trend !== 0 && (
                 <Badge
-                  variant={stats.trend > 0 ? "success" : stats.trend < 0 ? "error" : "secondary"}
+                  variant={
+                    stats.trend > 0
+                      ? "success"
+                      : stats.trend < 0
+                        ? "danger"
+                        : "default"
+                  }
                   size="sm"
                 >
                   {stats.trend > 0 ? (
@@ -260,33 +294,37 @@ export const ProgressChart: React.FC<ProgressChartProps> = ({
                     vectorEffect="non-scaling-stroke"
                   />
                   {/* Points */}
-                  {chartPoints.map((point, index) => (
-                    <circle
-                      key={index}
-                      cx={point.x}
-                      cy={chartHeight - point.y}
-                      r="3"
-                      fill="#2563eb"
-                      vectorEffect="non-scaling-stroke"
-                    />
-                  ))}
+                  {chartPoints.map(
+                    (point: { x: number; y: number }, index: number) => (
+                      <circle
+                        key={index}
+                        cx={point.x}
+                        cy={chartHeight - point.y}
+                        r="3"
+                        fill="#2563eb"
+                        vectorEffect="non-scaling-stroke"
+                      />
+                    ),
+                  )}
                 </>
               ) : (
                 // Bar chart
-                chartPoints.map((point, index) => {
-                  const barWidth = 100 / chartPoints.length - 2;
-                  return (
-                    <rect
-                      key={index}
-                      x={point.x - barWidth / 2}
-                      y={chartHeight - point.y}
-                      width={barWidth}
-                      height={point.y}
-                      fill="#2563eb"
-                      rx="2"
-                    />
-                  );
-                })
+                chartPoints.map(
+                  (point: { x: number; y: number }, index: number) => {
+                    const barWidth = 100 / chartPoints.length - 2;
+                    return (
+                      <rect
+                        key={index}
+                        x={point.x - barWidth / 2}
+                        y={chartHeight - point.y}
+                        width={barWidth}
+                        height={point.y}
+                        fill="#2563eb"
+                        rx="2"
+                      />
+                    );
+                  },
+                )
               )}
 
               {/* Gradient definition */}

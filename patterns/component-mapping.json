@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "exportedAt": "2026-01-29T02:29:19.144Z",
+  "exportedAt": "2026-02-02T18:33:40.865Z",
   "mappings": {
     "page-header": {
       "component": "PageHeader",
@@ -764,6 +764,270 @@
       "component": "FloatingActionButton",
       "importPath": "@/components/molecules",
       "category": "atom"
+    },
+    "credit-meter": {
+      "component": "CreditMeter",
+      "importPath": "@/clients/blaz-kelemnc/atoms/CreditMeter",
+      "category": "display",
+      "client": "blaz-klemenc"
+    },
+    "credit-expiration-alert": {
+      "component": "CreditExpirationAlert",
+      "importPath": "@/clients/blaz-kelemnc/atoms/CreditExpirationAlert",
+      "category": "display",
+      "client": "blaz-klemenc"
+    },
+    "exercise-video-link": {
+      "component": "ExerciseVideoLink",
+      "importPath": "@/clients/blaz-kelemnc/atoms/ExerciseVideoLink",
+      "category": "display",
+      "client": "blaz-klemenc"
+    },
+    "shareable-link-generator": {
+      "component": "ShareableLinkGenerator",
+      "importPath": "@/clients/blaz-kelemnc/atoms/ShareableLinkGenerator",
+      "category": "form",
+      "client": "blaz-klemenc"
+    },
+    "body-measurement-input": {
+      "component": "BodyMeasurementInput",
+      "importPath": "@/clients/blaz-kelemnc/molecules/BodyMeasurementInput",
+      "category": "form",
+      "client": "blaz-klemenc"
+    },
+    "daily-progress-input": {
+      "component": "DailyProgressInput",
+      "importPath": "@/clients/blaz-kelemnc/molecules/DailyProgressInput",
+      "category": "form",
+      "client": "blaz-klemenc"
+    },
+    "group-session-card": {
+      "component": "GroupSessionCard",
+      "importPath": "@/clients/blaz-kelemnc/molecules/GroupSessionCard",
+      "category": "display",
+      "client": "blaz-klemenc"
+    },
+    "lift-tracker": {
+      "component": "LiftTracker",
+      "importPath": "@/clients/blaz-kelemnc/molecules/LiftTracker",
+      "category": "form",
+      "client": "blaz-klemenc"
+    },
+    "meal-plan-card": {
+      "component": "MealPlanCard",
+      "importPath": "@/clients/blaz-kelemnc/molecules/MealPlanCard",
+      "category": "display",
+      "client": "blaz-klemenc"
+    },
+    "nutrition-summary": {
+      "component": "NutritionSummary",
+      "importPath": "@/clients/blaz-kelemnc/molecules/NutritionSummary",
+      "category": "display",
+      "client": "blaz-klemenc"
+    },
+    "progress-chart": {
+      "component": "ProgressChart",
+      "importPath": "@/clients/blaz-kelemnc/molecules/ProgressChart",
+      "category": "display",
+      "client": "blaz-klemenc"
+    },
+    "special-exercise-card": {
+      "component": "SpecialExerciseCard",
+      "importPath": "@/clients/blaz-kelemnc/molecules/SpecialExerciseCard",
+      "category": "display",
+      "client": "blaz-klemenc"
+    },
+    "trainee-card": {
+      "component": "TraineeCard",
+      "importPath": "@/clients/blaz-kelemnc/molecules/TraineeCard",
+      "category": "display",
+      "client": "blaz-klemenc"
+    },
+    "workout-plan-card": {
+      "component": "WorkoutPlanCard",
+      "importPath": "@/clients/blaz-kelemnc/molecules/WorkoutPlanCard",
+      "category": "display",
+      "client": "blaz-klemenc"
+    },
+    "ai-analysis-panel": {
+      "component": "AIAnalysisPanel",
+      "importPath": "@/clients/blaz-kelemnc/organisms/AIAnalysisPanel",
+      "category": "display",
+      "client": "blaz-klemenc"
+    },
+    "kinesiology-exam-form": {
+      "component": "KinesiologyExamForm",
+      "importPath": "@/clients/blaz-kelemnc/organisms/KinesiologyExamForm",
+      "category": "form",
+      "client": "blaz-klemenc"
+    },
+    "session-scheduler": {
+      "component": "SessionScheduler",
+      "importPath": "@/clients/blaz-kelemnc/organisms/SessionScheduler",
+      "category": "form",
+      "client": "blaz-klemenc"
+    },
+    "trainee-comparison": {
+      "component": "TraineeComparison",
+      "importPath": "@/clients/blaz-kelemnc/organisms/TraineeComparison",
+      "category": "display",
+      "client": "blaz-klemenc"
+    },
+    "weekly-calendar": {
+      "component": "WeeklyCalendar",
+      "importPath": "@/clients/blaz-kelemnc/organisms/WeeklyCalendar",
+      "category": "display",
+      "client": "blaz-klemenc"
+    },
+    "mind-map-connections": {
+      "component": "MindMapConnections",
+      "importPath": "@/clients/kflow/atoms/MindMapConnections",
+      "category": "display",
+      "client": "kflow"
+    },
+    "concept-meta-tags": {
+      "component": "ConceptMetaTags",
+      "importPath": "@/clients/kflow/molecules/ConceptMetaTags",
+      "category": "display",
+      "client": "kflow"
+    },
+    "graph-legend": {
+      "component": "GraphLegend",
+      "importPath": "@/clients/kflow/molecules/GraphLegend",
+      "category": "display",
+      "client": "kflow"
+    },
+    "layer-navigator": {
+      "component": "LayerNavigator",
+      "importPath": "@/clients/kflow/molecules/LayerNavigator",
+      "category": "navigation",
+      "client": "kflow"
+    },
+    "learning-goal-display": {
+      "component": "LearningGoalDisplay",
+      "importPath": "@/clients/kflow/molecules/LearningGoalDisplay",
+      "category": "display",
+      "client": "kflow"
+    },
+    "mind-map-header": {
+      "component": "MindMapHeader",
+      "importPath": "@/clients/kflow/molecules/MindMapHeader",
+      "category": "display",
+      "client": "kflow"
+    },
+    "mind-map-node": {
+      "component": "MindMapNode",
+      "importPath": "@/clients/kflow/molecules/MindMapNode",
+      "category": "display",
+      "client": "kflow"
+    },
+    "note-content": {
+      "component": "NoteContent",
+      "importPath": "@/clients/kflow/molecules/NoteContent",
+      "category": "display",
+      "client": "kflow"
+    },
+    "note-list-item": {
+      "component": "NoteListItem",
+      "importPath": "@/clients/kflow/molecules/NoteListItem",
+      "category": "display",
+      "client": "kflow"
+    },
+    "streaming-display": {
+      "component": "StreamingDisplay",
+      "importPath": "@/clients/kflow/molecules/StreamingDisplay",
+      "category": "display",
+      "client": "kflow"
+    },
+    "connection-block": {
+      "component": "ConnectionBlock",
+      "importPath": "@/clients/kflow/molecules/ConnectionBlock",
+      "category": "display",
+      "client": "kflow"
+    },
+    "quiz-block": {
+      "component": "QuizBlock",
+      "importPath": "@/clients/kflow/molecules/QuizBlock",
+      "category": "form",
+      "client": "kflow"
+    },
+    "reflection-block": {
+      "component": "ReflectionBlock",
+      "importPath": "@/clients/kflow/molecules/ReflectionBlock",
+      "category": "form",
+      "client": "kflow"
+    },
+    "activation-block": {
+      "component": "ActivationBlock",
+      "importPath": "@/clients/kflow/molecules/ActivationBlock",
+      "category": "display",
+      "client": "kflow"
+    },
+    "bloom-quiz-block": {
+      "component": "BloomQuizBlock",
+      "importPath": "@/clients/kflow/molecules/BloomQuizBlock",
+      "category": "form",
+      "client": "kflow"
+    },
+    "code-block": {
+      "component": "CodeBlock",
+      "importPath": "@/clients/kflow/molecules/CodeBlock",
+      "category": "display",
+      "client": "kflow"
+    },
+    "markdown-content": {
+      "component": "MarkdownContent",
+      "importPath": "@/clients/kflow/molecules/MarkdownContent",
+      "category": "display",
+      "client": "kflow"
+    },
+    "concept-card": {
+      "component": "ConceptCard",
+      "importPath": "@/clients/kflow/organisms/ConceptCard",
+      "category": "display",
+      "client": "kflow"
+    },
+    "flash-cards-display": {
+      "component": "FlashCardsDisplay",
+      "importPath": "@/clients/kflow/organisms/FlashCardsDisplay",
+      "category": "display",
+      "client": "kflow"
+    },
+    "flash-card-stack": {
+      "component": "FlashCardStack",
+      "importPath": "@/clients/kflow/organisms/FlashCardStack",
+      "category": "display",
+      "client": "kflow"
+    },
+    "flash-card": {
+      "component": "FlashCard",
+      "importPath": "@/clients/kflow/organisms/FlashCard",
+      "category": "display",
+      "client": "kflow"
+    },
+    "force-directed-graph": {
+      "component": "ForceDirectedGraph",
+      "importPath": "@/clients/kflow/organisms/ForceDirectedGraph",
+      "category": "display",
+      "client": "kflow"
+    },
+    "mind-map-canvas": {
+      "component": "MindMapCanvas",
+      "importPath": "@/clients/kflow/organisms/MindMapCanvas",
+      "category": "display",
+      "client": "kflow"
+    },
+    "note-list": {
+      "component": "NoteList",
+      "importPath": "@/clients/kflow/organisms/NoteList",
+      "category": "display",
+      "client": "kflow"
+    },
+    "segment-renderer": {
+      "component": "SegmentRenderer",
+      "importPath": "@/clients/kflow/organisms/SegmentRenderer",
+      "category": "display",
+      "client": "kflow"
     }
   }
 }

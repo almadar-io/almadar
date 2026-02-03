@@ -59,7 +59,7 @@ export {
   type WizardStep,
 } from "./WizardContainer";
 
-// Orbital visualization
+// Almadar visualization
 export {
   OrbitalVisualization,
   type OrbitalVisualizationProps,

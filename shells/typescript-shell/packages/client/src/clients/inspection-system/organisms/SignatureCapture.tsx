@@ -25,6 +25,8 @@ export interface SignatureCaptureProps {
   participantName?: string;
   /** Title */
   title?: string;
+  /** Subtitle */
+  subtitle?: string;
   /** Instructions text */
   instructions?: string;
   /** Canvas width */
@@ -88,7 +90,11 @@ export const SignatureCapture: React.FC<SignatureCaptureProps> = ({
   }, [width, height, strokeColor, strokeWidth]);
 
   const getPos = useCallback(
-    (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+    (
+      e:
+        | React.MouseEvent<HTMLCanvasElement>
+        | React.TouchEvent<HTMLCanvasElement>,
+    ) => {
       const canvas = canvasRef.current;
       if (!canvas) return { x: 0, y: 0 };
 
@@ -109,22 +115,30 @@ export const SignatureCapture: React.FC<SignatureCaptureProps> = ({
         y: (e.clientY - rect.top) * scaleY,
       };
     },
-    []
+    [],
   );
 
   const startDrawing = useCallback(
-    (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+    (
+      e:
+        | React.MouseEvent<HTMLCanvasElement>
+        | React.TouchEvent<HTMLCanvasElement>,
+    ) => {
       if (disabled) return;
       e.preventDefault();
       const pos = getPos(e);
       setIsDrawing(true);
       setLastPos(pos);
     },
-    [disabled, getPos]
+    [disabled, getPos],
   );
 
   const draw = useCallback(
-    (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+    (
+      e:
+        | React.MouseEvent<HTMLCanvasElement>
+        | React.TouchEvent<HTMLCanvasElement>,
+    ) => {
       if (!isDrawing || disabled) return;
       e.preventDefault();
 
@@ -142,7 +156,7 @@ export const SignatureCapture: React.FC<SignatureCaptureProps> = ({
       setLastPos(pos);
       setHasSignature(true);
     },
-    [isDrawing, disabled, getPos, lastPos]
+    [isDrawing, disabled, getPos, lastPos],
   );
 
   const stopDrawing = useCallback(() => {
@@ -200,7 +214,7 @@ export const SignatureCapture: React.FC<SignatureCaptureProps> = ({
           rounded="lg"
           className={cn(
             "relative overflow-hidden bg-white",
-            disabled && "opacity-50 cursor-not-allowed"
+            disabled && "opacity-50 cursor-not-allowed",
           )}
         >
           <canvas
@@ -219,9 +233,7 @@ export const SignatureCapture: React.FC<SignatureCaptureProps> = ({
           />
 
           {/* Signature line */}
-          <Box
-            className="absolute bottom-8 left-4 right-4 border-b border-dashed border-neutral-300"
-          />
+          <Box className="absolute bottom-8 left-4 right-4 border-b border-dashed border-neutral-300" />
 
           {/* Empty state indicator */}
           {!hasSignature && !disabled && (

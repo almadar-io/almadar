@@ -12,7 +12,7 @@ import {
   createMinimalContext,
   type SExpr,
   type EvaluationContext as SharedEvaluationContext,
-} from '@orbital/shared';
+} from '@almadar/shared';
 
 /**
  * Context for conditional evaluation

@@ -107,7 +107,7 @@ const LiftCard: React.FC<{
               </Typography>
             </VStack>
           </HStack>
-          <Badge variant="secondary" size="md">
+          <Badge variant="default" size="md">
             {lift.weight} kg
           </Badge>
         </HStack>
@@ -202,7 +202,7 @@ export const FitnessTemplate: React.FC<FitnessTemplateProps> = ({
       setSearchTerm(value);
       eventBus.emit("UI:SEARCH", { searchTerm: value, entity });
     },
-    [eventBus, entity]
+    [eventBus, entity],
   );
 
   // Handle create
@@ -215,33 +215,40 @@ export const FitnessTemplate: React.FC<FitnessTemplateProps> = ({
     (action: string, lift: LiftData) => {
       eventBus.emit(`UI:${action}`, { row: lift, entity });
     },
-    [eventBus, entity]
+    [eventBus, entity],
   );
 
   // Filter lifts
   const filteredLifts = lifts.filter((lift) => {
     return (
-      !searchTerm || lift.exerciseName.toLowerCase().includes(searchTerm.toLowerCase())
+      !searchTerm ||
+      lift.exerciseName.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
 
   // Calculate stats
   const totalLifts = lifts.length;
-  const totalVolume = lifts.reduce((sum, l) => sum + l.weight * l.sets * l.reps, 0);
+  const totalVolume = lifts.reduce(
+    (sum, l) => sum + l.weight * l.sets * l.reps,
+    0,
+  );
   const uniqueExercises = new Set(lifts.map((l) => l.exerciseName)).size;
 
   // Group by exercise for quick stats
-  const exerciseStats = lifts.reduce((acc, lift) => {
-    if (!acc[lift.exerciseName]) {
-      acc[lift.exerciseName] = { count: 0, maxWeight: 0 };
-    }
-    acc[lift.exerciseName].count++;
-    acc[lift.exerciseName].maxWeight = Math.max(
-      acc[lift.exerciseName].maxWeight,
-      lift.weight
-    );
-    return acc;
-  }, {} as Record<string, { count: number; maxWeight: number }>);
+  const exerciseStats = lifts.reduce(
+    (acc, lift) => {
+      if (!acc[lift.exerciseName]) {
+        acc[lift.exerciseName] = { count: 0, maxWeight: 0 };
+      }
+      acc[lift.exerciseName].count++;
+      acc[lift.exerciseName].maxWeight = Math.max(
+        acc[lift.exerciseName].maxWeight,
+        lift.weight,
+      );
+      return acc;
+    },
+    {} as Record<string, { count: number; maxWeight: number }>,
+  );
 
   // Top exercises
   const topExercises = Object.entries(exerciseStats)
@@ -284,7 +291,9 @@ export const FitnessTemplate: React.FC<FitnessTemplateProps> = ({
           <HStack gap="sm" align="center">
             <TrendingUp className="h-5 w-5 text-green-500" />
             <VStack gap="none">
-              <Typography variant="h3">{(totalVolume / 1000).toFixed(1)}k</Typography>
+              <Typography variant="h3">
+                {(totalVolume / 1000).toFixed(1)}k
+              </Typography>
               <Typography variant="small" className="text-neutral-500">
                 Total Volume (kg)
               </Typography>
@@ -382,7 +391,11 @@ export const FitnessTemplate: React.FC<FitnessTemplateProps> = ({
                   }
                 >
                   {filteredLifts.map((lift) => (
-                    <LiftCard key={lift.id} lift={lift} onAction={handleAction} />
+                    <LiftCard
+                      key={lift.id}
+                      lift={lift}
+                      onAction={handleAction}
+                    />
                   ))}
                 </Box>
               )}
@@ -393,22 +406,15 @@ export const FitnessTemplate: React.FC<FitnessTemplateProps> = ({
         {/* Right Column - Sidebar */}
         <VStack gap="md" className="flex-1 min-w-[280px]">
           {/* Wellness Input */}
-          {showWellnessInput && (
-            <DailyProgressInput
-              onSubmit={(data) => {
-                eventBus.emit("UI:ADD_WELLNESS", { row: data, entity: "WellnessEntry" });
-              }}
-            />
-          )}
+          {showWellnessInput && <DailyProgressInput entity="WellnessEntry" />}
 
           {/* Progress Chart */}
           {progressData && progressData.length > 0 && (
             <Card className="p-4">
               <ProgressChart
                 data={progressData}
-                title="Progress"
+                metric="Progress"
                 chartType="line"
-                height={200}
               />
             </Card>
           )}
@@ -428,11 +434,14 @@ export const FitnessTemplate: React.FC<FitnessTemplateProps> = ({
                     >
                       <VStack gap="none">
                         <Typography variant="body">{name}</Typography>
-                        <Typography variant="small" className="text-neutral-500">
+                        <Typography
+                          variant="small"
+                          className="text-neutral-500"
+                        >
                           {stats.count} times
                         </Typography>
                       </VStack>
-                      <Badge variant="secondary">{stats.maxWeight} kg max</Badge>
+                      <Badge variant="default">{stats.maxWeight} kg max</Badge>
                     </HStack>
                   ))}
                 </VStack>

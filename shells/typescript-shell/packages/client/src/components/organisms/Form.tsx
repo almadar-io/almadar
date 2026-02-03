@@ -40,10 +40,10 @@ import {
   createMinimalContext,
   type SExpr,
   type EvaluationContext as SharedEvaluationContext,
-} from "@orbital/shared";
+} from "@almadar/shared";
 
 /**
- * S-Expression type for conditional logic (re-export from @orbital/shared)
+ * S-Expression type for conditional logic (re-export from @almadar/shared)
  */
 export type SExpression = SExpr;
 
@@ -228,7 +228,7 @@ export interface FormProps extends Omit<
   /** Fields definition (schema format) - accepts readonly for generated const arrays */
   fields?: readonly Readonly<SchemaField>[];
   /** Initial form data */
-  initialData?: Record<string, unknown>;
+  initialData?: Record<string, unknown> | unknown;
   /** Loading state */
   isLoading?: boolean;
   /** Error state */
@@ -255,14 +255,14 @@ export interface FormProps extends Omit<
   relationsLoading?: Record<string, boolean>;
 
   // Inspection form extensions
-  /** Map of fieldId → S-expression condition for conditional field display */
-  conditionalFields?: Record<string, SExpression>;
-  /** Hidden calculations that emit GLOBAL_VARIABLE_SET on field change */
-  hiddenCalculations?: HiddenCalculation[];
-  /** Violation conditions that emit VIOLATION_DETECTED when met */
-  violationTriggers?: ViolationTrigger[];
-  /** Context for S-expression evaluation */
-  evaluationContext?: FormEvaluationContext;
+  /** Map of fieldId → S-expression condition for conditional field display (boolean true means enabled but config loaded separately) */
+  conditionalFields?: Record<string, SExpression> | boolean;
+  /** Hidden calculations that emit GLOBAL_VARIABLE_SET on field change (boolean true means enabled but config loaded separately) */
+  hiddenCalculations?: HiddenCalculation[] | boolean;
+  /** Violation conditions that emit VIOLATION_DETECTED when met (boolean true means enabled but config loaded separately) */
+  violationTriggers?: ViolationTrigger[] | boolean;
+  /** Context for S-expression evaluation - accepts flexible types from generated code */
+  evaluationContext?: FormEvaluationContext | Record<string, unknown>;
   /** Nested form sections with optional conditions */
   sections?: FormSection[];
   /** Callback when any field value changes */
@@ -271,6 +271,10 @@ export interface FormProps extends Omit<
     value: unknown;
     formValues: Record<string, unknown>;
   }) => void;
+  /** Config path for form configuration (schema-driven) */
+  configPath?: string;
+  /** Whether the form supports repeatable entries */
+  repeatable?: boolean;
 }
 
 const layoutStyles = {
@@ -386,18 +390,28 @@ export const Form: React.FC<FormProps> = ({
   cancelEvent = "CANCEL",
   relationsData = {},
   relationsLoading = {},
-  // Inspection form extensions
-  conditionalFields = {},
-  hiddenCalculations = [],
-  violationTriggers = [],
+  // Inspection form extensions - may come as boolean true from generated code (meaning enabled but config loaded separately)
+  conditionalFields: conditionalFieldsRaw = {},
+  hiddenCalculations: hiddenCalculationsRaw = [],
+  violationTriggers: violationTriggersRaw = [],
   evaluationContext: externalContext,
   sections = [],
   onFieldChange,
   ...props
 }) => {
   const eventBus = useEventBus();
-  const [formData, setFormData] =
-    React.useState<Record<string, unknown>>(initialData);
+  const normalizedInitialData = (initialData as Record<string, unknown>) ?? {};
+
+  // Normalize props that might come as boolean true from generated code
+  const conditionalFields =
+    typeof conditionalFieldsRaw === "boolean" ? {} : conditionalFieldsRaw;
+  const hiddenCalculations =
+    typeof hiddenCalculationsRaw === "boolean" ? [] : hiddenCalculationsRaw;
+  const violationTriggers =
+    typeof violationTriggersRaw === "boolean" ? [] : violationTriggersRaw;
+  const [formData, setFormData] = React.useState<Record<string, unknown>>(
+    normalizedInitialData,
+  );
   const [collapsedSections, setCollapsedSections] = React.useState<Set<string>>(
     new Set(),
   );
@@ -409,17 +423,24 @@ export const Form: React.FC<FormProps> = ({
   const evalContext: FormEvaluationContext = React.useMemo(
     () => ({
       formValues: formData,
-      globalVariables: externalContext?.globalVariables ?? {},
-      localVariables: externalContext?.localVariables ?? {},
-      entity: externalContext?.entity ?? {},
+      globalVariables: (externalContext?.globalVariables ?? {}) as Record<
+        string,
+        unknown
+      >,
+      localVariables: (externalContext?.localVariables ?? {}) as Record<
+        string,
+        unknown
+      >,
+      entity: (externalContext?.entity ?? {}) as Record<string, unknown>,
     }),
     [formData, externalContext],
   );
 
   // Sync form data when initialData changes (e.g., when data loads from API)
   React.useEffect(() => {
-    if (initialData && Object.keys(initialData).length > 0) {
-      setFormData(initialData);
+    const data = initialData as Record<string, unknown> | undefined;
+    if (data && Object.keys(data).length > 0) {
+      setFormData(data);
     }
   }, [initialData]);
 
@@ -432,9 +453,15 @@ export const Form: React.FC<FormProps> = ({
 
       const context: FormEvaluationContext = {
         formValues: newFormData,
-        globalVariables: externalContext?.globalVariables ?? {},
-        localVariables: externalContext?.localVariables ?? {},
-        entity: externalContext?.entity ?? {},
+        globalVariables: (externalContext?.globalVariables ?? {}) as Record<
+          string,
+          unknown
+        >,
+        localVariables: (externalContext?.localVariables ?? {}) as Record<
+          string,
+          unknown
+        >,
+        entity: (externalContext?.entity ?? {}) as Record<string, unknown>,
       };
 
       hiddenCalculations.forEach((calc) => {
@@ -463,12 +490,18 @@ export const Form: React.FC<FormProps> = ({
 
       const context: FormEvaluationContext = {
         formValues: newFormData,
-        globalVariables: externalContext?.globalVariables ?? {},
-        localVariables: externalContext?.localVariables ?? {},
-        entity: externalContext?.entity ?? {},
+        globalVariables: (externalContext?.globalVariables ?? {}) as Record<
+          string,
+          unknown
+        >,
+        localVariables: (externalContext?.localVariables ?? {}) as Record<
+          string,
+          unknown
+        >,
+        entity: (externalContext?.entity ?? {}) as Record<string, unknown>,
       };
 
-      violationTriggers.forEach((trigger) => {
+      violationTriggers.forEach((trigger: ViolationTrigger) => {
         const conditionMet = evaluateFormExpression(trigger.condition, context);
         if (conditionMet) {
           eventBus.emit("UI:VIOLATION_DETECTED", {

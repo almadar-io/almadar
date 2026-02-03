@@ -161,7 +161,7 @@ const CreditCard_: React.FC<{
             </VStack>
           </HStack>
           {expired ? (
-            <Badge variant="error">Expired</Badge>
+            <Badge variant="danger">Expired</Badge>
           ) : expiringSoon ? (
             <Badge variant="warning">
               <AlertTriangle className="h-3 w-3 mr-1" />

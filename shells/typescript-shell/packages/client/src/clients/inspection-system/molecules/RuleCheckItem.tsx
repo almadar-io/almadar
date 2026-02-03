@@ -22,11 +22,21 @@ import { Check, X, AlertTriangle, Camera } from "lucide-react";
 
 export type RuleSeverity = "critical" | "major" | "minor" | "info";
 
+export type RuleAnswer =
+  | "compliant"
+  | "non-compliant"
+  | "not-applicable"
+  | null;
+
 export interface RuleCheckItemProps {
   /** Rule ID */
-  id: string;
+  id?: string;
+  /** Rule ID alias */
+  ruleId?: string;
   /** Rule description */
-  description: string;
+  description?: string;
+  /** Rule text alias */
+  ruleText?: string;
   /** Official Gazette reference */
   gazetteNumber?: string;
   /** Article reference */
@@ -35,6 +45,8 @@ export interface RuleCheckItemProps {
   severity?: RuleSeverity;
   /** Current compliance status */
   isCompliant?: boolean | null;
+  /** Answer (alternative to isCompliant) */
+  answer?: RuleAnswer;
   /** Notes for non-compliance */
   notes?: string;
   /** Photos attached */
@@ -47,6 +59,10 @@ export interface RuleCheckItemProps {
   className?: string;
   /** Change handler */
   onChange?: (data: { isCompliant: boolean | null; notes: string }) => void;
+  /** Check handler (alternative to onChange) */
+  onCheck?: (answer: RuleAnswer, notes?: string) => void;
+  /** Add photo handler */
+  onAddPhoto?: () => void;
 }
 
 const severityConfig: Record<
@@ -87,7 +103,7 @@ export const RuleCheckItem: React.FC<RuleCheckItemProps> = ({
       onChange?.(data);
       eventBus.emit("UI:RULE_CHECKED", { ruleId: id, ...data });
     },
-    [id, localNotes, readOnly, onChange, eventBus]
+    [id, localNotes, readOnly, onChange, eventBus],
   );
 
   const handleNotesChange = useCallback(
@@ -97,7 +113,7 @@ export const RuleCheckItem: React.FC<RuleCheckItemProps> = ({
       const data = { isCompliant: localCompliant, notes: value };
       onChange?.(data);
     },
-    [localCompliant, readOnly, onChange]
+    [localCompliant, readOnly, onChange],
   );
 
   return (
@@ -115,7 +131,7 @@ export const RuleCheckItem: React.FC<RuleCheckItemProps> = ({
                 />
               )}
               <Badge
-                variant="outline"
+                variant="default"
                 className={cn(severityStyle.bgColor, severityStyle.color)}
               >
                 {severityStyle.label}
@@ -136,7 +152,7 @@ export const RuleCheckItem: React.FC<RuleCheckItemProps> = ({
                   "p-2 rounded-lg border transition-all",
                   localCompliant === true
                     ? "bg-green-100 border-green-300 text-green-600"
-                    : "bg-neutral-50 border-neutral-200 text-neutral-400 hover:bg-green-50"
+                    : "bg-neutral-50 border-neutral-200 text-neutral-400 hover:bg-green-50",
                 )}
               >
                 <Check className="h-5 w-5" />
@@ -148,7 +164,7 @@ export const RuleCheckItem: React.FC<RuleCheckItemProps> = ({
                   "p-2 rounded-lg border transition-all",
                   localCompliant === false
                     ? "bg-red-100 border-red-300 text-red-600"
-                    : "bg-neutral-50 border-neutral-200 text-neutral-400 hover:bg-red-50"
+                    : "bg-neutral-50 border-neutral-200 text-neutral-400 hover:bg-red-50",
                 )}
               >
                 <X className="h-5 w-5" />
@@ -164,7 +180,7 @@ export const RuleCheckItem: React.FC<RuleCheckItemProps> = ({
               className={cn(
                 localCompliant
                   ? "bg-green-100 text-green-600"
-                  : "bg-red-100 text-red-600"
+                  : "bg-red-100 text-red-600",
               )}
             >
               {localCompliant ? (
@@ -181,7 +197,10 @@ export const RuleCheckItem: React.FC<RuleCheckItemProps> = ({
           <VStack gap="xs">
             <HStack gap="xs" align="center">
               <AlertTriangle className="h-4 w-4 text-amber-500" />
-              <Typography variant="small" className="font-medium text-neutral-600">
+              <Typography
+                variant="small"
+                className="font-medium text-neutral-600"
+              >
                 Non-compliance Notes
               </Typography>
             </HStack>

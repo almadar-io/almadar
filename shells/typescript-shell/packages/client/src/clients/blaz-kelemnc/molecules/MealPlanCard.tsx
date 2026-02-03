@@ -67,19 +67,35 @@ export interface MealPlanData {
   updatedAt?: string | Date;
 }
 
+/** Operation definition for action buttons */
+export interface MealPlanOperation {
+  label: string;
+  event?: string;
+  action?: string;
+  variant?: "primary" | "secondary" | "danger" | "ghost";
+}
+
 export interface MealPlanCardProps {
-  /** Meal plan data */
-  data: MealPlanData;
+  /** Meal plan data - can be single item or array */
+  data?: MealPlanData | MealPlanData[] | unknown[];
   /** Show macro breakdown */
   showMacros?: boolean;
   /** Show AI analysis badge */
   showAiAnalysis?: boolean;
+  /** Show meals list */
+  showMeals?: boolean;
+  /** Show nutrition info */
+  showNutrition?: boolean;
   /** Compact mode */
   compact?: boolean;
+  /** Layout mode */
+  layout?: "list" | "grid" | "cards";
   /** Show action buttons */
   showActions?: boolean;
   /** Entity context for events */
   entity?: string;
+  /** Operations/actions available */
+  operations?: MealPlanOperation[];
   /** Additional CSS classes */
   className?: string;
 }
@@ -119,43 +135,55 @@ export const MealPlanCard: React.FC<MealPlanCardProps> = ({
 }) => {
   const eventBus = useEventBus();
 
+  // Normalize data - handle single item, array, or undefined
+  const normalizedData: MealPlanData | undefined = Array.isArray(data)
+    ? (data[0] as MealPlanData | undefined)
+    : (data as MealPlanData | undefined);
+
+  // Early return if no data
+  if (!normalizedData) {
+    return null;
+  }
+
   // Calculate macro percentages for visual display
   const totalMacroGrams =
-    (data.protein || 0) + (data.carbs || 0) + (data.fat || 0);
+    (normalizedData.protein || 0) +
+    (normalizedData.carbs || 0) +
+    (normalizedData.fat || 0);
   const macroPercentages =
     totalMacroGrams > 0
       ? {
-          protein: ((data.protein || 0) / totalMacroGrams) * 100,
-          carbs: ((data.carbs || 0) / totalMacroGrams) * 100,
-          fat: ((data.fat || 0) / totalMacroGrams) * 100,
+          protein: ((normalizedData.protein || 0) / totalMacroGrams) * 100,
+          carbs: ((normalizedData.carbs || 0) / totalMacroGrams) * 100,
+          fat: ((normalizedData.fat || 0) / totalMacroGrams) * 100,
         }
       : { protein: 0, carbs: 0, fat: 0 };
 
   // Emit VIEW event (matches MealPlanManagement trait)
   const handleView = useCallback(() => {
-    eventBus.emit("UI:VIEW", { row: data, entity });
-  }, [eventBus, data, entity]);
+    eventBus.emit("UI:VIEW", { row: normalizedData, entity });
+  }, [eventBus, normalizedData, entity]);
 
   // Emit EDIT event (matches MealPlanManagement trait)
   const handleEdit = useCallback(() => {
-    eventBus.emit("UI:EDIT", { row: data, entity });
-  }, [eventBus, data, entity]);
+    eventBus.emit("UI:EDIT", { row: normalizedData, entity });
+  }, [eventBus, normalizedData, entity]);
 
   // Emit DELETE event
   const handleDelete = useCallback(() => {
-    eventBus.emit("UI:DELETE", { row: data, entity });
-  }, [eventBus, data, entity]);
+    eventBus.emit("UI:DELETE", { row: normalizedData, entity });
+  }, [eventBus, normalizedData, entity]);
 
   // Handle share action
   const handleShare = useCallback(() => {
-    if (data.shareLink) {
-      navigator.clipboard.writeText(data.shareLink);
+    if (normalizedData.shareLink) {
+      navigator.clipboard.writeText(normalizedData.shareLink);
       eventBus.emit("UI:NOTIFY", {
         message: "Link copied to clipboard",
         type: "success",
       });
     }
-  }, [eventBus, data.shareLink]);
+  }, [eventBus, normalizedData.shareLink]);
 
   if (compact) {
     return (
@@ -174,29 +202,29 @@ export const MealPlanCard: React.FC<MealPlanCardProps> = ({
               <Utensils className="h-4 w-4 text-orange-600" />
             </Box>
             <VStack gap="none">
-              <Typography variant="label">{data.title}</Typography>
+              <Typography variant="label">{normalizedData.title}</Typography>
               <HStack gap="xs" align="center">
                 <Calendar className="h-3 w-3 text-neutral-400" />
                 <Typography variant="small" className="text-neutral-500">
-                  {formatDate(data.date)}
+                  {formatDate(normalizedData.date)}
                 </Typography>
               </HStack>
             </VStack>
           </HStack>
           <HStack gap="sm" align="center">
-            {data.calories && (
+            {normalizedData.calories && (
               <HStack gap="xs" align="center">
                 <Flame className="h-4 w-4 text-orange-500" />
                 <Typography variant="body" className="font-semibold">
-                  {data.calories}
+                  {normalizedData.calories}
                 </Typography>
                 <Typography variant="small" className="text-neutral-500">
                   kcal
                 </Typography>
               </HStack>
             )}
-            {data.aiAnalysis && showAiAnalysis && (
-              <Badge variant="secondary" size="sm">
+            {normalizedData.aiAnalysis && showAiAnalysis && (
+              <Badge variant="default" size="sm">
                 <Sparkles className="h-3 w-3 text-purple-500" />
               </Badge>
             )}
@@ -221,24 +249,24 @@ export const MealPlanCard: React.FC<MealPlanCardProps> = ({
               <Utensils className="h-5 w-5 text-orange-600" />
             </Box>
             <VStack gap="none">
-              <Typography variant="h4">{data.title}</Typography>
+              <Typography variant="h4">{normalizedData.title}</Typography>
               <HStack gap="xs" align="center">
                 <Calendar className="h-3 w-3 text-neutral-400" />
                 <Typography variant="small" className="text-neutral-500">
-                  {formatDate(data.date)}
+                  {formatDate(normalizedData.date)}
                 </Typography>
               </HStack>
             </VStack>
           </HStack>
           <HStack gap="sm" align="center">
-            {data.calories && (
-              <Badge variant="secondary" size="md">
+            {normalizedData.calories && (
+              <Badge variant="default" size="md">
                 <Flame className="h-3 w-3 mr-1 text-orange-500" />
-                {data.calories} kcal
+                {normalizedData.calories} kcal
               </Badge>
             )}
-            {data.aiAnalysis && showAiAnalysis && (
-              <Badge variant="secondary" size="md" title="AI Analysis Available">
+            {normalizedData.aiAnalysis && showAiAnalysis && (
+              <Badge variant="default" size="md" title="AI Analysis Available">
                 <Sparkles className="h-3 w-3 text-purple-500" />
               </Badge>
             )}
@@ -246,9 +274,9 @@ export const MealPlanCard: React.FC<MealPlanCardProps> = ({
         </HStack>
 
         {/* Description */}
-        {data.description && (
+        {normalizedData.description && (
           <Typography variant="body" className="text-neutral-600">
-            {data.description}
+            {normalizedData.description}
           </Typography>
         )}
 
@@ -262,7 +290,10 @@ export const MealPlanCard: React.FC<MealPlanCardProps> = ({
             >
               <HStack gap="none" className="h-full">
                 <Box
-                  className={cn("h-full transition-all", macroColors.protein.bar)}
+                  className={cn(
+                    "h-full transition-all",
+                    macroColors.protein.bar,
+                  )}
                   style={{ width: `${macroPercentages.protein}%` }}
                 />
                 <Box
@@ -279,11 +310,14 @@ export const MealPlanCard: React.FC<MealPlanCardProps> = ({
             {/* Macro Values */}
             <HStack gap="md" justify="between">
               <VStack gap="none" align="center">
-                <Typography variant="small" className={macroColors.protein.text}>
+                <Typography
+                  variant="small"
+                  className={macroColors.protein.text}
+                >
                   Protein
                 </Typography>
                 <Typography variant="body" className="font-semibold">
-                  {data.protein || 0}g
+                  {normalizedData.protein || 0}g
                 </Typography>
               </VStack>
               <VStack gap="none" align="center">
@@ -291,7 +325,7 @@ export const MealPlanCard: React.FC<MealPlanCardProps> = ({
                   Carbs
                 </Typography>
                 <Typography variant="body" className="font-semibold">
-                  {data.carbs || 0}g
+                  {normalizedData.carbs || 0}g
                 </Typography>
               </VStack>
               <VStack gap="none" align="center">
@@ -299,7 +333,7 @@ export const MealPlanCard: React.FC<MealPlanCardProps> = ({
                   Fat
                 </Typography>
                 <Typography variant="body" className="font-semibold">
-                  {data.fat || 0}g
+                  {normalizedData.fat || 0}g
                 </Typography>
               </VStack>
             </HStack>
@@ -307,7 +341,7 @@ export const MealPlanCard: React.FC<MealPlanCardProps> = ({
         )}
 
         {/* AI Analysis Preview */}
-        {data.aiAnalysis && showAiAnalysis && (
+        {normalizedData.aiAnalysis && showAiAnalysis && (
           <Box
             padding="sm"
             rounded="lg"
@@ -319,7 +353,7 @@ export const MealPlanCard: React.FC<MealPlanCardProps> = ({
                 variant="small"
                 className="text-purple-700 line-clamp-2"
               >
-                {data.aiAnalysis}
+                {normalizedData.aiAnalysis}
               </Typography>
             </HStack>
           </Box>
@@ -336,7 +370,7 @@ export const MealPlanCard: React.FC<MealPlanCardProps> = ({
               <Edit2 className="h-4 w-4 mr-1" />
               Edit
             </Button>
-            {data.shareLink && (
+            {normalizedData.shareLink && (
               <Button variant="ghost" size="sm" onClick={handleShare}>
                 <Share2 className="h-4 w-4" />
               </Button>

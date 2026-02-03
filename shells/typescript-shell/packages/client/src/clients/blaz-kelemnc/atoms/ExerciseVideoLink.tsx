@@ -31,7 +31,9 @@ export interface ExerciseVideoLinkProps {
 }
 
 // Extract YouTube video ID from URL
-const getYoutubeVideoId = (url: string): string | null => {
+const getYoutubeVideoId = (url: string | undefined | null): string | null => {
+  if (!url) return null;
+
   const patterns = [
     /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/,
     /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/,
@@ -70,20 +72,19 @@ export const ExerciseVideoLink: React.FC<ExerciseVideoLinkProps> = ({
 
   if (compact) {
     return (
-      <HStack
-        gap="xs"
-        align="center"
-        className={cn(
-          "cursor-pointer text-red-600 hover:text-red-700",
-          className
-        )}
+      <Box
+        as="button"
         onClick={handleClick}
+        className={cn(
+          "inline-flex items-center gap-1 cursor-pointer text-red-600 hover:text-red-700",
+          className,
+        )}
       >
         <Youtube className="h-4 w-4" />
         <Typography variant="small" className="underline">
           Watch
         </Typography>
-      </HStack>
+      </Box>
     );
   }
 
@@ -93,7 +94,7 @@ export const ExerciseVideoLink: React.FC<ExerciseVideoLinkProps> = ({
       border
       className={cn(
         "overflow-hidden cursor-pointer hover:shadow-md transition-shadow",
-        className
+        className,
       )}
       onClick={handleClick}
     >

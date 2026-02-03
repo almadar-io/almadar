@@ -53,15 +53,33 @@ export interface TraineeData {
   lastActiveAt?: string | Date;
 }
 
+/** Operation definition for action buttons */
+export interface TraineeOperation {
+  label: string;
+  event?: string;
+  action?: string;
+  variant?: "primary" | "secondary" | "danger" | "ghost";
+}
+
 export interface TraineeCardProps {
   /** Trainee data */
-  trainee: TraineeData;
+  trainee?: TraineeData;
+  /** Data array for list mode */
+  data?: TraineeData[] | unknown[];
   /** Show action buttons */
   showActions?: boolean;
+  /** Show credits */
+  showCredits?: boolean;
+  /** Show progress */
+  showProgress?: boolean;
+  /** Layout mode */
+  layout?: "list" | "grid" | "cards" | string;
   /** Compact mode */
   compact?: boolean;
   /** Entity context for events */
   entity?: string;
+  /** Operations/actions available */
+  operations?: TraineeOperation[];
   /** Additional CSS classes */
   className?: string;
 }
@@ -71,7 +89,7 @@ const formatDate = (date: string | Date): string => {
   const d = new Date(date);
   const now = new Date();
   const diffDays = Math.floor(
-    (now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24)
+    (now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24),
   );
 
   if (diffDays === 0) return "Today";
@@ -110,6 +128,7 @@ const formatSessionDate = (date: string | Date): string => {
 
 export const TraineeCard: React.FC<TraineeCardProps> = ({
   trainee,
+  data,
   showActions = true,
   compact = false,
   entity = "User",
@@ -117,18 +136,27 @@ export const TraineeCard: React.FC<TraineeCardProps> = ({
 }) => {
   const eventBus = useEventBus();
 
+  // Normalize trainee data - can come from trainee prop or data array
+  const traineeData: TraineeData | undefined =
+    trainee ?? (Array.isArray(data) ? (data[0] as TraineeData) : undefined);
+
+  // Early return if no data
+  if (!traineeData) {
+    return null;
+  }
+
   // Emit VIEW event (matches UserManagement trait)
   const handleView = useCallback(() => {
-    eventBus.emit("UI:VIEW", { row: trainee, entity });
-  }, [eventBus, trainee, entity]);
+    eventBus.emit("UI:VIEW", { row: traineeData, entity });
+  }, [eventBus, traineeData, entity]);
 
   // Emit custom MESSAGE event
   const handleMessage = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation();
-      eventBus.emit("UI:MESSAGE_TRAINEE", { row: trainee, entity });
+      eventBus.emit("UI:MESSAGE_TRAINEE", { row: traineeData, entity });
     },
-    [eventBus, trainee, entity]
+    [eventBus, traineeData, entity],
   );
 
   if (compact) {
@@ -139,10 +167,10 @@ export const TraineeCard: React.FC<TraineeCardProps> = ({
       >
         <HStack justify="between" align="center">
           <HStack gap="sm" align="center">
-            {trainee.profileImage ? (
+            {traineeData.profileImage ? (
               <img
-                src={trainee.profileImage}
-                alt={trainee.name}
+                src={traineeData.profileImage}
+                alt={traineeData.name}
                 className="h-10 w-10 rounded-full object-cover"
               />
             ) : (
@@ -156,11 +184,11 @@ export const TraineeCard: React.FC<TraineeCardProps> = ({
             )}
             <VStack gap="none">
               <Typography variant="body" className="font-medium">
-                {trainee.name}
+                {traineeData.name}
               </Typography>
-              {trainee.credits && (
+              {traineeData.credits && (
                 <CreditMeter
-                  data={trainee.credits}
+                  data={traineeData.credits}
                   compact
                   showActionButton={false}
                 />
@@ -175,17 +203,20 @@ export const TraineeCard: React.FC<TraineeCardProps> = ({
 
   return (
     <Card
-      className={cn("p-4 cursor-pointer hover:shadow-md transition-shadow", className)}
+      className={cn(
+        "p-4 cursor-pointer hover:shadow-md transition-shadow",
+        className,
+      )}
       onClick={handleView}
     >
       <VStack gap="md">
         {/* Header */}
         <HStack justify="between" align="start">
           <HStack gap="sm" align="center">
-            {trainee.profileImage ? (
+            {traineeData.profileImage ? (
               <img
-                src={trainee.profileImage}
-                alt={trainee.name}
+                src={traineeData.profileImage}
+                alt={traineeData.name}
                 className="h-12 w-12 rounded-full object-cover"
               />
             ) : (
@@ -198,9 +229,9 @@ export const TraineeCard: React.FC<TraineeCardProps> = ({
               </Box>
             )}
             <VStack gap="none">
-              <Typography variant="h4">{trainee.name}</Typography>
+              <Typography variant="h4">{traineeData.name}</Typography>
               <Typography variant="small" className="text-neutral-500">
-                {trainee.email}
+                {traineeData.email}
               </Typography>
             </VStack>
           </HStack>
@@ -217,25 +248,28 @@ export const TraineeCard: React.FC<TraineeCardProps> = ({
         </HStack>
 
         {/* Credits */}
-        {trainee.credits && (
+        {traineeData.credits && (
           <CreditMeter
-            data={trainee.credits}
+            data={traineeData.credits}
             size="sm"
             showActionButton={false}
           />
         )}
 
         {/* Next Session */}
-        {trainee.nextSession ? (
+        {traineeData.nextSession ? (
           <Box rounded="lg" padding="sm" className="bg-blue-50">
             <HStack gap="sm" align="center">
               <Calendar className="h-4 w-4 text-blue-600" />
               <VStack gap="none">
-                <Typography variant="small" className="text-blue-600 font-medium">
-                  Next: {trainee.nextSession.title}
+                <Typography
+                  variant="small"
+                  className="text-blue-600 font-medium"
+                >
+                  Next: {traineeData.nextSession.title}
                 </Typography>
                 <Typography variant="small" className="text-blue-500">
-                  {formatSessionDate(trainee.nextSession.scheduledAt)}
+                  {formatSessionDate(traineeData.nextSession.scheduledAt)}
                 </Typography>
               </VStack>
             </HStack>
@@ -253,14 +287,14 @@ export const TraineeCard: React.FC<TraineeCardProps> = ({
 
         {/* Stats */}
         <HStack justify="between" className="text-neutral-500">
-          {trainee.totalSessions !== undefined && (
+          {traineeData.totalSessions !== undefined && (
             <Typography variant="small">
-              {trainee.totalSessions} sessions
+              {traineeData.totalSessions} sessions
             </Typography>
           )}
-          {trainee.lastActiveAt && (
+          {traineeData.lastActiveAt && (
             <Typography variant="small">
-              Active {formatDate(trainee.lastActiveAt)}
+              Active {formatDate(traineeData.lastActiveAt)}
             </Typography>
           )}
         </HStack>

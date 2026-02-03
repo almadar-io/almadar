@@ -137,7 +137,11 @@ export const MealPlanDetailTemplate: React.FC<MealPlanDetailTemplateProps> = ({
   // Loading state
   if (isLoading) {
     return (
-      <VStack align="center" justify="center" className={cn("p-6 min-h-[400px]", className)}>
+      <VStack
+        align="center"
+        justify="center"
+        className={cn("p-6 min-h-[400px]", className)}
+      >
         <Spinner size="lg" />
         <Typography variant="body" className="text-neutral-500">
           Loading meal plan...
@@ -149,7 +153,11 @@ export const MealPlanDetailTemplate: React.FC<MealPlanDetailTemplateProps> = ({
   // Error state
   if (error) {
     return (
-      <VStack align="center" justify="center" className={cn("p-6 min-h-[400px]", className)}>
+      <VStack
+        align="center"
+        justify="center"
+        className={cn("p-6 min-h-[400px]", className)}
+      >
         <Typography variant="body" className="text-red-500">
           Error: {error.message}
         </Typography>
@@ -160,7 +168,11 @@ export const MealPlanDetailTemplate: React.FC<MealPlanDetailTemplateProps> = ({
   // No data state
   if (!data) {
     return (
-      <VStack align="center" justify="center" className={cn("p-6 min-h-[400px]", className)}>
+      <VStack
+        align="center"
+        justify="center"
+        className={cn("p-6 min-h-[400px]", className)}
+      >
         <Utensils className="h-12 w-12 text-neutral-300" />
         <Typography variant="h3" className="text-neutral-500">
           Meal plan not found
@@ -181,11 +193,10 @@ export const MealPlanDetailTemplate: React.FC<MealPlanDetailTemplateProps> = ({
   const aiAnalysisData: AIAnalysisData | undefined = data.aiAnalysis
     ? {
         id: data.id || "",
-        entityType: "MealPlan",
-        entityId: data.id || "",
-        analysis: data.aiAnalysis,
+        resourceType: "MealPlan",
+        resourceId: data.id || "",
+        content: data.aiAnalysis,
         generatedAt: data.updatedAt || new Date().toISOString(),
-        status: "completed",
       }
     : undefined;
 
@@ -271,11 +282,7 @@ export const MealPlanDetailTemplate: React.FC<MealPlanDetailTemplateProps> = ({
           <Card className="p-4">
             <VStack gap="md">
               <Typography variant="h4">Nutrition Breakdown</Typography>
-              <NutritionSummary
-                data={nutritionData}
-                showPercentages={true}
-                layout="detailed"
-              />
+              <NutritionSummary summary={nutritionData} />
             </VStack>
           </Card>
 
@@ -313,9 +320,9 @@ export const MealPlanDetailTemplate: React.FC<MealPlanDetailTemplateProps> = ({
           {/* AI Analysis */}
           {aiAnalysisData ? (
             <AIAnalysisPanel
-              data={aiAnalysisData}
-              showActions={true}
-              onRegenerate={handleAnalyze}
+              analysis={aiAnalysisData}
+              showRegenerate={true}
+              entity="MealPlan"
             />
           ) : (
             <Card className="p-4">
@@ -349,9 +356,9 @@ export const MealPlanDetailTemplate: React.FC<MealPlanDetailTemplateProps> = ({
               <VStack gap="sm">
                 <Typography variant="h4">Share Link</Typography>
                 <ShareableLinkGenerator
-                  link={data.shareLink}
-                  entityType="MealPlan"
-                  entityId={data.id || ""}
+                  existingLink={data.shareLink}
+                  resourceType="MealPlan"
+                  resourceId={data.id || ""}
                 />
               </VStack>
             </Card>

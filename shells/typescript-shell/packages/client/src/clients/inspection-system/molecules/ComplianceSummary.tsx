@@ -49,6 +49,8 @@ export interface ComplianceSummaryProps {
   title?: string;
   /** Compact mode */
   compact?: boolean;
+  /** Display variant */
+  variant?: "compact" | "full" | "minimal" | string;
   /** Additional CSS classes */
   className?: string;
 }
@@ -63,18 +65,16 @@ export const ComplianceSummary: React.FC<ComplianceSummaryProps> = ({
   className,
 }) => {
   const checkedItems = stats.compliant + stats.nonCompliant;
-  const complianceRate = checkedItems > 0
-    ? Math.round((stats.compliant / checkedItems) * 100)
-    : 0;
+  const complianceRate =
+    checkedItems > 0 ? Math.round((stats.compliant / checkedItems) * 100) : 0;
 
-  const rateChange = previousRate !== undefined
-    ? complianceRate - previousRate
-    : null;
+  const rateChange =
+    previousRate !== undefined ? complianceRate - previousRate : null;
 
   const getComplianceColor = (rate: number) => {
     if (rate >= 90) return "success";
     if (rate >= 70) return "warning";
-    return "error";
+    return "danger";
   };
 
   if (compact) {
@@ -130,7 +130,7 @@ export const ComplianceSummary: React.FC<ComplianceSummaryProps> = ({
                   gap="xs"
                   align="center"
                   className={cn(
-                    rateChange > 0 ? "text-green-600" : "text-red-600"
+                    rateChange > 0 ? "text-green-600" : "text-red-600",
                   )}
                 >
                   {rateChange > 0 ? (
@@ -212,14 +212,20 @@ export const ComplianceSummary: React.FC<ComplianceSummaryProps> = ({
         {/* Severity breakdown */}
         {showSeverityBreakdown && stats.nonCompliant > 0 && (
           <VStack gap="sm" className="pt-2 border-t">
-            <Typography variant="small" className="font-medium text-neutral-600">
+            <Typography
+              variant="small"
+              className="font-medium text-neutral-600"
+            >
               Non-Compliance by Severity
             </Typography>
             <HStack gap="md" wrap>
               {stats.critical > 0 && (
                 <HStack gap="xs" align="center">
                   <AlertTriangle className="h-4 w-4 text-red-600" />
-                  <Typography variant="small" className="text-red-600 font-medium">
+                  <Typography
+                    variant="small"
+                    className="text-red-600 font-medium"
+                  >
                     {stats.critical} Critical
                   </Typography>
                 </HStack>
@@ -227,7 +233,10 @@ export const ComplianceSummary: React.FC<ComplianceSummaryProps> = ({
               {stats.major > 0 && (
                 <HStack gap="xs" align="center">
                   <AlertTriangle className="h-4 w-4 text-orange-600" />
-                  <Typography variant="small" className="text-orange-600 font-medium">
+                  <Typography
+                    variant="small"
+                    className="text-orange-600 font-medium"
+                  >
                     {stats.major} Major
                   </Typography>
                 </HStack>
@@ -235,7 +244,10 @@ export const ComplianceSummary: React.FC<ComplianceSummaryProps> = ({
               {stats.minor > 0 && (
                 <HStack gap="xs" align="center">
                   <AlertTriangle className="h-4 w-4 text-yellow-600" />
-                  <Typography variant="small" className="text-yellow-600 font-medium">
+                  <Typography
+                    variant="small"
+                    className="text-yellow-600 font-medium"
+                  >
                     {stats.minor} Minor
                   </Typography>
                 </HStack>

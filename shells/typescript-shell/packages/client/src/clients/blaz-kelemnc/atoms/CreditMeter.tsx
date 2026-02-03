@@ -44,9 +44,17 @@ export interface CreditData {
   updatedAt?: string | Date;
 }
 
+/** Operation definition for action buttons */
+export interface CreditOperation {
+  label: string;
+  event?: string;
+  action?: string;
+  variant?: "primary" | "secondary" | "danger" | "ghost";
+}
+
 export interface CreditMeterProps {
   /** Credit entity data */
-  data?: CreditData;
+  data?: CreditData | Record<string, unknown>;
   /** Current remaining credits (can also pass directly) */
   remainingCredits?: number;
   /** Total credits purchased (can also pass directly) */
@@ -59,8 +67,12 @@ export interface CreditMeterProps {
   compact?: boolean;
   /** Show action button when low */
   showActionButton?: boolean;
+  /** Show expiration info */
+  showExpiration?: boolean;
   /** Entity context for events */
   entity?: string;
+  /** Operations/actions available */
+  operations?: CreditOperation[];
   /** Additional CSS classes */
   className?: string;
 }
@@ -78,10 +90,11 @@ const getDaysUntilExpiration = (expiresAt?: string | Date): number | null => {
 const getCreditStatus = (
   remainingCredits: number,
   totalCredits: number,
-  daysUntilExpiration: number | null
+  daysUntilExpiration: number | null,
 ): "full" | "medium" | "low" | "expiring" | "empty" => {
   if (remainingCredits === 0) return "empty";
-  if (daysUntilExpiration !== null && daysUntilExpiration <= 7) return "expiring";
+  if (daysUntilExpiration !== null && daysUntilExpiration <= 7)
+    return "expiring";
   const percentage = (remainingCredits / totalCredits) * 100;
   if (percentage >= 60) return "full";
   if (percentage >= 30) return "medium";
@@ -169,11 +182,13 @@ export const CreditMeter: React.FC<CreditMeterProps> = ({
   const sizes = sizeConfig[size];
 
   // Normalize data - support both data prop and individual props
-  const remainingCredits = data?.remainingCredits ?? propRemainingCredits ?? 0;
-  const totalCredits = data?.totalCredits ?? propTotalCredits ?? 10;
-  const expiresAt = data?.expiresAt ?? propExpiresAt;
+  const normalizedData = data as CreditData | undefined;
+  const remainingCredits =
+    normalizedData?.remainingCredits ?? propRemainingCredits ?? 0;
+  const totalCredits = normalizedData?.totalCredits ?? propTotalCredits ?? 10;
+  const expiresAt = normalizedData?.expiresAt ?? propExpiresAt;
 
-  const creditData: CreditData = data ?? {
+  const creditData: CreditData = normalizedData ?? {
     remainingCredits,
     totalCredits,
     expiresAt,
@@ -181,12 +196,12 @@ export const CreditMeter: React.FC<CreditMeterProps> = ({
 
   const daysUntilExpiration = useMemo(
     () => getDaysUntilExpiration(expiresAt),
-    [expiresAt]
+    [expiresAt],
   );
 
   const status = useMemo(
     () => getCreditStatus(remainingCredits, totalCredits, daysUntilExpiration),
-    [remainingCredits, totalCredits, daysUntilExpiration]
+    [remainingCredits, totalCredits, daysUntilExpiration],
   );
 
   const config = statusConfig[status];
@@ -232,7 +247,12 @@ export const CreditMeter: React.FC<CreditMeterProps> = ({
     <Box
       rounded="lg"
       border
-      className={cn(sizes.padding, config.bgColor, config.borderColor, className)}
+      className={cn(
+        sizes.padding,
+        config.bgColor,
+        config.borderColor,
+        className,
+      )}
     >
       <VStack gap={sizes.gap}>
         {/* Header with icon and credits */}
@@ -272,7 +292,7 @@ export const CreditMeter: React.FC<CreditMeterProps> = ({
                 : status === "medium"
                   ? "warning"
                   : status === "low" || status === "empty"
-                    ? "error"
+                    ? "danger"
                     : "warning"
             }
             size={size === "sm" ? "sm" : "md"}
@@ -288,7 +308,7 @@ export const CreditMeter: React.FC<CreditMeterProps> = ({
             className={cn(
               "transition-all duration-500",
               sizes.bar,
-              config.barColor
+              config.barColor,
             )}
             style={{ width: `${percentage}%` }}
           />
@@ -305,7 +325,9 @@ export const CreditMeter: React.FC<CreditMeterProps> = ({
             <Typography
               variant="small"
               className={cn(
-                daysUntilExpiration <= 7 ? "text-orange-600" : "text-neutral-500"
+                daysUntilExpiration <= 7
+                  ? "text-orange-600"
+                  : "text-neutral-500",
               )}
             >
               {daysUntilExpiration <= 0
@@ -318,27 +340,28 @@ export const CreditMeter: React.FC<CreditMeterProps> = ({
         )}
 
         {/* Action buttons when low */}
-        {showActionButton && (status === "low" || status === "expiring" || status === "empty") && (
-          <HStack gap="sm">
-            <Button
-              variant="primary"
-              size={size === "sm" ? "sm" : "md"}
-              onClick={handleAddCredits}
-              className="flex-1"
-            >
-              Add Credits
-            </Button>
-            {status !== "empty" && (
+        {showActionButton &&
+          (status === "low" || status === "expiring" || status === "empty") && (
+            <HStack gap="sm">
               <Button
-                variant="secondary"
+                variant="primary"
                 size={size === "sm" ? "sm" : "md"}
-                onClick={handleAdjustCredits}
+                onClick={handleAddCredits}
+                className="flex-1"
               >
-                Adjust
+                Add Credits
               </Button>
-            )}
-          </HStack>
-        )}
+              {status !== "empty" && (
+                <Button
+                  variant="secondary"
+                  size={size === "sm" ? "sm" : "md"}
+                  onClick={handleAdjustCredits}
+                >
+                  Adjust
+                </Button>
+              )}
+            </HStack>
+          )}
       </VStack>
     </Box>
   );

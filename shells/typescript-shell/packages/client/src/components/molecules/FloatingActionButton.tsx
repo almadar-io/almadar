@@ -80,7 +80,8 @@ export interface FloatingActionButtonProps {
     | "bottom-center"
     | "top-right"
     | "top-left"
-    | "top-center";
+    | "top-center"
+    | string; // Allow string for generated code compatibility
 
   /**
    * Additional CSS classes
@@ -146,7 +147,7 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isExpanded, actions]);
 
-  const positionClasses = {
+  const positionClasses: Record<string, string> = {
     "bottom-right": "bottom-6 right-6",
     "bottom-left": "bottom-6 left-6",
     "bottom-center": "bottom-6 left-1/2 -translate-x-1/2",

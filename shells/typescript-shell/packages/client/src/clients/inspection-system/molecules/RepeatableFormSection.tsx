@@ -25,9 +25,20 @@ export interface RepeatableFormSectionProps {
   /** Section title */
   title: string;
   /** Items in the section */
-  items: Array<{ id: string; [key: string]: unknown }>;
+  items: Array<{
+    id: string;
+    data?: Record<string, unknown>;
+    [key: string]: unknown;
+  }>;
   /** Render function for each item */
-  renderItem: (item: { id: string; [key: string]: unknown }, index: number) => React.ReactNode;
+  renderItem: (
+    item: {
+      id: string;
+      data?: Record<string, unknown>;
+      [key: string]: unknown;
+    },
+    index: number,
+  ) => React.ReactNode;
   /** Minimum items required */
   minItems?: number;
   /** Maximum items allowed */
@@ -42,12 +53,16 @@ export interface RepeatableFormSectionProps {
   readOnly?: boolean;
   /** Additional CSS classes */
   className?: string;
-  /** Add handler */
-  onAdd?: () => void;
+  /** Add handler - can accept data from renderForm */
+  onAdd?: (data?: Record<string, unknown>) => void;
   /** Remove handler */
   onRemove?: (itemId: string, index: number) => void;
   /** Reorder handler */
   onReorder?: (fromIndex: number, toIndex: number) => void;
+  /** Render custom form for adding items */
+  renderForm?: (
+    onAdd: (data: Record<string, unknown>) => void,
+  ) => React.ReactNode;
 }
 
 export const RepeatableFormSection: React.FC<RepeatableFormSectionProps> = ({
@@ -81,7 +96,7 @@ export const RepeatableFormSection: React.FC<RepeatableFormSectionProps> = ({
       onRemove?.(itemId, index);
       eventBus.emit("UI:SECTION_REMOVED", { sectionType, index, itemId });
     },
-    [sectionType, onRemove, eventBus]
+    [sectionType, onRemove, eventBus],
   );
 
   return (
@@ -93,12 +108,18 @@ export const RepeatableFormSection: React.FC<RepeatableFormSectionProps> = ({
             {title}
           </Typography>
           <Typography variant="small" className="text-neutral-500">
-            ({items.length}{maxItems !== Infinity ? `/${maxItems}` : ""})
+            ({items.length}
+            {maxItems !== Infinity ? `/${maxItems}` : ""})
           </Typography>
         </HStack>
 
         {canAdd && (
-          <Button variant="secondary" size="sm" onClick={handleAdd} className="gap-1">
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={handleAdd}
+            className="gap-1"
+          >
             <Plus className="h-4 w-4" />
             {addLabel}
           </Button>
@@ -111,7 +132,12 @@ export const RepeatableFormSection: React.FC<RepeatableFormSectionProps> = ({
           <VStack align="center" gap="sm" className="text-neutral-400">
             <Typography variant="body">{emptyMessage}</Typography>
             {canAdd && (
-              <Button variant="primary" size="sm" onClick={handleAdd} className="gap-1">
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={handleAdd}
+                className="gap-1"
+              >
                 <Plus className="h-4 w-4" />
                 {addLabel}
               </Button>

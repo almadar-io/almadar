@@ -5,7 +5,7 @@
  * Used by trait hooks for persist_data effects.
  *
  * @deprecated For new code, prefer useOrbitalMutations which sends mutations
- * through the orbital events route. This ensures all mutations go through
+ * through the almadar events route. This ensures all mutations go through
  * trait state machines and enforce guards/effects.
  *
  * Migration:
@@ -120,7 +120,7 @@ export function useDeleteEntity(entityName: string) {
 
 export interface UseEntityMutationsOptions {
   /**
-   * If provided, mutations go through orbital events route instead of direct CRUD.
+   * If provided, mutations go through almadar events route instead of direct CRUD.
    * This is the recommended approach for Phase 7+ compliance.
    */
   orbitalName?: string;
@@ -135,7 +135,7 @@ export interface UseEntityMutationsOptions {
 }
 
 /**
- * Send mutation event to orbital events route
+ * Send mutation event to almadar events route
  */
 async function sendOrbitalMutation(
   orbitalName: string,
@@ -162,7 +162,7 @@ async function sendOrbitalMutation(
 export function useEntityMutations(entityName: string, options?: UseEntityMutationsOptions) {
   const queryClient = useQueryClient();
 
-  // If orbitalName provided, use orbital events route
+  // If orbitalName provided, use almadar events route
   const useOrbitalRoute = !!options?.orbitalName;
   const events = {
     create: options?.events?.create || ENTITY_EVENTS.CREATE,
@@ -175,7 +175,7 @@ export function useEntityMutations(entityName: string, options?: UseEntityMutati
   const updateMutation = useUpdateEntity(entityName);
   const deleteMutation = useDeleteEntity(entityName);
 
-  // Orbital-based mutations
+  // Almadar-based mutations
   const orbitalCreateMutation = useMutation({
     mutationFn: async (data: Record<string, unknown>) => {
       return sendOrbitalMutation(options!.orbitalName!, events.create, undefined, {

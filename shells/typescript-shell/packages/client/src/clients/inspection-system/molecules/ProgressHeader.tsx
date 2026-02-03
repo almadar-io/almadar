@@ -42,6 +42,8 @@ export interface ProgressHeaderProps {
   progress?: number;
   /** Show step indicators */
   showSteps?: boolean;
+  /** Compact mode */
+  compact?: boolean;
   /** Additional CSS classes */
   className?: string;
 }
@@ -58,11 +60,15 @@ export const ProgressHeader: React.FC<ProgressHeaderProps> = ({
   className,
 }) => {
   // Calculate progress from steps if not provided
-  const calculatedProgress = progress ?? (steps
-    ? Math.round((steps.filter((s) => s.completed).length / steps.length) * 100)
-    : totalSteps
-    ? Math.round((currentStep / totalSteps) * 100)
-    : 0);
+  const calculatedProgress =
+    progress ??
+    (steps
+      ? Math.round(
+          (steps.filter((s) => s.completed).length / steps.length) * 100,
+        )
+      : totalSteps
+        ? Math.round((currentStep / totalSteps) * 100)
+        : 0);
 
   return (
     <Box
@@ -93,7 +99,10 @@ export const ProgressHeader: React.FC<ProgressHeaderProps> = ({
             <Typography variant="small" className="text-neutral-600">
               Progress
             </Typography>
-            <Typography variant="small" className="font-medium text-neutral-700">
+            <Typography
+              variant="small"
+              className="font-medium text-neutral-700"
+            >
               {calculatedProgress}%
             </Typography>
           </HStack>
@@ -116,7 +125,7 @@ export const ProgressHeader: React.FC<ProgressHeaderProps> = ({
                 className={cn(
                   "px-2 py-1 rounded",
                   step.current && "bg-blue-50",
-                  step.completed && !step.current && "text-green-600"
+                  step.completed && !step.current && "text-green-600",
                 )}
               >
                 {step.completed ? (
@@ -129,7 +138,9 @@ export const ProgressHeader: React.FC<ProgressHeaderProps> = ({
                 <Typography
                   variant="small"
                   className={cn(
-                    step.current ? "font-medium text-blue-700" : "text-neutral-600"
+                    step.current
+                      ? "font-medium text-blue-700"
+                      : "text-neutral-600",
                   )}
                 >
                   {step.label}

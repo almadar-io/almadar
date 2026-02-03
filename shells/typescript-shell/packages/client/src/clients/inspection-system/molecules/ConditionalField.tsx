@@ -20,7 +20,13 @@ import { Checkbox } from "../../../components/atoms/Checkbox";
 import { useEventBus } from "../../../hooks/useEventBus";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-export type FieldType = "text" | "number" | "select" | "textarea" | "checkbox" | "date";
+export type FieldType =
+  | "text"
+  | "number"
+  | "select"
+  | "textarea"
+  | "checkbox"
+  | "date";
 
 export interface FieldOption {
   value: string;
@@ -31,7 +37,14 @@ export interface FieldCondition {
   /** Field name to watch */
   field: string;
   /** Operator for comparison */
-  operator: "equals" | "notEquals" | "contains" | "greaterThan" | "lessThan" | "truthy" | "falsy";
+  operator:
+    | "equals"
+    | "notEquals"
+    | "contains"
+    | "greaterThan"
+    | "lessThan"
+    | "truthy"
+    | "falsy";
   /** Value to compare against */
   value?: string | number | boolean;
 }
@@ -70,7 +83,7 @@ export interface ConditionalFieldProps {
 // Evaluate condition against form values
 const evaluateCondition = (
   condition: FieldCondition | undefined,
-  formValues: Record<string, unknown>
+  formValues: Record<string, unknown>,
 ): boolean => {
   if (!condition) return true;
 
@@ -117,7 +130,7 @@ export const ConditionalField: React.FC<ConditionalFieldProps> = ({
   // Evaluate if field should be shown
   const isVisible = useMemo(
     () => evaluateCondition(condition, formValues),
-    [condition, formValues]
+    [condition, formValues],
   );
 
   const handleChange = useCallback(
@@ -129,7 +142,7 @@ export const ConditionalField: React.FC<ConditionalFieldProps> = ({
         condition: condition ? { met: isVisible } : undefined,
       });
     },
-    [name, condition, isVisible, onChange, eventBus]
+    [name, condition, isVisible, onChange, eventBus],
   );
 
   if (!isVisible) {
@@ -145,14 +158,12 @@ export const ConditionalField: React.FC<ConditionalFieldProps> = ({
             onChange={(e) => handleChange(e.target.value)}
             disabled={disabled}
             className="w-full"
-          >
-            <option value="">Select...</option>
-            {options.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </Select>
+            placeholder="Select..."
+            options={options.map((opt) => ({
+              value: String(opt.value),
+              label: opt.label,
+            }))}
+          />
         );
 
       case "textarea":

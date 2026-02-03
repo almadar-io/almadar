@@ -8,7 +8,8 @@ export type ButtonVariant =
   | "ghost"
   | "danger"
   | "success"
-  | "warning";
+  | "warning"
+  | "default";
 export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -65,6 +66,13 @@ const variantStyles = {
     "shadow-[var(--shadow-sm)]",
     "hover:bg-[var(--color-warning)] hover:text-[var(--color-warning-foreground)] hover:shadow-[var(--shadow-hover)]",
     "active:scale-[var(--active-scale)] active:shadow-[var(--shadow-active)]",
+  ].join(" "),
+  // "default" is an alias for secondary
+  default: [
+    "bg-[var(--color-secondary)] text-[var(--color-secondary-foreground)]",
+    "border-[length:var(--border-width-thin)] border-[var(--color-border)]",
+    "hover:bg-[var(--color-secondary-hover)]",
+    "active:scale-[var(--active-scale)]",
   ].join(" "),
 };
 

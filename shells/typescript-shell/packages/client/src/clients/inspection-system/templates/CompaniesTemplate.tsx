@@ -69,11 +69,11 @@ const getComplianceColor = (status: CompanyData["complianceStatus"]) => {
     case "compliant":
       return "success";
     case "non-compliant":
-      return "error";
+      return "danger";
     case "pending":
       return "warning";
     default:
-      return "neutral";
+      return "default";
   }
 };
 
@@ -86,15 +86,14 @@ const CompanyCard: React.FC<{
       <VStack gap="md">
         <HStack justify="between" align="start">
           <HStack gap="sm" align="start">
-            <Box
-              rounded="lg"
-              padding="sm"
-              className="bg-blue-50 text-blue-600"
-            >
+            <Box rounded="lg" padding="sm" className="bg-blue-50 text-blue-600">
               <Building2 className="h-5 w-5" />
             </Box>
             <VStack gap="xs">
-              <Typography variant="body" className="font-medium text-neutral-800">
+              <Typography
+                variant="body"
+                className="font-medium text-neutral-800"
+              >
                 {company.name}
               </Typography>
               <Typography variant="small" className="text-neutral-500">
@@ -120,7 +119,8 @@ const CompanyCard: React.FC<{
             <HStack gap="xs" align="center">
               <ClipboardList className="h-3 w-3" />
               <Typography variant="small">
-                {company.inspectionCount} inspection{company.inspectionCount !== 1 ? "s" : ""}
+                {company.inspectionCount} inspection
+                {company.inspectionCount !== 1 ? "s" : ""}
               </Typography>
             </HStack>
           )}
@@ -191,8 +191,10 @@ export const CompaniesTemplate: React.FC<CompaniesTemplateProps> = ({
     ? companies.filter(
         (c) =>
           c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          c.registrationNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          c.city.toLowerCase().includes(searchTerm.toLowerCase())
+          c.registrationNumber
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          c.city.toLowerCase().includes(searchTerm.toLowerCase()),
       )
     : companies;
 

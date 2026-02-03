@@ -1,4 +1,4 @@
-import{j as a}from"./jsx-runtime-CDt2p4po.js";import{r as N}from"./index-GiUgBvb1.js";const he={"1s":{type:"1s",name:"1s Orbital",color:"#C45B5B",glowColor:"rgba(196, 91, 91, 0.3)",lobes:1,hasNode:!1,scale:.6},"2s":{type:"2s",name:"2s Orbital",color:"#D4875B",glowColor:"rgba(212, 135, 91, 0.3)",lobes:1,hasNode:!1,scale:.8},"2p":{type:"2p",name:"2p Orbital",color:"#C9B458",glowColor:"rgba(201, 180, 88, 0.3)",lobes:2,hasNode:!1,scale:1},"3s":{type:"3s",name:"3s Orbital",color:"#5BA87A",glowColor:"rgba(91, 168, 122, 0.3)",lobes:1,hasNode:!0,scale:1},"3p":{type:"3p",name:"3p Orbital",color:"#5B8DC4",glowColor:"rgba(91, 141, 196, 0.3)",lobes:2,hasNode:!0,scale:1.1},"3d":{type:"3d",name:"3d Orbital",color:"#6B5B8A",glowColor:"rgba(107, 91, 138, 0.3)",lobes:4,hasNode:!0,scale:1.2},"4f":{type:"4f",name:"4f Orbital",color:"#8A5B9C",glowColor:"rgba(138, 91, 156, 0.3)",lobes:6,hasNode:!0,scale:1.3}},ye={sm:120,md:200,lg:300,xl:400};function we(e){var l,d,u,m,o,r;if(!e)return 1;const t=((l=e.dataEntities)==null?void 0:l.length)||0,i=((u=(d=e.ui)==null?void 0:d.pages)==null?void 0:u.length)||0,n=((m=e.traits)==null?void 0:m.length)||0,s=((r=(o=e.ui)==null?void 0:o.pages)==null?void 0:r.reduce((p,xe)=>{var C;return p+(((C=xe.sections)==null?void 0:C.length)||0)},0))||0;return t*3+i*2+n*2+s*1}function fe(e){return e<=3?"1s":e<=8?"2s":e<=15?"2p":e<=25?"3s":e<=40?"3p":e<=60?"3d":"4f"}const $=({config:e,size:t,animated:i})=>{const n=t*e.scale*.4;return a.jsx("div",{className:"absolute rounded-full",style:{width:n,height:n,background:`radial-gradient(circle at 30% 30%, ${e.color}dd, ${e.color}88 50%, ${e.color}44 100%)`,boxShadow:`
+import{j as a}from"./jsx-runtime-CDt2p4po.js";import{r as N}from"./index-GiUgBvb1.js";const he={"1s":{type:"1s",name:"1s Almadar",color:"#C45B5B",glowColor:"rgba(196, 91, 91, 0.3)",lobes:1,hasNode:!1,scale:.6},"2s":{type:"2s",name:"2s Almadar",color:"#D4875B",glowColor:"rgba(212, 135, 91, 0.3)",lobes:1,hasNode:!1,scale:.8},"2p":{type:"2p",name:"2p Almadar",color:"#C9B458",glowColor:"rgba(201, 180, 88, 0.3)",lobes:2,hasNode:!1,scale:1},"3s":{type:"3s",name:"3s Almadar",color:"#5BA87A",glowColor:"rgba(91, 168, 122, 0.3)",lobes:1,hasNode:!0,scale:1},"3p":{type:"3p",name:"3p Almadar",color:"#5B8DC4",glowColor:"rgba(91, 141, 196, 0.3)",lobes:2,hasNode:!0,scale:1.1},"3d":{type:"3d",name:"3d Almadar",color:"#6B5B8A",glowColor:"rgba(107, 91, 138, 0.3)",lobes:4,hasNode:!0,scale:1.2},"4f":{type:"4f",name:"4f Almadar",color:"#8A5B9C",glowColor:"rgba(138, 91, 156, 0.3)",lobes:6,hasNode:!0,scale:1.3}},ye={sm:120,md:200,lg:300,xl:400};function we(e){var l,d,u,m,o,r;if(!e)return 1;const t=((l=e.dataEntities)==null?void 0:l.length)||0,i=((u=(d=e.ui)==null?void 0:d.pages)==null?void 0:u.length)||0,n=((m=e.traits)==null?void 0:m.length)||0,s=((r=(o=e.ui)==null?void 0:o.pages)==null?void 0:r.reduce((p,xe)=>{var C;return p+(((C=xe.sections)==null?void 0:C.length)||0)},0))||0;return t*3+i*2+n*2+s*1}function fe(e){return e<=3?"1s":e<=8?"2s":e<=15?"2p":e<=25?"3s":e<=40?"3p":e<=60?"3d":"4f"}const $=({config:e,size:t,animated:i})=>{const n=t*e.scale*.4;return a.jsx("div",{className:"absolute rounded-full",style:{width:n,height:n,background:`radial-gradient(circle at 30% 30%, ${e.color}dd, ${e.color}88 50%, ${e.color}44 100%)`,boxShadow:`
           inset -10px -10px 20px rgba(0,0,0,0.3),
           inset 5px 5px 15px rgba(255,255,255,0.2),
           0 0 ${t*.15}px ${e.glowColor},
@@ -17,8 +17,8 @@ import{j as a}from"./jsx-runtime-CDt2p4po.js";import{r as N}from"./index-GiUgBvb
   dataEntities?: unknown[];
   ui?: { pages?: { sections?: unknown[] }[] };
   traits?: unknown[];
-}`,signature:{properties:[{key:"dataEntities",value:{name:"Array",elements:[{name:"unknown"}],raw:"unknown[]",required:!1}},{key:"ui",value:{name:"signature",type:"object",raw:"{ pages?: { sections?: unknown[] }[] }",signature:{properties:[{key:"pages",value:{name:"Array",elements:[{name:"signature",type:"object",raw:"{ sections?: unknown[] }",signature:{properties:[{key:"sections",value:{name:"Array",elements:[{name:"unknown"}],raw:"unknown[]",required:!1}}]}}],raw:"{ sections?: unknown[] }[]",required:!1}}]},required:!1}},{key:"traits",value:{name:"Array",elements:[{name:"unknown"}],raw:"unknown[]",required:!1}}]}},description:"Full KFlow schema object"},complexity:{required:!1,tsType:{name:"number"},description:"Direct complexity override (1-100+)"},size:{required:!1,tsType:{name:"union",raw:'"sm" | "md" | "lg" | "xl"',elements:[{name:"literal",value:'"sm"'},{name:"literal",value:'"md"'},{name:"literal",value:'"lg"'},{name:"literal",value:'"xl"'}]},description:"Size of the visualization",defaultValue:{value:'"md"',computed:!1}},showLabel:{required:!1,tsType:{name:"boolean"},description:"Show complexity label",defaultValue:{value:"true",computed:!1}},animated:{required:!1,tsType:{name:"boolean"},description:"Animation enabled",defaultValue:{value:"true",computed:!1}},onClick:{required:!1,tsType:{name:"signature",type:"function",raw:"() => void",signature:{arguments:[],return:{name:"void"}}},description:"Click handler"},className:{required:!1,tsType:{name:"string"},description:"Additional CSS classes",defaultValue:{value:'""',computed:!1}}}};const Se={title:"Organisms/OrbitalVisualization",component:c,parameters:{layout:"centered",backgrounds:{default:"dark",values:[{name:"dark",value:"#0a0a0a"},{name:"darker",value:"#000000"}]}},tags:["autodocs"],argTypes:{complexity:{control:{type:"range",min:1,max:100},description:"Complexity score (1-100+)"},size:{control:{type:"select"},options:["sm","md","lg","xl"]},animated:{control:{type:"boolean"}},showLabel:{control:{type:"boolean"}}}},b={name:"1s Orbital (Simple)",args:{complexity:2,size:"lg",animated:!0,showLabel:!0}},g={name:"2s Orbital",args:{complexity:6,size:"lg",animated:!0,showLabel:!0}},x={name:"2p Orbital (Dumbbell)",args:{complexity:12,size:"lg",animated:!0,showLabel:!0}},h={name:"3s Orbital",args:{complexity:20,size:"lg",animated:!0,showLabel:!0}},y={name:"3p Orbital",args:{complexity:35,size:"lg",animated:!0,showLabel:!0}},w={name:"3d Orbital (Cloverleaf)",args:{complexity:50,size:"lg",animated:!0,showLabel:!0}},f={name:"4f Orbital (Complex)",args:{complexity:75,size:"lg",animated:!0,showLabel:!0}},O={name:"Size: Small",args:{complexity:12,size:"sm",animated:!0,showLabel:!1}},v={name:"Size: Extra Large",args:{complexity:35,size:"xl",animated:!0,showLabel:!0}},z={name:"Interactive (Clickable)",args:{complexity:25,size:"lg",animated:!0,showLabel:!0,onClick:()=>alert("Orbital clicked!")}},S={name:"From KFlow Schema",args:{schema:{dataEntities:[{name:"User"},{name:"Project"},{name:"Task"}],ui:{pages:[{sections:[{},{},{}]},{sections:[{},{}]},{sections:[{},{},{},{}]}]},traits:[{name:"CRUD"},{name:"Validation"}]},size:"lg",animated:!0,showLabel:!0}},L={name:"All Orbital Types",render:()=>a.jsxs("div",{className:"flex flex-wrap gap-8 items-end justify-center p-8",children:[a.jsx(c,{complexity:2,size:"md",showLabel:!0}),a.jsx(c,{complexity:6,size:"md",showLabel:!0}),a.jsx(c,{complexity:12,size:"md",showLabel:!0}),a.jsx(c,{complexity:20,size:"md",showLabel:!0}),a.jsx(c,{complexity:35,size:"md",showLabel:!0}),a.jsx(c,{complexity:50,size:"md",showLabel:!0}),a.jsx(c,{complexity:75,size:"md",showLabel:!0})]})},j={name:"Static (No Animation)",args:{complexity:35,size:"lg",animated:!1,showLabel:!0}};var A,V,T;b.parameters={...b.parameters,docs:{...(A=b.parameters)==null?void 0:A.docs,source:{originalSource:`{
-  name: '1s Orbital (Simple)',
+}`,signature:{properties:[{key:"dataEntities",value:{name:"Array",elements:[{name:"unknown"}],raw:"unknown[]",required:!1}},{key:"ui",value:{name:"signature",type:"object",raw:"{ pages?: { sections?: unknown[] }[] }",signature:{properties:[{key:"pages",value:{name:"Array",elements:[{name:"signature",type:"object",raw:"{ sections?: unknown[] }",signature:{properties:[{key:"sections",value:{name:"Array",elements:[{name:"unknown"}],raw:"unknown[]",required:!1}}]}}],raw:"{ sections?: unknown[] }[]",required:!1}}]},required:!1}},{key:"traits",value:{name:"Array",elements:[{name:"unknown"}],raw:"unknown[]",required:!1}}]}},description:"Full KFlow schema object"},complexity:{required:!1,tsType:{name:"number"},description:"Direct complexity override (1-100+)"},size:{required:!1,tsType:{name:"union",raw:'"sm" | "md" | "lg" | "xl"',elements:[{name:"literal",value:'"sm"'},{name:"literal",value:'"md"'},{name:"literal",value:'"lg"'},{name:"literal",value:'"xl"'}]},description:"Size of the visualization",defaultValue:{value:'"md"',computed:!1}},showLabel:{required:!1,tsType:{name:"boolean"},description:"Show complexity label",defaultValue:{value:"true",computed:!1}},animated:{required:!1,tsType:{name:"boolean"},description:"Animation enabled",defaultValue:{value:"true",computed:!1}},onClick:{required:!1,tsType:{name:"signature",type:"function",raw:"() => void",signature:{arguments:[],return:{name:"void"}}},description:"Click handler"},className:{required:!1,tsType:{name:"string"},description:"Additional CSS classes",defaultValue:{value:'""',computed:!1}}}};const Se={title:"Organisms/OrbitalVisualization",component:c,parameters:{layout:"centered",backgrounds:{default:"dark",values:[{name:"dark",value:"#0a0a0a"},{name:"darker",value:"#000000"}]}},tags:["autodocs"],argTypes:{complexity:{control:{type:"range",min:1,max:100},description:"Complexity score (1-100+)"},size:{control:{type:"select"},options:["sm","md","lg","xl"]},animated:{control:{type:"boolean"}},showLabel:{control:{type:"boolean"}}}},b={name:"1s Almadar (Simple)",args:{complexity:2,size:"lg",animated:!0,showLabel:!0}},g={name:"2s Almadar",args:{complexity:6,size:"lg",animated:!0,showLabel:!0}},x={name:"2p Almadar (Dumbbell)",args:{complexity:12,size:"lg",animated:!0,showLabel:!0}},h={name:"3s Almadar",args:{complexity:20,size:"lg",animated:!0,showLabel:!0}},y={name:"3p Almadar",args:{complexity:35,size:"lg",animated:!0,showLabel:!0}},w={name:"3d Almadar (Cloverleaf)",args:{complexity:50,size:"lg",animated:!0,showLabel:!0}},f={name:"4f Almadar (Complex)",args:{complexity:75,size:"lg",animated:!0,showLabel:!0}},O={name:"Size: Small",args:{complexity:12,size:"sm",animated:!0,showLabel:!1}},v={name:"Size: Extra Large",args:{complexity:35,size:"xl",animated:!0,showLabel:!0}},z={name:"Interactive (Clickable)",args:{complexity:25,size:"lg",animated:!0,showLabel:!0,onClick:()=>alert("Almadar clicked!")}},S={name:"From KFlow Schema",args:{schema:{dataEntities:[{name:"User"},{name:"Project"},{name:"Task"}],ui:{pages:[{sections:[{},{},{}]},{sections:[{},{}]},{sections:[{},{},{},{}]}]},traits:[{name:"CRUD"},{name:"Validation"}]},size:"lg",animated:!0,showLabel:!0}},L={name:"All Almadar Types",render:()=>a.jsxs("div",{className:"flex flex-wrap gap-8 items-end justify-center p-8",children:[a.jsx(c,{complexity:2,size:"md",showLabel:!0}),a.jsx(c,{complexity:6,size:"md",showLabel:!0}),a.jsx(c,{complexity:12,size:"md",showLabel:!0}),a.jsx(c,{complexity:20,size:"md",showLabel:!0}),a.jsx(c,{complexity:35,size:"md",showLabel:!0}),a.jsx(c,{complexity:50,size:"md",showLabel:!0}),a.jsx(c,{complexity:75,size:"md",showLabel:!0})]})},j={name:"Static (No Animation)",args:{complexity:35,size:"lg",animated:!1,showLabel:!0}};var A,V,T;b.parameters={...b.parameters,docs:{...(A=b.parameters)==null?void 0:A.docs,source:{originalSource:`{
+  name: '1s Almadar (Simple)',
   args: {
     complexity: 2,
     size: 'lg',
@@ -26,7 +26,7 @@ import{j as a}from"./jsx-runtime-CDt2p4po.js";import{r as N}from"./index-GiUgBvb
     showLabel: true
   }
 }`,...(T=(V=b.parameters)==null?void 0:V.docs)==null?void 0:T.source}}};var E,q,F;g.parameters={...g.parameters,docs:{...(E=g.parameters)==null?void 0:E.docs,source:{originalSource:`{
-  name: '2s Orbital',
+  name: '2s Almadar',
   args: {
     complexity: 6,
     size: 'lg',
@@ -34,7 +34,7 @@ import{j as a}from"./jsx-runtime-CDt2p4po.js";import{r as N}from"./index-GiUgBvb
     showLabel: true
   }
 }`,...(F=(q=g.parameters)==null?void 0:q.docs)==null?void 0:F.source}}};var B,I,D;x.parameters={...x.parameters,docs:{...(B=x.parameters)==null?void 0:B.docs,source:{originalSource:`{
-  name: '2p Orbital (Dumbbell)',
+  name: '2p Almadar (Dumbbell)',
   args: {
     complexity: 12,
     size: 'lg',
@@ -42,7 +42,7 @@ import{j as a}from"./jsx-runtime-CDt2p4po.js";import{r as N}from"./index-GiUgBvb
     showLabel: true
   }
 }`,...(D=(I=x.parameters)==null?void 0:I.docs)==null?void 0:D.source}}};var _,M,R;h.parameters={...h.parameters,docs:{...(_=h.parameters)==null?void 0:_.docs,source:{originalSource:`{
-  name: '3s Orbital',
+  name: '3s Almadar',
   args: {
     complexity: 20,
     size: 'lg',
@@ -50,7 +50,7 @@ import{j as a}from"./jsx-runtime-CDt2p4po.js";import{r as N}from"./index-GiUgBvb
     showLabel: true
   }
 }`,...(R=(M=h.parameters)==null?void 0:M.docs)==null?void 0:R.source}}};var P,U,K;y.parameters={...y.parameters,docs:{...(P=y.parameters)==null?void 0:P.docs,source:{originalSource:`{
-  name: '3p Orbital',
+  name: '3p Almadar',
   args: {
     complexity: 35,
     size: 'lg',
@@ -58,7 +58,7 @@ import{j as a}from"./jsx-runtime-CDt2p4po.js";import{r as N}from"./index-GiUgBvb
     showLabel: true
   }
 }`,...(K=(U=y.parameters)==null?void 0:U.docs)==null?void 0:K.source}}};var G,Z,H;w.parameters={...w.parameters,docs:{...(G=w.parameters)==null?void 0:G.docs,source:{originalSource:`{
-  name: '3d Orbital (Cloverleaf)',
+  name: '3d Almadar (Cloverleaf)',
   args: {
     complexity: 50,
     size: 'lg',
@@ -66,7 +66,7 @@ import{j as a}from"./jsx-runtime-CDt2p4po.js";import{r as N}from"./index-GiUgBvb
     showLabel: true
   }
 }`,...(H=(Z=w.parameters)==null?void 0:Z.docs)==null?void 0:H.source}}};var J,Q,W;f.parameters={...f.parameters,docs:{...(J=f.parameters)==null?void 0:J.docs,source:{originalSource:`{
-  name: '4f Orbital (Complex)',
+  name: '4f Almadar (Complex)',
   args: {
     complexity: 75,
     size: 'lg',
@@ -96,7 +96,7 @@ import{j as a}from"./jsx-runtime-CDt2p4po.js";import{r as N}from"./index-GiUgBvb
     size: 'lg',
     animated: true,
     showLabel: true,
-    onClick: () => alert('Orbital clicked!')
+    onClick: () => alert('Almadar clicked!')
   }
 }`,...(le=(oe=z.parameters)==null?void 0:oe.docs)==null?void 0:le.source}}};var ne,ie,ce;S.parameters={...S.parameters,docs:{...(ne=S.parameters)==null?void 0:ne.docs,source:{originalSource:`{
   name: 'From KFlow Schema',
@@ -129,7 +129,7 @@ import{j as a}from"./jsx-runtime-CDt2p4po.js";import{r as N}from"./index-GiUgBvb
     showLabel: true
   }
 }`,...(ce=(ie=S.parameters)==null?void 0:ie.docs)==null?void 0:ce.source}}};var me,de,ue;L.parameters={...L.parameters,docs:{...(me=L.parameters)==null?void 0:me.docs,source:{originalSource:`{
-  name: 'All Orbital Types',
+  name: 'All Almadar Types',
   render: () => <div className="flex flex-wrap gap-8 items-end justify-center p-8">
             <OrbitalVisualization complexity={2} size="md" showLabel />
             <OrbitalVisualization complexity={6} size="md" showLabel />

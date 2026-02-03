@@ -8,5 +8,5 @@
 export * from './types/entities';
 export * from './schemas/entities';
 
-// S-Expression Evaluator (synced from orbital-shared/evaluator)
+// S-Expression Evaluator (synced from almadar-shared/evaluator)
 export * from './evaluator/index.js';
