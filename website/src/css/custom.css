@@ -28,6 +28,9 @@
     /* Parchment - Light text */
     --almadar-parchment: #f8fafc;
     --almadar-parchment-muted: #94a3b8;
+    
+    /* New Brand Variables */
+    --almadar-bg: #f8fafc;
 
     /* Brand Gradient */
     --almadar-gradient: linear-gradient(

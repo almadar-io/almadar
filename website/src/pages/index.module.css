@@ -6,113 +6,39 @@
     padding: 6rem 0;
     position: relative;
     overflow: hidden;
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f8fafc 100%);
+    background: var(--almadar-parchment);
 }
 
 [data-theme="dark"] .heroBanner {
-    background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #020617 100%);
+    background: var(--almadar-midnight);
 }
 
-/* Digital Mashrabiya - Geometric Grid Pattern */
-.heroBanner::before {
-    content: "";
+/* Digital Mashrabiya Pattern Container */
+/* Digital Mashrabiya Pattern Container */
+.heroPatternContainer {
     position: absolute;
     top: 0;
-    right: 0;
-    width: 55%;
-    height: 100%;
-    background-image:
-        /* Main grid - vertical lines */
-        repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 39px,
-            rgba(20, 184, 166, 0.12) 39px,
-            rgba(20, 184, 166, 0.12) 40px
-        ),
-        /* Main grid - horizontal lines */
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 39px,
-            rgba(20, 184, 166, 0.12) 39px,
-            rgba(20, 184, 166, 0.12) 40px
-        ),
-        /* Diagonal accent for mashrabiya effect */
-        repeating-linear-gradient(
-            45deg,
-            transparent,
-            transparent 55px,
-            rgba(20, 184, 166, 0.06) 55px,
-            rgba(20, 184, 166, 0.06) 56px
-        );
-    pointer-events: none;
-}
-
-[data-theme="dark"] .heroBanner::before {
-    background-image:
-        repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 39px,
-            rgba(20, 184, 166, 0.2) 39px,
-            rgba(20, 184, 166, 0.2) 40px
-        ),
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 39px,
-            rgba(20, 184, 166, 0.2) 39px,
-            rgba(20, 184, 166, 0.2) 40px
-        ),
-        repeating-linear-gradient(
-            45deg,
-            transparent,
-            transparent 55px,
-            rgba(20, 184, 166, 0.1) 55px,
-            rgba(20, 184, 166, 0.1) 56px
-        );
-}
-
-/* Subtle teal glow accents */
-.heroBanner::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
     right: 0;
     bottom: 0;
-    background:
-        radial-gradient(
-            circle at 20% 80%,
-            rgba(20, 184, 166, 0.08) 0%,
-            transparent 40%
-        ),
-        radial-gradient(
-            circle at 80% 20%,
-            rgba(6, 182, 212, 0.05) 0%,
-            transparent 40%
-        );
+    width: 60%;
+    /* Top-right focus */
+    z-index: 0;
+    overflow: hidden;
     pointer-events: none;
+    /* Blend: Visible at top-right, fades out */
+    mask-image: radial-gradient(circle at top right, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at top right, black 30%, transparent 80%);
 }
 
-[data-theme="dark"] .heroBanner::after {
-    background:
-        radial-gradient(
-            circle at 20% 80%,
-            rgba(20, 184, 166, 0.12) 0%,
-            transparent 40%
-        ),
-        radial-gradient(
-            circle at 80% 20%,
-            rgba(6, 182, 212, 0.08) 0%,
-            transparent 40%
-        );
+.heroPattern {
+    width: 100%;
+    height: 100%;
 }
 
 .heroContainer {
     display: grid;
-    grid-template-columns: 1.1fr 1fr;
+    grid-template-columns: 1.1fr;
+    /* Changed to single column as pattern is bg */
     gap: 4rem;
     align-items: center;
     max-width: 1200px;
@@ -124,6 +50,8 @@
 
 .heroText {
     text-align: left;
+    max-width: 600px;
+    /* Limit width as we are single column now */
 }
 
 html[dir="rtl"] .heroText {
@@ -135,11 +63,11 @@ html[dir="rtl"] .heroText {
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 1.5rem;
-    color: #1e293b;
-    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--almadar-midnight);
+}
+
+[data-theme="dark"] .heroTitle {
+    color: #f8fafc;
 }
 
 [data-theme="dark"] .heroTitle {
@@ -444,11 +372,9 @@ html[dir="rtl"] .heroText {
 }
 
 .ctaCard {
-    background: linear-gradient(
-        135deg,
-        rgba(20, 184, 166, 0.08) 0%,
-        rgba(6, 182, 212, 0.04) 100%
-    );
+    background: linear-gradient(135deg,
+            rgba(20, 184, 166, 0.08) 0%,
+            rgba(6, 182, 212, 0.04) 100%);
     border: 1px solid rgba(20, 184, 166, 0.3);
     border-radius: 24px;
     padding: 4rem;

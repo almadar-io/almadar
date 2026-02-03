@@ -1,47 +1,34 @@
 /* Enterprise Hero */
 .hero {
     padding: 8rem 0 6rem;
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f8fafc 100%);
+    background: var(--almadar-parchment);
     position: relative;
+    overflow: hidden;
+    /* Ensure pattern doesn't overflow */
 }
 
 [data-theme="dark"] .hero {
-    background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #020617 100%);
+    background: var(--almadar-midnight);
 }
 
-.hero::before {
-    content: "";
+/* Digital Mashrabiya Pattern Container - Top Right Focus */
+.heroPatternContainer {
     position: absolute;
     top: 0;
-    left: 0;
     right: 0;
     bottom: 0;
-    background:
-        radial-gradient(
-            circle at 30% 70%,
-            rgba(20, 184, 166, 0.06) 0%,
-            transparent 40%
-        ),
-        radial-gradient(
-            circle at 70% 30%,
-            rgba(6, 182, 212, 0.04) 0%,
-            transparent 40%
-        );
+    width: 60%;
+    z-index: 0;
+    overflow: hidden;
     pointer-events: none;
+    /* Blend: Visible at top-right, fades out */
+    mask-image: radial-gradient(circle at top right, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at top right, black 30%, transparent 80%);
 }
 
-[data-theme="dark"] .hero::before {
-    background:
-        radial-gradient(
-            circle at 30% 70%,
-            rgba(20, 184, 166, 0.1) 0%,
-            transparent 40%
-        ),
-        radial-gradient(
-            circle at 70% 30%,
-            rgba(6, 182, 212, 0.08) 0%,
-            transparent 40%
-        );
+.heroPattern {
+    width: 100%;
+    height: 100%;
 }
 
 .heroContent {
@@ -308,11 +295,9 @@
 }
 
 .contactCard {
-    background: linear-gradient(
-        135deg,
-        rgba(20, 184, 166, 0.1) 0%,
-        rgba(6, 182, 212, 0.06) 100%
-    );
+    background: linear-gradient(135deg,
+            rgba(20, 184, 166, 0.1) 0%,
+            rgba(6, 182, 212, 0.06) 100%);
     border: 1px solid rgba(20, 184, 166, 0.3);
     border-radius: 24px;
     padding: 4rem;
@@ -322,11 +307,9 @@
 }
 
 [data-theme="dark"] .contactCard {
-    background: linear-gradient(
-        135deg,
-        rgba(20, 184, 166, 0.08) 0%,
-        rgba(6, 182, 212, 0.04) 100%
-    );
+    background: linear-gradient(135deg,
+            rgba(20, 184, 166, 0.08) 0%,
+            rgba(6, 182, 212, 0.04) 100%);
     border-color: rgba(20, 184, 166, 0.2);
 }
 
