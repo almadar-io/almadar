@@ -101,11 +101,7 @@ const config: Config = {
           label: "GitHub",
           position: "right",
         },
-        {
-          href: "https://x.com/almadarLang",
-          label: "X",
-          position: "right",
-        },
+
         {
           type: "localeDropdown",
           position: "right",
@@ -139,10 +135,7 @@ const config: Config = {
               label: "GitHub",
               href: "https://github.com/almadar-io/almadar",
             },
-            {
-              label: "X (Twitter)",
-              href: "https://x.com/almadarLang",
-            },
+
             {
               label: "LinkedIn",
               href: "https://www.linkedin.com/company/almadar-io",
