@@ -296,7 +296,7 @@ function HomepageCTA() {
             </Translate>
           </p>
           <div className={styles.ctaCode}>
-            <code>npx @almadar/cli init my-app</code>
+            <code>npx @almadar/cli new my-app</code>
           </div>
           <div className={styles.buttons}>
             <Link
