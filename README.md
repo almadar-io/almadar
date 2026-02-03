@@ -31,8 +31,10 @@ The Orbital is the atomic unit of composition. It is defined within the `orbital
     }
   ]
 }
-2. Entities (The Matter)
+```
+#### 2. Entities (The Matter)
 Entities define the shape of your data structure. They are defined inside the orbital under the entity key.
+```json
 "entity": {
   "name": "Task",
   "persistence": "persistent",
@@ -45,8 +47,10 @@ Entities define the shape of your data structure. They are defined inside the or
     { "name": "completedAt", "type": "timestamp" }
   ]
 }
-3. Traits (The Energy)
+```
+#### 3. Traits (The Energy)
 Traits are State Machines that define behavior. They are listed in the traits array of the orbital.
+```json
 "traits": [
   {
     "name": "TaskWorkflow",
@@ -75,8 +79,10 @@ Traits are State Machines that define behavior. They are listed in the traits ar
     }
   }
 ]
-4. Pages (The Container)
+```
+#### 5. Pages (The Container)
 Pages define the routing and bind Traits to UI slots. They are listed in the pages array of the orbital.
+```json
 "pages": [
   {
     "name": "TaskDashboard",
@@ -90,6 +96,7 @@ Pages define the routing and bind Traits to UI slots. They are listed in the pag
     ]
   }
 ]
+```
 
 ## Quick Start
 
