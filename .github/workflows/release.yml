@@ -192,6 +192,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           VERSION=${{ steps.version.outputs.version }}
+          ROOT_DIR="$(pwd)"
 
           declare -A PLATFORMS=(
             ["linux-x64"]="linux x64"
@@ -206,19 +207,20 @@ jobs:
           for platform in "${!PLATFORMS[@]}"; do
             read os cpu <<< "${PLATFORMS[$platform]}"
 
-            ARTIFACT_DIR="artifacts/almadar-${platform}"
+            ARTIFACT_DIR="${ROOT_DIR}/artifacts/almadar-${platform}"
             if [ ! -d "$ARTIFACT_DIR" ]; then
-              echo "Skipping $platform - no artifact"
+              echo "Skipping $platform - no artifact directory"
               continue
             fi
 
-            mkdir -p "npm-packages/@almadar/cli-${platform}"
-            cd "npm-packages/@almadar/cli-${platform}"
+            PKG_DIR="${ROOT_DIR}/npm-packages/@almadar/cli-${platform}"
+            mkdir -p "$PKG_DIR"
+            cd "$PKG_DIR"
 
             if [[ "$platform" == windows* ]]; then
-              unzip "../../${ARTIFACT_DIR}/almadar-${platform}.zip" || true
+              unzip "${ARTIFACT_DIR}/almadar-${platform}.zip" || echo "Failed to extract $platform"
             else
-              tar -xzf "../../${ARTIFACT_DIR}/almadar-${platform}.tar.gz" || true
+              tar -xzf "${ARTIFACT_DIR}/almadar-${platform}.tar.gz" || echo "Failed to extract $platform"
             fi
 
             cat > package.json << EOF
@@ -233,16 +235,19 @@ jobs:
           }
           EOF
 
+            echo "Publishing @almadar/cli-${platform}..."
             npm publish --access public || echo "Failed to publish @almadar/cli-${platform}"
-            cd ../..
+            cd "$ROOT_DIR"
           done
 
           # Main package
           if [ -d "cli/npm" ]; then
-            mkdir -p "npm-packages/@almadar/cli"
-            cp -r cli/npm/* "npm-packages/@almadar/cli/"
-            cd "npm-packages/@almadar/cli"
+            PKG_DIR="${ROOT_DIR}/npm-packages/@almadar/cli"
+            mkdir -p "$PKG_DIR"
+            cp -r cli/npm/* "$PKG_DIR/"
+            cd "$PKG_DIR"
             jq --arg v "$VERSION" '.version = $v | .optionalDependencies |= with_entries(.value = $v)' package.json > tmp.json && mv tmp.json package.json
+            echo "Publishing @almadar/cli..."
             npm publish --access public || echo "Failed to publish @almadar/cli"
           fi
 
