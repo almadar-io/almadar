@@ -27,7 +27,8 @@ The Orbital is the atomic unit of composition. It is defined within the `orbital
         "category": "productivity"
       },
       "entity": { ... }, 
-      "traits": [ ... ]
+      "traits": [ ... ],
+      "pages": [ ... ]
     }
   ]
 }
