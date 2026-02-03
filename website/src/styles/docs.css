@@ -1,21 +1,28 @@
 /**
- * Documentation Styles
- * 
+ * Documentation Styles - Modern Heritage Theme
+ *
  * Styles for the documentation pages with sidebar navigation.
+ * Adapted for light mode with heritage accents.
  */
 
-/* Documentation Layout */
+/* ===========================
+   Documentation Layout
+   =========================== */
+
 .docs-layout {
     display: flex;
     min-height: calc(100vh - 80px);
     padding-top: 80px;
 }
 
-/* Sidebar */
+/* ===========================
+   Sidebar
+   =========================== */
+
 .docs-sidebar {
     width: 280px;
     flex-shrink: 0;
-    background: var(--bg-darker);
+    background: var(--bg-secondary);
     border-right: 1px solid var(--border);
     position: fixed;
     top: 80px;
@@ -73,8 +80,8 @@
 }
 
 .sidebar-link:hover {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-main);
+    background: var(--bg-tertiary);
 }
 
 .sidebar-link.active {
@@ -82,12 +89,16 @@
     background: rgba(20, 184, 166, 0.1);
 }
 
-/* Main Content */
+/* ===========================
+   Main Content
+   =========================== */
+
 .docs-content {
     flex: 1;
     margin-left: 280px;
     padding: 2rem 3rem;
     max-width: 900px;
+    background: var(--bg-primary);
 }
 
 .docs-content h1 {
@@ -95,6 +106,7 @@
     margin-bottom: 1rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--border);
+    color: var(--text-main);
 }
 
 .docs-content h2 {
@@ -102,19 +114,20 @@
     margin-top: 3rem;
     margin-bottom: 1rem;
     padding-top: 1rem;
-    color: #fff;
+    color: var(--text-main);
 }
 
 .docs-content h3 {
     font-size: 1.25rem;
     margin-top: 2rem;
     margin-bottom: 0.75rem;
-    color: #fff;
+    color: var(--text-main);
 }
 
 .docs-content p {
     margin-bottom: 1rem;
     line-height: 1.8;
+    color: var(--text-muted);
 }
 
 .docs-content ul,
@@ -132,12 +145,15 @@
     color: var(--teal);
 }
 
-/* Hero Image */
+/* ===========================
+   Hero Image
+   =========================== */
+
 .docs-hero-img {
     text-align: center;
     margin: 2rem 0;
     padding: 2rem;
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--bg-tertiary);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
 }
@@ -155,7 +171,11 @@
     font-style: italic;
 }
 
-/* Code Blocks */
+/* ===========================
+   Code Blocks
+   (Keep dark for readability)
+   =========================== */
+
 .code-block {
     background: #0d1117;
     border: 1px solid var(--border);
@@ -170,9 +190,9 @@
     align-items: center;
     padding: 0.5rem 1rem;
     background: rgba(255, 255, 255, 0.03);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     font-size: 0.8rem;
-    color: var(--text-muted);
+    color: #94a3b8;
 }
 
 .code-lang {
@@ -184,16 +204,18 @@ pre {
     margin: 0;
     padding: 1.25rem;
     overflow-x: auto;
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-family: var(--font-mono);
     font-size: 0.9rem;
     line-height: 1.6;
+    background: #0d1117;
+    color: #f8f8f2;
 }
 
 code {
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-family: var(--font-mono);
 }
 
-/* Inline code */
+/* Inline code - light mode appropriate */
 p code,
 li code {
     background: rgba(20, 184, 166, 0.1);
@@ -203,7 +225,10 @@ li code {
     font-size: 0.85em;
 }
 
-/* Syntax Highlighting - matches orbitals/syntax/textmate-grammar scopes */
+/* ===========================
+   Syntax Highlighting
+   (Dracula-like theme for dark code blocks)
+   =========================== */
 
 /* Core @ bindings: @entity, @payload, @state, @now */
 .token-binding {
@@ -281,7 +306,10 @@ li code {
     font-style: italic;
 }
 
-/* Tables */
+/* ===========================
+   Tables
+   =========================== */
+
 .docs-table {
     width: 100%;
     border-collapse: collapse;
@@ -297,8 +325,8 @@ li code {
 }
 
 .docs-table th {
-    background: rgba(255, 255, 255, 0.03);
-    color: #fff;
+    background: var(--bg-tertiary);
+    color: var(--text-main);
     font-weight: 600;
     font-size: 0.8rem;
     text-transform: uppercase;
@@ -316,7 +344,10 @@ li code {
     border-radius: 4px;
 }
 
-/* Info Boxes */
+/* ===========================
+   Info Boxes
+   =========================== */
+
 .info-box {
     padding: 1rem 1.25rem;
     border-radius: var(--radius-md);
@@ -339,6 +370,12 @@ li code {
     border-color: #6366f1;
 }
 
+/* Heritage gold info box for special notices */
+.info-box.heritage {
+    background: rgba(201, 162, 39, 0.08);
+    border-color: var(--sand-gold);
+}
+
 .info-box-title {
     font-weight: 700;
     font-size: 0.85rem;
@@ -359,7 +396,14 @@ li code {
     color: #6366f1;
 }
 
-/* Behavior Cards */
+.info-box.heritage .info-box-title {
+    color: var(--sand-gold);
+}
+
+/* ===========================
+   Behavior Cards
+   =========================== */
+
 .behavior-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -368,22 +412,24 @@ li code {
 }
 
 .behavior-card {
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: 1.25rem;
     transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
 }
 
 .behavior-card:hover {
     border-color: var(--teal);
+    box-shadow: var(--shadow-md);
 }
 
 .behavior-card h4 {
     color: var(--teal);
     font-size: 1rem;
     margin-bottom: 0.5rem;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
 }
 
 .behavior-card p {
@@ -391,7 +437,10 @@ li code {
     margin: 0;
 }
 
-/* State Machine Diagrams */
+/* ===========================
+   State Machine Diagrams
+   =========================== */
+
 .state-diagram {
     margin: 2rem 0;
     border-radius: var(--radius-md);
@@ -446,7 +495,10 @@ li code {
     }
 }
 
-/* Responsive */
+/* ===========================
+   Responsive
+   =========================== */
+
 @media (max-width: 1024px) {
     .docs-sidebar {
         width: 240px;

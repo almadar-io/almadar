@@ -1,18 +1,27 @@
 /**
- * Navigation Styles
- * 
- * Desktop and mobile navigation, including hamburger menu.
+ * Navigation Styles - Modern Heritage Theme
+ *
+ * Desktop and mobile navigation adapted for light mode.
  */
 
-/* Main Navigation Bar */
+/* ===========================
+   Main Navigation Bar
+   =========================== */
+
 nav {
     padding: 1.5rem 0;
     backdrop-filter: blur(10px);
     position: fixed;
     width: 100%;
     z-index: 100;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    background: rgba(15, 23, 42, 0.7);
+    border-bottom: 1px solid var(--border);
+    background: rgba(248, 250, 252, 0.9);
+    transition: background var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+/* Scrolled state - add shadow */
+nav.scrolled {
+    box-shadow: var(--shadow-md);
 }
 
 .nav-content {
@@ -21,14 +30,17 @@ nav {
     align-items: center;
 }
 
-/* Logo */
+/* ===========================
+   Logo
+   =========================== */
+
 .logo-container {
     display: flex;
     align-items: center;
     gap: 1rem;
     font-weight: 800;
     font-size: 1.5rem;
-    color: #fff;
+    color: var(--text-main);
     text-decoration: none;
 }
 
@@ -37,7 +49,10 @@ nav {
     height: 40px;
 }
 
-/* Desktop Navigation Links */
+/* ===========================
+   Desktop Navigation Links
+   =========================== */
+
 .nav-links {
     display: flex;
     align-items: center;
@@ -54,15 +69,15 @@ nav {
 
 .nav-item:hover,
 .nav-item.active {
-    color: #fff;
+    color: var(--text-main);
 }
 
 .nav-btn {
     padding: 0.5rem 1.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
     border-radius: 99px;
-    color: #fff;
+    color: var(--text-main);
     font-weight: 600;
     text-decoration: none;
     transition: all var(--transition-normal);
@@ -71,9 +86,25 @@ nav {
 .nav-btn:hover {
     background: var(--brand-gradient);
     border-color: transparent;
+    color: #fff;
 }
 
-/* Mobile Menu Toggle (Hamburger) */
+/* Gold accent nav button variant */
+.nav-btn-gold {
+    background: transparent;
+    border: 1px solid var(--sand-gold);
+    color: var(--sand-gold);
+}
+
+.nav-btn-gold:hover {
+    background: var(--sand-gold);
+    color: var(--midnight);
+}
+
+/* ===========================
+   Mobile Menu Toggle (Hamburger)
+   =========================== */
+
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;
@@ -98,10 +129,14 @@ nav {
 .mobile-menu-toggle span {
     width: 100%;
     height: 3px;
-    background: #fff;
+    background: var(--text-main);
     border-radius: 3px;
     transition: all var(--transition-normal);
     transform-origin: center;
+}
+
+.mobile-menu-toggle.active span {
+    background: #fff;
 }
 
 .mobile-menu-toggle.active span:nth-child(1) {
@@ -116,7 +151,10 @@ nav {
     transform: translateY(-10px) rotate(-45deg);
 }
 
-/* Mobile Menu Overlay */
+/* ===========================
+   Mobile Menu Overlay
+   =========================== */
+
 .mobile-menu {
     display: none;
     position: fixed;
@@ -124,7 +162,7 @@ nav {
     left: 0;
     width: 100%;
     height: 100vh;
-    background: var(--bg-darker);
+    background: var(--midnight);
     z-index: 105;
     opacity: 0;
     visibility: hidden;
@@ -149,7 +187,7 @@ nav {
 .mobile-nav-item {
     font-size: 1.5rem;
     font-weight: 600;
-    color: var(--text-muted);
+    color: #94a3b8;
     text-decoration: none;
     transition: color var(--transition-fast);
 }
@@ -168,7 +206,10 @@ nav {
     text-decoration: none;
 }
 
-/* Show mobile elements on small screens */
+/* ===========================
+   Show mobile elements on small screens
+   =========================== */
+
 @media (max-width: 768px) {
     .nav-links {
         display: none;
@@ -181,4 +222,37 @@ nav {
     .mobile-menu {
         display: block;
     }
+}
+
+/* ===========================
+   Dark Section Navigation Override
+   (When nav is over a dark section)
+   =========================== */
+
+nav.nav-dark {
+    background: rgba(15, 23, 42, 0.9);
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+nav.nav-dark .logo-container {
+    color: #fff;
+}
+
+nav.nav-dark .nav-item {
+    color: #94a3b8;
+}
+
+nav.nav-dark .nav-item:hover,
+nav.nav-dark .nav-item.active {
+    color: #fff;
+}
+
+nav.nav-dark .nav-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+nav.nav-dark .mobile-menu-toggle span {
+    background: #fff;
 }
