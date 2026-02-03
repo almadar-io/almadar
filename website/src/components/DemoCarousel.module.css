@@ -1,7 +1,11 @@
 .section {
     padding: 4rem 0;
-    background: var(--almadar-bg);
-    /* Use brand background */
+    /* Match Hero Section Gradient */
+    background: linear-gradient(135deg,
+            var(--almadar-midnight-dark) 0%,
+            var(--almadar-midnight) 50%,
+            var(--almadar-midnight-dark) 100%);
+    color: #fff;
     overflow: hidden;
     border-top: 1px solid var(--ifm-color-emphasis-200);
 }
@@ -14,126 +18,189 @@
 .heading {
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    color: var(--almadar-midnight);
-}
-
-[data-theme='dark'] .heading {
-    color: var(--ifm-color-primary-light);
+    color: #fff;
+    font-weight: 800;
 }
 
 .subheading {
     font-size: 1.25rem;
-    color: var(--ifm-color-content-secondary);
+    color: #cbd5e1;
     max-width: 600px;
     margin: 0 auto 1.5rem;
 }
 
-.carouselContainer {
-    position: relative;
+.actions {
+    margin-top: 2rem;
+}
+
+/* --- Scrollable Container --- */
+.scrollWrapper {
     width: 100%;
-    overflow: hidden;
-    /* Add fading gradients on sides */
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    position: relative;
+    /* Fading masks for sides */
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
 }
 
-.track {
+.scrollTrack {
     display: flex;
-    gap: 2rem;
-    width: max-content;
-    animation: scroll 60s linear infinite;
-    padding: 1rem 0;
+    overflow-x: auto;
+    /* Enable native scrolling */
+    gap: 24px;
+    padding: 20px 5%;
+    /* Padding for first/last items */
+    scroll-behavior: smooth;
+    /* Smooth momentum scrolling */
+    -webkit-overflow-scrolling: touch;
+    /* iOS Momentum */
+    scrollbar-width: none;
+    /* Firefox hide scrollbar */
+    cursor: grab;
 }
 
-.track.paused {
-    animation-play-state: paused;
+.scrollTrack::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari hide scrollbar */
 }
 
-@keyframes scroll {
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(-33.33%);
-        /* Move by 1/3 since we triplicated the list */
-    }
+.scrollTrack:active {
+    cursor: grabbing;
 }
 
+/* --- Card Design --- */
 .card {
-    flex: 0 0 350px;
-    background: var(--ifm-card-background-color);
-    border: 1px solid var(--ifm-color-emphasis-200);
-    border-radius: 12px;
-    padding: 1.5rem;
-    text-decoration: none !important;
-    color: inherit !important;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    flex: 0 0 380px;
+    /* Fixed width */
+    height: 440px;
+    /* Fixed height */
+
     display: flex;
     flex-direction: column;
-    position: relative;
+
+    background: var(--almadar-midnight-light);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
     overflow: hidden;
-    height: 220px;
+
+    text-decoration: none !important;
+    color: #f8fafc !important;
+
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-8px);
     border-color: var(--almadar-teal);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* --- Top Half: Preview --- */
+.cardPreviewContainer {
+    height: 55%;
+    /* Top part of card */
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cardPreview {
+    width: 100%;
+    height: 100%;
+    /* No grayscale for cleaner look, just scaled */
+}
+
+/* Iframe Scaling */
+.cardPreview iframe {
+    width: 142%;
+    /* 100 / 0.7 scale approx */
+    height: 142%;
+    transform: scale(0.7);
+    transform-origin: top left;
+    border: none;
+    pointer-events: none;
+    /* Pass clicks to card link */
+    background: #fff;
+    /* Ensure iframe has white bg if transparent */
+}
+
+/* Overlay gradient to make it feel integrated */
+.previewOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 70%, rgba(30, 41, 59, 0.8) 100%);
+    pointer-events: none;
+}
+
+/* --- Bottom Half: Content --- */
+.cardContent {
+    flex: 1;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+    background: var(--almadar-midnight-light);
+    /* Ensure solid background */
 }
 
 .cardHeader {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
 .cardCategory {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 1px;
     font-weight: 700;
     color: var(--almadar-teal);
     background: rgba(20, 184, 166, 0.1);
-    padding: 4px 8px;
-    border-radius: 4px;
+    padding: 6px 10px;
+    border-radius: 99px;
 }
 
 .cardTitle {
-    font-size: 1.25rem;
+    font-size: 1.4rem;
     margin-bottom: 0.5rem;
     font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
 }
 
 .cardDesc {
-    font-size: 0.9rem;
-    color: var(--ifm-color-content-secondary);
-    line-height: 1.4;
+    font-size: 0.95rem;
+    color: #94a3b8;
+    line-height: 1.5;
     flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .cta {
+    display: inline-flex;
+    align-items: center;
     font-weight: 600;
     color: var(--almadar-teal);
     margin-top: 1rem;
-    font-size: 0.9rem;
-    opacity: 0;
-    transform: translateX(-10px);
-    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    transition: transform 0.2s ease;
 }
 
 .card:hover .cta {
-    opacity: 1;
-    transform: translateX(0);
+    transform: translateX(6px);
+    color: var(--almadar-teal-light);
 }
 
-/* Subtle pattern background for cards */
-.cardBackground {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100px;
-    height: 100px;
-    background-image: radial-gradient(circle, var(--ifm-color-emphasis-200) 1px, transparent 1px);
-    background-size: 10px 10px;
-    opacity: 0.1;
-    pointer-events: none;
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .card {
+        flex: 0 0 300px;
+        height: 400px;
+    }
+
+    .scrollTrack {
+        padding: 20px 20px;
+    }
 }
