@@ -67,6 +67,22 @@ export default function DemoCarousel(): React.JSX.Element {
                 onTouchStart={() => setIsPaused(true)}
                 onTouchEnd={() => setIsPaused(false)}
             >
+                <button
+                    className={`${styles.navButton} ${styles.navButtonLeft}`}
+                    onClick={() => scrollRef.current?.scrollBy({ left: -400, behavior: 'smooth' })}
+                    aria-label="Scroll left"
+                >
+                    ←
+                </button>
+
+                <button
+                    className={`${styles.navButton} ${styles.navButtonRight}`}
+                    onClick={() => scrollRef.current?.scrollBy({ left: 400, behavior: 'smooth' })}
+                    aria-label="Scroll right"
+                >
+                    →
+                </button>
+
                 <div
                     className={styles.scrollTrack}
                     ref={scrollRef}

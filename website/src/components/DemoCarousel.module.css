@@ -42,6 +42,48 @@
     -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
 }
 
+.navButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(15, 23, 42, 0.6);
+    /* almadar-midnight with opacity */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    /* Hidden by default */
+}
+
+.scrollWrapper:hover .navButton {
+    opacity: 1;
+    /* Show on hover */
+}
+
+.navButton:hover {
+    background: var(--almadar-teal);
+    border-color: var(--almadar-teal);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.navButtonLeft {
+    left: 20px;
+}
+
+.navButtonRight {
+    right: 20px;
+}
+
 .scrollTrack {
     display: flex;
     overflow-x: auto;
