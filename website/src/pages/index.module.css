@@ -531,4 +531,11 @@ html[dir="rtl"] .heroText {
     .orbitalCanvas {
         max-width: 250px;
     }
+
+    /* Fix: Reduce pattern opacity on mobile to not obscure text */
+    .heroPatternContainer {
+        opacity: 0.15;
+        mask-image: radial-gradient(circle at center, transparent 40%, black 100%);
+        -webkit-mask-image: radial-gradient(circle at center, transparent 40%, black 100%);
+    }
 }

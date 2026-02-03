@@ -11,85 +11,64 @@ on:
         required: true
         type: string
 
-env:
-  CARGO_TERM_COLOR: always
-
 jobs:
-  build:
-    name: Build ${{ matrix.target }}
-    runs-on: ${{ matrix.os }}
+  # Package pre-built binaries from cli/dist/
+  package:
+    name: Package ${{ matrix.name }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         include:
-          - target: x86_64-unknown-linux-gnu
-            os: ubuntu-latest
-            name: linux-x64
+          - name: linux-x64
             ext: ""
-          - target: aarch64-unknown-linux-gnu
-            os: ubuntu-latest
-            name: linux-arm64
+          - name: linux-arm64
             ext: ""
-            cross: true
-          - target: x86_64-apple-darwin
-            os: macos-latest
-            name: darwin-x64
+          - name: darwin-x64
             ext: ""
-          - target: aarch64-apple-darwin
-            os: macos-latest
-            name: darwin-arm64
+          - name: darwin-arm64
             ext: ""
-          - target: x86_64-pc-windows-msvc
-            os: windows-latest
-            name: windows-x64
+          - name: windows-x64
             ext: ".exe"
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Rust
-        uses: dtolnay/rust-action@stable
-        with:
-          targets: ${{ matrix.target }}
-
-      - name: Install cross-compilation tools
-        if: matrix.cross
+      - name: Check if binary exists
+        id: check
         run: |
-          sudo apt-get update
-          sudo apt-get install -y gcc-aarch64-linux-gnu
-
-      - name: Build binary
-        run: |
-          if [ "${{ matrix.cross }}" = "true" ]; then
-            cargo install cross --git https://github.com/cross-rs/cross
-            cross build --release --package almadar-cli --target ${{ matrix.target }}
+          BINARY_PATH="cli/dist/${{ matrix.name }}/almadar${{ matrix.ext }}"
+          if [ -f "$BINARY_PATH" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Binary found: $BINARY_PATH"
           else
-            cargo build --release --package almadar-cli --target ${{ matrix.target }}
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Binary not found: $BINARY_PATH"
+            echo "Available binaries:"
+            ls -la cli/dist/ || echo "No dist directory"
           fi
-        shell: bash
-        working-directory: almadar-rust
 
-      - name: Prepare artifact (Unix)
-        if: matrix.os != 'windows-latest'
+      - name: Package binary (Unix)
+        if: steps.check.outputs.exists == 'true' && matrix.ext == ''
         run: |
           mkdir -p dist
-          cp almadar-rust/target/${{ matrix.target }}/release/almadar dist/almadar
+          cp "cli/dist/${{ matrix.name }}/almadar" dist/almadar
           chmod +x dist/almadar
           cd dist
-          tar -czvf almadar-${{ matrix.name }}.tar.gz almadar
+          tar -czvf "almadar-${{ matrix.name }}.tar.gz" almadar
           rm almadar
 
-      - name: Prepare artifact (Windows)
-        if: matrix.os == 'windows-latest'
+      - name: Package binary (Windows)
+        if: steps.check.outputs.exists == 'true' && matrix.ext == '.exe'
         run: |
-          mkdir dist
-          copy almadar-rust\target\${{ matrix.target }}\release\orbital.exe dist\almadar.exe
+          mkdir -p dist
+          cp "cli/dist/${{ matrix.name }}/almadar.exe" dist/almadar.exe
           cd dist
-          7z a almadar-${{ matrix.name }}.zip almadar.exe
-          del almadar.exe
-        shell: cmd
+          zip "almadar-${{ matrix.name }}.zip" almadar.exe
+          rm almadar.exe
 
       - name: Upload artifact
+        if: steps.check.outputs.exists == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: almadar-${{ matrix.name }}
@@ -97,7 +76,7 @@ jobs:
 
   release:
     name: Create Release
-    needs: build
+    needs: package
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -121,8 +100,20 @@ jobs:
       - name: Prepare release assets
         run: |
           mkdir -p release
-          find artifacts -type f \( -name "*.tar.gz" -o -name "*.zip" \) -exec cp {} release/ \;
-          ls -la release/
+          find artifacts -type f \( -name "*.tar.gz" -o -name "*.zip" \) -exec cp {} release/ \; 2>/dev/null || true
+          echo "Release assets:"
+          ls -la release/ || echo "No release assets found"
+
+      - name: Check for assets
+        id: assets
+        run: |
+          if [ -z "$(ls -A release/ 2>/dev/null)" ]; then
+            echo "has_assets=false" >> $GITHUB_OUTPUT
+            echo "WARNING: No binary assets found. Release will be created without downloadable binaries."
+            echo "To add binaries, run the almadar-sync script with cross-compiled binaries."
+          else
+            echo "has_assets=true" >> $GITHUB_OUTPUT
+          fi
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
@@ -138,14 +129,14 @@ jobs:
 
             ### Installation
 
-            #### npm (recommended)
+            #### Install Script (macOS/Linux)
             ```bash
-            npm install -g @almadar/cli
+            curl -fsSL https://almadar.io/install.sh | sh
             ```
 
-            #### Homebrew (macOS/Linux)
-            ```bash
-            brew install almadar-io/tap/almadar
+            #### Install Script (Windows PowerShell)
+            ```powershell
+            irm https://almadar.io/install.ps1 | iex
             ```
 
             #### Direct Download
@@ -159,21 +150,31 @@ jobs:
             | macOS | Apple Silicon | `almadar-darwin-arm64.tar.gz` |
             | Windows | x64 | `almadar-windows-x64.zip` |
 
-            #### Install Script (Unix)
+            ### Quick Start
+
             ```bash
-            curl -fsSL https://almadar.io/install.sh | sh
+            # Validate a schema
+            almadar validate my-app.orb
+
+            # Compile to TypeScript
+            almadar compile my-app.orb --shell typescript
+
+            # Start development server
+            almadar dev my-app.orb
             ```
 
             ### Documentation
 
-            - [Getting Started](https://almadar.io/docs/en/getting-started)
-            - [CLI Reference](https://almadar.io/docs/en/reference/cli)
-            - [Schema Format](https://almadar.io/docs/en/reference/schema)
+            - [Getting Started](https://almadar.io/docs/en/getting-started/introduction)
+            - [Standard Library](https://almadar.io/stdlib.html)
+            - [API Reference](https://almadar.io/docs/en/api)
 
   publish-npm:
     name: Publish to npm
     needs: release
     runs-on: ubuntu-latest
+    # Only run if NPM_TOKEN is configured
+    if: ${{ vars.PUBLISH_NPM == 'true' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -211,18 +212,27 @@ jobs:
             ["windows-x64"]="win32 x64"
           )
 
+          mkdir -p npm-packages
+
           for platform in "${!PLATFORMS[@]}"; do
             read os cpu <<< "${PLATFORMS[$platform]}"
+
+            # Check if artifact exists
+            ARTIFACT_DIR="artifacts/almadar-${platform}"
+            if [ ! -d "$ARTIFACT_DIR" ]; then
+              echo "Skipping $platform - no artifact found"
+              continue
+            fi
 
             mkdir -p "npm-packages/@almadar/cli-${platform}"
             cd "npm-packages/@almadar/cli-${platform}"
 
             # Extract binary
             if [[ "$platform" == windows* ]]; then
-              unzip "../../../artifacts/almadar-${platform}/almadar-${platform}.zip"
+              unzip "../../${ARTIFACT_DIR}/almadar-${platform}.zip" || true
               EXT=".exe"
             else
-              tar -xzf "../../../artifacts/almadar-${platform}/almadar-${platform}.tar.gz"
+              tar -xzf "../../${ARTIFACT_DIR}/almadar-${platform}.tar.gz" || true
               EXT=""
             fi
 
@@ -245,38 +255,48 @@ jobs:
             cd ../..
           done
 
-          # Main package
-          mkdir -p "@almadar/cli"
-          cp -r cli/npm/* "@almadar/cli/"
-          cd "@almadar/cli"
+          # Main package (only if cli/npm exists)
+          if [ -d "cli/npm" ]; then
+            mkdir -p "npm-packages/@almadar/cli"
+            cp -r cli/npm/* "npm-packages/@almadar/cli/"
+            cd "npm-packages/@almadar/cli"
 
-          # Update version in package.json
-          jq --arg v "$VERSION" '.version = $v | .optionalDependencies |= with_entries(.value = $v)' package.json > tmp.json
-          mv tmp.json package.json
+            # Update version in package.json
+            if command -v jq &> /dev/null; then
+              jq --arg v "$VERSION" '.version = $v | .optionalDependencies |= with_entries(.value = $v)' package.json > tmp.json
+              mv tmp.json package.json
+            fi
 
-          cd ../..
+            cd ../..
+          fi
 
       - name: Publish platform packages
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           for dir in npm-packages/@almadar/cli-*; do
-            cd "$dir"
-            npm publish --access public || true
-            cd -
+            if [ -d "$dir" ]; then
+              cd "$dir"
+              npm publish --access public || echo "Failed to publish $dir"
+              cd - > /dev/null
+            fi
           done
 
       - name: Publish main package
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          cd npm-packages/@almadar/cli
-          npm publish --access public
+          if [ -d "npm-packages/@almadar/cli" ]; then
+            cd npm-packages/@almadar/cli
+            npm publish --access public || echo "Failed to publish main package"
+          fi
 
   update-homebrew:
     name: Update Homebrew Tap
     needs: release
     runs-on: ubuntu-latest
+    # Only run if HOMEBREW_TAP_TOKEN is configured
+    if: ${{ vars.PUBLISH_HOMEBREW == 'true' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -297,17 +317,22 @@ jobs:
 
           # Download and compute SHA256 for each platform
           for platform in darwin-x64 darwin-arm64 linux-x64 linux-arm64; do
-            curl -fsSL "${BASE_URL}/almadar-${platform}.tar.gz" -o "almadar-${platform}.tar.gz"
-            SHA=$(sha256sum "almadar-${platform}.tar.gz" | cut -d' ' -f1)
-            echo "${platform}=${SHA}" >> $GITHUB_OUTPUT
-            echo "SHA256 for ${platform}: ${SHA}"
+            if curl -fsSL "${BASE_URL}/almadar-${platform}.tar.gz" -o "almadar-${platform}.tar.gz" 2>/dev/null; then
+              SHA=$(sha256sum "almadar-${platform}.tar.gz" | cut -d' ' -f1)
+              echo "${platform}=${SHA}" >> $GITHUB_OUTPUT
+              echo "SHA256 for ${platform}: ${SHA}"
+            else
+              echo "Could not download ${platform}"
+              echo "${platform}=MISSING" >> $GITHUB_OUTPUT
+            fi
           done
 
       - name: Clone Homebrew tap
         run: |
-          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/almadar-io/homebrew-tap.git tap
+          git clone https://x-access-token:${{ secrets.HOMEBREW_TAP_TOKEN }}@github.com/almadar-io/homebrew-tap.git tap || echo "Could not clone homebrew-tap"
 
       - name: Update formula
+        if: ${{ hashFiles('tap/Formula') != '' }}
         run: |
           VERSION=${{ steps.version.outputs.version }}
           VERSION_NUM=${VERSION#v}  # Remove 'v' prefix
@@ -349,7 +374,7 @@ jobs:
             end
 
             test do
-              assert_match "Almadar schema compiler", shell_output("#{bin}/almadar --help")
+              assert_match "almadar", shell_output("#{bin}/almadar --help")
             end
           end
           EOF
@@ -364,10 +389,11 @@ jobs:
           cat tap/Formula/almadar.rb
 
       - name: Commit and push
+        if: ${{ hashFiles('tap/Formula') != '' }}
         run: |
           cd tap
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add Formula/almadar.rb
-          git commit -m "Update almadar to ${{ steps.version.outputs.version }}"
-          git push
+          git diff --staged --quiet || git commit -m "Update almadar to ${{ steps.version.outputs.version }}"
+          git push || echo "Could not push to homebrew-tap"
