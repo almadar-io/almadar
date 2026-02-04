@@ -19,6 +19,11 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
+      label: "Community",
+      items: ["community/contributing"],
+    },
+    {
+      type: "category",
       label: "Reference",
       items: [
         {
@@ -32,11 +37,6 @@ const sidebars: SidebarsConfig = {
           href: "pathname:///behaviors.html",
         },
       ],
-    },
-    {
-      type: "category",
-      label: "Community",
-      items: ["community/contributing"],
     },
   ],
 };

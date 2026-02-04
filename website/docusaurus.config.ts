@@ -76,6 +76,12 @@ const config: Config = {
       },
       items: [
         {
+          to: "/",
+          label: "Home",
+          position: "left",
+          activeBaseRegex: "^/$",
+        },
+        {
           type: "docSidebar",
           sidebarId: "docsSidebar",
           position: "left",

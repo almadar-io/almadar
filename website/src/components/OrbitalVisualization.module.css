@@ -5,62 +5,11 @@
     justify-content: center;
 }
 
-.canvas {
+.schematicImage {
     width: 100%;
     height: auto;
     max-width: 400px;
-    filter: drop-shadow(0 0 15px rgba(20, 184, 166, 0.1));
-}
-
-.nucleusGroup {
-    animation: pulse 4s ease-in-out infinite;
-}
-
-.ring1 {
-    transform: rotate(0deg);
-    opacity: 0.6;
-}
-
-.ring2 {
-    transform: rotate(60deg);
-    opacity: 0.6;
-}
-
-.ring3 {
-    transform: rotate(-60deg);
-    opacity: 0.6;
-}
-
-/* Electrons are animated via SMIL in SVG, but we add glow here */
-.electron1,
-.electron2 {
-    filter: drop-shadow(0 0 4px var(--almadar-sand-gold));
-}
-
-@keyframes pulse {
-
-    0%,
-    100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.05);
-    }
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-/* Optional: Add slow rotation to entire gyro container */
-.gyroContainer {
-    animation: spin 60s linear infinite;
-    transform-origin: center;
+    border-radius: 12px;
+    /* Optional: subtle border if needed to separate from background */
+    /* border: 1px solid var(--ifm-color-emphasis-200); */
 }

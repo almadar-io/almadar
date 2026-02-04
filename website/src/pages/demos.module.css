@@ -114,3 +114,30 @@
     margin-bottom: 0.5rem;
     text-transform: uppercase;
 }
+
+/* Added for Hero consistency */
+.tag {
+    background: rgba(20, 184, 166, 0.1);
+    color: #14b8a6;
+    padding: 0.35rem 1rem;
+    border-radius: 99px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+}
+
+.buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
