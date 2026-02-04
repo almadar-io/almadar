@@ -190,6 +190,8 @@ function HomepageFeatures() {
   );
 }
 
+import OrbitalVisualization from "../components/OrbitalVisualization";
+
 function HomepagePhilosophy() {
   return (
     <section className={styles.philosophy}>
@@ -212,38 +214,23 @@ function HomepagePhilosophy() {
                 and integrations.
               </Translate>
             </p>
+
+            {/* Visualization replacing the list */}
+            <OrbitalVisualization />
+
             <div className={styles.philosophyFeatures}>
+              {/* Keeping short descriptions for accessibility/context below viz */}
               <div className={styles.philosophyFeature}>
-                <strong>
-                  <Translate id="homepage.philosophy.entity">Entity</Translate>
-                </strong>
-                <span>
-                  <Translate id="homepage.philosophy.entity.description">
-                    Your data model with fields and persistence
-                  </Translate>
-                </span>
+                <strong><Translate id="homepage.philosophy.entity">Entity</Translate></strong>: <Translate id="homepage.philosophy.entity.description">Data Model</Translate>
               </div>
               <div className={styles.philosophyFeature}>
-                <strong>
-                  <Translate id="homepage.philosophy.trait">Trait</Translate>
-                </strong>
-                <span>
-                  <Translate id="homepage.philosophy.trait.description">
-                    Reusable state machine with UI effects
-                  </Translate>
-                </span>
+                <strong><Translate id="homepage.philosophy.trait">Trait</Translate></strong>: <Translate id="homepage.philosophy.trait.description">Behavior</Translate>
               </div>
               <div className={styles.philosophyFeature}>
-                <strong>
-                  <Translate id="homepage.philosophy.page">Page</Translate>
-                </strong>
-                <span>
-                  <Translate id="homepage.philosophy.page.description">
-                    Route binding that composes traits
-                  </Translate>
-                </span>
+                <strong><Translate id="homepage.philosophy.page">Page</Translate></strong>: <Translate id="homepage.philosophy.page.description">Route Context</Translate>
               </div>
             </div>
+
           </div>
           <div className={styles.codePreview}>
             <div className={styles.codeHeader}>
@@ -334,8 +321,8 @@ export default function Home(): ReactNode {
       <HomepageHeader />
       <main>
         <DemoCarousel />
-        <HomepageFeatures />
         <HomepagePhilosophy />
+        <HomepageFeatures />
         <HomepageCTA />
       </main>
     </Layout>
