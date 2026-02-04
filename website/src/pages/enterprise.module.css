@@ -4,6 +4,9 @@
     background: var(--almadar-parchment);
     position: relative;
     overflow: hidden;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
     /* Ensure pattern doesn't overflow */
 }
 

@@ -158,6 +158,10 @@ const config: Config = {
               label: "GitHub",
               href: "https://github.com/almadar-io/almadar",
             },
+            {
+              label: "Contact",
+              href: "mailto:enterprise@almadar.io",
+            },
           ],
         },
       ],

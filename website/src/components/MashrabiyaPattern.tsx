@@ -40,7 +40,8 @@ export default function MashrabiyaPattern({
                                 stroke: var(--almadar-teal);
                                 stroke-dasharray: 5 15;
                                 animation: kf-flow 3s linear infinite;
-                                opacity: 0.6;
+                                animation: kf-flow 3s linear infinite;
+                                opacity: 0.3;
                             }
                         `}
                     </style>
@@ -52,8 +53,8 @@ export default function MashrabiyaPattern({
                         */}
 
                         {/* Base Geometry (Static) */}
-                        <path d="M 30 5 L 55 30 L 30 55 L 5 30 Z" opacity="0.5" />
-                        <rect x="14" y="14" width="32" height="32" opacity="0.5" />
+                        <path d="M 30 5 L 55 30 L 30 55 L 5 30 Z" opacity="0.3" />
+                        <rect x="14" y="14" width="32" height="32" opacity="0.3" />
 
                         {/* Circuit Current Overlay (Animated) */}
                         <path

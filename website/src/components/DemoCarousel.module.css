@@ -246,3 +246,41 @@
         padding: 20px 20px;
     }
 }
+
+/* Placeholder Styles */
+.cardPlaceholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--almadar-midnight) 0%, var(--almadar-midnight-dark) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+[data-theme='light'] .cardPlaceholder {
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+}
+
+.cardPlaceholderPattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(var(--almadar-teal) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.1;
+}
+
+.cardPlaceholderLabel {
+    background: rgba(20, 184, 166, 0.1);
+    color: var(--almadar-teal);
+    padding: 0.5rem 1rem;
+    border-radius: 99px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    z-index: 10;
+    border: 1px solid rgba(20, 184, 166, 0.2);
+}
