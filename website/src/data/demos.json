@@ -1,38 +1,17 @@
 [
   {
-    "id": "builder-templates-studioprojecttemplate--hq-mode",
-    "title": "Almadar Studio",
-    "description": "AI-powered development environment for building full-stack applications from natural language.",
-    "height": "850px",
-    "category": "Dev Tools"
-  },
-  {
-    "id": "builder-organisms-agentchatpanel--running",
-    "title": "AI Agent Panel",
-    "description": "Real-time AI assistant with tool calls, todo tracking, and schema diffs.",
-    "height": "700px",
-    "category": "Dev Tools"
-  },
-  {
-    "id": "builder-organisms-schemadiffviewer--multiple-files",
-    "title": "Schema Diff Viewer",
-    "description": "Visual diff viewer for tracking AI-generated code changes across files.",
-    "height": "500px",
-    "category": "Dev Tools"
-  },
-  {
     "id": "clients-winning-11-templates-admindashboardtemplate--default",
     "title": "Executive Dashboard",
     "description": "High-level overview of system health, alerts, and key metrics.",
     "height": "800px",
-    "category": "Winning 11"
+    "category": "Social Network"
   },
   {
     "id": "clients-winning-11-templates-trustintelligencetemplate--default",
     "title": "Trust Intelligence",
     "description": "AI-driven analysis of team trust scores and performance trends.",
     "height": "800px",
-    "category": "Winning 11"
+    "category": "Social Network"
   },
   {
     "id": "clients-inspection-system-templates-inspectionstemplate--default",
@@ -53,7 +32,7 @@
     "title": "User Profile 360",
     "description": "Comprehensive user analysis including activity and trust metrics.",
     "height": "800px",
-    "category": "Winning 11"
+    "category": "Social Network"
   },
   {
     "id": "clients-inspection-system-templates-inspectionprocesstemplate--content-rule-checking",
@@ -82,5 +61,26 @@
     "description": "Distraction-free reading environment with integrated quizzes and markers.",
     "height": "800px",
     "category": "EdTech"
+  },
+  {
+    "id": "builder-templates-studioprojecttemplate--hq-mode",
+    "title": "Almadar Studio",
+    "description": "AI-powered development environment for building full-stack applications from natural language.",
+    "height": "850px",
+    "category": "Dev Tools"
+  },
+  {
+    "id": "builder-organisms-agentchatpanel--running",
+    "title": "AI Agent Panel",
+    "description": "Real-time AI assistant with tool calls, todo tracking, and schema diffs.",
+    "height": "700px",
+    "category": "Dev Tools"
+  },
+  {
+    "id": "builder-organisms-schemadiffviewer--multiple-files",
+    "title": "Schema Diff Viewer",
+    "description": "Visual diff viewer for tracking AI-generated code changes across files.",
+    "height": "500px",
+    "category": "Dev Tools"
   }
 ]

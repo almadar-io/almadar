@@ -82,15 +82,15 @@ const config: Config = {
           activeBaseRegex: "^/$",
         },
         {
+          to: "/demos",
+          label: "Demos",
+          position: "left",
+        },
+        {
           type: "docSidebar",
           sidebarId: "docsSidebar",
           position: "left",
           label: "Docs",
-        },
-        {
-          to: "/demos",
-          label: "Demos",
-          position: "left",
         },
         {
           to: "/enterprise",
