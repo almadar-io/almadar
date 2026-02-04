@@ -101,22 +101,21 @@ export default function MashrabiyaPattern({
                         {/* 4. Central Pulse */}
                         <circle cx="30" cy="30" r="2" fill="var(--almadar-sand-gold)" style={{ animation: 'kf-pulse 4s infinite' }} />
 
-                        {/* 5. Inter-Pattern Connectors (Lattice Grid) */}
-                        <g className="orbit-ring" style={{ strokeWidth: 0.3, opacity: 0.15 }}>
-                            {/* Horizontal Connectors */}
-                            <path d="M 0 30 L 2 30" />
-                            <path d="M 58 30 L 60 30" />
+                        {/* 5. Inter-Pattern Connectors (Connected Lattice) */}
+                        <g className="orbit-ring" style={{ strokeWidth: 0.8, opacity: 0.4 }}>
+                            {/* Full Horizontal Grid */}
+                            <path d="M 0 30 L 60 30" />
 
-                            {/* Vertical Connectors */}
-                            <path d="M 30 0 L 30 2" />
-                            <path d="M 30 58 L 30 60" />
+                            {/* Full Vertical Grid */}
+                            <path d="M 30 0 L 30 60" />
 
-                            {/* Diagonal Lattice (X Grid) */}
-                            <path d="M 0 0 L 10 10" />
-                            <path d="M 60 0 L 50 10" />
-                            <path d="M 0 60 L 10 50" />
-                            <path d="M 60 60 L 50 50" />
+                            {/* Full Diagonal Cross (X) */}
+                            <path d="M 0 0 L 60 60" />
+                            <path d="M 60 0 L 0 60" />
                         </g>
+
+                        {/* 6. Outer Frame Connector (Box Grid) */}
+                        <path d="M 0 0 L 60 0 L 60 60 L 0 60 Z" stroke="var(--almadar-teal)" strokeWidth="0.5" opacity="0.3" fill="none" />
                     </g>
                 </pattern>
             </defs>

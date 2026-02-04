@@ -124,27 +124,32 @@
     gap: 1.5rem;
 }
 
+/* Gold Treatment for Enterprise Feature Cards */
 .featureCard {
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 24px;
     padding: 2rem;
     transition: all 0.3s ease;
+    /* Subtle Gold accent */
+    border-bottom: 3px solid #e2e8f0;
 }
 
 [data-theme="dark"] .featureCard {
     background: rgba(255, 255, 255, 0.02);
     border-color: #1e293b;
+    border-bottom-color: #1e293b;
 }
 
 .featureCard:hover {
-    border-color: #14b8a6;
+    border-color: var(--almadar-sand-gold);
+    border-bottom-color: var(--almadar-sand-gold);
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(20, 184, 166, 0.15);
+    box-shadow: 0 12px 40px rgba(201, 162, 39, 0.15);
 }
 
 [data-theme="dark"] .featureCard:hover {
-    box-shadow: 0 12px 40px rgba(20, 184, 166, 0.1);
+    box-shadow: 0 12px 40px rgba(201, 162, 39, 0.1);
 }
 
 .featureCard h3 {
