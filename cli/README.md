@@ -8,6 +8,9 @@ The command-line interface for Almadar.
 # npm (recommended)
 npm install -g @almadar/cli
 
+# Or use npx
+npx @almadar/cli validate schema.orb
+
 # Homebrew (macOS/Linux)
 brew install almadar/tap/almadar
 
@@ -22,7 +25,7 @@ winget install Almadar.CLI
 
 | Command | Description |
 |---------|-------------|
-| `almadar new <name>` | Create a new project |
+| `almadar new <name>` | Create a new project with @almadar/* dependencies |
 | `almadar validate <file>` | Validate a schema |
 | `almadar compile <file>` | Compile to target shell |
 | `almadar dev <file>` | Start development server |
@@ -32,8 +35,10 @@ winget install Almadar.CLI
 ## Usage
 
 ```bash
-# Create a new project
+# Create a new project (sets up package.json with @almadar/* dependencies)
 almadar new my-app
+cd my-app
+npm install
 
 # Validate a schema
 almadar validate schema.orb
@@ -44,6 +49,23 @@ almadar compile schema.orb --shell typescript --output ./generated
 # Start dev server
 almadar dev schema.orb
 ```
+
+## Project Structure
+
+When you run `almadar new my-app`, you get:
+
+```
+my-app/
+├── package.json       # Has @almadar/* dependencies
+├── schema.orb         # Your schema file
+└── README.md
+```
+
+After `npm install`, all @almadar/* packages are available:
+- `@almadar/core` - Core types
+- `@almadar/std` - Standard library operators
+- `@almadar/patterns` - UI patterns
+- `@almadar/validation` - Schema validation
 
 ## Documentation
 

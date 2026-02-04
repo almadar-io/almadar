@@ -203,7 +203,7 @@ function HomepagePhilosophy() {
             </span>
             <Heading as="h2">
               <Translate id="homepage.philosophy.title">
-                The Anatomy of an Orbital
+                The Anatomy of an Almadar
               </Translate>
             </Heading>
             <p>

@@ -7,7 +7,7 @@ const OrbitalVisualization: React.FC = () => {
         <div className={styles.container}>
             <img
                 src={useBaseUrl('/img/orbital-blueprint.png')}
-                alt="Technical Blueprint of the Orbital Architecture: Entity Core, Trait Circuitry, Page Frame"
+                alt="Technical Blueprint of the Almadar Architecture: Entity Core, Trait Circuitry, Page Frame"
                 className={styles.schematicImage}
             />
         </div>
