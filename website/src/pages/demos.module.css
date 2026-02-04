@@ -1,26 +1,81 @@
 .main {
-    padding: 4rem 0;
+    padding: 0;
+    /* Remove padding to allow full-width hero */
     min-height: 80vh;
+}
+
+/* Hero Standardization - Matching index.module.css */
+.heroWrapper {
+    min-height: 90vh;
+    /* Match Home */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 0;
+    position: relative;
+    overflow: hidden;
+    background: var(--almadar-parchment);
+    /* border-bottom removed */
+}
+
+[data-theme="dark"] .heroWrapper {
+    background: var(--almadar-midnight);
+}
+
+.heroPatternContainer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    /* Align to right like Home */
+    bottom: 0;
+    width: 60%;
+    /* Match Home width */
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    mask-image: radial-gradient(circle at top right, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at top right, black 30%, transparent 80%);
+}
+
+.heroPattern {
+    width: 100%;
+    height: 100%;
+    color: var(--almadar-teal);
+    opacity: 0.15;
+    /* Default opacity */
+}
+
+[data-theme='dark'] .heroPattern {
+    color: var(--almadar-teal);
+    opacity: 0.3;
 }
 
 .header {
     text-align: center;
-    margin-bottom: 4rem;
+    position: relative;
+    z-index: 10;
 }
 
 .header h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
     color: var(--almadar-midnight);
+    font-weight: 800;
 }
 
 [data-theme='dark'] .header h1 {
-    color: var(--ifm-color-primary-light);
+    color: #fff;
 }
 
 .header p {
     font-size: 1.25rem;
     color: var(--ifm-color-content-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.demosSection {
+    padding: 6rem 0;
 }
 
 .demoWrapper {
@@ -34,7 +89,12 @@
 .demoMeta h2 {
     font-size: 2rem;
     margin-bottom: 0.5rem;
-    color: #000000;
+    /* Theme-aware color fix */
+    color: var(--ifm-color-emphasis-900);
+}
+
+[data-theme='dark'] .demoMeta h2 {
+    color: #fff;
 }
 
 .demoMeta p {
