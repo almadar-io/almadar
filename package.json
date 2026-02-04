@@ -1,0 +1,25 @@
+{
+  "name": "almadar-project",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Almadar project template - install @almadar/* packages via npm",
+  "type": "module",
+  "scripts": {
+    "validate": "almadar validate",
+    "compile": "almadar compile",
+    "dev": "almadar dev",
+    "test": "almadar test"
+  },
+  "dependencies": {
+    "@almadar/core": "^1.0.1",
+    "@almadar/patterns": "^1.0.1",
+    "@almadar/std": "^1.0.1",
+    "@almadar/validation": "^1.0.1"
+  },
+  "devDependencies": {
+    "@almadar/cli": "^1.0.1"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

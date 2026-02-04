@@ -1,0 +1,18 @@
+{
+  "name": "@almadar/shell",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Minimal full-stack shell template for Almadar applications",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0"
+  }
+}
