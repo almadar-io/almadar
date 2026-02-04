@@ -112,9 +112,7 @@
 /* --- Card Design --- */
 .card {
     flex: 0 0 380px;
-    /* Fixed width */
     height: 440px;
-    /* Fixed height */
 
     display: flex;
     flex-direction: column;
@@ -125,54 +123,67 @@
     overflow: hidden;
 
     text-decoration: none !important;
-    color: #f8fafc !important;
+    color: var(--ifm-font-color-base) !important;
 
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     position: relative;
 }
 
+[data-theme='light'] .card {
+    background: #ffffff;
+    border-color: #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
 .card:hover {
     transform: translateY(-8px);
-    border-color: var(--almadar-teal);
+    border-color: var(--almadar-sand-gold);
+    /* Gold Border on Hover */
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme='light'] .card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 /* --- Top Half: Preview --- */
 .cardPreviewContainer {
     height: 55%;
-    /* Top part of card */
     position: relative;
     overflow: hidden;
     background: #000;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+[data-theme='light'] .cardPreviewContainer {
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+}
+
 .cardPreview {
     width: 100%;
     height: 100%;
-    /* No grayscale for cleaner look, just scaled */
 }
 
-/* Iframe Scaling */
 .cardPreview iframe {
     width: 142%;
-    /* 100 / 0.7 scale approx */
     height: 142%;
     transform: scale(0.7);
     transform-origin: top left;
     border: none;
     pointer-events: none;
-    /* Pass clicks to card link */
     background: #fff;
-    /* Ensure iframe has white bg if transparent */
 }
 
-/* Overlay gradient to make it feel integrated */
 .previewOverlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(to bottom, transparent 70%, rgba(30, 41, 59, 0.8) 100%);
     pointer-events: none;
+}
+
+[data-theme='light'] .previewOverlay {
+    background: linear-gradient(to bottom, transparent 70%, rgba(255, 255, 255, 0.8) 100%);
 }
 
 /* --- Bottom Half: Content --- */
@@ -183,7 +194,10 @@
     flex-direction: column;
     z-index: 2;
     background: var(--almadar-midnight-light);
-    /* Ensure solid background */
+}
+
+[data-theme='light'] .cardContent {
+    background: #ffffff;
 }
 
 .cardHeader {
@@ -195,8 +209,10 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: 700;
-    color: var(--almadar-teal);
-    background: rgba(20, 184, 166, 0.1);
+    /* Tertiary Gold Usage */
+    color: var(--almadar-sand-gold);
+    background: rgba(201, 162, 39, 0.1);
+    /* Gold with opacity */
     padding: 6px 10px;
     border-radius: 99px;
 }
@@ -207,6 +223,11 @@
     font-weight: 700;
     color: #fff;
     line-height: 1.2;
+}
+
+/* Force Black Title in Light Mode */
+[data-theme='light'] .cardTitle {
+    color: #000000;
 }
 
 .cardDesc {
@@ -220,19 +241,25 @@
     overflow: hidden;
 }
 
+[data-theme='light'] .cardDesc {
+    color: #64748b;
+}
+
 .cta {
     display: inline-flex;
     align-items: center;
     font-weight: 600;
     color: var(--almadar-teal);
+    /* Primary Teal */
     margin-top: 1rem;
     font-size: 0.95rem;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .card:hover .cta {
     transform: translateX(6px);
-    color: var(--almadar-teal-light);
+    color: var(--almadar-sand-gold);
+    /* Gold on Hover */
 }
 
 /* Mobile Adjustments */
