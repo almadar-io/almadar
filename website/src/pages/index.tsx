@@ -214,6 +214,9 @@ function HomepagePhilosophy() {
                 and integrations.
               </Translate>
             </p>
+
+            <OrbitalVisualization />
+
           </div>
           <div className={styles.codePreview}>
             <div className={styles.codeHeader}>
@@ -247,12 +250,6 @@ function HomepagePhilosophy() {
             </div>
           </div>
         </div>
-
-        {/* Visualization Full Width Below */}
-        <div className={styles.vizContainer}>
-          <OrbitalVisualization />
-        </div>
-
       </div>
     </section>
   );
