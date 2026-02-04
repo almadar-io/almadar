@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import Layout from '@theme/Layout';
+import Link from '@docusaurus/Link';
 import { useLocation } from '@docusaurus/router';
+import Translate from '@docusaurus/Translate';
 import StorybookDemo from '../components/StorybookDemo';
 import styles from './demos.module.css';
 import demos from '../data/demos.json';
@@ -23,15 +25,23 @@ export default function Demos(): React.JSX.Element {
                     </div>
                     <div className="container">
                         <div className={styles.header}>
+                            <span className={styles.tag}>
+                                <Translate id="demos.tag">Demos</Translate>
+                            </span>
                             <h1>Interactive Showcases</h1>
                             <p className={styles.description}>Experience the power of Almadar through live, interactive templates.</p>
+                            <div className={styles.buttons}>
+                                <Link className="button button--primary button--lg" to="#demos-grid">
+                                    <Translate id="demos.cta">View Demos</Translate>
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </header>
 
                 <div className={styles.demosSection}>
                     <div className="container">
-                        <div className={styles.grid}>
+                        <div id="demos-grid" className={styles.grid}>
                             {demos.map((demo) => (
                                 <div key={demo.id} id={demo.id} className={styles.demoWrapper}>
                                     <div className={styles.demoMeta}>

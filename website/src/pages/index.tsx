@@ -203,17 +203,48 @@ function HomepagePhilosophy() {
             </span>
             <Heading as="h2">
               <Translate id="homepage.philosophy.title">
-                Entity + Trait = Almadar
+                The Anatomy of an Orbital
               </Translate>
             </Heading>
             <p>
               <Translate id="homepage.philosophy.description">
-                Just as electrons orbit nuclei following quantum rules, your
-                application components follow state machine rules. Each Almadar
-                is an entity with attached traits that define its behavior, UI,
-                and integrations.
+                Most software is built like a house of cards. Almadar is built like a planetary system.
+                We separate your application into three atomic units:
               </Translate>
             </p>
+
+            <div className={styles.philosophyFeatures}>
+              <div className={styles.philosophyFeature}>
+                <strong>
+                  <Translate id="homepage.philosophy.entity">Entity (Matter)</Translate>
+                </strong>
+                <span>
+                  <Translate id="homepage.philosophy.entity.description">
+                    The immutable Core. It defines the gravity and shape of your data.
+                  </Translate>
+                </span>
+              </div>
+              <div className={styles.philosophyFeature}>
+                <strong>
+                  <Translate id="homepage.philosophy.trait">Trait (Energy)</Translate>
+                </strong>
+                <span>
+                  <Translate id="homepage.philosophy.trait.description">
+                    The dynamic Orbit. A state machine that defines behavior and logic.
+                  </Translate>
+                </span>
+              </div>
+              <div className={styles.philosophyFeature}>
+                <strong>
+                  <Translate id="homepage.philosophy.page">Page (Space)</Translate>
+                </strong>
+                <span>
+                  <Translate id="homepage.philosophy.page.description">
+                    The Frame. A route container where users interact with Orbitals.
+                  </Translate>
+                </span>
+              </div>
+            </div>
 
             <OrbitalVisualization />
 
