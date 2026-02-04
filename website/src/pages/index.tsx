@@ -214,23 +214,6 @@ function HomepagePhilosophy() {
                 and integrations.
               </Translate>
             </p>
-
-            {/* Visualization replacing the list */}
-            <OrbitalVisualization />
-
-            <div className={styles.philosophyFeatures}>
-              {/* Keeping short descriptions for accessibility/context below viz */}
-              <div className={styles.philosophyFeature}>
-                <strong><Translate id="homepage.philosophy.entity">Entity</Translate></strong>: <Translate id="homepage.philosophy.entity.description">Data Model</Translate>
-              </div>
-              <div className={styles.philosophyFeature}>
-                <strong><Translate id="homepage.philosophy.trait">Trait</Translate></strong>: <Translate id="homepage.philosophy.trait.description">Behavior</Translate>
-              </div>
-              <div className={styles.philosophyFeature}>
-                <strong><Translate id="homepage.philosophy.page">Page</Translate></strong>: <Translate id="homepage.philosophy.page.description">Route Context</Translate>
-              </div>
-            </div>
-
           </div>
           <div className={styles.codePreview}>
             <div className={styles.codeHeader}>
@@ -264,6 +247,12 @@ function HomepagePhilosophy() {
             </div>
           </div>
         </div>
+
+        {/* Visualization Full Width Below */}
+        <div className={styles.vizContainer}>
+          <OrbitalVisualization />
+        </div>
+
       </div>
     </section>
   );
