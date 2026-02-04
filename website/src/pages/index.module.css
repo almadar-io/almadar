@@ -361,6 +361,18 @@ html[dir="rtl"] .heroText {
     font-weight: 500;
 }
 
+/* Visualization Container */
+.vizContainer {
+    width: 100%;
+    margin-top: 2rem;
+    border-top: 1px solid var(--ifm-color-emphasis-200);
+    padding-top: 3rem;
+}
+
+[data-theme='dark'] .vizContainer {
+    border-top-color: var(--ifm-color-emphasis-100);
+}
+
 /* CTA Section */
 .cta {
     padding: 6rem 0;

@@ -1,99 +1,56 @@
 .container {
     width: 100%;
-    margin: 2rem 0;
+    margin: 3rem auto;
     position: relative;
-    background: radial-gradient(circle at center, rgba(20, 184, 166, 0.05) 0%, transparent 70%);
-    border-radius: 20px;
-    border: 1px solid var(--almadar-midnight-light);
-    overflow: hidden;
-}
-
-[data-theme='light'] .container {
-    background: radial-gradient(circle at center, rgba(20, 184, 166, 0.05) 0%, transparent 70%);
-    border-color: rgba(20, 184, 166, 0.1);
+    overflow: visible;
+    /* Allow hover effects to pop */
 }
 
 .canvas {
     width: 100%;
     height: auto;
-    max-width: 800px;
+    max-width: 900px;
+    /* Wider canvas */
     display: block;
     margin: 0 auto;
+    /* overflow: visible; */
 }
 
-.nucleus {
-    animation: pulse 4s ease-in-out infinite;
+.layerGroup {
+    cursor: pointer;
 }
 
-.orbit1,
-.orbit2,
-.orbit3 {
-    transform-origin: center;
+.layerPlane {
+    transition: all 0.3s ease;
 }
 
-/* Electron Animations */
-.electron1 {
-    animation: orbit1 8s linear infinite;
+.layerGroup:hover .layerPlane {
+    filter: drop-shadow(0 0 10px currentColor);
+    stroke-width: 3;
 }
 
-.electron2 {
-    animation: orbit2 12s linear infinite reverse;
+.labelGroup {
+    transition: transform 0.3s ease;
 }
 
-.electron3 {
-    animation: orbit3 10s linear infinite;
+.layerGroup:hover .labelGroup {
+    transform: translate(-190px, 20px);
+    /* Slight nudge left */
 }
 
-@keyframes pulse {
+.particle {
+    pointer-events: none;
+    filter: drop-shadow(0 0 4px white);
+}
 
-    0%,
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    50% {
-        transform: scale(1.05);
-        opacity: 0.9;
+/* Connection Lines Pulse */
+@keyframes dash {
+    to {
+        stroke-dashoffset: -20;
     }
 }
 
-@keyframes orbit1 {
-    0% {
-        transform: rotate(0deg) translateX(150px) rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg) translateX(150px) rotate(-360deg);
-    }
-}
-
-/* Need adjusted keyframes for rotated orbits to keep electrons on path */
-/* This is a simplified CSS animation representation. */
-/* Ideally we'd calculate exact path coordinates or use SMIL/JS for complex elliptical paths */
-/* For now, circular approximation for the 'electrons' on elliptical paths effect */
-
-.electron1 {
-    offset-path: path('M -150 0 A 150 80 0 1 1 150 0 A 150 80 0 1 1 -150 0');
-    animation: move 6s linear infinite;
-}
-
-.electron2 {
-    offset-path: path('M -150 0 A 150 80 0 1 1 150 0 A 150 80 0 1 1 -150 0');
-    animation: move 9s linear infinite;
-}
-
-.electron3 {
-    offset-path: path('M -150 0 A 150 80 0 1 1 150 0 A 150 80 0 1 1 -150 0');
-    animation: move 7s linear infinite reverse;
-}
-
-@keyframes move {
-    0% {
-        offset-distance: 0%;
-    }
-
-    100% {
-        offset-distance: 100%;
-    }
+.connectionLine {
+    animation: dash 1s linear infinite;
+    /* Uncommented to fix empty rule lint */
 }
