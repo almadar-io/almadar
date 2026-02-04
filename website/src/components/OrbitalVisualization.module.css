@@ -1,56 +1,66 @@
 .container {
     width: 100%;
-    margin: 3rem auto;
-    position: relative;
-    overflow: visible;
-    /* Allow hover effects to pop */
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
 }
 
 .canvas {
     width: 100%;
     height: auto;
-    max-width: 900px;
-    /* Wider canvas */
-    display: block;
-    margin: 0 auto;
-    /* overflow: visible; */
+    max-width: 400px;
+    filter: drop-shadow(0 0 15px rgba(20, 184, 166, 0.1));
 }
 
-.layerGroup {
-    cursor: pointer;
+.nucleusGroup {
+    animation: pulse 4s ease-in-out infinite;
 }
 
-.layerPlane {
-    transition: all 0.3s ease;
+.ring1 {
+    transform: rotate(0deg);
+    opacity: 0.6;
 }
 
-.layerGroup:hover .layerPlane {
-    filter: drop-shadow(0 0 10px currentColor);
-    stroke-width: 3;
+.ring2 {
+    transform: rotate(60deg);
+    opacity: 0.6;
 }
 
-.labelGroup {
-    transition: transform 0.3s ease;
+.ring3 {
+    transform: rotate(-60deg);
+    opacity: 0.6;
 }
 
-.layerGroup:hover .labelGroup {
-    transform: translate(-190px, 20px);
-    /* Slight nudge left */
+/* Electrons are animated via SMIL in SVG, but we add glow here */
+.electron1,
+.electron2 {
+    filter: drop-shadow(0 0 4px var(--almadar-sand-gold));
 }
 
-.particle {
-    pointer-events: none;
-    filter: drop-shadow(0 0 4px white);
-}
+@keyframes pulse {
 
-/* Connection Lines Pulse */
-@keyframes dash {
-    to {
-        stroke-dashoffset: -20;
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
     }
 }
 
-.connectionLine {
-    animation: dash 1s linear infinite;
-    /* Uncommented to fix empty rule lint */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Optional: Add slow rotation to entire gyro container */
+.gyroContainer {
+    animation: spin 60s linear infinite;
+    transform-origin: center;
 }
