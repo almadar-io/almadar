@@ -14,7 +14,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shell: [typescript, python]
+        # Use shell names that match templates/ directory
+        shell: [almadar-shell]
 
     steps:
       - uses: actions/checkout@v4
@@ -30,7 +31,8 @@ jobs:
 
       - name: Run language tests
         env:
-          ORBITAL_SHELLS_DIR: ${{ github.workspace }}/shells
+          # Templates are in templates/ not shells/
+          ORBITAL_SHELLS_DIR: ${{ github.workspace }}/templates
         run: |
           chmod +x tests/run-tests.sh
           ./tests/run-tests.sh --shell ${{ matrix.shell }} --verbose

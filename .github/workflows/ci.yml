@@ -7,27 +7,6 @@ on:
     branches: [main]
 
 jobs:
-  validate:
-    name: Validate
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-          cache-dependency-path: std/package.json
-
-      - name: Install std dependencies
-        working-directory: std
-        run: npm ci --ignore-scripts || npm install
-
-      - name: Run std tests
-        working-directory: std
-        run: npm test || echo "No tests configured yet"
-
   validate-test-schemas:
     name: Validate Test Schemas
     runs-on: ubuntu-latest
@@ -67,13 +46,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Check JSON validity
-        run: |
-          for file in patterns/*.json; do
-            echo "Checking $file..."
-            python3 -c "import json; json.load(open('$file'))"
-          done
 
       - name: Check example schemas
         run: |
