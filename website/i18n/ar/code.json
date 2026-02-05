@@ -657,5 +657,45 @@
   "enterprise.meta.description": {
     "message": "المدار للمؤسسات - وسّع تطويرك مع ميزات مؤسسية",
     "description": "Enterprise meta description"
+  },
+  "demos.tag": {
+    "message": "العروض التوضيحية",
+    "description": "Demos tag"
+  },
+  "demos.title": {
+    "message": "عروض تفاعلية",
+    "description": "Demos page title"
+  },
+  "demos.description": {
+    "message": "اختبر قوة المدار من خلال قوالب تفاعلية حية.",
+    "description": "Demos page description"
+  },
+  "demos.cta": {
+    "message": "عرض العروض التوضيحية",
+    "description": "View demos button"
+  },
+  "demos.meta.title": {
+    "message": "العروض التفاعلية",
+    "description": "Demos meta title"
+  },
+  "demos.meta.description": {
+    "message": "استكشف نظام تصميم المدار والقوالب",
+    "description": "Demos meta description"
+  },
+  "carousel.title": {
+    "message": "عروض تفاعلية",
+    "description": "Carousel section title"
+  },
+  "carousel.subtitle": {
+    "message": "استكشف تطبيقات حقيقية مبنية بالمدار.",
+    "description": "Carousel section subtitle"
+  },
+  "carousel.viewAll": {
+    "message": "عرض جميع العروض",
+    "description": "View all demos button"
+  },
+  "carousel.exploreDemo": {
+    "message": "استكشف العرض ←",
+    "description": "Explore demo CTA"
   }
 }

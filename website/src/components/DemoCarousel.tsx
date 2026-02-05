@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Link from '@docusaurus/Link';
+import Translate from '@docusaurus/Translate';
 import demos from '../data/demos.json';
 import styles from './DemoCarousel.module.css';
 
@@ -13,11 +14,11 @@ export default function DemoCarousel(): React.JSX.Element {
         <section className={styles.section}>
             <div className="container">
                 <div className={styles.header}>
-                    <h2 className={styles.heading}>Interactive Showcases</h2>
-                    <p className={styles.subheading}>Explore real-world applications built with Almadar.</p>
+                    <h2 className={styles.heading}><Translate id="carousel.title">Interactive Showcases</Translate></h2>
+                    <p className={styles.subheading}><Translate id="carousel.subtitle">Explore real-world applications built with Almadar.</Translate></p>
                     <div className={styles.actions}>
                         <Link to="/demos" className="button button--primary button--lg">
-                            View All Demos
+                            <Translate id="carousel.viewAll">View All Demos</Translate>
                         </Link>
                     </div>
                 </div>
@@ -108,7 +109,7 @@ function DemoCard({ demo }: { demo: typeof demos[0] }) {
                 </div>
                 <h3 className={styles.cardTitle}>{demo.title}</h3>
                 <p className={styles.cardDesc}>{demo.description}</p>
-                <span className={styles.cta}>Explore Demo →</span>
+                <span className={styles.cta}><Translate id="carousel.exploreDemo">Explore Demo →</Translate></span>
             </div>
         </Link>
     );
