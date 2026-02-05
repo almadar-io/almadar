@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import { useLocation } from '@docusaurus/router';
-import Translate from '@docusaurus/Translate';
+import Translate, { translate } from '@docusaurus/Translate';
 import StorybookDemo from '../components/StorybookDemo';
 import styles from './demos.module.css';
 import demos from '../data/demos.json';
@@ -16,8 +16,8 @@ export default function Demos(): React.JSX.Element {
 
     return (
         <Layout
-            title="Interactive Demos"
-            description="Explore the Almadar design system and templates">
+            title={translate({ id: 'demos.meta.title', message: 'Interactive Demos' })}
+            description={translate({ id: 'demos.meta.description', message: 'Explore the Almadar design system and templates' })}>
             <main className={styles.main}>
                 <header className={styles.heroWrapper}>
                     <div className={styles.heroPatternContainer}>
@@ -28,8 +28,8 @@ export default function Demos(): React.JSX.Element {
                             <span className={styles.tag}>
                                 <Translate id="demos.tag">Demos</Translate>
                             </span>
-                            <h1>Interactive Showcases</h1>
-                            <p className={styles.description}>Experience the power of Almadar through live, interactive templates.</p>
+                            <h1><Translate id="demos.title">Interactive Showcases</Translate></h1>
+                            <p className={styles.description}><Translate id="demos.description">Experience the power of Almadar through live, interactive templates.</Translate></p>
                             <div className={styles.buttons}>
                                 <Link className="button button--primary button--lg" to="#demos-grid">
                                     <Translate id="demos.cta">View Demos</Translate>
