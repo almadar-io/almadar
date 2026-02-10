@@ -510,7 +510,10 @@
               {
                 "from": "modalOpen",
                 "event": "CLOSE",
-                "to": "viewing"
+                "to": "viewing",
+                "effects": [
+                  ["render-ui", "modal", null]
+                ]
               },
               {
                 "from": "viewing",
@@ -900,7 +903,8 @@
             "events": [
               { "key": "INIT", "name": "Initialize" },
               { "key": "SELECT", "name": "Select Project", "payload": [{ "name": "id", "type": "string", "required": true }] },
-              { "key": "DESELECT", "name": "Deselect" }
+              { "key": "DESELECT", "name": "Deselect" },
+              { "key": "CLOSE", "name": "Close" }
             ],
             "transitions": [
               {
@@ -959,7 +963,18 @@
               {
                 "from": "selected",
                 "event": "DESELECT",
-                "to": "browsing"
+                "to": "browsing",
+                "effects": [
+                  ["render-ui", "drawer", null]
+                ]
+              },
+              {
+                "from": "selected",
+                "event": "CLOSE",
+                "to": "browsing",
+                "effects": [
+                  ["render-ui", "drawer", null]
+                ]
               }
             ]
           }
@@ -1588,13 +1603,17 @@
               {
                 "from": "open",
                 "event": "CLOSE",
-                "to": "closed"
+                "to": "closed",
+                "effects": [
+                  ["render-ui", "modal", null]
+                ]
               },
               {
                 "from": "open",
                 "event": "CONFIRM",
                 "to": "closed",
                 "effects": [
+                  ["render-ui", "modal", null],
                   ["notify", "success", "Action confirmed!"]
                 ]
               }
@@ -1650,7 +1669,10 @@
               {
                 "from": "open",
                 "event": "CLOSE",
-                "to": "closed"
+                "to": "closed",
+                "effects": [
+                  ["render-ui", "drawer", null]
+                ]
               }
             ]
           }
@@ -2244,18 +2266,25 @@
                 "event": "CONFIRM",
                 "to": "viewing",
                 "effects": [
+                  ["render-ui", "modal", null],
                   ["notify", "success", "Action confirmed successfully!"]
                 ]
               },
               {
                 "from": "modalOpen",
                 "event": "CANCEL",
-                "to": "viewing"
+                "to": "viewing",
+                "effects": [
+                  ["render-ui", "modal", null]
+                ]
               },
               {
                 "from": "modalOpen",
                 "event": "CLOSE",
-                "to": "viewing"
+                "to": "viewing",
+                "effects": [
+                  ["render-ui", "modal", null]
+                ]
               },
               {
                 "from": "viewing",
@@ -2273,7 +2302,10 @@
               {
                 "from": "drawerOpen",
                 "event": "CLOSE",
-                "to": "viewing"
+                "to": "viewing",
+                "effects": [
+                  ["render-ui", "drawer", null]
+                ]
               }
             ]
           }
