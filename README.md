@@ -29,16 +29,22 @@ Install the packages you need:
 
 ```bash
 # Core packages (required)
-npm install @almadar/core @almadar/validation
+npm install @almadar/core @almadar/validation @almadar/evaluator
 
 # Standard library operators
 npm install @almadar/std
 
-# UI patterns
-npm install @almadar/patterns
+# UI patterns and components
+npm install @almadar/patterns @almadar/ui
 
-# Runtime packages (for compiled apps)
-npm install @almadar/runtime @almadar/server @almadar/ui
+# Runtime (for running compiled apps)
+npm install @almadar/runtime @almadar/server
+
+# External service integrations (Stripe, Twilio, YouTube, etc.)
+npm install @almadar/integrations
+
+# AI agent infrastructure
+npm install @almadar/agent @almadar/llm @almadar/skills
 ```
 
 ### CLI Installation
@@ -51,17 +57,53 @@ npm install -g @almadar/cli
 npx @almadar/cli validate schema.orb
 ```
 
-## Available Packages
+## Published Packages
+
+All `@almadar` packages are published to [npm](https://www.npmjs.com/org/almadar).
+
+### Core
 
 | Package | npm | Description |
 |---------|-----|-------------|
-| `@almadar/core` | [![npm](https://img.shields.io/npm/v/@almadar/core)](https://www.npmjs.com/package/@almadar/core) | Core types and schema definitions |
+| `@almadar/core` | [![npm](https://img.shields.io/npm/v/@almadar/core)](https://www.npmjs.com/package/@almadar/core) | Core schema types and definitions |
+| `@almadar/validation` | [![npm](https://img.shields.io/npm/v/@almadar/validation)](https://www.npmjs.com/package/@almadar/validation) | Schema validation rules |
+| `@almadar/evaluator` | [![npm](https://img.shields.io/npm/v/@almadar/evaluator)](https://www.npmjs.com/package/@almadar/evaluator) | S-expression evaluator |
 | `@almadar/std` | [![npm](https://img.shields.io/npm/v/@almadar/std)](https://www.npmjs.com/package/@almadar/std) | Standard library (math, string, array operators) |
-| `@almadar/patterns` | [![npm](https://img.shields.io/npm/v/@almadar/patterns)](https://www.npmjs.com/package/@almadar/patterns) | UI pattern definitions |
-| `@almadar/validation` | [![npm](https://img.shields.io/npm/v/@almadar/validation)](https://www.npmjs.com/package/@almadar/validation) | Schema validation utilities |
-| `@almadar/runtime` | [![npm](https://img.shields.io/npm/v/@almadar/runtime)](https://www.npmjs.com/package/@almadar/runtime) | Client-side runtime |
-| `@almadar/server` | [![npm](https://img.shields.io/npm/v/@almadar/server)](https://www.npmjs.com/package/@almadar/server) | Server-side runtime |
-| `@almadar/ui` | [![npm](https://img.shields.io/npm/v/@almadar/ui)](https://www.npmjs.com/package/@almadar/ui) | React UI components |
+| `@almadar/patterns` | [![npm](https://img.shields.io/npm/v/@almadar/patterns)](https://www.npmjs.com/package/@almadar/patterns) | Pattern registry and component mappings |
+
+### Runtime
+
+| Package | npm | Description |
+|---------|-----|-------------|
+| `@almadar/runtime` | [![npm](https://img.shields.io/npm/v/@almadar/runtime)](https://www.npmjs.com/package/@almadar/runtime) | Interpreted runtime for orbital applications |
+| `@almadar/server` | [![npm](https://img.shields.io/npm/v/@almadar/server)](https://www.npmjs.com/package/@almadar/server) | Shared server infrastructure (Express middleware) |
+| `@almadar/ui` | [![npm](https://img.shields.io/npm/v/@almadar/ui)](https://www.npmjs.com/package/@almadar/ui) | React UI components, hooks, and providers |
+| `@almadar/integrations` | [![npm](https://img.shields.io/npm/v/@almadar/integrations)](https://www.npmjs.com/package/@almadar/integrations) | External service integrations (Stripe, Twilio, YouTube, Email, LLM) |
+
+### AI & Agent
+
+| Package | npm | Description |
+|---------|-----|-------------|
+| `@almadar/agent` | [![npm](https://img.shields.io/npm/v/@almadar/agent)](https://www.npmjs.com/package/@almadar/agent) | AI agent infrastructure for schema generation |
+| `@almadar/llm` | [![npm](https://img.shields.io/npm/v/@almadar/llm)](https://www.npmjs.com/package/@almadar/llm) | Multi-provider LLM client (rate limiting, token tracking, structured outputs) |
+| `@almadar/skills` | [![npm](https://img.shields.io/npm/v/@almadar/skills)](https://www.npmjs.com/package/@almadar/skills) | AI skill generators and prompts |
+
+### Tooling
+
+| Package | npm | Description |
+|---------|-----|-------------|
+| `@almadar/cli` | [![npm](https://img.shields.io/npm/v/@almadar/cli)](https://www.npmjs.com/package/@almadar/cli) | Almadar CLI (validate, compile, dev server) |
+| `@almadar/extensions` | [![npm](https://img.shields.io/npm/v/@almadar/extensions)](https://www.npmjs.com/package/@almadar/extensions) | Editor extension utilities for `.orb` files (VSCode, Zed) |
+
+### CLI Platform Binaries
+
+| Package | Platform |
+|---------|----------|
+| `@almadar/cli-darwin-arm64` | macOS Apple Silicon |
+| `@almadar/cli-darwin-x64` | macOS Intel |
+| `@almadar/cli-linux-arm64` | Linux ARM64 |
+| `@almadar/cli-linux-x64` | Linux x64 |
+| `@almadar/cli-windows-x64` | Windows x64 |
 
 ## Documentation
 
