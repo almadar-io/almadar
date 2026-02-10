@@ -211,7 +211,7 @@
                       }
                     ]
                   }],
-                  ["render-ui", "center", {
+                  ["render-ui", "main", {
                     "type": "vstack",
                     "gap": "md",
                     "children": [
@@ -422,7 +422,7 @@
                       }
                     ]
                   }],
-                  ["render-ui", "center", {
+                  ["render-ui", "main", {
                     "type": "vstack",
                     "gap": "lg",
                     "children": [
@@ -852,7 +852,7 @@
                       { "label": "On Hold", "value": "2", "icon": "circle-pause" }
                     ]
                   }],
-                  ["render-ui", "center", {
+                  ["render-ui", "main", {
                     "type": "entity-table",
                     "entity": "Project",
                     "columns": ["name", "status", "progress", "budget"],
@@ -873,7 +873,7 @@
                     "title": "Project Details",
                     "showBack": true
                   }],
-                  ["render-ui", "center", {
+                  ["render-ui", "main", {
                     "type": "entity-detail",
                     "entity": "Project",
                     "fields": ["name", "description", "status", "progress", "budget", "startDate", "endDate", "teamSize"]
@@ -1043,7 +1043,7 @@
                     "placeholder": "Search items...",
                     "entity": "SearchableItem"
                   }],
-                  ["render-ui", "center", {
+                  ["render-ui", "main", {
                     "type": "filter-group",
                     "entity": "SearchableItem",
                     "filters": [
@@ -1305,7 +1305,7 @@
                     ],
                     "currentStep": 0
                   }],
-                  ["render-ui", "center", {
+                  ["render-ui", "main", {
                     "type": "form",
                     "entity": "WizardData",
                     "fields": [
@@ -1328,7 +1328,7 @@
                     ],
                     "currentStep": 1
                   }],
-                  ["render-ui", "center", {
+                  ["render-ui", "main", {
                     "type": "form",
                     "entity": "WizardData",
                     "fields": [
@@ -1351,7 +1351,7 @@
                     ],
                     "currentStep": 2
                   }],
-                  ["render-ui", "center", {
+                  ["render-ui", "main", {
                     "type": "form",
                     "entity": "WizardData",
                     "fields": [
@@ -1427,7 +1427,7 @@
                     "title": "State - Loading",
                     "subtitle": "Loading state pattern"
                   }],
-                  ["render-ui", "center", {
+                  ["render-ui", "main", {
                     "type": "loading-state",
                     "message": "Loading data..."
                   }]
@@ -1464,7 +1464,7 @@
                     "title": "State - Empty",
                     "subtitle": "Empty state pattern"
                   }],
-                  ["render-ui", "center", {
+                  ["render-ui", "main", {
                     "type": "empty-state",
                     "title": "No items yet",
                     "description": "Get started by creating your first item.",
@@ -1503,7 +1503,7 @@
                     "title": "State - Error",
                     "subtitle": "Error state pattern"
                   }],
-                  ["render-ui", "center", {
+                  ["render-ui", "main", {
                     "type": "error-state",
                     "title": "Something went wrong",
                     "message": "We couldn't load the data. Please try again."
@@ -1731,7 +1731,7 @@
                     "title": "Accordion Pattern",
                     "subtitle": "Collapsible content sections"
                   }],
-                  ["render-ui", "center", {
+                  ["render-ui", "main", {
                     "type": "accordion",
                     "items": [
                       { "id": "section1", "title": "Section 1", "content": "Content for section 1" },
@@ -1772,7 +1772,7 @@
                     "title": "Alert Pattern",
                     "subtitle": "Alert message components"
                   }],
-                  ["render-ui", "center", {
+                  ["render-ui", "main", {
                     "type": "alert",
                     "variant": "info",
                     "title": "Information",
@@ -2062,7 +2062,7 @@
                       }
                     ]
                   }],
-                  ["render-ui", "center", {
+                  ["render-ui", "main", {
                     "type": "vstack",
                     "gap": "lg",
                     "children": [
@@ -2191,7 +2191,7 @@
                       { "label": "Open Drawer", "event": "OPEN_DRAWER", "variant": "secondary" }
                     ]
                   }],
-                  ["render-ui", "center", {
+                  ["render-ui", "main", {
                     "type": "vstack",
                     "gap": "lg",
                     "children": [
