@@ -21,27 +21,6 @@
     "category": "Strategy Game"
   },
   {
-    "id": "templates-game-gamecanvas3dworldmap--world-map-default",
-    "title": "3D World Map",
-    "description": "Three.js-powered 3D world map with terrain features, camera controls, and unit placement.",
-    "height": "800px",
-    "category": "3D Engine"
-  },
-  {
-    "id": "templates-game-gamecanvas3dworldmap--battle-player-turn",
-    "title": "3D Battle Scene",
-    "description": "3D tactical battle view with GLB model loading, turn indicators, and attack ranges.",
-    "height": "800px",
-    "category": "3D Engine"
-  },
-  {
-    "id": "templates-game-gamecanvas3dworldmap--castle-default",
-    "title": "3D Castle View",
-    "description": "3D castle garrison with loaded Kenney assets, building placement, and orbit controls.",
-    "height": "800px",
-    "category": "3D Engine"
-  },
-  {
     "id": "clients-winning-11-templates-admindashboardtemplate--default",
     "title": "Executive Dashboard",
     "description": "High-level overview of system health, alerts, and key metrics with real-time activity feed.",

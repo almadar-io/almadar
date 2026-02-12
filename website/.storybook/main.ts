@@ -16,7 +16,6 @@ const workspaceRoot = path.resolve(__dirname, "../../..");
 const config: StorybookConfig = {
     stories: [
         // Core @almadar/ui — only the specific stories used in demos
-        path.join(workspaceRoot, "packages/almadar-ui/components/templates/GameCanvas3DTemplates.stories.tsx"),
         path.join(workspaceRoot, "packages/almadar-ui/components/organisms/game/BattleBoard.stories.tsx"),
         path.join(workspaceRoot, "packages/almadar-ui/components/organisms/game/WorldMapBoard.stories.tsx"),
         path.join(workspaceRoot, "packages/almadar-ui/components/organisms/GraphCanvas.stories.tsx"),
