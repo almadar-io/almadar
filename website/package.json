@@ -7,6 +7,7 @@
     "docusaurus": "docusaurus",
     "start": "npm run build:storybook && docusaurus start",
     "build": "npm run build:storybook && npm run build:legacy && docusaurus build",
+    "build:site": "npm run build:legacy && docusaurus build",
     "build:docusaurus": "docusaurus build",
     "build:legacy": "node scripts/build.js",
     "build:storybook": "storybook build -o static/storybook --quiet || echo 'Storybook build skipped (run from monorepo root for full build)'",
