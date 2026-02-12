@@ -39,7 +39,7 @@ jobs:
 
       - name: Build website
         working-directory: website
-        run: npm run build || echo "Build script not yet configured"
+        run: npm run build:site
 
   lint:
     name: Lint

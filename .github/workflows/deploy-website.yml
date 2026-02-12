@@ -41,7 +41,8 @@ jobs:
           # Download the latest storybook.tar.gz from GitHub releases
           gh release download --pattern "storybook.tar.gz" --dir . || true
           if [ -f storybook.tar.gz ]; then
-            tar -xzf storybook.tar.gz
+            mkdir -p storybook
+            tar -xzf storybook.tar.gz -C storybook
             rm storybook.tar.gz
             echo "Storybook extracted from release artifact"
           else
