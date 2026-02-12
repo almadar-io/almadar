@@ -1,0 +1,62 @@
+{
+  "name": "UsesBasicTest",
+  "version": "1.0.0",
+  "description": "Test basic 'uses' primitive - importing an external orbital",
+  "uses": [
+    {
+      "from": "./11-uses-base.orb",
+      "as": "Base"
+    }
+  ],
+  "orbitals": [
+    {
+      "name": "TaskManager",
+      "entity": {
+        "name": "Task",
+        "collection": "tasks",
+        "fields": [
+          { "name": "id", "type": "string", "required": true, "primaryKey": true },
+          { "name": "title", "type": "string", "required": true },
+          { "name": "status", "type": "string", "default": "todo" }
+        ]
+      },
+      "traits": [
+        {
+          "name": "TaskLifecycle",
+          "linkedEntity": "Task",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [
+              { "name": "todo", "isInitial": true },
+              { "name": "in_progress" },
+              { "name": "done" }
+            ],
+            "events": [
+              { "key": "START", "name": "Start Task" },
+              { "key": "COMPLETE", "name": "Complete Task" },
+              { "key": "RESET", "name": "Reset Task" }
+            ],
+            "transitions": [
+              { "from": "todo", "to": "in_progress", "event": "START" },
+              { "from": "in_progress", "to": "done", "event": "COMPLETE" },
+              { "from": ["in_progress", "done"], "to": "todo", "event": "RESET" }
+            ]
+          }
+        }
+      ],
+      "pages": [
+        {
+          "name": "TaskList",
+          "path": "/tasks",
+          "traits": [
+            { "ref": "TaskLifecycle", "linkedEntity": "Task" }
+          ]
+        },
+        {
+          "ref": "Base.pages.DetailView",
+          "path": "/tasks/:id"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "name": "ModuleA",
+  "version": "1.0.0",
+  "description": "Module A for testing multiple 'uses' imports",
+  "orbitals": [
+    {
+      "name": "AComponent",
+      "entity": {
+        "name": "EntityA",
+        "collection": "entities_a",
+        "fields": [
+          { "name": "id", "type": "string", "required": true },
+          { "name": "dataA", "type": "string" },
+          { "name": "count", "type": "number", "default": 0 }
+        ]
+      },
+      "traits": [
+        {
+          "name": "ProcessorA",
+          "linkedEntity": "EntityA",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [
+              { "name": "pending", "isInitial": true },
+              { "name": "processing" },
+              { "name": "done" }
+            ],
+            "events": [
+              { "key": "PROCESS", "name": "Process" },
+              { "key": "COMPLETE", "name": "Complete" }
+            ],
+            "transitions": [
+              {
+                "from": "pending",
+                "to": "processing",
+                "event": "PROCESS",
+                "effects": [
+                  ["set", "@entity.count", ["+", "@entity.count", 1]]
+                ]
+              },
+              {
+                "from": "processing",
+                "to": "done",
+                "event": "COMPLETE",
+                "effects": [
+                  ["emit", "COMPLETED", { "module": "A" }]
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "pages": [
+        {
+          "name": "ViewA",
+          "path": "/a/view",
+          "traits": [
+            { "ref": "ProcessorA", "linkedEntity": "EntityA" }
+          ]
+        }
+      ]
+    }
+  ]
+}

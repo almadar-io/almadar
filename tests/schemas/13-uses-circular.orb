@@ -1,0 +1,50 @@
+{
+  "name": "UsesCircularTest",
+  "version": "1.0.0",
+  "description": "Test circular dependency detection with 'uses' - should fail validation",
+  "uses": [
+    {
+      "from": "./13-uses-a-circular.orb",
+      "as": "CircA"
+    }
+  ],
+  "orbitals": [
+    {
+      "name": "CircularTest",
+      "entity": {
+        "name": "CircEntity",
+        "collection": "circ",
+        "fields": [
+          { "name": "id", "type": "string", "required": true }
+        ]
+      },
+      "traits": [
+        {
+          "name": "CircularTestTrait",
+          "linkedEntity": "CircEntity",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [
+              { "name": "idle", "isInitial": true }
+            ],
+            "events": [
+              { "key": "TEST", "name": "Test" }
+            ],
+            "transitions": [
+              { "from": "idle", "to": "idle", "event": "TEST" }
+            ]
+          }
+        }
+      ],
+      "pages": [
+        {
+          "name": "CircPage",
+          "path": "/circ",
+          "traits": [
+            { "ref": "CircularTestTrait", "linkedEntity": "CircEntity" }
+          ]
+        }
+      ]
+    }
+  ]
+}

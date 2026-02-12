@@ -1,0 +1,50 @@
+{
+  "name": "CircA",
+  "version": "1.0.0",
+  "description": "Module A that imports B (circular dependency test)",
+  "uses": [
+    {
+      "from": "./13-uses-b-circular.orb",
+      "as": "CircB"
+    }
+  ],
+  "orbitals": [
+    {
+      "name": "ComponentA",
+      "entity": {
+        "name": "EntityA",
+        "collection": "a",
+        "fields": [
+          { "name": "id", "type": "string", "required": true }
+        ]
+      },
+      "traits": [
+        {
+          "name": "TraitA",
+          "linkedEntity": "EntityA",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [
+              { "name": "start", "isInitial": true }
+            ],
+            "events": [
+              { "key": "GO", "name": "Go" }
+            ],
+            "transitions": [
+              { "from": "start", "to": "start", "event": "GO" }
+            ]
+          }
+        }
+      ],
+      "pages": [
+        {
+          "name": "PageA",
+          "path": "/a",
+          "traits": [
+            { "ref": "TraitA", "linkedEntity": "EntityA" }
+          ]
+        }
+      ]
+    }
+  ]
+}

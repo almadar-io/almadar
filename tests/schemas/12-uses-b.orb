@@ -1,0 +1,62 @@
+{
+  "name": "ModuleB",
+  "version": "1.0.0",
+  "description": "Module B for testing multiple 'uses' imports",
+  "orbitals": [
+    {
+      "name": "BComponent",
+      "entity": {
+        "name": "EntityB",
+        "collection": "entities_b",
+        "fields": [
+          { "name": "id", "type": "string", "required": true },
+          { "name": "dataB", "type": "string" },
+          { "name": "processed", "type": "boolean", "default": false }
+        ]
+      },
+      "traits": [
+        {
+          "name": "ProcessorB",
+          "linkedEntity": "EntityB",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [
+              { "name": "waiting", "isInitial": true },
+              { "name": "active" },
+              { "name": "finished" }
+            ],
+            "events": [
+              { "key": "ACTIVATE", "name": "Activate" },
+              { "key": "FINISH", "name": "Finish" }
+            ],
+            "transitions": [
+              {
+                "from": "waiting",
+                "to": "active",
+                "event": "ACTIVATE"
+              },
+              {
+                "from": "active",
+                "to": "finished",
+                "event": "FINISH",
+                "effects": [
+                  ["set", "@entity.processed", true],
+                  ["emit", "COMPLETED", { "module": "B" }]
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "pages": [
+        {
+          "name": "ViewB",
+          "path": "/b/view",
+          "traits": [
+            { "ref": "ProcessorB", "linkedEntity": "EntityB" }
+          ]
+        }
+      ]
+    }
+  ]
+}
