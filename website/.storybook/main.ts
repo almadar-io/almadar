@@ -48,6 +48,8 @@ const config: StorybookConfig = {
         const { mergeConfig } = await import("vite");
 
         return mergeConfig(config, {
+            // Use relative base so all asset paths work when served under /storybook/
+            base: './',
             resolve: {
                 alias: {
                     // Resolve @almadar/ui to source so all project stories can import it
