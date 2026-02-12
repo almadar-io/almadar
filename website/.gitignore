@@ -5,6 +5,7 @@ node_modules/
 build/
 .docusaurus/
 .firebase/
+static/storybook/
 
 # Environment (secrets)
 .env

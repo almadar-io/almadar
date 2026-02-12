@@ -42,10 +42,8 @@ const config: StorybookConfig = {
     typescript: {
         reactDocgen: false,
     },
-    staticDirs: [
-        // Trait Wars assets (sprites, 3D models)
-        { from: path.join(workspaceRoot, "projects/trait-wars/assets"), to: "/trait-wars-assets" },
-    ],
+    // No staticDirs — trait-wars assets are served from the CDN (trait-wars-assets.web.app)
+    staticDirs: [],
     async viteFinal(config) {
         const { mergeConfig } = await import("vite");
 
