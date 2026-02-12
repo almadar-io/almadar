@@ -1,0 +1,84 @@
+{
+  "name": "UsesMultipleTest",
+  "version": "1.0.0",
+  "description": "Test importing multiple external orbitals with 'uses'",
+  "uses": [
+    {
+      "from": "./12-uses-a.orb",
+      "as": "ModuleA"
+    },
+    {
+      "from": "./12-uses-b.orb",
+      "as": "ModuleB"
+    }
+  ],
+  "orbitals": [
+    {
+      "name": "CompositeApp",
+      "entity": {
+        "name": "Composite",
+        "collection": "composites",
+        "fields": [
+          { "name": "id", "type": "string", "required": true },
+          { "name": "name", "type": "string", "required": true },
+          { "name": "moduleARef", "type": "string" },
+          { "name": "moduleBRef", "type": "string" }
+        ]
+      },
+      "traits": [
+        {
+          "name": "CompositeManager",
+          "linkedEntity": "Composite",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [
+              { "name": "idle", "isInitial": true },
+              { "name": "processing_a" },
+              { "name": "processing_b" },
+              { "name": "complete" }
+            ],
+            "events": [
+              { "key": "START_A", "name": "Start A" },
+              { "key": "START_B", "name": "Start B" },
+              { "key": "FINISH", "name": "Finish" }
+            ],
+            "transitions": [
+              { "from": "idle", "to": "processing_a", "event": "START_A" },
+              { "from": "processing_a", "to": "processing_b", "event": "START_B" },
+              { "from": "processing_b", "to": "complete", "event": "FINISH" }
+            ]
+          },
+          "listens": [
+            {
+              "event": "ModuleA:COMPLETED",
+              "triggers": "START_B",
+              "scope": "external"
+            },
+            {
+              "event": "ModuleB:COMPLETED",
+              "triggers": "FINISH",
+              "scope": "external"
+            }
+          ]
+        }
+      ],
+      "pages": [
+        {
+          "ref": "ModuleA.pages.ViewA",
+          "path": "/a"
+        },
+        {
+          "ref": "ModuleB.pages.ViewB",
+          "path": "/b"
+        },
+        {
+          "name": "CombinedView",
+          "path": "/combined",
+          "traits": [
+            { "ref": "CompositeManager", "linkedEntity": "Composite" }
+          ]
+        }
+      ]
+    }
+  ]
+}

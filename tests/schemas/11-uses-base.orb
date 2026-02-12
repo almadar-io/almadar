@@ -1,0 +1,78 @@
+{
+  "name": "UsesBaseOrbital",
+  "version": "1.0.0",
+  "description": "Base orbital for testing 'uses' imports - provides shared traits and pages",
+  "orbitals": [
+    {
+      "name": "SharedComponents",
+      "entity": {
+        "name": "StatusEntity",
+        "collection": "statuses",
+        "fields": [
+          { "name": "id", "type": "string", "required": true },
+          { "name": "status", "type": "string", "default": "active" },
+          { "name": "updatedAt", "type": "timestamp" }
+        ]
+      },
+      "traits": [
+        {
+          "name": "StatusTracker",
+          "linkedEntity": "StatusEntity",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [
+              { "name": "active", "isInitial": true },
+              { "name": "archived" },
+              { "name": "deleted" }
+            ],
+            "events": [
+              { "key": "ARCHIVE", "name": "Archive" },
+              { "key": "RESTORE", "name": "Restore" },
+              { "key": "DELETE", "name": "Delete" }
+            ],
+            "transitions": [
+              {
+                "from": "active",
+                "to": "archived",
+                "event": "ARCHIVE",
+                "effects": [
+                  ["set", "@entity.updatedAt", ["now"]]
+                ]
+              },
+              {
+                "from": "archived",
+                "to": "active",
+                "event": "RESTORE",
+                "effects": [
+                  ["set", "@entity.updatedAt", ["now"]]
+                ]
+              },
+              {
+                "from": ["active", "archived"],
+                "to": "deleted",
+                "event": "DELETE",
+                "guard": ["=", "@config.allowDelete", true]
+              }
+            ]
+          }
+        }
+      ],
+      "pages": [
+        {
+          "name": "DetailView",
+          "path": "/:entity/:id",
+          "traits": [
+            { "ref": "StatusTracker", "linkedEntity": "StatusEntity" }
+          ]
+        },
+        {
+          "name": "StatusBadge",
+          "path": "/components/status-badge",
+          "traits": [
+            { "ref": "StatusTracker", "linkedEntity": "StatusEntity" }
+          ]
+        }
+      ]
+    }
+  ]
+}

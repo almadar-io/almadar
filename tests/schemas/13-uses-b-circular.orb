@@ -1,0 +1,50 @@
+{
+  "name": "CircB",
+  "version": "1.0.0",
+  "description": "Module B that imports the main schema (completes circular dependency)",
+  "uses": [
+    {
+      "from": "./13-uses-circular.orb",
+      "as": "CircMain"
+    }
+  ],
+  "orbitals": [
+    {
+      "name": "ComponentB",
+      "entity": {
+        "name": "EntityB",
+        "collection": "b",
+        "fields": [
+          { "name": "id", "type": "string", "required": true }
+        ]
+      },
+      "traits": [
+        {
+          "name": "TraitB",
+          "linkedEntity": "EntityB",
+          "category": "interaction",
+          "stateMachine": {
+            "states": [
+              { "name": "init", "isInitial": true }
+            ],
+            "events": [
+              { "key": "NEXT", "name": "Next" }
+            ],
+            "transitions": [
+              { "from": "init", "to": "init", "event": "NEXT" }
+            ]
+          }
+        }
+      ],
+      "pages": [
+        {
+          "name": "PageB",
+          "path": "/b",
+          "traits": [
+            { "ref": "TraitB", "linkedEntity": "EntityB" }
+          ]
+        }
+      ]
+    }
+  ]
+}
