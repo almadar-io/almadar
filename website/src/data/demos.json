@@ -85,15 +85,8 @@
   },
   {
     "id": "game-battleboard--editor",
-    "title": "Battle Map Editor",
-    "description": "Interactive editor for designing battle maps with terrain painting and unit placement.",
-    "height": "800px",
-    "category": "Game Tools"
-  },
-  {
-    "id": "game-worldmapboard--editor",
-    "title": "World Map Editor",
-    "description": "Visual editor for crafting world maps with region placement and feature tooling.",
+    "title": "Game Map Editor",
+    "description": "Interactive isometric editor for designing game maps with terrain painting, unit placement, and region tooling.",
     "height": "800px",
     "category": "Game Tools"
   },
@@ -103,12 +96,5 @@
     "description": "Force-directed graph canvas with draggable nodes, zoom controls, and grouped layouts.",
     "height": "700px",
     "category": "Data Viz"
-  },
-  {
-    "id": "organisms-layout-dashboardgrid--mixed-spanning",
-    "title": "Dashboard Grid",
-    "description": "Responsive dashboard layout with stat cards, mixed column spanning, and metric widgets.",
-    "height": "600px",
-    "category": "Core Components"
   }
 ]
