@@ -21,11 +21,6 @@ const config: StorybookConfig = {
         path.join(workspaceRoot, "packages/almadar-ui/components/organisms/GraphCanvas.stories.tsx"),
         path.join(workspaceRoot, "packages/almadar-ui/components/organisms/layout/DashboardGrid.stories.tsx"),
 
-        // Trait Wars
-        path.join(workspaceRoot, "projects/trait-wars/design-system/templates/CanvasBattleTemplate.stories.tsx"),
-        path.join(workspaceRoot, "projects/trait-wars/design-system/templates/CanvasWorldMapTemplate.stories.tsx"),
-        path.join(workspaceRoot, "projects/trait-wars/design-system/templates/CanvasCastleTemplate.stories.tsx"),
-
         // Winning-11
         path.join(workspaceRoot, "projects/winning-11/design-system/templates/AdminDashboardTemplate.stories.tsx"),
         path.join(workspaceRoot, "projects/winning-11/design-system/templates/TrustIntelligenceTemplate.stories.tsx"),
