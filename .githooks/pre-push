@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+#
+# Pre-push hook: auto-rebuild and upload website storybook when relevant files change.
+#
+# Checks if any pushed commits touch storybook config, demos, story files, or theme CSS.
+# If so, rebuilds the storybook tarball and uploads it to the GitHub release.
+#
+# Setup (run once):
+#   cd almadar && git config core.hooksPath .githooks
+#
+set -euo pipefail
+
+ALMADAR_DIR="$(git rev-parse --show-toplevel)"
+MONOREPO_ROOT="$(cd "$ALMADAR_DIR/.." && pwd)"
+BUILD_SCRIPT="$MONOREPO_ROOT/tools/build-website-storybook.sh"
+
+# Read push info from stdin
+while read -r LOCAL_SHA REMOTE_SHA REF_NAME _; do
+    # Skip deletes
+    if [[ "$LOCAL_SHA" == "0000000000000000000000000000000000000000" ]]; then
+        continue
+    fi
+
+    # For new branches, compare against the remote HEAD
+    if [[ "$REMOTE_SHA" == "0000000000000000000000000000000000000000" ]]; then
+        REMOTE_SHA="$(git rev-parse origin/main 2>/dev/null || echo "")"
+        [[ -z "$REMOTE_SHA" ]] && continue
+    fi
+
+    # Check if any changed files are storybook-related
+    CHANGED=$(git diff --name-only "$REMOTE_SHA" "$LOCAL_SHA" 2>/dev/null || echo "")
+
+    NEEDS_REBUILD=false
+    while IFS= read -r file; do
+        case "$file" in
+            website/.storybook/*|website/src/data/demos.json|website/package.json)
+                NEEDS_REBUILD=true ;;
+        esac
+    done <<< "$CHANGED"
+
+    if $NEEDS_REBUILD; then
+        echo ""
+        echo "==> Storybook config changed — rebuilding and uploading..."
+        echo ""
+        if [[ -x "$BUILD_SCRIPT" ]]; then
+            "$BUILD_SCRIPT"
+        else
+            echo "WARNING: $BUILD_SCRIPT not found or not executable."
+            echo "Run manually: ./tools/build-website-storybook.sh"
+        fi
+    fi
+done
+
+exit 0
