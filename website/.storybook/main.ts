@@ -1,14 +1,9 @@
 /**
  * Website Storybook Config
  *
- * Unified storybook that composes stories from ALL sources for the
- * Almadar website demo section. This is separate from @almadar/ui's
- * own storybook to keep the published package clean.
- *
- * Sources:
- * - Core @almadar/ui components
- * - Project design systems (trait-wars, winning-11, kflow, builder)
- * - Legacy client stories (inspection-system, blaz-klemenc)
+ * Curated storybook for the Almadar website demo section.
+ * Only includes the specific stories used in demos.json — NOT the full
+ * design system catalog. This keeps the build fast and the tarball small.
  */
 
 import type { StorybookConfig } from "@storybook/react-vite";
@@ -20,21 +15,38 @@ const workspaceRoot = path.resolve(__dirname, "../../..");
 
 const config: StorybookConfig = {
     stories: [
-        // Core @almadar/ui
-        path.join(workspaceRoot, "packages/almadar-ui/components/**/*.stories.@(js|jsx|ts|tsx)"),
-        // Project design systems
-        path.join(workspaceRoot, "projects/trait-wars/design-system/**/*.stories.@(js|jsx|ts|tsx)"),
-        path.join(workspaceRoot, "projects/winning-11/design-system/**/*.stories.@(js|jsx|ts|tsx)"),
-        // KFlow excluded: templates transitively depend on react-force-graph-2d and react-syntax-highlighter
-        // which have broken package exports. Build KFlow storybook separately if needed.
-        path.join(workspaceRoot, "projects/builder/design-system/**/*.stories.@(js|jsx|ts|tsx)"),
-        path.join(workspaceRoot, "projects/inspection-system/design-system/**/*.stories.@(js|jsx|ts|tsx)"),
-        path.join(workspaceRoot, "projects/blaz-klemenc/design-system/**/*.stories.@(js|jsx|ts|tsx)"),
+        // Core @almadar/ui — only the specific stories used in demos
+        path.join(workspaceRoot, "packages/almadar-ui/components/templates/GameCanvas3DTemplates.stories.tsx"),
+        path.join(workspaceRoot, "packages/almadar-ui/components/organisms/game/BattleBoard.stories.tsx"),
+        path.join(workspaceRoot, "packages/almadar-ui/components/organisms/game/WorldMapBoard.stories.tsx"),
+        path.join(workspaceRoot, "packages/almadar-ui/components/organisms/GraphCanvas.stories.tsx"),
+        path.join(workspaceRoot, "packages/almadar-ui/components/organisms/layout/DashboardGrid.stories.tsx"),
+
+        // Trait Wars
+        path.join(workspaceRoot, "projects/trait-wars/design-system/templates/CanvasBattleTemplate.stories.tsx"),
+        path.join(workspaceRoot, "projects/trait-wars/design-system/templates/CanvasWorldMapTemplate.stories.tsx"),
+        path.join(workspaceRoot, "projects/trait-wars/design-system/templates/CanvasCastleTemplate.stories.tsx"),
+
+        // Winning-11
+        path.join(workspaceRoot, "projects/winning-11/design-system/templates/AdminDashboardTemplate.stories.tsx"),
+        path.join(workspaceRoot, "projects/winning-11/design-system/templates/TrustIntelligenceTemplate.stories.tsx"),
+        path.join(workspaceRoot, "projects/winning-11/design-system/templates/GraphIntelligenceTemplate.stories.tsx"),
+        path.join(workspaceRoot, "projects/winning-11/design-system/templates/UserProfileTemplate.stories.tsx"),
+
+        // Inspection System
+        path.join(workspaceRoot, "projects/inspection-system/design-system/templates/InspectionsTemplate.stories.tsx"),
+        path.join(workspaceRoot, "projects/inspection-system/design-system/templates/InspectionFormTemplate.stories.tsx"),
+
+        // Blaz Klemenc (Fitness)
+        path.join(workspaceRoot, "projects/blaz-klemenc/design-system/templates/FitnessTemplate.stories.tsx"),
+        path.join(workspaceRoot, "projects/blaz-klemenc/design-system/templates/MealPlanDetailTemplate.stories.tsx"),
+        path.join(workspaceRoot, "projects/blaz-klemenc/design-system/templates/ScheduleTemplate.stories.tsx"),
+
+        // Builder
+        path.join(workspaceRoot, "projects/builder/design-system/templates/StudioProjectTemplate.stories.tsx"),
+        path.join(workspaceRoot, "projects/builder/design-system/organisms/agent/AgentChatPanel.stories.tsx"),
     ],
-    addons: [
-        "@storybook/addon-links",
-        "@storybook/addon-themes",
-    ],
+    addons: [],
     framework: {
         name: "@storybook/react-vite",
         options: {},
@@ -42,19 +54,14 @@ const config: StorybookConfig = {
     typescript: {
         reactDocgen: false,
     },
-    // No staticDirs — trait-wars assets are served from the CDN (trait-wars-assets.web.app)
     staticDirs: [],
     async viteFinal(config) {
         const { mergeConfig } = await import("vite");
 
         return mergeConfig(config, {
-            // Use relative base so all asset paths work when served under /storybook/
-            base: './',
             resolve: {
                 alias: {
-                    // Resolve @almadar/ui to source so all project stories can import it
                     "@almadar/ui": path.join(workspaceRoot, "packages/almadar-ui/components/index.ts"),
-                    // Stub out react-force-graph-2d (broken exports field, only used by one KFlow story)
                     "react-force-graph-2d": path.join(__dirname, "stubs/react-force-graph-2d.ts"),
                 },
                 preserveSymlinks: true,
@@ -67,9 +74,7 @@ const config: StorybookConfig = {
             },
             server: {
                 fs: {
-                    allow: [
-                        workspaceRoot,
-                    ],
+                    allow: [workspaceRoot],
                 },
             },
             optimizeDeps: {
@@ -80,14 +85,10 @@ const config: StorybookConfig = {
                     "react/jsx-dev-runtime",
                     "clsx",
                     "@storybook/addon-themes",
-                    "@storybook/addon-links",
                     "refractor",
                     "hastscript",
                 ],
-                exclude: [
-                    // react-force-graph-2d has broken exports field
-                    "react-force-graph-2d",
-                ],
+                exclude: ["react-force-graph-2d"],
             },
             esbuild: {
                 target: "esnext",
