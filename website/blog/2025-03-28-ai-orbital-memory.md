@@ -3,7 +3,10 @@ slug: ai-orbital-memory
 title: "Why We Gave Our AI Agent Orbital Memory Instead of a Vector Database"
 authors: [osamah]
 tags: [architecture, ai]
+image: /img/blog/ai-orbital-memory.png
 ---
+
+![Why We Gave Our AI Agent Orbital Memory Instead of a Vector Database](/img/blog/ai-orbital-memory.png)
 
 Everyone's building RAG systems with vector DBs. We gave our AI a structured memory system that actually understands context.
 

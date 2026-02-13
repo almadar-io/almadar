@@ -3,9 +3,12 @@ slug: three-execution-models
 title: "Three Execution Models, One Truth: How We Solved the 'Write Once, Run Anywhere' Problem"
 authors: [osamah]
 tags: [architecture]
+image: /img/blog/three-execution-models.png
 ---
 
-Java promised "write once, run anywhere." We deliver "write once, run *everywhere appropriately*."
+![Three Execution Models, One Source of Truth](/img/blog/three-execution-models.png)
+
+The same `.orb` file runs in the browser, on the server, and compiles to native code. Here's how.Java promised "write once, run anywhere." We deliver "write once, run *everywhere appropriately*."
 
 <!-- truncate -->
 

@@ -3,7 +3,10 @@ slug: closed-circuit-pattern
 title: "The Closed Circuit Pattern: Why Your Users Get Stuck (And How to Prevent It)"
 authors: [osamah]
 tags: [architecture, state-machines]
+image: /img/blog/closed-circuit-pattern.png
 ---
+
+![The Closed Circuit Pattern: Why Your Users Get Stuck (And How to Prevent It)](/img/blog/closed-circuit-pattern.png)
 
 Ever opened a modal and couldn't close it? That's a broken circuit. We made it impossible to build those.
 

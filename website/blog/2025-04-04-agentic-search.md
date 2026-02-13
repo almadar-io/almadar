@@ -3,7 +3,10 @@ slug: agentic-search
 title: "Agentic Search: Teaching an AI to Remember Like a Human"
 authors: [osamah]
 tags: [architecture, ai]
+image: /img/blog/agentic-search.png
 ---
+
+![Agentic Search: Teaching an AI to Remember Like a Human](/img/blog/agentic-search.png)
 
 Vector search finds similar text. Agentic search finds relevant context. The difference is reasoning.
 

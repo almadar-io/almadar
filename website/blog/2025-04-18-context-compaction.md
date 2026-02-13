@@ -3,7 +3,10 @@ slug: context-compaction
 title: "Context Compaction: The Art of Summarizing a 3-Hour Coding Session for Your LLM"
 authors: [osamah]
 tags: [architecture, ai]
+image: /img/blog/context-compaction.png
 ---
+
+![Context Compaction: The Art of Summarizing a 3-Hour Coding Session for Your LLM](/img/blog/context-compaction.png)
 
 Your AI pair programmer has a 200K token limit. After 3 hours, you're at 150K. What do you do?
 

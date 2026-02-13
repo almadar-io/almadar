@@ -9,6 +9,10 @@ IKEA revolutionized furniture by making it composable, flat-packed, and assembly
 
 <!-- truncate -->
 
+![The IKEA Effect in Software: Why We Love What We Build (And Why That's Dangerous)](/img/blog/ikea-effect-software.png)
+
+We overvalue code we write ourselves. Almadar's component architecture forces us to assemble, not invent.
+
 ## The Furniture Problem
 
 Before IKEA, furniture was either:

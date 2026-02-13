@@ -1,9 +1,14 @@
 ---
 slug: state-sync-browser-tabs
+image: /img/blog/state-sync-browser-tabs.png
 title: "State Sync Across Browser Tabs: The Hardest Problem We Solved (That You Didn't Know You Needed)"
 authors: [osamah]
 tags: [architecture]
 ---
+
+![State Synchronization Across Browser Tabs: The Orbital Approach](/img/blog/state-sync-browser-tabs.png)
+
+How we keep state perfectly synchronized across multiple tabs without WebSockets or complex backend logic.
 
 Ever had two tabs of the same app open and they got out of sync? We fixed that at the framework level.
 

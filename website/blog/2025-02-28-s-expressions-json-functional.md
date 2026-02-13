@@ -1,9 +1,14 @@
 ---
 slug: s-expressions-json-functional
 title: "S-Expressions: The JSON of Functional Programming (That Actually Makes Sense)"
+image: /img/blog/s-expressions-json-functional.png
 authors: [osamah]
 tags: [architecture]
 ---
+
+![S-Expressions, JSON, and the Functional Renaissanc](/img/blog/s-expressions-json-functional.png)
+
+Why we chose Lisp-style S-expressions over JSON for logic definition, and why you might too.
 
 Everyone loves JSON, but when you need logic, you end up with string templates or JavaScript. What if your data format *was* your logic format?
 

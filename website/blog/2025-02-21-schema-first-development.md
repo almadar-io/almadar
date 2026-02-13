@@ -280,3 +280,15 @@ By defining your application's structure declaratively:
 The schema becomes the **documentation that executes**.
 
 Ready to write your first schema? Check out the [Getting Started guide](/docs/getting-started/introduction).
+
+</content>
+---
+image: /img/blog/schema-first-development.png
+---
+
+![Schema-First Development: The Blueprint That Becomes the Building](/img/blog/schema-first-development.png)
+
+Stop writing code that *implied* a schema. Write the schema, and let the code follow.cumentation that executes**.
+
+Ready to write your first schema? Check out the [Getting Started guide](/docs/getting-started/introduction).
+```
