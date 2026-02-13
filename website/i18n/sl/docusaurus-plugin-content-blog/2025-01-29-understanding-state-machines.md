@@ -1,23 +1,23 @@
 ---
 slug: understanding-state-machines
-title: Razumevanje state machines v Almadarju
+title: Razumevanje State Machines v Almadar
 authors: [osamah]
 tags: [architecture, tutorial]
 ---
 
-State machines so srce Almadarja. V tem prispevku raziskujemo, zakaj smo izbrali state machines kot temelj za vedênje aplikacije.
+State machines so v jedru Almadarja. V tem prispevku raziskujemo, zakaj smo izbrali state machines kot temelj za vedênje aplikacije.
 
 <!-- truncate -->
 
-## Zakaj state machines?
+## Zakaj State Machines?
 
-Tradicionalne spletne aplikacije pogosto trpijo zaradi nepredvidljivega vedênja. Gumb lahko naredi različne stvari, odvisno od skritega stanja, dirkalnih pogojev ali implicitnih predpostavk, zakopanih v kodi.
+Tradicionalne web aplikacije pogosto trpijo zaradi nepredvidljivega vedênja. Gumb lahko počne različne stvari, odvisno od skritega stanja, race condition ali implicitnih predpostavk, zakopanih v kodi.
 
-State machines to rešijo z **vsako možno stanje izrecnim** in **vsakim prehodom namernim**.
+State machines to rešijo z izpostavljanjem **vsakega možnega stanja** in **vsakega prehoda namenskega**.
 
-## Anatomija Almadar state machine
+## Anatomija Almadar State Machine
 
-Vsak trait v Almadarju vsebuje state machine:
+Vsak trait v Almadar vsebuje state machine:
 
 ```json
 {
@@ -51,33 +51,33 @@ Vsak trait v Almadarju vsebuje state machine:
 
 ## Ključni koncepti
 
-### States
-States predstavljajo možna stanja vašega entity. Vsako stanje je izrecno in poimenovano.
+### Stanja
+Stanja predstavljajo možna stanja vašega entity. Vsako stanje je eksplicitno in poimenovano.
 
-### Events
-Events sprožijo prehode. Lahko prihajajo iz uporabniških akcij, sistemskih dogodkov ali drugih orbitalov.
+### Dogodki
+Dogodki sprožijo prehode. Lahko prihajajo iz uporabniških akcij, sistemskih dogodkov ali drugih orbitalov.
 
-### Transitions
-Transitions definirajo, kako se vaš entity premika iz enega stanja v drugo. Vsak transition lahko ima:
-- **Guards**: Pogoji, ki morajo biti izpolnjeni
-- **Effects**: Ukazi za izvedbo (posodobi polja, render UI, emit events)
+### Prehodi
+Prehodi definirajo, kako se vaš entity premika iz enega stanja v drugo. Vsak prehod lahko ima:
+- **Guard**: Pogoji, ki morajo biti izpolnjeni
+- **Effects**: Akcije za izvedbo (posodobi polja, renderiraj UI, emitiraj dogodke)
 
 ### Effects
 Effects so stranski učinki prehoda. Almadar podpira:
 - `set` - Posodobi polje entity
 - `increment` / `decrement` - Spremeni številke
-- `render-ui` - Render UI pattern
-- `emit` - Objavi events drugim orbitalom
+- `render-ui` - Renderiraj UI vzorec
+- `emit` - Objavi dogodke drugim orbitalom
 - `persist` - Shrani v bazo
-- `navigate` - Spremeni poti
+- `navigate` - Spremeni route
 
-## Prednosti
+## Koristi
 
-1. **Predvidljivost**: Vedno veste, v kakšnem stanju je vaša aplikacija
-2. **Testabilnost**: Testirajte vsak transition neodvisno
-3. **Varnost**: Guards preprečujejo nepooblaščene spremembe stanja
-4. **Debugiranje**: Zgodovina stanj naredi napake reproducibilne
+1. **Predvidljivost**: Vedno veste, v katerem stanju je vaša aplikacija
+2. **Testabilnost**: Testirajte vsak prehod neodvisno
+3. **Varnost**: Guardi preprečujejo nepooblaščene spremembe stanja
+4. **Debugging**: Zgodovina stanj naredi napake reproducibilne
 
 ## Naslednji koraki
 
-Pripravljeni graditi s state machines? Oglejte si naš [vodnik za začetek](/docs/getting-started/introduction).
+Pripravljeni graditi s state machines? Preverite naš [Getting Started vodnik](/docs/getting-started/introduction).

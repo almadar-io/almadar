@@ -1,27 +1,27 @@
 ---
 slug: welcome-to-almadar
-title: Dobrodošli v Almadarju
+title: Dobrodošli v Almadar
 authors: [almadar]
 tags: [announcement]
 ---
 
-Z veseljem predstavljamo **Almadar** - Fiziko programske opreme.
+Z veseljem predstavljamo **Almadar** — Fiziko programske opreme.
 
-Almadar je deklarativni ogrodje za gradnjo celovitih aplikacij prek state machines. Definirajte svoje entities, vedênja in UI kot sheme, ki se prevedejo v produkcijsko pripravljeno kodo.
+Almadar je deklarativni framework za gradnjo full-stack aplikacij preko state machines. Definirajte svoje entities, vedênja in UI kot sheme, ki se prevedejo v production-ready kodo.
 
 <!-- truncate -->
 
 ## Kaj je Almadar?
 
-Almadar (arabsko za "orbita") prinaša nov paradigem v razvoj programske opreme:
+Almadar (arabsko za "Orbit") prinaša novo paradigmo v razvoj programske opreme:
 
-- **Deklarativne sheme**: Definirajte celotno strukturo svoje aplikacije na enem mestu
+- **Deklarativne sheme**: Definirajte celotno strukturo aplikacije na enem mestu
 - **State machines**: Modelirajte vedênje kot predvidljive, testabilne state machines
-- **Celovita generacija**: Prevedite v React frontend, Express/FastAPI backend in modele podatkovne baze
+- **Full-stack generacija**: Prevedite v React frontend, Express/FastAPI backend in modele baze
 
 ## Almadar model
 
-Tako kot elektroni krožijo okoli jeder po kvantnih pravilih, vaše komponente aplikacije sledijo pravilom state machines. Vsak **Orbital** je entity s priloženimi **traits**, ki definirajo njegovo vedênje, UI in integracije.
+Kot elektroni orbitirajo okoli jeder po kvantnih pravilih, vaše komponente aplikacije sledijo pravilom state machine. Vsak **Orbital** je entity s priloženimi **traits**, ki definirajo njegovo vedênje, UI in integracije.
 
 ```json
 {
@@ -42,8 +42,8 @@ Tako kot elektroni krožijo okoli jeder po kvantnih pravilih, vaše komponente a
 }
 ```
 
-## Začetek
+## Kako začeti
 
-Pripravljeni preizkusiti Almadar? Oglejte si našo [dokumentacijo](/docs), da začnete, ali [prenesite CLI](/docs/downloads/cli), da ustvarite svoj prvi projekt.
+Pripravljeni poskusiti Almadar? Preverite našo [dokumentacijo](/docs) za začetek, ali [prenesite CLI](/docs/downloads/cli) za ustvarjanje vašega prvega projekta.
 
-Ostanite z nami za več posodobitev, vaj in poglobljenih vpogledov v Almadar arhitekturo!
+Ostanite z nami za več posodobitev, tutorialov in globinskih raziskav Almadar arhitekture!
