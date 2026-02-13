@@ -10,7 +10,7 @@ tags: [architecture]
 
 لماذا اخترنا S-expressions (تعبيرات رمزية بأسلوب Lisp) بدلاً من JSON لتعريف المنطق، ولماذا قد تفعل ذلك أيضاً.
 
-الجميع يحب JSON، لكن عندما تحتاج منطق، ينتهي بك المطاف بقوالب نصية أو JavaScript. ماذا لو كانت صيغة البيانات *هي* صيغة المنطق؟
+الجميع يحب JSON، لكن عندما تحتاج منطقاً، ينتهي بك المطاف بقوالب نصية أو JavaScript. ماذا لو كانت صيغة البيانات *هي* صيغة المنطق؟
 
 <!-- truncate -->
 
@@ -63,7 +63,7 @@ const condition = (user) => user.age >= 18 && user.verified;
 
 ## ادخل عالم الـ S-Expressions
 
-الـ S-expressions (تعبيرات رمزية موجودة منذ 1958 مع Lisp) بسيطة جداً:
+الـ S-expressions (تعبيرات رمزية موجودة منذ 1958 مع Lisp) بسيطة للغاية:
 
 ```
 (operator operand1 operand2 ...)
@@ -120,7 +120,7 @@ if (user.roleLevel >= 5 && !entity.isFlagged && entity.amount > 0) {
 }
 ```
 
-كل effect هو S-expression:
+كل effect عبارة عن S-expression:
 - `["set", target, value]` — تعيين قيمة
 - `["persist", operation, entity, id, data]` — حفظ في قاعدة البيانات
 - `["emit", event, payload]` — إرسال حدث
@@ -129,7 +129,7 @@ if (user.roleLevel >= 5 && !entity.isFlagged && entity.amount > 0) {
 
 ### 1. الـ Homoiconicity (التماثل بين الكود والبيانات)
 
-الـ S-expressions هي بيانات تبدو كالكود. هذا يعني:
+الـ S-expressions عبارة عن بيانات تبدو كالكود. هذا يعني:
 
 ```json
 ["+", "@entity.count", 1]
@@ -141,7 +141,7 @@ if (user.roleLevel >= 5 && !entity.isFlagged && entity.amount > 0) {
 
 ### 2. قابلية التركيب
 
-يمكنك تداخل الـ S-expressions بلا حدود:
+يمكنك تضمين الـ S-expressions بلا حدود:
 
 ```json
 ["if",
@@ -263,7 +263,7 @@ serde_json::to_string(&guard).unwrap();
 ["matches", "str", "regex"]
 ```
 
-## جرّبه: ابنِ guard
+## جربه: ابنِ guard
 
 لننشئ guard لسير عمل الموافقة:
 
@@ -311,6 +311,6 @@ if (
 - **أمان البيانات** (التسلسل، التحقق، بدون eval)
 - **وضوح Excel** (تصريحية، سهلة القراءة)
 
-في المرة القادمة التي تُغريك فيها `eval()` أو القوالب النصية للمنطق الديناميكي، تذكّر: هناك حل عمره 60 عاماً يعمل فعلاً.
+في المرة القادمة التي يغزوك فيها إغراء استخدام `eval()` أو القوالب النصية للمنطق الديناميكي، تذكّر: هناك حل عمره 60 عاماً يعمل بالفعل.
 
 تريد استكشاف المزيد؟ اطّلع على [معاملات الـ standard library](/docs/stdlib).
