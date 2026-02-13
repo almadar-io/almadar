@@ -243,16 +243,4 @@ section {
     opacity: 0.9;
 }
 
-/* ===========================
-   RTL Support
-   =========================== */
-
-html[dir="rtl"] .geometric-corner::before {
-    right: auto;
-    left: 0;
-}
-
-html[dir="rtl"] .heritage-underline::after {
-    margin-left: auto;
-    margin-right: 0;
-}
+/* RTL: Handled automatically by RTLcss — no manual overrides needed */

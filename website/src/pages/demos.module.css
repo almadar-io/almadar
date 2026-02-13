@@ -142,13 +142,4 @@
     }
 }
 
-/* ===========================
-   RTL Support
-   =========================== */
-
-html[dir="rtl"] .heroPatternContainer {
-    right: auto;
-    left: 0;
-    mask-image: radial-gradient(circle at top left, black 30%, transparent 80%);
-    -webkit-mask-image: radial-gradient(circle at top left, black 30%, transparent 80%);
-}
+/* RTL: Handled automatically by RTLcss */

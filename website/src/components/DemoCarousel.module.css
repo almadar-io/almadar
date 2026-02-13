@@ -314,18 +314,4 @@
     border: 1px solid rgba(20, 184, 166, 0.2);
 }
 
-/* ===========================
-   RTL Support
-   =========================== */
-
-html[dir="rtl"] .card:hover .cta {
-    transform: translateX(-6px);
-}
-
-html[dir="rtl"] .cardPreview iframe {
-    transform-origin: top right;
-}
-
-html[dir="rtl"] .cardContent {
-    text-align: right;
-}
+/* RTL: Handled automatically by RTLcss */

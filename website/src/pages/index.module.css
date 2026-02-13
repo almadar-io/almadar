@@ -54,9 +54,6 @@
     /* Limit width as we are single column now */
 }
 
-html[dir="rtl"] .heroText {
-    text-align: right;
-}
 
 .heroTitle {
     font-size: 3.5rem;
@@ -528,9 +525,6 @@ div[class*='codePreview'] span[class*='token-line'] span[class*='token'][class*=
         order: 1;
     }
 
-    html[dir="rtl"] .heroText {
-        text-align: center;
-    }
 
     .heroAnimation {
         order: 0;
@@ -670,38 +664,18 @@ div[class*='codePreview'] span[class*='token-line'] span[class*='token'][class*=
     color: #334155 !important;
 }
 
-/* ===========================
-   RTL Support
-   =========================== */
+/* === RTL Support === */
+/* RTLcss auto-handles most directional flipping.
+   Only mask-image gradient positions need manual override
+   since RTLcss doesn't flip radial-gradient positions. */
 
-html[dir="rtl"] .heroPatternContainer {
-    right: auto;
-    left: 0;
-    mask-image: radial-gradient(circle at top left, black 30%, transparent 80%);
-    -webkit-mask-image: radial-gradient(circle at top left, black 30%, transparent 80%);
-}
-
-html[dir="rtl"] .philosophyContent {
-    direction: rtl;
-}
-
-html[dir="rtl"] .philosophyFeature {
-    flex-direction: row-reverse;
-}
-
-html[dir="rtl"] .effectsLegend {
-    direction: rtl;
-    text-align: right;
-}
-
-html[dir="rtl"] .effectItem {
-    flex-direction: row-reverse;
-}
-
-html[dir="rtl"] .effectItem code {
+/* Code preview must stay LTR */
+.codePreview {
+    /* rtl:ignore */
     direction: ltr;
 }
 
-html[dir="rtl"] .codePreview {
+.effectItem code {
+    /* rtl:ignore */
     direction: ltr;
 }

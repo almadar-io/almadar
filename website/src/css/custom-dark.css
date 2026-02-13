@@ -449,15 +449,6 @@ code {
     border-left: 4px solid var(--almadar-sand-gold);
 }
 
-html[dir="rtl"][data-theme="dark"] .alert--info {
-    border-left: none;
-    border-right: 4px solid var(--almadar-teal);
-}
-
-html[dir="rtl"][data-theme="dark"] .alert--warning {
-    border-left: none;
-    border-right: 4px solid var(--almadar-sand-gold);
-}
 
 /* === Table of Contents === */
 .table-of-contents__link {
@@ -470,94 +461,17 @@ html[dir="rtl"][data-theme="dark"] .alert--warning {
 }
 
 /* === RTL Support === */
-html[dir="rtl"] {
-    text-align: right;
-}
+/* RTLcss auto-handles all directional flipping. See custom.css for details. */
 
-/* Code blocks always LTR */
-html[dir="rtl"] pre,
-html[dir="rtl"] code,
-html[dir="rtl"] .prism-code,
-html[dir="rtl"] .home-page-code-preview {
+/* Code blocks must always stay LTR */
+pre,
+code,
+.prism-code,
+.home-page-code-preview {
+    /* rtl:ignore */
     direction: ltr;
+    /* rtl:ignore */
     text-align: left;
-}
-
-/* Navbar RTL - flip the entire layout */
-html[dir="rtl"] .navbar {
-    direction: rtl;
-}
-
-html[dir="rtl"] .navbar > .container,
-html[dir="rtl"] .navbar > .container-fluid {
-    flex-direction: row-reverse;
-}
-
-html[dir="rtl"] .navbar__inner {
-    flex-direction: row-reverse;
-}
-
-html[dir="rtl"] .navbar__items {
-    flex-direction: row-reverse;
-}
-
-html[dir="rtl"] .navbar__items--right {
-    flex-direction: row-reverse;
-}
-
-html[dir="rtl"] .navbar__brand {
-    margin-right: 0;
-    margin-left: 1rem;
-}
-
-html[dir="rtl"] .navbar__logo {
-    margin-right: 0;
-    margin-left: 0.5rem;
-}
-
-/* Sidebar RTL */
-html[dir="rtl"] .menu__list .menu__list {
-    padding-left: 0;
-    padding-right: 1rem;
-}
-
-html[dir="rtl"] .menu__link--sublist-caret::after {
-    transform: rotate(180deg);
-}
-
-/* Table of Contents RTL */
-html[dir="rtl"] .table-of-contents ul {
-    padding-left: 0;
-    padding-right: 1rem;
-}
-
-/* Alerts RTL */
-html[dir="rtl"] .alert {
-    border-left: none;
-    border-right: 4px solid;
-}
-
-/* Doc sidebar RTL */
-html[dir="rtl"] .theme-doc-sidebar-container {
-    border-right: none;
-    border-left: 1px solid var(--ifm-toc-border-color);
-}
-
-/* Markdown RTL */
-html[dir="rtl"] .markdown ul,
-html[dir="rtl"] .markdown ol {
-    padding-left: 0;
-    padding-right: 2rem;
-}
-
-/* Avatar RTL */
-html[dir="rtl"] .avatar {
-    flex-direction: row-reverse;
-}
-
-html[dir="rtl"] .avatar__photo {
-    margin-right: 0;
-    margin-left: var(--ifm-avatar-intro-margin);
 }
 
 /* === Scrollbar (dark mode) === */

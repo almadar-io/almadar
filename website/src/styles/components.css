@@ -447,36 +447,4 @@ footer p {
     color: #94a3b8;
 }
 
-/* ===========================
-   RTL Support
-   =========================== */
-
-html[dir="rtl"] .hero::before {
-    right: auto;
-    left: 0;
-}
-
-html[dir="rtl"] .result-box {
-    border-left: none;
-    border-right: 3px solid var(--teal);
-    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
-}
-
-html[dir="rtl"] .step-content.right {
-    text-align: right;
-}
-
-html[dir="rtl"] .step-content.left {
-    text-align: left;
-    margin-left: 0;
-    margin-right: auto;
-}
-
-html[dir="rtl"] .step-content.left .step-tags {
-    justify-content: flex-start;
-}
-
-html[dir="rtl"] .features::before {
-    left: 50%;
-    transform: translateX(-50%);
-}
+/* RTL: Handled automatically by RTLcss — no manual overrides needed */

@@ -257,19 +257,4 @@ nav.nav-dark .mobile-menu-toggle span {
     background: #fff;
 }
 
-/* ===========================
-   RTL Support
-   =========================== */
-
-html[dir="rtl"] .nav-content {
-    flex-direction: row-reverse;
-}
-
-html[dir="rtl"] .nav-links {
-    flex-direction: row-reverse;
-}
-
-html[dir="rtl"] .mobile-menu-toggle.active {
-    right: auto;
-    left: 2rem;
-}
+/* RTL: Handled automatically by RTLcss — no manual overrides needed */
