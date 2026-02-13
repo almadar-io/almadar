@@ -463,13 +463,14 @@ code {
 /* === RTL Support === */
 /* RTLcss auto-handles all directional flipping. See custom.css for details. */
 
-/* Code blocks must always stay LTR.
-   Using !important to override RTLcss auto-flipping. */
+/* Code blocks must always stay LTR. */
 pre,
 code,
 .prism-code,
 .home-page-code-preview {
+    /* rtl:ignore */
     direction: ltr !important;
+    /* rtl:ignore */
     text-align: left !important;
 }
 

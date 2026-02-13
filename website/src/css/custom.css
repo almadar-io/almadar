@@ -533,13 +533,14 @@ body {
  * For declarations that must NOT be flipped (e.g. code blocks), use !important.
  */
 
-/* Code blocks must always stay LTR regardless of locale.
-   Using !important to override RTLcss auto-flipping. */
+/* Code blocks must always stay LTR regardless of locale. */
 pre,
 code,
 .prism-code,
 .home-page-code-preview {
+    /* rtl:ignore */
     direction: ltr !important;
+    /* rtl:ignore */
     text-align: left !important;
 }
 
