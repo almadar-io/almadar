@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Link from '@docusaurus/Link';
-import Translate from '@docusaurus/Translate';
+import Translate, { translate } from '@docusaurus/Translate';
 import demos from '../data/demos.json';
 import styles from './DemoCarousel.module.css';
 
@@ -90,7 +90,7 @@ function DemoCard({ demo }: { demo: typeof demos[0] }) {
                     {isVisible ? (
                         <iframe
                             src={`/storybook/iframe.html?id=${demo.id}&viewMode=story&singleStory=true`}
-                            title={demo.title}
+                            title={translate({ id: `demo.${demo.key}.title`, message: demo.title })}
                             tabIndex={-1}
                         />
                     ) : (
@@ -105,10 +105,10 @@ function DemoCard({ demo }: { demo: typeof demos[0] }) {
 
             <div className={styles.cardContent}>
                 <div className={styles.cardHeader}>
-                    <span className={styles.cardCategory}>{demo.category}</span>
+                    <span className={styles.cardCategory}>{translate({ id: `demo.category.${demo.categoryKey}`, message: demo.category })}</span>
                 </div>
-                <h3 className={styles.cardTitle}>{demo.title}</h3>
-                <p className={styles.cardDesc}>{demo.description}</p>
+                <h3 className={styles.cardTitle}>{translate({ id: `demo.${demo.key}.title`, message: demo.title })}</h3>
+                <p className={styles.cardDesc}>{translate({ id: `demo.${demo.key}.description`, message: demo.description })}</p>
                 <span className={styles.cta}><Translate id="carousel.exploreDemo">Explore Demo →</Translate></span>
             </div>
         </Link>

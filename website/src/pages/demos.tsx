@@ -42,20 +42,25 @@ export default function Demos(): React.JSX.Element {
                 <div className={styles.demosSection}>
                     <div className="container">
                         <div id="demos-grid" className={styles.grid}>
-                            {demos.map((demo) => (
-                                <div key={demo.id} id={demo.id} className={styles.demoWrapper}>
-                                    <div className={styles.demoMeta}>
-                                        <span className={styles.badge}>{demo.category}</span>
-                                        <h2>{demo.title}</h2>
-                                        <p>{demo.description}</p>
+                            {demos.map((demo) => {
+                                const translatedTitle = translate({ id: `demo.${demo.key}.title`, message: demo.title });
+                                const translatedDesc = translate({ id: `demo.${demo.key}.description`, message: demo.description });
+                                const translatedCategory = translate({ id: `demo.category.${demo.categoryKey}`, message: demo.category });
+                                return (
+                                    <div key={demo.id} id={demo.id} className={styles.demoWrapper}>
+                                        <div className={styles.demoMeta}>
+                                            <span className={styles.badge}>{translatedCategory}</span>
+                                            <h2>{translatedTitle}</h2>
+                                            <p>{translatedDesc}</p>
+                                        </div>
+                                        <StorybookDemo
+                                            id={demo.id}
+                                            title={translatedTitle}
+                                            height={demo.height}
+                                        />
                                     </div>
-                                    <StorybookDemo
-                                        id={demo.id}
-                                        title={demo.title}
-                                        height={demo.height}
-                                    />
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </div>
                 </div>
