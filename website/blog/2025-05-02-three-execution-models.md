@@ -48,15 +48,12 @@ Each optimized for its environment.
 
 **Best for:** Development, IDE, rapid iteration
 
-```typescript
-// Direct schema execution
-import { createOrbitalRuntime } from '@almadar/runtime';
+```bash
+# Start development server with live reload
+almadar dev task-app.orb
 
-const runtime = createOrbitalRuntime();
-const app = await runtime.load('task-app.orb');
-
-// Execute in browser/Node.js
-app.start();
+# Opens browser at localhost:3000
+# Schema changes auto-reload
 ```
 
 **Characteristics:**
@@ -75,16 +72,15 @@ app.start();
 
 **Best for:** Native apps, CLI tools, high performance
 
-```rust
-// Native execution
-use orbital_runtime::Runtime;
+```bash
+# Compile to native Rust binary
+almadar compile task-app.orb --shell rust -o native/
 
-let runtime = Runtime::new()?;
-let app = runtime.load_schema("task-app.orb")?;
-
-// Execute natively
-app.run()?;
+# Build and run the native app
+cd native && cargo build --release && ./target/release/task-app
 ```
+
+The Almadar compiler generates a complete Rust project with Axum for the backend and egui for the UI. The resulting binary is a standalone native application — no runtime dependencies, no Node.js.
 
 **Characteristics:**
 - 🚀 Native performance
@@ -191,26 +187,25 @@ OIR is the **Rosetta Stone** — a common format all targets understand.
 
 ### Model 1: TypeScript Runtime
 
-```typescript
-// Loaded and executed directly
-const runtime = createOrbitalRuntime();
-await runtime.load('task-app.orb');
+```bash
+# Start development server — schema interpreted directly
+almadar dev task-app.orb
 
-// State machine runs in memory
-// UI renders via React components
-// Events handled by EventBus
+# State machine runs in memory
+# UI renders via React components
+# Events handled by EventBus
 ```
 
 ### Model 2: Rust Runtime
 
-```rust
-// Compiled to native binary
-let app = orbital::load("task-app.orb")?;
-app.run()?;
+```bash
+# Compile to standalone native binary
+almadar compile task-app.orb --shell rust -o native/
+cd native && cargo build --release
 
-// State machine runs as native code
-// UI via egui (immediate mode)
-// Events via Rust channels
+# State machine runs as native code
+# UI via egui (immediate mode)
+# Events via Rust channels
 ```
 
 ### Model 3: Generated TypeScript

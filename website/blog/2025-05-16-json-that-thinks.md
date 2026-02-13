@@ -173,9 +173,9 @@ This computes the sum of numbers from N to 0. The state machine is the loop. The
 
 Almadar is the only Turing-complete language that's a strict subset of JSON. This means every JSON tool, every JSON API, every JSON database, and every JSON-aware LLM works with Almadar programs out of the box.
 
-## The Evaluator: How S-Expressions Execute
+## How S-Expressions Execute
 
-The Almadar evaluator processes S-expressions recursively with an LRU cache for hot paths:
+The Almadar compiler evaluates S-expressions recursively:
 
 ```
 ["and",
@@ -189,9 +189,8 @@ The Almadar evaluator processes S-expressions recursively with an LRU cache for 
 1. Resolve bindings: `@user.roleLevel` → `5`, `@entity.amount` → `7500`
 2. Evaluate inner expressions: `[">=", 5, 3]` → `true`, `["<", 7500, 10000]` → `true`
 3. Evaluate outer expression: `["and", true, true]` → `true`
-4. Cache the expression hash → result pair
 
-The LRU cache (1,000 entries) means repeated guard evaluations — common in UIs where the same conditions are checked on every render — skip the full evaluation tree.
+The compiler optimizes repeated guard evaluations internally — common in UIs where the same conditions are checked on every render — so evaluation is fast even for complex expressions.
 
 ## Extending Without Versioning
 

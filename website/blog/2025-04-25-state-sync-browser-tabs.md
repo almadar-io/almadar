@@ -68,8 +68,7 @@ Tab 1 (Client A)          Transport           Tab 2 (Client B)
 ### The StateSyncManager
 
 ```typescript
-import { StateSyncManager } from '@almadar/agent';
-
+// Internal: Almadar's state synchronization system
 const syncManager = new StateSyncManager({
   clientId: 'browser-tab-1',
   conflictStrategy: 'last_write_wins',
@@ -128,7 +127,7 @@ Example:
 
 ### Step 3: Transport Layer
 
-The `@almadar/server` package handles transport:
+The server handles transport via WebSocket:
 
 ```typescript
 // Server-side WebSocket setup
@@ -202,8 +201,9 @@ syncManager.on('conflictDetected', (conflicts, incoming) => {
 
 ```typescript
 import { useEffect, useRef } from 'react';
-import { getStateSyncManager } from '@almadar/agent';
 import { io } from 'socket.io-client';
+
+// Internal: getStateSyncManager() returns the singleton sync manager
 
 export function useStateSync(threadId: string | null) {
   const syncManagerRef = useRef(getStateSyncManager());
@@ -353,8 +353,7 @@ const syncManager = new StateSyncManager({
 For high-frequency updates:
 
 ```typescript
-import { debounceSync } from '@almadar/agent';
-
+// Internal: debounce utility for high-frequency sync events
 const debouncedNotify = debounceSync(syncManager, 500);
 
 // Called on every keystroke

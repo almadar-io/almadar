@@ -206,27 +206,19 @@ const THRESHOLDS = {
 ## Code Example: Complete Flow
 
 ```typescript
-import { 
-  createSkillAgent, 
-  SessionManager, 
-  MemoryManager 
-} from '@almadar/agent';
+// Internal: Almadar's interrupt learning system
+// (This is how it works under the hood — not a public API)
 
-// Setup with memory
-const memoryManager = new MemoryManager({ db: firestoreDb });
-const sessionManager = new SessionManager({
-  mode: 'firestore',
-  firestoreDb: db,
+const memoryManager = createMemoryManager(db);
+const sessionManager = createSessionManager({
   memoryManager,
 });
 
-// Create agent
-const { agent, threadId } = await createSkillAgent({
+// The agent is created with interrupt learning enabled
+const agent = createAgent({
   skill: 'kflow-orbitals',
   workDir: '/workspace',
-  memoryManager,
   userId: 'user_123',
-  skillLoader: loadSkill,
   // Interrupt config based on learned preferences
   noInterrupt: false,
 });

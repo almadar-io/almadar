@@ -259,9 +259,9 @@ interface Insights {
 ## Code Example: Using Agentic Search
 
 ```typescript
-import { createAgenticSearchEngine } from '@almadar/agent';
-
-const searchEngine = createAgenticSearchEngine(memoryManager);
+// Internal: Almadar's agentic search engine
+// (This is how it works under the hood — not a public API)
+const searchEngine = createSearchEngine(memoryManager);
 
 // Search for authentication patterns
 const response = await searchEngine.search({

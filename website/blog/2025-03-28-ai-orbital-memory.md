@@ -147,7 +147,8 @@ Memory updates are events that trigger state transitions — just like regular A
 ### Recording a Session
 
 ```typescript
-const memoryManager = new MemoryManager({ db: firestoreDb });
+// Internal: Almadar's memory system records generation sessions
+const memoryManager = createMemoryManager(db);
 
 // After completing a generation session
 await memoryManager.recordGeneration(userId, {
@@ -175,14 +176,14 @@ await memoryManager.updateProjectContext(appId, {
 ### Using Memory in Generation
 
 ```typescript
-const { agent, userPreferences, projectContext } = await createSkillAgent({
+// Internal: When the agent starts, memory is loaded automatically
+const agent = createAgent({
   skill: 'kflow-orbitals',
-  memoryManager,
   userId: 'user_123',
   appId: 'app_456',
 });
 
-// Memory is automatically injected into system prompt
+// Memory context is automatically injected into the system prompt
 ```
 
 The AI receives:
@@ -275,21 +276,17 @@ Memory IS an Almadar schema. It uses the same patterns as any other app.
 ## Try It: Build a Memory-Aware Agent
 
 ```typescript
-import { MemoryManager, createSkillAgent } from '@almadar/agent';
+// Internal: Almadar's AI agent uses structured memory
+// (This is how it works under the hood — not a public API)
 
-// Initialize memory
-const memoryManager = new MemoryManager({ 
-  db: firestoreDb 
-});
+const memoryManager = createMemoryManager(db);
 
-// Create agent with memory
-const { agent, threadId } = await createSkillAgent({
+// The agent is created with memory access
+const agent = createAgent({
   skill: 'kflow-orbitals',
   workDir: '/workspace',
-  memoryManager,
   userId: 'user_123',
   appId: 'app_456',
-  skillLoader: loadSkill,
 });
 
 // The agent now has access to:
@@ -302,19 +299,8 @@ const result = await agent.run({
   input: 'Create a Product entity',
 });
 
-// After completion, sync to memory
-await sessionManager.syncSessionToMemory(
-  threadId,
-  'user_123',
-  {
-    appId: 'app_456',
-    inputDescription: 'Create a Product entity',
-    generatedOrbital: 'ProductManagement',
-    patternsUsed: ['entity-form', 'entity-table'],
-    entities: ['Product'],
-    success: true,
-  }
-);
+// After completion, session data is synced to memory automatically
+// Recording: what was generated, which patterns were used, success/failure
 ```
 
 ## The Takeaway

@@ -259,7 +259,7 @@ Adding inventory management and low-stock alerts.
 ## Code Example: Using Compaction
 
 ```typescript
-import { SessionManager } from '@almadar/agent';
+// Internal: Almadar's session management system
 
 const sessionManager = new SessionManager({
   mode: 'firestore',

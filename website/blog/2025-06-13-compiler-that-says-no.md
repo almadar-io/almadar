@@ -256,7 +256,7 @@ The compiler is written in Rust. This gives us:
 
 **Memory safety without GC:** The validator borrows the schema without copying it. For a 5,000-line schema, this saves significant memory and time.
 
-**Compilation speed:** Full validation of a large schema takes <50ms. You get feedback faster than your editor can refresh.
+**Compilation speed:** Full validation of a large schema takes &lt;50ms. You get feedback faster than your editor can refresh.
 
 **Fearless concurrency:** Validation modules can run in parallel without data races. Rust's type system guarantees this at compile time.
 
@@ -276,7 +276,7 @@ The best bug is the one that never exists.
 
 Almadar's compiler doesn't just check syntax. It checks causality (closed circuits), completeness (no orphaned events), reachability (no dead states), correctness (type-safe expressions), and consistency (cross-orbital event matching).
 
-50+ rules. 12 modules. <50ms.
+50+ rules. 12 modules. &lt;50ms.
 
 That's not a compiler. That's a code reviewer that never sleeps, never misses a case, and never approves broken code.
 
