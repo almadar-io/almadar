@@ -12,7 +12,7 @@
           { "ime": "completed", "tip": "logicno" }
         ]
       },
-      "znacilnost": [
+      "znacilnosti": [
         {
           "ime": "BrskalnikOpravil",
           "povezanaEntiteta": "Opravilo",
