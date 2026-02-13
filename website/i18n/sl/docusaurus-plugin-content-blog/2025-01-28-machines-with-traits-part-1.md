@@ -269,6 +269,8 @@ Almadar ni samo programski jezik. Je nov način razmišljanja o vedênju strojev
 
 [Part 2: Gradnja industrijskega robotskega krmilnika](/blog/machines-with-traits-part-2) — Skupaj bomo zgradili robotsko roko z jezikom Almadar, korak za korakom.
 
+<!-- truncate -->
+
 ---
 
 *Napisala ekipa Almadar*  

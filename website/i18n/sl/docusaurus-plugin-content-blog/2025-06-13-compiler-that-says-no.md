@@ -256,7 +256,7 @@ Compiler je napisan v Rustu. To nam daje:
 
 **Memory safety brez GC:** Validator si izposodi shemo brez kopiranja. Za 5.000-vrstično shemo to prihrani pomemben pomnilnik in čas.
 
-**Hitrost kompilacije:** Polna validacija velike sheme traja <50ms. Feedback dobite hitreje, kot se lahko vaš editor osveži.
+**Hitrost kompilacije:** Polna validacija velike sheme traja `&lt;50ms`. Feedback dobite hitreje, kot se lahko vaš editor osveži.
 
 **Brezstrahna sočasnost:** Validacijski moduli lahko tečejo vzporedno brez tekmovanj za podatke. Rustov tipni sistem to zagotavlja ob compile time.
 
@@ -276,7 +276,7 @@ Najboljša napaka je tista, ki nikoli ne obstaja.
 
 Almadarjev compiler ne preverja samo sintakse. Preverja vzročnost (zaprte kroge), popolnost (ni osirotelih dogodkov), dosegljivost (ni mrtvih stanj), pravilnost (type-safe izrazi) in konsistenco (ujemanje cross-orbital dogodkov).
 
-50+ pravil. 12 modulov. <50ms.
+50+ pravil. 12 modulov. `&lt;50ms`.
 
 To ni compiler. To je code reviewer, ki nikoli ne spi, nikoli ne zamudi primera in nikoli ne odobri pokvarjene kode.
 
