@@ -23,7 +23,7 @@
           "ucinki": [
             ["nastavi", "@entiteta.message", "Pozdravljen, svet!"],
             ["nastavi", "@entiteta.count", ["+", "@entiteta.count", 1]],
-            ["narisi_vmesnik", "glavni", {
+            ["render-ui", "main", {
               "tip": "stats-card",
               "naslov": "@entiteta.message",
               "vrednost": "@entiteta.count"
