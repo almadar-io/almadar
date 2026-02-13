@@ -1,0 +1,34 @@
+{
+  "orbitala": "OpravilaApp",
+  "entiteta": {
+    "ime": "Opravilo",
+    "zbirka": "tasks",
+    "polja": [
+      { "ime": "id", "tip": "niz", "obvezno": true, "primarniKljuc": true },
+      { "ime": "title", "tip": "niz", "obvezno": true },
+      { "ime": "completed", "tip": "logicno" }
+    ]
+  },
+  "znacilnost": [
+    {
+      "ime": "UpravljanjeOpravil",
+      "povezanaEntiteta": "Opravilo",
+      "strojStanj": {
+        "stanja": [
+          { "ime": "Aktivno", "zacetno": true },
+          { "ime": "Koncano" }
+        ],
+        "prehodi": [
+          {
+            "iz": "Aktivno",
+            "do": "Koncano",
+            "dogodek": "ZAKLJUCI",
+            "ucinki": [
+              ["set", "@entity.completed", true]
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
