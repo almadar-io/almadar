@@ -395,52 +395,90 @@ body {
 
 /* Exception for Home Page Code Preview - keep it dark/transparent */
 /* We use the global class .home-page-code-preview added in index.tsx */
+/* Force Dracula-like theme colors */
+
 .home-page-code-preview .prism-code {
     background-color: transparent !important;
     border: none !important;
+    color: #f8f8f2 !important;
+    /* Dracula Foreground */
+    text-shadow: none !important;
     font-family: "IBM Plex Mono", "Fira Code", monospace;
 }
 
 .home-page-code-preview code {
     background-color: transparent !important;
-    color: #f8fafc !important;
-    /* Base text white */
+    color: inherit !important;
     border: none !important;
 }
 
-/* Force vibrant colors for JSON tokens in the home page preview */
-.home-page-code-preview .token.string {
-    color: #bae6fd !important;
+/* Tokens - Dracula Theme */
+.home-page-code-preview .token.comment,
+.home-page-code-preview .token.prolog,
+.home-page-code-preview .token.doctype,
+.home-page-code-preview .token.cdata {
+    color: #6272a4 !important;
 }
 
-/* Light Blue */
-.home-page-code-preview .token.property {
-    color: #2dd4bf !important;
-}
-
-/* Teal */
-.home-page-code-preview .token.number {
-    color: #fcd34d !important;
-}
-
-/* Yellow */
-.home-page-code-preview .token.boolean {
-    color: #fca5a5 !important;
-}
-
-/* Red/Pink */
-.home-page-code-preview .token.keyword {
-    color: #c084fc !important;
-}
-
-/* Purple */
 .home-page-code-preview .token.punctuation {
-    color: #94a3b8 !important;
+    color: #f8f8f2 !important;
 }
 
-/* Grey */
-.home-page-code-preview .token.operator {
-    color: #cbd5e1 !important;
+.home-page-code-preview .token.namespace {
+    opacity: .7;
+}
+
+.home-page-code-preview .token.property,
+.home-page-code-preview .token.tag,
+.home-page-code-preview .token.constant,
+.home-page-code-preview .token.symbol,
+.home-page-code-preview .token.deleted {
+    color: #ff79c6 !important;
+    /* Pink */
+}
+
+.home-page-code-preview .token.boolean,
+.home-page-code-preview .token.number {
+    color: #bd93f9 !important;
+    /* Purple */
+}
+
+.home-page-code-preview .token.selector,
+.home-page-code-preview .token.attr-name,
+.home-page-code-preview .token.string,
+.home-page-code-preview .token.char,
+.home-page-code-preview .token.builtin,
+.home-page-code-preview .token.inserted {
+    color: #f1fa8c !important;
+    /* Yellow */
+}
+
+.home-page-code-preview .token.operator,
+.home-page-code-preview .token.entity,
+.home-page-code-preview .token.url,
+.home-page-code-preview .language-css .token.string,
+.home-page-code-preview .style .token.string,
+.home-page-code-preview .token.variable {
+    color: #f8f8f2 !important;
+}
+
+.home-page-code-preview .token.atrule,
+.home-page-code-preview .token.attr-value,
+.home-page-code-preview .token.keyword {
+    color: #8be9fd !important;
+    /* Cyan */
+}
+
+.home-page-code-preview .token.function,
+.home-page-code-preview .token.class-name {
+    color: #50fa7b !important;
+    /* Green */
+}
+
+.home-page-code-preview .token.regex,
+.home-page-code-preview .token.important {
+    color: #ffb86c !important;
+    /* Orange */
 }
 
 [data-theme="light"] code {
