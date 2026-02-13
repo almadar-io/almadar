@@ -67,23 +67,11 @@
 
 ## ابدأ الآن
 
-<div class="grid cards" dir="rtl">
+<div dir="rtl">
 
-- :material-rocket-launch: **[البداية السريعة](getting-started/introduction.md)**
-  
-  ابنِ أول تطبيق بلغة المدار في ١٠ دقائق
-
-- :material-book-open-variant: **[دليل اللغة](../en/language/specification.md)**
-  
-  تعمق في الكيانات والسمات وتعبيرات S
-
-- :material-download: **[تحميل المُصرّف](downloads/cli.md)**
-  
-  احصل على مُصرّف المدار لمنصتك
-
-- :fontawesome-brands-discord: **[انضم للمجتمع](community/contributing.md)**
-  
-  تواصل مع مطوري المدار الآخرين
+- **[البداية السريعة](getting-started/introduction.md)** — ابنِ أول تطبيق بلغة المدار في ١٠ دقائق
+- **[تحميل المُصرّف](downloads/cli.md)** — احصل على مُصرّف المدار لمنصتك
+- **[انضم للمجتمع](community/contributing.md)** — تواصل مع مطوري المدار الآخرين
 
 </div>
 

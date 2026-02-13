@@ -23,15 +23,17 @@ tags: [architecture, tutorial]
 {
   "name": "Toggleable",
   "stateMachine": {
-    "initial": "off",
-    "states": ["off", "on"],
+    "states": [
+      { "name": "off", "isInitial": true },
+      { "name": "on" }
+    ],
     "transitions": [
       {
         "from": "off",
         "event": "TOGGLE",
         "to": "on",
         "effects": [
-          ["render-ui", "main", { "pattern": "toggle", "props": { "active": true }}]
+          ["render-ui", "main", { "type": "toggle", "active": true }]
         ]
       },
       {
@@ -39,7 +41,7 @@ tags: [architecture, tutorial]
         "event": "TOGGLE",
         "to": "off",
         "effects": [
-          ["render-ui", "main", { "pattern": "toggle", "props": { "active": false }}]
+          ["render-ui", "main", { "type": "toggle", "active": false }]
         ]
       }
     ]

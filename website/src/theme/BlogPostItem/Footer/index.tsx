@@ -5,20 +5,20 @@ import Link from '@docusaurus/Link';
 // A curated list of recent/important posts to show at the bottom
 const RECENT_POSTS = [
     {
+        title: "One Schema, Six Apps",
+        permalink: "/blog/one-schema-six-apps",
+    },
+    {
+        title: "JSON That Thinks: Turing-Complete JSON",
+        permalink: "/blog/json-that-thinks",
+    },
+    {
         title: "Three Execution Models, One Source of Truth",
         permalink: "/blog/three-execution-models",
     },
     {
-        title: "State Sync Across Browser Tabs",
-        permalink: "/blog/state-sync-browser-tabs",
-    },
-    {
-        title: "Schema-First Development",
-        permalink: "/blog/schema-first-development",
-    },
-    {
-        title: "The IKEA Effect for Software",
-        permalink: "/blog/ikea-effect-software",
+        title: "The Closed Circuit Pattern",
+        permalink: "/blog/closed-circuit-pattern",
     },
 ];
 

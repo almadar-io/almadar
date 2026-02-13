@@ -23,8 +23,10 @@ Every trait in Almadar contains a state machine:
 {
   "name": "Toggleable",
   "stateMachine": {
-    "initial": "off",
-    "states": ["off", "on"],
+    "states": [
+      { "name": "off", "isInitial": true },
+      { "name": "on" }
+    ],
     "transitions": [
       {
         "from": "off",

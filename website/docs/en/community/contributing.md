@@ -36,7 +36,7 @@ Welcome to the Almadar community! We're excited to have you contribute.
 
 ```bash
 # Fork and clone the repository
-git clone https://github.com/YOUR_USERNAME/almadar-docs.git
+git clone https://github.com/YOUR_USERNAME/almadar.git
 
 # Create a branch
 git checkout -b docs/improve-getting-started

@@ -4,7 +4,7 @@
 
 ## What We Offer
 
-Almadar is both the creator of the Almadar and a full-service software development agency. We use our own technology to deliver projects faster, better, and more cost-effectively than traditional development.
+Almadar is both the creator of the Almadar language and a full-service software development agency. We use our own technology to deliver projects faster, better, and more cost-effectively than traditional development.
 
 ### For Enterprises
 
@@ -129,7 +129,7 @@ We specialize in projects for the Saudi and GCC market:
 ### Osama Alghanmi
 **Founder & Technical Lead**
 
-15 years of engineering expertise. Previously architected Saudi Arabia's national e-invoicing platform. Creator of the Almadar.
+15 years of engineering expertise. Previously architected Saudi Arabia's national e-invoicing platform. Creator of Almadar.
 
 - [LinkedIn](https://linkedin.com/in/osama-alghanmi-0957bb28/)
 - oalghnmi@gmail.com

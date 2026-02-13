@@ -67,25 +67,9 @@ Your Vision → OrbitalSchema (.orb) → Full-Stack Application
 
 ## Get Started
 
-<div class="grid cards">
-
-- :material-rocket-launch: **[Quick Start](en/getting-started/introduction.md)**
-  
-  Build your first Almadar application in 10 minutes
-
-- :material-book-open-variant: **[Language Guide](en/language/specification.md)**
-  
-  Deep dive into entities, traits, and S-expressions
-
-- :material-download: **[Download CLI](en/downloads/cli.md)**
-  
-  Get the Almadar compiler for your platform
-
-- :fontawesome-brands-discord: **[Join Community](en/community/contributing.md)**
-  
-  Connect with other Almadar developers
-
-</div>
+- **[Quick Start](en/getting-started/introduction.md)** — Build your first Almadar application in 10 minutes
+- **[Download CLI](en/downloads/cli.md)** — Get the Almadar compiler for your platform
+- **[Join Community](en/community/contributing.md)** — Connect with other Almadar developers
 
 ## Language Selector
 
@@ -96,7 +80,7 @@ Your Vision → OrbitalSchema (.orb) → Full-Stack Application
 
 ## Enterprise Services
 
-Looking for a development partner? **Almadar** is both the creator of Almadar and a full-service software agency.
+Looking for a development partner? **Almadar** is both the creator of the Almadar language and a full-service software agency.
 
 - [Almadar Enterprise](en/enterprise/index.md) — Custom development, training, consulting
 - [المدار للأعمال](ar/enterprise/index.md) — التطوير المخصص، التدريب، الاستشارات

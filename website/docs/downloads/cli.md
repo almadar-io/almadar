@@ -10,19 +10,7 @@ The Almadar Command Line Interface (CLI) is your gateway to the Almadar ecosyste
 
 ## Installation
 
-### macOS / Linux
-
-```bash
-curl -fsSL https://almadar.io/install.sh | sh
-```
-
-### Windows
-
-```powershell
-irm https://almadar.io/install.ps1 | iex
-```
-
-### npm
+### npm (Recommended)
 
 ```bash
 npm install -g @almadar/cli
@@ -34,9 +22,10 @@ npm install -g @almadar/cli
 |---------|-------------|
 | `almadar new` | Create a new project |
 | `almadar validate` | Validate a schema |
-| `almadar compile` | Compile to target |
+| `almadar compile` | Compile to target shell |
 | `almadar dev` | Start dev server |
-| `almadar test` | Run tests |
+| `almadar test` | Run state machine tests |
+| `almadar format` | Format a schema |
 
 ## Quick Start
 

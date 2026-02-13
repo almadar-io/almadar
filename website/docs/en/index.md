@@ -28,7 +28,7 @@ Welcome to the Almadar programming language documentation. Almadar is a declarat
 
 - [State Machine Design](guides/technical/state-machines.md)
 - [Guards and Permissions](guides/technical/guards-and-permissions.md)
-- [Cross-Almadar Events](guides/technical/cross-orbital-events.md)
+- [Cross-Orbital Events](guides/technical/cross-orbital-events.md)
 - [Testing](guides/technical/testing.md)
 
 #### Business
@@ -101,9 +101,9 @@ Like planets in orbit around a star, application components in Almadar follow pr
 
 ## Community
 
-- [Discord](https://discord.gg/almadar) - Real-time chat and support
-- [GitHub Discussions](https://github.com/almadar/almadar/discussions) - Technical discussions
-- [Twitter @OrbitalLang](https://twitter.com/OrbitalLang) - Updates and announcements
+- [Discord](https://discord.gg/YtWJCpnk) - Real-time chat and support
+- [GitHub Discussions](https://github.com/almadar-io/almadar/discussions) - Technical discussions
+- [LinkedIn](https://www.linkedin.com/company/almadar-io) - Updates and announcements
 
 ---
 
