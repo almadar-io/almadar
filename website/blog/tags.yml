@@ -17,3 +17,15 @@ architecture:
 community:
   label: Community
   description: Community news and contributions
+
+state-machines:
+  label: State Machines
+  description: Posts about state machine patterns and concepts
+
+ai:
+  label: AI & Machine Learning
+  description: AI-native development and intelligent systems
+
+philosophy:
+  label: Philosophy
+  description: Design philosophy and paradigm discussions
