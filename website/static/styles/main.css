@@ -258,6 +258,8 @@ section {
     opacity: 0.9;
 }
 
+/* RTL: Handled automatically by RTLcss — no manual overrides needed */
+
 
 /* ========== navigation.css ========== */
 /**
@@ -518,6 +520,8 @@ nav.nav-dark .nav-btn {
 nav.nav-dark .mobile-menu-toggle span {
     background: #fff;
 }
+
+/* RTL: Handled automatically by RTLcss — no manual overrides needed */
 
 
 /* ========== components.css ========== */
@@ -969,6 +973,8 @@ footer p {
 .dark-section .case-body p {
     color: #94a3b8;
 }
+
+/* RTL: Handled automatically by RTLcss — no manual overrides needed */
 
 
 /* ========== responsive.css ========== */
@@ -1626,6 +1632,8 @@ li code {
         font-size: 2rem;
     }
 }
+
+/* RTL: Handled automatically by RTLcss — no manual overrides needed */
 
 
 /* ========== variables-dark.css ========== */

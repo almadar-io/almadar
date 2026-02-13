@@ -1,156 +1,128 @@
 [
   {
-    "id": "trait-wars-templates-canvasbattletemplate--all-units",
-    "title": "Tactical Battle Arena",
-    "description": "Isometric tactical combat with animated sprite sheets, terrain effects, and real-time combat log.",
-    "height": "850px",
-    "category": "Strategy Game"
-  },
-  {
-    "id": "trait-wars-templates-canvasworldmaptemplate--large-map",
-    "title": "World Map Explorer",
-    "description": "Expansive isometric world map with animated units, terrain types, and region tooltips.",
-    "height": "850px",
-    "category": "Strategy Game"
-  },
-  {
-    "id": "trait-wars-templates-canvascastletemplate--with-hero",
-    "title": "Castle Stronghold",
-    "description": "Isometric castle management with building grid, hero garrison, and resource overview.",
-    "height": "850px",
-    "category": "Strategy Game"
-  },
-  {
-    "id": "templates-game-gamecanvas3dworldmap--world-map-default",
-    "title": "3D World Map",
-    "description": "Three.js-powered 3D world map with terrain features, camera controls, and unit placement.",
-    "height": "800px",
-    "category": "3D Engine"
-  },
-  {
-    "id": "templates-game-gamecanvas3dworldmap--battle-player-turn",
-    "title": "3D Battle Scene",
-    "description": "3D tactical battle view with GLB model loading, turn indicators, and attack ranges.",
-    "height": "800px",
-    "category": "3D Engine"
-  },
-  {
-    "id": "templates-game-gamecanvas3dworldmap--castle-default",
-    "title": "3D Castle View",
-    "description": "3D castle garrison with loaded Kenney assets, building placement, and orbit controls.",
-    "height": "800px",
-    "category": "3D Engine"
-  },
-  {
     "id": "clients-winning-11-templates-admindashboardtemplate--default",
+    "key": "executiveDashboard",
     "title": "Executive Dashboard",
     "description": "High-level overview of system health, alerts, and key metrics with real-time activity feed.",
     "height": "800px",
-    "category": "Social Network"
+    "category": "Social Network",
+    "categoryKey": "socialNetwork"
   },
   {
     "id": "clients-winning-11-templates-trustintelligencetemplate--default",
+    "key": "trustIntelligence",
     "title": "Trust Intelligence",
     "description": "AI-driven analysis of team trust scores, performance trends, and top performers.",
     "height": "800px",
-    "category": "Social Network"
+    "category": "Social Network",
+    "categoryKey": "socialNetwork"
   },
   {
     "id": "clients-winning-11-templates-graphintelligencetemplate--high-density-network",
+    "key": "graphIntelligence",
     "title": "Graph Intelligence",
     "description": "Network visualization with cluster detection, density metrics, and connection analysis.",
     "height": "800px",
-    "category": "Social Network"
+    "category": "Social Network",
+    "categoryKey": "socialNetwork"
   },
   {
     "id": "clients-winning-11-templates-userprofiletemplate--default",
+    "key": "userProfile360",
     "title": "User Profile 360",
     "description": "Comprehensive user analysis including activity history, trust metrics, and connection usage.",
     "height": "800px",
-    "category": "Social Network"
+    "category": "Social Network",
+    "categoryKey": "socialNetwork"
   },
   {
     "id": "clients-inspection-system-templates-inspectionstemplate--default",
+    "key": "inspectionManagement",
     "title": "Inspection Management",
     "description": "Centralized hub for tracking compliance checks, field operations, and inspection status.",
     "height": "800px",
-    "category": "Gov Tech"
+    "category": "Gov Tech",
+    "categoryKey": "govTech"
   },
   {
     "id": "clients-inspection-system-templates-inspectionformdemotemplate--trade-inspection",
+    "key": "inspectionForm",
     "title": "Inspection Form",
     "description": "Multi-step inspection form with conditional fields, law references, and violation capture.",
     "height": "850px",
-    "category": "Gov Tech"
+    "category": "Gov Tech",
+    "categoryKey": "govTech"
   },
   {
     "id": "blaz-klemenc-templates-fitnesstemplate--default",
+    "key": "fitnessTracker",
     "title": "Fitness Tracker",
     "description": "Workout logging with lift tracking, progress charts, and daily wellness input.",
     "height": "800px",
-    "category": "Fitness App"
+    "category": "Fitness App",
+    "categoryKey": "fitnessApp"
   },
   {
     "id": "blaz-klemenc-templates-mealplandetailtemplate--default",
+    "key": "mealPlanDetail",
     "title": "Meal Plan Detail",
     "description": "Detailed nutrition plan with macro breakdown, AI analysis, and shareable links.",
     "height": "800px",
-    "category": "Fitness App"
+    "category": "Fitness App",
+    "categoryKey": "fitnessApp"
   },
   {
     "id": "blaz-klemenc-templates-scheduletemplate--busy-week",
+    "key": "trainingSchedule",
     "title": "Training Schedule",
     "description": "Weekly training calendar with session management, status tracking, and completion overview.",
     "height": "800px",
-    "category": "Fitness App"
+    "category": "Fitness App",
+    "categoryKey": "fitnessApp"
   },
   {
     "id": "builder-templates-studioprojecttemplate--hq-mode",
+    "key": "almadarStudio",
     "title": "Almadar Studio",
     "description": "AI-powered development environment for building full-stack applications from natural language.",
     "height": "850px",
-    "category": "Dev Tools"
+    "category": "Dev Tools",
+    "categoryKey": "devTools"
   },
   {
     "id": "builder-templates-studioprojecttemplate--with-all-panels",
+    "key": "studioFullView",
     "title": "Studio Full View",
     "description": "Complete IDE layout with agent panel, inspector, schema editor, and live preview.",
     "height": "850px",
-    "category": "Dev Tools"
+    "category": "Dev Tools",
+    "categoryKey": "devTools"
   },
   {
     "id": "builder-organisms-agentchatpanel--running",
+    "key": "aiAgentPanel",
     "title": "AI Agent Panel",
     "description": "Real-time AI assistant with tool calls, todo tracking, and schema diffs.",
     "height": "700px",
-    "category": "Dev Tools"
+    "category": "Dev Tools",
+    "categoryKey": "devTools"
   },
   {
     "id": "game-battleboard--editor",
-    "title": "Battle Map Editor",
-    "description": "Interactive editor for designing battle maps with terrain painting and unit placement.",
+    "key": "gameMapEditor",
+    "title": "Game Map Editor",
+    "description": "Interactive isometric editor for designing game maps with terrain painting, unit placement, and region tooling.",
     "height": "800px",
-    "category": "Game Tools"
-  },
-  {
-    "id": "game-worldmapboard--editor",
-    "title": "World Map Editor",
-    "description": "Visual editor for crafting world maps with region placement and feature tooling.",
-    "height": "800px",
-    "category": "Game Tools"
+    "category": "Game Tools",
+    "categoryKey": "gameTools"
   },
   {
     "id": "organisms-graphcanvas--interactive",
+    "key": "interactiveGraph",
     "title": "Interactive Graph",
     "description": "Force-directed graph canvas with draggable nodes, zoom controls, and grouped layouts.",
     "height": "700px",
-    "category": "Data Viz"
-  },
-  {
-    "id": "organisms-layout-dashboardgrid--mixed-spanning",
-    "title": "Dashboard Grid",
-    "description": "Responsive dashboard layout with stat cards, mixed column spanning, and metric widgets.",
-    "height": "600px",
-    "category": "Core Components"
+    "category": "Data Viz",
+    "categoryKey": "dataViz"
   }
 ]

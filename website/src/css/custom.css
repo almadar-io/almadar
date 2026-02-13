@@ -394,7 +394,11 @@ body {
 }
 
 /* === Custom Code Block (KISS - Unified Theme) === */
-.home-page-code-preview pre {
+/* === Custom Code Block (KISS - Unified Theme) === */
+/* Increase specificity to override [data-theme] .prism-code */
+html .home-page-code-preview pre,
+[data-theme="light"] .home-page-code-preview pre,
+[data-theme="dark"] .home-page-code-preview pre {
     background-color: transparent !important;
     border: none !important;
     margin: 0;
@@ -406,7 +410,9 @@ body {
 }
 
 /* Force specific reset for the inner code element to prevent "white lines" or borders */
-.home-page-code-preview code {
+html .home-page-code-preview code,
+[data-theme="light"] .home-page-code-preview code,
+[data-theme="dark"] .home-page-code-preview code {
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
@@ -415,30 +421,54 @@ body {
 }
 
 /* Universal Colors (Dracula-based for high contrast on the dark panel) */
-.kk {
-    color: #8be9fd;
-    font-weight: 600;
+/* Override Prism syntax highlighting (for all languages) */
+.home-page-code-preview .token.property,
+.home-page-code-preview .token.className,
+.home-page-code-preview .token.class-name {
+    color: #2dd4bf !important;
+    /* Teal */
 }
 
-/* Key - Cyan */
-.ks {
-    color: #f1fa8c;
+.home-page-code-preview .token.string,
+.home-page-code-preview .token.url,
+.home-page-code-preview .token.attr-value {
+    color: #bae6fd !important;
+    /* Light Blue */
 }
 
-/* String - Yellow */
-.kn {
-    color: #bd93f9;
+.home-page-code-preview .token.number,
+.home-page-code-preview .token.boolean,
+.home-page-code-preview .token.constant {
+    color: #fca5a5 !important;
+    /* Red/Pink */
 }
 
-/* Number - Purple */
-.kp {
-    color: #f8f8f2;
+.home-page-code-preview .token.punctuation,
+.home-page-code-preview .token.operator {
+    color: #94a3b8 !important;
+    /* Slate */
 }
 
-/* Punctuation - White */
-.kc {
-    color: #6272a4;
+.home-page-code-preview .token.keyword,
+.home-page-code-preview .token.variable,
+.home-page-code-preview .token.selector,
+.home-page-code-preview .token.function {
+    color: #c084fc !important;
+    /* Purple */
+}
+
+.home-page-code-preview .token.comment {
+    color: #6272a4 !important;
+    /* Desaturated Blue/Grey */
     font-style: italic;
+}
+
+/* Force text color */
+.home-page-code-preview pre,
+.home-page-code-preview code {
+    color: #f8fafc !important;
+    /* White/Parchment */
+    /* Override inline Prism color */
 }
 
 /* Comment - Desaturated Blue */
