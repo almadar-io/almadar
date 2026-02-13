@@ -1,0 +1,91 @@
+/* Custom JSON Syntax Highlighting — no Prism */
+
+.container {
+  border-radius: 16px;
+  overflow: hidden;
+  background: #0f172a;
+  border: 1px solid #1e293b;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid #1e293b;
+}
+
+.headerTitle {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #14b8a6;
+  font-family: "IBM Plex Mono", "Fira Code", monospace;
+}
+
+.pre {
+  margin: 0;
+  padding: 1.25rem;
+  overflow-x: auto;
+  background: transparent;
+  /* rtl:ignore */
+  direction: ltr !important;
+  /* rtl:ignore */
+  text-align: left !important;
+}
+
+.code {
+  font-family: "IBM Plex Mono", "Fira Code", "JetBrains Mono", monospace;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: #e2e8f0;
+  background: transparent;
+  /* rtl:ignore */
+  direction: ltr !important;
+  /* rtl:ignore */
+  text-align: left !important;
+}
+
+/* ─── Token Colors ─── */
+
+/* JSON property keys */
+.property {
+  color: #2dd4bf; /* teal-400 */
+}
+
+/* String values */
+.string {
+  color: #bae6fd; /* sky-200 */
+}
+
+/* Binding references (@entity.field) */
+.binding {
+  color: #c084fc; /* purple-400 */
+  font-style: italic;
+}
+
+/* Effect operators (set, render-ui, +, etc.) */
+.operator {
+  color: #fb923c; /* orange-400 */
+  font-weight: 600;
+}
+
+/* Numbers */
+.number {
+  color: #fcd34d; /* amber-300 */
+}
+
+/* Booleans */
+.boolean {
+  color: #fca5a5; /* red-300 */
+}
+
+/* Null */
+.null {
+  color: #94a3b8; /* slate-400 */
+  font-style: italic;
+}
+
+/* Punctuation: braces, brackets, colons, commas */
+.punctuation {
+  color: #64748b; /* slate-500 */
+}

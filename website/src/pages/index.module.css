@@ -284,107 +284,8 @@
 }
 
 .codePreview {
-    background: #0f172a;
-    /* Force Dark */
-    border: 1px solid #1e293b;
-    /* Force Dark Border */
     border-radius: 16px;
     overflow: hidden;
-}
-
-/* Remove or neutralize theme-specific overrides if active */
-[data-theme="dark"] .codePreview {
-    background: #0f172a;
-    border-color: #1e293b;
-}
-
-.codeHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.75rem 1rem;
-    background: rgba(255, 255, 255, 0.03);
-    /* Force Dark */
-    border-bottom: 1px solid #1e293b;
-    /* Force Dark Border */
-}
-
-[data-theme="dark"] .codeHeader {
-    background: rgba(255, 255, 255, 0.03);
-    border-bottom-color: #1e293b;
-}
-
-.codeLang {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #14b8a6;
-    font-family: "IBM Plex Mono", "Fira Code", monospace;
-}
-
-.codePreview pre {
-    margin: 0 !important;
-    border-radius: 0 !important;
-    border: none !important;
-    background: transparent !important;
-    /* Ensure transparent so it takes container bg */
-}
-
-/* Force Dark Syntax Highlighting for JSON in Light Mode */
-/* Force Dark Syntax Highlighting (Increased Specificity) */
-div[class*='codePreview'] span[class*='token-line'] span[class*='token'][class*='property'] {
-    color: #2dd4bf !important;
-}
-
-div[class*='codePreview'] span[class*='token-line'] span[class*='token'][class*='string'] {
-    color: #bae6fd !important;
-}
-
-div[class*='codePreview'] span[class*='token-line'] span[class*='token'][class*='number'] {
-    color: #fcd34d !important;
-}
-
-div[class*='codePreview'] span[class*='token-line'] span[class*='token'][class*='boolean'] {
-    color: #fca5a5 !important;
-}
-
-div[class*='codePreview'] span[class*='token-line'] span[class*='token'][class*='punctuation'] {
-    color: #94a3b8 !important;
-}
-
-div[class*='codePreview'] span[class*='token-line'] span[class*='token'][class*='keyword'] {
-    color: #c084fc !important;
-}
-
-/* Fallback for standard token classes */
-.codePreview .token.property {
-    color: #2dd4bf !important;
-}
-
-.codePreview .token.string {
-    color: #bae6fd !important;
-}
-
-.codePreview .token.number {
-    color: #fcd34d !important;
-}
-
-.codePreview .token.boolean {
-    color: #fca5a5 !important;
-}
-
-.codePreview .token.punctuation {
-    color: #94a3b8 !important;
-}
-
-.codePreview .token.keyword {
-    color: #c084fc !important;
-}
-
-.codePreview code,
-.codePreview pre {
-    color: #f8fafc !important;
-    /* Force text white */
-    background-color: transparent !important;
 }
 
 .effectsLegend {
@@ -617,63 +518,12 @@ div[class*='codePreview'] span[class*='token-line'] span[class*='token'][class*=
     }
 }
 
-/* Force Light Mode Code Block Colors via CSS Modules to bypass loading issues */
-:global(html[data-theme="light"] .home-page-code-preview .token.string) {
-    color: #059669 !important;
-    /* Emerald */
-}
-
-:global(html[data-theme="light"] .home-page-code-preview .token.property) {
-    color: #d946ef !important;
-    /* Fuchsia */
-}
-
-:global(html[data-theme="light"] .home-page-code-preview .token.number) {
-    color: #7c3aed !important;
-    /* Violet */
-}
-
-:global(html[data-theme="light"] .home-page-code-preview .token.boolean) {
-    color: #7c3aed !important;
-    /* Violet */
-}
-
-:global(html[data-theme="light"] .home-page-code-preview .token.keyword) {
-    color: #0891b2 !important;
-    /* Cyan */
-}
-
-:global(html[data-theme="light"] .home-page-code-preview .token.punctuation) {
-    color: #475569 !important;
-    /* Slate */
-}
-
-:global(html[data-theme="light"] .home-page-code-preview .token.operator) {
-    color: #475569 !important;
-    /* Slate */
-}
-
-:global(html[data-theme="light"] .home-page-code-preview),
-:global(html[data-theme="light"] .home-page-code-preview .prism-code) {
-    color: #1e293b !important;
-    /* Dark Slate Base */
-}
-
-:global(html[data-theme="light"] .home-page-code-preview .effectsLegend),
-:global(html[data-theme="light"] .home-page-code-preview .effectItem) {
-    color: #334155 !important;
-}
-
 /* === RTL Support === */
 /* RTLcss auto-handles most directional flipping.
    Only mask-image gradient positions need manual override
    since RTLcss doesn't flip radial-gradient positions. */
 
-/* Code preview must stay LTR. */
-.codePreview {
-    /* rtl:ignore */
-    direction: ltr !important;
-}
+/* Code preview stays LTR — handled by JsonHighlight component. */
 
 .effectItem code {
     /* rtl:ignore */

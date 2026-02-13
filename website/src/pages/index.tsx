@@ -5,9 +5,8 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
-import CodeBlock from "@theme/CodeBlock";
-
 import styles from "./index.module.css";
+import JsonHighlight from "../components/JsonHighlight";
 
 // @ts-ignore
 import helloWorldEn from "!!raw-loader!../examples/hello-world.en.orb";
@@ -30,50 +29,8 @@ const LocalizedSchemaDisplay = () => {
   // Handle potential ESM default export from raw-loader
   const code = typeof content === "object" && content.default ? content.default : content;
 
-  return (
-    <CodeBlock language="json" className={styles.codeBlock} title="hello-world.orb">
-      {code}
-    </CodeBlock>
-  );
+  return <JsonHighlight code={code} title="hello-world.orb" />;
 };
-
-const helloWorldSchema = `{
-  "name": "HelloWorld",
-  "orbitals": [{
-    "name": "Greeter",
-    "entity": {
-      "name": "Greeting",
-      "fields": [
-        { "name": "message", "type": "string" },
-        { "name": "count", "type": "number", "default": 0 }
-      ]
-    },
-    "traits": [{
-      "name": "Clickable",
-      "stateMachine": {
-        "states": [
-          { "name": "idle", "isInitial": true },
-          { "name": "greeted" }
-        ],
-        "events": [{ "key": "CLICK", "name": "Click" }],
-        "transitions": [{
-          "from": "idle",
-          "event": "CLICK",
-          "to": "greeted",
-          "effects": [
-            ["set", "@entity.message", "Hello, World!"],
-            ["set", "@entity.count", ["+", "@entity.count", 1]],
-            ["render-ui", "main", {
-              "type": "stats-card",
-              "title": "@entity.message",
-              "value": "@entity.count"
-            }]
-          ]
-        }]
-      }
-    }]
-  }]
-}`;
 
 import MashrabiyaPattern from "../components/MashrabiyaPattern";
 import DemoCarousel from "../components/DemoCarousel";
@@ -281,10 +238,7 @@ function HomepagePhilosophy() {
             <OrbitalVisualization />
 
           </div>
-          <div className={clsx(styles.codePreview, "home-page-code-preview")}>
-            <div className={styles.codeHeader}>
-              <span className={styles.codeLang}>hello-world.orb</span>
-            </div>
+          <div className={styles.codePreview}>
             <LocalizedSchemaDisplay />
             <div className={styles.effectsLegend}>
               <div className={styles.effectItem}>
