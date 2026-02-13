@@ -39,7 +39,7 @@ image: /img/blog/agentic-search.png
 البحث الوكيلي يجمع:
 1. **الفهم الدلالي** — ماذا يعني الاستعلام؟
 2. **التنقل الزمني** — متى حدث هذا؟
-3. **التعرف على الأنماط** — أي نوع من الحلول؟
+3. **التعرف على الـ patterns (أنماط تكرارية في البيانات أو السلوك)** — أي نوع من الحلول؟
 4. **الاستدلال السببي** — ما الذي أدى إلى النجاح؟
 
 ```typescript
@@ -119,7 +119,7 @@ const matches = sessions.filter(s =>
 );
 ```
 
-### 3. البحث بالأنماط
+### 3. البحث بالـ patterns
 
 *"أرني جميع عروض القوائم التي بنيتها"*
 
@@ -132,15 +132,15 @@ const response = await searchEngine.search({
 ```
 
 كيف يعمل:
-1. استخراج مصطلحات الأنماط ("قائمة"، "جدول"، "شبكة"، "بطاقات")
-2. البحث في سجلات تقارب الأنماط
-3. إرجاع الجلسات التي تستخدم تلك الأنماط
+1. استخراج مصطلحات الـ patterns ("قائمة"، "جدول"، "شبكة"، "بطاقات")
+2. البحث في سجلات تقارب الـ patterns
+3. إرجاع الجلسات التي تستخدم تلك الـ patterns
 
 ```typescript
 const patternTerms = ['list', 'table', 'grid', 'cards'];
 const userPatterns = await memoryManager.getUserPatterns(userId);
 
-// إيجاد الأنماط عالية النجاح
+// إيجاد الـ patterns عالية النجاح
 const goodPatterns = userPatterns.filter(p =>
   p.successCount / p.usageCount > 0.8
 );
@@ -159,7 +159,7 @@ const response = await searchEngine.search({
 });
 ```
 
-يجمع نتائج البحث الزمني والدلالي والأنماط مع إزالة التكرار.
+يجمع نتائج البحث الزمني والدلالي والـ patterns مع إزالة التكرار.
 
 ## محرك الاستدلال
 
@@ -193,7 +193,7 @@ interface SearchResult {
 ```typescript
 interface Insights {
   summary: string;           // ما تم إيجاده
-  patterns: string[];        // الأنماط الشائعة
+  patterns: string[];        // الـ patterns الشائعة
   trends: string[];          // الاتجاهات الزمنية
   suggestions: string[];     // الخطوات التالية القابلة للتنفيذ
 }
@@ -234,10 +234,10 @@ interface Insights {
 
 3. **البحث الدلالي**
    - طابق "checkout" في الطلبات
-   - وجد كيانات ذات صلة (Order, Cart)
+   - وجد entities ذات صلة (Order, Cart)
 
-4. **البحث بالأنماط**
-   - وجد استخدام نمط `wizard-flow`
+4. **البحث بالـ patterns**
+   - وجد استخدام pattern الـ `wizard-flow`
    - معدل نجاح 90%
 
 5. **توليد الرؤى**
@@ -276,7 +276,7 @@ const response = await searchEngine.search({
 console.log(response.insights.summary);
 // "Found 4 authentication implementations across 2 projects"
 
-// عرض الأنماط المستخدمة
+// عرض الـ patterns المستخدمة
 response.insights.patterns.forEach(pattern => {
   console.log(`- ${pattern}`);
 });
@@ -312,10 +312,10 @@ if (response.insights.suggestions.length > 0) {
 | الاستعلام | "authentication" | "كيف تعاملت مع المصادقة؟" |
 | الطريقة | تشابه التضمينات | استدلال + تنقل |
 | النتائج | نص مشابه | سياق ذو صلة |
-| الزمني | طابع زمني فقط | انتقالات حالة |
+| الزمني | طابع زمني فقط | state transitions |
 | السببي | لا يوجد | سلاسل خطأ ← إصلاح |
 | التفسير | درجة تشابه | استدلال مقروء للبشر |
-| الرؤى | لا يوجد | أنماط، اتجاهات، اقتراحات |
+| الرؤى | لا يوجد | patterns، اتجاهات، اقتراحات |
 
 ## تشبيه واقعي: أمين المكتبة مقابل مساعد البحث
 
@@ -340,8 +340,8 @@ if (response.insights.suggestions.length > 0) {
 الفرق هو **الاستدلال**:
 - فهم نية الاستعلام
 - التنقل في السياق الزمني
-- التعرف على الأنماط
-- رسم الروابط
+- التعرف على الـ patterns
+- رسم الـ bindings (الروابط بين البيانات)
 - اقتراح الخطوات التالية
 
 هكذا يتذكر البشر. وهكذا يتذكر ذكاؤنا الاصطناعي أيضاً.
