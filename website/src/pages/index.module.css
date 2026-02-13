@@ -669,3 +669,39 @@ div[class*='codePreview'] span[class*='token-line'] span[class*='token'][class*=
 :global(html[data-theme="light"] .home-page-code-preview .effectItem) {
     color: #334155 !important;
 }
+
+/* ===========================
+   RTL Support
+   =========================== */
+
+html[dir="rtl"] .heroPatternContainer {
+    right: auto;
+    left: 0;
+    mask-image: radial-gradient(circle at top left, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at top left, black 30%, transparent 80%);
+}
+
+html[dir="rtl"] .philosophyContent {
+    direction: rtl;
+}
+
+html[dir="rtl"] .philosophyFeature {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .effectsLegend {
+    direction: rtl;
+    text-align: right;
+}
+
+html[dir="rtl"] .effectItem {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .effectItem code {
+    direction: ltr;
+}
+
+html[dir="rtl"] .codePreview {
+    direction: ltr;
+}

@@ -65,3 +65,16 @@
     border: none;
     display: block;
 }
+
+/* ===========================
+   RTL Support
+   =========================== */
+
+html[dir="rtl"] .header {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .title {
+    margin-left: 0;
+    margin-right: 1rem;
+}

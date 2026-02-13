@@ -396,3 +396,19 @@
         font-size: 1.75rem;
     }
 }
+
+/* ===========================
+   RTL Support
+   =========================== */
+
+html[dir="rtl"] .heroPatternContainer {
+    right: auto;
+    left: 0;
+    mask-image: radial-gradient(circle at top left, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at top left, black 30%, transparent 80%);
+}
+
+html[dir="rtl"] .pricingFeatures li::before {
+    margin-right: 0;
+    margin-left: 0.75rem;
+}

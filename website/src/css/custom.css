@@ -512,6 +512,16 @@ body {
     border-left: 4px solid var(--almadar-sand-gold);
 }
 
+html[dir="rtl"][data-theme="dark"] .alert--info {
+    border-left: none;
+    border-right: 4px solid var(--almadar-teal);
+}
+
+html[dir="rtl"][data-theme="dark"] .alert--warning {
+    border-left: none;
+    border-right: 4px solid var(--almadar-sand-gold);
+}
+
 /* === Table of Contents === */
 .table-of-contents__link {
     transition: color var(--transition-fast);
@@ -525,6 +535,15 @@ body {
 /* === RTL Support === */
 html[dir="rtl"] {
     text-align: right;
+}
+
+/* Code blocks always LTR */
+html[dir="rtl"] pre,
+html[dir="rtl"] code,
+html[dir="rtl"] .prism-code,
+html[dir="rtl"] .home-page-code-preview {
+    direction: ltr;
+    text-align: left;
 }
 
 /* Navbar RTL - flip the entire layout */
@@ -559,9 +578,109 @@ html[dir="rtl"] .navbar__logo {
     margin-left: 0.5rem;
 }
 
+/* Sidebar RTL */
+html[dir="rtl"] .menu__list {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+html[dir="rtl"] .menu__list .menu__list {
+    padding-left: 0;
+    padding-right: 1rem;
+}
+
+html[dir="rtl"] .menu__link--sublist-caret::after {
+    transform: rotate(180deg);
+}
+
+html[dir="rtl"] .menu__caret::before {
+    transform: rotate(180deg);
+}
+
+/* Table of Contents RTL */
+html[dir="rtl"] .table-of-contents {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+html[dir="rtl"] .table-of-contents ul {
+    padding-left: 0;
+    padding-right: 1rem;
+}
+
+/* Alerts/Admonitions RTL */
 html[dir="rtl"] .alert {
     border-left: none;
     border-right: 4px solid;
+}
+
+html[dir="rtl"] .alert--info {
+    border-right-color: var(--ifm-color-info);
+}
+
+html[dir="rtl"] .alert--warning {
+    border-right-color: var(--ifm-color-warning);
+}
+
+/* Pagination RTL */
+html[dir="rtl"] .pagination-nav__link--next .pagination-nav__sublabel::after {
+    content: " «";
+}
+
+html[dir="rtl"] .pagination-nav__link--prev .pagination-nav__sublabel::before {
+    content: "» ";
+}
+
+/* Breadcrumbs RTL */
+html[dir="rtl"] .breadcrumbs__item:not(:last-child)::after {
+    transform: rotate(180deg);
+}
+
+/* Footer RTL */
+html[dir="rtl"] .footer__links {
+    direction: rtl;
+}
+
+/* Blog author RTL */
+html[dir="rtl"] .avatar {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .avatar__photo {
+    margin-right: 0;
+    margin-left: var(--ifm-avatar-intro-margin);
+}
+
+/* Markdown content RTL */
+html[dir="rtl"] .markdown ul,
+html[dir="rtl"] .markdown ol {
+    padding-left: 0;
+    padding-right: 2rem;
+}
+
+/* Docusaurus doc sidebar RTL */
+html[dir="rtl"] .theme-doc-sidebar-container {
+    border-right: none;
+    border-left: 1px solid var(--ifm-toc-border-color);
+}
+
+/* TOC sidebar (right side) moves to left in RTL */
+html[dir="rtl"] .col--3 .table-of-contents {
+    border-left: none;
+    border-right: 1px solid var(--ifm-toc-border-color);
+}
+
+/* Search bar RTL */
+html[dir="rtl"] .navbar__search-input {
+    padding-left: 0.5rem;
+    padding-right: 2rem;
+    background-position: right 0.75rem center;
+}
+
+/* Dropdown menu RTL */
+html[dir="rtl"] .dropdown__menu {
+    right: auto;
+    left: 0;
 }
 
 /* === Scrollbar (dark mode) === */

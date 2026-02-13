@@ -524,3 +524,54 @@ li code {
         font-size: 2rem;
     }
 }
+
+/* ===========================
+   RTL Support
+   =========================== */
+
+html[dir="rtl"] .docs-sidebar {
+    left: auto;
+    right: 0;
+    border-right: none;
+    border-left: 1px solid var(--border);
+}
+
+html[dir="rtl"] .docs-content {
+    margin-left: 0;
+    margin-right: 280px;
+}
+
+html[dir="rtl"] .sidebar-title {
+    padding-left: 0;
+    padding-right: 0.5rem;
+}
+
+html[dir="rtl"] .docs-content ul,
+html[dir="rtl"] .docs-content ol {
+    padding-left: 0;
+    padding-right: 1.5rem;
+}
+
+html[dir="rtl"] .docs-table th,
+html[dir="rtl"] .docs-table td {
+    text-align: right;
+}
+
+html[dir="rtl"] .info-box {
+    border-left: none;
+    border-right: 4px solid;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+@media (max-width: 1024px) {
+    html[dir="rtl"] .docs-content {
+        margin-left: 0;
+        margin-right: 240px;
+    }
+}
+
+@media (max-width: 768px) {
+    html[dir="rtl"] .docs-content {
+        margin-right: 0;
+    }
+}
