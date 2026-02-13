@@ -3,7 +3,10 @@ slug: schema-first-development
 title: "Schema-First Development: Why We Write JSON Before TypeScript"
 authors: [osamah]
 tags: [architecture, tutorial]
+image: /img/blog/schema-first-development.png
 ---
+
+![Schema-First Development: The Blueprint That Becomes the Building](/img/blog/schema-first-development.png)
 
 What if you defined your entire application in a single JSON file before writing any component code?
 
@@ -281,14 +284,4 @@ The schema becomes the **documentation that executes**.
 
 Ready to write your first schema? Check out the [Getting Started guide](/docs/getting-started/introduction).
 
-</content>
----
-image: /img/blog/schema-first-development.png
----
 
-![Schema-First Development: The Blueprint That Becomes the Building](/img/blog/schema-first-development.png)
-
-Stop writing code that *implied* a schema. Write the schema, and let the code follow.cumentation that executes**.
-
-Ready to write your first schema? Check out the [Getting Started guide](/docs/getting-started/introduction).
-```

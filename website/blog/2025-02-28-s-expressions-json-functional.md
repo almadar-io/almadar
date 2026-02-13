@@ -6,7 +6,7 @@ authors: [osamah]
 tags: [architecture]
 ---
 
-![S-Expressions, JSON, and the Functional Renaissanc](/img/blog/s-expressions-json-functional.png)
+![S-Expressions, JSON, and the Functional Renaissance](/img/blog/s-expressions-json-functional.png)
 
 Why we chose Lisp-style S-expressions over JSON for logic definition, and why you might too.
 

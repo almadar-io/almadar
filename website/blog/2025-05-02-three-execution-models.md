@@ -8,7 +8,9 @@ image: /img/blog/three-execution-models.png
 
 ![Three Execution Models, One Source of Truth](/img/blog/three-execution-models.png)
 
-The same `.orb` file runs in the browser, on the server, and compiles to native code. Here's how.Java promised "write once, run anywhere." We deliver "write once, run *everywhere appropriately*."
+The same `.orb` file runs in the browser, on the server, and compiles to native code. Here's how.
+
+Java promised "write once, run anywhere." We deliver "write once, run *everywhere appropriately*."
 
 <!-- truncate -->
 
