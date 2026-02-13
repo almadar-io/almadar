@@ -1,0 +1,18 @@
+{
+  "sidebar.docsSidebar.category.Getting Started": {
+    "message": "Začetek",
+    "description": "The label for category Getting Started in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Downloads": {
+    "message": "Prenosi",
+    "description": "The label for category Downloads in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Community": {
+    "message": "Skupnost",
+    "description": "The label for category Community in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Enterprise": {
+    "message": "Podjetje",
+    "description": "The label for category Enterprise in sidebar docsSidebar"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "title": {
+    "message": "Blog",
+    "description": "The title for the blog used in SEO"
+  },
+  "description": {
+    "message": "Almadar blog - Prispevki o deklarativnem programiranju in state machines",
+    "description": "The description for the blog used in SEO"
+  },
+  "sidebar.title": {
+    "message": "Najnovejše objave",
+    "description": "The label for the left sidebar"
+  }
+}
