@@ -27,7 +27,7 @@
                 "do": "Koncano",
                 "dogodek": "ZAKLJUCI",
                 "ucinki": [
-                  ["set", "@entity.completed", true]
+                  ["nastavi", "@entity.completed", true]
                 ]
               }
             ]

@@ -27,7 +27,7 @@
                 "إلى": "منجز",
                 "حدث": "إنجاز",
                 "تأثيرات": [
-                  ["set", "@entity.completed", true]
+                  ["تعيين", "@entity.completed", true]
                 ]
               }
             ]
