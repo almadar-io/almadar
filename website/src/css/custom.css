@@ -402,9 +402,22 @@ html[data-theme="light"] .home-page-code-preview .prism-code,
     background-color: transparent !important;
     border: none !important;
     color: #f8f8f2 !important;
-    /* Dracula Foreground */
+    /* Default Dark Mode (Dracula) */
     text-shadow: none !important;
     font-family: "IBM Plex Mono", "Fira Code", monospace;
+}
+
+/* Light Mode Overrides for Base Text */
+html[data-theme="light"] .home-page-code-preview,
+html[data-theme="light"] .home-page-code-preview .prism-code {
+    color: #1e293b !important;
+    /* Dark Slate for Light Mode */
+}
+
+/* Legend Text Fix */
+html[data-theme="light"] .home-page-code-preview .effectsLegend,
+html[data-theme="light"] .home-page-code-preview .effectItem {
+    color: #334155 !important;
 }
 
 html[data-theme="light"] .home-page-code-preview code,
@@ -414,39 +427,100 @@ html[data-theme="light"] .home-page-code-preview code,
     border: none !important;
 }
 
-/* Tokens - Dracula Theme - High Specificity */
-html[data-theme="light"] .home-page-code-preview .token.comment,
-html[data-theme="light"] .home-page-code-preview .token.prolog,
-html[data-theme="light"] .home-page-code-preview .token.doctype,
-html[data-theme="light"] .home-page-code-preview .token.cdata {
+/* Tokens - Dracula Theme (Default/Dark) */
+.home-page-code-preview .token.comment,
+.home-page-code-preview .token.prolog,
+.home-page-code-preview .token.doctype,
+.home-page-code-preview .token.cdata {
     color: #6272a4 !important;
 }
 
-html[data-theme="light"] .home-page-code-preview .token.punctuation,
 .home-page-code-preview .token.punctuation {
     color: #f8f8f2 !important;
 }
 
-html[data-theme="light"] .home-page-code-preview .token.namespace {
+.home-page-code-preview .token.namespace {
     opacity: .7;
+}
+
+.home-page-code-preview .token.property,
+.home-page-code-preview .token.tag,
+.home-page-code-preview .token.constant,
+.home-page-code-preview .token.symbol,
+.home-page-code-preview .token.deleted {
+    color: #ff79c6 !important;
+}
+
+.home-page-code-preview .token.boolean,
+.home-page-code-preview .token.number {
+    color: #bd93f9 !important;
+}
+
+.home-page-code-preview .token.selector,
+.home-page-code-preview .token.attr-name,
+.home-page-code-preview .token.string,
+.home-page-code-preview .token.char,
+.home-page-code-preview .token.builtin,
+.home-page-code-preview .token.inserted {
+    color: #f1fa8c !important;
+}
+
+.home-page-code-preview .token.operator,
+.home-page-code-preview .token.entity,
+.home-page-code-preview .token.url,
+.home-page-code-preview .language-css .token.string,
+.home-page-code-preview .style .token.string,
+.home-page-code-preview .token.variable {
+    color: #f8f8f2 !important;
+}
+
+.home-page-code-preview .token.atrule,
+.home-page-code-preview .token.attr-value,
+.home-page-code-preview .token.keyword {
+    color: #8be9fd !important;
+}
+
+.home-page-code-preview .token.function,
+.home-page-code-preview .token.class-name {
+    color: #50fa7b !important;
+}
+
+.home-page-code-preview .token.regex,
+.home-page-code-preview .token.important {
+    color: #ffb86c !important;
+}
+
+
+/* === Light Mode Overrides for Tokens === */
+/* High specificity to ensure visibility on light backgrounds */
+
+html[data-theme="light"] .home-page-code-preview .token.comment,
+html[data-theme="light"] .home-page-code-preview .token.prolog,
+html[data-theme="light"] .home-page-code-preview .token.doctype,
+html[data-theme="light"] .home-page-code-preview .token.cdata {
+    color: #64748b !important;
+    /* Slate 500 */
+}
+
+html[data-theme="light"] .home-page-code-preview .token.punctuation,
+html[data-theme="light"] .home-page-code-preview .token.operator {
+    color: #475569 !important;
+    /* Slate 600 */
 }
 
 html[data-theme="light"] .home-page-code-preview .token.property,
 html[data-theme="light"] .home-page-code-preview .token.tag,
 html[data-theme="light"] .home-page-code-preview .token.constant,
 html[data-theme="light"] .home-page-code-preview .token.symbol,
-html[data-theme="light"] .home-page-code-preview .token.deleted,
-.home-page-code-preview .token.property {
-    color: #ff79c6 !important;
-    /* Pink */
+html[data-theme="light"] .home-page-code-preview .token.deleted {
+    color: #d946ef !important;
+    /* Fuchsia 500 */
 }
 
 html[data-theme="light"] .home-page-code-preview .token.boolean,
-html[data-theme="light"] .home-page-code-preview .token.number,
-.home-page-code-preview .token.number,
-.home-page-code-preview .token.boolean {
-    color: #bd93f9 !important;
-    /* Purple */
+html[data-theme="light"] .home-page-code-preview .token.number {
+    color: #7c3aed !important;
+    /* Violet 600 */
 }
 
 html[data-theme="light"] .home-page-code-preview .token.selector,
@@ -454,40 +528,28 @@ html[data-theme="light"] .home-page-code-preview .token.attr-name,
 html[data-theme="light"] .home-page-code-preview .token.string,
 html[data-theme="light"] .home-page-code-preview .token.char,
 html[data-theme="light"] .home-page-code-preview .token.builtin,
-html[data-theme="light"] .home-page-code-preview .token.inserted,
-.home-page-code-preview .token.string {
-    color: #f1fa8c !important;
-    /* Yellow */
-}
-
-html[data-theme="light"] .home-page-code-preview .token.operator,
-html[data-theme="light"] .home-page-code-preview .token.entity,
-html[data-theme="light"] .home-page-code-preview .token.url,
-html[data-theme="light"] .home-page-code-preview .language-css .token.string,
-html[data-theme="light"] .home-page-code-preview .style .token.string,
-html[data-theme="light"] .home-page-code-preview .token.variable,
-.home-page-code-preview .token.operator {
-    color: #f8f8f2 !important;
+html[data-theme="light"] .home-page-code-preview .token.inserted {
+    color: #059669 !important;
+    /* Emerald 600 - Fixes invisible yellow */
 }
 
 html[data-theme="light"] .home-page-code-preview .token.atrule,
 html[data-theme="light"] .home-page-code-preview .token.attr-value,
-html[data-theme="light"] .home-page-code-preview .token.keyword,
-.home-page-code-preview .token.keyword {
-    color: #8be9fd !important;
-    /* Cyan */
+html[data-theme="light"] .home-page-code-preview .token.keyword {
+    color: #0891b2 !important;
+    /* Cyan 600 */
 }
 
 html[data-theme="light"] .home-page-code-preview .token.function,
 html[data-theme="light"] .home-page-code-preview .token.class-name {
-    color: #50fa7b !important;
-    /* Green */
+    color: #0d9488 !important;
+    /* Teal 600 */
 }
 
 html[data-theme="light"] .home-page-code-preview .token.regex,
 html[data-theme="light"] .home-page-code-preview .token.important {
-    color: #ffb86c !important;
-    /* Orange */
+    color: #ea580c !important;
+    /* Orange 600 */
 }
 
 [data-theme="light"] code {

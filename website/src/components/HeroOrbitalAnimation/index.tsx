@@ -4,6 +4,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { Float } from "@react-three/drei";
+import { useColorMode } from '@docusaurus/theme-common';
 
 // Normalized P-orbital shape function
 function getPOrbitalPoint(theta: number, phi: number, scale: number) {
@@ -81,8 +82,6 @@ function AnimatedLine({ phi, scale, color }: { phi: number, scale: number, color
 // using smooth lines along longitudinal curves.
 function StructuredOrbital({ color = "#06b6d4", scale = 3.5 }) {
     const groupRef = useRef<THREE.Group>(null);
-
-    // Number of longitudinal lines (meridians)
     const meridianCount = 24;
 
     // Generate angles for lines
@@ -95,7 +94,7 @@ function StructuredOrbital({ color = "#06b6d4", scale = 3.5 }) {
         if (groupRef.current) {
             const t = state.clock.getElapsedTime();
             groupRef.current.rotation.y = t * 0.15;
-            groupRef.current.rotation.z = Math.sin(t * 0.1) * 0.1; // Gentle sway
+            groupRef.current.rotation.z = Math.sin(t * 0.1) * 0.1;
         }
     });
 
@@ -104,12 +103,19 @@ function StructuredOrbital({ color = "#06b6d4", scale = 3.5 }) {
             {phis.map((phi, i) => (
                 <AnimatedLine key={i} phi={phi} scale={scale} color={color} />
             ))}
-
         </group>
     );
 }
 
 export default function HeroOrbitalAnimation() {
+    const { colorMode } = useColorMode();
+    const isDark = colorMode === 'dark';
+
+    // Dark mode: Cyan (#22d3ee)
+    // Light mode: Dark Slate / Indigo (#334155) for high contrast ink look
+    const color = isDark ? "#22d3ee" : "#334155";
+    const bloomIntensity = isDark ? 2.0 : 0.5;
+
     return (
         <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0, opacity: 0.9, pointerEvents: 'none' }}>
             <Canvas camera={{ position: [0, 0, 10], fov: 40 }} gl={{ alpha: true, antialias: true }}>
@@ -117,14 +123,13 @@ export default function HeroOrbitalAnimation() {
 
                 {/* Floating animated group */}
                 <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.2}>
-                    <StructuredOrbital scale={3.2} color="#22d3ee" /> {/* Cyan */}
+                    <StructuredOrbital scale={3.2} color={color} />
                 </Float>
 
                 <EffectComposer disableNormalPass>
-                    <Bloom luminanceThreshold={0.2} luminanceSmoothing={0.9} height={300} intensity={2.0} />
+                    <Bloom luminanceThreshold={0.2} luminanceSmoothing={0.9} height={300} intensity={bloomIntensity} />
                 </EffectComposer>
             </Canvas>
         </div>
     );
 }
-
