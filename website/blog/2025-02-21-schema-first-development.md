@@ -70,7 +70,13 @@ An Almadar schema (`.orb` file) contains:
               { "name": "Creating" },
               { "name": "Editing" }
             ],
-            "events": ["INIT", "CREATE", "EDIT", "SAVE", "CANCEL"],
+            "events": [
+                      { "key": "INIT", "name": "Initialize" },
+                      { "key": "CREATE", "name": "Create" },
+                      { "key": "EDIT", "name": "Edit" },
+                      { "key": "SAVE", "name": "Save" },
+                      { "key": "CANCEL", "name": "Cancel" }
+                    ],
             "transitions": [
               {
                 "from": "Browsing",
@@ -246,7 +252,7 @@ Create `blog.orb`:
   "orbitals": [
     {
       "name": "PostManagement",
-      "uses": [{ "from": "std/behaviors/crud", "as": "CRUD" }],
+      "uses": [{ "from": "std/List", "as": "List" }],
       "entity": {
         "name": "Post",
         "fields": [
@@ -255,7 +261,7 @@ Create `blog.orb`:
           { "name": "published", "type": "boolean", "default": false }
         ]
       },
-      "traits": [{ "ref": "CRUD.traits.CRUDManagement" }],
+      "traits": [{ "ref": "List.traits.ListManagement" }],
       "pages": [{ "name": "PostsPage", "path": "/posts" }]
     }
   ]
@@ -268,7 +274,7 @@ orbital compile blog.orb --shell typescript -o blog-app/
 cd blog-app && npm install && npm run dev
 ```
 
-You now have a working blog admin panel with list, create, edit, delete.
+You now have a working blog admin panel with list, create, edit, and delete.
 
 ## The Takeaway
 

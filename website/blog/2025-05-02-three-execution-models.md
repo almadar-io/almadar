@@ -50,10 +50,10 @@ Each optimized for its environment.
 
 ```typescript
 // Direct schema execution
-import { Runtime } from '@almadar/runtime';
+import { createOrbitalRuntime } from '@almadar/runtime';
 
-const runtime = new Runtime();
-const app = await runtime.loadSchema('task-app.orb');
+const runtime = createOrbitalRuntime();
+const app = await runtime.load('task-app.orb');
 
 // Execute in browser/Node.js
 app.start();
@@ -193,8 +193,8 @@ OIR is the **Rosetta Stone** — a common format all targets understand.
 
 ```typescript
 // Loaded and executed directly
-const runtime = new Runtime();
-await runtime.loadSchema('task-app.orb');
+const runtime = createOrbitalRuntime();
+await runtime.load('task-app.orb');
 
 // State machine runs in memory
 // UI renders via React components
@@ -254,8 +254,8 @@ cd output && npm install && npm run dev
 # Development
 orbital dev task-app.orb          # TypeScript Runtime
 
-# Native testing
-orbital run task-app.orb --native # Rust Runtime
+# Compile to Rust (Native)
+orbital compile task-app.orb --shell rust -o native/  # Rust Runtime
 
 # Production build
 orbital compile task-app.orb --shell typescript -o prod/
@@ -364,7 +364,11 @@ Create `multi-target.orb`:
       "linkedEntity": "Counter",
       "stateMachine": {
         "states": [{ "name": "counting", "isInitial": true }],
-        "events": ["INIT", "INCREMENT", "DECREMENT"],
+        "events": [
+          { "key": "INIT", "name": "Initialize" },
+          { "key": "INCREMENT", "name": "Increment" },
+          { "key": "DECREMENT", "name": "Decrement" }
+        ],
         "transitions": [
           {
             "from": "counting",
@@ -414,7 +418,7 @@ Run it three ways:
 orbital dev multi-target.orb
 
 # 2. Rust Runtime (Native)
-orbital run multi-target.orb --native
+orbital compile multi-target.orb --shell rust -o counter-native/
 
 # 3. Generated TypeScript (Production)
 orbital compile multi-target.orb --shell typescript -o counter-web/

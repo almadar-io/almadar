@@ -21,7 +21,7 @@ Almadar (Arabic for "The Orbit") brings a new paradigm to software development:
 
 ## The Almadar Model
 
-Just as electrons orbit nuclei following quantum rules, your application components follow state machine rules. Each **Almadar** is an entity with attached **traits** that define its behavior, UI, and integrations.
+Just as electrons orbit nuclei following quantum rules, your application components follow state machine rules. Each **Orbital** is an entity with attached **traits** that define its behavior, UI, and integrations.
 
 ```json
 {
@@ -31,7 +31,7 @@ Just as electrons orbit nuclei following quantum rules, your application compone
       "name": "Task",
       "fields": [
         { "name": "title", "type": "string" },
-        { "name": "status", "type": "enum", "options": ["todo", "done"] }
+        { "name": "status", "type": "enum", "values": ["todo", "done"] }
       ]
     },
     "traits": [

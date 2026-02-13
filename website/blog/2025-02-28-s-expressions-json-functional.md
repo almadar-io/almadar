@@ -184,7 +184,7 @@ S-expressions in Almadar use special prefixes for context:
 |--------|---------|---------|
 | `@entity.field` | Current entity field | `"@entity.status"` |
 | `@payload.field` | Event payload | `"@payload.userId"` |
-| `@state.field` | Current state variable | `"@state.selectedId"` |
+| `@state` | Current state machine state name | `"@state"` (e.g. `"Browsing"`) |
 | `@user.field` | Current user | `"@user.id"` |
 | `@now` | Current timestamp | `"@now"` |
 

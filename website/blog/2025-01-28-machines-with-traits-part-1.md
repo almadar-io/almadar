@@ -143,7 +143,27 @@ In physics, we describe object motion with simple laws:
           ]
         },
         {
-          "from": "*",
+          "from": "idle",
+          "to": "error",
+          "event": "EMERGENCY",
+          "effects": [
+            ["persist", "update", "Arm", { "speed": 0 }],
+            ["emit", "EMERGENCY_STOP", { "reason": "@payload.reason" }],
+            ["notify", "error", "Emergency stop!"]
+          ]
+        },
+        {
+          "from": "moving",
+          "to": "error",
+          "event": "EMERGENCY",
+          "effects": [
+            ["persist", "update", "Arm", { "speed": 0 }],
+            ["emit", "EMERGENCY_STOP", { "reason": "@payload.reason" }],
+            ["notify", "error", "Emergency stop!"]
+          ]
+        },
+        {
+          "from": "holding",
           "to": "error",
           "event": "EMERGENCY",
           "effects": [
@@ -163,7 +183,7 @@ In physics, we describe object motion with simple laws:
 1. **All states are clear** — idle, moving, holding, error
 2. **All transitions are defined** — No surprises
 3. **Guards protect** — Cannot grab weight greater than 50
-4. **Any state to emergency** — `"from": "*"` means from all states
+4. **Any state to emergency** — One explicit transition per state ensures every state can reach `error`
 
 ---
 

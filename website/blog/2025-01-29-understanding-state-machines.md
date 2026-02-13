@@ -31,7 +31,7 @@ Every trait in Almadar contains a state machine:
         "event": "TOGGLE",
         "to": "on",
         "effects": [
-          ["render-ui", "main", { "pattern": "toggle", "props": { "active": true }}]
+          ["render-ui", "main", { "type": "toggle", "active": true }]
         ]
       },
       {
@@ -39,7 +39,7 @@ Every trait in Almadar contains a state machine:
         "event": "TOGGLE",
         "to": "off",
         "effects": [
-          ["render-ui", "main", { "pattern": "toggle", "props": { "active": false }}]
+          ["render-ui", "main", { "type": "toggle", "active": false }]
         ]
       }
     ]

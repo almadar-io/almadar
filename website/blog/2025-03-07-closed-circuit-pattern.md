@@ -309,7 +309,11 @@ Create `modal-demo.orb`:
           { "name": "main", "isInitial": true },
           { "name": "modalOpen" }
         ],
-        "events": ["INIT", "OPEN", "CLOSE"],
+        "events": [
+          { "key": "INIT", "name": "Initialize" },
+          { "key": "OPEN", "name": "Open" },
+          { "key": "CLOSE", "name": "Close" }
+        ],
         "transitions": [
           {
             "from": "main",
