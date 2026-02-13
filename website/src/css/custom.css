@@ -533,15 +533,14 @@ body {
  * Use /* rtl:ignore */ for declarations that must NOT be flipped (e.g. code blocks).
  */
 
-/* Code blocks must always stay LTR regardless of locale */
+/* Code blocks must always stay LTR regardless of locale.
+   Using !important to override RTLcss auto-flipping. */
 pre,
 code,
 .prism-code,
 .home-page-code-preview {
-    /* rtl:ignore */
-    direction: ltr;
-    /* rtl:ignore */
-    text-align: left;
+    direction: ltr !important;
+    text-align: left !important;
 }
 
 /* === Scrollbar (dark mode) === */

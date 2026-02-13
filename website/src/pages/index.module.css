@@ -669,13 +669,12 @@ div[class*='codePreview'] span[class*='token-line'] span[class*='token'][class*=
    Only mask-image gradient positions need manual override
    since RTLcss doesn't flip radial-gradient positions. */
 
-/* Code preview must stay LTR */
+/* Code preview must stay LTR.
+   Using !important to override RTLcss auto-flipping. */
 .codePreview {
-    /* rtl:ignore */
-    direction: ltr;
+    direction: ltr !important;
 }
 
 .effectItem code {
-    /* rtl:ignore */
-    direction: ltr;
+    direction: ltr !important;
 }
