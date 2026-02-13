@@ -530,7 +530,7 @@ body {
  * dir="rtl" on <html> + RTLcss handles: margins, paddings, borders, text-align,
  * left/right positioning, and flex container flow direction.
  *
- * Use /* rtl:ignore */ for declarations that must NOT be flipped (e.g. code blocks).
+ * For declarations that must NOT be flipped (e.g. code blocks), use !important.
  */
 
 /* Code blocks must always stay LTR regardless of locale.
