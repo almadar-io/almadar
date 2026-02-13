@@ -466,8 +466,7 @@ code {
 /* Code blocks must always stay LTR. */
 pre,
 code,
-.prism-code,
-.home-page-code-preview {
+.prism-code {
     /* rtl:ignore */
     direction: ltr !important;
     /* rtl:ignore */

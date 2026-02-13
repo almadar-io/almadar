@@ -393,86 +393,6 @@ body {
     border: 1px solid #e2e8f0;
 }
 
-/* === Custom Code Block (KISS - Unified Theme) === */
-/* === Custom Code Block (KISS - Unified Theme) === */
-/* Increase specificity to override [data-theme] .prism-code */
-html .home-page-code-preview pre,
-[data-theme="light"] .home-page-code-preview pre,
-[data-theme="dark"] .home-page-code-preview pre {
-    background-color: transparent !important;
-    border: none !important;
-    margin: 0;
-    padding: 1rem;
-    font-family: "IBM Plex Mono", "Fira Code", monospace;
-    font-size: 0.9em;
-    line-height: 1.5;
-    overflow-x: auto;
-}
-
-/* Force specific reset for the inner code element to prevent "white lines" or borders */
-html .home-page-code-preview code,
-[data-theme="light"] .home-page-code-preview code,
-[data-theme="dark"] .home-page-code-preview code {
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    color: inherit !important;
-    padding: 0 !important;
-}
-
-/* Universal Colors (Dracula-based for high contrast on the dark panel) */
-/* Override Prism syntax highlighting (for all languages) */
-.home-page-code-preview .token.property,
-.home-page-code-preview .token.className,
-.home-page-code-preview .token.class-name {
-    color: #2dd4bf !important;
-    /* Teal */
-}
-
-.home-page-code-preview .token.string,
-.home-page-code-preview .token.url,
-.home-page-code-preview .token.attr-value {
-    color: #bae6fd !important;
-    /* Light Blue */
-}
-
-.home-page-code-preview .token.number,
-.home-page-code-preview .token.boolean,
-.home-page-code-preview .token.constant {
-    color: #fca5a5 !important;
-    /* Red/Pink */
-}
-
-.home-page-code-preview .token.punctuation,
-.home-page-code-preview .token.operator {
-    color: #94a3b8 !important;
-    /* Slate */
-}
-
-.home-page-code-preview .token.keyword,
-.home-page-code-preview .token.variable,
-.home-page-code-preview .token.selector,
-.home-page-code-preview .token.function {
-    color: #c084fc !important;
-    /* Purple */
-}
-
-.home-page-code-preview .token.comment {
-    color: #6272a4 !important;
-    /* Desaturated Blue/Grey */
-    font-style: italic;
-}
-
-/* Force text color */
-.home-page-code-preview pre,
-.home-page-code-preview code {
-    color: #f8fafc !important;
-    /* White/Parchment */
-    /* Override inline Prism color */
-}
-
-/* Comment - Desaturated Blue */
-
 [data-theme="dark"] code {
     background-color: var(--almadar-midnight-light);
     color: var(--almadar-teal-light);
@@ -566,8 +486,7 @@ html .home-page-code-preview code,
 /* Code blocks must always stay LTR regardless of locale. */
 pre,
 code,
-.prism-code,
-.home-page-code-preview {
+.prism-code {
     /* rtl:ignore */
     direction: ltr !important;
     /* rtl:ignore */
