@@ -331,7 +331,7 @@
     "description": "Homepage main title"
   },
   "homepage.subtitle": {
-    "message": "ابنِ تطبيقات متكاملة من خلال مخططات تصريحية. حدد الكيانات والسلوكيات وواجهة المستخدم كآلات حالة تُترجم إلى كود جاهز للإنتاج.",
+    "message": "ابنِ تطبيقات متكاملة من خلال schemas تصريحية. حدد الـ entities والسلوكيات وواجهة المستخدم كـ state machines تُترجم إلى كود جاهز للإنتاج.",
     "description": "Homepage subtitle"
   },
   "homepage.getStarted": {
@@ -351,19 +351,19 @@
     "description": "Features section subtitle"
   },
   "homepage.feature.declarative.title": {
-    "message": "مخططات تصريحية",
+    "message": "Schemas تصريحية",
     "description": "Declarative feature title"
   },
   "homepage.feature.declarative.description": {
-    "message": "عرّف تطبيقك بالكامل كمخطط. الكيانات والسمات والصفحات والتكاملات - كلها في مكان واحد.",
+    "message": "عرّف تطبيقك بالكامل كـ schema. الـ entities والـ traits والصفحات والتكاملات - كلها في مكان واحد.",
     "description": "Declarative feature description"
   },
   "homepage.feature.stateMachines.title": {
-    "message": "آلات الحالة",
+    "message": "State Machines",
     "description": "State machines feature title"
   },
   "homepage.feature.stateMachines.description": {
-    "message": "صمم السلوكيات كآلات حالة مع حراس وتأثيرات. قابلة للتنبؤ والاختبار وآمنة بالتصميم.",
+    "message": "صمم السلوكيات كـ state machines مع guards و effects. قابلة للتنبؤ والاختبار وآمنة بالتصميم.",
     "description": "State machines feature description"
   },
   "homepage.feature.fullStack.title": {
@@ -403,27 +403,27 @@
     "description": "Philosophy tag"
   },
   "homepage.philosophy.title": {
-    "message": "تشريح المدار",
+    "message": "تشريح الـ Orbital",
     "description": "Philosophy title"
   },
   "homepage.philosophy.description": {
-    "message": "كما تدور الإلكترونات حول النواة وفق قواعد الكم، تتبع مكونات تطبيقك قواعد آلة الحالة. كل مدار هو كيان مع سمات مرفقة تحدد سلوكه وواجهته وتكاملاته.",
+    "message": "كما تدور الإلكترونات حول النواة وفق قواعد الكم، تتبع مكونات تطبيقك قواعد الـ state machine. كل orbital هو entity مع traits مرفقة تحدد سلوكه وواجهته وتكاملاته.",
     "description": "Philosophy description"
   },
   "homepage.philosophy.entity": {
-    "message": "الكيان (المادة)",
+    "message": "الـ Entity (المادة)",
     "description": "Entity term"
   },
   "homepage.philosophy.entity.description": {
-    "message": "النواة الثابتة. تحدد الجاذبية وشكل بياناتك.",
+    "message": "النواة الثابتة. الـ entity يحدد شكل بياناتك وجاذبيتها.",
     "description": "Entity description"
   },
   "homepage.philosophy.trait": {
-    "message": "السمة (الطاقة)",
+    "message": "الـ Trait (الطاقة)",
     "description": "Trait term"
   },
   "homepage.philosophy.trait.description": {
-    "message": "المدار الديناميكي. آلة حالة تحدد السلوك والمنطق.",
+    "message": "المدار الديناميكي. state machine تحدد السلوك والمنطق.",
     "description": "Trait description"
   },
   "homepage.philosophy.page": {
@@ -431,7 +431,7 @@
     "description": "Page term"
   },
   "homepage.philosophy.page.description": {
-    "message": "الإطار. حاوية المسار حيث يتفاعل المستخدمون مع المدارات.",
+    "message": "الإطار. حاوية المسار حيث يتفاعل المستخدمون مع الـ orbitals.",
     "description": "Page description"
   },
   "homepage.cta.title": {
@@ -439,7 +439,7 @@
     "description": "CTA title"
   },
   "homepage.cta.description": {
-    "message": "ثبّت CLI وأنشئ أول مخطط مداري في ثوانٍ.",
+    "message": "ثبّت الـ CLI وأنشئ أول orbital schema في ثوانٍ.",
     "description": "CTA description"
   },
   "homepage.cta.readDocs": {
@@ -455,19 +455,19 @@
     "description": "Meta title"
   },
   "homepage.meta.description": {
-    "message": "المدار - تطبيقات متكاملة تصريحية من خلال آلات الحالة",
+    "message": "Almadar - تطبيقات متكاملة تصريحية من خلال state machines",
     "description": "Meta description"
   },
   "homepage.effect.set": {
-    "message": "تحديث حقل الكيان",
+    "message": "تحديث حقل الـ entity",
     "description": "Set effect description"
   },
   "homepage.effect.increment": {
-    "message": "تعبيرات S الرياضية",
+    "message": "S-expression math",
     "description": "S-expression math effect description"
   },
   "homepage.effect.renderui": {
-    "message": "عرض نمط في منطقة",
+    "message": "عرض pattern في slot",
     "description": "Render-ui effect description"
   },
   "enterprise.tag": {
@@ -475,7 +475,7 @@
     "description": "Enterprise tag"
   },
   "enterprise.title": {
-    "message": "المدار للفرق والمؤسسات",
+    "message": "Almadar للفرق والمؤسسات",
     "description": "Enterprise title"
   },
   "enterprise.subtitle": {
@@ -655,7 +655,7 @@
     "description": "Enterprise meta title"
   },
   "enterprise.meta.description": {
-    "message": "المدار للمؤسسات - وسّع تطويرك مع ميزات مؤسسية",
+    "message": "Almadar للمؤسسات - وسّع تطويرك مع ميزات مؤسسية",
     "description": "Enterprise meta description"
   },
   "demos.tag": {
