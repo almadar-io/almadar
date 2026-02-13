@@ -9,48 +9,33 @@ import CodeBlock from "@theme/CodeBlock";
 
 import styles from "./index.module.css";
 
-const HelloWorldSchemaDisplay = () => (
-  <pre className={styles.codeBlock}>
-    <code>
-      <span className="kp">{"{"}</span>
-      {"\n  "}<span className="kk">"name"</span><span className="kp">: </span><span className="ks">"HelloWorld"</span><span className="kp">,</span>
-      {"\n  "}<span className="kk">"orbitals"</span><span className="kp">: </span><span className="kp">[{"{"}</span>
-      {"\n    "}<span className="kk">"name"</span><span className="kp">: </span><span className="ks">"Greeter"</span><span className="kp">,</span>
-      {"\n    "}<span className="kk">"entity"</span><span className="kp">: {"{"}</span>
-      {"\n      "}<span className="kk">"name"</span><span className="kp">: </span><span className="ks">"Greeting"</span><span className="kp">,</span>
-      {"\n      "}<span className="kk">"fields"</span><span className="kp">: [</span>
-      {"\n        "}<span className="kp">{"{"} </span><span className="kk">"name"</span><span className="kp">: </span><span className="ks">"message"</span><span className="kp">, </span><span className="kk">"type"</span><span className="kp">: </span><span className="ks">"string"</span><span className="kp"> {"}"},</span>
-      {"\n        "}<span className="kp">{"{"} </span><span className="kk">"name"</span><span className="kp">: </span><span className="ks">"count"</span><span className="kp">, </span><span className="kk">"type"</span><span className="kp">: </span><span className="ks">"number"</span><span className="kp">, </span><span className="kk">"default"</span><span className="kp">: </span><span className="kn">0</span><span className="kp"> {"}"}</span>
-      {"\n      "}<span className="kp">]</span>
-      {"\n    "}<span className="kp">{"}"},</span>
-      {"\n    "}<span className="kk">"traits"</span><span className="kp">: </span><span className="kp">[{"{"}</span>
-      {"\n      "}<span className="kk">"name"</span><span className="kp">: </span><span className="ks">"Clickable"</span><span className="kp">,</span>
-      {"\n      "}<span className="kk">"stateMachine"</span><span className="kp">: </span><span className="kp">{"{"}</span>
-      {"\n        "}<span className="kk">"states"</span><span className="kp">: [</span>
-      {"\n          "}<span className="kp">{"{"} </span><span className="kk">"name"</span><span className="kp">: </span><span className="ks">"idle"</span><span className="kp">, </span><span className="kk">"isInitial"</span><span className="kp">: </span><span className="kn">true</span><span className="kp"> {"}"},</span>
-      {"\n          "}<span className="kp">{"{"} </span><span className="kk">"name"</span><span className="kp">: </span><span className="ks">"greeted"</span><span className="kp"> {"}"}</span>
-      {"\n        "}<span className="kp">],</span>
-      {"\n        "}<span className="kk">"transitions"</span><span className="kp">: </span><span className="kp">[{"{"}</span>
-      {"\n          "}<span className="kk">"from"</span><span className="kp">: </span><span className="ks">"idle"</span><span className="kp">,</span>
-      {"\n          "}<span className="kk">"event"</span><span className="kp">: </span><span className="ks">"CLICK"</span><span className="kp">,</span>
-      {"\n          "}<span className="kk">"to"</span><span className="kp">: </span><span className="ks">"greeted"</span><span className="kp">,</span>
-      {"\n          "}<span className="kk">"effects"</span><span className="kp">: [</span>
-      {"\n            "}<span className="kp">[</span><span className="ks">"set"</span><span className="kp">, </span><span className="ks">"@entity.message"</span><span className="kp">, </span><span className="ks">"Hello, World!"</span><span className="kp">],</span>
-      {"\n            "}<span className="kp">[</span><span className="ks">"set"</span><span className="kp">, </span><span className="ks">"@entity.count"</span><span className="kp">, [</span><span className="ks">"+"</span><span className="kp">, </span><span className="ks">"@entity.count"</span><span className="kp">, </span><span className="kn">1</span><span className="kp">]],</span>
-      {"\n            "}<span className="kp">[</span><span className="ks">"render-ui"</span><span className="kp">, </span><span className="ks">"main"</span><span className="kp">, {"{"}</span>
-      {"\n              "}<span className="kk">"type"</span><span className="kp">: </span><span className="ks">"stats-card"</span><span className="kp">,</span>
-      {"\n              "}<span className="kk">"title"</span><span className="kp">: </span><span className="ks">"@entity.message"</span><span className="kp">,</span>
-      {"\n              "}<span className="kk">"value"</span><span className="kp">: </span><span className="ks">"@entity.count"</span>
-      {"\n            "}<span className="kp">{"}"}]</span>
-      {"\n          "}<span className="kp">]</span>
-      {"\n        "}<span className="kp">{"}"}]</span>
-      {"\n      "}<span className="kp">{"}"}</span>
-      {"\n    "}<span className="kp">{"}"}]</span>
-      {"\n  "}<span className="kp">{"}"}]</span>
-      {"\n"}<span className="kp">{"}"}</span>
-    </code>
-  </pre>
-);
+// @ts-ignore
+import helloWorldEn from "!!raw-loader!../examples/hello-world.en.orb";
+// @ts-ignore
+import helloWorldAr from "!!raw-loader!../examples/hello-world.ar.orb";
+// @ts-ignore
+import helloWorldSl from "!!raw-loader!../examples/hello-world.sl.orb";
+
+const LocalizedSchemaDisplay = () => {
+  const context = useDocusaurusContext();
+  const currentLocale = context.i18n?.currentLocale ?? "en";
+
+  let content = helloWorldEn;
+  if (currentLocale === "ar") {
+    content = helloWorldAr;
+  } else if (currentLocale === "sl") {
+    content = helloWorldSl;
+  }
+
+  // Handle potential ESM default export from raw-loader
+  const code = typeof content === "object" && content.default ? content.default : content;
+
+  return (
+    <CodeBlock language="json" className={styles.codeBlock} title="hello-world.orb">
+      {code}
+    </CodeBlock>
+  );
+};
 
 const helloWorldSchema = `{
   "name": "HelloWorld",
@@ -300,7 +285,7 @@ function HomepagePhilosophy() {
             <div className={styles.codeHeader}>
               <span className={styles.codeLang}>hello-world.orb</span>
             </div>
-            <HelloWorldSchemaDisplay />
+            <LocalizedSchemaDisplay />
             <div className={styles.effectsLegend}>
               <div className={styles.effectItem}>
                 <span className={styles.effectIcon}>📝</span>

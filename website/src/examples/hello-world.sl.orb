@@ -1,0 +1,36 @@
+{
+  "ime": "PozdravljenSvet",
+  "orbitale": [{
+    "ime": "Pozdravljalec",
+    "entiteta": {
+      "ime": "Pozdrav",
+      "polja": [
+        { "ime": "sporocilo", "tip": "niz" },
+        { "ime": "stevilo", "tip": "stevilo", "privzeto": 0 }
+      ]
+    },
+    "znacilnosti": [{
+      "ime": "Klikabilno",
+      "strojStanj": {
+        "stanja": [
+          { "ime": "v_mirovanju", "zacetno": true },
+          { "ime": "pozdravljen" }
+        ],
+        "prehodi": [{
+          "iz": "v_mirovanju",
+          "dogodek": "KLIK",
+          "do": "pozdravljen",
+          "ucinki": [
+            ["nastavi", "@entiteta.message", "Pozdravljen, svet!"],
+            ["nastavi", "@entiteta.count", ["+", "@entiteta.count", 1]],
+            ["narisi_vmesnik", "glavni", {
+              "tip": "stats-card",
+              "naslov": "@entiteta.message",
+              "vrednost": "@entiteta.count"
+            }]
+          ]
+        }]
+      }
+    }]
+  }]
+}

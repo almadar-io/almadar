@@ -1,0 +1,36 @@
+{
+  "name": "HelloWorld",
+  "orbitals": [{
+    "name": "Greeter",
+    "entity": {
+      "name": "Greeting",
+      "fields": [
+        { "name": "message", "type": "string" },
+        { "name": "count", "type": "number", "default": 0 }
+      ]
+    },
+    "traits": [{
+      "name": "Clickable",
+      "stateMachine": {
+        "states": [
+          { "name": "idle", "isInitial": true },
+          { "name": "greeted" }
+        ],
+        "transitions": [{
+          "from": "idle",
+          "event": "CLICK",
+          "to": "greeted",
+          "effects": [
+            ["set", "@entity.message", "Hello, World!"],
+            ["set", "@entity.count", ["+", "@entity.count", 1]],
+            ["render-ui", "main", {
+              "type": "stats-card",
+              "title": "@entity.message",
+              "value": "@entity.count"
+            }]
+          ]
+        }]
+      }
+    }]
+  }]
+}
