@@ -1,0 +1,46 @@
+{
+  "link.item.label.Getting Started": {
+    "message": "Začetek",
+    "description": "Footer item with label Getting Started"
+  },
+  "link.item.label.Downloads": {
+    "message": "Prenosi",
+    "description": "Footer item with label Downloads"
+  },
+  "link.item.label.Discord": {
+    "message": "Discord",
+    "description": "Footer item with label Discord"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Footer item with label GitHub"
+  },
+  "link.item.label.LinkedIn": {
+    "message": "LinkedIn",
+    "description": "Footer item with label LinkedIn"
+  },
+  "link.item.label.Blog": {
+    "message": "Blog",
+    "description": "Footer item with label Blog"
+  },
+  "link.item.label.Contact": {
+    "message": "Kontakt",
+    "description": "Footer item with label Contact"
+  },
+  "link.title.Docs": {
+    "message": "Dokumentacija",
+    "description": "Footer title with label Docs"
+  },
+  "link.title.Community": {
+    "message": "Skupnost",
+    "description": "Footer title with label Community"
+  },
+  "link.title.More": {
+    "message": "Več",
+    "description": "Footer title with label More"
+  },
+  "copyright": {
+    "message": "Copyright © 2025 Almadar. Zgrajeno z Docusaurus.",
+    "description": "The footer copyright"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "title": {
+    "message": "Almadar",
+    "description": "The title in the navbar"
+  },
+  "item.label.Home": {
+    "message": "Domov",
+    "description": "Navbar item with label Home"
+  },
+  "item.label.Demos": {
+    "message": "Predstavitve",
+    "description": "Navbar item with label Demos"
+  },
+  "item.label.Docs": {
+    "message": "Dokumentacija",
+    "description": "Navbar item with label Docs"
+  },
+  "item.label.Enterprise": {
+    "message": "Podjetje",
+    "description": "Navbar item with label Enterprise"
+  },
+  "item.label.Blog": {
+    "message": "Blog",
+    "description": "Navbar item with label Blog"
+  },
+  "item.label.Discord": {
+    "message": "Discord",
+    "description": "Navbar item with label Discord"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}

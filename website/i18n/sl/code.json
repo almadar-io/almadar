@@ -1,0 +1,837 @@
+{
+  "theme.ErrorPageContent.title": {
+    "message": "Ta stran se ne odziva.",
+    "description": "The title of the fallback page when the page crashed"
+  },
+  "theme.BackToTopButton.buttonAriaLabel": {
+    "message": "Pomakni se na vrh",
+    "description": "The ARIA label for the back to top button"
+  },
+  "theme.blog.archive.title": {
+    "message": "Arhiv",
+    "description": "The page & hero title of the blog archive page"
+  },
+  "theme.blog.archive.description": {
+    "message": "Arhiv",
+    "description": "The page & hero description of the blog archive page"
+  },
+  "theme.blog.paginator.navAriaLabel": {
+    "message": "Navigacija po straneh bloga",
+    "description": "The ARIA label for the blog pagination"
+  },
+  "theme.blog.paginator.newerEntries": {
+    "message": "Novejši zapisi",
+    "description": "The label used to navigate to the newer blog posts page (previous page)"
+  },
+  "theme.blog.paginator.olderEntries": {
+    "message": "Starejši zapisi",
+    "description": "The label used to navigate to the older blog posts page (next page)"
+  },
+  "theme.blog.post.paginator.navAriaLabel": {
+    "message": "Navigacija po objavah bloga",
+    "description": "The ARIA label for the blog posts pagination"
+  },
+  "theme.blog.post.paginator.newerPost": {
+    "message": "Novejša objava",
+    "description": "The blog post button label to navigate to the newer/previous post"
+  },
+  "theme.blog.post.paginator.olderPost": {
+    "message": "Starejša objava",
+    "description": "The blog post button label to navigate to the older/next post"
+  },
+  "theme.tags.tagsPageLink": {
+    "message": "Prikaži vse oznake",
+    "description": "The label of the link targeting the tag list page"
+  },
+  "theme.colorToggle.ariaLabel.mode.system": {
+    "message": "sistemski način",
+    "description": "The name for the system color mode"
+  },
+  "theme.colorToggle.ariaLabel.mode.light": {
+    "message": "Svetli način",
+    "description": "The name for the light color mode"
+  },
+  "theme.colorToggle.ariaLabel.mode.dark": {
+    "message": "Temni način",
+    "description": "The name for the dark color mode"
+  },
+  "theme.colorToggle.ariaLabel": {
+    "message": "Preklopi med temnim in svetlim načinom (trenutno {mode})",
+    "description": "The ARIA label for the color mode toggle"
+  },
+  "theme.docs.breadcrumbs.navAriaLabel": {
+    "message": "Drobtine",
+    "description": "The ARIA label for the breadcrumbs"
+  },
+  "theme.docs.DocCard.categoryDescription.plurals": {
+    "message": "{count} elementov",
+    "description": "The default description for a category card in the generated index about how many items this category includes"
+  },
+  "theme.docs.paginator.navAriaLabel": {
+    "message": "Stran dokumentacije",
+    "description": "The ARIA label for the docs pagination"
+  },
+  "theme.docs.paginator.previous": {
+    "message": "Prejšnje",
+    "description": "The label used to navigate to the previous doc"
+  },
+  "theme.docs.paginator.next": {
+    "message": "Naprej",
+    "description": "The label used to navigate to the next doc"
+  },
+  "theme.docs.tagDocListPageTitle.nDocsTagged": {
+    "message": "En dokument z oznako|{count} dokumentov z oznako",
+    "description": "Pluralized label for \"{count} docs tagged\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.docs.tagDocListPageTitle": {
+    "message": "{nDocsTagged} z oznako \"{tagName}\"",
+    "description": "The title of the page for a docs tag"
+  },
+  "theme.docs.versionBadge.label": {
+    "message": "Različica: {versionLabel}"
+  },
+  "theme.docs.versions.unreleasedVersionLabel": {
+    "message": "Ta dokumentacija je za različico {siteTitle} {versionLabel}, ki še ni izdana.",
+    "description": "The label used to tell the user that he's browsing an unreleased doc version"
+  },
+  "theme.docs.versions.unmaintainedVersionLabel": {
+    "message": "To je dokumentacija za {siteTitle} {versionLabel}, ki se je ne vzdržuje več.",
+    "description": "The label used to tell the user that he's browsing an unmaintained doc version"
+  },
+  "theme.docs.versions.latestVersionSuggestionLabel": {
+    "message": "Za najnovejšo dokumentacijo si oglejte {latestVersionLink} ({versionLabel}).",
+    "description": "The label used to tell the user to check the latest version"
+  },
+  "theme.docs.versions.latestVersionLinkLabel": {
+    "message": "najnovejša različica",
+    "description": "The label used for the latest version suggestion link label"
+  },
+  "theme.common.editThisPage": {
+    "message": "Uredi to stran",
+    "description": "The link label to edit the current page"
+  },
+  "theme.common.headingLinkTitle": {
+    "message": "Neposredna povezava do {heading}",
+    "description": "Title for link to heading"
+  },
+  "theme.lastUpdated.atDate": {
+    "message": " {date}",
+    "description": "The words used to describe on which date a page has been last updated"
+  },
+  "theme.lastUpdated.byUser": {
+    "message": " od {user}",
+    "description": "The words used to describe by who the page has been last updated"
+  },
+  "theme.lastUpdated.lastUpdatedAtBy": {
+    "message": "Nazadnje posodobljeno{atDate}{byUser}",
+    "description": "The sentence used to display when a page has been last updated, and by who"
+  },
+  "theme.navbar.mobileVersionsDropdown.label": {
+    "message": "Različice",
+    "description": "The label for the navbar versions dropdown on mobile view"
+  },
+  "theme.NotFound.title": {
+    "message": "Stran ni najdena",
+    "description": "The title of the 404 page"
+  },
+  "theme.tags.tagsListLabel": {
+    "message": "Oznake:",
+    "description": "The label alongside a tag list"
+  },
+  "theme.admonition.caution": {
+    "message": "Pozor",
+    "description": "The default label used for the Caution admonition (:::caution)"
+  },
+  "theme.admonition.danger": {
+    "message": "Nevarnost",
+    "description": "The default label used for the Danger admonition (:::danger)"
+  },
+  "theme.admonition.info": {
+    "message": "Informacije",
+    "description": "The default label used for the Info admonition (:::info)"
+  },
+  "theme.admonition.note": {
+    "message": "Opomba",
+    "description": "The default label used for the Note admonition (:::note)"
+  },
+  "theme.admonition.tip": {
+    "message": "Namig",
+    "description": "The default label used for the Tip admonition (:::tip)"
+  },
+  "theme.admonition.warning": {
+    "message": "Opozorilo",
+    "description": "The default label used for the Warning admonition (:::warning)"
+  },
+  "theme.AnnouncementBar.closeButtonAriaLabel": {
+    "message": "Zapri",
+    "description": "The ARIA label for close button of announcement bar"
+  },
+  "theme.blog.sidebar.navAriaLabel": {
+    "message": "Najnovejše objave na blogu",
+    "description": "The ARIA label for recent posts in the blog sidebar"
+  },
+  "theme.DocSidebarItem.expandCategoryAriaLabel": {
+    "message": "Razširi kategorijo '{label}'",
+    "description": "The ARIA label to expand the sidebar category"
+  },
+  "theme.DocSidebarItem.collapseCategoryAriaLabel": {
+    "message": "Strni kategorijo '{label}'",
+    "description": "The ARIA label to collapse the sidebar category"
+  },
+  "theme.IconExternalLink.ariaLabel": {
+    "message": "(odpre se v novem zavihku)",
+    "description": "The ARIA label for the external link icon"
+  },
+  "theme.NavBar.navAriaLabel": {
+    "message": "Glavna",
+    "description": "The ARIA label for the main navigation"
+  },
+  "theme.navbar.mobileLanguageDropdown.label": {
+    "message": "Jeziki",
+    "description": "The label for the mobile language switcher dropdown"
+  },
+  "theme.NotFound.p1": {
+    "message": "Nismo mogli najti tega, kar ste iskali.",
+    "description": "The first paragraph of the 404 page"
+  },
+  "theme.NotFound.p2": {
+    "message": "Obrnite se na lastnika spletnega mesta, ki vas je povezal na prvotni URL, in jim sporočite, da je povezava pokvarjena.",
+    "description": "The 2nd paragraph of the 404 page"
+  },
+  "theme.TOCCollapsible.toggleButtonLabel": {
+    "message": "Vsebina te strani",
+    "description": "The label used by the button on the collapsible TOC component"
+  },
+  "theme.blog.post.readMore": {
+    "message": "Preberi več",
+    "description": "The label used in blog post item excerpts to link to full blog posts"
+  },
+  "theme.blog.post.readMoreLabel": {
+    "message": "Preberi več o {title}",
+    "description": "The ARIA label for the link to full blog posts from excerpts"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} min branja",
+    "description": "Pluralized label for \"{readingTime} min read\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.CodeBlock.copy": {
+    "message": "Kopiraj",
+    "description": "The copy button label on code blocks"
+  },
+  "theme.CodeBlock.copied": {
+    "message": "Kopirano",
+    "description": "The copied button label on code blocks"
+  },
+  "theme.CodeBlock.copyButtonAriaLabel": {
+    "message": "Kopiraj kodo v odložišče",
+    "description": "The ARIA label for copy code blocks button"
+  },
+  "theme.CodeBlock.wordWrapToggle": {
+    "message": "Preklopi ovijanje besedila",
+    "description": "The title attribute for toggle word wrapping button of code block lines"
+  },
+  "theme.docs.breadcrumbs.home": {
+    "message": "Domov",
+    "description": "The ARIA label for the home page in the breadcrumbs"
+  },
+  "theme.docs.sidebar.collapseButtonTitle": {
+    "message": "Strni stransko vrstico",
+    "description": "The title attribute for collapse button of doc sidebar"
+  },
+  "theme.docs.sidebar.collapseButtonAriaLabel": {
+    "message": "Strni stransko vrstico",
+    "description": "The title attribute for collapse button of doc sidebar"
+  },
+  "theme.docs.sidebar.navAriaLabel": {
+    "message": "Stranska vrstica dokumentacije",
+    "description": "The ARIA label for the sidebar navigation"
+  },
+  "theme.docs.sidebar.closeSidebarButtonAriaLabel": {
+    "message": "Zapri navigacijsko vrstico",
+    "description": "The ARIA label for close button of mobile sidebar"
+  },
+  "theme.navbar.mobileSidebarSecondaryMenu.backButtonLabel": {
+    "message": "← Nazaj na glavni meni",
+    "description": "The label of the back button to return to main menu, inside the mobile navbar sidebar secondary menu (notably used to display the docs sidebar)"
+  },
+  "theme.docs.sidebar.toggleSidebarButtonAriaLabel": {
+    "message": "Preklopi navigacijsko vrstico",
+    "description": "The ARIA label for hamburger menu button of mobile navigation"
+  },
+  "theme.navbar.mobileDropdown.collapseButton.expandAriaLabel": {
+    "message": "Razširi spustni meni",
+    "description": "The ARIA label of the button to expand the mobile dropdown navbar item"
+  },
+  "theme.navbar.mobileDropdown.collapseButton.collapseAriaLabel": {
+    "message": "Strni spustni meni",
+    "description": "The ARIA label of the button to collapse the mobile dropdown navbar item"
+  },
+  "theme.docs.sidebar.expandButtonTitle": {
+    "message": "Razširi stransko vrstico",
+    "description": "The ARIA label and title attribute for expand button of doc sidebar"
+  },
+  "theme.docs.sidebar.expandButtonAriaLabel": {
+    "message": "Razširi stransko vrstico",
+    "description": "The ARIA label and title attribute for expand button of doc sidebar"
+  },
+  "theme.blog.post.plurals": {
+    "message": "Ena objava|{count} objav",
+    "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.blog.tagTitle": {
+    "message": "{nPosts} z oznako \"{tagName}\"",
+    "description": "The title of the page for a blog tag"
+  },
+  "theme.blog.author.pageTitle": {
+    "message": "{authorName} - {nPosts}",
+    "description": "The title of the page for a blog author"
+  },
+  "theme.blog.authorsList.pageTitle": {
+    "message": "Avtorji",
+    "description": "The title of the authors page"
+  },
+  "theme.blog.authorsList.viewAll": {
+    "message": "Prikaži vse avtorje",
+    "description": "The label of the link targeting the blog authors page"
+  },
+  "theme.blog.author.noPosts": {
+    "message": "Ta avtor še ni napisal nobene objave.",
+    "description": "The text for authors with 0 blog post"
+  },
+  "theme.contentVisibility.unlistedBanner.title": {
+    "message": "Neizpisana stran",
+    "description": "The unlisted content banner title"
+  },
+  "theme.contentVisibility.unlistedBanner.message": {
+    "message": "Ta stran je neizpisana. Iskalniki je ne bodo indeksirali, do nje pa lahko dostopajo samo uporabniki z neposredno povezavo.",
+    "description": "The unlisted content banner message"
+  },
+  "theme.contentVisibility.draftBanner.title": {
+    "message": "Osnutek strani",
+    "description": "The draft content banner title"
+  },
+  "theme.contentVisibility.draftBanner.message": {
+    "message": "Ta stran je osnutek. Vidna bo samo v razvojnem načinu in izključena iz produkcijske gradnje.",
+    "description": "The draft content banner message"
+  },
+  "theme.ErrorPageContent.tryAgain": {
+    "message": "Poskusi znova",
+    "description": "The label of the button to try again rendering when the React error boundary captures an error"
+  },
+  "theme.common.skipToMainContent": {
+    "message": "Preskoči na glavno vsebino",
+    "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
+  },
+  "theme.tags.tagsPageTitle": {
+    "message": "Oznake",
+    "description": "The title of the tag list page"
+  },
+  "homepage.title": {
+    "message": "Fizika programske opreme",
+    "description": "Homepage main title"
+  },
+  "homepage.subtitle": {
+    "message": "Gradite celovite aplikacije z deklarativnimi shemami. Določite entitete, vedenja in uporabniški vmesnik kot stroje stanj, ki se prevedejo v produkcijsko pripravljeno kodo.",
+    "description": "Homepage subtitle"
+  },
+  "homepage.getStarted": {
+    "message": "Začni",
+    "description": "Get started button"
+  },
+  "homepage.downloadCLI": {
+    "message": "Prenesi CLI",
+    "description": "Download CLI button"
+  },
+  "homepage.features.title": {
+    "message": "Gradite hitreje, zaženite s samozavestjo",
+    "description": "Features section title"
+  },
+  "homepage.features.subtitle": {
+    "message": "Vse, kar potrebujete za prehod od ideje do produkcije",
+    "description": "Features section subtitle"
+  },
+  "homepage.feature.declarative.title": {
+    "message": "Deklarativne sheme",
+    "description": "Declarative feature title"
+  },
+  "homepage.feature.declarative.description": {
+    "message": "Določite celotno aplikacijo kot shemo. Entitete, lastnosti, strani in integracije - vse na enem mestu.",
+    "description": "Declarative feature description"
+  },
+  "homepage.feature.stateMachines.title": {
+    "message": "Stroji stanj",
+    "description": "State machines feature title"
+  },
+  "homepage.feature.stateMachines.description": {
+    "message": "Oblikujte vedenja kot stroje stanj s stražarji in učinki. Predvidljivi, testabilni in varni po zasnovi.",
+    "description": "State machines feature description"
+  },
+  "homepage.feature.fullStack.title": {
+    "message": "Celotna generacija",
+    "description": "Full-stack feature title"
+  },
+  "homepage.feature.fullStack.description": {
+    "message": "Prevedite v React vmesje, Express/FastAPI strežnik in modele podatkovne baze. Ena shema, celotna aplikacija.",
+    "description": "Full-stack feature description"
+  },
+  "homepage.feature.integrations.title": {
+    "message": "Vgrajene integracije",
+    "description": "Integrations feature title"
+  },
+  "homepage.feature.integrations.description": {
+    "message": "Povežite se z zunanjimi storitvami z vgrajenimi konektorji. Stripe, Twilio, OpenAI in več.",
+    "description": "Integrations feature description"
+  },
+  "homepage.feature.realtime.title": {
+    "message": "V realnem času in igre",
+    "description": "Realtime feature title"
+  },
+  "homepage.feature.realtime.description": {
+    "message": "Gradite aplikacije v realnem času in igre z istim deklarativnim pristopom. Vgrajena podpora WebSocket.",
+    "description": "Realtime feature description"
+  },
+  "homepage.feature.aiPowered.title": {
+    "message": "Poganja umetna inteligenca",
+    "description": "AI feature title"
+  },
+  "homepage.feature.aiPowered.description": {
+    "message": "Generirajte sheme iz naravnega jezika. Pustite umetni inteligenci, da obdela ponavljajočo se kodo, vi pa se osredotočite na logiko.",
+    "description": "AI feature description"
+  },
+  "homepage.philosophy.tag": {
+    "message": "Filozofija",
+    "description": "Philosophy tag"
+  },
+  "homepage.philosophy.title": {
+    "message": "Anatomija orbitala",
+    "description": "Philosophy title"
+  },
+  "homepage.philosophy.description": {
+    "message": "Kakor elektroni krožijo okoli jedra po kvantnih pravilih, tako sledijo komponente vaše aplikacije pravilom stroja stanj. Vsak orbital je entiteta s priloženimi lastnostmi, ki določajo njegovo vedenje, vmesnik in integracije.",
+    "description": "Philosophy description"
+  },
+  "homepage.philosophy.entity": {
+    "message": "Entiteta (snov)",
+    "description": "Entity term"
+  },
+  "homepage.philosophy.entity.description": {
+    "message": "Nespremenljivo jedro. Entiteta določa obliko vaših podatkov in njihovo privlačnost.",
+    "description": "Entity description"
+  },
+  "homepage.philosophy.trait": {
+    "message": "Lastnost (energija)",
+    "description": "Trait term"
+  },
+  "homepage.philosophy.trait.description": {
+    "message": "Dinamična orbita. Stroj stanj, ki določa vedenje in logiko.",
+    "description": "Trait description"
+  },
+  "homepage.philosophy.page": {
+    "message": "Stran (prostor)",
+    "description": "Page term"
+  },
+  "homepage.philosophy.page.description": {
+    "message": "Okvir. Posoda za pot, kjer uporabniki komunicirajo z orbitali.",
+    "description": "Page description"
+  },
+  "homepage.cta.title": {
+    "message": "Pripravljeni za gradnjo?",
+    "description": "CTA title"
+  },
+  "homepage.cta.description": {
+    "message": "Namestite CLI in ustvarite svojo prvo orbitalno shemo v nekaj sekundah.",
+    "description": "CTA description"
+  },
+  "homepage.cta.readDocs": {
+    "message": "Preberi dokumentacijo",
+    "description": "Read docs button"
+  },
+  "homepage.cta.viewGithub": {
+    "message": "Ogled na GitHub",
+    "description": "View on GitHub button"
+  },
+  "homepage.meta.title": {
+    "message": "Fizika programske opreme",
+    "description": "Meta title"
+  },
+  "homepage.meta.description": {
+    "message": "Almadar - Celovite deklarativne aplikacije prek strojev stanj",
+    "description": "Meta description"
+  },
+  "homepage.effect.set": {
+    "message": "Posodobi polje entitete",
+    "description": "Set effect description"
+  },
+  "homepage.effect.increment": {
+    "message": "S-izraz matematika",
+    "description": "S-expression math effect description"
+  },
+  "homepage.effect.renderui": {
+    "message": "Upodobi vzorec v režo",
+    "description": "Render-ui effect description"
+  },
+  "enterprise.tag": {
+    "message": "Za podjetja",
+    "description": "Enterprise tag"
+  },
+  "enterprise.title": {
+    "message": "Almadar za ekipe in podjetja",
+    "description": "Enterprise title"
+  },
+  "enterprise.subtitle": {
+    "message": "Razširite svoj razvoj s podjetniškimi funkcijami, podporo po meri in prilagodljivimi možnostmi uvajanja.",
+    "description": "Enterprise subtitle"
+  },
+  "enterprise.cta.contact": {
+    "message": "Stopite v stik s prodajo",
+    "description": "Contact sales button"
+  },
+  "enterprise.cta.docs": {
+    "message": "Ogled dokumentacije",
+    "description": "View docs button"
+  },
+  "enterprise.features.title": {
+    "message": "Podjetniške funkcije",
+    "description": "Enterprise features title"
+  },
+  "enterprise.features.subtitle": {
+    "message": "Vse, kar potrebujete za gradnjo v velikem obsegu",
+    "description": "Enterprise features subtitle"
+  },
+  "enterprise.feature.collaboration.title": {
+    "message": "Timsko sodelovanje",
+    "description": "Collaboration feature title"
+  },
+  "enterprise.feature.collaboration.description": {
+    "message": "Sodelujte s svojo ekipo pri shemah z nadzorom dostopa, dnevnikom različic in sodelovanjem v realnem času.",
+    "description": "Collaboration feature description"
+  },
+  "enterprise.feature.deployment.title": {
+    "message": "Zasebno uvajanje",
+    "description": "Deployment feature title"
+  },
+  "enterprise.feature.deployment.description": {
+    "message": "Uvajajte lokalno ali v svoji zasebni oblaku. Popoln nadzor nad vašimi podatki in infrastrukturo.",
+    "description": "Deployment feature description"
+  },
+  "enterprise.feature.security.title": {
+    "message": "Varnost podjetij",
+    "description": "Security feature title"
+  },
+  "enterprise.feature.security.description": {
+    "message": "SSO/SAML integracija, revizijski dnevniki, skladnost s SOC 2 in napredni varnostni nadzori.",
+    "description": "Security feature description"
+  },
+  "enterprise.feature.support.title": {
+    "message": "Prednostna podpora",
+    "description": "Support feature title"
+  },
+  "enterprise.feature.support.description": {
+    "message": "Namenski podporni kanali z zagotovljenimi časi odziva in neposreden dostop do naše inženirske ekipe.",
+    "description": "Support feature description"
+  },
+  "enterprise.feature.training.title": {
+    "message": "Usposabljanje po meri",
+    "description": "Training feature title"
+  },
+  "enterprise.feature.training.description": {
+    "message": "Programi uvajanja, delavnice in usposabljanje po meri za potrebe vaše ekipe.",
+    "description": "Training feature description"
+  },
+  "enterprise.feature.customization.title": {
+    "message": "Integracije po meri",
+    "description": "Customization feature title"
+  },
+  "enterprise.feature.customization.description": {
+    "message": "Gradite konektorje po meri za vaše notranje sisteme. Pomagamo vam povezati Almadar z vašo infrastrukturo.",
+    "description": "Customization feature description"
+  },
+  "enterprise.pricing.title": {
+    "message": "Prilagodljivo določanje cen",
+    "description": "Pricing title"
+  },
+  "enterprise.pricing.subtitle": {
+    "message": "Načrti, ki rastejo z vašim podjetjem",
+    "description": "Pricing subtitle"
+  },
+  "enterprise.pricing.team.title": {
+    "message": "Ekipa",
+    "description": "Team plan title"
+  },
+  "enterprise.pricing.team.description": {
+    "message": "Za majhne ekipe, ki se začenjajo",
+    "description": "Team plan description"
+  },
+  "enterprise.pricing.team.feature1": {
+    "message": "Do 10 članov",
+    "description": "Team feature 1"
+  },
+  "enterprise.pricing.team.feature2": {
+    "message": "Skupne sheme",
+    "description": "Team feature 2"
+  },
+  "enterprise.pricing.team.feature3": {
+    "message": "Podpora po e-pošti",
+    "description": "Team feature 3"
+  },
+  "enterprise.pricing.team.feature4": {
+    "message": "Oblakovno uvajanje",
+    "description": "Team feature 4"
+  },
+  "enterprise.pricing.popular": {
+    "message": "Najbolj priljubljeno",
+    "description": "Most popular badge"
+  },
+  "enterprise.pricing.business.title": {
+    "message": "Poslovni",
+    "description": "Business plan title"
+  },
+  "enterprise.pricing.business.description": {
+    "message": "Za rastoča podjetja",
+    "description": "Business plan description"
+  },
+  "enterprise.pricing.business.feature1": {
+    "message": "Neomejeni člani",
+    "description": "Business feature 1"
+  },
+  "enterprise.pricing.business.feature2": {
+    "message": "SSO/SAML integracija",
+    "description": "Business feature 2"
+  },
+  "enterprise.pricing.business.feature3": {
+    "message": "Prednostna podpora",
+    "description": "Business feature 3"
+  },
+  "enterprise.pricing.business.feature4": {
+    "message": "Možnost zasebnega oblaka",
+    "description": "Business feature 4"
+  },
+  "enterprise.pricing.business.feature5": {
+    "message": "Revizijski dnevniki",
+    "description": "Business feature 5"
+  },
+  "enterprise.pricing.enterprise.title": {
+    "message": "Podjetje",
+    "description": "Enterprise plan title"
+  },
+  "enterprise.pricing.enterprise.description": {
+    "message": "Za velika podjetja",
+    "description": "Enterprise plan description"
+  },
+  "enterprise.pricing.enterprise.feature1": {
+    "message": "Lokalno uvajanje",
+    "description": "Enterprise feature 1"
+  },
+  "enterprise.pricing.enterprise.feature2": {
+    "message": "Integracije po meri",
+    "description": "Enterprise feature 2"
+  },
+  "enterprise.pricing.enterprise.feature3": {
+    "message": "Namenska podpora",
+    "description": "Enterprise feature 3"
+  },
+  "enterprise.pricing.enterprise.feature4": {
+    "message": "SLA garancija",
+    "description": "Enterprise feature 4"
+  },
+  "enterprise.pricing.enterprise.feature5": {
+    "message": "Usposabljanje po meri",
+    "description": "Enterprise feature 5"
+  },
+  "enterprise.pricing.contact": {
+    "message": "Stopite v stik",
+    "description": "Contact us button"
+  },
+  "enterprise.contact.title": {
+    "message": "Pripravljeni za začetek?",
+    "description": "Contact title"
+  },
+  "enterprise.contact.description": {
+    "message": "Stopite v stik z našo prodajno ekipo za razpravo o vaših zahtevah in prejeli prilagojeno ponudbo.",
+    "description": "Contact description"
+  },
+  "enterprise.meta.title": {
+    "message": "Za podjetja",
+    "description": "Enterprise meta title"
+  },
+  "enterprise.meta.description": {
+    "message": "Almadar za podjetja - Razširite svoj razvoj s podjetniškimi funkcijami",
+    "description": "Enterprise meta description"
+  },
+  "demos.tag": {
+    "message": "Predstavitve",
+    "description": "Demos tag"
+  },
+  "demos.title": {
+    "message": "Interaktivne predstavitve",
+    "description": "Demos page title"
+  },
+  "demos.description": {
+    "message": "Doživite moč Almadarja skozi interaktivne žive predloge.",
+    "description": "Demos page description"
+  },
+  "demos.cta": {
+    "message": "Oglej si predstavitve",
+    "description": "View demos button"
+  },
+  "demos.meta.title": {
+    "message": "Interaktivne predstavitve",
+    "description": "Demos meta title"
+  },
+  "demos.meta.description": {
+    "message": "Raziščite sistem oblikovanja Almadar in predloge",
+    "description": "Demos meta description"
+  },
+  "carousel.title": {
+    "message": "Interaktivne predstavitve",
+    "description": "Carousel section title"
+  },
+  "carousel.subtitle": {
+    "message": "Raziščite prave aplikacije, zgrajene z Almadarjem.",
+    "description": "Carousel section subtitle"
+  },
+  "carousel.viewAll": {
+    "message": "Oglej si vse predstavitve",
+    "description": "View all demos button"
+  },
+  "carousel.exploreDemo": {
+    "message": "Razišči predstavitev →",
+    "description": "Explore demo CTA"
+  },
+  "demo.category.socialNetwork": {
+    "message": "Družabno omrežje",
+    "description": "Demo category: Social Network"
+  },
+  "demo.category.govTech": {
+    "message": "Vladna tehnologija",
+    "description": "Demo category: Gov Tech"
+  },
+  "demo.category.fitnessApp": {
+    "message": "Aplikacija za fitnes",
+    "description": "Demo category: Fitness App"
+  },
+  "demo.category.devTools": {
+    "message": "Orodja za razvijalce",
+    "description": "Demo category: Dev Tools"
+  },
+  "demo.category.gameTools": {
+    "message": "Orodja za igre",
+    "description": "Demo category: Game Tools"
+  },
+  "demo.category.dataViz": {
+    "message": "Vizualizacija podatkov",
+    "description": "Demo category: Data Viz"
+  },
+  "demo.executiveDashboard.title": {
+    "message": "Nadzorna plošča za vodstvo",
+    "description": "Demo title: Executive Dashboard"
+  },
+  "demo.executiveDashboard.description": {
+    "message": "Celovit pregled zdravja sistema, opozoril in ključnih kazalnikov s povzetkom dejavnosti v realnem času.",
+    "description": "Demo description: Executive Dashboard"
+  },
+  "demo.trustIntelligence.title": {
+    "message": "Inteligenca zaupanja",
+    "description": "Demo title: Trust Intelligence"
+  },
+  "demo.trustIntelligence.description": {
+    "message": "Analiza, poganja umetna inteligenca, za ocene zaupanja ekipe, trende uspešnosti in najboljše izvajalce.",
+    "description": "Demo description: Trust Intelligence"
+  },
+  "demo.graphIntelligence.title": {
+    "message": "Grafna inteligenca",
+    "description": "Demo title: Graph Intelligence"
+  },
+  "demo.graphIntelligence.description": {
+    "message": "Vizualizacija omrežja z odkrivanjem gruč, metrik gostote in analizo povezav.",
+    "description": "Demo description: Graph Intelligence"
+  },
+  "demo.userProfile360.title": {
+    "message": "Uporabniški profil 360°",
+    "description": "Demo title: User Profile 360"
+  },
+  "demo.userProfile360.description": {
+    "message": "Celovita analiza uporabnika z zgodovino dejavnosti, metrikami zaupanja in uporabo povezav.",
+    "description": "Demo description: User Profile 360"
+  },
+  "demo.inspectionManagement.title": {
+    "message": "Upravljanje inšpekcij",
+    "description": "Demo title: Inspection Management"
+  },
+  "demo.inspectionManagement.description": {
+    "message": "Poenoteno središče za sledenje pregledom skladnosti, terenskim operacijam in statusu inšpekcij.",
+    "description": "Demo description: Inspection Management"
+  },
+  "demo.inspectionForm.title": {
+    "message": "Obrazec za inšpekcijo",
+    "description": "Demo title: Inspection Form"
+  },
+  "demo.inspectionForm.description": {
+    "message": "Večstopenjski obrazec za inšpekcijo s pogojnimi polji, pravnimi sklici in zaznavanjem kršitev.",
+    "description": "Demo description: Inspection Form"
+  },
+  "demo.fitnessTracker.title": {
+    "message": "Sledilnik fitnesa",
+    "description": "Demo title: Fitness Tracker"
+  },
+  "demo.fitnessTracker.description": {
+    "message": "Beleženje treningov s sledenjem uteži, grafi napredka in dnevnimi vnosi počutja.",
+    "description": "Demo description: Fitness Tracker"
+  },
+  "demo.mealPlanDetail.title": {
+    "message": "Podrobnosti jedilnika",
+    "description": "Demo title: Meal Plan Detail"
+  },
+  "demo.mealPlanDetail.description": {
+    "message": "Podroben načrt prehrane z analizo hranilnih snovi, analizo umetne inteligence in povezavami za deljenje.",
+    "description": "Demo description: Meal Plan Detail"
+  },
+  "demo.trainingSchedule.title": {
+    "message": "Urnik treningov",
+    "description": "Demo title: Training Schedule"
+  },
+  "demo.trainingSchedule.description": {
+    "message": "Tedenski koledar treningov z upravljanjem sej, sledenjem statusa in pregledom dosežkov.",
+    "description": "Demo description: Training Schedule"
+  },
+  "demo.almadarStudio.title": {
+    "message": "Almadar Studio",
+    "description": "Demo title: Almadar Studio"
+  },
+  "demo.almadarStudio.description": {
+    "message": "Razvojno okolje, poganja umetna inteligenca, za gradnjo celovitih aplikacij iz naravnega jezika.",
+    "description": "Demo description: Almadar Studio"
+  },
+  "demo.studioFullView.title": {
+    "message": "Polni pogled studia",
+    "description": "Demo title: Studio Full View"
+  },
+  "demo.studioFullView.description": {
+    "message": "Postavitev celotnega razvojnega okolja s ploščo agenta, inšpektorjem, urejevalnikom shem in živim predogledom.",
+    "description": "Demo description: Studio Full View"
+  },
+  "demo.aiAgentPanel.title": {
+    "message": "Plošča agentske umetne inteligence",
+    "description": "Demo title: AI Agent Panel"
+  },
+  "demo.aiAgentPanel.description": {
+    "message": "Takojšnji asistent umetne inteligence s klici orodij, sledenjem nalog in razlikami shem.",
+    "description": "Demo description: AI Agent Panel"
+  },
+  "demo.gameMapEditor.title": {
+    "message": "Urejevalnik zemljevidov iger",
+    "description": "Demo title: Game Map Editor"
+  },
+  "demo.gameMapEditor.description": {
+    "message": "Interaktivni izometrični urejevalnik za oblikovanje zemljevidov iger s risanjem terena, postavljanjem enot in orodji za območja.",
+    "description": "Demo description: Game Map Editor"
+  },
+  "demo.interactiveGraph.title": {
+    "message": "Interaktivni graf",
+    "description": "Demo title: Interactive Graph"
+  },
+  "demo.interactiveGraph.description": {
+    "message": "Plošča za usmerjen graf s silami z vozlišči, ki jih je mogoče povleči, nadzorom povečave in grozdenimi postavitvami.",
+    "description": "Demo description: Interactive Graph"
+  }
+}
