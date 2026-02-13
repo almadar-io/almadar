@@ -394,9 +394,53 @@ body {
 }
 
 /* Exception for Home Page Code Preview - keep it dark/transparent */
-[data-theme="light"] div[class*='codePreview'] .prism-code {
+/* We use the global class .home-page-code-preview added in index.tsx */
+.home-page-code-preview .prism-code {
     background-color: transparent !important;
-    border: none;
+    border: none !important;
+    font-family: "IBM Plex Mono", "Fira Code", monospace;
+}
+
+.home-page-code-preview code {
+    background-color: transparent !important;
+    color: #f8fafc !important;
+    /* Base text white */
+    border: none !important;
+}
+
+/* Force vibrant colors for JSON tokens in the home page preview */
+.home-page-code-preview .token.string {
+    color: #bae6fd !important;
+}
+
+/* Light Blue */
+.home-page-code-preview .token.property {
+    color: #2dd4bf !important;
+}
+
+/* Teal */
+.home-page-code-preview .token.number {
+    color: #fcd34d !important;
+}
+
+/* Yellow */
+.home-page-code-preview .token.boolean {
+    color: #fca5a5 !important;
+}
+
+/* Red/Pink */
+.home-page-code-preview .token.keyword {
+    color: #c084fc !important;
+}
+
+/* Purple */
+.home-page-code-preview .token.punctuation {
+    color: #94a3b8 !important;
+}
+
+/* Grey */
+.home-page-code-preview .token.operator {
+    color: #cbd5e1 !important;
 }
 
 [data-theme="light"] code {

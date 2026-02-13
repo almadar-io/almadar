@@ -249,7 +249,7 @@ function HomepagePhilosophy() {
             <OrbitalVisualization />
 
           </div>
-          <div className={styles.codePreview}>
+          <div className={clsx(styles.codePreview, "home-page-code-preview")}>
             <div className={styles.codeHeader}>
               <span className={styles.codeLang}>hello-world.orb</span>
             </div>
