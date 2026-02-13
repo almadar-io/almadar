@@ -1,175 +1,130 @@
 // @ts-nocheck
-import React, { useRef, useMemo, useState } from "react";
+import React, { useRef, useMemo, useLayoutEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { Float } from "@react-three/drei";
 
-// A custom component to render the "Electrified P-Orbital"
-function ElectrifiedOrbital() {
-    const groupRef = useRef<THREE.Group>(null);
+// Normalized P-orbital shape function
+function getPOrbitalPoint(theta: number, phi: number, scale: number) {
+    // r = scale * |cos(theta)| ^ 1.2
+    const r = scale * Math.pow(Math.abs(Math.cos(theta)), 1.2);
+    const x = r * Math.sin(theta) * Math.cos(phi);
+    const y = r * Math.cos(theta);
+    const z = r * Math.sin(theta) * Math.sin(phi);
+    return new THREE.Vector3(x, y, z);
+}
 
-    // Create a parametric P-Orbital shape (dumbbell / p-orbital lobes)
-    // We'll use a collection of lines to simulate the "probability density" feel
-    const linesCount = 100;
-    const pointsPerLine = 50;
+function AnimatedLine({ phi, scale, color }: { phi: number, scale: number, color: string }) {
+    const lineRef = useRef<any>(null);
+    const pointsPerLine = 64;
 
-    // Generate lines that follow a P-orbital distribution (approximate lobes)
-    // A P-orbital has two lobes along an axis (say Y-axis)
-    const lines = useMemo(() => {
-        const tempLines: THREE.Vector3[][] = [];
+    // Generate Source (Sphere/Chaos) and Target (P-Orbital) points
+    const { startPoints, endPoints, currentPoints } = useMemo(() => {
+        const start = [];
+        const end = [];
+        const current = [];
 
-        for (let i = 0; i < linesCount; i++) {
-            const linePoints: THREE.Vector3[] = [];
-            // Randomly assign to top (positive) or bottom (negative) lobe
-            const lobeSign = Math.random() > 0.5 ? 1 : -1;
+        for (let j = 0; j <= pointsPerLine; j++) {
+            const theta = (j / pointsPerLine) * Math.PI;
 
-            // Each line starts near center and goes out, or spirals within the lobe
-            const theta = Math.random() * Math.PI * 2; // Angle around Y axis
-            const phiBase = Math.PI / 4; // Angle from Y axis (approximate lobe width)
-            const phi = phiBase + (Math.random() - 0.5) * 0.5;
+            // Target: P-Orbital
+            const p = getPOrbitalPoint(theta, phi, scale);
+            end.push(p);
 
-            for (let j = 0; j < pointsPerLine; j++) {
-                const t = j / (pointsPerLine - 1);
-                const radius = 2 + Math.random() * 0.5 + t * 3; // spread out
+            // Source: Expanded Sphere (Chaos/Dispersed)
+            // We disperse them outwards based on their P-orbital position to make it look like they "compress" in
+            const s = p.clone().normalize().multiplyScalar(scale * 3); // Large sphere
+            // Add some noise to start
+            s.x += (Math.random() - 0.5) * 2;
+            s.y += (Math.random() - 0.5) * 2;
+            s.z += (Math.random() - 0.5) * 2;
 
-                // Convert spherical coords to cartesian, oriented along Y
-                // x = r * sin(phi) * cos(theta)
-                // y = r * cos(phi) * lobeSign + verticalOffset
-                // z = r * sin(phi) * sin(theta)
-
-                // Apply some "noise" or "electricity" jitter
-                const jitter = 0.15;
-
-                const x = radius * Math.sin(phi) * Math.cos(theta + t * 2) + (Math.random() - 0.5) * jitter;
-                const y = radius * Math.cos(phi) * lobeSign + (Math.random() - 0.5) * jitter;
-                const z = radius * Math.sin(phi) * Math.sin(theta + t * 2) + (Math.random() - 0.5) * jitter;
-
-                linePoints.push(new THREE.Vector3(x, y, z));
-            }
-            tempLines.push(linePoints);
+            start.push(s);
+            current.push(s.clone());
         }
-        return tempLines;
+        return { startPoints: start, endPoints: end, currentPoints: current };
+    }, [phi, scale]);
+
+    useLayoutEffect(() => {
+        if (lineRef.current) {
+            const geo = new THREE.BufferGeometry().setFromPoints(currentPoints); // Init
+            lineRef.current.geometry = geo;
+        }
     }, []);
 
-    // Animation state for "settling"
-    // We'll use a time uniform or just manipulate positions in useFrame
+    useFrame((state) => {
+        if (!lineRef.current) return;
+
+        // Animation Progress: 0 -> 1 over time
+        // Easing: easeOutCubic = 1 - pow(1 - x, 3)
+        let t = Math.min(1, state.clock.getElapsedTime() * 0.4); // Slow converge over ~2.5s
+        t = 1 - Math.pow(1 - t, 3);
+
+        // Update vectors
+        for (let i = 0; i < currentPoints.length; i++) {
+            currentPoints[i].lerpVectors(startPoints[i], endPoints[i], t);
+        }
+
+        // Update geometry
+        lineRef.current.geometry.setFromPoints(currentPoints);
+    });
+
+    return (
+        <line ref={lineRef}>
+            <lineBasicMaterial color={color} transparent opacity={0.5} linewidth={1} />
+        </line>
+    );
+}
+
+// A component that renders a structured P-Orbital (dumbbell shape)
+// using smooth lines along longitudinal curves.
+function StructuredOrbital({ color = "#06b6d4", scale = 3.5 }) {
+    const groupRef = useRef<THREE.Group>(null);
+
+    // Number of longitudinal lines (meridians)
+    const meridianCount = 24;
+
+    // Generate angles for lines
+    const phis = useMemo(() => {
+        return new Array(meridianCount).fill(0).map((_, i) => (i / meridianCount) * Math.PI * 2);
+    }, []);
+
+    // Slowly rotate the entire structure
     useFrame((state) => {
         if (groupRef.current) {
-            // Slowly rotate the whole orbital
-            groupRef.current.rotation.y += 0.002;
-            groupRef.current.rotation.z += 0.001;
+            const t = state.clock.getElapsedTime();
+            groupRef.current.rotation.y = t * 0.15;
+            groupRef.current.rotation.z = Math.sin(t * 0.1) * 0.1; // Gentle sway
         }
     });
 
     return (
         <group ref={groupRef}>
-            {lines.map((linePoints, index) => (
-                <Line
-                    key={index}
-                    points={linePoints}
-                    color={index % 2 === 0 ? "#14b8a6" : "#c9a227"} // Teal and Gold
-                    opacity={0.6}
-                    width={1.5}
-                />
+            {phis.map((phi, i) => (
+                <AnimatedLine key={i} phi={phi} scale={scale} color={color} />
             ))}
+
         </group>
-    );
-}
-
-// Simple Line component using BufferGeometry
-function Line({ points, color, opacity, width }: { points: THREE.Vector3[], color: string, opacity: number, width: number }) {
-    const lineGeometry = useMemo(() => {
-        const geometry = new THREE.BufferGeometry().setFromPoints(points);
-        return geometry;
-    }, [points]);
-
-    return (
-        <line geometry={lineGeometry}>
-            <lineBasicMaterial
-                attach="material"
-                color={color}
-                transparent
-                opacity={opacity}
-                // linewidth={width} // Note: linewidth only works in WebGL2 or some browsers
-                linecap="round"
-                linejoin="round"
-            />
-        </line>
-    );
-}
-
-// Particle field for extra "VFX" atmosphere
-function Particles({ count = 200 }) {
-    const mesh = useRef<THREE.InstancedMesh>(null);
-
-    const particles = useMemo(() => {
-        const temp = [];
-        for (let i = 0; i < count; i++) {
-            const time = Math.random() * 100;
-            const factor = Math.random() * 10 + 5;
-            const speed = Math.random() * 0.01 + 0.005;
-            const x = (Math.random() - 0.5) * 15;
-            const y = (Math.random() - 0.5) * 15;
-            const z = (Math.random() - 0.5) * 15;
-            temp.push({ time, factor, speed, x, y, z });
-        }
-        return temp;
-    }, [count]);
-
-    const dummy = useMemo(() => new THREE.Object3D(), []);
-
-    useFrame(() => {
-        if (!mesh.current) return;
-
-        particles.forEach((particle, i) => {
-            const { factor, speed, x, y, z } = particle;
-            // Update particle rotation/position slightly
-            const t = (particle.time += speed);
-
-            dummy.position.set(
-                x + Math.cos(t) + Math.sin(t * 1) / 10,
-                y + Math.sin(t) + Math.cos(t * 2) / 10,
-                z + Math.cos(t) + Math.sin(t * 3) / 10
-            );
-
-            const s = Math.cos(t) * 0.1 + 0.1; // Pulsing size
-            dummy.scale.set(s, s, s);
-            dummy.rotation.set(s * 5, s * 5, s * 5);
-
-            dummy.updateMatrix();
-            mesh.current!.setMatrixAt(i, dummy.matrix);
-        });
-        mesh.current.instanceMatrix.needsUpdate = true;
-    });
-
-    return (
-        <instancedMesh ref={mesh} args={[undefined, undefined, count]}>
-            <dodecahedronGeometry args={[0.2, 0]} />
-            <meshStandardMaterial color="#06b6d4" roughness={0.0} emissive="#06b6d4" emissiveIntensity={1} />
-        </instancedMesh>
     );
 }
 
 export default function HeroOrbitalAnimation() {
     return (
-        <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0, opacity: 0.8, pointerEvents: 'none' }}>
-            <Canvas camera={{ position: [0, 0, 12], fov: 45 }} gl={{ alpha: true, antialias: true }}>
+        <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0, opacity: 0.9, pointerEvents: 'none' }}>
+            <Canvas camera={{ position: [0, 0, 10], fov: 40 }} gl={{ alpha: true, antialias: true }}>
                 <ambientLight intensity={0.5} />
-                <pointLight position={[10, 10, 10]} intensity={1} />
 
                 {/* Floating animated group */}
-                <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-                    <ElectrifiedOrbital />
+                <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.2}>
+                    <StructuredOrbital scale={3.2} color="#22d3ee" /> {/* Cyan */}
                 </Float>
 
-                <Particles />
-
-                {/* Post Processing for Glow */}
-                <EffectComposer>
-                    <Bloom luminanceThreshold={0.2} luminanceSmoothing={0.9} height={300} intensity={1.5} />
+                <EffectComposer disableNormalPass>
+                    <Bloom luminanceThreshold={0.2} luminanceSmoothing={0.9} height={300} intensity={2.0} />
                 </EffectComposer>
             </Canvas>
         </div>
     );
 }
+
