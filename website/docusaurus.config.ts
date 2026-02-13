@@ -48,6 +48,7 @@ const config: Config = {
         },
         blog: {
           showReadingTime: true,
+          blogSidebarCount: 0,
           feedOptions: {
             type: ["rss", "atom"],
             xslt: true,
@@ -64,7 +65,7 @@ const config: Config = {
   themeConfig: {
     image: "img/og-image.png",
     colorMode: {
-      defaultMode: "dark",
+      defaultMode: "light",
       disableSwitch: false,
       respectPrefersColorScheme: false,
     },
