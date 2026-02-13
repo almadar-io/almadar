@@ -403,7 +403,7 @@
     "description": "Philosophy tag"
   },
   "homepage.philosophy.title": {
-    "message": "كيان + سمة = مدار",
+    "message": "تشريح المدار",
     "description": "Philosophy title"
   },
   "homepage.philosophy.description": {
@@ -411,27 +411,27 @@
     "description": "Philosophy description"
   },
   "homepage.philosophy.entity": {
-    "message": "كيان",
+    "message": "الكيان (المادة)",
     "description": "Entity term"
   },
   "homepage.philosophy.entity.description": {
-    "message": "نموذج بياناتك مع الحقول والاستمرارية",
+    "message": "النواة الثابتة. تحدد الجاذبية وشكل بياناتك.",
     "description": "Entity description"
   },
   "homepage.philosophy.trait": {
-    "message": "سمة",
+    "message": "السمة (الطاقة)",
     "description": "Trait term"
   },
   "homepage.philosophy.trait.description": {
-    "message": "آلة حالة قابلة لإعادة الاستخدام مع تأثيرات واجهة",
+    "message": "المدار الديناميكي. آلة حالة تحدد السلوك والمنطق.",
     "description": "Trait description"
   },
   "homepage.philosophy.page": {
-    "message": "صفحة",
+    "message": "الصفحة (الفضاء)",
     "description": "Page term"
   },
   "homepage.philosophy.page.description": {
-    "message": "ربط المسار الذي يجمع السمات",
+    "message": "الإطار. حاوية المسار حيث يتفاعل المستخدمون مع المدارات.",
     "description": "Page description"
   },
   "homepage.cta.title": {
@@ -463,8 +463,8 @@
     "description": "Set effect description"
   },
   "homepage.effect.increment": {
-    "message": "إضافة إلى رقم",
-    "description": "Increment effect description"
+    "message": "تعبيرات S الرياضية",
+    "description": "S-expression math effect description"
   },
   "homepage.effect.renderui": {
     "message": "عرض نمط في منطقة",
@@ -697,5 +697,141 @@
   "carousel.exploreDemo": {
     "message": "استكشف العرض ←",
     "description": "Explore demo CTA"
+  },
+  "demo.category.socialNetwork": {
+    "message": "شبكة اجتماعية",
+    "description": "Demo category: Social Network"
+  },
+  "demo.category.govTech": {
+    "message": "تقنية حكومية",
+    "description": "Demo category: Gov Tech"
+  },
+  "demo.category.fitnessApp": {
+    "message": "تطبيق لياقة",
+    "description": "Demo category: Fitness App"
+  },
+  "demo.category.devTools": {
+    "message": "أدوات تطوير",
+    "description": "Demo category: Dev Tools"
+  },
+  "demo.category.gameTools": {
+    "message": "أدوات ألعاب",
+    "description": "Demo category: Game Tools"
+  },
+  "demo.category.dataViz": {
+    "message": "تصور البيانات",
+    "description": "Demo category: Data Viz"
+  },
+  "demo.executiveDashboard.title": {
+    "message": "لوحة التحكم التنفيذية",
+    "description": "Demo title: Executive Dashboard"
+  },
+  "demo.executiveDashboard.description": {
+    "message": "نظرة شاملة على صحة النظام والتنبيهات والمقاييس الرئيسية مع موجز النشاط الفوري.",
+    "description": "Demo description: Executive Dashboard"
+  },
+  "demo.trustIntelligence.title": {
+    "message": "ذكاء الثقة",
+    "description": "Demo title: Trust Intelligence"
+  },
+  "demo.trustIntelligence.description": {
+    "message": "تحليل مدعوم بالذكاء الاصطناعي لدرجات ثقة الفريق واتجاهات الأداء وأفضل المؤدين.",
+    "description": "Demo description: Trust Intelligence"
+  },
+  "demo.graphIntelligence.title": {
+    "message": "ذكاء الرسم البياني",
+    "description": "Demo title: Graph Intelligence"
+  },
+  "demo.graphIntelligence.description": {
+    "message": "تصور الشبكة مع كشف التجمعات ومقاييس الكثافة وتحليل الاتصالات.",
+    "description": "Demo description: Graph Intelligence"
+  },
+  "demo.userProfile360.title": {
+    "message": "ملف المستخدم ٣٦٠°",
+    "description": "Demo title: User Profile 360"
+  },
+  "demo.userProfile360.description": {
+    "message": "تحليل شامل للمستخدم يشمل سجل النشاط ومقاييس الثقة واستخدام الاتصالات.",
+    "description": "Demo description: User Profile 360"
+  },
+  "demo.inspectionManagement.title": {
+    "message": "إدارة التفتيش",
+    "description": "Demo title: Inspection Management"
+  },
+  "demo.inspectionManagement.description": {
+    "message": "مركز موحد لتتبع فحوصات الامتثال والعمليات الميدانية وحالة التفتيش.",
+    "description": "Demo description: Inspection Management"
+  },
+  "demo.inspectionForm.title": {
+    "message": "نموذج التفتيش",
+    "description": "Demo title: Inspection Form"
+  },
+  "demo.inspectionForm.description": {
+    "message": "نموذج تفتيش متعدد الخطوات مع حقول شرطية ومراجع قانونية ورصد المخالفات.",
+    "description": "Demo description: Inspection Form"
+  },
+  "demo.fitnessTracker.title": {
+    "message": "متتبع اللياقة",
+    "description": "Demo title: Fitness Tracker"
+  },
+  "demo.fitnessTracker.description": {
+    "message": "تسجيل التمارين مع تتبع الأوزان ورسوم التقدم البيانية ومدخلات العافية اليومية.",
+    "description": "Demo description: Fitness Tracker"
+  },
+  "demo.mealPlanDetail.title": {
+    "message": "تفاصيل خطة الوجبات",
+    "description": "Demo title: Meal Plan Detail"
+  },
+  "demo.mealPlanDetail.description": {
+    "message": "خطة تغذية مفصلة مع تحليل العناصر الغذائية وتحليل الذكاء الاصطناعي وروابط قابلة للمشاركة.",
+    "description": "Demo description: Meal Plan Detail"
+  },
+  "demo.trainingSchedule.title": {
+    "message": "جدول التدريب",
+    "description": "Demo title: Training Schedule"
+  },
+  "demo.trainingSchedule.description": {
+    "message": "تقويم تدريبي أسبوعي مع إدارة الجلسات وتتبع الحالة ونظرة عامة على الإنجاز.",
+    "description": "Demo description: Training Schedule"
+  },
+  "demo.almadarStudio.title": {
+    "message": "استوديو المدار",
+    "description": "Demo title: Almadar Studio"
+  },
+  "demo.almadarStudio.description": {
+    "message": "بيئة تطوير مدعومة بالذكاء الاصطناعي لبناء تطبيقات متكاملة من اللغة الطبيعية.",
+    "description": "Demo description: Almadar Studio"
+  },
+  "demo.studioFullView.title": {
+    "message": "العرض الكامل للاستوديو",
+    "description": "Demo title: Studio Full View"
+  },
+  "demo.studioFullView.description": {
+    "message": "تخطيط بيئة التطوير الكامل مع لوحة الوكيل والمفتش ومحرر المخطط والمعاينة الحية.",
+    "description": "Demo description: Studio Full View"
+  },
+  "demo.aiAgentPanel.title": {
+    "message": "لوحة وكيل الذكاء الاصطناعي",
+    "description": "Demo title: AI Agent Panel"
+  },
+  "demo.aiAgentPanel.description": {
+    "message": "مساعد ذكاء اصطناعي فوري مع استدعاءات الأدوات وتتبع المهام وفروقات المخطط.",
+    "description": "Demo description: AI Agent Panel"
+  },
+  "demo.gameMapEditor.title": {
+    "message": "محرر خرائط الألعاب",
+    "description": "Demo title: Game Map Editor"
+  },
+  "demo.gameMapEditor.description": {
+    "message": "محرر إيزومتري تفاعلي لتصميم خرائط الألعاب مع رسم التضاريس ووضع الوحدات وأدوات المناطق.",
+    "description": "Demo description: Game Map Editor"
+  },
+  "demo.interactiveGraph.title": {
+    "message": "رسم بياني تفاعلي",
+    "description": "Demo title: Interactive Graph"
+  },
+  "demo.interactiveGraph.description": {
+    "message": "لوحة رسم بياني موجهة بالقوة مع عُقد قابلة للسحب وتحكم بالتكبير وتخطيطات مجمعة.",
+    "description": "Demo description: Interactive Graph"
   }
 }

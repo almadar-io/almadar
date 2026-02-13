@@ -393,43 +393,55 @@ body {
     border: 1px solid #e2e8f0;
 }
 
-/* Home Page Code Preview Specifics */
-/* We want this to be transparent but readable. */
-.home-page-code-preview .prism-code {
+/* === Custom Code Block (KISS - Unified Theme) === */
+.home-page-code-preview pre {
     background-color: transparent !important;
     border: none !important;
-    text-shadow: none !important;
+    margin: 0;
+    padding: 1rem;
     font-family: "IBM Plex Mono", "Fira Code", monospace;
-}
-
-[data-theme="light"] code {
-    background-color: #f1f5f9;
-    color: #0f172a;
-    border: 1px solid #e2e8f0;
-}
-
-/* Fix for "Greeter" and other class names in light mode being too light */
-[data-theme="light"] .token.class-name,
-[data-theme="light"] .token.function {
-    color: #0d9488;
-    /* Darker teal for better visibility */
-}
-
-[data-theme="light"] .token.keyword {
-    color: #7c3aed;
-    /* Violet for keywords */
-}
-
-[data-theme="light"] .token.string {
-    color: #059669;
-    /* Emerald for strings */
-}
-
-code {
-    border-radius: var(--radius-sm);
     font-size: 0.9em;
-    padding: 0.2rem 0.4rem;
+    line-height: 1.5;
+    overflow-x: auto;
 }
+
+/* Force specific reset for the inner code element to prevent "white lines" or borders */
+.home-page-code-preview code {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    padding: 0 !important;
+}
+
+/* Universal Colors (Dracula-based for high contrast on the dark panel) */
+.kk {
+    color: #8be9fd;
+    font-weight: 600;
+}
+
+/* Key - Cyan */
+.ks {
+    color: #f1fa8c;
+}
+
+/* String - Yellow */
+.kn {
+    color: #bd93f9;
+}
+
+/* Number - Purple */
+.kp {
+    color: #f8f8f2;
+}
+
+/* Punctuation - White */
+.kc {
+    color: #6272a4;
+    font-style: italic;
+}
+
+/* Comment - Desaturated Blue */
 
 [data-theme="dark"] code {
     background-color: var(--almadar-midnight-light);
