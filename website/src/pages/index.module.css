@@ -622,3 +622,50 @@ div[class*='codePreview'] span[class*='token-line'] span[class*='token'][class*=
         -webkit-mask-image: radial-gradient(circle at center, transparent 40%, black 100%);
     }
 }
+
+/* Force Light Mode Code Block Colors via CSS Modules to bypass loading issues */
+:global(html[data-theme="light"] .home-page-code-preview .token.string) {
+    color: #059669 !important;
+    /* Emerald */
+}
+
+:global(html[data-theme="light"] .home-page-code-preview .token.property) {
+    color: #d946ef !important;
+    /* Fuchsia */
+}
+
+:global(html[data-theme="light"] .home-page-code-preview .token.number) {
+    color: #7c3aed !important;
+    /* Violet */
+}
+
+:global(html[data-theme="light"] .home-page-code-preview .token.boolean) {
+    color: #7c3aed !important;
+    /* Violet */
+}
+
+:global(html[data-theme="light"] .home-page-code-preview .token.keyword) {
+    color: #0891b2 !important;
+    /* Cyan */
+}
+
+:global(html[data-theme="light"] .home-page-code-preview .token.punctuation) {
+    color: #475569 !important;
+    /* Slate */
+}
+
+:global(html[data-theme="light"] .home-page-code-preview .token.operator) {
+    color: #475569 !important;
+    /* Slate */
+}
+
+:global(html[data-theme="light"] .home-page-code-preview),
+:global(html[data-theme="light"] .home-page-code-preview .prism-code) {
+    color: #1e293b !important;
+    /* Dark Slate Base */
+}
+
+:global(html[data-theme="light"] .home-page-code-preview .effectsLegend),
+:global(html[data-theme="light"] .home-page-code-preview .effectItem) {
+    color: #334155 !important;
+}
