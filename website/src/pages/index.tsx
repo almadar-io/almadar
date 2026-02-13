@@ -48,6 +48,7 @@ const helloWorldSchema = `{
 
 import MashrabiyaPattern from "../components/MashrabiyaPattern";
 import DemoCarousel from "../components/DemoCarousel";
+import HeroOrbitalAnimation from "../components/HeroOrbitalAnimation";
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
@@ -55,7 +56,9 @@ function HomepageHeader() {
     <header className={clsx("hero", styles.heroBanner)}>
       {/* Background Pattern */}
       <div className={styles.heroPatternContainer}>
-        <MashrabiyaPattern className={styles.heroPattern} opacity={0.6} />
+        {/* Replaced generic pattern with 3D Orbital VFX */}
+        <HeroOrbitalAnimation />
+        {/* <MashrabiyaPattern className={styles.heroPattern} opacity={0.6} /> */}
       </div>
 
       <div className={styles.heroContainer}>
