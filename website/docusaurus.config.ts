@@ -20,10 +20,10 @@ const config: Config = {
   onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
 
-  // i18n configuration for English and Arabic
+  // i18n configuration for English, Arabic, and Slovenian
   i18n: {
     defaultLocale: "en",
-    locales: ["en", "ar"],
+    locales: ["en", "ar", "sl"],
     localeConfigs: {
       en: {
         label: "English",
@@ -34,6 +34,11 @@ const config: Config = {
         label: "العربية",
         direction: "rtl",
         htmlLang: "ar",
+      },
+      sl: {
+        label: "Slovenščina",
+        direction: "ltr",
+        htmlLang: "sl",
       },
     },
   },
