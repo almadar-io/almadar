@@ -15,210 +15,887 @@ tags: [case-study, architecture]
 
 ## الادعاء
 
-تدّعي كل لغة برمجة أنها "عامة الغرض." لكن متى كانت آخر مرة استخدمت فيها نفس الإطار لبناء لعبة *و* أداة امتثال حكومية؟
+تدّعي كل لغة برمجة أنها "general purpose." لكن متى كانت آخر مرة استخدمت فيها نفس الـ framework لبناء لعبة *و* أداة compliance حكومية؟
 
-تعتبر البنية المدارية لـ Almadar محايدة المجال بالتصميم. الـ orbital (الوحدة المدارية) هو: entity (كيان يمثّل نموذج البيانات) + traits (وحدات سلوك تدير الـ state machine) + صفحات. تعمل تلك الصيغة لأي مجال لأنها تُنمذج **السلوك**، وليس **التقنية**.
+تعتبر الـ Orbital architecture لـ Almadar محايدة المجال بالتصميم. الـ Orbital هو: Entity + Traits + Pages. تعمل تلك الصيغة لأي مجال لأنها تُنمذج **السلوك**، وليس **التقنية**.
 
-لنستعرض الستة جميعًا.
+لنستعرض الستة جميعًا — وهذه المرة، سنريك كود الـ schema الفعلي.
 
-## 1. حروب الـ traits — لعبة استراتيجية تكتيكية
+## كيف يعمل الـ Orbital Schema
 
-**المجال:** قتال تكتيكي قائم على الأدوار
-**التحدي الرئيسي:** قتال معقد مع ذكاء اصطناعي مرئي، مراحل أدوار، تركيب وحدات
-
-تعد حروب الـ traits لعبة استراتيجية مستوحاة من Heroes of Might and Magic حيث تُجهّز الوحدات **traits** — state machines (آلات حالة تدير سلوك البرنامج عبر حالات محددة) مرئية تُحدد سلوكها. الابتكار الأساسي: يستطيع اللاعبون قراءة state machines الأعداء واستغلال نوافذ الـ transition (الانتقال بين حالتين).
-
-**كيف تُنمذجها الـ orbitals:**
-
-```
-Match Orbital: manages game state, turns, win conditions
-Unit Orbital: handles movement, combat, death
-Hero Orbital: special abilities, trait composition
-Terrain Orbital: tile effects, fog of war
-```
-
-سلوك كل وحدة هو trait بحالات مثل `خامل → متحرك → مهاجم → مدافع`. يرى اللاعبون هذه الحالات ويخططون حولها.
-
-**ما يجعل هذا يعمل:** يعتبر متحكم مراحل الأدوار state machine بحد ذاته:
+قبل الغوص في التطبيقات الستة، إليك تعريفًا سريعًا لما ستراه في الكود. كل orbital schema هو ملف JSON بهذا الشكل:
 
 ```json
 {
-  "states": [
-    { "name": "ObservationPhase", "isInitial": true },
-    { "name": "SelectionPhase" },
-    { "name": "MovementPhase" },
-    { "name": "ActionPhase" },
-    { "name": "ResolutionPhase" }
+  "name": "app-name",
+  "version": "1.0.0",
+  "orbitals": [
+    {
+      "name": "OrbitalName",
+      "entity": { ... },
+      "traits": [ ... ],
+      "pages": [ ... ]
+    }
   ]
 }
 ```
 
-خمس حالات. transitions نظيفة. بدون تعقيد خفي في حلقة اللعبة.
+- **Entity** يحدد شكل البيانات — الحقول، الأنواع، نمط الـ persistence
+- **Traits** تحدد السلوك — state machines بحالات، events، transitions، guards، و effects
+- **Pages** تربط الـ traits بالـ routes — مسار URL يُفعّل trait واحد أو أكثر
+
+الـ Effects هي الأوليات الجانبية: `set` يُحدّث حقلاً، `render-ui` يعرض مكوّنًا، `persist` يحفظ في قاعدة البيانات، `emit` يرسل events عبر الـ orbitals، `navigate` يغيّر الـ route، `notify` يعرض رسالة.
+
+الـ Guards هي شروط بصيغة S-expression يجب أن تتحقق ليحدث الـ transition. إذا فشل الـ guard، الـ transition غير موجود.
+
+الآن لنرَ هذا مطبّقًا عبر ستة مجالات.
+
+## 1. حروب الـ Traits — لعبة استراتيجية تكتيكية
+
+**المجال:** قتال تكتيكي قائم على الأدوار
+**التحدي الرئيسي:** قتال معقد مع AI مرئي، مراحل أدوار، تركيب وحدات
+
+تعد حروب الـ Traits لعبة استراتيجية مستوحاة من Heroes of Might and Magic حيث تُجهّز الوحدات **Traits** — state machines مرئية تُحدد سلوكها. الابتكار الأساسي: يستطيع اللاعبون قراءة state machines الأعداء واستغلال نوافذ الـ transition.
+
+### الـ Entity
+
+كل وحدة في ساحة المعركة هي entity بإحصائيات قتالية وموقع وtraits مجهزة:
+
+```json
+{
+  "entity": {
+    "name": "Unit",
+    "persistence": "runtime",
+    "fields": [
+      { "name": "id", "type": "string", "required": true },
+      { "name": "name", "type": "string", "required": true },
+      { "name": "hp", "type": "number", "default": 100 },
+      { "name": "attack", "type": "number", "default": 10 },
+      { "name": "defense", "type": "number", "default": 5 },
+      { "name": "position", "type": "object" },
+      { "name": "equippedTraits", "type": "array", "items": { "type": "string" } },
+      { "name": "status", "type": "enum", "values": ["alive", "stunned", "dead"] }
+    ]
+  }
+}
+```
+
+لاحظ `"persistence": "runtime"` — حالة اللعبة تعيش في الذاكرة، ليس في قاعدة بيانات. الـ entity هو النواة الجاذبة: كل شيء آخر يدور حوله.
+
+### الـ Traits
+
+متحكم الأدوار نفسه هو state machine. كل مرحلة لها قواعد دخول وخروج واضحة:
+
+```json
+{
+  "name": "TurnPhaseController",
+  "linkedEntity": "Match",
+  "stateMachine": {
+    "states": [
+      { "name": "ObservationPhase", "isInitial": true },
+      { "name": "SelectionPhase" },
+      { "name": "MovementPhase" },
+      { "name": "ActionPhase" },
+      { "name": "ResolutionPhase" }
+    ],
+    "events": [
+      { "key": "BEGIN_SELECTION", "name": "Begin Selection" },
+      { "key": "CONFIRM_SELECTION", "name": "Confirm Selection" },
+      { "key": "MOVE_COMPLETE", "name": "Move Complete" },
+      { "key": "RESOLVE", "name": "Resolve Actions" },
+      { "key": "NEXT_TURN", "name": "Next Turn" }
+    ],
+    "transitions": [
+      {
+        "from": "ObservationPhase",
+        "event": "BEGIN_SELECTION",
+        "to": "SelectionPhase",
+        "effects": [
+          ["render-ui", "main", {
+            "type": "entity-table",
+            "entity": "Unit",
+            "columns": ["name", "hp", "status", "equippedTraits"]
+          }]
+        ]
+      },
+      { "from": "SelectionPhase", "event": "CONFIRM_SELECTION", "to": "MovementPhase" },
+      { "from": "MovementPhase", "event": "MOVE_COMPLETE", "to": "ActionPhase" },
+      {
+        "from": "ActionPhase",
+        "event": "RESOLVE",
+        "to": "ResolutionPhase",
+        "effects": [
+          ["emit", "TURN_RESOLVED", { "turnNumber": "@entity.turnCount" }]
+        ]
+      },
+      { "from": "ResolutionPhase", "event": "NEXT_TURN", "to": "ObservationPhase" }
+    ]
+  }
+}
+```
+
+خمس حالات. transitions نظيفة. الـ `render-ui` effect في SelectionPhase يعرض جدول الوحدات بـ traits مرئية — هذا ما يتيح للاعبين قراءة state machines الأعداء والتخطيط حولها. الـ `emit` effect يبث حل الدور لجميع الـ orbitals الأخرى (القتال، التضاريس، قدرات البطل).
+
+قتال الوحدات هو trait منفصل بـ guards تفرض قواعد اللعبة:
+
+```json
+{
+  "from": "idle",
+  "event": "ATTACK",
+  "to": "attacking",
+  "guard": ["and",
+    [">", "@entity.hp", 0],
+    ["!=", "@entity.status", "stunned"]
+  ],
+  "effects": [
+    ["set", "@entity.lastAction", "attack"],
+    ["emit", "DAMAGE_DEALT", {
+      "attackerId": "@entity.id",
+      "damage": "@entity.attack"
+    }]
+  ]
+}
+```
+
+الوحدة الميتة أو المصعوقة حرفيًا لا تستطيع الهجوم. الـ guard يجعل ذلك مستحيلاً — لا يوجد `if` statement لتنسى كتابته.
+
+### الـ Pages
+
+```json
+"pages": [
+  {
+    "name": "BattlefieldPage",
+    "path": "/battle/:matchId",
+    "traits": [
+      { "ref": "TurnPhaseController", "linkedEntity": "Match" },
+      { "ref": "UnitCombat", "linkedEntity": "Unit" }
+    ]
+  },
+  {
+    "name": "ArmyBuilderPage",
+    "path": "/army",
+    "traits": [
+      { "ref": "UnitComposition", "linkedEntity": "Unit" }
+    ]
+  }
+]
+```
+
+الـ page هو مجرد route يربط traits. `/battle/:matchId` يُفعّل كلاً من متحكم الأدوار و trait القتال على نفس الشاشة. الـ compiler يولّد الـ UI من effects الـ `render-ui`.
 
 ## 2. إرم — لعبة أكشن RPG ثلاثية الأبعاد
 
 **المجال:** لعبة ARPG لاستكشاف الزنزانات
 **التحدي الرئيسي:** قتال فوري، زنزانات إجرائية، تركيب القدرات
 
-تدور إرم داخل كرة دايسون تُسمى سيادة إرم. ينزل اللاعبون عبر 5 مناطق زنزانات، ويهزمون الزعماء، ويجمعون **شظايا مدارية** — أجزاء من السلوك تتركب لتصبح قدرات جديدة.
+تدور إرم داخل كرة دايسون تُسمى سيادة إرم. ينزل اللاعبون عبر 5 مناطق زنزانات، ويهزمون الزعماء، ويجمعون **Orbital Shards** — أجزاء من السلوك تتركب لتصبح قدرات جديدة.
 
-**كيف تُنمذجها الـ orbitals:**
+### الـ Entity
 
+الـ entity الخاص باللاعب يتتبع الصحة والمخزون وفتحات الـ 8 orbitals:
+
+```json
+{
+  "entity": {
+    "name": "Player",
+    "persistence": "persistent",
+    "collection": "players",
+    "fields": [
+      { "name": "id", "type": "string", "required": true },
+      { "name": "health", "type": "number", "default": 100 },
+      { "name": "maxHealth", "type": "number", "default": 100 },
+      { "name": "equippedOrbitals", "type": "array", "items": { "type": "string" } },
+      { "name": "inventory", "type": "array", "items": { "type": "object" } },
+      { "name": "currentZone", "type": "number", "default": 1 },
+      { "name": "orbitalShards", "type": "number", "default": 0 }
+    ]
+  }
+}
 ```
-Player Orbital: health, inventory, equipped orbitals
-Dungeon Orbital: room generation, enemy spawning, loot tables
-Combat Orbital: damage, projectiles, area effects
-Boss Orbital: phase-based boss encounters
+
+بيانات اللاعب `"persistent"` — التقدم يُحفظ في قاعدة البيانات بين الجلسات.
+
+### الـ Traits
+
+مواجهات الزعماء تستخدم state machines قائمة على المراحل — نفس الـ pattern كمتحكم الأدوار، لكن لعدو واحد:
+
+```json
+{
+  "name": "BossEncounter",
+  "linkedEntity": "Boss",
+  "stateMachine": {
+    "states": [
+      { "name": "dormant", "isInitial": true },
+      { "name": "phase1" },
+      { "name": "phase2" },
+      { "name": "enraged" },
+      { "name": "defeated", "isTerminal": true }
+    ],
+    "events": [
+      { "key": "ENGAGE", "name": "Start Fight" },
+      { "key": "DAMAGE", "name": "Take Damage", "payload": [
+        { "name": "amount", "type": "number", "required": true }
+      ]},
+      { "key": "PHASE_SHIFT", "name": "Phase Shift" }
+    ],
+    "transitions": [
+      { "from": "dormant", "event": "ENGAGE", "to": "phase1" },
+      {
+        "from": "phase1",
+        "event": "DAMAGE",
+        "to": "phase2",
+        "guard": ["<", "@entity.hp", 50],
+        "effects": [
+          ["set", "@entity.attackPattern", "aggressive"],
+          ["emit", "BOSS_PHASE_CHANGED", { "phase": 2 }]
+        ]
+      },
+      {
+        "from": "phase2",
+        "event": "DAMAGE",
+        "to": "enraged",
+        "guard": ["<", "@entity.hp", 20],
+        "effects": [
+          ["set", "@entity.attackSpeed", ["+", "@entity.attackSpeed", 2]],
+          ["set", "@entity.attackPattern", "berserk"]
+        ]
+      },
+      {
+        "from": ["phase1", "phase2", "enraged"],
+        "event": "DAMAGE",
+        "to": "defeated",
+        "guard": ["<=", "@entity.hp", 0],
+        "effects": [
+          ["emit", "BOSS_DEFEATED", { "bossId": "@entity.id", "zone": "@entity.zone" }],
+          ["emit", "LOOT_DROP", { "table": "@entity.lootTable" }]
+        ]
+      }
+    ]
+  }
+}
 ```
 
-يستطيع اللاعب تجهيز 8 orbitals في وقت واحد (الدفاع، الترميم، التعطيل، التصنيع، الاستكشاف، التحويل، القيادة، الأرشفة). كل منها state machine مكتفية ذاتيًا تتركب مع الأخرى.
+لاحظ `"from": ["phase1", "phase2", "enraged"]` — transition الموت يعمل من أي مرحلة قتالية. الـ guards تتحقق من عتبات HP لتفعيل تحولات المراحل. الـ event `BOSS_DEFEATED` يتدفق إلى Dungeon orbital لفتح المنطقة التالية، بينما `LOOT_DROP` يتدفق إلى نظام المخزون.
 
-**نظام الـ resonance (رنين — تأثيرات تآزرية بين الـ orbitals):** تخلق الـ orbitals المتوافقة effects (تأثيرات تُنفَّذ عند الـ transitions) تآزرية:
-- الدفاع + الترميم → شفاء دروع 1.5 ضعف
-- التعطيل + التصنيع → الفخاخ تُطبق إضعافات
-- الأرشفة + القيادة → الحلفاء يتلقون معلومات عن نقاط ضعف الأعداء
+### نظام الـ Resonance
 
-يخلق هذا لعبة فوقية لبناء الأوراق فوق قتال الأكشن.
+الـ Orbitals المتوافقة تخلق effects تآزرية:
+- Defend + Mend → شفاء دروع 1.5 ضعف
+- Disrupt + Fabricate → الفخاخ تُطبق debuffs
+- Archive + Command → الحلفاء يتلقون معلومات عن نقاط ضعف الأعداء
+
+يُنمذج هذا عبر `listens` عبر الـ orbitals — عندما يكون orbital-ان محددان مجهزين معًا، events-هما المشتركة تفعّل effects الرنين.
+
+### الـ Pages
+
+```json
+"pages": [
+  {
+    "name": "DungeonPage",
+    "path": "/dungeon/:zoneId",
+    "traits": [
+      { "ref": "DungeonExploration", "linkedEntity": "Dungeon" },
+      { "ref": "PlayerCombat", "linkedEntity": "Player" },
+      { "ref": "BossEncounter", "linkedEntity": "Boss" }
+    ]
+  },
+  {
+    "name": "OrbitalLoadoutPage",
+    "path": "/loadout",
+    "traits": [
+      { "ref": "OrbitalEquip", "linkedEntity": "Player" }
+    ]
+  }
+]
+```
+
+صفحة الزنزانة تركّب ثلاث traits على route واحد — الاستكشاف والقتال ومواجهات الزعماء كلها نشطة في وقت واحد.
 
 ## 3. Winning 11 — ذكاء العلاقات
 
 **المجال:** شبكات مهنية قائمة على الثقة
-**التحدي الرئيسي:** فرض رقم دنبار، التوافق النفسي، تشكيل الفرق
+**التحدي الرئيسي:** فرض رقم Dunbar، التوافق النفسي، تشكيل الفرق
 
-تستبدل Winning 11 الشبكات السلبية على طريقة LinkedIn بـ "حدائق" مقصودة وعالية القيمة من متعاونين موثوقين. يفرض النظام رقم دنبار (حد 150 اتصال) ويستخدم تقييمات نفسية لحساب درجات الثقة.
+تستبدل Winning 11 الشبكات السلبية على طريقة LinkedIn بـ "حدائق" مقصودة وعالية القيمة من متعاونين موثوقين. يفرض النظام رقم Dunbar (حد 150 اتصال) ويستخدم تقييمات نفسية لحساب trust scores.
 
-**كيف تُنمذجها الـ orbitals:**
+### الـ Entity
 
-```
-User Orbital: profile, Jungian archetype assessment
-Connection Orbital: trust scoring, categorization, decay
-Garden Orbital: relationship visualization, health metrics
-Team Orbital: AI-driven team formation (2-11 members)
-```
-
-التقييم النفسي هو trait متعدد الخطوات بحالات لكل مرحلة أسئلة. تُحدَّث درجات الثقة كحقول entity عبر الـ effects عند حدوث التفاعلات.
-
-**يفرض الـ guards (شروط تمنع أو تسمح بالـ transition) الديناميكيات الاجتماعية:**
+الـ Connection entity يتتبع العلاقة بين مستخدمين مع trust scoring و decay:
 
 ```json
 {
-  "from": "Active",
-  "to": "Active",
-  "event": "ADD_CONNECTION",
-  "guard": ["<", "@entity.connectionCount", 150]
+  "entity": {
+    "name": "Connection",
+    "persistence": "persistent",
+    "collection": "connections",
+    "fields": [
+      { "name": "id", "type": "string", "required": true },
+      { "name": "userId", "type": "string", "required": true },
+      { "name": "connectedUserId", "type": "string", "required": true },
+      { "name": "trustScore", "type": "number", "default": 50 },
+      { "name": "lastInteraction", "type": "timestamp" },
+      { "name": "connectionCount", "type": "number", "default": 0 },
+      { "name": "category", "type": "enum", "values": ["inner_circle", "trusted", "casual", "dormant"] }
+    ]
+  }
 }
 ```
 
-حرفيًا لا تستطيع إضافة اتصال رقم 151. ليس اقتراحًا — لا تملك الـ state machine أي transition.
+### الـ Traits
 
-## 4. نظام التفتيش الحكومي — سير عمل الامتثال
-
-**المجال:** تفتيش ميداني منظم للمنظمين الحكوميين
-**التحدي الرئيسي:** فرض سير عمل من 5 مراحل، guards المتطلبات القانونية، سجلات التدقيق
-
-يرشد هذا النظام، المبني للمفتشين الحكوميين، المفتش عبر مراحل المقدمة → المحتوى → التحضير → السجل → الإغلاق. تُفرض المتطلبات القانونية بالـ guards — لا يمكنك التقدم دون إكمال الحقول الإلزامية.
-
-**كيف تُنمذجها الـ orbitals:**
-
-```
-Inspection Orbital: 5-phase workflow, field validation, document generation
-Inspector Orbital: authentication, assignment, workload
-Company Orbital: entity being inspected, history, compliance status
-```
-
-**يضمن guard الإغلاق عدم تفويت أي شيء:**
+الـ Connection lifecycle يدير إضافة الاتصالات والتفاعل معها وتلاشيها. الـ guard يفرض رقم Dunbar:
 
 ```json
 {
-  "from": "Record",
-  "to": "Closing",
-  "event": "CLOSE",
-  "guard": ["and",
-    ["not-empty", "@entity.legalBasis"],
-    ["not-empty", "@entity.findings"],
-    ["not-empty", "@entity.measures"],
-    ["=", "@entity.inspectorSignature", true],
-    ["=", "@entity.subjectSignature", true]
+  "name": "ConnectionLifecycle",
+  "linkedEntity": "Connection",
+  "stateMachine": {
+    "states": [
+      { "name": "pending", "isInitial": true },
+      { "name": "active" },
+      { "name": "decayed" },
+      { "name": "removed", "isTerminal": true }
+    ],
+    "events": [
+      { "key": "ACCEPT", "name": "Accept Connection" },
+      { "key": "INTERACT", "name": "Record Interaction" },
+      { "key": "DECAY_CHECK", "name": "Check for Decay" },
+      { "key": "REMOVE", "name": "Remove Connection" }
+    ],
+    "transitions": [
+      {
+        "from": "pending",
+        "event": "ACCEPT",
+        "to": "active",
+        "guard": ["<", "@entity.connectionCount", 150],
+        "effects": [
+          ["increment", "@entity.connectionCount", 1],
+          ["set", "@entity.lastInteraction", "@now"],
+          ["persist", "update", "Connection", "@entity"]
+        ]
+      },
+      {
+        "from": "active",
+        "event": "INTERACT",
+        "to": "active",
+        "effects": [
+          ["set", "@entity.trustScore", ["+", "@entity.trustScore", 5]],
+          ["set", "@entity.lastInteraction", "@now"]
+        ]
+      },
+      {
+        "from": "active",
+        "event": "DECAY_CHECK",
+        "to": "decayed",
+        "guard": [">", ["-", "@now", "@entity.lastInteraction"], 2592000000],
+        "effects": [
+          ["set", "@entity.trustScore", ["-", "@entity.trustScore", 10]],
+          ["set", "@entity.category", "dormant"]
+        ]
+      },
+      {
+        "from": ["active", "decayed"],
+        "event": "REMOVE",
+        "to": "removed",
+        "effects": [
+          ["decrement", "@entity.connectionCount", 1],
+          ["persist", "delete", "Connection", "@entity.id"]
+        ]
+      }
+    ]
+  }
+}
+```
+
+حرفيًا لا تستطيع إضافة اتصال رقم 151. الـ guard `["<", "@entity.connectionCount", 150]` يجعل الـ transition غير موجود. guard الـ decay يتحقق إذا مرت 30 يومًا (2592000000 ميلي ثانية) منذ آخر تفاعل — إذا كان كذلك، الاتصال يتلاشى تلقائيًا.
+
+التقييم النفسي هو trait متعدد الخطوات. الـ trust scores تُحدَّث كحقول entity عبر الـ effects عند حدوث التفاعلات:
+
+```json
+{
+  "from": "active",
+  "event": "INTERACT",
+  "to": "active",
+  "effects": [
+    ["set", "@entity.trustScore", ["+", "@entity.trustScore", 5]],
+    ["set", "@entity.lastInteraction", "@now"]
   ]
 }
 ```
 
-يُسجَّل كل transition تلقائيًا. لا يعد سجل التدقيق ميزة — إنه نتيجة للهندسة المعمارية.
+كل تفاعل هو `+5` للثقة. عدم النشاط يُضعفها. الرياضيات صريحة في الـ schema — بدون خوارزمية مخفية.
+
+### الـ Pages
+
+```json
+"pages": [
+  {
+    "name": "GardenPage",
+    "path": "/garden",
+    "traits": [
+      { "ref": "ConnectionLifecycle", "linkedEntity": "Connection" },
+      { "ref": "GardenVisualization", "linkedEntity": "Garden" }
+    ]
+  },
+  {
+    "name": "TeamBuilderPage",
+    "path": "/team/build",
+    "traits": [
+      { "ref": "TeamFormation", "linkedEntity": "Team" }
+    ]
+  }
+]
+```
+
+صفحة الحديقة تعرض شبكة علاقاتك مع تصوّر الثقة. بانِي الفريق يستخدم تشكيل مدعوم بالـ AI لاختيار 2-11 عضوًا بناءً على توافق الـ archetype.
+
+## 4. نظام التفتيش الحكومي — سير عمل الـ Compliance
+
+**المجال:** تفتيش ميداني منظم للمنظمين الحكوميين
+**التحدي الرئيسي:** فرض workflow من 5 مراحل، guards المتطلبات القانونية، audit trails
+
+يرشد هذا النظام، المبني للمفتشين الحكوميين، المفتش عبر مراحل المقدمة → المحتوى → التحضير → السجل → الإغلاق. تُفرض المتطلبات القانونية بالـ guards — لا يمكنك التقدم دون إكمال الحقول الإلزامية.
+
+### الـ Entity
+
+الـ Inspection entity يلتقط كل ما يحتاجه المفتش في الميدان:
+
+```json
+{
+  "entity": {
+    "name": "Inspection",
+    "persistence": "persistent",
+    "collection": "inspections",
+    "fields": [
+      { "name": "id", "type": "string", "required": true },
+      { "name": "inspectorId", "type": "string", "required": true },
+      { "name": "companyId", "type": "string", "required": true },
+      { "name": "legalBasis", "type": "string" },
+      { "name": "findings", "type": "array", "items": { "type": "object" } },
+      { "name": "measures", "type": "array", "items": { "type": "object" } },
+      { "name": "inspectorSignature", "type": "boolean", "default": false },
+      { "name": "subjectSignature", "type": "boolean", "default": false },
+      { "name": "createdAt", "type": "timestamp" },
+      { "name": "status", "type": "enum", "values": ["draft", "in_progress", "completed", "archived"] }
+    ]
+  }
+}
+```
+
+### الـ Traits
+
+الـ workflow ذو المراحل الخمس هو الـ trait الأساسي. كل transition للمرحلة التالية له guards تفرض المتطلبات القانونية:
+
+```json
+{
+  "name": "InspectionWorkflow",
+  "linkedEntity": "Inspection",
+  "stateMachine": {
+    "states": [
+      { "name": "Introduction", "isInitial": true },
+      { "name": "Content" },
+      { "name": "Preparation" },
+      { "name": "Record" },
+      { "name": "Closing", "isTerminal": true }
+    ],
+    "events": [
+      { "key": "PROCEED", "name": "Proceed to Next Phase" },
+      { "key": "SAVE_FINDINGS", "name": "Save Findings", "payload": [
+        { "name": "findings", "type": "array", "required": true }
+      ]},
+      { "key": "SIGN", "name": "Sign Document" },
+      { "key": "CLOSE", "name": "Close Inspection" }
+    ],
+    "transitions": [
+      {
+        "from": "Introduction",
+        "event": "PROCEED",
+        "to": "Content",
+        "guard": ["not-empty", "@entity.legalBasis"],
+        "effects": [
+          ["persist", "update", "Inspection", "@entity"],
+          ["render-ui", "main", {
+            "type": "form",
+            "entity": "Inspection",
+            "fields": [
+              { "name": "findings", "label": "Findings", "type": "textarea", "required": true }
+            ]
+          }]
+        ]
+      },
+      { "from": "Content", "event": "PROCEED", "to": "Preparation" },
+      {
+        "from": "Preparation",
+        "event": "SAVE_FINDINGS",
+        "to": "Record",
+        "effects": [
+          ["set", "@entity.findings", "@payload.findings"],
+          ["persist", "update", "Inspection", "@entity"]
+        ]
+      },
+      {
+        "from": "Record",
+        "event": "CLOSE",
+        "to": "Closing",
+        "guard": ["and",
+          ["not-empty", "@entity.legalBasis"],
+          ["not-empty", "@entity.findings"],
+          ["not-empty", "@entity.measures"],
+          ["=", "@entity.inspectorSignature", true],
+          ["=", "@entity.subjectSignature", true]
+        ],
+        "effects": [
+          ["set", "@entity.status", "completed"],
+          ["persist", "update", "Inspection", "@entity"],
+          ["notify", "success", "Inspection closed successfully"]
+        ]
+      }
+    ]
+  }
+}
+```
+
+guard الإغلاق هو الجزء الأكثر أهمية: **خمسة شروط** يجب أن تتحقق جميعها. الأساس القانوني يجب أن يكون مملوءًا. النتائج يجب أن تكون موجودة. الإجراءات يجب أن تكون محددة. كل من المفتش والخاضع للتفتيش يجب أن يكونا قد وقّعا. إذا غاب أي واحد، الـ CLOSE event ببساطة لا يُطلق. لا يوجد زر "تخطي"، لا يوجد override — الـ state machine لا تملك أي transition.
+
+كل `persist` effect يُولّد audit trail تلقائيًا. التفتيش ينتقل عبر الحالات، وكل transition يُسجَّل بالـ timestamp والمستخدم والـ payload. الـ audit trail ليس ميزة — إنه نتيجة للـ architecture.
+
+### الـ Pages
+
+```json
+"pages": [
+  {
+    "name": "InspectionFormPage",
+    "path": "/inspection/:id",
+    "traits": [
+      { "ref": "InspectionWorkflow", "linkedEntity": "Inspection" }
+    ]
+  },
+  {
+    "name": "InspectionListPage",
+    "path": "/inspections",
+    "traits": [
+      { "ref": "InspectionBrowser", "linkedEntity": "Inspection" }
+    ]
+  }
+]
+```
+
+صفحة النموذج تستخدم trait واحد يعرض forms مختلفة لكل مرحلة عبر `render-ui`. الـ route `/inspection/:id` يحمّل التفتيش المحدد ويعرض أي مرحلة يمر بها حاليًا.
 
 ## 5. KFlow — منصة تعلم بالذكاء الاصطناعي
 
-**المجال:** توليد رسم بياني معرفي مدعوم بنماذج اللغة الكبيرة
-**التحدي الرئيسي:** توسيع المفاهيم التكراري، توليد دروس بالذكاء الاصطناعي، نشر الدورات
+**المجال:** توليد knowledge graph مدعوم بـ LLMs
+**التحدي الرئيسي:** توسيع المفاهيم التكراري، توليد دروس بالـ AI، نشر الـ courses
 
-تحوّل KFlow موضوعًا أوليًا (مثل "JavaScript") إلى رسم بياني معرفي منظم مع مفاهيم مترابطة، ودروس مولَّدة بالذكاء الاصطناعي، ودورات قابلة للنشر.
+تحوّل KFlow موضوعًا أوليًا (مثل "JavaScript") إلى knowledge graph منظم مع مفاهيم مترابطة، ودروس مولَّدة بالـ AI، و courses قابلة للنشر.
 
-**كيف تُنمذجها الـ orbitals:**
+### الـ Entity
+
+الـ Concept entity هو عقدة الـ knowledge graph:
+
+```json
+{
+  "entity": {
+    "name": "Concept",
+    "persistence": "persistent",
+    "collection": "concepts",
+    "fields": [
+      { "name": "id", "type": "string", "required": true },
+      { "name": "title", "type": "string", "required": true },
+      { "name": "difficulty", "type": "enum", "values": ["beginner", "intermediate", "advanced"] },
+      { "name": "prerequisites", "type": "array", "items": { "type": "string" } },
+      { "name": "followUps", "type": "array", "items": { "type": "string" } },
+      { "name": "aiContent", "type": "string" },
+      { "name": "graphId", "type": "string", "required": true }
+    ]
+  }
+}
+```
+
+### الـ Traits
+
+الـ Concept expansion trait هو حيث يلتقي الـ AI بالـ state machines:
+
+```json
+{
+  "name": "ConceptExpansion",
+  "linkedEntity": "Concept",
+  "emits": [
+    {
+      "event": "CONCEPT_EXPANDED",
+      "scope": "external",
+      "payload": [
+        { "name": "conceptId", "type": "string", "required": true },
+        { "name": "childConcepts", "type": "array", "required": true }
+      ]
+    }
+  ],
+  "stateMachine": {
+    "states": [
+      { "name": "seed", "isInitial": true },
+      { "name": "expanding" },
+      { "name": "expanded" },
+      { "name": "published", "isTerminal": true }
+    ],
+    "events": [
+      { "key": "EXPAND", "name": "Expand Concept" },
+      { "key": "AI_COMPLETE", "name": "AI Generation Complete", "payload": [
+        { "name": "content", "type": "string", "required": true },
+        { "name": "children", "type": "array", "required": true }
+      ]},
+      { "key": "PUBLISH", "name": "Publish" }
+    ],
+    "transitions": [
+      {
+        "from": "seed",
+        "event": "EXPAND",
+        "to": "expanding",
+        "effects": [
+          ["render-ui", "main", {
+            "type": "stats",
+            "title": "Expanding...",
+            "value": "@entity.title",
+            "subtitle": "AI is generating content"
+          }]
+        ]
+      },
+      {
+        "from": "expanding",
+        "event": "AI_COMPLETE",
+        "to": "expanded",
+        "effects": [
+          ["set", "@entity.aiContent", "@payload.content"],
+          ["set", "@entity.followUps", "@payload.children"],
+          ["persist", "update", "Concept", "@entity"],
+          ["emit", "CONCEPT_EXPANDED", {
+            "conceptId": "@entity.id",
+            "childConcepts": "@payload.children"
+          }]
+        ]
+      },
+      {
+        "from": "expanded",
+        "event": "PUBLISH",
+        "to": "published",
+        "guard": ["not-empty", "@entity.aiContent"],
+        "effects": [
+          ["persist", "update", "Concept", "@entity"],
+          ["notify", "success", "Concept published"]
+        ]
+      }
+    ]
+  }
+}
+```
+
+سلسلة الـ cross-orbital events تقود الـ pipeline بالكامل:
 
 ```
-Graph Orbital: seed concept, difficulty levels, learning paths
-Concept Orbital: hierarchical layers, prerequisites, follow-ups
-Lesson Orbital: AI-generated content, flashcards, exercises
-Course Orbital: curated subsets, publishing, mentor assignment
+المستخدم يُدخل موضوعًا → Graph يُصدر TOPIC_CREATED →
+  Concept يستمع → يوسّع الـ prerequisites → يُصدر CONCEPT_EXPANDED →
+    Lesson يستمع → يولّد محتوى AI → يُصدر LESSON_CREATED →
+      Course يستمع → يضيف إلى المنهج
 ```
 
-**تقود الأحداث عبر الـ orbitals خط الإنتاج:**
+كل سهم هو تصريح `listens`/`emits`:
 
-```
-User enters topic → Graph emits TOPIC_CREATED →
-  Concept listens → expands prerequisites → emits CONCEPT_EXPANDED →
-    Lesson listens → generates AI content → emits LESSON_CREATED →
-      Course listens → adds to curriculum
+```json
+{
+  "name": "LessonGenerator",
+  "listens": [
+    { "event": "CONCEPT_EXPANDED", "scope": "external" }
+  ],
+  "emits": [
+    { "event": "LESSON_CREATED", "scope": "external" }
+  ]
+}
 ```
 
-يعتبر خط الإنتاج بالكامل تصريحيًا. بدون كود تنظيم. بدون طوابير مهام. مجرد أحداث تتدفق عبر الـ orbitals.
+الـ pipeline بالكامل declarative. بدون orchestration code. بدون job queues. مجرد events تتدفق عبر الـ Orbitals.
+
+### الـ Pages
+
+```json
+"pages": [
+  {
+    "name": "GraphExplorerPage",
+    "path": "/graph/:graphId",
+    "traits": [
+      { "ref": "ConceptExpansion", "linkedEntity": "Concept" },
+      { "ref": "GraphVisualization", "linkedEntity": "Graph" }
+    ]
+  },
+  {
+    "name": "CourseEditorPage",
+    "path": "/course/:courseId/edit",
+    "traits": [
+      { "ref": "CourseCuration", "linkedEntity": "Course" }
+    ]
+  }
+]
+```
+
+صفحة مستكشف الرسم البياني تركّب توسيع المفاهيم مع التصوّر — توسيع المفاهيم وعرض الـ knowledge graph على route واحد.
 
 ## 6. متتبع اللياقة — منصة تدريب شخصية
 
 **المجال:** إدارة المدرب-العميل مع جدولة قائمة على الرصيد
-**التحدي الرئيسي:** نظام رصيد، تتبع التمارين، تحليل الوجبات بالذكاء الاصطناعي
+**التحدي الرئيسي:** نظام رصيد، تتبع التمارين، تحليل الوجبات بالـ AI
 
-مبني لمدرب شخصي يدير عملاء متعددين. يتميز بنظام حجز جلسات قائم على الرصيد، وتتبع رفع الأثقال، وإدارة خطط الوجبات، وتحليل غذائي مدعوم بالذكاء الاصطناعي.
+مبني لمدرب شخصي يدير عملاء متعددين. يتميز بنظام حجز جلسات قائم على الرصيد، وتتبع رفع الأثقال، وإدارة خطط الوجبات، وتحليل غذائي مدعوم بالـ AI.
 
-**كيف تُنمذجها الـ orbitals:**
+### الـ Entity
 
-```
-Trainee Orbital: profile, credits, progress metrics
-Session Orbital: booking, credit deduction, cancellation
-Workout Orbital: lift logging, reps, weight, trends
-Meal Orbital: daily intake, AI analysis, trainer feedback
-Schedule Orbital: group sessions, YouTube video references
-```
-
-**انتهاء صلاحية الرصيد كـ guard:**
+الـ Session entity يدير الحجوزات مع تتبع الرصيد:
 
 ```json
 {
-  "from": "Available",
-  "to": "Booked",
-  "event": "BOOK_SESSION",
-  "guard": ["and",
-    [">", "@entity.remainingCredits", 0],
-    ["<", "@now", "@entity.creditsExpireAt"]
+  "entity": {
+    "name": "Session",
+    "persistence": "persistent",
+    "collection": "sessions",
+    "fields": [
+      { "name": "id", "type": "string", "required": true },
+      { "name": "traineeId", "type": "string", "required": true },
+      { "name": "scheduledAt", "type": "timestamp" },
+      { "name": "remainingCredits", "type": "number", "default": 0 },
+      { "name": "creditsExpireAt", "type": "timestamp" },
+      { "name": "notes", "type": "string" },
+      { "name": "type", "type": "enum", "values": ["individual", "group", "online"] }
+    ]
+  }
+}
+```
+
+### الـ Traits
+
+الـ Session booking trait يفرض قواعد الرصيد بالـ guards:
+
+```json
+{
+  "name": "SessionBooking",
+  "linkedEntity": "Session",
+  "emits": [
+    {
+      "event": "SESSION_BOOKED",
+      "scope": "external",
+      "payload": [
+        { "name": "traineeId", "type": "string", "required": true },
+        { "name": "scheduledAt", "type": "timestamp", "required": true }
+      ]
+    }
   ],
+  "stateMachine": {
+    "states": [
+      { "name": "available", "isInitial": true },
+      { "name": "booked" },
+      { "name": "completed", "isTerminal": true },
+      { "name": "cancelled" }
+    ],
+    "events": [
+      { "key": "BOOK", "name": "Book Session" },
+      { "key": "CANCEL", "name": "Cancel Session" },
+      { "key": "COMPLETE", "name": "Complete Session" }
+    ],
+    "transitions": [
+      {
+        "from": "available",
+        "event": "BOOK",
+        "to": "booked",
+        "guard": ["and",
+          [">", "@entity.remainingCredits", 0],
+          ["<", "@now", "@entity.creditsExpireAt"]
+        ],
+        "effects": [
+          ["set", "@entity.remainingCredits", ["-", "@entity.remainingCredits", 1]],
+          ["persist", "update", "Session", "@entity"],
+          ["emit", "SESSION_BOOKED", {
+            "traineeId": "@entity.traineeId",
+            "scheduledAt": "@entity.scheduledAt"
+          }],
+          ["notify", "success", "Session booked"]
+        ]
+      },
+      {
+        "from": "booked",
+        "event": "CANCEL",
+        "to": "cancelled",
+        "effects": [
+          ["set", "@entity.remainingCredits", ["+", "@entity.remainingCredits", 1]],
+          ["persist", "update", "Session", "@entity"],
+          ["notify", "info", "Session cancelled, credit refunded"]
+        ]
+      },
+      {
+        "from": "booked",
+        "event": "COMPLETE",
+        "to": "completed",
+        "effects": [
+          ["persist", "update", "Session", "@entity"]
+        ]
+      }
+    ]
+  }
+}
+```
+
+لا تستطيع الحجز برصيد صفري. لا تستطيع الحجز برصيد منتهي الصلاحية. الـ guard `["and", [">", "@entity.remainingCredits", 0], ["<", "@now", "@entity.creditsExpireAt"]]` يجعل كلا الشرطين إلزاميين. وعند الإلغاء، يُسترد الرصيد تلقائيًا عبر `["+", "@entity.remainingCredits", 1]` — قاعدة الـ business في الـ schema، ليست مخفية في service layer.
+
+الـ workout tracking trait يستخدم نفس effect primitives لغرض مختلف تمامًا:
+
+```json
+{
+  "from": "logging",
+  "event": "LOG_SET",
+  "to": "logging",
   "effects": [
-    ["set", "@entity.remainingCredits", ["-", "@entity.remainingCredits", 1]]
+    ["set", "@entity.lastWeight", "@payload.weight"],
+    ["set", "@entity.lastReps", "@payload.reps"],
+    ["increment", "@entity.totalSets", 1],
+    ["persist", "update", "Workout", "@entity"]
   ]
 }
 ```
 
-لا تستطيع الحجز برصيد صفري. لا تستطيع الحجز برصيد منتهي الصلاحية. الـ state machine تعرف.
+نفس `set`، نفس `increment`، نفس `persist` — مطبقة على التكرارات والأوزان بدلاً من إحصائيات اللعبة أو نتائج التفتيش.
 
-## الـ pattern
+### الـ Pages
 
-ستة تطبيقات. ستة مجالات مختلفة. نفس الـ pattern (النمط المعماري):
+```json
+"pages": [
+  {
+    "name": "TraineeDashboard",
+    "path": "/trainee/:id",
+    "traits": [
+      { "ref": "SessionBooking", "linkedEntity": "Session" },
+      { "ref": "WorkoutLog", "linkedEntity": "Workout" },
+      { "ref": "MealTracker", "linkedEntity": "Meal" }
+    ]
+  },
+  {
+    "name": "SchedulePage",
+    "path": "/schedule",
+    "traits": [
+      { "ref": "SessionBrowser", "linkedEntity": "Session" }
+    ]
+  }
+]
+```
+
+لوحة تحكم المتدرب تركّب ثلاث traits على صفحة واحدة — الحجوزات والتمارين والوجبات كلها مرئية في وقت واحد. كل trait تدير state machine الخاصة بها بشكل مستقل.
+
+## الـ Pattern
+
+ستة تطبيقات. ستة مجالات مختلفة. نفس الـ pattern:
 
 | المفهوم | اللعبة | الحكومة | الاجتماعي | اللياقة | التعليم | الـ RPG |
 |---------|--------|---------|-----------|---------|---------|--------|
-| **الـ entity** | الوحدة | التفتيش | الاتصال | الجلسة | المفهوم | اللاعب |
+| **الـ Entity** | الوحدة | التفتيش | الاتصال | الجلسة | المفهوم | اللاعب |
 | **الحالات** | خامل→هجوم→ميت | مقدمة→محتوى→إغلاق | معلق→نشط→متلاشٍ | متاح→محجوز→منتهٍ | بذرة→موسَّع→منشور | استكشاف→قتال→زعيم |
-| **الـ guards** | HP > 0، في المدى | الحقول مملوءة، موقَّع | < 150 اتصال | الرصيد > 0 | المتطلبات المسبقة متحققة | يملك الـ orbital المطلوب |
-| **الـ effects** | إلحاق ضرر، تحرك | حفظ النتائج، تسجيل | تحديث درجة الثقة | خصم رصيد | توليد درس | إسقاط غنيمة |
+| **الـ Guards** | HP > 0، في المدى | الحقول مملوءة، موقَّع | < 150 اتصال | الرصيد > 0 | الـ Prerequisites متحققة | يملك الـ orbital المطلوب |
+| **الـ Effects** | إلحاق ضرر، تحرك | حفظ النتائج، تسجيل | تحديث trust score | خصم رصيد | توليد درس | إسقاط غنيمة |
 | **الأحداث** | ATTACK, MOVE, DIE | PROCEED, CLOSE | CONNECT, DECAY | BOOK, CANCEL | EXPAND, PUBLISH | ENTER_ROOM, ATTACK |
+| **الـ Pages** | /battle/:matchId | /inspection/:id | /garden | /trainee/:id | /graph/:graphId | /dungeon/:zoneId |
 
 تتغير المفردات. ولا تتغير البنية.
 
@@ -231,28 +908,28 @@ Schedule Orbital: group sessions, YouTube video references
 - ألعاب
 - أنظمة حكومية
 - منصات اجتماعية
-- منتجات مدعومة بالذكاء الاصطناعي
+- منتجات مدعومة بالـ AI
 - تطبيقات صحة ولياقة
 
-بدون إطار جديد لكل مجال. بدون مكتبة إدارة حالة جديدة. بدون بنية خلفية جديدة. لغة واحدة، compiler (مُصرِّف) واحد، نموذج ذهني واحد.
+بدون framework جديد لكل مجال. بدون state management library جديدة. بدون backend architecture جديدة. لغة واحدة، compiler واحد، نموذج ذهني واحد.
 
 ### للشركات
 
-يمكن لفريق واحد بناء منتجات متعددة. يستطيع المهندس المعماري الذي صمم نظام التفتيش تصميم نظام قتال اللعبة — الـ patterns (الأنماط المعمارية) هي نفسها. حالات، transitions، guards، effects.
+يمكن لفريق واحد بناء منتجات متعددة. يستطيع المهندس المعماري الذي صمم نظام التفتيش تصميم نظام قتال اللعبة — الـ patterns هي نفسها. حالات، transitions، guards، effects.
 
 ### للصناعة
 
-تشير حقيقة أن نفس الهندسة تتعامل مع القتال القائم على الأدوار والامتثال الحكومي إلى أننا وجدنا شيئًا جوهريًا. ليس إطارًا محسَّنًا لمجال واحد، بل **نموذجًا للسلوك** يعمل عبر المجالات.
+تشير حقيقة أن نفس الـ architecture تتعامل مع القتال القائم على الأدوار والـ compliance الحكومي إلى أننا وجدنا شيئًا جوهريًا. ليس framework محسَّنًا لمجال واحد، بل **نموذجًا للسلوك** يعمل عبر المجالات.
 
 لأن السلوك هو سلوك. سواء كانت وحدة لعبة تقرر الهجوم، أو مفتش يُكمل مرحلة، أو مدرب لياقة يحجز جلسة — كلها:
 
 1. ابدأ في حالة
-2. استقبل حدثًا
+2. استقبل event
 3. تحقق من الـ guards
 4. نفّذ الـ effects
 5. انتقل إلى الحالة التالية
 
-لا يعتبر هذا ميزة إطار عمل. بل هكذا تعمل الأنظمة.
+لا يعتبر هذا ميزة framework. بل هكذا تعمل الأنظمة.
 
 ## الخلاصة
 

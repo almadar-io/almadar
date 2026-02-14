@@ -19,7 +19,36 @@ Every programming language claims to be "general purpose." But when was the last
 
 Almadar's Orbital architecture is domain-agnostic by design. An Orbital is: Entity + Traits + Pages. That formula works for any domain because it models **behavior**, not **technology**.
 
-Let's walk through all six.
+Let's walk through all six — and this time, we'll show you the actual schema code.
+
+## How an Orbital Schema Works
+
+Before diving into the six apps, here's a quick primer on what you'll see in the code. Every Orbital schema is a JSON file with this structure:
+
+```json
+{
+  "name": "app-name",
+  "version": "1.0.0",
+  "orbitals": [
+    {
+      "name": "OrbitalName",
+      "entity": { ... },
+      "traits": [ ... ],
+      "pages": [ ... ]
+    }
+  ]
+}
+```
+
+- **Entity** defines the data shape — fields, types, persistence mode
+- **Traits** define behavior — state machines with states, events, transitions, guards, and effects
+- **Pages** bind traits to routes — a URL path that activates one or more traits
+
+Effects are the side-effect primitives: `set` updates a field, `render-ui` renders a component, `persist` saves to database, `emit` sends cross-orbital events, `navigate` changes the route, `notify` shows a message.
+
+Guards are S-expression conditions that must be true for a transition to fire. If a guard fails, the transition doesn't exist.
+
+Now let's see this in action across six domains.
 
 ## 1. Trait Wars — Tactical Strategy Game
 
@@ -28,32 +57,131 @@ Let's walk through all six.
 
 Trait Wars is a Heroes of Might and Magic-inspired strategy game where units equip **Traits** — visible state machines that define their behavior. The core innovation: players can read enemy state machines and exploit transition windows.
 
-**How Orbitals model it:**
+### The Entity
 
-```
-Match Orbital: manages game state, turns, win conditions
-Unit Orbital: handles movement, combat, death
-Hero Orbital: special abilities, trait composition
-Terrain Orbital: tile effects, fog of war
-```
-
-Each unit's behavior is a trait with states like `Idle → Moving → Attacking → Defending`. Players see these states and plan around them.
-
-**What makes this work:** The turn-based phase controller is a state machine itself:
+Every unit on the battlefield is an entity with combat stats, position, and equipped traits:
 
 ```json
 {
-  "states": [
-    { "name": "ObservationPhase", "isInitial": true },
-    { "name": "SelectionPhase" },
-    { "name": "MovementPhase" },
-    { "name": "ActionPhase" },
-    { "name": "ResolutionPhase" }
+  "entity": {
+    "name": "Unit",
+    "persistence": "runtime",
+    "fields": [
+      { "name": "id", "type": "string", "required": true },
+      { "name": "name", "type": "string", "required": true },
+      { "name": "hp", "type": "number", "default": 100 },
+      { "name": "attack", "type": "number", "default": 10 },
+      { "name": "defense", "type": "number", "default": 5 },
+      { "name": "position", "type": "object" },
+      { "name": "equippedTraits", "type": "array", "items": { "type": "string" } },
+      { "name": "status", "type": "enum", "values": ["alive", "stunned", "dead"] }
+    ]
+  }
+}
+```
+
+Notice `"persistence": "runtime"` — game state lives in memory, not a database. The entity is the gravitational core: everything else orbits around it.
+
+### The Traits
+
+The turn controller itself is a state machine. Each phase has clear entry and exit rules:
+
+```json
+{
+  "name": "TurnPhaseController",
+  "linkedEntity": "Match",
+  "stateMachine": {
+    "states": [
+      { "name": "ObservationPhase", "isInitial": true },
+      { "name": "SelectionPhase" },
+      { "name": "MovementPhase" },
+      { "name": "ActionPhase" },
+      { "name": "ResolutionPhase" }
+    ],
+    "events": [
+      { "key": "BEGIN_SELECTION", "name": "Begin Selection" },
+      { "key": "CONFIRM_SELECTION", "name": "Confirm Selection" },
+      { "key": "MOVE_COMPLETE", "name": "Move Complete" },
+      { "key": "RESOLVE", "name": "Resolve Actions" },
+      { "key": "NEXT_TURN", "name": "Next Turn" }
+    ],
+    "transitions": [
+      {
+        "from": "ObservationPhase",
+        "event": "BEGIN_SELECTION",
+        "to": "SelectionPhase",
+        "effects": [
+          ["render-ui", "main", {
+            "type": "entity-table",
+            "entity": "Unit",
+            "columns": ["name", "hp", "status", "equippedTraits"]
+          }]
+        ]
+      },
+      { "from": "SelectionPhase", "event": "CONFIRM_SELECTION", "to": "MovementPhase" },
+      { "from": "MovementPhase", "event": "MOVE_COMPLETE", "to": "ActionPhase" },
+      {
+        "from": "ActionPhase",
+        "event": "RESOLVE",
+        "to": "ResolutionPhase",
+        "effects": [
+          ["emit", "TURN_RESOLVED", { "turnNumber": "@entity.turnCount" }]
+        ]
+      },
+      { "from": "ResolutionPhase", "event": "NEXT_TURN", "to": "ObservationPhase" }
+    ]
+  }
+}
+```
+
+Five states. Clean transitions. The `render-ui` effect in SelectionPhase shows the unit table with their traits visible — this is what lets players read enemy state machines and plan around them. The `emit` effect broadcasts turn resolution to all other orbitals (combat, terrain, hero abilities).
+
+Unit combat is a separate trait with guards that enforce game rules:
+
+```json
+{
+  "from": "idle",
+  "event": "ATTACK",
+  "to": "attacking",
+  "guard": ["and",
+    [">", "@entity.hp", 0],
+    ["!=", "@entity.status", "stunned"]
+  ],
+  "effects": [
+    ["set", "@entity.lastAction", "attack"],
+    ["emit", "DAMAGE_DEALT", {
+      "attackerId": "@entity.id",
+      "damage": "@entity.attack"
+    }]
   ]
 }
 ```
 
-Five states. Clean transitions. No hidden game loop complexity.
+A dead or stunned unit literally cannot attack. The guard makes it impossible — no `if` statement to forget.
+
+### The Pages
+
+```json
+"pages": [
+  {
+    "name": "BattlefieldPage",
+    "path": "/battle/:matchId",
+    "traits": [
+      { "ref": "TurnPhaseController", "linkedEntity": "Match" },
+      { "ref": "UnitCombat", "linkedEntity": "Unit" }
+    ]
+  },
+  {
+    "name": "ArmyBuilderPage",
+    "path": "/army",
+    "traits": [
+      { "ref": "UnitComposition", "linkedEntity": "Unit" }
+    ]
+  }
+]
+```
+
+A page is just a route that binds traits. `/battle/:matchId` activates both the turn controller and the combat trait on the same screen. The compiler generates the UI from the `render-ui` effects.
 
 ## 2. Iram — 3D Action RPG
 
@@ -62,23 +190,126 @@ Five states. Clean transitions. No hidden game loop complexity.
 
 Iram is set inside a Dyson Sphere called the Iram Dominion. Players descend through 5 dungeon zones, defeat bosses, and collect **Orbital Shards** — fragments of behavior that compose into new abilities.
 
-**How Orbitals model it:**
+### The Entity
 
+The player entity tracks health, inventory, and the 8 orbital slots:
+
+```json
+{
+  "entity": {
+    "name": "Player",
+    "persistence": "persistent",
+    "collection": "players",
+    "fields": [
+      { "name": "id", "type": "string", "required": true },
+      { "name": "health", "type": "number", "default": 100 },
+      { "name": "maxHealth", "type": "number", "default": 100 },
+      { "name": "equippedOrbitals", "type": "array", "items": { "type": "string" } },
+      { "name": "inventory", "type": "array", "items": { "type": "object" } },
+      { "name": "currentZone", "type": "number", "default": 1 },
+      { "name": "orbitalShards", "type": "number", "default": 0 }
+    ]
+  }
+}
 ```
-Player Orbital: health, inventory, equipped orbitals
-Dungeon Orbital: room generation, enemy spawning, loot tables
-Combat Orbital: damage, projectiles, area effects
-Boss Orbital: phase-based boss encounters
+
+Player data is `"persistent"` — progress saves to database between sessions.
+
+### The Traits
+
+Boss encounters use phase-based state machines — the same pattern as the turn controller, but for a single enemy:
+
+```json
+{
+  "name": "BossEncounter",
+  "linkedEntity": "Boss",
+  "stateMachine": {
+    "states": [
+      { "name": "dormant", "isInitial": true },
+      { "name": "phase1" },
+      { "name": "phase2" },
+      { "name": "enraged" },
+      { "name": "defeated", "isTerminal": true }
+    ],
+    "events": [
+      { "key": "ENGAGE", "name": "Start Fight" },
+      { "key": "DAMAGE", "name": "Take Damage", "payload": [
+        { "name": "amount", "type": "number", "required": true }
+      ]},
+      { "key": "PHASE_SHIFT", "name": "Phase Shift" }
+    ],
+    "transitions": [
+      { "from": "dormant", "event": "ENGAGE", "to": "phase1" },
+      {
+        "from": "phase1",
+        "event": "DAMAGE",
+        "to": "phase2",
+        "guard": ["<", "@entity.hp", 50],
+        "effects": [
+          ["set", "@entity.attackPattern", "aggressive"],
+          ["emit", "BOSS_PHASE_CHANGED", { "phase": 2 }]
+        ]
+      },
+      {
+        "from": "phase2",
+        "event": "DAMAGE",
+        "to": "enraged",
+        "guard": ["<", "@entity.hp", 20],
+        "effects": [
+          ["set", "@entity.attackSpeed", ["+", "@entity.attackSpeed", 2]],
+          ["set", "@entity.attackPattern", "berserk"]
+        ]
+      },
+      {
+        "from": ["phase1", "phase2", "enraged"],
+        "event": "DAMAGE",
+        "to": "defeated",
+        "guard": ["<=", "@entity.hp", 0],
+        "effects": [
+          ["emit", "BOSS_DEFEATED", { "bossId": "@entity.id", "zone": "@entity.zone" }],
+          ["emit", "LOOT_DROP", { "table": "@entity.lootTable" }]
+        ]
+      }
+    ]
+  }
+}
 ```
 
-The player can equip 8 Orbitals simultaneously (Defend, Mend, Disrupt, Fabricate, Pathfind, Transmute, Command, Archive). Each is a self-contained state machine that composes with the others.
+Notice `"from": ["phase1", "phase2", "enraged"]` — the death transition works from any combat phase. Guards check HP thresholds to trigger phase shifts. The `BOSS_DEFEATED` event flows to the Dungeon orbital to unlock the next zone, while `LOOT_DROP` flows to the inventory system.
 
-**The resonance system:** Compatible Orbitals create synergy effects:
+### The Resonance System
+
+Compatible Orbitals create synergy effects:
 - Defend + Mend → 1.5x shield healing
 - Disrupt + Fabricate → Traps apply debuffs
 - Archive + Command → Allies receive enemy weakness intel
 
-This creates a deckbuilding meta-game on top of the action combat.
+This is modeled through cross-orbital `listens` — when two specific orbitals are both equipped, their combined events trigger resonance effects.
+
+### The Pages
+
+```json
+"pages": [
+  {
+    "name": "DungeonPage",
+    "path": "/dungeon/:zoneId",
+    "traits": [
+      { "ref": "DungeonExploration", "linkedEntity": "Dungeon" },
+      { "ref": "PlayerCombat", "linkedEntity": "Player" },
+      { "ref": "BossEncounter", "linkedEntity": "Boss" }
+    ]
+  },
+  {
+    "name": "OrbitalLoadoutPage",
+    "path": "/loadout",
+    "traits": [
+      { "ref": "OrbitalEquip", "linkedEntity": "Player" }
+    ]
+  }
+]
+```
+
+The dungeon page composes three traits on one route — exploration, combat, and boss encounters all active simultaneously.
 
 ## 3. Winning 11 — Relationship Intelligence
 
@@ -87,29 +318,136 @@ This creates a deckbuilding meta-game on top of the action combat.
 
 Winning 11 replaces passive LinkedIn-style networking with intentional, high-value "gardens" of trusted collaborators. The system enforces Dunbar's number (150 connection cap) and uses psychological assessments to calculate trust scores.
 
-**How Orbitals model it:**
+### The Entity
 
-```
-User Orbital: profile, Jungian archetype assessment
-Connection Orbital: trust scoring, categorization, decay
-Garden Orbital: relationship visualization, health metrics
-Team Orbital: AI-driven team formation (2-11 members)
-```
-
-The psychological assessment is a multi-step trait with states for each question phase. Trust scores update as entity fields via effects when interactions occur.
-
-**Guards enforce social dynamics:**
+The connection entity tracks the relationship between two users with trust scoring and decay:
 
 ```json
 {
-  "from": "Active",
-  "to": "Active",
-  "event": "ADD_CONNECTION",
-  "guard": ["<", "@entity.connectionCount", 150]
+  "entity": {
+    "name": "Connection",
+    "persistence": "persistent",
+    "collection": "connections",
+    "fields": [
+      { "name": "id", "type": "string", "required": true },
+      { "name": "userId", "type": "string", "required": true },
+      { "name": "connectedUserId", "type": "string", "required": true },
+      { "name": "trustScore", "type": "number", "default": 50 },
+      { "name": "lastInteraction", "type": "timestamp" },
+      { "name": "connectionCount", "type": "number", "default": 0 },
+      { "name": "category", "type": "enum", "values": ["inner_circle", "trusted", "casual", "dormant"] }
+    ]
+  }
 }
 ```
 
-You literally can't add a 151st connection. It's not a suggestion — the state machine has no transition.
+### The Traits
+
+The connection lifecycle manages adding, interacting with, and decaying connections. The guard enforces Dunbar's number:
+
+```json
+{
+  "name": "ConnectionLifecycle",
+  "linkedEntity": "Connection",
+  "stateMachine": {
+    "states": [
+      { "name": "pending", "isInitial": true },
+      { "name": "active" },
+      { "name": "decayed" },
+      { "name": "removed", "isTerminal": true }
+    ],
+    "events": [
+      { "key": "ACCEPT", "name": "Accept Connection" },
+      { "key": "INTERACT", "name": "Record Interaction" },
+      { "key": "DECAY_CHECK", "name": "Check for Decay" },
+      { "key": "REMOVE", "name": "Remove Connection" }
+    ],
+    "transitions": [
+      {
+        "from": "pending",
+        "event": "ACCEPT",
+        "to": "active",
+        "guard": ["<", "@entity.connectionCount", 150],
+        "effects": [
+          ["increment", "@entity.connectionCount", 1],
+          ["set", "@entity.lastInteraction", "@now"],
+          ["persist", "update", "Connection", "@entity"]
+        ]
+      },
+      {
+        "from": "active",
+        "event": "INTERACT",
+        "to": "active",
+        "effects": [
+          ["set", "@entity.trustScore", ["+", "@entity.trustScore", 5]],
+          ["set", "@entity.lastInteraction", "@now"]
+        ]
+      },
+      {
+        "from": "active",
+        "event": "DECAY_CHECK",
+        "to": "decayed",
+        "guard": [">", ["-", "@now", "@entity.lastInteraction"], 2592000000],
+        "effects": [
+          ["set", "@entity.trustScore", ["-", "@entity.trustScore", 10]],
+          ["set", "@entity.category", "dormant"]
+        ]
+      },
+      {
+        "from": ["active", "decayed"],
+        "event": "REMOVE",
+        "to": "removed",
+        "effects": [
+          ["decrement", "@entity.connectionCount", 1],
+          ["persist", "delete", "Connection", "@entity.id"]
+        ]
+      }
+    ]
+  }
+}
+```
+
+You literally can't add a 151st connection. The guard `["<", "@entity.connectionCount", 150]` makes the transition non-existent. The decay guard checks if 30 days (2592000000ms) have passed since last interaction — if so, the connection automatically degrades.
+
+The psychological assessment is a multi-step trait. Trust scores update as entity fields via effects when interactions occur:
+
+```json
+{
+  "from": "active",
+  "event": "INTERACT",
+  "to": "active",
+  "effects": [
+    ["set", "@entity.trustScore", ["+", "@entity.trustScore", 5]],
+    ["set", "@entity.lastInteraction", "@now"]
+  ]
+}
+```
+
+Every interaction is a `+5` to trust. Inactivity decays it. The math is explicit in the schema — no hidden algorithm.
+
+### The Pages
+
+```json
+"pages": [
+  {
+    "name": "GardenPage",
+    "path": "/garden",
+    "traits": [
+      { "ref": "ConnectionLifecycle", "linkedEntity": "Connection" },
+      { "ref": "GardenVisualization", "linkedEntity": "Garden" }
+    ]
+  },
+  {
+    "name": "TeamBuilderPage",
+    "path": "/team/build",
+    "traits": [
+      { "ref": "TeamFormation", "linkedEntity": "Team" }
+    ]
+  }
+]
+```
+
+The garden page shows your relationship network with trust visualization. The team builder uses AI-driven formation to pick 2-11 members based on archetype compatibility.
 
 ## 4. Government Inspection System — Compliance Workflow
 
@@ -118,32 +456,131 @@ You literally can't add a 151st connection. It's not a suggestion — the state 
 
 Built for government inspectors, this system guides them through Introduction → Content → Preparation → Record → Closing phases. Legal requirements are enforced by guards — you can't advance without completing mandatory fields.
 
-**How Orbitals model it:**
+### The Entity
 
-```
-Inspection Orbital: 5-phase workflow, field validation, document generation
-Inspector Orbital: authentication, assignment, workload
-Company Orbital: entity being inspected, history, compliance status
-```
-
-**The closing guard ensures nothing is missed:**
+The inspection entity captures everything an inspector needs in the field:
 
 ```json
 {
-  "from": "Record",
-  "to": "Closing",
-  "event": "CLOSE",
-  "guard": ["and",
-    ["not-empty", "@entity.legalBasis"],
-    ["not-empty", "@entity.findings"],
-    ["not-empty", "@entity.measures"],
-    ["=", "@entity.inspectorSignature", true],
-    ["=", "@entity.subjectSignature", true]
-  ]
+  "entity": {
+    "name": "Inspection",
+    "persistence": "persistent",
+    "collection": "inspections",
+    "fields": [
+      { "name": "id", "type": "string", "required": true },
+      { "name": "inspectorId", "type": "string", "required": true },
+      { "name": "companyId", "type": "string", "required": true },
+      { "name": "legalBasis", "type": "string" },
+      { "name": "findings", "type": "array", "items": { "type": "object" } },
+      { "name": "measures", "type": "array", "items": { "type": "object" } },
+      { "name": "inspectorSignature", "type": "boolean", "default": false },
+      { "name": "subjectSignature", "type": "boolean", "default": false },
+      { "name": "createdAt", "type": "timestamp" },
+      { "name": "status", "type": "enum", "values": ["draft", "in_progress", "completed", "archived"] }
+    ]
+  }
 }
 ```
 
-Every state transition is automatically logged. The audit trail isn't a feature — it's a consequence of the architecture.
+### The Traits
+
+The 5-phase workflow is the core trait. Each transition to the next phase has guards that enforce legal requirements:
+
+```json
+{
+  "name": "InspectionWorkflow",
+  "linkedEntity": "Inspection",
+  "stateMachine": {
+    "states": [
+      { "name": "Introduction", "isInitial": true },
+      { "name": "Content" },
+      { "name": "Preparation" },
+      { "name": "Record" },
+      { "name": "Closing", "isTerminal": true }
+    ],
+    "events": [
+      { "key": "PROCEED", "name": "Proceed to Next Phase" },
+      { "key": "SAVE_FINDINGS", "name": "Save Findings", "payload": [
+        { "name": "findings", "type": "array", "required": true }
+      ]},
+      { "key": "SIGN", "name": "Sign Document" },
+      { "key": "CLOSE", "name": "Close Inspection" }
+    ],
+    "transitions": [
+      {
+        "from": "Introduction",
+        "event": "PROCEED",
+        "to": "Content",
+        "guard": ["not-empty", "@entity.legalBasis"],
+        "effects": [
+          ["persist", "update", "Inspection", "@entity"],
+          ["render-ui", "main", {
+            "type": "form",
+            "entity": "Inspection",
+            "fields": [
+              { "name": "findings", "label": "Findings", "type": "textarea", "required": true }
+            ]
+          }]
+        ]
+      },
+      { "from": "Content", "event": "PROCEED", "to": "Preparation" },
+      {
+        "from": "Preparation",
+        "event": "SAVE_FINDINGS",
+        "to": "Record",
+        "effects": [
+          ["set", "@entity.findings", "@payload.findings"],
+          ["persist", "update", "Inspection", "@entity"]
+        ]
+      },
+      {
+        "from": "Record",
+        "event": "CLOSE",
+        "to": "Closing",
+        "guard": ["and",
+          ["not-empty", "@entity.legalBasis"],
+          ["not-empty", "@entity.findings"],
+          ["not-empty", "@entity.measures"],
+          ["=", "@entity.inspectorSignature", true],
+          ["=", "@entity.subjectSignature", true]
+        ],
+        "effects": [
+          ["set", "@entity.status", "completed"],
+          ["persist", "update", "Inspection", "@entity"],
+          ["notify", "success", "Inspection closed successfully"]
+        ]
+      }
+    ]
+  }
+}
+```
+
+The closing guard is the most critical piece: **five conditions** must all be true. Legal basis must be filled. Findings must exist. Measures must be specified. Both the inspector and the subject must have signed. If any one is missing, the CLOSE event simply doesn't fire. There's no "skip" button, no override — the state machine has no transition.
+
+Every `persist` effect auto-generates an audit trail. The inspection moves through states, and each transition is logged with timestamp, user, and payload. The audit trail isn't a feature — it's a consequence of the architecture.
+
+### The Pages
+
+```json
+"pages": [
+  {
+    "name": "InspectionFormPage",
+    "path": "/inspection/:id",
+    "traits": [
+      { "ref": "InspectionWorkflow", "linkedEntity": "Inspection" }
+    ]
+  },
+  {
+    "name": "InspectionListPage",
+    "path": "/inspections",
+    "traits": [
+      { "ref": "InspectionBrowser", "linkedEntity": "Inspection" }
+    ]
+  }
+]
+```
+
+The form page uses a single trait that renders different forms per phase via `render-ui`. The route `/inspection/:id` loads the specific inspection and shows whichever phase it's currently in.
 
 ## 5. KFlow — AI Learning Platform
 
@@ -152,16 +589,106 @@ Every state transition is automatically logged. The audit trail isn't a feature 
 
 KFlow transforms a seed topic (like "JavaScript") into a structured knowledge graph with interconnected concepts, AI-generated lessons, and publishable courses.
 
-**How Orbitals model it:**
+### The Entity
 
-```
-Graph Orbital: seed concept, difficulty levels, learning paths
-Concept Orbital: hierarchical layers, prerequisites, follow-ups
-Lesson Orbital: AI-generated content, flashcards, exercises
-Course Orbital: curated subsets, publishing, mentor assignment
+The concept entity is the knowledge graph node:
+
+```json
+{
+  "entity": {
+    "name": "Concept",
+    "persistence": "persistent",
+    "collection": "concepts",
+    "fields": [
+      { "name": "id", "type": "string", "required": true },
+      { "name": "title", "type": "string", "required": true },
+      { "name": "difficulty", "type": "enum", "values": ["beginner", "intermediate", "advanced"] },
+      { "name": "prerequisites", "type": "array", "items": { "type": "string" } },
+      { "name": "followUps", "type": "array", "items": { "type": "string" } },
+      { "name": "aiContent", "type": "string" },
+      { "name": "graphId", "type": "string", "required": true }
+    ]
+  }
+}
 ```
 
-**Cross-orbital events drive the pipeline:**
+### The Traits
+
+The concept expansion trait is where AI meets state machines:
+
+```json
+{
+  "name": "ConceptExpansion",
+  "linkedEntity": "Concept",
+  "emits": [
+    {
+      "event": "CONCEPT_EXPANDED",
+      "scope": "external",
+      "payload": [
+        { "name": "conceptId", "type": "string", "required": true },
+        { "name": "childConcepts", "type": "array", "required": true }
+      ]
+    }
+  ],
+  "stateMachine": {
+    "states": [
+      { "name": "seed", "isInitial": true },
+      { "name": "expanding" },
+      { "name": "expanded" },
+      { "name": "published", "isTerminal": true }
+    ],
+    "events": [
+      { "key": "EXPAND", "name": "Expand Concept" },
+      { "key": "AI_COMPLETE", "name": "AI Generation Complete", "payload": [
+        { "name": "content", "type": "string", "required": true },
+        { "name": "children", "type": "array", "required": true }
+      ]},
+      { "key": "PUBLISH", "name": "Publish" }
+    ],
+    "transitions": [
+      {
+        "from": "seed",
+        "event": "EXPAND",
+        "to": "expanding",
+        "effects": [
+          ["render-ui", "main", {
+            "type": "stats",
+            "title": "Expanding...",
+            "value": "@entity.title",
+            "subtitle": "AI is generating content"
+          }]
+        ]
+      },
+      {
+        "from": "expanding",
+        "event": "AI_COMPLETE",
+        "to": "expanded",
+        "effects": [
+          ["set", "@entity.aiContent", "@payload.content"],
+          ["set", "@entity.followUps", "@payload.children"],
+          ["persist", "update", "Concept", "@entity"],
+          ["emit", "CONCEPT_EXPANDED", {
+            "conceptId": "@entity.id",
+            "childConcepts": "@payload.children"
+          }]
+        ]
+      },
+      {
+        "from": "expanded",
+        "event": "PUBLISH",
+        "to": "published",
+        "guard": ["not-empty", "@entity.aiContent"],
+        "effects": [
+          ["persist", "update", "Concept", "@entity"],
+          ["notify", "success", "Concept published"]
+        ]
+      }
+    ]
+  }
+}
+```
+
+The cross-orbital event chain drives the entire pipeline:
 
 ```
 User enters topic → Graph emits TOPIC_CREATED →
@@ -170,7 +697,45 @@ User enters topic → Graph emits TOPIC_CREATED →
       Course listens → adds to curriculum
 ```
 
+Each arrow is a `listens`/`emits` declaration:
+
+```json
+{
+  "name": "LessonGenerator",
+  "listens": [
+    { "event": "CONCEPT_EXPANDED", "scope": "external" }
+  ],
+  "emits": [
+    { "event": "LESSON_CREATED", "scope": "external" }
+  ]
+}
+```
+
 The entire pipeline is declarative. No orchestration code. No job queues. Just events flowing through Orbitals.
+
+### The Pages
+
+```json
+"pages": [
+  {
+    "name": "GraphExplorerPage",
+    "path": "/graph/:graphId",
+    "traits": [
+      { "ref": "ConceptExpansion", "linkedEntity": "Concept" },
+      { "ref": "GraphVisualization", "linkedEntity": "Graph" }
+    ]
+  },
+  {
+    "name": "CourseEditorPage",
+    "path": "/course/:courseId/edit",
+    "traits": [
+      { "ref": "CourseCuration", "linkedEntity": "Course" }
+    ]
+  }
+]
+```
+
+The graph explorer page composes concept expansion with visualization — expanding concepts and rendering the knowledge graph on one route.
 
 ## 6. Fitness Tracker — Personal Training Platform
 
@@ -179,34 +744,145 @@ The entire pipeline is declarative. No orchestration code. No job queues. Just e
 
 Built for a personal trainer managing multiple clients. Features a credit-based session booking system, lift tracking, meal plan management, and AI-powered nutritional analysis.
 
-**How Orbitals model it:**
+### The Entity
 
-```
-Trainee Orbital: profile, credits, progress metrics
-Session Orbital: booking, credit deduction, cancellation
-Workout Orbital: lift logging, reps, weight, trends
-Meal Orbital: daily intake, AI analysis, trainer feedback
-Schedule Orbital: group sessions, YouTube video references
-```
-
-**Credit expiry as a guard:**
+The session entity manages bookings with credit tracking:
 
 ```json
 {
-  "from": "Available",
-  "to": "Booked",
-  "event": "BOOK_SESSION",
-  "guard": ["and",
-    [">", "@entity.remainingCredits", 0],
-    ["<", "@now", "@entity.creditsExpireAt"]
+  "entity": {
+    "name": "Session",
+    "persistence": "persistent",
+    "collection": "sessions",
+    "fields": [
+      { "name": "id", "type": "string", "required": true },
+      { "name": "traineeId", "type": "string", "required": true },
+      { "name": "scheduledAt", "type": "timestamp" },
+      { "name": "remainingCredits", "type": "number", "default": 0 },
+      { "name": "creditsExpireAt", "type": "timestamp" },
+      { "name": "notes", "type": "string" },
+      { "name": "type", "type": "enum", "values": ["individual", "group", "online"] }
+    ]
+  }
+}
+```
+
+### The Traits
+
+The session booking trait enforces credit rules with guards:
+
+```json
+{
+  "name": "SessionBooking",
+  "linkedEntity": "Session",
+  "emits": [
+    {
+      "event": "SESSION_BOOKED",
+      "scope": "external",
+      "payload": [
+        { "name": "traineeId", "type": "string", "required": true },
+        { "name": "scheduledAt", "type": "timestamp", "required": true }
+      ]
+    }
   ],
+  "stateMachine": {
+    "states": [
+      { "name": "available", "isInitial": true },
+      { "name": "booked" },
+      { "name": "completed", "isTerminal": true },
+      { "name": "cancelled" }
+    ],
+    "events": [
+      { "key": "BOOK", "name": "Book Session" },
+      { "key": "CANCEL", "name": "Cancel Session" },
+      { "key": "COMPLETE", "name": "Complete Session" }
+    ],
+    "transitions": [
+      {
+        "from": "available",
+        "event": "BOOK",
+        "to": "booked",
+        "guard": ["and",
+          [">", "@entity.remainingCredits", 0],
+          ["<", "@now", "@entity.creditsExpireAt"]
+        ],
+        "effects": [
+          ["set", "@entity.remainingCredits", ["-", "@entity.remainingCredits", 1]],
+          ["persist", "update", "Session", "@entity"],
+          ["emit", "SESSION_BOOKED", {
+            "traineeId": "@entity.traineeId",
+            "scheduledAt": "@entity.scheduledAt"
+          }],
+          ["notify", "success", "Session booked"]
+        ]
+      },
+      {
+        "from": "booked",
+        "event": "CANCEL",
+        "to": "cancelled",
+        "effects": [
+          ["set", "@entity.remainingCredits", ["+", "@entity.remainingCredits", 1]],
+          ["persist", "update", "Session", "@entity"],
+          ["notify", "info", "Session cancelled, credit refunded"]
+        ]
+      },
+      {
+        "from": "booked",
+        "event": "COMPLETE",
+        "to": "completed",
+        "effects": [
+          ["persist", "update", "Session", "@entity"]
+        ]
+      }
+    ]
+  }
+}
+```
+
+Can't book with zero credits. Can't book with expired credits. The guard `["and", [">", "@entity.remainingCredits", 0], ["<", "@now", "@entity.creditsExpireAt"]]` makes both conditions mandatory. And when you cancel, the credit is automatically refunded via `["+", "@entity.remainingCredits", 1]` — the business rule is in the schema, not hidden in a service layer.
+
+The workout tracking trait uses the same effect primitives for a completely different purpose:
+
+```json
+{
+  "from": "logging",
+  "event": "LOG_SET",
+  "to": "logging",
   "effects": [
-    ["set", "@entity.remainingCredits", ["-", "@entity.remainingCredits", 1]]
+    ["set", "@entity.lastWeight", "@payload.weight"],
+    ["set", "@entity.lastReps", "@payload.reps"],
+    ["increment", "@entity.totalSets", 1],
+    ["persist", "update", "Workout", "@entity"]
   ]
 }
 ```
 
-Can't book with zero credits. Can't book with expired credits. The state machine knows.
+Same `set`, same `increment`, same `persist` — applied to reps and weights instead of game stats or inspection findings.
+
+### The Pages
+
+```json
+"pages": [
+  {
+    "name": "TraineeDashboard",
+    "path": "/trainee/:id",
+    "traits": [
+      { "ref": "SessionBooking", "linkedEntity": "Session" },
+      { "ref": "WorkoutLog", "linkedEntity": "Workout" },
+      { "ref": "MealTracker", "linkedEntity": "Meal" }
+    ]
+  },
+  {
+    "name": "SchedulePage",
+    "path": "/schedule",
+    "traits": [
+      { "ref": "SessionBrowser", "linkedEntity": "Session" }
+    ]
+  }
+]
+```
+
+The trainee dashboard composes three traits on one page — bookings, workouts, and meals all visible at once. Each trait manages its own state machine independently.
 
 ## The Pattern
 
@@ -219,6 +895,7 @@ Six applications. Six different domains. The same pattern:
 | **Guards** | HP > 0, in range | Fields filled, signed | < 150 connections | Credits > 0 | Prerequisites met | Has required orbital |
 | **Effects** | Deal damage, move | Save findings, log | Update trust score | Deduct credit | Generate lesson | Drop loot |
 | **Events** | ATTACK, MOVE, DIE | PROCEED, CLOSE | CONNECT, DECAY | BOOK, CANCEL | EXPAND, PUBLISH | ENTER_ROOM, ATTACK |
+| **Pages** | /battle/:matchId | /inspection/:id | /garden | /trainee/:id | /graph/:graphId | /dungeon/:zoneId |
 
 The vocabulary changes. The structure doesn't.
 
