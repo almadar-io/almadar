@@ -1,13 +1,13 @@
 ---
 slug: one-schema-six-apps
-title: "schema واحد، ستة تطبيقات: كيف بنينا لعبة وأداة حكومية ومتتبع لياقة بنفس اللغة"
+title: "schema واحد، خمسة تطبيقات: كيف بنينا أداة حكومية ومنصة AI ولعبتين بنفس اللغة"
 authors: [almadar]
 tags: [case-study, architecture]
 ---
 
-لعبة استراتيجية تكتيكية. لعبة زنزانات ثلاثية الأبعاد. منصة ذكاء العلاقات. نظام تفتيش حكومي. منصة تعلم بالذكاء الاصطناعي. متتبع لياقة شخصي.
+نظام تفتيش حكومي. منصة تعلم بالذكاء الاصطناعي. متتبع لياقة شخصي. لعبة استراتيجية تكتيكية. لعبة زنزانات ثلاثية الأبعاد.
 
-ستة تطبيقات. ستة مجالات مختلفة تمامًا. لغة واحدة.
+خمسة تطبيقات. خمسة مجالات مختلفة تمامًا. لغة واحدة.
 
 إليك الكيفية — ولماذا يهم ذلك.
 
@@ -19,11 +19,11 @@ tags: [case-study, architecture]
 
 تعتبر الـ Orbital architecture لـ Almadar محايدة المجال بالتصميم. الـ Orbital هو: Entity + Traits + Pages. تعمل تلك الصيغة لأي مجال لأنها تُنمذج **السلوك**، وليس **التقنية**.
 
-لنستعرض الستة جميعًا — وهذه المرة، سنريك كود الـ schema الفعلي.
+لنستعرض الخمسة جميعًا — وهذه المرة، سنريك كود الـ schema الفعلي.
 
 ## كيف يعمل الـ Orbital Schema
 
-قبل الغوص في التطبيقات الستة، إليك تعريفًا سريعًا لما ستراه في الكود. كل orbital schema هو ملف JSON بهذا الشكل:
+قبل الغوص في التطبيقات الخمسة، إليك تعريفًا سريعًا لما ستراه في الكود. كل orbital schema هو ملف JSON بهذا الشكل:
 
 ```json
 {
@@ -48,408 +48,9 @@ tags: [case-study, architecture]
 
 الـ Guards هي شروط بصيغة S-expression يجب أن تتحقق ليحدث الـ transition. إذا فشل الـ guard، الـ transition غير موجود.
 
-الآن لنرَ هذا مطبّقًا عبر ستة مجالات.
+الآن لنرَ هذا مطبّقًا عبر خمسة مجالات.
 
-## 1. حروب الـ Traits — لعبة استراتيجية تكتيكية
-
-**المجال:** قتال تكتيكي قائم على الأدوار
-**التحدي الرئيسي:** قتال معقد مع AI مرئي، مراحل أدوار، تركيب وحدات
-
-تعد حروب الـ Traits لعبة استراتيجية مستوحاة من Heroes of Might and Magic حيث تُجهّز الوحدات **Traits** — state machines مرئية تُحدد سلوكها. الابتكار الأساسي: يستطيع اللاعبون قراءة state machines الأعداء واستغلال نوافذ الـ transition.
-
-### الـ Entity
-
-كل وحدة في ساحة المعركة هي entity بإحصائيات قتالية وموقع وtraits مجهزة:
-
-```json
-{
-  "entity": {
-    "name": "Unit",
-    "persistence": "runtime",
-    "fields": [
-      { "name": "id", "type": "string", "required": true },
-      { "name": "name", "type": "string", "required": true },
-      { "name": "hp", "type": "number", "default": 100 },
-      { "name": "attack", "type": "number", "default": 10 },
-      { "name": "defense", "type": "number", "default": 5 },
-      { "name": "position", "type": "object" },
-      { "name": "equippedTraits", "type": "array", "items": { "type": "string" } },
-      { "name": "status", "type": "enum", "values": ["alive", "stunned", "dead"] }
-    ]
-  }
-}
-```
-
-لاحظ `"persistence": "runtime"` — حالة اللعبة تعيش في الذاكرة، ليس في قاعدة بيانات. الـ entity هو النواة الجاذبة: كل شيء آخر يدور حوله.
-
-### الـ Traits
-
-متحكم الأدوار نفسه هو state machine. كل مرحلة لها قواعد دخول وخروج واضحة:
-
-```json
-{
-  "name": "TurnPhaseController",
-  "linkedEntity": "Match",
-  "stateMachine": {
-    "states": [
-      { "name": "ObservationPhase", "isInitial": true },
-      { "name": "SelectionPhase" },
-      { "name": "MovementPhase" },
-      { "name": "ActionPhase" },
-      { "name": "ResolutionPhase" }
-    ],
-    "events": [
-      { "key": "BEGIN_SELECTION", "name": "Begin Selection" },
-      { "key": "CONFIRM_SELECTION", "name": "Confirm Selection" },
-      { "key": "MOVE_COMPLETE", "name": "Move Complete" },
-      { "key": "RESOLVE", "name": "Resolve Actions" },
-      { "key": "NEXT_TURN", "name": "Next Turn" }
-    ],
-    "transitions": [
-      {
-        "from": "ObservationPhase",
-        "event": "BEGIN_SELECTION",
-        "to": "SelectionPhase",
-        "effects": [
-          ["render-ui", "main", {
-            "type": "entity-table",
-            "entity": "Unit",
-            "columns": ["name", "hp", "status", "equippedTraits"]
-          }]
-        ]
-      },
-      { "from": "SelectionPhase", "event": "CONFIRM_SELECTION", "to": "MovementPhase" },
-      { "from": "MovementPhase", "event": "MOVE_COMPLETE", "to": "ActionPhase" },
-      {
-        "from": "ActionPhase",
-        "event": "RESOLVE",
-        "to": "ResolutionPhase",
-        "effects": [
-          ["emit", "TURN_RESOLVED", { "turnNumber": "@entity.turnCount" }]
-        ]
-      },
-      { "from": "ResolutionPhase", "event": "NEXT_TURN", "to": "ObservationPhase" }
-    ]
-  }
-}
-```
-
-خمس حالات. transitions نظيفة. الـ `render-ui` effect في SelectionPhase يعرض جدول الوحدات بـ traits مرئية — هذا ما يتيح للاعبين قراءة state machines الأعداء والتخطيط حولها. الـ `emit` effect يبث حل الدور لجميع الـ orbitals الأخرى (القتال، التضاريس، قدرات البطل).
-
-قتال الوحدات هو trait منفصل بـ guards تفرض قواعد اللعبة:
-
-```json
-{
-  "from": "idle",
-  "event": "ATTACK",
-  "to": "attacking",
-  "guard": ["and",
-    [">", "@entity.hp", 0],
-    ["!=", "@entity.status", "stunned"]
-  ],
-  "effects": [
-    ["set", "@entity.lastAction", "attack"],
-    ["emit", "DAMAGE_DEALT", {
-      "attackerId": "@entity.id",
-      "damage": "@entity.attack"
-    }]
-  ]
-}
-```
-
-الوحدة الميتة أو المصعوقة حرفيًا لا تستطيع الهجوم. الـ guard يجعل ذلك مستحيلاً — لا يوجد `if` statement لتنسى كتابته.
-
-### الـ Pages
-
-```json
-"pages": [
-  {
-    "name": "BattlefieldPage",
-    "path": "/battle/:matchId",
-    "traits": [
-      { "ref": "TurnPhaseController", "linkedEntity": "Match" },
-      { "ref": "UnitCombat", "linkedEntity": "Unit" }
-    ]
-  },
-  {
-    "name": "ArmyBuilderPage",
-    "path": "/army",
-    "traits": [
-      { "ref": "UnitComposition", "linkedEntity": "Unit" }
-    ]
-  }
-]
-```
-
-الـ page هو مجرد route يربط traits. `/battle/:matchId` يُفعّل كلاً من متحكم الأدوار و trait القتال على نفس الشاشة. الـ compiler يولّد الـ UI من effects الـ `render-ui`.
-
-## 2. إرم — لعبة أكشن RPG ثلاثية الأبعاد
-
-**المجال:** لعبة ARPG لاستكشاف الزنزانات
-**التحدي الرئيسي:** قتال فوري، زنزانات إجرائية، تركيب القدرات
-
-تدور إرم داخل كرة دايسون تُسمى سيادة إرم. ينزل اللاعبون عبر 5 مناطق زنزانات، ويهزمون الزعماء، ويجمعون **Orbital Shards** — أجزاء من السلوك تتركب لتصبح قدرات جديدة.
-
-### الـ Entity
-
-الـ entity الخاص باللاعب يتتبع الصحة والمخزون وفتحات الـ 8 orbitals:
-
-```json
-{
-  "entity": {
-    "name": "Player",
-    "persistence": "persistent",
-    "collection": "players",
-    "fields": [
-      { "name": "id", "type": "string", "required": true },
-      { "name": "health", "type": "number", "default": 100 },
-      { "name": "maxHealth", "type": "number", "default": 100 },
-      { "name": "equippedOrbitals", "type": "array", "items": { "type": "string" } },
-      { "name": "inventory", "type": "array", "items": { "type": "object" } },
-      { "name": "currentZone", "type": "number", "default": 1 },
-      { "name": "orbitalShards", "type": "number", "default": 0 }
-    ]
-  }
-}
-```
-
-بيانات اللاعب `"persistent"` — التقدم يُحفظ في قاعدة البيانات بين الجلسات.
-
-### الـ Traits
-
-مواجهات الزعماء تستخدم state machines قائمة على المراحل — نفس الـ pattern كمتحكم الأدوار، لكن لعدو واحد:
-
-```json
-{
-  "name": "BossEncounter",
-  "linkedEntity": "Boss",
-  "stateMachine": {
-    "states": [
-      { "name": "dormant", "isInitial": true },
-      { "name": "phase1" },
-      { "name": "phase2" },
-      { "name": "enraged" },
-      { "name": "defeated", "isTerminal": true }
-    ],
-    "events": [
-      { "key": "ENGAGE", "name": "Start Fight" },
-      { "key": "DAMAGE", "name": "Take Damage", "payload": [
-        { "name": "amount", "type": "number", "required": true }
-      ]},
-      { "key": "PHASE_SHIFT", "name": "Phase Shift" }
-    ],
-    "transitions": [
-      { "from": "dormant", "event": "ENGAGE", "to": "phase1" },
-      {
-        "from": "phase1",
-        "event": "DAMAGE",
-        "to": "phase2",
-        "guard": ["<", "@entity.hp", 50],
-        "effects": [
-          ["set", "@entity.attackPattern", "aggressive"],
-          ["emit", "BOSS_PHASE_CHANGED", { "phase": 2 }]
-        ]
-      },
-      {
-        "from": "phase2",
-        "event": "DAMAGE",
-        "to": "enraged",
-        "guard": ["<", "@entity.hp", 20],
-        "effects": [
-          ["set", "@entity.attackSpeed", ["+", "@entity.attackSpeed", 2]],
-          ["set", "@entity.attackPattern", "berserk"]
-        ]
-      },
-      {
-        "from": ["phase1", "phase2", "enraged"],
-        "event": "DAMAGE",
-        "to": "defeated",
-        "guard": ["<=", "@entity.hp", 0],
-        "effects": [
-          ["emit", "BOSS_DEFEATED", { "bossId": "@entity.id", "zone": "@entity.zone" }],
-          ["emit", "LOOT_DROP", { "table": "@entity.lootTable" }]
-        ]
-      }
-    ]
-  }
-}
-```
-
-لاحظ `"from": ["phase1", "phase2", "enraged"]` — transition الموت يعمل من أي مرحلة قتالية. الـ guards تتحقق من عتبات HP لتفعيل تحولات المراحل. الـ event `BOSS_DEFEATED` يتدفق إلى Dungeon orbital لفتح المنطقة التالية، بينما `LOOT_DROP` يتدفق إلى نظام المخزون.
-
-### نظام الـ Resonance
-
-الـ Orbitals المتوافقة تخلق effects تآزرية:
-- Defend + Mend → شفاء دروع 1.5 ضعف
-- Disrupt + Fabricate → الفخاخ تُطبق debuffs
-- Archive + Command → الحلفاء يتلقون معلومات عن نقاط ضعف الأعداء
-
-يُنمذج هذا عبر `listens` عبر الـ orbitals — عندما يكون orbital-ان محددان مجهزين معًا، events-هما المشتركة تفعّل effects الرنين.
-
-### الـ Pages
-
-```json
-"pages": [
-  {
-    "name": "DungeonPage",
-    "path": "/dungeon/:zoneId",
-    "traits": [
-      { "ref": "DungeonExploration", "linkedEntity": "Dungeon" },
-      { "ref": "PlayerCombat", "linkedEntity": "Player" },
-      { "ref": "BossEncounter", "linkedEntity": "Boss" }
-    ]
-  },
-  {
-    "name": "OrbitalLoadoutPage",
-    "path": "/loadout",
-    "traits": [
-      { "ref": "OrbitalEquip", "linkedEntity": "Player" }
-    ]
-  }
-]
-```
-
-صفحة الزنزانة تركّب ثلاث traits على route واحد — الاستكشاف والقتال ومواجهات الزعماء كلها نشطة في وقت واحد.
-
-## 3. Winning 11 — ذكاء العلاقات
-
-**المجال:** شبكات مهنية قائمة على الثقة
-**التحدي الرئيسي:** فرض رقم Dunbar، التوافق النفسي، تشكيل الفرق
-
-تستبدل Winning 11 الشبكات السلبية على طريقة LinkedIn بـ "حدائق" مقصودة وعالية القيمة من متعاونين موثوقين. يفرض النظام رقم Dunbar (حد 150 اتصال) ويستخدم تقييمات نفسية لحساب trust scores.
-
-### الـ Entity
-
-الـ Connection entity يتتبع العلاقة بين مستخدمين مع trust scoring و decay:
-
-```json
-{
-  "entity": {
-    "name": "Connection",
-    "persistence": "persistent",
-    "collection": "connections",
-    "fields": [
-      { "name": "id", "type": "string", "required": true },
-      { "name": "userId", "type": "string", "required": true },
-      { "name": "connectedUserId", "type": "string", "required": true },
-      { "name": "trustScore", "type": "number", "default": 50 },
-      { "name": "lastInteraction", "type": "timestamp" },
-      { "name": "connectionCount", "type": "number", "default": 0 },
-      { "name": "category", "type": "enum", "values": ["inner_circle", "trusted", "casual", "dormant"] }
-    ]
-  }
-}
-```
-
-### الـ Traits
-
-الـ Connection lifecycle يدير إضافة الاتصالات والتفاعل معها وتلاشيها. الـ guard يفرض رقم Dunbar:
-
-```json
-{
-  "name": "ConnectionLifecycle",
-  "linkedEntity": "Connection",
-  "stateMachine": {
-    "states": [
-      { "name": "pending", "isInitial": true },
-      { "name": "active" },
-      { "name": "decayed" },
-      { "name": "removed", "isTerminal": true }
-    ],
-    "events": [
-      { "key": "ACCEPT", "name": "Accept Connection" },
-      { "key": "INTERACT", "name": "Record Interaction" },
-      { "key": "DECAY_CHECK", "name": "Check for Decay" },
-      { "key": "REMOVE", "name": "Remove Connection" }
-    ],
-    "transitions": [
-      {
-        "from": "pending",
-        "event": "ACCEPT",
-        "to": "active",
-        "guard": ["<", "@entity.connectionCount", 150],
-        "effects": [
-          ["increment", "@entity.connectionCount", 1],
-          ["set", "@entity.lastInteraction", "@now"],
-          ["persist", "update", "Connection", "@entity"]
-        ]
-      },
-      {
-        "from": "active",
-        "event": "INTERACT",
-        "to": "active",
-        "effects": [
-          ["set", "@entity.trustScore", ["+", "@entity.trustScore", 5]],
-          ["set", "@entity.lastInteraction", "@now"]
-        ]
-      },
-      {
-        "from": "active",
-        "event": "DECAY_CHECK",
-        "to": "decayed",
-        "guard": [">", ["-", "@now", "@entity.lastInteraction"], 2592000000],
-        "effects": [
-          ["set", "@entity.trustScore", ["-", "@entity.trustScore", 10]],
-          ["set", "@entity.category", "dormant"]
-        ]
-      },
-      {
-        "from": ["active", "decayed"],
-        "event": "REMOVE",
-        "to": "removed",
-        "effects": [
-          ["decrement", "@entity.connectionCount", 1],
-          ["persist", "delete", "Connection", "@entity.id"]
-        ]
-      }
-    ]
-  }
-}
-```
-
-حرفيًا لا تستطيع إضافة اتصال رقم 151. الـ guard `["<", "@entity.connectionCount", 150]` يجعل الـ transition غير موجود. guard الـ decay يتحقق إذا مرت 30 يومًا (2592000000 ميلي ثانية) منذ آخر تفاعل — إذا كان كذلك، الاتصال يتلاشى تلقائيًا.
-
-التقييم النفسي هو trait متعدد الخطوات. الـ trust scores تُحدَّث كحقول entity عبر الـ effects عند حدوث التفاعلات:
-
-```json
-{
-  "from": "active",
-  "event": "INTERACT",
-  "to": "active",
-  "effects": [
-    ["set", "@entity.trustScore", ["+", "@entity.trustScore", 5]],
-    ["set", "@entity.lastInteraction", "@now"]
-  ]
-}
-```
-
-كل تفاعل هو `+5` للثقة. عدم النشاط يُضعفها. الرياضيات صريحة في الـ schema — بدون خوارزمية مخفية.
-
-### الـ Pages
-
-```json
-"pages": [
-  {
-    "name": "GardenPage",
-    "path": "/garden",
-    "traits": [
-      { "ref": "ConnectionLifecycle", "linkedEntity": "Connection" },
-      { "ref": "GardenVisualization", "linkedEntity": "Garden" }
-    ]
-  },
-  {
-    "name": "TeamBuilderPage",
-    "path": "/team/build",
-    "traits": [
-      { "ref": "TeamFormation", "linkedEntity": "Team" }
-    ]
-  }
-]
-```
-
-صفحة الحديقة تعرض شبكة علاقاتك مع تصوّر الثقة. بانِي الفريق يستخدم تشكيل مدعوم بالـ AI لاختيار 2-11 عضوًا بناءً على توافق الـ archetype.
-
-## 4. نظام التفتيش الحكومي — سير عمل الـ Compliance
+## 1. نظام التفتيش الحكومي — سير عمل الـ Compliance
 
 **المجال:** تفتيش ميداني منظم للمنظمين الحكوميين
 **التحدي الرئيسي:** فرض workflow من 5 مراحل، guards المتطلبات القانونية، audit trails
@@ -582,7 +183,7 @@ guard الإغلاق هو الجزء الأكثر أهمية: **خمسة شرو�
 
 صفحة النموذج تستخدم trait واحد يعرض forms مختلفة لكل مرحلة عبر `render-ui`. الـ route `/inspection/:id` يحمّل التفتيش المحدد ويعرض أي مرحلة يمر بها حاليًا.
 
-## 5. KFlow — منصة تعلم بالذكاء الاصطناعي
+## 2. KFlow — منصة تعلم بالذكاء الاصطناعي
 
 **المجال:** توليد knowledge graph مدعوم بـ LLMs
 **التحدي الرئيسي:** توسيع المفاهيم التكراري، توليد دروس بالـ AI، نشر الـ courses
@@ -737,7 +338,7 @@ guard الإغلاق هو الجزء الأكثر أهمية: **خمسة شرو�
 
 صفحة مستكشف الرسم البياني تركّب توسيع المفاهيم مع التصوّر — توسيع المفاهيم وعرض الـ knowledge graph على route واحد.
 
-## 6. متتبع اللياقة — منصة تدريب شخصية
+## 3. متتبع اللياقة — منصة تدريب شخصية
 
 **المجال:** إدارة المدرب-العميل مع جدولة قائمة على الرصيد
 **التحدي الرئيسي:** نظام رصيد، تتبع التمارين، تحليل الوجبات بالـ AI
@@ -884,18 +485,279 @@ guard الإغلاق هو الجزء الأكثر أهمية: **خمسة شرو�
 
 لوحة تحكم المتدرب تركّب ثلاث traits على صفحة واحدة — الحجوزات والتمارين والوجبات كلها مرئية في وقت واحد. كل trait تدير state machine الخاصة بها بشكل مستقل.
 
+## 4. حروب الـ Traits — لعبة استراتيجية تكتيكية
+
+**المجال:** قتال تكتيكي قائم على الأدوار
+**التحدي الرئيسي:** قتال معقد مع AI مرئي، مراحل أدوار، تركيب وحدات
+
+تعد حروب الـ Traits لعبة استراتيجية مستوحاة من Heroes of Might and Magic حيث تُجهّز الوحدات **Traits** — state machines مرئية تُحدد سلوكها. الابتكار الأساسي: يستطيع اللاعبون قراءة state machines الأعداء واستغلال نوافذ الـ transition.
+
+### الـ Entity
+
+كل وحدة في ساحة المعركة هي entity بإحصائيات قتالية وموقع وtraits مجهزة:
+
+```json
+{
+  "entity": {
+    "name": "Unit",
+    "persistence": "runtime",
+    "fields": [
+      { "name": "id", "type": "string", "required": true },
+      { "name": "name", "type": "string", "required": true },
+      { "name": "hp", "type": "number", "default": 100 },
+      { "name": "attack", "type": "number", "default": 10 },
+      { "name": "defense", "type": "number", "default": 5 },
+      { "name": "position", "type": "object" },
+      { "name": "equippedTraits", "type": "array", "items": { "type": "string" } },
+      { "name": "status", "type": "enum", "values": ["alive", "stunned", "dead"] }
+    ]
+  }
+}
+```
+
+لاحظ `"persistence": "runtime"` — حالة اللعبة تعيش في الذاكرة، ليس في قاعدة بيانات. الـ entity هو النواة الجاذبة: كل شيء آخر يدور حوله.
+
+### الـ Traits
+
+متحكم الأدوار نفسه هو state machine. كل مرحلة لها قواعد دخول وخروج واضحة:
+
+```json
+{
+  "name": "TurnPhaseController",
+  "linkedEntity": "Match",
+  "stateMachine": {
+    "states": [
+      { "name": "ObservationPhase", "isInitial": true },
+      { "name": "SelectionPhase" },
+      { "name": "MovementPhase" },
+      { "name": "ActionPhase" },
+      { "name": "ResolutionPhase" }
+    ],
+    "events": [
+      { "key": "BEGIN_SELECTION", "name": "Begin Selection" },
+      { "key": "CONFIRM_SELECTION", "name": "Confirm Selection" },
+      { "key": "MOVE_COMPLETE", "name": "Move Complete" },
+      { "key": "RESOLVE", "name": "Resolve Actions" },
+      { "key": "NEXT_TURN", "name": "Next Turn" }
+    ],
+    "transitions": [
+      {
+        "from": "ObservationPhase",
+        "event": "BEGIN_SELECTION",
+        "to": "SelectionPhase",
+        "effects": [
+          ["render-ui", "main", {
+            "type": "entity-table",
+            "entity": "Unit",
+            "columns": ["name", "hp", "status", "equippedTraits"]
+          }]
+        ]
+      },
+      { "from": "SelectionPhase", "event": "CONFIRM_SELECTION", "to": "MovementPhase" },
+      { "from": "MovementPhase", "event": "MOVE_COMPLETE", "to": "ActionPhase" },
+      {
+        "from": "ActionPhase",
+        "event": "RESOLVE",
+        "to": "ResolutionPhase",
+        "effects": [
+          ["emit", "TURN_RESOLVED", { "turnNumber": "@entity.turnCount" }]
+        ]
+      },
+      { "from": "ResolutionPhase", "event": "NEXT_TURN", "to": "ObservationPhase" }
+    ]
+  }
+}
+```
+
+خمس حالات. transitions نظيفة. الـ `render-ui` effect في SelectionPhase يعرض جدول الوحدات بـ traits مرئية — هذا ما يتيح للاعبين قراءة state machines الأعداء والتخطيط حولها. الـ `emit` effect يبث حل الدور لجميع الـ orbitals الأخرى (القتال، التضاريس، قدرات البطل).
+
+قتال الوحدات هو trait منفصل بـ guards تفرض قواعد اللعبة:
+
+```json
+{
+  "from": "idle",
+  "event": "ATTACK",
+  "to": "attacking",
+  "guard": ["and",
+    [">", "@entity.hp", 0],
+    ["!=", "@entity.status", "stunned"]
+  ],
+  "effects": [
+    ["set", "@entity.lastAction", "attack"],
+    ["emit", "DAMAGE_DEALT", {
+      "attackerId": "@entity.id",
+      "damage": "@entity.attack"
+    }]
+  ]
+}
+```
+
+الوحدة الميتة أو المصعوقة حرفيًا لا تستطيع الهجوم. الـ guard يجعل ذلك مستحيلاً — لا يوجد `if` statement لتنسى كتابته.
+
+### الـ Pages
+
+```json
+"pages": [
+  {
+    "name": "BattlefieldPage",
+    "path": "/battle/:matchId",
+    "traits": [
+      { "ref": "TurnPhaseController", "linkedEntity": "Match" },
+      { "ref": "UnitCombat", "linkedEntity": "Unit" }
+    ]
+  },
+  {
+    "name": "ArmyBuilderPage",
+    "path": "/army",
+    "traits": [
+      { "ref": "UnitComposition", "linkedEntity": "Unit" }
+    ]
+  }
+]
+```
+
+الـ page هو مجرد route يربط traits. `/battle/:matchId` يُفعّل كلاً من متحكم الأدوار و trait القتال على نفس الشاشة. الـ compiler يولّد الـ UI من effects الـ `render-ui`.
+
+## 5. إرم — لعبة أكشن RPG ثلاثية الأبعاد
+
+**المجال:** لعبة ARPG لاستكشاف الزنزانات
+**التحدي الرئيسي:** قتال فوري، زنزانات إجرائية، تركيب القدرات
+
+تدور إرم داخل كرة دايسون تُسمى سيادة إرم. ينزل اللاعبون عبر 5 مناطق زنزانات، ويهزمون الزعماء، ويجمعون **Orbital Shards** — أجزاء من السلوك تتركب لتصبح قدرات جديدة.
+
+### الـ Entity
+
+الـ entity الخاص باللاعب يتتبع الصحة والمخزون وفتحات الـ 8 orbitals:
+
+```json
+{
+  "entity": {
+    "name": "Player",
+    "persistence": "persistent",
+    "collection": "players",
+    "fields": [
+      { "name": "id", "type": "string", "required": true },
+      { "name": "health", "type": "number", "default": 100 },
+      { "name": "maxHealth", "type": "number", "default": 100 },
+      { "name": "equippedOrbitals", "type": "array", "items": { "type": "string" } },
+      { "name": "inventory", "type": "array", "items": { "type": "object" } },
+      { "name": "currentZone", "type": "number", "default": 1 },
+      { "name": "orbitalShards", "type": "number", "default": 0 }
+    ]
+  }
+}
+```
+
+بيانات اللاعب `"persistent"` — التقدم يُحفظ في قاعدة البيانات بين الجلسات.
+
+### الـ Traits
+
+مواجهات الزعماء تستخدم state machines قائمة على المراحل — نفس الـ pattern كمتحكم الأدوار، لكن لعدو واحد:
+
+```json
+{
+  "name": "BossEncounter",
+  "linkedEntity": "Boss",
+  "stateMachine": {
+    "states": [
+      { "name": "dormant", "isInitial": true },
+      { "name": "phase1" },
+      { "name": "phase2" },
+      { "name": "enraged" },
+      { "name": "defeated", "isTerminal": true }
+    ],
+    "events": [
+      { "key": "ENGAGE", "name": "Start Fight" },
+      { "key": "DAMAGE", "name": "Take Damage", "payload": [
+        { "name": "amount", "type": "number", "required": true }
+      ]},
+      { "key": "PHASE_SHIFT", "name": "Phase Shift" }
+    ],
+    "transitions": [
+      { "from": "dormant", "event": "ENGAGE", "to": "phase1" },
+      {
+        "from": "phase1",
+        "event": "DAMAGE",
+        "to": "phase2",
+        "guard": ["<", "@entity.hp", 50],
+        "effects": [
+          ["set", "@entity.attackPattern", "aggressive"],
+          ["emit", "BOSS_PHASE_CHANGED", { "phase": 2 }]
+        ]
+      },
+      {
+        "from": "phase2",
+        "event": "DAMAGE",
+        "to": "enraged",
+        "guard": ["<", "@entity.hp", 20],
+        "effects": [
+          ["set", "@entity.attackSpeed", ["+", "@entity.attackSpeed", 2]],
+          ["set", "@entity.attackPattern", "berserk"]
+        ]
+      },
+      {
+        "from": ["phase1", "phase2", "enraged"],
+        "event": "DAMAGE",
+        "to": "defeated",
+        "guard": ["<=", "@entity.hp", 0],
+        "effects": [
+          ["emit", "BOSS_DEFEATED", { "bossId": "@entity.id", "zone": "@entity.zone" }],
+          ["emit", "LOOT_DROP", { "table": "@entity.lootTable" }]
+        ]
+      }
+    ]
+  }
+}
+```
+
+لاحظ `"from": ["phase1", "phase2", "enraged"]` — transition الموت يعمل من أي مرحلة قتالية. الـ guards تتحقق من عتبات HP لتفعيل تحولات المراحل. الـ event `BOSS_DEFEATED` يتدفق إلى Dungeon orbital لفتح المنطقة التالية، بينما `LOOT_DROP` يتدفق إلى نظام المخزون.
+
+### نظام الـ Resonance
+
+الـ Orbitals المتوافقة تخلق effects تآزرية:
+- Defend + Mend → شفاء دروع 1.5 ضعف
+- Disrupt + Fabricate → الفخاخ تُطبق debuffs
+- Archive + Command → الحلفاء يتلقون معلومات عن نقاط ضعف الأعداء
+
+يُنمذج هذا عبر `listens` عبر الـ orbitals — عندما يكون orbital-ان محددان مجهزين معًا، events-هما المشتركة تفعّل effects الرنين.
+
+### الـ Pages
+
+```json
+"pages": [
+  {
+    "name": "DungeonPage",
+    "path": "/dungeon/:zoneId",
+    "traits": [
+      { "ref": "DungeonExploration", "linkedEntity": "Dungeon" },
+      { "ref": "PlayerCombat", "linkedEntity": "Player" },
+      { "ref": "BossEncounter", "linkedEntity": "Boss" }
+    ]
+  },
+  {
+    "name": "OrbitalLoadoutPage",
+    "path": "/loadout",
+    "traits": [
+      { "ref": "OrbitalEquip", "linkedEntity": "Player" }
+    ]
+  }
+]
+```
+
+صفحة الزنزانة تركّب ثلاث traits على route واحد — الاستكشاف والقتال ومواجهات الزعماء كلها نشطة في وقت واحد.
+
 ## الـ Pattern
 
-ستة تطبيقات. ستة مجالات مختلفة. نفس الـ pattern:
+خمسة تطبيقات. خمسة مجالات مختلفة. نفس الـ pattern:
 
-| المفهوم | اللعبة | الحكومة | الاجتماعي | اللياقة | التعليم | الـ RPG |
-|---------|--------|---------|-----------|---------|---------|--------|
-| **الـ Entity** | الوحدة | التفتيش | الاتصال | الجلسة | المفهوم | اللاعب |
-| **الحالات** | خامل→هجوم→ميت | مقدمة→محتوى→إغلاق | معلق→نشط→متلاشٍ | متاح→محجوز→منتهٍ | بذرة→موسَّع→منشور | استكشاف→قتال→زعيم |
-| **الـ Guards** | HP > 0، في المدى | الحقول مملوءة، موقَّع | < 150 اتصال | الرصيد > 0 | الـ Prerequisites متحققة | يملك الـ orbital المطلوب |
-| **الـ Effects** | إلحاق ضرر، تحرك | حفظ النتائج، تسجيل | تحديث trust score | خصم رصيد | توليد درس | إسقاط غنيمة |
-| **الأحداث** | ATTACK, MOVE, DIE | PROCEED, CLOSE | CONNECT, DECAY | BOOK, CANCEL | EXPAND, PUBLISH | ENTER_ROOM, ATTACK |
-| **الـ Pages** | /battle/:matchId | /inspection/:id | /garden | /trainee/:id | /graph/:graphId | /dungeon/:zoneId |
+| المفهوم | الحكومة | التعليم | اللياقة | اللعبة | الـ RPG |
+|---------|---------|---------|---------|--------|--------|
+| **الـ Entity** | التفتيش | المفهوم | الجلسة | الوحدة | اللاعب |
+| **الحالات** | مقدمة→محتوى→إغلاق | بذرة→موسَّع→منشور | متاح→محجوز→منتهٍ | خامل→هجوم→ميت | استكشاف→قتال→زعيم |
+| **الـ Guards** | الحقول مملوءة، موقَّع | الـ Prerequisites متحققة | الرصيد > 0 | HP > 0، في المدى | يملك الـ orbital المطلوب |
+| **الـ Effects** | حفظ النتائج، تسجيل | توليد درس | خصم رصيد | إلحاق ضرر، تحرك | إسقاط غنيمة |
+| **الأحداث** | PROCEED, CLOSE | EXPAND, PUBLISH | BOOK, CANCEL | ATTACK, MOVE, DIE | ENTER_ROOM, ATTACK |
+| **الـ Pages** | /inspection/:id | /graph/:graphId | /trainee/:id | /battle/:matchId | /dungeon/:zoneId |
 
 تتغير المفردات. ولا تتغير البنية.
 
@@ -907,7 +769,6 @@ guard الإغلاق هو الجزء الأكثر أهمية: **خمسة شرو�
 - أدوات أعمال
 - ألعاب
 - أنظمة حكومية
-- منصات اجتماعية
 - منتجات مدعومة بالـ AI
 - تطبيقات صحة ولياقة
 
@@ -937,6 +798,6 @@ guard الإغلاق هو الجزء الأكثر أهمية: **خمسة شرو�
 
 React + Express. Django + PostgreSQL. Rails + Redis. هذه خيارات تقنية. لا تغيّر كيفية نمذجة السلوك — فقط تغيّر أين تكتب نفس الـ patterns.
 
-تعتبر Almadar نموذج سلوك يُصرَّف إلى تقنية. schema واحد. ستة تطبيقات. لأن النموذج صحيح.
+تعتبر Almadar نموذج سلوك يُصرَّف إلى تقنية. schema واحد. خمسة تطبيقات. لأن النموذج صحيح.
 
 استكشف جميع المشاريع وجرب بناء مشروعك الخاص في [almadar.io](/docs/getting-started/introduction).

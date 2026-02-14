@@ -1,13 +1,13 @@
 ---
 slug: one-schema-six-apps
-title: "One Schema, Six Apps: How We Built a Game, a Government Tool, and a Fitness Tracker with the Same Language"
+title: "One Schema, Five Apps: How We Built a Government Tool, an AI Platform, and Two Games with the Same Language"
 authors: [almadar]
 tags: [case-study, architecture]
 ---
 
-A tactical strategy game. A 3D dungeon crawler. A relationship intelligence platform. A government inspection system. An AI learning platform. A personal fitness tracker.
+A government inspection system. An AI learning platform. A personal fitness tracker. A tactical strategy game. A 3D dungeon crawler.
 
-Six applications. Six completely different domains. One language.
+Five applications. Five completely different domains. One language.
 
 Here's how — and why it matters.
 
@@ -19,11 +19,11 @@ Every programming language claims to be "general purpose." But when was the last
 
 Almadar's Orbital architecture is domain-agnostic by design. An Orbital is: Entity + Traits + Pages. That formula works for any domain because it models **behavior**, not **technology**.
 
-Let's walk through all six — and this time, we'll show you the actual schema code.
+Let's walk through all five — and this time, we'll show you the actual schema code.
 
 ## How an Orbital Schema Works
 
-Before diving into the six apps, here's a quick primer on what you'll see in the code. Every Orbital schema is a JSON file with this structure:
+Before diving into the five apps, here's a quick primer on what you'll see in the code. Every Orbital schema is a JSON file with this structure:
 
 ```json
 {
@@ -48,408 +48,9 @@ Effects are the side-effect primitives: `set` updates a field, `render-ui` rende
 
 Guards are S-expression conditions that must be true for a transition to fire. If a guard fails, the transition doesn't exist.
 
-Now let's see this in action across six domains.
+Now let's see this in action across five domains.
 
-## 1. Trait Wars — Tactical Strategy Game
-
-**Domain:** Turn-based tactical combat
-**Key Challenge:** Complex combat with visible AI, turn phases, unit composition
-
-Trait Wars is a Heroes of Might and Magic-inspired strategy game where units equip **Traits** — visible state machines that define their behavior. The core innovation: players can read enemy state machines and exploit transition windows.
-
-### The Entity
-
-Every unit on the battlefield is an entity with combat stats, position, and equipped traits:
-
-```json
-{
-  "entity": {
-    "name": "Unit",
-    "persistence": "runtime",
-    "fields": [
-      { "name": "id", "type": "string", "required": true },
-      { "name": "name", "type": "string", "required": true },
-      { "name": "hp", "type": "number", "default": 100 },
-      { "name": "attack", "type": "number", "default": 10 },
-      { "name": "defense", "type": "number", "default": 5 },
-      { "name": "position", "type": "object" },
-      { "name": "equippedTraits", "type": "array", "items": { "type": "string" } },
-      { "name": "status", "type": "enum", "values": ["alive", "stunned", "dead"] }
-    ]
-  }
-}
-```
-
-Notice `"persistence": "runtime"` — game state lives in memory, not a database. The entity is the gravitational core: everything else orbits around it.
-
-### The Traits
-
-The turn controller itself is a state machine. Each phase has clear entry and exit rules:
-
-```json
-{
-  "name": "TurnPhaseController",
-  "linkedEntity": "Match",
-  "stateMachine": {
-    "states": [
-      { "name": "ObservationPhase", "isInitial": true },
-      { "name": "SelectionPhase" },
-      { "name": "MovementPhase" },
-      { "name": "ActionPhase" },
-      { "name": "ResolutionPhase" }
-    ],
-    "events": [
-      { "key": "BEGIN_SELECTION", "name": "Begin Selection" },
-      { "key": "CONFIRM_SELECTION", "name": "Confirm Selection" },
-      { "key": "MOVE_COMPLETE", "name": "Move Complete" },
-      { "key": "RESOLVE", "name": "Resolve Actions" },
-      { "key": "NEXT_TURN", "name": "Next Turn" }
-    ],
-    "transitions": [
-      {
-        "from": "ObservationPhase",
-        "event": "BEGIN_SELECTION",
-        "to": "SelectionPhase",
-        "effects": [
-          ["render-ui", "main", {
-            "type": "entity-table",
-            "entity": "Unit",
-            "columns": ["name", "hp", "status", "equippedTraits"]
-          }]
-        ]
-      },
-      { "from": "SelectionPhase", "event": "CONFIRM_SELECTION", "to": "MovementPhase" },
-      { "from": "MovementPhase", "event": "MOVE_COMPLETE", "to": "ActionPhase" },
-      {
-        "from": "ActionPhase",
-        "event": "RESOLVE",
-        "to": "ResolutionPhase",
-        "effects": [
-          ["emit", "TURN_RESOLVED", { "turnNumber": "@entity.turnCount" }]
-        ]
-      },
-      { "from": "ResolutionPhase", "event": "NEXT_TURN", "to": "ObservationPhase" }
-    ]
-  }
-}
-```
-
-Five states. Clean transitions. The `render-ui` effect in SelectionPhase shows the unit table with their traits visible — this is what lets players read enemy state machines and plan around them. The `emit` effect broadcasts turn resolution to all other orbitals (combat, terrain, hero abilities).
-
-Unit combat is a separate trait with guards that enforce game rules:
-
-```json
-{
-  "from": "idle",
-  "event": "ATTACK",
-  "to": "attacking",
-  "guard": ["and",
-    [">", "@entity.hp", 0],
-    ["!=", "@entity.status", "stunned"]
-  ],
-  "effects": [
-    ["set", "@entity.lastAction", "attack"],
-    ["emit", "DAMAGE_DEALT", {
-      "attackerId": "@entity.id",
-      "damage": "@entity.attack"
-    }]
-  ]
-}
-```
-
-A dead or stunned unit literally cannot attack. The guard makes it impossible — no `if` statement to forget.
-
-### The Pages
-
-```json
-"pages": [
-  {
-    "name": "BattlefieldPage",
-    "path": "/battle/:matchId",
-    "traits": [
-      { "ref": "TurnPhaseController", "linkedEntity": "Match" },
-      { "ref": "UnitCombat", "linkedEntity": "Unit" }
-    ]
-  },
-  {
-    "name": "ArmyBuilderPage",
-    "path": "/army",
-    "traits": [
-      { "ref": "UnitComposition", "linkedEntity": "Unit" }
-    ]
-  }
-]
-```
-
-A page is just a route that binds traits. `/battle/:matchId` activates both the turn controller and the combat trait on the same screen. The compiler generates the UI from the `render-ui` effects.
-
-## 2. Iram — 3D Action RPG
-
-**Domain:** Dungeon-crawling ARPG
-**Key Challenge:** Real-time combat, procedural dungeons, ability composition
-
-Iram is set inside a Dyson Sphere called the Iram Dominion. Players descend through 5 dungeon zones, defeat bosses, and collect **Orbital Shards** — fragments of behavior that compose into new abilities.
-
-### The Entity
-
-The player entity tracks health, inventory, and the 8 orbital slots:
-
-```json
-{
-  "entity": {
-    "name": "Player",
-    "persistence": "persistent",
-    "collection": "players",
-    "fields": [
-      { "name": "id", "type": "string", "required": true },
-      { "name": "health", "type": "number", "default": 100 },
-      { "name": "maxHealth", "type": "number", "default": 100 },
-      { "name": "equippedOrbitals", "type": "array", "items": { "type": "string" } },
-      { "name": "inventory", "type": "array", "items": { "type": "object" } },
-      { "name": "currentZone", "type": "number", "default": 1 },
-      { "name": "orbitalShards", "type": "number", "default": 0 }
-    ]
-  }
-}
-```
-
-Player data is `"persistent"` — progress saves to database between sessions.
-
-### The Traits
-
-Boss encounters use phase-based state machines — the same pattern as the turn controller, but for a single enemy:
-
-```json
-{
-  "name": "BossEncounter",
-  "linkedEntity": "Boss",
-  "stateMachine": {
-    "states": [
-      { "name": "dormant", "isInitial": true },
-      { "name": "phase1" },
-      { "name": "phase2" },
-      { "name": "enraged" },
-      { "name": "defeated", "isTerminal": true }
-    ],
-    "events": [
-      { "key": "ENGAGE", "name": "Start Fight" },
-      { "key": "DAMAGE", "name": "Take Damage", "payload": [
-        { "name": "amount", "type": "number", "required": true }
-      ]},
-      { "key": "PHASE_SHIFT", "name": "Phase Shift" }
-    ],
-    "transitions": [
-      { "from": "dormant", "event": "ENGAGE", "to": "phase1" },
-      {
-        "from": "phase1",
-        "event": "DAMAGE",
-        "to": "phase2",
-        "guard": ["<", "@entity.hp", 50],
-        "effects": [
-          ["set", "@entity.attackPattern", "aggressive"],
-          ["emit", "BOSS_PHASE_CHANGED", { "phase": 2 }]
-        ]
-      },
-      {
-        "from": "phase2",
-        "event": "DAMAGE",
-        "to": "enraged",
-        "guard": ["<", "@entity.hp", 20],
-        "effects": [
-          ["set", "@entity.attackSpeed", ["+", "@entity.attackSpeed", 2]],
-          ["set", "@entity.attackPattern", "berserk"]
-        ]
-      },
-      {
-        "from": ["phase1", "phase2", "enraged"],
-        "event": "DAMAGE",
-        "to": "defeated",
-        "guard": ["<=", "@entity.hp", 0],
-        "effects": [
-          ["emit", "BOSS_DEFEATED", { "bossId": "@entity.id", "zone": "@entity.zone" }],
-          ["emit", "LOOT_DROP", { "table": "@entity.lootTable" }]
-        ]
-      }
-    ]
-  }
-}
-```
-
-Notice `"from": ["phase1", "phase2", "enraged"]` — the death transition works from any combat phase. Guards check HP thresholds to trigger phase shifts. The `BOSS_DEFEATED` event flows to the Dungeon orbital to unlock the next zone, while `LOOT_DROP` flows to the inventory system.
-
-### The Resonance System
-
-Compatible Orbitals create synergy effects:
-- Defend + Mend → 1.5x shield healing
-- Disrupt + Fabricate → Traps apply debuffs
-- Archive + Command → Allies receive enemy weakness intel
-
-This is modeled through cross-orbital `listens` — when two specific orbitals are both equipped, their combined events trigger resonance effects.
-
-### The Pages
-
-```json
-"pages": [
-  {
-    "name": "DungeonPage",
-    "path": "/dungeon/:zoneId",
-    "traits": [
-      { "ref": "DungeonExploration", "linkedEntity": "Dungeon" },
-      { "ref": "PlayerCombat", "linkedEntity": "Player" },
-      { "ref": "BossEncounter", "linkedEntity": "Boss" }
-    ]
-  },
-  {
-    "name": "OrbitalLoadoutPage",
-    "path": "/loadout",
-    "traits": [
-      { "ref": "OrbitalEquip", "linkedEntity": "Player" }
-    ]
-  }
-]
-```
-
-The dungeon page composes three traits on one route — exploration, combat, and boss encounters all active simultaneously.
-
-## 3. Winning 11 — Relationship Intelligence
-
-**Domain:** Trust-based professional networking
-**Key Challenge:** Dunbar's number enforcement, psychological compatibility, team formation
-
-Winning 11 replaces passive LinkedIn-style networking with intentional, high-value "gardens" of trusted collaborators. The system enforces Dunbar's number (150 connection cap) and uses psychological assessments to calculate trust scores.
-
-### The Entity
-
-The connection entity tracks the relationship between two users with trust scoring and decay:
-
-```json
-{
-  "entity": {
-    "name": "Connection",
-    "persistence": "persistent",
-    "collection": "connections",
-    "fields": [
-      { "name": "id", "type": "string", "required": true },
-      { "name": "userId", "type": "string", "required": true },
-      { "name": "connectedUserId", "type": "string", "required": true },
-      { "name": "trustScore", "type": "number", "default": 50 },
-      { "name": "lastInteraction", "type": "timestamp" },
-      { "name": "connectionCount", "type": "number", "default": 0 },
-      { "name": "category", "type": "enum", "values": ["inner_circle", "trusted", "casual", "dormant"] }
-    ]
-  }
-}
-```
-
-### The Traits
-
-The connection lifecycle manages adding, interacting with, and decaying connections. The guard enforces Dunbar's number:
-
-```json
-{
-  "name": "ConnectionLifecycle",
-  "linkedEntity": "Connection",
-  "stateMachine": {
-    "states": [
-      { "name": "pending", "isInitial": true },
-      { "name": "active" },
-      { "name": "decayed" },
-      { "name": "removed", "isTerminal": true }
-    ],
-    "events": [
-      { "key": "ACCEPT", "name": "Accept Connection" },
-      { "key": "INTERACT", "name": "Record Interaction" },
-      { "key": "DECAY_CHECK", "name": "Check for Decay" },
-      { "key": "REMOVE", "name": "Remove Connection" }
-    ],
-    "transitions": [
-      {
-        "from": "pending",
-        "event": "ACCEPT",
-        "to": "active",
-        "guard": ["<", "@entity.connectionCount", 150],
-        "effects": [
-          ["increment", "@entity.connectionCount", 1],
-          ["set", "@entity.lastInteraction", "@now"],
-          ["persist", "update", "Connection", "@entity"]
-        ]
-      },
-      {
-        "from": "active",
-        "event": "INTERACT",
-        "to": "active",
-        "effects": [
-          ["set", "@entity.trustScore", ["+", "@entity.trustScore", 5]],
-          ["set", "@entity.lastInteraction", "@now"]
-        ]
-      },
-      {
-        "from": "active",
-        "event": "DECAY_CHECK",
-        "to": "decayed",
-        "guard": [">", ["-", "@now", "@entity.lastInteraction"], 2592000000],
-        "effects": [
-          ["set", "@entity.trustScore", ["-", "@entity.trustScore", 10]],
-          ["set", "@entity.category", "dormant"]
-        ]
-      },
-      {
-        "from": ["active", "decayed"],
-        "event": "REMOVE",
-        "to": "removed",
-        "effects": [
-          ["decrement", "@entity.connectionCount", 1],
-          ["persist", "delete", "Connection", "@entity.id"]
-        ]
-      }
-    ]
-  }
-}
-```
-
-You literally can't add a 151st connection. The guard `["<", "@entity.connectionCount", 150]` makes the transition non-existent. The decay guard checks if 30 days (2592000000ms) have passed since last interaction — if so, the connection automatically degrades.
-
-The psychological assessment is a multi-step trait. Trust scores update as entity fields via effects when interactions occur:
-
-```json
-{
-  "from": "active",
-  "event": "INTERACT",
-  "to": "active",
-  "effects": [
-    ["set", "@entity.trustScore", ["+", "@entity.trustScore", 5]],
-    ["set", "@entity.lastInteraction", "@now"]
-  ]
-}
-```
-
-Every interaction is a `+5` to trust. Inactivity decays it. The math is explicit in the schema — no hidden algorithm.
-
-### The Pages
-
-```json
-"pages": [
-  {
-    "name": "GardenPage",
-    "path": "/garden",
-    "traits": [
-      { "ref": "ConnectionLifecycle", "linkedEntity": "Connection" },
-      { "ref": "GardenVisualization", "linkedEntity": "Garden" }
-    ]
-  },
-  {
-    "name": "TeamBuilderPage",
-    "path": "/team/build",
-    "traits": [
-      { "ref": "TeamFormation", "linkedEntity": "Team" }
-    ]
-  }
-]
-```
-
-The garden page shows your relationship network with trust visualization. The team builder uses AI-driven formation to pick 2-11 members based on archetype compatibility.
-
-## 4. Government Inspection System — Compliance Workflow
+## 1. Government Inspection System — Compliance Workflow
 
 **Domain:** Structured field inspections for government regulators
 **Key Challenge:** 5-phase workflow enforcement, legal requirement guards, audit trails
@@ -582,7 +183,7 @@ Every `persist` effect auto-generates an audit trail. The inspection moves throu
 
 The form page uses a single trait that renders different forms per phase via `render-ui`. The route `/inspection/:id` loads the specific inspection and shows whichever phase it's currently in.
 
-## 5. KFlow — AI Learning Platform
+## 2. KFlow — AI Learning Platform
 
 **Domain:** LLM-powered knowledge graph generation
 **Key Challenge:** Recursive concept expansion, AI lesson generation, course publishing
@@ -737,7 +338,7 @@ The entire pipeline is declarative. No orchestration code. No job queues. Just e
 
 The graph explorer page composes concept expansion with visualization — expanding concepts and rendering the knowledge graph on one route.
 
-## 6. Fitness Tracker — Personal Training Platform
+## 3. Fitness Tracker — Personal Training Platform
 
 **Domain:** Trainer-client management with credit-based scheduling
 **Key Challenge:** Credit system, workout tracking, AI meal analysis
@@ -884,18 +485,279 @@ Same `set`, same `increment`, same `persist` — applied to reps and weights ins
 
 The trainee dashboard composes three traits on one page — bookings, workouts, and meals all visible at once. Each trait manages its own state machine independently.
 
+## 4. Trait Wars — Tactical Strategy Game
+
+**Domain:** Turn-based tactical combat
+**Key Challenge:** Complex combat with visible AI, turn phases, unit composition
+
+Trait Wars is a Heroes of Might and Magic-inspired strategy game where units equip **Traits** — visible state machines that define their behavior. The core innovation: players can read enemy state machines and exploit transition windows.
+
+### The Entity
+
+Every unit on the battlefield is an entity with combat stats, position, and equipped traits:
+
+```json
+{
+  "entity": {
+    "name": "Unit",
+    "persistence": "runtime",
+    "fields": [
+      { "name": "id", "type": "string", "required": true },
+      { "name": "name", "type": "string", "required": true },
+      { "name": "hp", "type": "number", "default": 100 },
+      { "name": "attack", "type": "number", "default": 10 },
+      { "name": "defense", "type": "number", "default": 5 },
+      { "name": "position", "type": "object" },
+      { "name": "equippedTraits", "type": "array", "items": { "type": "string" } },
+      { "name": "status", "type": "enum", "values": ["alive", "stunned", "dead"] }
+    ]
+  }
+}
+```
+
+Notice `"persistence": "runtime"` — game state lives in memory, not a database. The entity is the gravitational core: everything else orbits around it.
+
+### The Traits
+
+The turn controller itself is a state machine. Each phase has clear entry and exit rules:
+
+```json
+{
+  "name": "TurnPhaseController",
+  "linkedEntity": "Match",
+  "stateMachine": {
+    "states": [
+      { "name": "ObservationPhase", "isInitial": true },
+      { "name": "SelectionPhase" },
+      { "name": "MovementPhase" },
+      { "name": "ActionPhase" },
+      { "name": "ResolutionPhase" }
+    ],
+    "events": [
+      { "key": "BEGIN_SELECTION", "name": "Begin Selection" },
+      { "key": "CONFIRM_SELECTION", "name": "Confirm Selection" },
+      { "key": "MOVE_COMPLETE", "name": "Move Complete" },
+      { "key": "RESOLVE", "name": "Resolve Actions" },
+      { "key": "NEXT_TURN", "name": "Next Turn" }
+    ],
+    "transitions": [
+      {
+        "from": "ObservationPhase",
+        "event": "BEGIN_SELECTION",
+        "to": "SelectionPhase",
+        "effects": [
+          ["render-ui", "main", {
+            "type": "entity-table",
+            "entity": "Unit",
+            "columns": ["name", "hp", "status", "equippedTraits"]
+          }]
+        ]
+      },
+      { "from": "SelectionPhase", "event": "CONFIRM_SELECTION", "to": "MovementPhase" },
+      { "from": "MovementPhase", "event": "MOVE_COMPLETE", "to": "ActionPhase" },
+      {
+        "from": "ActionPhase",
+        "event": "RESOLVE",
+        "to": "ResolutionPhase",
+        "effects": [
+          ["emit", "TURN_RESOLVED", { "turnNumber": "@entity.turnCount" }]
+        ]
+      },
+      { "from": "ResolutionPhase", "event": "NEXT_TURN", "to": "ObservationPhase" }
+    ]
+  }
+}
+```
+
+Five states. Clean transitions. The `render-ui` effect in SelectionPhase shows the unit table with their traits visible — this is what lets players read enemy state machines and plan around them. The `emit` effect broadcasts turn resolution to all other orbitals (combat, terrain, hero abilities).
+
+Unit combat is a separate trait with guards that enforce game rules:
+
+```json
+{
+  "from": "idle",
+  "event": "ATTACK",
+  "to": "attacking",
+  "guard": ["and",
+    [">", "@entity.hp", 0],
+    ["!=", "@entity.status", "stunned"]
+  ],
+  "effects": [
+    ["set", "@entity.lastAction", "attack"],
+    ["emit", "DAMAGE_DEALT", {
+      "attackerId": "@entity.id",
+      "damage": "@entity.attack"
+    }]
+  ]
+}
+```
+
+A dead or stunned unit literally cannot attack. The guard makes it impossible — no `if` statement to forget.
+
+### The Pages
+
+```json
+"pages": [
+  {
+    "name": "BattlefieldPage",
+    "path": "/battle/:matchId",
+    "traits": [
+      { "ref": "TurnPhaseController", "linkedEntity": "Match" },
+      { "ref": "UnitCombat", "linkedEntity": "Unit" }
+    ]
+  },
+  {
+    "name": "ArmyBuilderPage",
+    "path": "/army",
+    "traits": [
+      { "ref": "UnitComposition", "linkedEntity": "Unit" }
+    ]
+  }
+]
+```
+
+A page is just a route that binds traits. `/battle/:matchId` activates both the turn controller and the combat trait on the same screen. The compiler generates the UI from the `render-ui` effects.
+
+## 5. Iram — 3D Action RPG
+
+**Domain:** Dungeon-crawling ARPG
+**Key Challenge:** Real-time combat, procedural dungeons, ability composition
+
+Iram is set inside a Dyson Sphere called the Iram Dominion. Players descend through 5 dungeon zones, defeat bosses, and collect **Orbital Shards** — fragments of behavior that compose into new abilities.
+
+### The Entity
+
+The player entity tracks health, inventory, and the 8 orbital slots:
+
+```json
+{
+  "entity": {
+    "name": "Player",
+    "persistence": "persistent",
+    "collection": "players",
+    "fields": [
+      { "name": "id", "type": "string", "required": true },
+      { "name": "health", "type": "number", "default": 100 },
+      { "name": "maxHealth", "type": "number", "default": 100 },
+      { "name": "equippedOrbitals", "type": "array", "items": { "type": "string" } },
+      { "name": "inventory", "type": "array", "items": { "type": "object" } },
+      { "name": "currentZone", "type": "number", "default": 1 },
+      { "name": "orbitalShards", "type": "number", "default": 0 }
+    ]
+  }
+}
+```
+
+Player data is `"persistent"` — progress saves to database between sessions.
+
+### The Traits
+
+Boss encounters use phase-based state machines — the same pattern as the turn controller, but for a single enemy:
+
+```json
+{
+  "name": "BossEncounter",
+  "linkedEntity": "Boss",
+  "stateMachine": {
+    "states": [
+      { "name": "dormant", "isInitial": true },
+      { "name": "phase1" },
+      { "name": "phase2" },
+      { "name": "enraged" },
+      { "name": "defeated", "isTerminal": true }
+    ],
+    "events": [
+      { "key": "ENGAGE", "name": "Start Fight" },
+      { "key": "DAMAGE", "name": "Take Damage", "payload": [
+        { "name": "amount", "type": "number", "required": true }
+      ]},
+      { "key": "PHASE_SHIFT", "name": "Phase Shift" }
+    ],
+    "transitions": [
+      { "from": "dormant", "event": "ENGAGE", "to": "phase1" },
+      {
+        "from": "phase1",
+        "event": "DAMAGE",
+        "to": "phase2",
+        "guard": ["<", "@entity.hp", 50],
+        "effects": [
+          ["set", "@entity.attackPattern", "aggressive"],
+          ["emit", "BOSS_PHASE_CHANGED", { "phase": 2 }]
+        ]
+      },
+      {
+        "from": "phase2",
+        "event": "DAMAGE",
+        "to": "enraged",
+        "guard": ["<", "@entity.hp", 20],
+        "effects": [
+          ["set", "@entity.attackSpeed", ["+", "@entity.attackSpeed", 2]],
+          ["set", "@entity.attackPattern", "berserk"]
+        ]
+      },
+      {
+        "from": ["phase1", "phase2", "enraged"],
+        "event": "DAMAGE",
+        "to": "defeated",
+        "guard": ["<=", "@entity.hp", 0],
+        "effects": [
+          ["emit", "BOSS_DEFEATED", { "bossId": "@entity.id", "zone": "@entity.zone" }],
+          ["emit", "LOOT_DROP", { "table": "@entity.lootTable" }]
+        ]
+      }
+    ]
+  }
+}
+```
+
+Notice `"from": ["phase1", "phase2", "enraged"]` — the death transition works from any combat phase. Guards check HP thresholds to trigger phase shifts. The `BOSS_DEFEATED` event flows to the Dungeon orbital to unlock the next zone, while `LOOT_DROP` flows to the inventory system.
+
+### The Resonance System
+
+Compatible Orbitals create synergy effects:
+- Defend + Mend → 1.5x shield healing
+- Disrupt + Fabricate → Traps apply debuffs
+- Archive + Command → Allies receive enemy weakness intel
+
+This is modeled through cross-orbital `listens` — when two specific orbitals are both equipped, their combined events trigger resonance effects.
+
+### The Pages
+
+```json
+"pages": [
+  {
+    "name": "DungeonPage",
+    "path": "/dungeon/:zoneId",
+    "traits": [
+      { "ref": "DungeonExploration", "linkedEntity": "Dungeon" },
+      { "ref": "PlayerCombat", "linkedEntity": "Player" },
+      { "ref": "BossEncounter", "linkedEntity": "Boss" }
+    ]
+  },
+  {
+    "name": "OrbitalLoadoutPage",
+    "path": "/loadout",
+    "traits": [
+      { "ref": "OrbitalEquip", "linkedEntity": "Player" }
+    ]
+  }
+]
+```
+
+The dungeon page composes three traits on one route — exploration, combat, and boss encounters all active simultaneously.
+
 ## The Pattern
 
-Six applications. Six different domains. The same pattern:
+Five applications. Five different domains. The same pattern:
 
-| Concept | Game | Government | Social | Fitness | Education | RPG |
-|---------|------|-----------|--------|---------|-----------|-----|
-| **Entity** | Unit | Inspection | Connection | Session | Concept | Player |
-| **States** | Idle→Attack→Dead | Intro→Content→Close | Pending→Active→Decayed | Available→Booked→Done | Seed→Expanded→Published | Exploring→Combat→Boss |
-| **Guards** | HP > 0, in range | Fields filled, signed | < 150 connections | Credits > 0 | Prerequisites met | Has required orbital |
-| **Effects** | Deal damage, move | Save findings, log | Update trust score | Deduct credit | Generate lesson | Drop loot |
-| **Events** | ATTACK, MOVE, DIE | PROCEED, CLOSE | CONNECT, DECAY | BOOK, CANCEL | EXPAND, PUBLISH | ENTER_ROOM, ATTACK |
-| **Pages** | /battle/:matchId | /inspection/:id | /garden | /trainee/:id | /graph/:graphId | /dungeon/:zoneId |
+| Concept | Government | Education | Fitness | Game | RPG |
+|---------|-----------|-----------|---------|------|-----|
+| **Entity** | Inspection | Concept | Session | Unit | Player |
+| **States** | Intro→Content→Close | Seed→Expanded→Published | Available→Booked→Done | Idle→Attack→Dead | Exploring→Combat→Boss |
+| **Guards** | Fields filled, signed | Prerequisites met | Credits > 0 | HP > 0, in range | Has required orbital |
+| **Effects** | Save findings, log | Generate lesson | Deduct credit | Deal damage, move | Drop loot |
+| **Events** | PROCEED, CLOSE | EXPAND, PUBLISH | BOOK, CANCEL | ATTACK, MOVE, DIE | ENTER_ROOM, ATTACK |
+| **Pages** | /inspection/:id | /graph/:graphId | /trainee/:id | /battle/:matchId | /dungeon/:zoneId |
 
 The vocabulary changes. The structure doesn't.
 
@@ -907,7 +769,6 @@ You learn Almadar once. Then you can build:
 - Business tools
 - Games
 - Government systems
-- Social platforms
 - AI-powered products
 - Health and fitness apps
 
@@ -937,6 +798,6 @@ The question "what language should I use?" is less important than "what model of
 
 React + Express. Django + PostgreSQL. Rails + Redis. These are technology choices. They don't change how you model behavior — they just change where you write the same patterns.
 
-Almadar is a behavior model that happens to compile to technology. One schema. Six apps. Because the model is right.
+Almadar is a behavior model that happens to compile to technology. One schema. Five apps. Because the model is right.
 
 Explore all projects and try building your own at [almadar.io](/docs/getting-started/introduction).

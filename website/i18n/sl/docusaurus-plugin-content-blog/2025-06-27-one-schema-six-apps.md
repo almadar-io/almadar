@@ -1,13 +1,13 @@
 ---
 slug: one-schema-six-apps
-title: "Ena shema, šest aplikacij: Kako smo zgradili igro, vladno orodje in sledilnik fitnesa z istim jezikom"
+title: "Ena shema, pet aplikacij: Kako smo zgradili vladno orodje, AI platformo in dve igri z istim jezikom"
 authors: [almadar]
 tags: [case-study, architecture]
 ---
 
-Taktična strateška igra. 3D dungeon crawler. Platforma za inteligenco odnosov. Vladni inšpekcijski sistem. Platforma za učenje z AI. Osebni sledilnik fitnesa.
+Vladni inšpekcijski sistem. Platforma za učenje z AI. Osebni sledilnik fitnesa. Taktična strateška igra. 3D dungeon crawler.
 
-Šest aplikacij. Šest popolnoma različnih domen. En jezik.
+Pet aplikacij. Pet popolnoma različnih domen. En jezik.
 
 Tukaj je razlaga — in zakaj je to pomembno.
 
@@ -19,11 +19,11 @@ Vsak programski jezik trdi, da je "general purpose." Ampak kdaj ste nazadnje upo
 
 Almadarjeva Orbital architecture je po zasnovi domain-agnostična. Orbital je: Entity + Traits + Pages. Ta formula deluje za katero koli domeno, ker modelira **vedênje**, ne **tehnologijo**.
 
-Prehodimo vseh šest — in tokrat vam pokažemo dejanski schema kode.
+Prehodimo vseh pet — in tokrat vam pokažemo dejanski schema kode.
 
 ## Kako deluje Orbital Schema
 
-Preden se poglobimo v šest aplikacij, je tu hiter pregled, kaj boste videli v kodi. Vsak orbital schema je JSON datoteka s to strukturo:
+Preden se poglobimo v pet aplikacij, je tu hiter pregled, kaj boste videli v kodi. Vsak orbital schema je JSON datoteka s to strukturo:
 
 ```json
 {
@@ -48,408 +48,9 @@ Effects so stranski primitivi: `set` posodobi polje, `render-ui` prikaže kompon
 
 Guards so S-expression pogoji, ki morajo biti resnični, da se transition sproži. Če guard ne uspe, transition ne obstaja.
 
-Zdaj pa poglejmo to v akciji čez šest domen.
+Zdaj pa poglejmo to v akciji čez pet domen.
 
-## 1. Trait Wars — Taktična strateška igra
-
-**Domena:** Turn-based taktični boj
-**Ključni izziv:** Kompleksen boj z vidnim AI, faze potez, kompozicija enot
-
-Trait Wars je strategijska igra, navdihnjena z Heroes of Might and Magic, kjer enote opremijo **Traits** — vidne state machines, ki definirajo njihovo vedênje. Jederna inovacija: igralci lahko preberejo sovražnikove state machines in izkoristijo okna prehodov.
-
-### Entity
-
-Vsaka enota na bojišču je entity z bojnimi statistikami, pozicijo in opremljenimi traits:
-
-```json
-{
-  "entity": {
-    "name": "Unit",
-    "persistence": "runtime",
-    "fields": [
-      { "name": "id", "type": "string", "required": true },
-      { "name": "name", "type": "string", "required": true },
-      { "name": "hp", "type": "number", "default": 100 },
-      { "name": "attack", "type": "number", "default": 10 },
-      { "name": "defense", "type": "number", "default": 5 },
-      { "name": "position", "type": "object" },
-      { "name": "equippedTraits", "type": "array", "items": { "type": "string" } },
-      { "name": "status", "type": "enum", "values": ["alive", "stunned", "dead"] }
-    ]
-  }
-}
-```
-
-Opazite `"persistence": "runtime"` — stanje igre živi v pomnilniku, ne v bazi podatkov. Entity je gravitacijsko jedro: vse drugo kroži okoli njega.
-
-### Traits
-
-Turn controller sam je state machine. Vsaka faza ima jasna pravila vstopa in izstopa:
-
-```json
-{
-  "name": "TurnPhaseController",
-  "linkedEntity": "Match",
-  "stateMachine": {
-    "states": [
-      { "name": "ObservationPhase", "isInitial": true },
-      { "name": "SelectionPhase" },
-      { "name": "MovementPhase" },
-      { "name": "ActionPhase" },
-      { "name": "ResolutionPhase" }
-    ],
-    "events": [
-      { "key": "BEGIN_SELECTION", "name": "Begin Selection" },
-      { "key": "CONFIRM_SELECTION", "name": "Confirm Selection" },
-      { "key": "MOVE_COMPLETE", "name": "Move Complete" },
-      { "key": "RESOLVE", "name": "Resolve Actions" },
-      { "key": "NEXT_TURN", "name": "Next Turn" }
-    ],
-    "transitions": [
-      {
-        "from": "ObservationPhase",
-        "event": "BEGIN_SELECTION",
-        "to": "SelectionPhase",
-        "effects": [
-          ["render-ui", "main", {
-            "type": "entity-table",
-            "entity": "Unit",
-            "columns": ["name", "hp", "status", "equippedTraits"]
-          }]
-        ]
-      },
-      { "from": "SelectionPhase", "event": "CONFIRM_SELECTION", "to": "MovementPhase" },
-      { "from": "MovementPhase", "event": "MOVE_COMPLETE", "to": "ActionPhase" },
-      {
-        "from": "ActionPhase",
-        "event": "RESOLVE",
-        "to": "ResolutionPhase",
-        "effects": [
-          ["emit", "TURN_RESOLVED", { "turnNumber": "@entity.turnCount" }]
-        ]
-      },
-      { "from": "ResolutionPhase", "event": "NEXT_TURN", "to": "ObservationPhase" }
-    ]
-  }
-}
-```
-
-Pet stanj. Čisti prehodi. `render-ui` effect v SelectionPhase prikaže tabelo enot z vidnimi traits — to je, kar igralcem omogoča branje sovražnikovih state machines in načrtovanje okoli njih. `emit` effect oddaja razrešitev poteze vsem drugim orbitalom (boj, teren, junaške sposobnosti).
-
-Boj enot je ločen trait z guards, ki vsilijo pravila igre:
-
-```json
-{
-  "from": "idle",
-  "event": "ATTACK",
-  "to": "attacking",
-  "guard": ["and",
-    [">", "@entity.hp", 0],
-    ["!=", "@entity.status", "stunned"]
-  ],
-  "effects": [
-    ["set", "@entity.lastAction", "attack"],
-    ["emit", "DAMAGE_DEALT", {
-      "attackerId": "@entity.id",
-      "damage": "@entity.attack"
-    }]
-  ]
-}
-```
-
-Mrtva ali ošametena enota dobesedno ne more napasti. Guard to onemogoči — ni `if` stavka, ki bi ga lahko pozabili.
-
-### Pages
-
-```json
-"pages": [
-  {
-    "name": "BattlefieldPage",
-    "path": "/battle/:matchId",
-    "traits": [
-      { "ref": "TurnPhaseController", "linkedEntity": "Match" },
-      { "ref": "UnitCombat", "linkedEntity": "Unit" }
-    ]
-  },
-  {
-    "name": "ArmyBuilderPage",
-    "path": "/army",
-    "traits": [
-      { "ref": "UnitComposition", "linkedEntity": "Unit" }
-    ]
-  }
-]
-```
-
-Page je preprosto route, ki veže traits. `/battle/:matchId` aktivira tako turn controller kot combat trait na istem zaslonu. Compiler generira UI iz `render-ui` effects.
-
-## 2. Iram — 3D Action RPG
-
-**Domena:** Dungeon-crawling ARPG
-**Ključni izziv:** Real-time boj, proceduralni dungeons, kompozicija sposobnosti
-
-Iram se dogaja znotraj Dyson Sphere z imenom Iram Dominion. Igralci se spuščajo skozi 5 dungeon con, premagujejo šefe in zbirajo **Orbital Shards** — fragmente vedênja, ki se komponirajo v nove sposobnosti.
-
-### Entity
-
-Player entity sledi zdravju, inventarju in 8 orbital slotom:
-
-```json
-{
-  "entity": {
-    "name": "Player",
-    "persistence": "persistent",
-    "collection": "players",
-    "fields": [
-      { "name": "id", "type": "string", "required": true },
-      { "name": "health", "type": "number", "default": 100 },
-      { "name": "maxHealth", "type": "number", "default": 100 },
-      { "name": "equippedOrbitals", "type": "array", "items": { "type": "string" } },
-      { "name": "inventory", "type": "array", "items": { "type": "object" } },
-      { "name": "currentZone", "type": "number", "default": 1 },
-      { "name": "orbitalShards", "type": "number", "default": 0 }
-    ]
-  }
-}
-```
-
-Podatki igralca so `"persistent"` — napredek se shranjuje v bazo med sejami.
-
-### Traits
-
-Boss srečanja uporabljajo phase-based state machines — isti vzorec kot turn controller, ampak za enega sovražnika:
-
-```json
-{
-  "name": "BossEncounter",
-  "linkedEntity": "Boss",
-  "stateMachine": {
-    "states": [
-      { "name": "dormant", "isInitial": true },
-      { "name": "phase1" },
-      { "name": "phase2" },
-      { "name": "enraged" },
-      { "name": "defeated", "isTerminal": true }
-    ],
-    "events": [
-      { "key": "ENGAGE", "name": "Start Fight" },
-      { "key": "DAMAGE", "name": "Take Damage", "payload": [
-        { "name": "amount", "type": "number", "required": true }
-      ]},
-      { "key": "PHASE_SHIFT", "name": "Phase Shift" }
-    ],
-    "transitions": [
-      { "from": "dormant", "event": "ENGAGE", "to": "phase1" },
-      {
-        "from": "phase1",
-        "event": "DAMAGE",
-        "to": "phase2",
-        "guard": ["<", "@entity.hp", 50],
-        "effects": [
-          ["set", "@entity.attackPattern", "aggressive"],
-          ["emit", "BOSS_PHASE_CHANGED", { "phase": 2 }]
-        ]
-      },
-      {
-        "from": "phase2",
-        "event": "DAMAGE",
-        "to": "enraged",
-        "guard": ["<", "@entity.hp", 20],
-        "effects": [
-          ["set", "@entity.attackSpeed", ["+", "@entity.attackSpeed", 2]],
-          ["set", "@entity.attackPattern", "berserk"]
-        ]
-      },
-      {
-        "from": ["phase1", "phase2", "enraged"],
-        "event": "DAMAGE",
-        "to": "defeated",
-        "guard": ["<=", "@entity.hp", 0],
-        "effects": [
-          ["emit", "BOSS_DEFEATED", { "bossId": "@entity.id", "zone": "@entity.zone" }],
-          ["emit", "LOOT_DROP", { "table": "@entity.lootTable" }]
-        ]
-      }
-    ]
-  }
-}
-```
-
-Opazite `"from": ["phase1", "phase2", "enraged"]` — death transition deluje iz katere koli bojne faze. Guards preverjajo HP pragove za sprožitev faznih prehodov. `BOSS_DEFEATED` event teče v Dungeon orbital za odklepanje naslednje cone, medtem ko `LOOT_DROP` teče v inventarni sistem.
-
-### Resonance sistem
-
-Združljivi Orbitali ustvarjajo sinergijske effects:
-- Defend + Mend → 1.5x shield healing
-- Disrupt + Fabricate → Pasti uporabijo debuffe
-- Archive + Command → Zavezniki prejmejo intel o slabostih sovražnikov
-
-To je modelirano skozi cross-orbital `listens` — ko sta dva specifična orbitala hkrati opremljena, njuni skupni events sprožijo resonance effects.
-
-### Pages
-
-```json
-"pages": [
-  {
-    "name": "DungeonPage",
-    "path": "/dungeon/:zoneId",
-    "traits": [
-      { "ref": "DungeonExploration", "linkedEntity": "Dungeon" },
-      { "ref": "PlayerCombat", "linkedEntity": "Player" },
-      { "ref": "BossEncounter", "linkedEntity": "Boss" }
-    ]
-  },
-  {
-    "name": "OrbitalLoadoutPage",
-    "path": "/loadout",
-    "traits": [
-      { "ref": "OrbitalEquip", "linkedEntity": "Player" }
-    ]
-  }
-]
-```
-
-Dungeon page komponira tri traits na enem route — raziskovanje, boj in boss srečanja so vsi aktivni hkrati.
-
-## 3. Winning 11 — Inteligenca odnosov
-
-**Domena:** Trust-based profesionalno mreženje
-**Ključni izziv:** Dunbarjevo število enforcement, psihološka združljivost, formiranje ekip
-
-Winning 11 nadomešča pasivno LinkedIn-style mreženje z namernimi, visoko-vrednimi "vrtovi" zaupanih sodelavcev. Sistem vsili Dunbarjevo število (150 connection cap) in uporablja psihološke ocene za izračun trust scores.
-
-### Entity
-
-Connection entity sledi razmerju med dvema uporabnikoma s trust scoring in decay:
-
-```json
-{
-  "entity": {
-    "name": "Connection",
-    "persistence": "persistent",
-    "collection": "connections",
-    "fields": [
-      { "name": "id", "type": "string", "required": true },
-      { "name": "userId", "type": "string", "required": true },
-      { "name": "connectedUserId", "type": "string", "required": true },
-      { "name": "trustScore", "type": "number", "default": 50 },
-      { "name": "lastInteraction", "type": "timestamp" },
-      { "name": "connectionCount", "type": "number", "default": 0 },
-      { "name": "category", "type": "enum", "values": ["inner_circle", "trusted", "casual", "dormant"] }
-    ]
-  }
-}
-```
-
-### Traits
-
-Connection lifecycle upravlja dodajanje, interakcijo in propadanje povezav. Guard vsili Dunbarjevo število:
-
-```json
-{
-  "name": "ConnectionLifecycle",
-  "linkedEntity": "Connection",
-  "stateMachine": {
-    "states": [
-      { "name": "pending", "isInitial": true },
-      { "name": "active" },
-      { "name": "decayed" },
-      { "name": "removed", "isTerminal": true }
-    ],
-    "events": [
-      { "key": "ACCEPT", "name": "Accept Connection" },
-      { "key": "INTERACT", "name": "Record Interaction" },
-      { "key": "DECAY_CHECK", "name": "Check for Decay" },
-      { "key": "REMOVE", "name": "Remove Connection" }
-    ],
-    "transitions": [
-      {
-        "from": "pending",
-        "event": "ACCEPT",
-        "to": "active",
-        "guard": ["<", "@entity.connectionCount", 150],
-        "effects": [
-          ["increment", "@entity.connectionCount", 1],
-          ["set", "@entity.lastInteraction", "@now"],
-          ["persist", "update", "Connection", "@entity"]
-        ]
-      },
-      {
-        "from": "active",
-        "event": "INTERACT",
-        "to": "active",
-        "effects": [
-          ["set", "@entity.trustScore", ["+", "@entity.trustScore", 5]],
-          ["set", "@entity.lastInteraction", "@now"]
-        ]
-      },
-      {
-        "from": "active",
-        "event": "DECAY_CHECK",
-        "to": "decayed",
-        "guard": [">", ["-", "@now", "@entity.lastInteraction"], 2592000000],
-        "effects": [
-          ["set", "@entity.trustScore", ["-", "@entity.trustScore", 10]],
-          ["set", "@entity.category", "dormant"]
-        ]
-      },
-      {
-        "from": ["active", "decayed"],
-        "event": "REMOVE",
-        "to": "removed",
-        "effects": [
-          ["decrement", "@entity.connectionCount", 1],
-          ["persist", "delete", "Connection", "@entity.id"]
-        ]
-      }
-    ]
-  }
-}
-```
-
-Dobesedno ne morete dodati 151. povezave. Guard `["<", "@entity.connectionCount", 150]` naredi transition neobstoječ. Decay guard preveri, ali je od zadnje interakcije minilo 30 dni (2592000000ms) — če ja, se povezava samodejno degradira.
-
-Psihološka ocena je multi-step trait. Trust scores se posodabljajo kot entity fields preko effects, ko pride do interakcij:
-
-```json
-{
-  "from": "active",
-  "event": "INTERACT",
-  "to": "active",
-  "effects": [
-    ["set", "@entity.trustScore", ["+", "@entity.trustScore", 5]],
-    ["set", "@entity.lastInteraction", "@now"]
-  ]
-}
-```
-
-Vsaka interakcija je `+5` za zaupanje. Neaktivnost ga degradira. Matematika je eksplicitna v shemi — ni skritega algoritma.
-
-### Pages
-
-```json
-"pages": [
-  {
-    "name": "GardenPage",
-    "path": "/garden",
-    "traits": [
-      { "ref": "ConnectionLifecycle", "linkedEntity": "Connection" },
-      { "ref": "GardenVisualization", "linkedEntity": "Garden" }
-    ]
-  },
-  {
-    "name": "TeamBuilderPage",
-    "path": "/team/build",
-    "traits": [
-      { "ref": "TeamFormation", "linkedEntity": "Team" }
-    ]
-  }
-]
-```
-
-Garden page prikazuje vašo mrežo odnosov z vizualizacijo zaupanja. Team builder uporablja AI-driven formiranje za izbiro 2-11 članov glede na archetype združljivost.
-
-## 4. Government Inspection System — Compliance Workflow
+## 1. Government Inspection System — Compliance Workflow
 
 **Domena:** Strukturirane terenske inšpekcije za vladne regulatorje
 **Ključni izziv:** 5-fazni workflow enforcement, zakonski guard zahtevki, audit trails
@@ -582,7 +183,7 @@ Vsak `persist` effect samodejno generira audit trail. Inšpekcija prehaja skozi 
 
 Form page uporablja en trait, ki prikazuje različne forme glede na fazo preko `render-ui`. Route `/inspection/:id` naloži specifično inšpekcijo in prikaže, v kateri fazi je trenutno.
 
-## 5. KFlow — Platforma za učenje z AI
+## 2. KFlow — Platforma za učenje z AI
 
 **Domena:** LLM-powered generacija knowledge graph
 **Ključni izziv:** Rekurzivna ekspanzija konceptov, AI generacija lekcij, objava tečajev
@@ -737,7 +338,7 @@ Celoten pipeline je deklarativen. Ni orchestration kode. Ni job queues. Samo dog
 
 Graph explorer page komponira concept expansion z vizualizacijo — razširjanje konceptov in prikazovanje knowledge graph na enem route.
 
-## 6. Fitness Tracker — Osebna trening platforma
+## 3. Fitness Tracker — Osebna trening platforma
 
 **Domena:** Upravljanje trener-stranka s kreditnim sistemom
 **Ključni izziv:** Kreditni sistem, sledenje vaj, AI analiza obrokov
@@ -884,18 +485,279 @@ Isti `set`, isti `increment`, isti `persist` — aplicirani na ponovitve in ute�
 
 Trainee dashboard komponira tri traits na eni strani — rezervacije, vadbe in obroki so vsi vidni hkrati. Vsak trait upravlja svoj state machine neodvisno.
 
+## 4. Trait Wars — Taktična strateška igra
+
+**Domena:** Turn-based taktični boj
+**Ključni izziv:** Kompleksen boj z vidnim AI, faze potez, kompozicija enot
+
+Trait Wars je strategijska igra, navdihnjena z Heroes of Might and Magic, kjer enote opremijo **Traits** — vidne state machines, ki definirajo njihovo vedênje. Jederna inovacija: igralci lahko preberejo sovražnikove state machines in izkoristijo okna prehodov.
+
+### Entity
+
+Vsaka enota na bojišču je entity z bojnimi statistikami, pozicijo in opremljenimi traits:
+
+```json
+{
+  "entity": {
+    "name": "Unit",
+    "persistence": "runtime",
+    "fields": [
+      { "name": "id", "type": "string", "required": true },
+      { "name": "name", "type": "string", "required": true },
+      { "name": "hp", "type": "number", "default": 100 },
+      { "name": "attack", "type": "number", "default": 10 },
+      { "name": "defense", "type": "number", "default": 5 },
+      { "name": "position", "type": "object" },
+      { "name": "equippedTraits", "type": "array", "items": { "type": "string" } },
+      { "name": "status", "type": "enum", "values": ["alive", "stunned", "dead"] }
+    ]
+  }
+}
+```
+
+Opazite `"persistence": "runtime"` — stanje igre živi v pomnilniku, ne v bazi podatkov. Entity je gravitacijsko jedro: vse drugo kroži okoli njega.
+
+### Traits
+
+Turn controller sam je state machine. Vsaka faza ima jasna pravila vstopa in izstopa:
+
+```json
+{
+  "name": "TurnPhaseController",
+  "linkedEntity": "Match",
+  "stateMachine": {
+    "states": [
+      { "name": "ObservationPhase", "isInitial": true },
+      { "name": "SelectionPhase" },
+      { "name": "MovementPhase" },
+      { "name": "ActionPhase" },
+      { "name": "ResolutionPhase" }
+    ],
+    "events": [
+      { "key": "BEGIN_SELECTION", "name": "Begin Selection" },
+      { "key": "CONFIRM_SELECTION", "name": "Confirm Selection" },
+      { "key": "MOVE_COMPLETE", "name": "Move Complete" },
+      { "key": "RESOLVE", "name": "Resolve Actions" },
+      { "key": "NEXT_TURN", "name": "Next Turn" }
+    ],
+    "transitions": [
+      {
+        "from": "ObservationPhase",
+        "event": "BEGIN_SELECTION",
+        "to": "SelectionPhase",
+        "effects": [
+          ["render-ui", "main", {
+            "type": "entity-table",
+            "entity": "Unit",
+            "columns": ["name", "hp", "status", "equippedTraits"]
+          }]
+        ]
+      },
+      { "from": "SelectionPhase", "event": "CONFIRM_SELECTION", "to": "MovementPhase" },
+      { "from": "MovementPhase", "event": "MOVE_COMPLETE", "to": "ActionPhase" },
+      {
+        "from": "ActionPhase",
+        "event": "RESOLVE",
+        "to": "ResolutionPhase",
+        "effects": [
+          ["emit", "TURN_RESOLVED", { "turnNumber": "@entity.turnCount" }]
+        ]
+      },
+      { "from": "ResolutionPhase", "event": "NEXT_TURN", "to": "ObservationPhase" }
+    ]
+  }
+}
+```
+
+Pet stanj. Čisti prehodi. `render-ui` effect v SelectionPhase prikaže tabelo enot z vidnimi traits — to je, kar igralcem omogoča branje sovražnikovih state machines in načrtovanje okoli njih. `emit` effect oddaja razrešitev poteze vsem drugim orbitalom (boj, teren, junaške sposobnosti).
+
+Boj enot je ločen trait z guards, ki vsilijo pravila igre:
+
+```json
+{
+  "from": "idle",
+  "event": "ATTACK",
+  "to": "attacking",
+  "guard": ["and",
+    [">", "@entity.hp", 0],
+    ["!=", "@entity.status", "stunned"]
+  ],
+  "effects": [
+    ["set", "@entity.lastAction", "attack"],
+    ["emit", "DAMAGE_DEALT", {
+      "attackerId": "@entity.id",
+      "damage": "@entity.attack"
+    }]
+  ]
+}
+```
+
+Mrtva ali ošametena enota dobesedno ne more napasti. Guard to onemogoči — ni `if` stavka, ki bi ga lahko pozabili.
+
+### Pages
+
+```json
+"pages": [
+  {
+    "name": "BattlefieldPage",
+    "path": "/battle/:matchId",
+    "traits": [
+      { "ref": "TurnPhaseController", "linkedEntity": "Match" },
+      { "ref": "UnitCombat", "linkedEntity": "Unit" }
+    ]
+  },
+  {
+    "name": "ArmyBuilderPage",
+    "path": "/army",
+    "traits": [
+      { "ref": "UnitComposition", "linkedEntity": "Unit" }
+    ]
+  }
+]
+```
+
+Page je preprosto route, ki veže traits. `/battle/:matchId` aktivira tako turn controller kot combat trait na istem zaslonu. Compiler generira UI iz `render-ui` effects.
+
+## 5. Iram — 3D Action RPG
+
+**Domena:** Dungeon-crawling ARPG
+**Ključni izziv:** Real-time boj, proceduralni dungeons, kompozicija sposobnosti
+
+Iram se dogaja znotraj Dyson Sphere z imenom Iram Dominion. Igralci se spuščajo skozi 5 dungeon con, premagujejo šefe in zbirajo **Orbital Shards** — fragmente vedênja, ki se komponirajo v nove sposobnosti.
+
+### Entity
+
+Player entity sledi zdravju, inventarju in 8 orbital slotom:
+
+```json
+{
+  "entity": {
+    "name": "Player",
+    "persistence": "persistent",
+    "collection": "players",
+    "fields": [
+      { "name": "id", "type": "string", "required": true },
+      { "name": "health", "type": "number", "default": 100 },
+      { "name": "maxHealth", "type": "number", "default": 100 },
+      { "name": "equippedOrbitals", "type": "array", "items": { "type": "string" } },
+      { "name": "inventory", "type": "array", "items": { "type": "object" } },
+      { "name": "currentZone", "type": "number", "default": 1 },
+      { "name": "orbitalShards", "type": "number", "default": 0 }
+    ]
+  }
+}
+```
+
+Podatki igralca so `"persistent"` — napredek se shranjuje v bazo med sejami.
+
+### Traits
+
+Boss srečanja uporabljajo phase-based state machines — isti vzorec kot turn controller, ampak za enega sovražnika:
+
+```json
+{
+  "name": "BossEncounter",
+  "linkedEntity": "Boss",
+  "stateMachine": {
+    "states": [
+      { "name": "dormant", "isInitial": true },
+      { "name": "phase1" },
+      { "name": "phase2" },
+      { "name": "enraged" },
+      { "name": "defeated", "isTerminal": true }
+    ],
+    "events": [
+      { "key": "ENGAGE", "name": "Start Fight" },
+      { "key": "DAMAGE", "name": "Take Damage", "payload": [
+        { "name": "amount", "type": "number", "required": true }
+      ]},
+      { "key": "PHASE_SHIFT", "name": "Phase Shift" }
+    ],
+    "transitions": [
+      { "from": "dormant", "event": "ENGAGE", "to": "phase1" },
+      {
+        "from": "phase1",
+        "event": "DAMAGE",
+        "to": "phase2",
+        "guard": ["<", "@entity.hp", 50],
+        "effects": [
+          ["set", "@entity.attackPattern", "aggressive"],
+          ["emit", "BOSS_PHASE_CHANGED", { "phase": 2 }]
+        ]
+      },
+      {
+        "from": "phase2",
+        "event": "DAMAGE",
+        "to": "enraged",
+        "guard": ["<", "@entity.hp", 20],
+        "effects": [
+          ["set", "@entity.attackSpeed", ["+", "@entity.attackSpeed", 2]],
+          ["set", "@entity.attackPattern", "berserk"]
+        ]
+      },
+      {
+        "from": ["phase1", "phase2", "enraged"],
+        "event": "DAMAGE",
+        "to": "defeated",
+        "guard": ["<=", "@entity.hp", 0],
+        "effects": [
+          ["emit", "BOSS_DEFEATED", { "bossId": "@entity.id", "zone": "@entity.zone" }],
+          ["emit", "LOOT_DROP", { "table": "@entity.lootTable" }]
+        ]
+      }
+    ]
+  }
+}
+```
+
+Opazite `"from": ["phase1", "phase2", "enraged"]` — death transition deluje iz katere koli bojne faze. Guards preverjajo HP pragove za sprožitev faznih prehodov. `BOSS_DEFEATED` event teče v Dungeon orbital za odklepanje naslednje cone, medtem ko `LOOT_DROP` teče v inventarni sistem.
+
+### Resonance sistem
+
+Združljivi Orbitali ustvarjajo sinergijske effects:
+- Defend + Mend → 1.5x shield healing
+- Disrupt + Fabricate → Pasti uporabijo debuffe
+- Archive + Command → Zavezniki prejmejo intel o slabostih sovražnikov
+
+To je modelirano skozi cross-orbital `listens` — ko sta dva specifična orbitala hkrati opremljena, njuni skupni events sprožijo resonance effects.
+
+### Pages
+
+```json
+"pages": [
+  {
+    "name": "DungeonPage",
+    "path": "/dungeon/:zoneId",
+    "traits": [
+      { "ref": "DungeonExploration", "linkedEntity": "Dungeon" },
+      { "ref": "PlayerCombat", "linkedEntity": "Player" },
+      { "ref": "BossEncounter", "linkedEntity": "Boss" }
+    ]
+  },
+  {
+    "name": "OrbitalLoadoutPage",
+    "path": "/loadout",
+    "traits": [
+      { "ref": "OrbitalEquip", "linkedEntity": "Player" }
+    ]
+  }
+]
+```
+
+Dungeon page komponira tri traits na enem route — raziskovanje, boj in boss srečanja so vsi aktivni hkrati.
+
 ## Vzorec
 
-Šest aplikacij. Šest različnih domen. Isti vzorec:
+Pet aplikacij. Pet različnih domen. Isti vzorec:
 
-| Koncept | Igra | Vlada | Socialno | Fitnes | Izobraževanje | RPG |
-|---------|------|-----------|--------|---------|-----------|-----|
-| **Entity** | Enota | Inšpekcija | Povezava | Seja | Koncept | Igralec |
-| **States** | Idle→Attack→Dead | Intro→Content→Close | Pending→Active→Decayed | Available→Booked→Done | Seed→Expanded→Published | Exploring→Combat→Boss |
-| **Guards** | HP > 0, in range | Polja izpolnjena, podpisano | < 150 povezav | Krediti > 0 | Prerequisites izpolnjeni | Ima zahtevani orbital |
-| **Effects** | Povzroči škodo, premakni | Shrani ugotovitve, log | Posodobi trust score | Odbij kredit | Generiraj lekcijo | Drop loot |
-| **Events** | ATTACK, MOVE, DIE | PROCEED, CLOSE | CONNECT, DECAY | BOOK, CANCEL | EXPAND, PUBLISH | ENTER_ROOM, ATTACK |
-| **Pages** | /battle/:matchId | /inspection/:id | /garden | /trainee/:id | /graph/:graphId | /dungeon/:zoneId |
+| Koncept | Vlada | Izobraževanje | Fitnes | Igra | RPG |
+|---------|-------|-----------|---------|------|-----|
+| **Entity** | Inšpekcija | Koncept | Seja | Enota | Igralec |
+| **States** | Intro→Content→Close | Seed→Expanded→Published | Available→Booked→Done | Idle→Attack→Dead | Exploring→Combat→Boss |
+| **Guards** | Polja izpolnjena, podpisano | Prerequisites izpolnjeni | Krediti > 0 | HP > 0, in range | Ima zahtevani orbital |
+| **Effects** | Shrani ugotovitve, log | Generiraj lekcijo | Odbij kredit | Povzroči škodo, premakni | Drop loot |
+| **Events** | PROCEED, CLOSE | EXPAND, PUBLISH | BOOK, CANCEL | ATTACK, MOVE, DIE | ENTER_ROOM, ATTACK |
+| **Pages** | /inspection/:id | /graph/:graphId | /trainee/:id | /battle/:matchId | /dungeon/:zoneId |
 
 Besedišče se spreminja. Struktura ne.
 
@@ -907,7 +769,6 @@ Almadar se naučite enkrat. Nato lahko gradite:
 - Poslovna orodja
 - Igre
 - Vladne sisteme
-- Socialne platforme
 - AI-powered produkti
 - Health and fitness aplikacije
 
@@ -937,6 +798,6 @@ Vprašanje "kateri jezik naj uporabim?" je manj pomembno kot "kateri model vedê
 
 React + Express. Django + PostgreSQL. Rails + Redis. To so tehnološke izbire. Ne spremenijo, kako modelirate vedênje — samo spremenijo, kje pišete iste vzorce.
 
-Almadar je model vedênja, ki se prevede v tehnologijo. Ena shema. Šest aplikacij. Ker je model pravilen.
+Almadar je model vedênja, ki se prevede v tehnologijo. Ena shema. Pet aplikacij. Ker je model pravilen.
 
 Raziščite vse projekte in poskusite zgraditi svojega na [almadar.io](/docs/getting-started/introduction).
