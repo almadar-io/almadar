@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import type { ReactNode } from "react";
 import clsx from "clsx";
 import Link from "@docusaurus/Link";
@@ -15,21 +16,57 @@ import helloWorldAr from "!!raw-loader!../examples/hello-world.ar.orb";
 // @ts-ignore
 import helloWorldSl from "!!raw-loader!../examples/hello-world.sl.orb";
 
+function resolveRaw(content: any): string {
+  return typeof content === "object" && content.default ? content.default : content;
+}
+
 const LocalizedSchemaDisplay = () => {
   const context = useDocusaurusContext();
   const currentLocale = context.i18n?.currentLocale ?? "en";
+  const [activeTab, setActiveTab] = useState<"en" | "local">("en");
 
-  let content = helloWorldEn;
-  if (currentLocale === "ar") {
-    content = helloWorldAr;
-  } else if (currentLocale === "sl") {
-    content = helloWorldSl;
+  const enCode = resolveRaw(helloWorldEn);
+
+  if (currentLocale === "en") {
+    return <JsonHighlight code={enCode} title="hello-world.orb" />;
   }
 
-  // Handle potential ESM default export from raw-loader
-  const code = typeof content === "object" && content.default ? content.default : content;
+  let localContent = helloWorldEn;
+  if (currentLocale === "ar") {
+    localContent = helloWorldAr;
+  } else if (currentLocale === "sl") {
+    localContent = helloWorldSl;
+  }
+  const localCode = resolveRaw(localContent);
 
-  return <JsonHighlight code={code} title="hello-world.orb" />;
+  const localLabel = translate({
+    id: "homepage.schema.inYourLanguage",
+    message: "In Your Language",
+  });
+
+  return (
+    <div>
+      <div className={styles.schemaTabs}>
+        <button
+          className={clsx(styles.schemaTab, activeTab === "en" && styles.schemaTabActive)}
+          onClick={() => setActiveTab("en")}
+        >
+          English
+        </button>
+        <button
+          className={clsx(styles.schemaTab, activeTab === "local" && styles.schemaTabActive)}
+          onClick={() => setActiveTab("local")}
+        >
+          {localLabel}
+        </button>
+      </div>
+      <JsonHighlight
+        code={activeTab === "en" ? enCode : localCode}
+        title="hello-world.orb"
+        className={styles.schemaCodeBlock}
+      />
+    </div>
+  );
 };
 
 import MashrabiyaPattern from "../components/MashrabiyaPattern";

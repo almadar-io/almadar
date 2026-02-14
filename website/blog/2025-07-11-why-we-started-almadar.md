@@ -51,9 +51,9 @@ This was not just a nice metaphor. It was an architectural principle. Software s
 
 ## Two People, Not Twenty
 
-I co-founded Almadar with Maja in Ljubljana, Slovenia. Two people, not twenty. That was deliberate.
+We started Almadar in Ljubljana, Slovenia. Two people, not twenty. That was deliberate.
 
-We had both seen what happens when companies try to solve complexity with headcount. You end up with more complexity, not less. More communication overhead, more coordination, more meetings about meetings. The best software I have ever seen was built by small teams with strong opinions and clear constraints.
+We had seen what happens when companies try to solve complexity with headcount. You end up with more complexity, not less. More communication overhead, more coordination, more meetings about meetings. The best software I have ever seen was built by small teams with strong opinions and clear constraints.
 
 Our constraint was simple: we had to build something that two people could maintain. That meant the tool itself had to eliminate the work that would normally require a large team. If Almadar could not reduce a ten-person project to a two-person project, then we had no business building it.
 
@@ -63,7 +63,7 @@ Ljubljana turned out to be the perfect place for this kind of work. It is a smal
 
 We set ourselves a concrete target: 87% cost reduction. Not a vague promise of "increased productivity", an actual, measurable reduction in the time and money it takes to build a business application.
 
-Where does that number come from? If 80% of a typical application is boilerplate that the compiler generates, and the remaining 20% is custom business logic that takes half the time because you are working with a clean schema instead of a tangled codebase, you get roughly 87% savings. Weeks instead of months. Thousands instead of tens of thousands.
+Where does that number come from? We collected real project requirements and broke everything down to the smallest possible feature. Then we compared the effort of building each feature with Almadar versus traditional development assisted by LLMs. When we added it all up across the full scope, the difference came out to roughly 87%. Weeks instead of months. Thousands instead of tens of thousands.
 
 But the cost reduction is only half the story. The other half is ownership. With Almadar, you own everything. The schema is yours. The generated code is yours. There is no vendor lock-in, no monthly subscription to access your own application, no platform that can change its pricing or shut down and take your software with it. You describe what you want, we generate it, and it belongs to you completely.
 
@@ -75,6 +75,6 @@ Almadar is not finished. We are still early, still refining the schema language,
 
 The vision is straightforward: any business application that follows common patterns should take days to build, not months. The people who understand the business should be able to describe what they need, and the system should produce it. Developers should spend their time on genuinely hard problems, the 20% that is unique and interesting, not on the 80% that has been solved a thousand times before.
 
-I started Almadar because I was tired of building the same thing over and over. I kept building it because I realized I was not the only one.
+We started Almadar because we were tired of building the same thing over and over. We kept building it because we realized we were not the only ones.
 
 If any of this resonates with you, we would love to hear from you. Check out our [documentation](/docs), try the [CLI](/docs/downloads/cli), or just reach out and tell us what you are building. The orbit is just getting started.
