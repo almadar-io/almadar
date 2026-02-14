@@ -558,6 +558,7 @@ article,
 article h1,
 article h2,
 article h3 {
+    font-family: var(--ifm-heading-font-family);
     color: var(--ifm-heading-color);
 }
 
@@ -587,6 +588,7 @@ article h3 {
 [data-theme="dark"] article h1,
 [data-theme="dark"] article h2,
 [data-theme="dark"] article h3 {
+    font-family: var(--ifm-heading-font-family);
     color: var(--almadar-parchment);
 }
 
