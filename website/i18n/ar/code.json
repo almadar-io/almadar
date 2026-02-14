@@ -857,5 +857,9 @@
   "blog.recentPosts.closedCircuitTitle": {
     "message": "الـ Closed Circuit Pattern: لماذا يعلق مستخدموك (وكيف تمنع ذلك)",
     "description": "Title for the 'Closed Circuit Pattern' blog post"
+  },
+  "homepage.schema.inYourLanguage": {
+    "message": "بلغتك",
+    "description": "Tab label for the localized schema example on the homepage"
   }
 }

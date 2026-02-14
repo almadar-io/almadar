@@ -857,5 +857,9 @@
   "blog.recentPosts.closedCircuitTitle": {
     "message": "Vzorec zaprtega kroga: Zakaj se vaši uporabniki zataknejo (in kako to preprečiti)",
     "description": "Title for the 'Closed Circuit Pattern' blog post"
+  },
+  "homepage.schema.inYourLanguage": {
+    "message": "V vašem jeziku",
+    "description": "Tab label for the localized schema example on the homepage"
   }
 }

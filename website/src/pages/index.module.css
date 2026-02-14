@@ -288,6 +288,45 @@
     overflow: hidden;
 }
 
+/* Schema language tabs */
+.schemaTabs {
+    display: flex;
+    gap: 0;
+    background: #0f172a;
+    border-radius: 16px 16px 0 0;
+    border-bottom: 1px solid #1e293b;
+    overflow: hidden;
+}
+
+.schemaTab {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    border: none;
+    background: transparent;
+    color: #64748b;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.schemaTab:hover {
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.schemaTabActive {
+    color: #14b8a6;
+    background: rgba(20, 184, 166, 0.08);
+    border-bottom: 2px solid #14b8a6;
+}
+
+.schemaCodeBlock {
+    border-radius: 0 0 16px 16px !important;
+    border-top: none !important;
+}
+
 .effectsLegend {
     padding: 1rem 1.25rem;
     background: rgba(20, 184, 166, 0.05);
