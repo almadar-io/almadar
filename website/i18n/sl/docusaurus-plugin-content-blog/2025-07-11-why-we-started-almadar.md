@@ -51,9 +51,9 @@ To ni bila le lepa metafora. Bilo je arhitekturno nacelo. Programska oprema ne b
 
 ## Dva cloveka, ne dvajset
 
-Almadar sem ustanovil v Ljubljani, v Sloveniji. Dva cloveka, ne dvajset. To je bilo namerno.
+Almadar smo ustanovili v Ljubljani, v Sloveniji. Dva cloveka, ne dvajset. To je bilo namerno.
 
-Videl sem, kaj se zgodi, ko podjetja poskusajo resiti kompleksnost z vec zaposlenimi. Konca se z vec kompleksnosti, ne manj. Vec komunikacijskih stroskov, vec koordinacije, vec sestankov o sestankih. Najboljsa programska oprema, ki sem jo kdaj videl, je bila zgrajena s strani majhnih ekip z mocnimi prepricanji in jasnimi omejitvami.
+Videli smo, kaj se zgodi, ko podjetja poskusajo resiti kompleksnost z vec zaposlenimi. Konca se z vec kompleksnosti, ne manj. Vec komunikacijskih stroskov, vec koordinacije, vec sestankov o sestankih. Najboljsa programska oprema, ki sem jo kdaj videl, je bila zgrajena s strani majhnih ekip z mocnimi prepricanji in jasnimi omejitvami.
 
 Nasa omejitev je bila preprosta: zgraditi moramo nekaj, kar lahko vzdrzujeta dva cloveka. To je pomenilo, da mora orodje samo odpraviti delo, ki bi sicer zahtevalo veliko ekipo. Ce Almadar ne more zmanjsati projekta za deset ljudi na projekt za dva cloveka, potem ga nimamo pravice graditi.
 
@@ -63,7 +63,7 @@ Ljubljana se je izkazala za popolno mesto za tovrstno delo. Majhno, mirno mesto 
 
 Postavili smo si konkreten cilj: 87-odstotno zmanjsanje stroskov. Ne nejasna obljuba "povecane produktivnosti", dejansko, merljivo zmanjsanje casa in denarja, potrebnega za gradnjo poslovne aplikacije.
 
-Od kod ta stevilka? Ce je 80 % tipicne aplikacije boilerplate, ki ga generira compiler, in preostalih 20 % je business logic po meri, ki zahteva polovico casa, ker delamo s cisto shemo namesto zapletene codebase, dobimo priblizno 87 % prihrankov. Tedni namesto mesecev. Tisoci namesto deset tisocov.
+Od kod ta stevilka? Zbrali smo dejanske projektne zahteve in vse razdelili na najmanjse mozne feature. Nato smo primerjali trud za gradnjo vsakega featura z Almadarjem v primerjavi s tradicionalnim razvojem ob pomoci LLMs. Ko smo vse sesteli prek celotnega obsega, je razlika znasal priblizno 87 %. Tedni namesto mesecev. Tisoci namesto deset tisocov.
 
 Toda zmanjsanje stroskov je le polovica zgodbe. Druga polovica je lastnistvo. Z Almadarjem ste lastnik vsega. Shema je vasa. Generirana koda je vasa. Ni vendor lock-in, ni mesecne narocnine za dostop do lastne aplikacije, ni platforme, ki lahko spremeni ceno ali se zapre in odnese vaso programsko opremo. Opisete, kaj zelite, mi to generiramo, in v celoti je vase.
 
@@ -75,6 +75,6 @@ Almadar se ni koncan. Se vedno smo na zacetku, se vedno izpopolnjujemo schema la
 
 Vizija je jasna: vsaka poslovna aplikacija, ki sledi pogostim vzorcem, bi morala zahtevati dneve za gradnjo, ne mesecev. Ljudje, ki razumejo poslovanje, bi morali biti sposobni opisati, kaj potrebujejo, in sistem bi to moral proizvesti. Razvijalci bi morali porabiti cas za resnično tezke probleme, tistih 20 %, ki so edinstveni in zanimivi, ne za 80 %, ki so bili reseni ze tisockrat.
 
-Almadar sem zacel, ker sem bil naveliCan graditi isto stvar znova in znova. Nadaljeval sem, ker sem spoznal, da nisem edini.
+Almadar smo zaceli, ker smo bili naveliCani graditi isto stvar znova in znova. Nadaljevali smo, ker smo spoznali, da nismo edini.
 
 Ce se vam karkoli od tega zdi znano, bi vas radi slisali. Oglejte si naso [dokumentacijo](/docs), preizkusite [CLI](/docs/downloads/cli) ali nas preprosto kontaktirajte in nam povejte, kaj gradite. Orbita se sele zacenja.
