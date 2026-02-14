@@ -215,7 +215,7 @@ function HomepageFeatures() {
   );
 }
 
-import OrbitalVisualization from "../components/OrbitalVisualization";
+import HeroSchemaAnimation from "../components/HeroSchemaAnimation";
 
 function HomepagePhilosophy() {
   return (
@@ -270,9 +270,22 @@ function HomepagePhilosophy() {
                 </span>
               </div>
             </div>
+          </div>
+          <div className={styles.architectureDiagram}>
+            <HeroSchemaAnimation />
+          </div>
+        </div>
 
-            <OrbitalVisualization />
-
+        <div className={styles.schemaExample}>
+          <div className={styles.schemaExampleHeader}>
+            <span className={styles.tag}>
+              <Translate id="homepage.schema.tag">Schema</Translate>
+            </span>
+            <Heading as="h3">
+              <Translate id="homepage.schema.title">
+                See it in code
+              </Translate>
+            </Heading>
           </div>
           <div className={styles.codePreview}>
             <LocalizedSchemaDisplay />

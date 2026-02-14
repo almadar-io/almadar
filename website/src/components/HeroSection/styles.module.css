@@ -14,28 +14,7 @@
     background: var(--almadar-midnight);
 }
 
-/* HeroSchemaAnimation container — right side illustration */
-.heroPatternContainer {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 55%;
-    z-index: 0;
-    overflow: hidden;
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    mask-image: linear-gradient(to right, transparent 0%, black 25%, black 100%);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 25%, black 100%);
-}
-
 .heroContainer {
-    display: grid;
-    grid-template-columns: 1.1fr;
-    gap: 4rem;
-    align-items: center;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
@@ -95,14 +74,9 @@
 
 /* Responsive */
 @media (max-width: 996px) {
-    .heroContainer {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 3rem;
-    }
-
     .heroText {
         text-align: center;
+        max-width: 100%;
     }
 
     .heroSubtitle {
@@ -136,14 +110,6 @@
     .buttons {
         flex-direction: column;
         align-items: stretch;
-    }
-
-    /* Reduce pattern opacity on mobile */
-    .heroPatternContainer {
-        opacity: 0.25;
-        width: 100%;
-        mask-image: linear-gradient(to bottom, black 0%, transparent 80%);
-        -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 80%);
     }
 }
 

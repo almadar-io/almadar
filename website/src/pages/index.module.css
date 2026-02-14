@@ -127,6 +127,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
+    margin-bottom: 4rem;
 }
 
 .philosophyText h2 {
@@ -185,6 +186,44 @@
 
 [data-theme="dark"] .philosophyFeature span {
     color: #94a3b8;
+}
+
+/* Architecture diagram — right column, shows schema being drawn */
+.architectureDiagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 24px;
+    border: 1px solid #e8e4de;
+}
+
+[data-theme="dark"] .architectureDiagram {
+    background: rgba(15, 23, 42, 0.5);
+    border-color: #1e293b;
+}
+
+/* Schema example — full width below the philosophy grid */
+.schemaExample {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.schemaExampleHeader {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.schemaExampleHeader h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0;
+}
+
+[data-theme="dark"] .schemaExampleHeader h3 {
+    color: #f8fafc;
 }
 
 .codePreview {
@@ -270,18 +309,6 @@
     font-family: "IBM Plex Mono", monospace;
     font-size: 0.8rem;
     font-weight: 500;
-}
-
-/* Visualization Container */
-.vizContainer {
-    width: 100%;
-    margin-top: 2rem;
-    border-top: 1px solid var(--ifm-color-emphasis-200);
-    padding-top: 3rem;
-}
-
-[data-theme='dark'] .vizContainer {
-    border-top-color: var(--ifm-color-emphasis-100);
 }
 
 /* CTA Section — warm gradient */
