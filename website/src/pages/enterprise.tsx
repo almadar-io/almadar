@@ -1,9 +1,18 @@
+import React from "react";
 import type { ReactNode } from "react";
 import Link from "@docusaurus/Link";
 import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
 import MashrabiyaPattern from "../components/MashrabiyaPattern";
+import {
+  TeamIcon,
+  DeploymentIcon,
+  SecurityIcon,
+  SupportIcon,
+  TrainingIcon,
+  CustomizationIcon,
+} from "../components/FeatureIcons";
 
 import styles from "./enterprise.module.css";
 
@@ -45,7 +54,7 @@ function EnterpriseHero() {
 
 const features = [
   {
-    icon: "👥",
+    IconComponent: TeamIcon,
     titleId: "enterprise.feature.collaboration.title",
     titleDefault: "Team Collaboration",
     descriptionId: "enterprise.feature.collaboration.description",
@@ -53,7 +62,7 @@ const features = [
       "Work together on schemas with role-based access control, version history, and real-time collaboration.",
   },
   {
-    icon: "🏢",
+    IconComponent: DeploymentIcon,
     titleId: "enterprise.feature.deployment.title",
     titleDefault: "Private Deployments",
     descriptionId: "enterprise.feature.deployment.description",
@@ -61,7 +70,7 @@ const features = [
       "Deploy on-premise or in your private cloud. Full control over your data and infrastructure.",
   },
   {
-    icon: "🛡️",
+    IconComponent: SecurityIcon,
     titleId: "enterprise.feature.security.title",
     titleDefault: "Enterprise Security",
     descriptionId: "enterprise.feature.security.description",
@@ -69,7 +78,7 @@ const features = [
       "SSO/SAML integration, audit logs, SOC 2 compliance, and advanced security controls.",
   },
   {
-    icon: "🎯",
+    IconComponent: SupportIcon,
     titleId: "enterprise.feature.support.title",
     titleDefault: "Priority Support",
     descriptionId: "enterprise.feature.support.description",
@@ -77,7 +86,7 @@ const features = [
       "Dedicated support channels with guaranteed response times and direct access to our engineering team.",
   },
   {
-    icon: "📚",
+    IconComponent: TrainingIcon,
     titleId: "enterprise.feature.training.title",
     titleDefault: "Custom Training",
     descriptionId: "enterprise.feature.training.description",
@@ -85,7 +94,7 @@ const features = [
       "Onboarding programs, workshops, and custom training tailored to your team's needs.",
   },
   {
-    icon: "🔧",
+    IconComponent: CustomizationIcon,
     titleId: "enterprise.feature.customization.title",
     titleDefault: "Custom Integrations",
     descriptionId: "enterprise.feature.customization.description",
@@ -113,7 +122,9 @@ function EnterpriseFeatures() {
         <div className={styles.featureGrid}>
           {features.map((feature, idx) => (
             <div key={idx} className={styles.featureCard}>
-              <span className={styles.featureIcon}>{feature.icon}</span>
+              <div className={styles.featureIcon}>
+                <feature.IconComponent size={48} />
+              </div>
               <Heading as="h3">
                 <Translate id={feature.titleId}>{feature.titleDefault}</Translate>
               </Heading>

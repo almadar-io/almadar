@@ -83,10 +83,10 @@
     flex-wrap: wrap;
 }
 
-/* Features Section */
+/* Features Section — warm parchment */
 .features {
     padding: 6rem 0;
-    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    background: linear-gradient(180deg, #fffefa 0%, #faf8f5 100%);
 }
 
 [data-theme="dark"] .features {
@@ -124,15 +124,14 @@
     gap: 1.5rem;
 }
 
-/* Gold Treatment for Enterprise Feature Cards */
+/* Gentle Humanist Enterprise Feature Cards */
 .featureCard {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
+    background: #fffefa;
+    border: 1px solid #e8e4de;
     border-radius: 24px;
     padding: 2rem;
-    transition: all 0.3s ease;
-    /* Subtle Gold accent */
-    border-bottom: 3px solid #e2e8f0;
+    transition: all var(--transition-normal);
+    border-bottom: 3px solid #e8e4de;
 }
 
 [data-theme="dark"] .featureCard {
@@ -144,12 +143,12 @@
 .featureCard:hover {
     border-color: var(--almadar-sand-gold);
     border-bottom-color: var(--almadar-sand-gold);
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(201, 162, 39, 0.15);
+    transform: none;
+    box-shadow: 0 4px 20px rgba(201, 162, 39, 0.1);
 }
 
 [data-theme="dark"] .featureCard:hover {
-    box-shadow: 0 12px 40px rgba(201, 162, 39, 0.1);
+    box-shadow: 0 4px 20px rgba(201, 162, 39, 0.08);
 }
 
 .featureCard h3 {
@@ -175,15 +174,23 @@
 }
 
 .featureIcon {
-    font-size: 2.25rem;
     margin-bottom: 1rem;
     display: block;
+    line-height: 1;
 }
 
-/* Pricing Section */
+.featureIcon svg {
+    transition: transform var(--transition-slow);
+}
+
+.featureCard:hover .featureIcon svg {
+    transform: scale(1.05);
+}
+
+/* Pricing Section — warm gradient */
 .pricing {
     padding: 6rem 0;
-    background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+    background: linear-gradient(180deg, #faf8f5 0%, #ece8e1 100%);
 }
 
 [data-theme="dark"] .pricing {
@@ -199,8 +206,8 @@
 }
 
 .pricingCard {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
+    background: #fffefa;
+    border: 1px solid #e8e4de;
     border-radius: 24px;
     padding: 2.5rem;
     position: relative;
@@ -239,7 +246,7 @@
     text-align: center;
     margin-bottom: 2rem;
     padding-bottom: 2rem;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e8e4de;
 }
 
 [data-theme="dark"] .pricingHeader {
@@ -276,7 +283,7 @@
 .pricingFeatures li {
     padding: 0.75rem 0;
     color: #475569;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e8e4de;
     font-size: 0.95rem;
 }
 
@@ -292,10 +299,10 @@
     font-weight: 600;
 }
 
-/* Contact Section */
+/* Contact Section — warm */
 .contact {
     padding: 6rem 0;
-    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    background: linear-gradient(180deg, #fffefa 0%, #faf8f5 100%);
 }
 
 [data-theme="dark"] .contact {
@@ -304,9 +311,9 @@
 
 .contactCard {
     background: linear-gradient(135deg,
-            rgba(20, 184, 166, 0.1) 0%,
-            rgba(6, 182, 212, 0.06) 100%);
-    border: 1px solid rgba(20, 184, 166, 0.3);
+            rgba(201, 162, 39, 0.06) 0%,
+            rgba(20, 184, 166, 0.04) 100%);
+    border: 1px solid rgba(201, 162, 39, 0.25);
     border-radius: 24px;
     padding: 4rem;
     text-align: center;

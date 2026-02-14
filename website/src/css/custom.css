@@ -6,7 +6,7 @@
  */
 
 /* === Google Fonts === */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;0,8..60,800;1,8..60,400&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
 
 /* === Brand Colors === */
 :root {
@@ -25,12 +25,16 @@
     --almadar-teal-light: #2dd4bf;
     --almadar-cyan: #06b6d4;
 
-    /* Parchment - Light text */
-    --almadar-parchment: #f8fafc;
+    /* Parchment - Warm cream base (shifted from cool blue-white) */
+    --almadar-parchment: #faf8f5;
     --almadar-parchment-muted: #94a3b8;
 
     /* New Brand Variables */
-    --almadar-bg: #f8fafc;
+    --almadar-bg: #faf8f5;
+
+    /* Gold callout background */
+    --almadar-gold-subtle: rgba(201, 162, 39, 0.06);
+    --almadar-gold-bg: rgba(201, 162, 39, 0.08);
 
     /* Brand Gradient */
     --almadar-gradient: linear-gradient(135deg,
@@ -62,9 +66,13 @@
     --radius-lg: 16px;
     --radius-xl: 24px;
 
-    /* Transitions */
-    --transition-fast: 0.2s ease;
-    --transition-normal: 0.3s ease;
+    /* Transitions — unhurried, deliberate */
+    --transition-fast: 0.25s ease;
+    --transition-normal: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Paper grain texture overlay */
+    --paper-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
 /* Dark mode */
@@ -98,11 +106,11 @@
         Roboto, sans-serif;
     --ifm-font-family-monospace:
         "IBM Plex Mono", "Fira Code", SFMono-Regular, Menlo, Monaco, monospace;
-    --ifm-heading-font-family: "Plus Jakarta Sans", var(--ifm-font-family-base);
+    --ifm-heading-font-family: "Source Serif 4", "Georgia", serif;
     --ifm-heading-font-weight: 700;
 }
 
-/* Arabic font for RTL - IBM Plex Sans Arabic matches the geometric style of Plus Jakarta Sans */
+/* Arabic font for RTL - Keep existing Arabic fonts unchanged */
 html[lang="ar"],
 html[dir="rtl"] {
     --ifm-font-family-base: "IBM Plex Sans Arabic", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -117,6 +125,18 @@ html {
 body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: var(--almadar-bg);
+}
+
+/* Paper grain texture — subtle warmth on light mode content areas */
+.main-wrapper {
+    background-image: var(--paper-grain);
+    background-repeat: repeat;
+    background-size: 256px 256px;
+}
+
+[data-theme="dark"] .main-wrapper {
+    background-image: none;
 }
 
 /* Gradient Text Utility */
@@ -147,7 +167,7 @@ body {
 /* === Navbar === */
 .navbar {
     box-shadow: none;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e8e4de;
 }
 
 /* Apply backdrop-filter only on desktop - it breaks mobile sidebar when applied to navbar */
@@ -185,10 +205,6 @@ body {
 }
 
 .navbar__link--active {
-    color: var(--almadar-sand-gold);
-}
-
-[data-theme="dark"] .navbar__link--active {
     color: var(--almadar-sand-gold);
 }
 
@@ -584,18 +600,20 @@ article h3 {
 
 /* Blog cards - Light mode */
 article.margin-bottom--xl {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
+    background: #fffefa;
+    border: 1px solid #e8e4de;
+    border-bottom: 3px solid #e8e4de;
     border-radius: var(--radius-xl);
     padding: 2rem;
     margin-bottom: 2rem !important;
-    transition: all 0.3s ease;
+    transition: all var(--transition-normal);
 }
 
 article.margin-bottom--xl:hover {
-    border-color: var(--almadar-teal);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(20, 184, 166, 0.15);
+    border-color: var(--almadar-sand-gold);
+    border-bottom-color: var(--almadar-sand-gold);
+    transform: none;
+    box-shadow: 0 8px 30px rgba(201, 162, 39, 0.12);
 }
 
 /* Blog cards - Dark mode */

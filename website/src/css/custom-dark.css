@@ -6,7 +6,7 @@
  */
 
 /* === Google Fonts === */
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;0,8..60,800;1,8..60,400&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
 
 /* === Brand Colors === */
 :root {
@@ -99,11 +99,11 @@
         Roboto, sans-serif;
     --ifm-font-family-monospace:
         "IBM Plex Mono", "Fira Code", SFMono-Regular, Menlo, Monaco, monospace;
-    --ifm-heading-font-family: "Plus Jakarta Sans", var(--ifm-font-family-base);
+    --ifm-heading-font-family: "Source Serif 4", "Georgia", serif;
     --ifm-heading-font-weight: 700;
 }
 
-/* Arabic font for RTL */
+/* Arabic font for RTL — keep existing Arabic fonts unchanged */
 html[lang="ar"],
 html[dir="rtl"] {
     --ifm-font-family-base: "Noto Naskh Arabic", "Traditional Arabic", serif;
