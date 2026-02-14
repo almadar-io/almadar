@@ -1,108 +1,8 @@
-/* Hero Section */
-.heroBanner {
-    min-height: 90vh;
-    display: flex;
-    align-items: center;
-    padding: 6rem 0;
-    position: relative;
-    overflow: hidden;
-    background: var(--almadar-parchment);
-}
-
-[data-theme="dark"] .heroBanner {
-    background: var(--almadar-midnight);
-}
-
-/* Digital Mashrabiya Pattern Container */
-/* Digital Mashrabiya Pattern Container */
-.heroPatternContainer {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 60%;
-    /* Top-right focus */
-    z-index: 0;
-    overflow: hidden;
-    pointer-events: none;
-    /* Blend: Visible at top-right, fades out */
-    mask-image: radial-gradient(circle at top right, black 30%, transparent 80%);
-    -webkit-mask-image: radial-gradient(circle at top right, black 30%, transparent 80%);
-}
-
-.heroPattern {
-    width: 100%;
-    height: 100%;
-}
-
-.heroContainer {
-    display: grid;
-    grid-template-columns: 1.1fr;
-    /* Changed to single column as pattern is bg */
-    gap: 4rem;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    position: relative;
-    z-index: 1;
-}
-
-.heroText {
-    text-align: left;
-    max-width: 600px;
-    /* Limit width as we are single column now */
-}
-
-
-.heroTitle {
-    font-size: 3.5rem;
-    font-weight: 800;
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
-    color: var(--almadar-midnight);
-}
-
-[data-theme="dark"] .heroTitle {
-    color: #f8fafc;
-}
-
-[data-theme="dark"] .heroTitle {
-    color: #f8fafc;
-    background: linear-gradient(135deg, #f8fafc 0%, #94a3b8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.heroSubtitle {
-    font-size: 1.25rem;
-    line-height: 1.7;
-    color: #475569;
-    margin-bottom: 2.5rem;
-    max-width: 540px;
-}
-
-[data-theme="dark"] .heroSubtitle {
-    color: #94a3b8;
-}
-
+/* Buttons — shared across sections */
 .buttons {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
-}
-
-.heroAnimation {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.orbitalCanvas {
-    width: 100%;
-    max-width: 400px;
-    height: auto;
 }
 
 /* Features Section — warm parchment gradient */
@@ -457,31 +357,6 @@
 
 /* Responsive */
 @media (max-width: 996px) {
-    .heroContainer {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 3rem;
-    }
-
-    .heroText {
-        text-align: center;
-        order: 1;
-    }
-
-
-    .heroAnimation {
-        order: 0;
-    }
-
-    .heroSubtitle {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .heroTitle {
-        font-size: 2.75rem;
-    }
-
     .buttons {
         justify-content: center;
     }
@@ -502,31 +377,9 @@
     .philosophyFeatures {
         align-items: center;
     }
-
-    .orbitalCanvas {
-        max-width: 300px;
-    }
-
-    .heroBanner::before {
-        width: 100%;
-        opacity: 0.5;
-    }
 }
 
 @media (max-width: 768px) {
-    .heroBanner {
-        padding: 4rem 0;
-        min-height: auto;
-    }
-
-    .heroTitle {
-        font-size: 2rem;
-    }
-
-    .heroSubtitle {
-        font-size: 1.1rem;
-    }
-
     .featureGrid {
         grid-template-columns: 1fr;
     }
@@ -546,17 +399,6 @@
     .buttons {
         flex-direction: column;
         align-items: stretch;
-    }
-
-    .orbitalCanvas {
-        max-width: 250px;
-    }
-
-    /* Fix: Reduce pattern opacity on mobile to not obscure text */
-    .heroPatternContainer {
-        opacity: 0.15;
-        mask-image: radial-gradient(circle at center, transparent 40%, black 100%);
-        -webkit-mask-image: radial-gradient(circle at center, transparent 40%, black 100%);
     }
 }
 

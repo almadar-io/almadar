@@ -69,9 +69,8 @@ const LocalizedSchemaDisplay = () => {
   );
 };
 
-import MashrabiyaPattern from "../components/MashrabiyaPattern";
 import DemoCarousel from "../components/DemoCarousel";
-import HeroSchemaAnimation from "../components/HeroSchemaAnimation";
+import HeroSection from "../components/HeroSection";
 import {
   SchemaIcon,
   StateMachineIcon,
@@ -82,40 +81,32 @@ import {
 } from "../components/FeatureIcons";
 
 function HomepageHeader() {
-  const { siteConfig } = useDocusaurusContext();
   return (
-    <header className={clsx("hero", styles.heroBanner)}>
-      {/* Background Pattern */}
-      <div className={styles.heroPatternContainer}>
-        <HeroSchemaAnimation />
-      </div>
-
-      <div className={styles.heroContainer}>
-        <div className={styles.heroText}>
-          <Heading as="h1" className={styles.heroTitle}>
-            <Translate id="homepage.title">The Physics of Software</Translate>
-          </Heading>
-          <p className={styles.heroSubtitle}>
-            <Translate id="homepage.subtitle">
-              Build full-stack applications through declarative schemas. Define
-              entities, behaviors, and UI as state machines that compile to
-              production-ready code.
-            </Translate>
-          </p>
-          <div className={styles.buttons}>
-            <Link className="button button--primary button--lg" to="/docs">
-              <Translate id="homepage.getStarted">Get Started</Translate>
-            </Link>
-            <Link
-              className="button button--secondary button--lg"
-              to="/docs/downloads/cli"
-            >
-              <Translate id="homepage.downloadCLI">Download CLI</Translate>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </header>
+    <HeroSection
+      title={
+        <Translate id="homepage.title">The Physics of Software</Translate>
+      }
+      subtitle={
+        <Translate id="homepage.subtitle">
+          Build full-stack applications through declarative schemas. Define
+          entities, behaviors, and UI as state machines that compile to
+          production-ready code.
+        </Translate>
+      }
+      buttons={
+        <>
+          <Link className="button button--primary button--lg" to="/docs">
+            <Translate id="homepage.getStarted">Get Started</Translate>
+          </Link>
+          <Link
+            className="button button--secondary button--lg"
+            to="/docs/downloads/cli"
+          >
+            <Translate id="homepage.downloadCLI">Download CLI</Translate>
+          </Link>
+        </>
+      }
+    />
   );
 }
 

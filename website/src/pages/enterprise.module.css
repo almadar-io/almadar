@@ -1,88 +1,3 @@
-/* Enterprise Hero */
-.hero {
-    padding: 8rem 0 6rem;
-    background: var(--almadar-parchment);
-    position: relative;
-    overflow: hidden;
-    min-height: 90vh;
-    display: flex;
-    align-items: center;
-    /* Ensure pattern doesn't overflow */
-}
-
-[data-theme="dark"] .hero {
-    background: var(--almadar-midnight);
-}
-
-/* Digital Mashrabiya Pattern Container - Top Right Focus */
-.heroPatternContainer {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 60%;
-    z-index: 0;
-    overflow: hidden;
-    pointer-events: none;
-    /* Blend: Visible at top-right, fades out */
-    mask-image: radial-gradient(circle at top right, black 30%, transparent 80%);
-    -webkit-mask-image: radial-gradient(circle at top right, black 30%, transparent 80%);
-}
-
-.heroPattern {
-    width: 100%;
-    height: 100%;
-}
-
-.heroContent {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-}
-
-.tag {
-    background: rgba(20, 184, 166, 0.1);
-    color: #14b8a6;
-    padding: 0.35rem 1rem;
-    border-radius: 99px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    display: inline-block;
-    margin-bottom: 1.5rem;
-}
-
-.heroTitle {
-    font-size: 3rem;
-    font-weight: 800;
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
-    color: #1e293b;
-}
-
-[data-theme="dark"] .heroTitle {
-    color: #f8fafc;
-}
-
-.heroSubtitle {
-    font-size: 1.25rem;
-    line-height: 1.7;
-    color: #475569;
-    margin-bottom: 2.5rem;
-}
-
-[data-theme="dark"] .heroSubtitle {
-    color: #94a3b8;
-}
-
-.buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
 /* Features Section — warm parchment */
 .features {
     padding: 6rem 0;
@@ -351,10 +266,6 @@
 
 /* Responsive */
 @media (max-width: 996px) {
-    .heroTitle {
-        font-size: 2.5rem;
-    }
-
     .featureGrid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -370,29 +281,12 @@
 }
 
 @media (max-width: 768px) {
-    .hero {
-        padding: 6rem 0 4rem;
-    }
-
-    .heroTitle {
-        font-size: 2rem;
-    }
-
-    .heroSubtitle {
-        font-size: 1.1rem;
-    }
-
     .featureGrid {
         grid-template-columns: 1fr;
     }
 
     .sectionHeader h2 {
         font-size: 2rem;
-    }
-
-    .buttons {
-        flex-direction: column;
-        align-items: stretch;
     }
 
     .contactCard {

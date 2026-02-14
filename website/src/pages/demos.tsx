@@ -1,43 +1,28 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
-import { useLocation } from '@docusaurus/router';
 import Translate, { translate } from '@docusaurus/Translate';
 import StorybookDemo from '../components/StorybookDemo';
+import HeroSection from '../components/HeroSection';
 import styles from './demos.module.css';
 import demos from '../data/demos.json';
-import MashrabiyaPattern from '../components/MashrabiyaPattern';
 
 export default function Demos(): React.JSX.Element {
-    const location = useLocation();
-
-    // Scroll logic removed based on user request ("page auto scrolls... fix that")
-    // useEffect(() => { ... }, [location]);
-
     return (
         <Layout
             title={translate({ id: 'demos.meta.title', message: 'Interactive Demos' })}
             description={translate({ id: 'demos.meta.description', message: 'Explore the Almadar design system and templates' })}>
             <main className={styles.main}>
-                <header className={styles.heroWrapper}>
-                    <div className={styles.heroPatternContainer}>
-                        <MashrabiyaPattern className={styles.heroPattern} opacity={0.6} />
-                    </div>
-                    <div className="container">
-                        <div className={styles.header}>
-                            <span className={styles.tag}>
-                                <Translate id="demos.tag">Demos</Translate>
-                            </span>
-                            <h1><Translate id="demos.title">Interactive Showcases</Translate></h1>
-                            <p className={styles.description}><Translate id="demos.description">Experience the power of Almadar through live, interactive templates.</Translate></p>
-                            <div className={styles.buttons}>
-                                <Link className="button button--primary button--lg" to="#demos-grid">
-                                    <Translate id="demos.cta">View Demos</Translate>
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </header>
+                <HeroSection
+                    tag={<Translate id="demos.tag">Demos</Translate>}
+                    title={<Translate id="demos.title">Interactive Showcases</Translate>}
+                    subtitle={<Translate id="demos.description">Experience the power of Almadar through live, interactive templates.</Translate>}
+                    buttons={
+                        <Link className="button button--primary button--lg" to="#demos-grid">
+                            <Translate id="demos.cta">View Demos</Translate>
+                        </Link>
+                    }
+                />
 
                 <div className={styles.demosSection}>
                     <div className="container">
