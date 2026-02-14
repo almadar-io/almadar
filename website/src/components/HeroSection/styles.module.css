@@ -14,18 +14,21 @@
     background: var(--almadar-midnight);
 }
 
-/* HeroSchemaAnimation container — top-right focus */
+/* HeroSchemaAnimation container — right side illustration */
 .heroPatternContainer {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
-    width: 60%;
+    width: 55%;
     z-index: 0;
     overflow: hidden;
     pointer-events: none;
-    mask-image: radial-gradient(circle at top right, black 30%, transparent 80%);
-    -webkit-mask-image: radial-gradient(circle at top right, black 30%, transparent 80%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    mask-image: linear-gradient(to right, transparent 0%, black 25%, black 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 25%, black 100%);
 }
 
 .heroContainer {
@@ -137,9 +140,10 @@
 
     /* Reduce pattern opacity on mobile */
     .heroPatternContainer {
-        opacity: 0.15;
-        mask-image: radial-gradient(circle at center, transparent 40%, black 100%);
-        -webkit-mask-image: radial-gradient(circle at center, transparent 40%, black 100%);
+        opacity: 0.25;
+        width: 100%;
+        mask-image: linear-gradient(to bottom, black 0%, transparent 80%);
+        -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 80%);
     }
 }
 
