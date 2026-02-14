@@ -4,7 +4,7 @@ import Link from "@docusaurus/Link";
 import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
-import MashrabiyaPattern from "../components/MashrabiyaPattern";
+import HeroSection from "../components/HeroSection";
 import {
   TeamIcon,
   DeploymentIcon,
@@ -18,37 +18,29 @@ import styles from "./enterprise.module.css";
 
 function EnterpriseHero() {
   return (
-    <header className={styles.hero}>
-      {/* Background Pattern */}
-      <div className={styles.heroPatternContainer}>
-        <MashrabiyaPattern className={styles.heroPattern} opacity={0.6} />
-      </div>
-      <div className="container">
-        <div className={styles.heroContent}>
-          <span className={styles.tag}>
-            <Translate id="enterprise.tag">Enterprise</Translate>
-          </span>
-          <Heading as="h1" className={styles.heroTitle}>
-            <Translate id="enterprise.title">
-              Almadar for Teams & Organizations
-            </Translate>
-          </Heading>
-          <p className={styles.heroSubtitle}>
-            <Translate id="enterprise.subtitle">
-              Scale your development with enterprise-grade features, dedicated support, and custom deployment options.
-            </Translate>
-          </p>
-          <div className={styles.buttons}>
-            <Link className="button button--primary button--lg" to="#contact">
-              <Translate id="enterprise.cta.contact">Contact Sales</Translate>
-            </Link>
-            <Link className="button button--secondary button--lg" to="/docs">
-              <Translate id="enterprise.cta.docs">View Documentation</Translate>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </header>
+    <HeroSection
+      tag={<Translate id="enterprise.tag">Enterprise</Translate>}
+      title={
+        <Translate id="enterprise.title">
+          Almadar for Teams & Organizations
+        </Translate>
+      }
+      subtitle={
+        <Translate id="enterprise.subtitle">
+          Scale your development with enterprise-grade features, dedicated support, and custom deployment options.
+        </Translate>
+      }
+      buttons={
+        <>
+          <Link className="button button--primary button--lg" to="#contact">
+            <Translate id="enterprise.cta.contact">Contact Sales</Translate>
+          </Link>
+          <Link className="button button--secondary button--lg" to="/docs">
+            <Translate id="enterprise.cta.docs">View Documentation</Translate>
+          </Link>
+        </>
+      }
+    />
   );
 }
 
