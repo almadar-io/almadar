@@ -833,5 +833,29 @@
   "demo.interactiveGraph.description": {
     "message": "Plošča za usmerjen graf s silami z vozlišči, ki jih je mogoče povleči, nadzorom povečave in grozdenimi postavitvami.",
     "description": "Demo description: Interactive Graph"
+  },
+  "blog.recentPosts.heading": {
+    "message": "Nedavne objave",
+    "description": "The heading for the recent posts section on blog post pages"
+  },
+  "blog.recentPosts.readArticle": {
+    "message": "Preberi članek →",
+    "description": "The link text for reading a recent blog post"
+  },
+  "blog.recentPosts.oneSchemaTitle": {
+    "message": "Ena shema, šest aplikacij",
+    "description": "Title for the 'One Schema, Six Apps' blog post"
+  },
+  "blog.recentPosts.jsonThinksTitle": {
+    "message": "JSON, ki razmišlja: Turing-complete JSON",
+    "description": "Title for the 'JSON That Thinks' blog post"
+  },
+  "blog.recentPosts.threeExecutionModelsTitle": {
+    "message": "Trije izvedbeni modeli, ena resnica",
+    "description": "Title for the 'Three Execution Models' blog post"
+  },
+  "blog.recentPosts.closedCircuitTitle": {
+    "message": "Vzorec zaprtega kroga: Zakaj se vaši uporabniki zataknejo (in kako to preprečiti)",
+    "description": "Title for the 'Closed Circuit Pattern' blog post"
   }
 }
