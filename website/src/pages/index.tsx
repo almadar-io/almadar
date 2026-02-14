@@ -71,7 +71,15 @@ const LocalizedSchemaDisplay = () => {
 
 import MashrabiyaPattern from "../components/MashrabiyaPattern";
 import DemoCarousel from "../components/DemoCarousel";
-import HeroOrbitalAnimation from "../components/HeroOrbitalAnimation";
+import HeroSchemaAnimation from "../components/HeroSchemaAnimation";
+import {
+  SchemaIcon,
+  StateMachineIcon,
+  FullStackIcon,
+  IntegrationsIcon,
+  RealtimeIcon,
+  AIIcon,
+} from "../components/FeatureIcons";
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
@@ -79,9 +87,7 @@ function HomepageHeader() {
     <header className={clsx("hero", styles.heroBanner)}>
       {/* Background Pattern */}
       <div className={styles.heroPatternContainer}>
-        {/* Replaced generic pattern with 3D Orbital VFX */}
-        <HeroOrbitalAnimation />
-        {/* <MashrabiyaPattern className={styles.heroPattern} opacity={0.6} /> */}
+        <HeroSchemaAnimation />
       </div>
 
       <div className={styles.heroContainer}>
@@ -115,7 +121,7 @@ function HomepageHeader() {
 
 const FeatureList = [
   {
-    icon: "📐",
+    IconComponent: SchemaIcon,
     titleId: "homepage.feature.declarative.title",
     titleDefault: "Declarative Schemas",
     descriptionId: "homepage.feature.declarative.description",
@@ -123,7 +129,7 @@ const FeatureList = [
       "Define your entire application as a schema. Entities, traits, pages, and integrations - all in one place.",
   },
   {
-    icon: "⚙️",
+    IconComponent: StateMachineIcon,
     titleId: "homepage.feature.stateMachines.title",
     titleDefault: "State Machines",
     descriptionId: "homepage.feature.stateMachines.description",
@@ -131,7 +137,7 @@ const FeatureList = [
       "Model behavior as state machines with guards and effects. Predictable, testable, and secure by design.",
   },
   {
-    icon: "🚀",
+    IconComponent: FullStackIcon,
     titleId: "homepage.feature.fullStack.title",
     titleDefault: "Full-Stack Generation",
     descriptionId: "homepage.feature.fullStack.description",
@@ -139,7 +145,7 @@ const FeatureList = [
       "Compile to React frontend, Express/FastAPI backend, and database models. One schema, complete app.",
   },
   {
-    icon: "🔌",
+    IconComponent: IntegrationsIcon,
     titleId: "homepage.feature.integrations.title",
     titleDefault: "Built-in Integrations",
     descriptionId: "homepage.feature.integrations.description",
@@ -147,7 +153,7 @@ const FeatureList = [
       "Connect to external services with pre-built integrators. Stripe, Twilio, OpenAI, and more.",
   },
   {
-    icon: "🎮",
+    IconComponent: RealtimeIcon,
     titleId: "homepage.feature.realtime.title",
     titleDefault: "Real-time & Games",
     descriptionId: "homepage.feature.realtime.description",
@@ -155,7 +161,7 @@ const FeatureList = [
       "Build real-time applications and games with the same declarative approach. WebSocket support included.",
   },
   {
-    icon: "🤖",
+    IconComponent: AIIcon,
     titleId: "homepage.feature.aiPowered.title",
     titleDefault: "AI-Powered",
     descriptionId: "homepage.feature.aiPowered.description",
@@ -165,13 +171,13 @@ const FeatureList = [
 ];
 
 function Feature({
-  icon,
+  IconComponent,
   titleId,
   titleDefault,
   descriptionId,
   descriptionDefault,
 }: {
-  icon: string;
+  IconComponent: React.FC<{ size?: number; className?: string }>;
   titleId: string;
   titleDefault: string;
   descriptionId: string;
@@ -179,7 +185,9 @@ function Feature({
 }) {
   return (
     <div className={styles.featureCard}>
-      <span className={styles.featureIcon}>{icon}</span>
+      <div className={styles.featureIcon}>
+        <IconComponent size={48} />
+      </div>
       <Heading as="h3">
         <Translate id={titleId}>{titleDefault}</Translate>
       </Heading>

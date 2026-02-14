@@ -105,12 +105,10 @@
     height: auto;
 }
 
-/* Features Section */
-/* Features Section - Alternating Background */
+/* Features Section — warm parchment gradient */
 .features {
     padding: 6rem 0;
-    /* Darker start point */
-    background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+    background: linear-gradient(180deg, #faf8f5 0%, #f5f2ed 100%);
 }
 
 [data-theme="dark"] .features {
@@ -150,15 +148,15 @@
     gap: 1.5rem;
 }
 
-/* Gold Treatment for Feature Cards */
+/* Gentle Humanist Feature Cards — gold border grows on hover, no lift */
 .featureCard {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
+    background: #fffefa;
+    border: 1px solid #e8e4de;
     border-radius: 24px;
     padding: 2rem;
-    transition: all 0.3s ease;
-    /* Subtle Gold accent */
-    border-bottom: 3px solid #e2e8f0;
+    transition: all var(--transition-normal);
+    border-bottom: 3px solid #e8e4de;
+    position: relative;
 }
 
 [data-theme="dark"] .featureCard {
@@ -170,12 +168,12 @@
 .featureCard:hover {
     border-color: var(--almadar-sand-gold);
     border-bottom-color: var(--almadar-sand-gold);
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(201, 162, 39, 0.15);
+    transform: none;
+    box-shadow: 0 4px 20px rgba(201, 162, 39, 0.1);
 }
 
 [data-theme="dark"] .featureCard:hover {
-    box-shadow: 0 12px 40px rgba(201, 162, 39, 0.1);
+    box-shadow: 0 4px 20px rgba(201, 162, 39, 0.08);
 }
 
 .featureCard h3 {
@@ -201,17 +199,23 @@
 }
 
 .featureIcon {
-    font-size: 2.25rem;
     margin-bottom: 1rem;
     display: block;
+    line-height: 1;
 }
 
-/* Philosophy Section */
-/* Philosophy Section - Distinct Grey Background */
+.featureIcon svg {
+    transition: transform var(--transition-slow);
+}
+
+.featureCard:hover .featureIcon svg {
+    transform: scale(1.05);
+}
+
+/* Philosophy Section — warm stone gray */
 .philosophy {
     padding: 6rem 0;
-    background: #e2e8f0;
-    /* Slate-200 for reduced brightness */
+    background: #ece8e1;
 }
 
 [data-theme="dark"] .philosophy {
@@ -380,11 +384,10 @@
     border-top-color: var(--ifm-color-emphasis-100);
 }
 
-/* CTA Section */
-/* CTA Section - Match Features Gradient */
+/* CTA Section — warm gradient */
 .cta {
     padding: 6rem 0;
-    background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%);
+    background: linear-gradient(180deg, #f5f2ed 0%, #ece8e1 100%);
 }
 
 [data-theme="dark"] .cta {
@@ -393,9 +396,9 @@
 
 .ctaCard {
     background: linear-gradient(135deg,
-            rgba(20, 184, 166, 0.08) 0%,
-            rgba(6, 182, 212, 0.04) 100%);
-    border: 1px solid rgba(20, 184, 166, 0.3);
+            rgba(201, 162, 39, 0.06) 0%,
+            rgba(20, 184, 166, 0.04) 100%);
+    border: 1px solid rgba(201, 162, 39, 0.25);
     border-radius: 24px;
     padding: 4rem;
     text-align: center;
@@ -429,8 +432,8 @@
 }
 
 .ctaCode {
-    background: #f1f5f9;
-    border: 1px solid #e2e8f0;
+    background: #f5f2ed;
+    border: 1px solid #e8e4de;
     border-radius: 12px;
     padding: 1rem 2rem;
     display: inline-block;

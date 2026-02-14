@@ -137,14 +137,13 @@
 }
 
 .card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-2px);
     border-color: var(--almadar-sand-gold);
-    /* Gold Border on Hover */
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
 
 [data-theme='light'] .card:hover {
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 24px rgba(201, 162, 39, 0.1);
 }
 
 /* --- Top Half: Preview --- */
@@ -157,9 +156,8 @@
 }
 
 [data-theme='light'] .cardPreviewContainer {
-    background: #f1f5f9;
-    /* Slate-100, slightly darker than card body */
-    border-bottom: 1px solid #e2e8f0;
+    background: #f5f2ed;
+    border-bottom: 1px solid #e8e4de;
 }
 
 .cardPreview {
@@ -185,7 +183,7 @@
 }
 
 [data-theme='light'] .previewOverlay {
-    background: linear-gradient(to bottom, transparent 70%, rgba(248, 250, 252, 0.8) 100%);
+    background: linear-gradient(to bottom, transparent 70%, rgba(250, 248, 245, 0.8) 100%);
 }
 
 /* --- Bottom Half: Content --- */
@@ -289,7 +287,7 @@
 }
 
 [data-theme='light'] .cardPlaceholder {
-    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    background: linear-gradient(135deg, #f5f2ed 0%, #ece8e1 100%);
 }
 
 .cardPlaceholderPattern {
