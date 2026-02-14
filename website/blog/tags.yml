@@ -29,3 +29,7 @@ ai:
 philosophy:
   label: Philosophy
   description: Design philosophy and paradigm discussions
+
+story:
+  label: Story
+  description: Origin stories and personal narratives from the team
