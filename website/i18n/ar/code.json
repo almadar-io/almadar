@@ -833,5 +833,29 @@
   "demo.interactiveGraph.description": {
     "message": "لوحة رسم بياني موجهة بالقوة مع عُقد قابلة للسحب وتحكم بالتكبير وتخطيطات مجمعة.",
     "description": "Demo description: Interactive Graph"
+  },
+  "blog.recentPosts.heading": {
+    "message": "أحدث المنشورات",
+    "description": "The heading for the recent posts section on blog post pages"
+  },
+  "blog.recentPosts.readArticle": {
+    "message": "اقرأ المقال ←",
+    "description": "The link text for reading a recent blog post"
+  },
+  "blog.recentPosts.oneSchemaTitle": {
+    "message": "schema واحد، ستة تطبيقات",
+    "description": "Title for the 'One Schema, Six Apps' blog post"
+  },
+  "blog.recentPosts.jsonThinksTitle": {
+    "message": "JSON يُفكّر: Turing-Complete JSON",
+    "description": "Title for the 'JSON That Thinks' blog post"
+  },
+  "blog.recentPosts.threeExecutionModelsTitle": {
+    "message": "ثلاثة نماذج تنفيذ، حقيقة واحدة",
+    "description": "Title for the 'Three Execution Models' blog post"
+  },
+  "blog.recentPosts.closedCircuitTitle": {
+    "message": "الـ Closed Circuit Pattern: لماذا يعلق مستخدموك (وكيف تمنع ذلك)",
+    "description": "Title for the 'Closed Circuit Pattern' blog post"
   }
 }

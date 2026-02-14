@@ -1,36 +1,57 @@
 import React from 'react';
 import Footer from '@theme-original/BlogPostItem/Footer';
 import Link from '@docusaurus/Link';
+import {translate} from '@docusaurus/Translate';
 
-// A curated list of recent/important posts to show at the bottom
-const RECENT_POSTS = [
-    {
-        title: "One Schema, Six Apps",
-        permalink: "/blog/one-schema-six-apps",
-    },
-    {
-        title: "JSON That Thinks: Turing-Complete JSON",
-        permalink: "/blog/json-that-thinks",
-    },
-    {
-        title: "Three Execution Models, One Source of Truth",
-        permalink: "/blog/three-execution-models",
-    },
-    {
-        title: "The Closed Circuit Pattern",
-        permalink: "/blog/closed-circuit-pattern",
-    },
-];
+function useRecentPosts() {
+    return [
+        {
+            title: translate({
+                id: 'blog.recentPosts.oneSchemaTitle',
+                message: 'One Schema, Six Apps',
+            }),
+            permalink: "/blog/one-schema-six-apps",
+        },
+        {
+            title: translate({
+                id: 'blog.recentPosts.jsonThinksTitle',
+                message: 'JSON That Thinks: Turing-Complete JSON',
+            }),
+            permalink: "/blog/json-that-thinks",
+        },
+        {
+            title: translate({
+                id: 'blog.recentPosts.threeExecutionModelsTitle',
+                message: 'Three Execution Models, One Source of Truth',
+            }),
+            permalink: "/blog/three-execution-models",
+        },
+        {
+            title: translate({
+                id: 'blog.recentPosts.closedCircuitTitle',
+                message: 'The Closed Circuit Pattern',
+            }),
+            permalink: "/blog/closed-circuit-pattern",
+        },
+    ];
+}
 
 export default function BlogPostItemFooter(props): JSX.Element {
+    const recentPosts = useRecentPosts();
+
     return (
         <>
             <Footer {...props} />
 
             <section style={{ marginTop: '4rem', paddingTop: '2rem', borderTop: '1px solid var(--ifm-toc-border-color)' }}>
-                <h3>Recent Posts</h3>
+                <h3>
+                    {translate({
+                        id: 'blog.recentPosts.heading',
+                        message: 'Recent Posts',
+                    })}
+                </h3>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '1rem', marginTop: '1rem' }}>
-                    {RECENT_POSTS.map((post) => (
+                    {recentPosts.map((post) => (
                         <Link
                             key={post.permalink}
                             to={post.permalink}
@@ -43,11 +64,14 @@ export default function BlogPostItemFooter(props): JSX.Element {
                                 color: 'var(--ifm-font-color-base)',
                                 transition: 'all 0.2s ease',
                             }}
-                        // Add hover effect via simplified inline style or class if possible, 
-                        // but for now simpler is better. Docusaurus Link handles navigation.
                         >
                             <div style={{ fontWeight: '600', marginBottom: '0.5rem' }}>{post.title}</div>
-                            <div style={{ fontSize: '0.85rem', color: 'var(--almadar-teal)' }}>Read Article →</div>
+                            <div style={{ fontSize: '0.85rem', color: 'var(--almadar-teal)' }}>
+                                {translate({
+                                    id: 'blog.recentPosts.readArticle',
+                                    message: 'Read Article →',
+                                })}
+                            </div>
                         </Link>
                     ))}
                 </div>
