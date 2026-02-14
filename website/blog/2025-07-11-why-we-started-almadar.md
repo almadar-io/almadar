@@ -51,9 +51,9 @@ This was not just a nice metaphor. It was an architectural principle. Software s
 
 ## Two People, Not Twenty
 
-I co-founded Almadar with Maja in Ljubljana, Slovenia. Two people, not twenty. That was deliberate.
+I started Almadar in Ljubljana, Slovenia. Two people, not twenty. That was deliberate.
 
-We had both seen what happens when companies try to solve complexity with headcount. You end up with more complexity, not less. More communication overhead, more coordination, more meetings about meetings. The best software I have ever seen was built by small teams with strong opinions and clear constraints.
+I had seen what happens when companies try to solve complexity with headcount. You end up with more complexity, not less. More communication overhead, more coordination, more meetings about meetings. The best software I have ever seen was built by small teams with strong opinions and clear constraints.
 
 Our constraint was simple: we had to build something that two people could maintain. That meant the tool itself had to eliminate the work that would normally require a large team. If Almadar could not reduce a ten-person project to a two-person project, then we had no business building it.
 
