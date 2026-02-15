@@ -12,6 +12,8 @@ Ever opened a modal and couldn't close it? That's a broken circuit. We made it i
 
 <!-- truncate -->
 
+<OrbitalDiagram />
+
 ## The Stuck User Problem
 
 You're using an app. You click "Open Settings." A modal appears. You click the X button. Nothing happens. You press Escape. Nothing. You click outside the modal. Still nothing.

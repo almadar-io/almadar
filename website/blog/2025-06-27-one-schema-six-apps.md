@@ -13,6 +13,8 @@ Here's how — and why it matters.
 
 <!-- truncate -->
 
+<OrbitalDiagram />
+
 ## The Claim
 
 Every programming language claims to be "general purpose." But when was the last time you used the same framework to build a game *and* a government compliance tool?

@@ -11,6 +11,8 @@ What if your software architecture made non-compliance impossible?
 
 <!-- truncate -->
 
+<OrbitalDiagram />
+
 ## The Checklist Failure
 
 Every regulated industry relies on checklists:

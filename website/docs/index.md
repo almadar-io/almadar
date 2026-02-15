@@ -28,6 +28,8 @@ Your Vision → OrbitalSchema (.orb) → Full-Stack Application
 | Documentation as afterthought | Schema IS documentation |
 | Testing is complex | State machines are inherently testable |
 
+<OrbitalDiagram />
+
 ## Quick Example
 
 ```json

@@ -21,6 +21,8 @@ In this series, we'll explore how the Almadar language can revolutionize robotic
 
 <!-- truncate -->
 
+<OrbitalDiagram />
+
 ---
 
 ## The Problem: Why is Robot Programming Hard?

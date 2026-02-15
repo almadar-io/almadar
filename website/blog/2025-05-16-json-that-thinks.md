@@ -13,6 +13,8 @@ Here's why — and how.
 
 <!-- truncate -->
 
+<OrbitalDiagram />
+
 ## The Problem with Configuration Languages
 
 The industry has been circling this problem for decades:

@@ -14,6 +14,8 @@ Java promised "write once, run anywhere." We deliver "write once, run *everywher
 
 <!-- truncate -->
 
+<OrbitalDiagram />
+
 ## The Promise and Failure of WORA
 
 In 1995, Java promised: *"Write once, run anywhere."*

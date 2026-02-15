@@ -11,6 +11,8 @@ Almadar is a declarative framework for building full-stack applications through 
 
 <!-- truncate -->
 
+<OrbitalDiagram />
+
 ## What is Almadar?
 
 Almadar (Arabic for "The Orbit") brings a new paradigm to software development:

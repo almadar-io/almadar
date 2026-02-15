@@ -9,6 +9,8 @@ State machines are at the heart of Almadar. In this post, we explore why we chos
 
 <!-- truncate -->
 
+<OrbitalDiagram />
+
 ## Why State Machines?
 
 Traditional web applications often suffer from unpredictable behavior. A button might do different things depending on hidden state, race conditions, or implicit assumptions buried in code.

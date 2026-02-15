@@ -12,6 +12,8 @@ What if you defined your entire application in a single JSON file before writing
 
 <!-- truncate -->
 
+<OrbitalDiagram />
+
 ## The Traditional Flow
 
 Most frontend development looks like this:

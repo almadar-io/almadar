@@ -14,6 +14,8 @@ Everyone loves JSON, but when you need logic, you end up with string templates o
 
 <!-- truncate -->
 
+<OrbitalDiagram />
+
 ## The JSON Limitation
 
 JSON is great for data:

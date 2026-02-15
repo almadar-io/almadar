@@ -9,6 +9,8 @@ Authorization logic scattered across your app? What if it was just... part of th
 
 <!-- truncate -->
 
+<OrbitalDiagram />
+
 ## The Authorization Mess
 
 Most apps handle permissions like this:

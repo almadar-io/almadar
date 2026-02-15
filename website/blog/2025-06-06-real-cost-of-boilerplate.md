@@ -13,6 +13,8 @@ This isn't a theoretical comparison. Let's count.
 
 <!-- truncate -->
 
+<OrbitalDiagram />
+
 ## The Traditional Stack: A Line Count Audit
 
 Building a task manager with React + Express + PostgreSQL. Let's count every file you need:

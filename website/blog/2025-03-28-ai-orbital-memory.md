@@ -12,6 +12,8 @@ Everyone's building RAG systems with vector DBs. We gave our AI a structured mem
 
 <!-- truncate -->
 
+<OrbitalDiagram />
+
 ## The RAG Problem
 
 Retrieval-Augmented Generation (RAG) is the standard approach for giving AI agents memory:

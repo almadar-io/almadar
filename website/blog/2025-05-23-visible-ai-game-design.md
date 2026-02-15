@@ -13,6 +13,8 @@ That's what we built in Trait Wars.
 
 <!-- truncate -->
 
+<OrbitalDiagram />
+
 ## The Black Box Problem
 
 In traditional game AI, enemy behavior looks like this from the player's perspective:

@@ -12,6 +12,8 @@ Almadar (المدار) is a **declarative programming language** for building fu
 
 The Almadar compiler transforms this schema into a complete, production-ready application.
 
+<OrbitalDiagram />
+
 ## The Problem Almadar Solves
 
 ### Traditional Development

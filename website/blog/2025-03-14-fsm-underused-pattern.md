@@ -9,6 +9,8 @@ If you're using `useState` for complex UI, you're probably doing it wrong. There
 
 <!-- truncate -->
 
+<OrbitalDiagram />
+
 ## The Boolean Flag Trap
 
 Here's a familiar pattern:

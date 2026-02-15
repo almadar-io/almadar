@@ -11,6 +11,8 @@ This isn't just a game mechanic. It's a software architecture pattern that solve
 
 <!-- truncate -->
 
+<OrbitalDiagram />
+
 ## The Composition Problem
 
 Software architecture is stuck between two bad options:

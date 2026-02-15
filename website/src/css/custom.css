@@ -85,6 +85,8 @@
     --ifm-color-primary-lighter: #99f6e4;
     --ifm-color-primary-lightest: #ccfbf1;
 
+    --almadar-bg: var(--almadar-midnight);
+
     --ifm-background-color: var(--almadar-midnight);
     --ifm-background-surface-color: var(--almadar-midnight-light);
     --ifm-navbar-background-color: rgba(2, 6, 23, 0.8);
