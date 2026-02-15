@@ -71,6 +71,7 @@ const LocalizedSchemaDisplay = () => {
 
 import DemoCarousel from "../components/DemoCarousel";
 import HeroSection from "../components/HeroSection";
+import HeroSchemaAnimation from "../components/HeroSchemaAnimation";
 import {
   SchemaIcon,
   StateMachineIcon,
@@ -83,6 +84,7 @@ import {
 function HomepageHeader() {
   return (
     <HeroSection
+      backgroundElement={<HeroSchemaAnimation />}
       title={
         <Translate id="homepage.title">The Physics of Software</Translate>
       }

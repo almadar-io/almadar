@@ -1,7 +1,6 @@
 import React from "react";
 import type { ReactNode } from "react";
 import Heading from "@theme/Heading";
-import HeroSchemaAnimation from "../HeroSchemaAnimation";
 import styles from "./styles.module.css";
 
 interface HeroSectionProps {
@@ -9,23 +8,28 @@ interface HeroSectionProps {
   subtitle: ReactNode;
   buttons: ReactNode;
   tag?: ReactNode;
+  /** Optional background illustration (e.g. HeroSchemaAnimation on homepage) */
+  backgroundElement?: ReactNode;
 }
 
 /**
  * Shared hero section used across all top-level pages.
- * Shows the HeroSchemaAnimation background with left-aligned text overlay.
+ * Text overlay on the left; optional background illustration on the right.
  */
 export default function HeroSection({
   title,
   subtitle,
   buttons,
   tag,
+  backgroundElement,
 }: HeroSectionProps) {
   return (
     <header className={styles.hero}>
-      <div className={styles.heroPatternContainer}>
-        <HeroSchemaAnimation />
-      </div>
+      {backgroundElement && (
+        <div className={styles.heroPatternContainer}>
+          {backgroundElement}
+        </div>
+      )}
       <div className={styles.heroContainer}>
         <div className={styles.heroText}>
           {tag && <span className={styles.tag}>{tag}</span>}

@@ -284,8 +284,9 @@ export default function HeroSchemaAnimation() {
         </text>
 
         <text
-          x="222"
-          y="278"
+          x="240"
+          y="258"
+          textAnchor="middle"
           fontSize="8"
           fill={gold}
           fontFamily="'IBM Plex Mono', monospace"
