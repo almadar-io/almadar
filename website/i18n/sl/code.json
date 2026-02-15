@@ -861,5 +861,17 @@
   "homepage.schema.inYourLanguage": {
     "message": "V vašem jeziku",
     "description": "Tab label for the localized schema example on the homepage"
+  },
+  "homepage.animation.title": {
+    "message": "Kako deluje",
+    "description": "Animation section title"
+  },
+  "homepage.animation.subtitle": {
+    "message": "Vsaka aplikacija Almadar je sestavljena iz orbitalnih enot. Entiteta hrani vaše podatke, lastnosti določajo vedenje kot stroji stanj, strani pa jih vežejo na poti. Opazujte, kako se arhitektura sestavi sama.",
+    "description": "Animation section subtitle"
+  },
+  "homepage.animation.caption": {
+    "message": "Orbitalna enota = Entiteta + Lastnosti + Strani",
+    "description": "Animation section caption"
   }
 }

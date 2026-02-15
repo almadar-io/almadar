@@ -115,7 +115,26 @@ function HomepageAnimation() {
   return (
     <section className={styles.animationSection}>
       <div className="container">
+        <div className={styles.animationHeader}>
+          <Heading as="h2" className={styles.animationTitle}>
+            <Translate id="homepage.animation.title">
+              How It Works
+            </Translate>
+          </Heading>
+          <p className={styles.animationSubtitle}>
+            <Translate id="homepage.animation.subtitle">
+              Every Almadar application is composed of Orbital Units. An Entity
+              holds your data, Traits define behavior as state machines, and
+              Pages bind them to routes. Watch the architecture assemble itself.
+            </Translate>
+          </p>
+        </div>
         <HeroSchemaAnimation />
+        <p className={styles.animationCaption}>
+          <Translate id="homepage.animation.caption">
+            Orbital Unit = Entity + Traits + Pages
+          </Translate>
+        </p>
       </div>
     </section>
   );

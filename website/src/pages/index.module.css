@@ -7,18 +7,55 @@
 
 /* Animation Section — standalone below hero */
 .animationSection {
-    padding: 3rem 0 4rem;
-    background: var(--almadar-parchment);
-    display: flex;
-    justify-content: center;
+    padding: 4rem 0 5rem;
+    background: linear-gradient(180deg, var(--almadar-parchment) 0%, #ece8e1 100%);
+    border-top: 1px solid rgba(201, 162, 39, 0.15);
 }
 
 [data-theme="dark"] .animationSection {
-    background: var(--almadar-midnight);
+    background: linear-gradient(180deg, var(--almadar-midnight) 0%, #020617 100%);
+    border-top-color: rgba(20, 184, 166, 0.15);
 }
 
 .animationSection :global(.container) {
-    max-width: 560px;
+    max-width: 600px;
+}
+
+.animationHeader {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.animationTitle {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+[data-theme="dark"] .animationTitle {
+    color: #f8fafc;
+}
+
+.animationSubtitle {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #475569;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+[data-theme="dark"] .animationSubtitle {
+    color: #94a3b8;
+}
+
+.animationCaption {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--almadar-sand-gold);
 }
 
 /* Features Section — warm parchment gradient */

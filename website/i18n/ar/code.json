@@ -861,5 +861,17 @@
   "homepage.schema.inYourLanguage": {
     "message": "بلغتك",
     "description": "Tab label for the localized schema example on the homepage"
+  },
+  "homepage.animation.title": {
+    "message": "كيف يعمل",
+    "description": "Animation section title"
+  },
+  "homepage.animation.subtitle": {
+    "message": "كل تطبيق في المدار يتكون من وحدات مدارية. الـ Entity يحمل بياناتك، والـ Traits تحدد السلوك كـ state machines، والصفحات تربطها بالمسارات. شاهد البنية وهي تتشكل.",
+    "description": "Animation section subtitle"
+  },
+  "homepage.animation.caption": {
+    "message": "الوحدة المدارية = Entity + Traits + Pages",
+    "description": "Animation section caption"
   }
 }
