@@ -5,6 +5,22 @@
     flex-wrap: wrap;
 }
 
+/* Animation Section — standalone below hero */
+.animationSection {
+    padding: 3rem 0 4rem;
+    background: var(--almadar-parchment);
+    display: flex;
+    justify-content: center;
+}
+
+[data-theme="dark"] .animationSection {
+    background: var(--almadar-midnight);
+}
+
+.animationSection :global(.container) {
+    max-width: 560px;
+}
+
 /* Features Section — warm parchment gradient */
 .features {
     padding: 6rem 0;

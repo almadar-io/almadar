@@ -84,7 +84,6 @@ import {
 function HomepageHeader() {
   return (
     <HeroSection
-      backgroundElement={<HeroSchemaAnimation />}
       title={
         <Translate id="homepage.title">The Physics of Software</Translate>
       }
@@ -109,6 +108,16 @@ function HomepageHeader() {
         </>
       }
     />
+  );
+}
+
+function HomepageAnimation() {
+  return (
+    <section className={styles.animationSection}>
+      <div className="container">
+        <HeroSchemaAnimation />
+      </div>
+    </section>
   );
 }
 
@@ -358,6 +367,7 @@ export default function Home(): ReactNode {
       })}
     >
       <HomepageHeader />
+      <HomepageAnimation />
       <main>
         <DemoCarousel />
         <HomepagePhilosophy />

@@ -8,28 +8,20 @@ interface HeroSectionProps {
   subtitle: ReactNode;
   buttons: ReactNode;
   tag?: ReactNode;
-  /** Optional background illustration (e.g. HeroSchemaAnimation on homepage) */
-  backgroundElement?: ReactNode;
 }
 
 /**
  * Shared hero section used across all top-level pages.
- * Text overlay on the left; optional background illustration on the right.
+ * Clean text hero — no embedded animations.
  */
 export default function HeroSection({
   title,
   subtitle,
   buttons,
   tag,
-  backgroundElement,
 }: HeroSectionProps) {
   return (
     <header className={styles.hero}>
-      {backgroundElement && (
-        <div className={styles.heroPatternContainer}>
-          {backgroundElement}
-        </div>
-      )}
       <div className={styles.heroContainer}>
         <div className={styles.heroText}>
           {tag && <span className={styles.tag}>{tag}</span>}
