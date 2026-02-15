@@ -204,7 +204,7 @@ export default function OrbitalDiagram() {
 
           {/* === Edge labels === */}
           <text
-            x="148" y="138" fontSize="7" fill={gold}
+            x="138" y="148" textAnchor="end" fontSize="7" fill={gold}
             fontFamily="'IBM Plex Mono', monospace" fontWeight="500"
             className={styles.edgeLabel} style={{ animationDelay: "1.6s" }}
           >
@@ -212,7 +212,7 @@ export default function OrbitalDiagram() {
           </text>
 
           <text
-            x="238" y="138" fontSize="7" fill={gold}
+            x="262" y="148" textAnchor="start" fontSize="7" fill={gold}
             fontFamily="'IBM Plex Mono', monospace" fontWeight="500"
             className={styles.edgeLabel} style={{ animationDelay: "1.8s" }}
           >
@@ -220,7 +220,7 @@ export default function OrbitalDiagram() {
           </text>
 
           <text
-            x="200" y="224" textAnchor="middle"
+            x="200" y="238" textAnchor="middle"
             fontSize="7" fill={gold}
             fontFamily="'IBM Plex Mono', monospace" fontWeight="500"
             className={styles.edgeLabel} style={{ animationDelay: "3.0s" }}

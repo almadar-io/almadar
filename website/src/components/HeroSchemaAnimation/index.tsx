@@ -258,8 +258,9 @@ export default function HeroSchemaAnimation() {
 
         {/* === Floating labels for connections === */}
         <text
-          x="178"
-          y="163"
+          x="168"
+          y="172"
+          textAnchor="end"
           fontSize="8"
           fill={gold}
           fontFamily="'IBM Plex Mono', monospace"
@@ -271,8 +272,9 @@ export default function HeroSchemaAnimation() {
         </text>
 
         <text
-          x="278"
-          y="163"
+          x="312"
+          y="172"
+          textAnchor="start"
           fontSize="8"
           fill={gold}
           fontFamily="'IBM Plex Mono', monospace"
@@ -285,7 +287,7 @@ export default function HeroSchemaAnimation() {
 
         <text
           x="240"
-          y="258"
+          y="272"
           textAnchor="middle"
           fontSize="8"
           fill={gold}
