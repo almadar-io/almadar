@@ -29,7 +29,7 @@ This essay is about a different path. One where machines become more capable *an
 
 ## II. The black box problem, made concrete
 
-Let me make this tangible. Say you have a robot arm in a factory. It sorts parts on a conveyor belt. It uses a neural network trained on ten thousand images to distinguish good parts from defective ones.
+Let us make this tangible. Say you have a robot arm in a factory. It sorts parts on a conveyor belt. It uses a neural network trained on ten thousand images to distinguish good parts from defective ones.
 
 One Tuesday, the robot starts rejecting good parts. Production drops 30%.
 
@@ -97,7 +97,7 @@ This is the key insight: **traits are capability contracts**. When you compose t
 
 ## IV. Where learning fits
 
-I want to be careful here, because this is where people assume you have to choose: readable rules *or* machine learning. That's a false choice.
+We want to be careful here, because this is where people assume you have to choose: readable rules *or* machine learning. That's a false choice.
 
 Trait Machines don't reject learning. They **constrain** it.
 
@@ -137,7 +137,7 @@ A child learning to walk doesn't run a training script. They try, fall, adjust, 
 
 ## V. The traceability argument
 
-This is the part I care about most, and it's the part that's hardest to get excited about until something goes wrong.
+This is the part we care about most, and it's the part that's hardest to get excited about until something goes wrong.
 
 When a Trait Machine misbehaves, you debug it by **reading**. Not by staring at loss curves. Not by retraining. Not by adding more data and hoping. You read.
 
@@ -164,13 +164,13 @@ Now compare this to debugging a neural network decision: "The model output a sto
 
 **For the public:** When people ask "how do I know this robot is safe?", the answer isn't "trust us, we tested it." The answer is "here are its traits. Here is what it can do. Here is what it cannot do. Every action it takes is logged against these rules. You can verify this yourself."
 
-This is what I mean by machines you can read. Not transparency as a marketing claim. Transparency as an engineering property.
+This is what we mean by machines you can read. Not transparency as a marketing claim. Transparency as an engineering property.
 
 ---
 
 ## VI. Five domains where this matters
 
-Inspired by Amodei's structure, let me sketch where Trait Machines could matter most. I'll try to be concrete about what's possible today versus what requires further work.
+Inspired by Amodei's structure, let us sketch where Trait Machines could matter most. We'll try to be concrete about what's possible today versus what requires further work.
 
 ### 1. Manufacturing and quality control
 
@@ -227,19 +227,19 @@ This turns robotics education from "learn these libraries and frameworks" into "
 
 ---
 
-## VII. What I'm not claiming
+## VII. What we're not claiming
 
-I want to be honest about the limits.
+We want to be honest about the limits.
 
-**I'm not claiming trait machines solve AI alignment.** The guards are written by humans. If the humans write the wrong guards, the robot will do the wrong thing traceably. Traceability makes bugs findable, not impossible.
+**We're not claiming trait machines solve AI alignment.** The guards are written by humans. If the humans write the wrong guards, the robot will do the wrong thing traceably. Traceability makes bugs findable, not impossible.
 
-**I'm not claiming neural networks are bad.** They're extraordinarily capable. The argument is that capability without legibility is dangerous at scale, and that you can have both.
+**We're not claiming neural networks are bad.** They're extraordinarily capable. The argument is that capability without legibility is dangerous at scale, and that you can have both.
 
-**I'm not claiming this is easy.** Writing good traits is hard. Composing them correctly is hard. The tooling needs to be much better. The ecosystem barely exists. We're at the "hand-cranked automobile" stage, not the "highway system" stage.
+**We're not claiming this is easy.** Writing good traits is hard. Composing them correctly is hard. The tooling needs to be much better. The ecosystem barely exists. We're at the "hand-cranked automobile" stage, not the "highway system" stage.
 
-**I'm not claiming this replaces traditional robotics.** ROS, PyTorch, SLAM algorithms — all of this still applies. Trait Machines are a composition layer on top, not a replacement underneath.
+**We're not claiming this replaces traditional robotics.** ROS, PyTorch, SLAM algorithms — all of this still applies. Trait Machines are a composition layer on top, not a replacement underneath.
 
-What I am claiming is narrower and, I think, defensible: **that the readability of a robot's behavior is a first-class engineering requirement, not a nice-to-have, and that we have a concrete way to achieve it.**
+What we are claiming is narrower and, we think, defensible: **that the readability of a robot's behavior is a first-class engineering requirement, not a nice-to-have, and that we have a concrete way to achieve it.**
 
 ---
 
@@ -263,11 +263,11 @@ The Trait Machine bet is that this asymmetry matters more as systems become more
 
 Richard Brautigan imagined "machines of loving grace" tending the world while humans return to nature. Amodei imagined AI compressing a century of progress into a decade.
 
-I imagine something smaller and, I think, more achievable: machines whose grace is legible. Robots you can read the way you read a book — following the logic, spotting the errors, understanding the intent. Machines that earn trust not through performance benchmarks, but through clarity.
+We imagine something smaller and, we think, more achievable: machines whose grace is legible. Robots you can read the way you read a book — following the logic, spotting the errors, understanding the intent. Machines that earn trust not through performance benchmarks, but through clarity.
 
 We're building this at Almadar. The schemas are open. The compiler validates. Systems communicate through the Orbital protocol — a shared event bus where every message is traceable. If you write a trait, the robot does exactly what you wrote — and nothing else.
 
-The tools are early. The ecosystem is small. But the idea is, I believe, right: that the future of robotics isn't just about what machines can do. It's about whether we can read what they're doing while they do it.
+The tools are early. The ecosystem is small. But the idea is, we believe, right: that the future of robotics isn't just about what machines can do. It's about whether we can read what they're doing while they do it.
 
 If that matters to you, come read our traits.
 
