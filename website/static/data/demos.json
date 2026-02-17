@@ -1,128 +1,128 @@
 [
   {
-    "id": "clients-winning-11-templates-admindashboardtemplate--default",
     "key": "executiveDashboard",
     "title": "Executive Dashboard",
     "description": "High-level overview of system health, alerts, and key metrics with real-time activity feed.",
     "height": "800px",
     "category": "Social Network",
-    "categoryKey": "socialNetwork"
+    "categoryKey": "socialNetwork",
+    "theme": "slate-light"
   },
   {
-    "id": "clients-winning-11-templates-trustintelligencetemplate--default",
     "key": "trustIntelligence",
     "title": "Trust Intelligence",
     "description": "AI-driven analysis of team trust scores, performance trends, and top performers.",
     "height": "800px",
     "category": "Social Network",
-    "categoryKey": "socialNetwork"
+    "categoryKey": "socialNetwork",
+    "theme": "ocean-light"
   },
   {
-    "id": "clients-winning-11-templates-graphintelligencetemplate--high-density-network",
     "key": "graphIntelligence",
     "title": "Graph Intelligence",
     "description": "Network visualization with cluster detection, density metrics, and connection analysis.",
     "height": "800px",
     "category": "Social Network",
-    "categoryKey": "socialNetwork"
+    "categoryKey": "socialNetwork",
+    "theme": "midnight-dark"
   },
   {
-    "id": "clients-winning-11-templates-userprofiletemplate--default",
     "key": "userProfile360",
     "title": "User Profile 360",
     "description": "Comprehensive user analysis including activity history, trust metrics, and connection usage.",
     "height": "800px",
     "category": "Social Network",
-    "categoryKey": "socialNetwork"
+    "categoryKey": "socialNetwork",
+    "theme": "lavender-light"
   },
   {
-    "id": "clients-inspection-system-templates-inspectionstemplate--default",
     "key": "inspectionManagement",
     "title": "Inspection Management",
     "description": "Centralized hub for tracking compliance checks, field operations, and inspection status.",
     "height": "800px",
     "category": "Gov Tech",
-    "categoryKey": "govTech"
+    "categoryKey": "govTech",
+    "theme": "sand-light"
   },
   {
-    "id": "clients-inspection-system-templates-inspectionformdemotemplate--trade-inspection",
     "key": "inspectionForm",
     "title": "Inspection Form",
     "description": "Multi-step inspection form with conditional fields, law references, and violation capture.",
     "height": "850px",
     "category": "Gov Tech",
-    "categoryKey": "govTech"
+    "categoryKey": "govTech",
+    "theme": "copper-light"
   },
   {
-    "id": "blaz-klemenc-templates-fitnesstemplate--default",
     "key": "fitnessTracker",
     "title": "Fitness Tracker",
     "description": "Workout logging with lift tracking, progress charts, and daily wellness input.",
     "height": "800px",
     "category": "Fitness App",
-    "categoryKey": "fitnessApp"
+    "categoryKey": "fitnessApp",
+    "theme": "forest-light"
   },
   {
-    "id": "blaz-klemenc-templates-mealplandetailtemplate--default",
     "key": "mealPlanDetail",
     "title": "Meal Plan Detail",
     "description": "Detailed nutrition plan with macro breakdown, AI analysis, and shareable links.",
     "height": "800px",
     "category": "Fitness App",
-    "categoryKey": "fitnessApp"
+    "categoryKey": "fitnessApp",
+    "theme": "rose-light"
   },
   {
-    "id": "blaz-klemenc-templates-scheduletemplate--busy-week",
     "key": "trainingSchedule",
     "title": "Training Schedule",
     "description": "Weekly training calendar with session management, status tracking, and completion overview.",
     "height": "800px",
     "category": "Fitness App",
-    "categoryKey": "fitnessApp"
+    "categoryKey": "fitnessApp",
+    "theme": "ember-light"
   },
   {
-    "id": "builder-templates-studioprojecttemplate--hq-mode",
     "key": "almadarStudio",
     "title": "Almadar Studio",
     "description": "AI-powered development environment for building full-stack applications from natural language.",
     "height": "850px",
     "category": "Dev Tools",
-    "categoryKey": "devTools"
+    "categoryKey": "devTools",
+    "theme": "almadar-dark"
   },
   {
-    "id": "builder-templates-studioprojecttemplate--with-all-panels",
     "key": "studioFullView",
     "title": "Studio Full View",
     "description": "Complete IDE layout with agent panel, inspector, schema editor, and live preview.",
     "height": "850px",
     "category": "Dev Tools",
-    "categoryKey": "devTools"
+    "categoryKey": "devTools",
+    "theme": "neon-dark"
   },
   {
-    "id": "builder-organisms-agentchatpanel--running",
     "key": "aiAgentPanel",
     "title": "AI Agent Panel",
     "description": "Real-time AI assistant with tool calls, todo tracking, and schema diffs.",
     "height": "700px",
     "category": "Dev Tools",
-    "categoryKey": "devTools"
+    "categoryKey": "devTools",
+    "theme": "arctic-light"
   },
   {
-    "id": "game-battleboard--editor",
     "key": "gameMapEditor",
     "title": "Game Map Editor",
     "description": "Interactive isometric editor for designing game maps with terrain painting, unit placement, and region tooling.",
     "height": "800px",
     "category": "Game Tools",
-    "categoryKey": "gameTools"
+    "categoryKey": "gameTools",
+    "theme": "trait-wars-dark"
   },
   {
-    "id": "organisms-graphcanvas--interactive",
     "key": "interactiveGraph",
     "title": "Interactive Graph",
     "description": "Force-directed graph canvas with draggable nodes, zoom controls, and grouped layouts.",
     "height": "700px",
     "category": "Data Viz",
-    "categoryKey": "dataViz"
+    "categoryKey": "dataViz",
+    "theme": "sunset-light"
   }
 ]

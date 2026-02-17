@@ -1,6 +1,9 @@
 import { themes as prismThemes } from "prism-react-renderer";
 import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
+import path from "path";
+
+const workspaceRoot = path.resolve(__dirname, "../..");
 
 const config: Config = {
   title: "Almadar",
@@ -42,6 +45,41 @@ const config: Config = {
       },
     },
   },
+
+  plugins: [
+    // Portable stories: resolve @almadar/ui and project design system imports
+    function demoAliasesPlugin() {
+      return {
+        name: "demo-aliases",
+        configureWebpack() {
+          return {
+            resolve: {
+              alias: {
+                "@almadar/ui": path.join(workspaceRoot, "packages/almadar-ui/components/index.ts"),
+                "react-force-graph-2d": path.join(__dirname, ".storybook/stubs/react-force-graph-2d.ts"),
+              },
+            },
+          };
+        },
+      };
+    },
+    // Tailwind CSS: process @tailwind directives for inline @almadar/ui demos
+    function tailwindPlugin() {
+      return {
+        name: "tailwind-postcss",
+        configurePostCss(postcssOptions) {
+          postcssOptions.plugins = [
+            require("tailwindcss")(
+              path.join(__dirname, "tailwind.config.mjs"),
+            ),
+            require("autoprefixer"),
+            ...(postcssOptions.plugins || []),
+          ];
+          return postcssOptions;
+        },
+      };
+    },
+  ],
 
   presets: [
     [

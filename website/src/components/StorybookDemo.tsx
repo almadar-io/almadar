@@ -8,9 +8,11 @@ interface StorybookDemoProps {
     demoKey: string;
     title: string;
     height?: string;
+    /** Theme name from @almadar/ui (e.g. "ocean-light", "midnight-dark") */
+    theme?: string;
 }
 
-export default function StorybookDemo({ demoKey, title, height = '600px' }: StorybookDemoProps): React.JSX.Element {
+export default function StorybookDemo({ demoKey, title, height = '600px', theme }: StorybookDemoProps): React.JSX.Element {
     const [isVisible, setIsVisible] = useState(false);
     const [demo, setDemo] = useState<DemoEntry | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -69,7 +71,7 @@ export default function StorybookDemo({ demoKey, title, height = '600px' }: Stor
                         <span style={{ color: 'var(--ifm-color-danger)' }}>{error}</span>
                     </div>
                 ) : demo ? (
-                    <StoryThemeWrapper>
+                    <StoryThemeWrapper theme={theme}>
                         <demo.Component {...demo.args} />
                     </StoryThemeWrapper>
                 ) : (

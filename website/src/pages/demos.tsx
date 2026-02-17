@@ -14,10 +14,10 @@ import { demoSchemas } from '../data/demo-schemas';
 export default function Demos(): React.JSX.Element {
     const [viewMode, setViewMode] = useState<Record<string, 'live' | 'arch'>>({});
 
-    const toggleView = (id: string) => {
+    const toggleView = (key: string) => {
         setViewMode(prev => ({
             ...prev,
-            [id]: prev[id] === 'arch' ? 'live' : 'arch'
+            [key]: prev[key] === 'arch' ? 'live' : 'arch'
         }));
     };
 
@@ -44,11 +44,11 @@ export default function Demos(): React.JSX.Element {
                                 const translatedTitle = translate({ id: `demo.${demo.key}.title`, message: demo.title });
                                 const translatedDesc = translate({ id: `demo.${demo.key}.description`, message: demo.description });
                                 const translatedCategory = translate({ id: `demo.category.${demo.categoryKey}`, message: demo.category });
-                                const isArch = viewMode[demo.id] === 'arch';
+                                const isArch = viewMode[demo.key] === 'arch';
                                 const schema = demoSchemas[demo.key];
 
                                 return (
-                                    <div key={demo.id} id={demo.id} className={styles.demoWrapper}>
+                                    <div key={demo.key} id={demo.key} className={styles.demoWrapper}>
                                         <div className={styles.demoMeta}>
                                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                                                 <div>
@@ -58,7 +58,7 @@ export default function Demos(): React.JSX.Element {
                                                 {schema && (
                                                     <button
                                                         className="button button--secondary button--sm"
-                                                        onClick={() => toggleView(demo.id)}
+                                                        onClick={() => toggleView(demo.key)}
                                                         style={{ marginLeft: '1rem' }}
                                                     >
                                                         {isArch ? 'View Demo' : 'View Architecture'}
@@ -83,9 +83,10 @@ export default function Demos(): React.JSX.Element {
                                             </div>
                                         ) : (
                                             <StorybookDemo
-                                                id={demo.id}
+                                                demoKey={demo.key}
                                                 title={translatedTitle}
                                                 height={demo.height}
+                                                theme={demo.theme}
                                             />
                                         )}
                                     </div>

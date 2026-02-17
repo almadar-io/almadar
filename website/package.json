@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "start": "npm run build:storybook && docusaurus start",
-    "build": "npm run build:storybook && npm run build:legacy && docusaurus build",
+    "start": "docusaurus start",
+    "build": "npm run build:legacy && docusaurus build",
     "build:site": "npm run build:legacy && docusaurus build",
     "build:docusaurus": "docusaurus build",
     "build:legacy": "node scripts/build.js",

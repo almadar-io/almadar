@@ -1,5 +1,5 @@
 /**
- * Tailwind config for the website storybook.
+ * Tailwind config for the website + storybook.
  * Re-exports the @almadar/ui config with expanded content paths
  * to scan all project design system components.
  */
@@ -12,5 +12,6 @@ export default {
     '../../packages/almadar-ui/components/**/*.{js,ts,jsx,tsx}',
     '../../projects/*/design-system/**/*.{js,ts,jsx,tsx}',
     './.storybook/**/*.{js,ts,jsx,tsx}',
+    './src/**/*.{js,ts,jsx,tsx}',
   ],
 };

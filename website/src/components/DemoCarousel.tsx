@@ -3,6 +3,8 @@ import Link from '@docusaurus/Link';
 import Translate, { translate } from '@docusaurus/Translate';
 import demos from '../data/demos.json';
 import styles from './DemoCarousel.module.css';
+import StoryThemeWrapper from './StoryThemeWrapper';
+import { demoRegistry, type DemoEntry } from '../data/demo-registry';
 
 export default function DemoCarousel(): React.JSX.Element {
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -48,7 +50,7 @@ export default function DemoCarousel(): React.JSX.Element {
                     ref={scrollRef}
                 >
                     {displayedDemos.map((demo, index) => (
-                        <DemoCard key={`${demo.id}-${index}`} demo={demo} />
+                        <DemoCard key={`${demo.key}-${index}`} demo={demo} />
                     ))}
                 </div>
             </div>
@@ -58,6 +60,7 @@ export default function DemoCarousel(): React.JSX.Element {
 
 function DemoCard({ demo }: { demo: typeof demos[0] }) {
     const [isVisible, setIsVisible] = useState(false);
+    const [demoEntry, setDemoEntry] = useState<DemoEntry | null>(null);
     const cardRef = useRef<HTMLAnchorElement>(null);
 
     useEffect(() => {
@@ -78,21 +81,29 @@ function DemoCard({ demo }: { demo: typeof demos[0] }) {
         return () => observer.disconnect();
     }, []);
 
+    useEffect(() => {
+        if (!isVisible) return;
+        const loader = demoRegistry[demo.key];
+        if (loader) {
+            loader().then(setDemoEntry).catch(() => { /* silently fail in carousel */ });
+        }
+    }, [isVisible, demo.key]);
+
     return (
         <Link
             ref={cardRef}
-            to={`/demos?id=${demo.id}`}
+            to={`/demos#${demo.key}`}
             className={styles.card}
             draggable="false"
         >
             <div className={styles.cardPreviewContainer}>
                 <div className={styles.cardPreview}>
-                    {isVisible ? (
-                        <iframe
-                            src={`/storybook/iframe.html?id=${demo.id}&viewMode=story&singleStory=true`}
-                            title={translate({ id: `demo.${demo.key}.title`, message: demo.title })}
-                            tabIndex={-1}
-                        />
+                    {demoEntry ? (
+                        <div className={styles.cardPreviewInline}>
+                            <StoryThemeWrapper theme={demo.theme}>
+                                <demoEntry.Component {...demoEntry.args} />
+                            </StoryThemeWrapper>
+                        </div>
                     ) : (
                         <div className={styles.cardPlaceholder}>
                             <div className={styles.cardPlaceholderPattern} />

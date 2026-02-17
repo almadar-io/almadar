@@ -175,6 +175,16 @@
     background: #fff;
 }
 
+.cardPreviewInline {
+    width: 142%;
+    height: 142%;
+    transform: scale(0.7);
+    transform-origin: top left;
+    pointer-events: none;
+    background: #fff;
+    overflow: hidden;
+}
+
 .previewOverlay {
     position: absolute;
     inset: 0;
