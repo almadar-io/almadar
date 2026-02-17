@@ -45,9 +45,13 @@ Now scale this up. Scale it to robots that operate in homes, hospitals, schools.
 
 ---
 
-## III. What a trait machine is
+## III. What a trait machine is (and what it isn't)
 
-A **Trait Machine** is a robot whose behavior is written in a language you can read. Not metaphorically. Literally.
+None of the ideas we're about to describe are new. We want to be upfront about that, because we think honesty about lineage matters more than claims of invention.
+
+David Harel formalized statecharts in 1987. The robotics community has been using behavior trees — composable decision structures — since the early 2000s. Formal methods researchers built specification languages like TLA+ and Alloy that let you mathematically verify system behavior. Safety engineers have been clamping neural network outputs with explicit constraints for years.
+
+A **Trait Machine** builds on all of this. It is a robot whose behavior is written in a language you can read. Not metaphorically. Literally.
 
 Here's the core idea. A robot's behavior is decomposed into **traits** — small, composable state machines that each govern one aspect of what the robot can do. A trait has:
 
@@ -92,6 +96,8 @@ entity InspectionRobot:
 Four traits. The robot can move, rotate, and scan. It cannot enter restricted zones. The fourth trait doesn't add capability — it adds **restriction**. And the restriction is visible right there in the declaration, not buried in training data.
 
 This is the key insight: **traits are capability contracts**. When you compose them onto a robot, you're granting and constraining abilities with the same mechanism. Adding a new capability is the same act as adding a new constraint.
+
+Behavior trees also compose. Statecharts also compose. But behavior trees are tree-structured — priority nodes, sequence nodes, fallback nodes — and they get tangled fast. Statecharts compose via parallel regions, but a complex statechart starts looking like a circuit diagram. Traits compose flat. You add `CannotEnterRestrictedZone` alongside `CanMove` and the restriction just works, visible at the same level as the capability. That's a design choice, not a breakthrough. But it's a consequential one, because it means a non-engineer can look at a trait list and understand what the robot can and cannot do without tracing through a tree or parsing a diagram.
 
 ---
 
@@ -227,7 +233,39 @@ This turns robotics education from "learn these libraries and frameworks" into "
 
 ---
 
-## VII. What we're not claiming
+## VII. The hard questions
+
+If you've worked in systems engineering, you're already thinking about the failure modes. We want to address four of them directly, because they're the right questions to ask.
+
+### "Flat composition sounds nice. How do you prevent interaction explosion?"
+
+When you compose five traits onto a robot, you have five state machines running concurrently. What happens when `CanMove` wants to go forward and `CannotEnterRestrictedZone` wants to block? What about ten traits? Twenty?
+
+The answer is that composition conflicts need to be detectable **before the robot runs**, not after. The Almadar validator analyzes the trait file at compile time and catches entire categories of problems statically: unreachable states that no event can ever enter, events that are emitted but never handled by any other trait, transitions that reference data fields that don't exist, states that trap the system with no way out. These aren't runtime bugs to be discovered in production. They're structural errors that the compiler rejects the way a type checker rejects a type mismatch — before the code ever runs.
+
+This is the real value of "spec equals implementation." When the trait file is the source of truth, the validator can reason about the entire behavioral space at once. It can verify that every state machine is well-formed, that cross-trait communication is complete (every emitted event has a listener), and that the composition doesn't produce dead ends. The trait file is small enough and structured enough that this analysis is tractable. Try doing the same analysis across a thousand Python files and a neural network.
+
+### "What about real-time constraints?"
+
+Robotics engineers will rightly ask: can you guarantee that guard evaluation completes within a bounded time? If a robot is moving at speed and a guard takes too long, the safety property is worthless.
+
+For Trait Machines to be serious about safety-critical systems, evaluation cost must be proportional to the number of active traits per event — not to the total system size. Guard evaluation is deterministic: same state, same event, same inputs, same result, every time. And worst-case evaluation bounds are statically derivable from the trait definitions, so a certification authority can verify them. This is achievable precisely because guards are explicit expressions, not arbitrary code. A guard like `distance < safety_threshold` has a bounded evaluation cost that a compiler can compute. A neural network inference does not.
+
+### "If guards reject too many proposals, doesn't learning collapse?"
+
+This is the most interesting pushback from the ML side. If a neural network proposes paths and the guards reject 90% of them, the model can't learn effectively — it's optimizing in a space where most of its output is discarded.
+
+The framing matters here. Guards define a **hard safety envelope**. The model learns to optimize within the feasible region, not across the entire space. Rejections aren't failures — they're training signals. A well-designed system feeds guard rejections back into the training loop: "this path was rejected because it crossed a restricted zone" is exactly the kind of structured feedback that makes learning more efficient, not less. The guards don't fight the model. They shape its search space.
+
+### "Readable by non-engineers — really?"
+
+Fair challenge. The argument isn't that anyone can read a trait file with zero context. The argument is that a domain expert with minimal training — a nurse, a safety inspector, a teacher — can read one faster and more reliably than they can read a behavior tree, a statechart diagram, or a TLA+ specification. The grammar is smaller. The cognitive load is lower. And crucially, the structure maps to concepts domain experts already have: "in this situation, when this happens, check these conditions, then do this." That's how people naturally describe procedures. Trait files formalize that structure without requiring the reader to learn a programming paradigm first.
+
+This is an empirical claim that deserves empirical testing — readability studies, time-to-comprehension measurements, error rates. That work hasn't been done yet. But the design target is clear: readable by domain experts, not just by the engineers who wrote it.
+
+---
+
+## VIII. What we're not claiming
 
 We want to be honest about the limits.
 
@@ -241,9 +279,17 @@ We want to be honest about the limits.
 
 What we are claiming is narrower and, we think, defensible: **that the readability of a robot's behavior is a first-class engineering requirement, not a nice-to-have, and that we have a concrete way to achieve it.**
 
+Whether that constitutes "innovation" or "a well-designed integration of known techniques" depends on your standard. Most things people call innovative are the latter. The iPhone didn't invent touchscreens, phones, or music players. We think there are three things that matter about this specific integration:
+
+**The specification is the implementation.** TLA+ is readable but doesn't generate your system. Behavior trees run but they aren't human-readable specifications. The gap between "the spec" and "the code" is where most real-world systems rot — the spec drifts, the code is what actually runs. In a Trait Machine, the trait file is both the specification and the source from which working code is generated. There is no gap to drift across.
+
+**The target audience is different.** TLA+ targets engineers who already know formal methods. Behavior trees target robotics engineers. XState targets web developers. The claim here is that a policy expert, a regulator, or a teacher could read a trait file and understand what the robot will do. That's a literacy argument, not a technology argument — and it might be the one that matters most.
+
+**Constraints and capabilities use the same mechanism.** In most systems, the safety layer is separate from the behavior layer — a filter, a wrapper, a post-hoc check. In a Trait Machine, `CannotEnterRestrictedZone` sits alongside `CanMove` in the same trait list, expressed in the same language, at the same level of visibility. Restrictions aren't afterthoughts. They're first-class declarations.
+
 ---
 
-## VIII. The explicit philosophy
+## IX. The explicit philosophy
 
 There's a principle at the heart of this that goes beyond robotics.
 
@@ -259,7 +305,7 @@ The Trait Machine bet is that this asymmetry matters more as systems become more
 
 ---
 
-## IX. An invitation
+## X. An invitation
 
 Richard Brautigan imagined "machines of loving grace" tending the world while humans return to nature. Amodei imagined AI compressing a century of progress into a decade.
 
