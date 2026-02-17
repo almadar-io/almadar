@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './StorybookDemo.module.css';
 import StoryThemeWrapper from './StoryThemeWrapper';
+import DemoErrorBoundary from './DemoErrorBoundary';
 import { demoRegistry, type DemoEntry } from '../data/demo-registry';
 
 interface StorybookDemoProps {
@@ -71,9 +72,11 @@ export default function StorybookDemo({ demoKey, title, height = '600px', theme 
                         <span style={{ color: 'var(--ifm-color-danger)' }}>{error}</span>
                     </div>
                 ) : demo ? (
-                    <StoryThemeWrapper theme={theme}>
-                        <demo.Component {...demo.args} />
-                    </StoryThemeWrapper>
+                    <DemoErrorBoundary demoKey={demoKey}>
+                        <StoryThemeWrapper theme={theme}>
+                            <demo.Component {...demo.args} />
+                        </StoryThemeWrapper>
+                    </DemoErrorBoundary>
                 ) : (
                     <div className={styles.placeholder}>
                         Loading Preview...

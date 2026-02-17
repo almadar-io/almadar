@@ -4,6 +4,7 @@ import Translate, { translate } from '@docusaurus/Translate';
 import demos from '../data/demos.json';
 import styles from './DemoCarousel.module.css';
 import StoryThemeWrapper from './StoryThemeWrapper';
+import DemoErrorBoundary from './DemoErrorBoundary';
 import { demoRegistry, type DemoEntry } from '../data/demo-registry';
 
 export default function DemoCarousel(): React.JSX.Element {
@@ -99,11 +100,13 @@ function DemoCard({ demo }: { demo: typeof demos[0] }) {
             <div className={styles.cardPreviewContainer}>
                 <div className={styles.cardPreview}>
                     {demoEntry ? (
-                        <div className={styles.cardPreviewInline}>
-                            <StoryThemeWrapper theme={demo.theme}>
-                                <demoEntry.Component {...demoEntry.args} />
-                            </StoryThemeWrapper>
-                        </div>
+                        <DemoErrorBoundary demoKey={demo.key} silent>
+                            <div className={styles.cardPreviewInline}>
+                                <StoryThemeWrapper theme={demo.theme}>
+                                    <demoEntry.Component {...demoEntry.args} />
+                                </StoryThemeWrapper>
+                            </div>
+                        </DemoErrorBoundary>
                     ) : (
                         <div className={styles.cardPlaceholder}>
                             <div className={styles.cardPlaceholderPattern} />
