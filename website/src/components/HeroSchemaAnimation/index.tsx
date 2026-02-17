@@ -9,10 +9,12 @@ import styles from "./styles.module.css";
  * Shows an Orbital schema assembling itself: entities appearing,
  * traits connecting, pages binding — like a blueprint being sketched.
  *
- * Visualization Update (Orbit Layout):
- * - Trait (Center): Framed by state machine arcs (Eye/Orbit shape)
- * - State Machine: Symmetric arcs (Top/Bottom) connecting Idle <-> Active
- * - Hierarchy: Vertical Stack (Entity -> Trait -> Page)
+ * Visualization Update (4-State Order Fulfillment):
+ * - Example: Order Fulfillment (placed -> preparing -> shipped -> delivered)
+ * - Layout: Satellite Orbit (4 Corners)
+ * - Trait (Center): "Fulfillment" logic
+ * - Page: "Track Order"
+ * - Entity: "Order"
  */
 export default function HeroSchemaAnimation() {
   const { colorMode } = useColorMode();
@@ -24,13 +26,13 @@ export default function HeroSchemaAnimation() {
   const textColor = isDark ? "#cbd5e1" : "#475569";
   const nodeText = isDark ? "#f1f5f9" : "#0f172a";
   const tealFill = isDark ? "rgba(20, 184, 166, 0.15)" : "rgba(20, 184, 166, 0.1)";
-  const goldFill = isDark ? "rgba(201, 162, 39, 0.15)" : "rgba(201, 162, 39, 0.1)"; // Background for trait
+  const goldFill = isDark ? "rgba(201, 162, 39, 0.15)" : "rgba(201, 162, 39, 0.1)";
   const mutedFill = isDark ? "rgba(71, 85, 105, 0.3)" : "rgba(148, 163, 184, 0.25)";
-  const traitBg = isDark ? "rgba(20, 20, 25, 0.8)" : "rgba(255, 255, 255, 0.9)"; // Solid bg to pop trait
+  const traitBg = isDark ? "rgba(20, 20, 25, 0.8)" : "rgba(255, 255, 255, 0.9)";
 
   // Center X = 250 (ViewBox width 500)
   const centerX = 250;
-  const labelX = 285; // Closer to icon
+  const labelX = 305;
 
   return (
     <div className={styles.container}>
@@ -40,9 +42,7 @@ export default function HeroSchemaAnimation() {
         xmlns="http://www.w3.org/2000/svg"
         className={styles.svg}
       >
-        {/* === Connection Lines (drawn first) === */}
-
-        {/* Entity (Bottom) -> Trait (Middle) */}
+        {/* === Connection Lines (Vertical Stack) === */}
         <path
           d={`M${centerX} 290 L${centerX} 240`}
           stroke={gold}
@@ -50,8 +50,6 @@ export default function HeroSchemaAnimation() {
           className={styles.connectionLine}
           style={{ animationDelay: "1.0s" }}
         />
-
-        {/* Trait (Middle) -> Page (Top) */}
         <path
           d={`M${centerX} 160 L${centerX} 110`}
           stroke={gold}
@@ -60,31 +58,124 @@ export default function HeroSchemaAnimation() {
           style={{ animationDelay: "1.2s" }}
         />
 
-        {/* === State Machine Orbit Arcs (The "Eye") === */}
+        {/* === State Connections (Star Topology) === */}
+        {/* Trait -> placed */}
+        <path d={`M${centerX - 40} 190 L130 160`} stroke={teal} strokeWidth="1" opacity="0.5" className={styles.connectionLine} style={{ animationDelay: "1.8s" }} />
+        {/* Trait -> preparing */}
+        <path d={`M${centerX - 40} 210 L130 240`} stroke={teal} strokeWidth="1" opacity="0.5" className={styles.connectionLine} style={{ animationDelay: "1.9s" }} />
+        {/* Trait -> shipped */}
+        <path d={`M${centerX + 40} 190 L370 160`} stroke={teal} strokeWidth="1" opacity="0.5" className={styles.connectionLine} style={{ animationDelay: "2.0s" }} />
+        {/* Trait -> delivered */}
+        <path d={`M${centerX + 40} 210 L370 240`} stroke={teal} strokeWidth="1" opacity="0.5" className={styles.connectionLine} style={{ animationDelay: "2.1s" }} />
 
-        {/* Upper Arc: Idle -> Active */}
+        {/* === Transitions (Process Flow) === */}
+
+        {/* placed -> preparing (Left Down) */}
         <path
-          d="M125 200 Q250 120 375 200"
-          stroke={teal}
+          d="M100 175 L100 225"
+          stroke={gold}
           strokeWidth="1.5"
           fill="none"
           strokeDasharray="4 4"
           className={styles.connectionLine}
-          style={{ animationDelay: "2.0s", opacity: 0.6 }}
+          style={{ animationDelay: "2.5s", opacity: 0.6 }}
         />
 
-        {/* Lower Arc: Active -> Idle */}
+        {/* preparing -> shipped (Curve Under) */}
         <path
-          d="M375 200 Q250 280 125 200"
-          stroke={teal}
+          d="M125 240 Q250 320 375 160" // Long curve from bottom-left to top-right feels weird visually?
+        // Let's try preparing -> shipped as a curve under
+        // Actually, let's do:
+        // Left: placed -> preparing
+        // Cross: preparing -> shipped
+        // Right: shipped -> delivered
+        />
+        {/* Simpler Curve: Preparing(100,240) -> Shipped(400,160) is a big jump. */}
+        {/* Maybe better: 
+             TL(Placed) -> TR(Preparing) ? No, user reads L->R.
+             TL(placed) -> TR(preparing) -> ML(shipped)? No.
+        */}
+        {/* User asked for "Super Clear". 
+            Sequence: Placed -> Preparing -> Shipped -> Delivered.
+            Let's put them in order visually?
+            1(TL) -> 2(BL)? No.
+            1(Far Left) -> 2(Mid Left) -> 3(Mid Right) -> 4(Far Right)?
+            The "Star/Satellite" layout implies equal weight.
+            Let's stick to the 4 corners but connect them 1->2->3->4.
+            1: Placed (TL) -> 2: Preparing (BL)
+            2: Preparing (BL) -> 3: Shipped (TR) THIS CROSSES CENTER. BAD.
+            
+            Alternative Layout:
+            1: Placed (TL)
+            2: Preparing (TR)
+            3: Shipped (BL) ?? Confusing.
+            
+            Let's do circular:
+            TL(Placed) -> TR(Preparing) -> BR(Shipped) -> BL(Delivered)? No, end logic is usually "Done" at end.
+            
+            Standard Diagram:
+            L -> R.
+            Placed(100, 200) -> Preparing(200, 200) -> Shipped(300, 200) -> Delivered(400, 200).
+            But Trait is in center (250, 200).
+            
+            So: 
+            Placed(80, 200) -> Preparing(160, 200) -> [Trait] -> Shipped(340, 200) -> Delivered(420, 200).
+            This creates a horizontal line through the center... obscuring trait?
+            
+            Let's go back to 4 corners, but order them nicely.
+            Left Side: Placed(Top), Preparing(Bottom).
+            Right Side: Shipped(Top), Delivered(Bottom).
+            
+            Flow: Placed -> Preparing -> Shipped -> Delivered.
+            
+            We can draw a "U" curve for Preparing -> Shipped.
+            Preparing (Left Bottom) -> Curve under Trait -> Shipped (Right Top... or Right Bottom).
+            If Shipped is Right Bottom and Delivered is Right Top?
+            Then Preparing -> Shipped is straight across bottom.
+            Shipped -> Delivered is straight up.
+            
+            Let's try that ordering:
+            1. Placed (Left Top)
+            2. Preparing (Left Bottom)
+            3. Shipped (Right Bottom)
+            4. Delivered (Right Top)
+            
+            Logic: Down, Across, Up.
+            "U" shape.
+            
+            Let's do that.
+        */}
+
+        {/* 1->2: Placed(LT) -> Preparing(LB) */}
+        <path
+          d="M100 175 L100 225"
+          stroke={gold}
+          strokeWidth="1.5"
+          strokeDasharray="4 4"
+          className={styles.connectionLine}
+          style={{ animationDelay: "2.4s", opacity: 0.6 }}
+        />
+
+        {/* 2->3: Preparing(LB) -> Shipped(RB) */}
+        <path
+          d="M125 240 Q250 280 375 240"
+          stroke={gold}
           strokeWidth="1.5"
           fill="none"
           strokeDasharray="4 4"
           className={styles.connectionLine}
-          style={{ animationDelay: "2.2s", opacity: 0.6 }}
+          style={{ animationDelay: "2.5s", opacity: 0.6 }}
         />
 
-        {/* Transition flow arrows on arcs? Maybe just the dashes are enough for now to keep it clean */}
+        {/* 3->4: Shipped(RB) -> Delivered(RT) */}
+        <path
+          d="M400 225 L400 175"
+          stroke={gold}
+          strokeWidth="1.5"
+          strokeDasharray="4 4"
+          className={styles.connectionLine}
+          style={{ animationDelay: "2.6s", opacity: 0.6 }}
+        />
 
 
         {/* === Entity Node (Matter) — Bottom === */}
@@ -110,7 +201,7 @@ export default function HeroSchemaAnimation() {
             fill={nodeText}
             className={styles.nodeLabel}
           >
-            Entity
+            Order
           </text>
           <text
             x={labelX}
@@ -121,31 +212,14 @@ export default function HeroSchemaAnimation() {
             fontFamily="'IBM Plex Mono', monospace"
             className={styles.nodeLabel}
           >
-            (Matter)
+            (Entity)
           </text>
         </g>
 
         {/* === Trait Node (Energy) — Middle (The Core) === */}
         <g className={styles.nodeGroup} style={{ animationDelay: "0.6s" }}>
-          {/* Solid background to pop */}
-          <circle
-            cx={centerX}
-            cy="200"
-            r="38"
-            fill={traitBg}
-            className={styles.fadeIn}
-          />
-          {/* Pulse ring */}
-          <circle
-            cx={centerX}
-            cy="200"
-            r="42"
-            stroke={gold}
-            strokeWidth="1.5"
-            fill="none"
-            opacity="0.3"
-            className={styles.pulseRing}
-          />
+          <circle cx={centerX} cy="200" r="38" fill={traitBg} className={styles.fadeIn} />
+          <circle cx={centerX} cy="200" r="42" stroke={gold} strokeWidth="1.5" fill="none" opacity="0.3" className={styles.pulseRing} />
           <Zap
             x={centerX - 28}
             y="172"
@@ -167,7 +241,7 @@ export default function HeroSchemaAnimation() {
             fill={nodeText}
             className={styles.nodeLabel}
           >
-            Trait
+            Fulfillment
           </text>
           <text
             x={labelX}
@@ -178,7 +252,7 @@ export default function HeroSchemaAnimation() {
             fontFamily="'IBM Plex Mono', monospace"
             className={styles.nodeLabel}
           >
-            (Energy)
+            (Trait)
           </text>
         </g>
 
@@ -205,7 +279,7 @@ export default function HeroSchemaAnimation() {
             fill={nodeText}
             className={styles.nodeLabel}
           >
-            Page
+            Track Order
           </text>
           <text
             x={labelX}
@@ -216,59 +290,34 @@ export default function HeroSchemaAnimation() {
             fontFamily="'IBM Plex Mono', monospace"
             className={styles.nodeLabel}
           >
-            (Space)
+            (Page)
           </text>
         </g>
 
-        {/* === State Nodes === */}
-        <g className={styles.nodeGroup} style={{ animationDelay: "1.8s" }}>
-          {/* State: idle */}
-          <circle
-            cx="100"
-            cy="200"
-            r="25"
-            stroke={muted}
-            strokeWidth="2"
-            fill={mutedFill}
-            className={styles.nodeShape}
-          />
-          <text
-            x="100"
-            y="204"
-            textAnchor="middle"
-            fontSize="10"
-            fontWeight="500"
-            fill={textColor}
-            fontFamily="'IBM Plex Mono', monospace"
-            className={styles.nodeLabel}
-          >
-            idle
-          </text>
+        {/* === State Nodes (4 States) === */}
+
+        {/* 1. Placed (Top Left) */}
+        <g className={styles.nodeGroup} style={{ animationDelay: "1.4s" }}>
+          <circle cx="100" cy="160" r="22" stroke={muted} strokeWidth="2" fill={mutedFill} className={styles.nodeShape} />
+          <text x="100" y="164" textAnchor="middle" fontSize="9" fontWeight="500" fill={textColor} fontFamily="'IBM Plex Mono', monospace" className={styles.nodeLabel}>placed</text>
         </g>
 
-        <g className={styles.nodeGroup} style={{ animationDelay: "2.0s" }}>
-          {/* State: active */}
-          <circle
-            cx="400"
-            cy="200"
-            r="25"
-            stroke={teal}
-            strokeWidth="2"
-            fill={tealFill}
-            className={styles.nodeShape}
-          />
-          <text
-            x="400"
-            y="204"
-            textAnchor="middle"
-            fontSize="10"
-            fill={teal}
-            fontFamily="'IBM Plex Mono', monospace"
-            fontWeight="600"
-            className={styles.nodeLabel}
-          >
-            active
-          </text>
+        {/* 2. Preparing (Bottom Left) */}
+        <g className={styles.nodeGroup} style={{ animationDelay: "1.5s" }}>
+          <circle cx="100" cy="240" r="22" stroke={teal} strokeWidth="2" fill={tealFill} className={styles.nodeShape} />
+          <text x="100" y="244" textAnchor="middle" fontSize="9" fontWeight="500" fill={teal} fontFamily="'IBM Plex Mono', monospace" className={styles.nodeLabel}>prep</text>
+        </g>
+
+        {/* 3. Shipped (Bottom Right) - Flow goes Across Bottom */}
+        <g className={styles.nodeGroup} style={{ animationDelay: "1.6s" }}>
+          <circle cx="400" cy="240" r="22" stroke={teal} strokeWidth="2" fill={tealFill} className={styles.nodeShape} />
+          <text x="400" y="244" textAnchor="middle" fontSize="9" fontWeight="500" fill={teal} fontFamily="'IBM Plex Mono', monospace" className={styles.nodeLabel}>shipped</text>
+        </g>
+
+        {/* 4. Delivered (Top Right) - Flow goes Up */}
+        <g className={styles.nodeGroup} style={{ animationDelay: "1.7s" }}>
+          <circle cx="400" cy="160" r="22" stroke={gold} strokeWidth="2" fill={goldFill} className={styles.nodeShape} />
+          <text x="400" y="164" textAnchor="middle" fontSize="9" fontWeight="700" fill={gold} fontFamily="'IBM Plex Mono', monospace" className={styles.nodeLabel}>done</text>
         </g>
 
         {/* === Key Labels === */}
