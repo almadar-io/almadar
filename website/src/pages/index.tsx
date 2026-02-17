@@ -301,7 +301,6 @@ function HomepagePhilosophy() {
               </div>
             </div>
 
-            <OrbitalVisualization />
 
           </div>
           <div className={styles.codePreview}>

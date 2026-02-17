@@ -1,5 +1,6 @@
 import React from "react";
 import { useColorMode } from "@docusaurus/theme-common";
+import { Box, Zap, Layout } from "lucide-react";
 import styles from "./styles.module.css";
 
 /**
@@ -8,7 +9,10 @@ import styles from "./styles.module.css";
  * Shows an Orbital schema assembling itself: entities appearing,
  * traits connecting, pages binding — like a blueprint being sketched.
  *
- * Design philosophy: "watch behavior being modeled" not "cool particle effect"
+ * Visualization Update (Orbit Layout):
+ * - Trait (Center): Framed by state machine arcs (Eye/Orbit shape)
+ * - State Machine: Symmetric arcs (Top/Bottom) connecting Idle <-> Active
+ * - Hierarchy: Vertical Stack (Entity -> Trait -> Page)
  */
 export default function HeroSchemaAnimation() {
   const { colorMode } = useColorMode();
@@ -20,85 +24,86 @@ export default function HeroSchemaAnimation() {
   const textColor = isDark ? "#cbd5e1" : "#475569";
   const nodeText = isDark ? "#f1f5f9" : "#0f172a";
   const tealFill = isDark ? "rgba(20, 184, 166, 0.15)" : "rgba(20, 184, 166, 0.1)";
-  const goldFill = isDark ? "rgba(201, 162, 39, 0.15)" : "rgba(201, 162, 39, 0.1)";
+  const goldFill = isDark ? "rgba(201, 162, 39, 0.15)" : "rgba(201, 162, 39, 0.1)"; // Background for trait
   const mutedFill = isDark ? "rgba(71, 85, 105, 0.3)" : "rgba(148, 163, 184, 0.25)";
+  const traitBg = isDark ? "rgba(20, 20, 25, 0.8)" : "rgba(255, 255, 255, 0.9)"; // Solid bg to pop trait
+
+  // Center X = 250 (ViewBox width 500)
+  const centerX = 250;
+  const labelX = 285; // Closer to icon
 
   return (
     <div className={styles.container}>
       <svg
-        viewBox="0 0 480 400"
+        viewBox="0 0 500 400"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className={styles.svg}
       >
-        {/* === Connection Lines (drawn first, appear with path animation) === */}
+        {/* === Connection Lines (drawn first) === */}
 
-        {/* Entity -> Trait connection */}
+        {/* Entity (Bottom) -> Trait (Middle) */}
         <path
-          d="M160 130 L230 200"
+          d={`M${centerX} 290 L${centerX} 240`}
+          stroke={gold}
+          strokeWidth="2"
+          className={styles.connectionLine}
+          style={{ animationDelay: "1.0s" }}
+        />
+
+        {/* Trait (Middle) -> Page (Top) */}
+        <path
+          d={`M${centerX} 160 L${centerX} 110`}
           stroke={gold}
           strokeWidth="2"
           className={styles.connectionLine}
           style={{ animationDelay: "1.2s" }}
         />
 
-        {/* Page -> Trait connection */}
-        <path
-          d="M320 130 L250 200"
-          stroke={gold}
-          strokeWidth="2"
-          className={styles.connectionLine}
-          style={{ animationDelay: "1.4s" }}
-        />
+        {/* === State Machine Orbit Arcs (The "Eye") === */}
 
-        {/* Trait -> State nodes */}
+        {/* Upper Arc: Idle -> Active */}
         <path
-          d="M230 240 L165 300"
+          d="M125 200 Q250 120 375 200"
           stroke={teal}
           strokeWidth="1.5"
+          fill="none"
+          strokeDasharray="4 4"
           className={styles.connectionLine}
-          style={{ animationDelay: "2.0s" }}
+          style={{ animationDelay: "2.0s", opacity: 0.6 }}
         />
+
+        {/* Lower Arc: Active -> Idle */}
         <path
-          d="M250 240 L315 300"
+          d="M375 200 Q250 280 125 200"
           stroke={teal}
           strokeWidth="1.5"
+          fill="none"
+          strokeDasharray="4 4"
           className={styles.connectionLine}
-          style={{ animationDelay: "2.2s" }}
+          style={{ animationDelay: "2.2s", opacity: 0.6 }}
         />
 
-        {/* State transition arrow */}
-        <path
-          d="M185 305 C210 265 270 265 295 305"
-          stroke={gold}
-          strokeWidth="2"
-          fill="none"
-          className={styles.connectionLine}
-          style={{ animationDelay: "2.8s" }}
-        />
-        {/* Arrow head */}
-        <path
-          d="M289 297 L295 305 L286 303"
-          stroke={gold}
-          strokeWidth="2"
-          fill="none"
-          className={styles.connectionLine}
-          style={{ animationDelay: "2.8s" }}
-        />
+        {/* Transition flow arrows on arcs? Maybe just the dashes are enough for now to keep it clean */}
 
-        {/* === Entity Node (Matter) — Diamond shape === */}
+
+        {/* === Entity Node (Matter) — Bottom === */}
         <g className={styles.nodeGroup} style={{ animationDelay: "0.3s" }}>
-          <path
-            d="M160 75 L205 120 L160 165 L115 120 Z"
+          <Box
+            x={centerX - 30}
+            y="290"
+            width="60"
+            height="60"
             stroke={teal}
-            strokeWidth="2.5"
+            strokeWidth="2"
             fill={tealFill}
+            strokeDasharray="1000" strokeDashoffset="1000"
             className={styles.nodeShape}
           />
           <text
-            x="160"
-            y="117"
-            textAnchor="middle"
+            x={labelX}
+            y="320"
+            textAnchor="start"
             fontSize="13"
             fontWeight="700"
             fontFamily="'Source Serif 4', Georgia, serif"
@@ -108,10 +113,10 @@ export default function HeroSchemaAnimation() {
             Entity
           </text>
           <text
-            x="160"
-            y="134"
-            textAnchor="middle"
-            fontSize="9"
+            x={labelX}
+            y="335"
+            textAnchor="start"
+            fontSize="10"
             fill={textColor}
             fontFamily="'IBM Plex Mono', monospace"
             className={styles.nodeLabel}
@@ -120,70 +125,42 @@ export default function HeroSchemaAnimation() {
           </text>
         </g>
 
-        {/* === Page Node (Space) — Rounded rect === */}
+        {/* === Trait Node (Energy) — Middle (The Core) === */}
         <g className={styles.nodeGroup} style={{ animationDelay: "0.6s" }}>
-          <rect
-            x="275"
-            y="85"
-            width="90"
-            height="70"
-            rx="10"
-            stroke={teal}
-            strokeWidth="2.5"
-            fill={tealFill}
-            className={styles.nodeShape}
-          />
-          <text
-            x="320"
-            y="117"
-            textAnchor="middle"
-            fontSize="13"
-            fontWeight="700"
-            fontFamily="'Source Serif 4', Georgia, serif"
-            fill={nodeText}
-            className={styles.nodeLabel}
-          >
-            Page
-          </text>
-          <text
-            x="320"
-            y="134"
-            textAnchor="middle"
-            fontSize="9"
-            fill={textColor}
-            fontFamily="'IBM Plex Mono', monospace"
-            className={styles.nodeLabel}
-          >
-            (Space)
-          </text>
-        </g>
-
-        {/* === Trait Node (Energy) — Central hub circle === */}
-        <g className={styles.nodeGroup} style={{ animationDelay: "0.9s" }}>
+          {/* Solid background to pop */}
           <circle
-            cx="240"
-            cy="215"
-            r="40"
-            stroke={gold}
-            strokeWidth="2.5"
-            fill={goldFill}
-            className={styles.nodeShape}
+            cx={centerX}
+            cy="200"
+            r="38"
+            fill={traitBg}
+            className={styles.fadeIn}
           />
           {/* Pulse ring */}
           <circle
-            cx="240"
-            cy="215"
-            r="40"
+            cx={centerX}
+            cy="200"
+            r="42"
             stroke={gold}
             strokeWidth="1.5"
             fill="none"
-            opacity="0.4"
+            opacity="0.3"
             className={styles.pulseRing}
           />
+          <Zap
+            x={centerX - 28}
+            y="172"
+            width="56"
+            height="56"
+            stroke={gold}
+            strokeWidth="2.5"
+            fill={goldFill}
+            strokeDasharray="1000" strokeDashoffset="1000"
+            className={styles.nodeShape}
+          />
           <text
-            x="240"
-            y="212"
-            textAnchor="middle"
+            x={labelX}
+            y="200"
+            textAnchor="start"
             fontSize="13"
             fontWeight="700"
             fontFamily="'Source Serif 4', Georgia, serif"
@@ -193,10 +170,10 @@ export default function HeroSchemaAnimation() {
             Trait
           </text>
           <text
-            x="240"
-            y="229"
-            textAnchor="middle"
-            fontSize="9"
+            x={labelX}
+            y="215"
+            textAnchor="start"
+            fontSize="10"
             fill={textColor}
             fontFamily="'IBM Plex Mono', monospace"
             className={styles.nodeLabel}
@@ -205,21 +182,59 @@ export default function HeroSchemaAnimation() {
           </text>
         </g>
 
+        {/* === Page Node (Space) — Top === */}
+        <g className={styles.nodeGroup} style={{ animationDelay: "0.9s" }}>
+          <Layout
+            x={centerX - 30}
+            y="50"
+            width="60"
+            height="60"
+            stroke={teal}
+            strokeWidth="2"
+            fill={tealFill}
+            strokeDasharray="1000" strokeDashoffset="1000"
+            className={styles.nodeShape}
+          />
+          <text
+            x={labelX}
+            y="80"
+            textAnchor="start"
+            fontSize="13"
+            fontWeight="700"
+            fontFamily="'Source Serif 4', Georgia, serif"
+            fill={nodeText}
+            className={styles.nodeLabel}
+          >
+            Page
+          </text>
+          <text
+            x={labelX}
+            y="95"
+            textAnchor="start"
+            fontSize="10"
+            fill={textColor}
+            fontFamily="'IBM Plex Mono', monospace"
+            className={styles.nodeLabel}
+          >
+            (Space)
+          </text>
+        </g>
+
         {/* === State Nodes === */}
         <g className={styles.nodeGroup} style={{ animationDelay: "1.8s" }}>
           {/* State: idle */}
           <circle
-            cx="160"
-            cy="315"
-            r="26"
+            cx="100"
+            cy="200"
+            r="25"
             stroke={muted}
             strokeWidth="2"
             fill={mutedFill}
             className={styles.nodeShape}
           />
           <text
-            x="160"
-            y="319"
+            x="100"
+            y="204"
             textAnchor="middle"
             fontSize="10"
             fontWeight="500"
@@ -234,17 +249,17 @@ export default function HeroSchemaAnimation() {
         <g className={styles.nodeGroup} style={{ animationDelay: "2.0s" }}>
           {/* State: active */}
           <circle
-            cx="320"
-            cy="315"
-            r="26"
+            cx="400"
+            cy="200"
+            r="25"
             stroke={teal}
             strokeWidth="2"
             fill={tealFill}
             className={styles.nodeShape}
           />
           <text
-            x="320"
-            y="319"
+            x="400"
+            y="204"
             textAnchor="middle"
             fontSize="10"
             fill={teal}
@@ -256,55 +271,21 @@ export default function HeroSchemaAnimation() {
           </text>
         </g>
 
-        {/* === Floating labels for connections === */}
+        {/* === Key Labels === */}
         <text
-          x="168"
-          y="172"
-          textAnchor="end"
-          fontSize="8"
-          fill={gold}
-          fontFamily="'IBM Plex Mono', monospace"
-          fontWeight="500"
-          className={styles.edgeLabel}
-          style={{ animationDelay: "1.6s" }}
-        >
-          has_trait
-        </text>
-
-        <text
-          x="312"
-          y="172"
-          textAnchor="start"
-          fontSize="8"
-          fill={gold}
-          fontFamily="'IBM Plex Mono', monospace"
-          fontWeight="500"
-          className={styles.edgeLabel}
-          style={{ animationDelay: "1.8s" }}
-        >
-          renders
-        </text>
-
-        <text
-          x="240"
-          y="272"
+          x={centerX}
+          y="370"
           textAnchor="middle"
-          fontSize="8"
-          fill={gold}
+          fontSize="10"
+          fill={muted}
+          opacity="0.7"
           fontFamily="'IBM Plex Mono', monospace"
-          fontWeight="500"
           className={styles.edgeLabel}
-          style={{ animationDelay: "3.0s" }}
+          style={{ animationDelay: "3.2s" }}
         >
-          transition
+          Orbital Unit
         </text>
 
-        {/* === Decorative Mashrabiya corner diamonds === */}
-        <g className={styles.cornerPattern}>
-          <path d="M15 15 L35 35 L15 55 L-5 35 Z" stroke={teal} strokeWidth="0.8" fill="none" />
-          <path d="M445 340 L465 360 L445 380 L425 360 Z" stroke={teal} strokeWidth="0.8" fill="none" />
-          <path d="M445 15 L465 35 L445 55 L425 35 Z" stroke={gold} strokeWidth="0.5" fill="none" />
-        </g>
       </svg>
     </div>
   );

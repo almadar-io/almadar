@@ -172,7 +172,7 @@ const config: Config = {
             },
             {
               label: "Contact",
-              href: "mailto:enterprise@almadar.io",
+              href: "mailto:hello@almadar.io",
             },
           ],
         },

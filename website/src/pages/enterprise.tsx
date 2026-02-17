@@ -239,8 +239,8 @@ function EnterpriseContact() {
               Contact our sales team to discuss your requirements and get a custom quote.
             </Translate>
           </p>
-          <a href="mailto:enterprise@almadar.io" className="button button--primary button--lg">
-            enterprise@almadar.io
+          <a href="mailto:hello@almadar.io" className="button button--primary button--lg">
+            hello@almadar.io
           </a>
         </div>
       </div>
