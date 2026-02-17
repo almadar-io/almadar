@@ -79,9 +79,7 @@ export default function Demos(): React.JSX.Element {
                                                 alignItems: 'center',
                                                 justifyContent: 'center'
                                             }}>
-                                                <div style={{ transform: 'scale(1.2)' }}>
-                                                    <HeroSchemaAnimation schema={schema} />
-                                                </div>
+                                                <HeroSchemaAnimation schema={schema} />
                                             </div>
                                         ) : (
                                             <StorybookDemo

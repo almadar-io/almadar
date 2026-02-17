@@ -112,11 +112,13 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
   const traitBg = isDark ? "rgba(20, 20, 25, 0.8)" : "rgba(255, 255, 255, 0.9)";
 
   // Layout Constants
-  const centerX = 250;
-  const centerY = 200; // Trait Center
-  const labelX = 305;
-  const radiusX = 150; // Horizontal radius
-  const radiusY = 80;  // Vertical radius (flattened oval)
+  const viewBoxW = 600;
+  const viewBoxH = 600;
+  const centerX = viewBoxW / 2; // 300
+  const centerY = viewBoxH / 2; // 300 - Trait Center
+  const labelX = centerX + 55;
+  const radiusX = 220;
+  const radiusY = 140;
 
   const { appName, entityName, pageName, traitName, states, transitions } = useMemo(
     () => extractVisualizationData(schema),
@@ -129,36 +131,10 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
     if (count === 0) return {};
 
     const positions: Record<string, { x: number; y: number }> = {};
-
-    // Start angle: -180 (Left) to flow clockwise?
-    // Or standard: distribute evenly.
-    // For 4 states: Top-Left, Top-Right, Bottom-Right, Bottom-Left?
-    // Let's use a standard circular distribution starting from roughly Top-Left (-135deg).
-
-    // Actually, let's replicate the "U" shape or "Diamond" if possible.
-    // Dynamic approach: Distribute across 360 degrees.
     const startAngle = -135 * (Math.PI / 180); // Top Left start
 
     states.forEach((state, i) => {
-      // Evenly space them
-      // If 4 states: 0, 1, 2, 3.
-      // We want 1(Placed) at TL, 2(Prep) at BL, 3(Shipped) at BR, 4(Done) at TR? 
-      // No, standard order: 1->2->3->4.
-      // Let's just place them in a circle around the center.
       const angle = startAngle + (i * (2 * Math.PI)) / count;
-
-      // Use oval to fit aspect ratio
-      // But for generic N, circle is safest.
-      // Let's manually map the strict 4-state fallback to corners to preserve the exact design approved.
-      if (states.length === 4 && states[0].name === "placed") {
-        if (i === 0) positions[state.name] = { x: 50, y: 150 }; // TL
-        if (i === 1) positions[state.name] = { x: 50, y: 240 }; // BL
-        if (i === 2) positions[state.name] = { x: 380, y: 240 }; // BR
-        if (i === 3) positions[state.name] = { x: 380, y: 150 }; // TR
-        return;
-      }
-
-      // Generic Layout
       const x = centerX + radiusX * Math.cos(angle);
       const y = centerY + radiusY * Math.sin(angle);
       positions[state.name] = { x, y };
@@ -170,10 +146,31 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
   // Helper to get definition for marker
   const markerId = "arrowhead";
 
+  // Helper to shorten the end of a bezier curve so the arrow doesn't get buried
+  const getShortenedEnd = (start: { x: number, y: number }, cp: { x: number, y: number }, end: { x: number, y: number }, shortenBy: number) => {
+    // Vector from CP to End (approximate for Quad Bezier approaching end)
+    // Actually for Quad Bezier B(t), tangent at t=1 is 2(P2 - P1).
+    // So vector is End - CP.
+    const dx = end.x - cp.x;
+    const dy = end.y - cp.y;
+    const len = Math.sqrt(dx * dx + dy * dy);
+    if (len === 0) return end;
+
+    // We want to stop 'shortenBy' pixels before 'end'.
+    // t param is not linear with distance, but for small shortening near end, linear approx on the vector P1->P2 is okay ish?
+    // Actually, we can just move the end point P2 back along the vector P1->P2.
+    // New P2' = P2 - (v/len)*shortenBy
+    const t = Math.max(0, len - shortenBy) / len;
+    return {
+      x: cp.x + dx * t,
+      y: cp.y + dy * t
+    };
+  };
+
   return (
     <div className={styles.container}>
       <svg
-        viewBox="0 0 500 460"
+        viewBox={`0 0 ${viewBoxW} ${viewBoxH}`}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className={styles.svg}
@@ -195,9 +192,9 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
         <rect
           x="10"
           y="10"
-          width="480"
-          height="440"
-          rx="12"
+          width={viewBoxW - 20}
+          height={viewBoxH - 20}
+          rx="16"
           stroke={muted}
           strokeWidth="1"
           strokeDasharray="4 4"
@@ -205,10 +202,10 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           opacity="0.5"
         />
         <text
-          x="25"
-          y="35"
+          x="30"
+          y="40"
           textAnchor="start"
-          fontSize="11"
+          fontSize="12"
           fontWeight="600"
           fill={muted}
           fontFamily="'IBM Plex Mono', monospace"
@@ -217,60 +214,59 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           APP: {appName.toUpperCase()}
         </text>
 
-        {/* === Connection Lines (Vertical Stack) === */}
-        {/* Entity -> Trait */}
+        {/* === Vertical Connections (Entity-Trait-Page) === */}
         <path
-          d={`M${centerX} 340 L${centerX} 240`}
+          d={`M${centerX} ${centerY + 160} L${centerX} ${centerY + 40}`}
           stroke={gold}
           strokeWidth="2"
           className={styles.connectionLine}
           style={{ animationDelay: "1.0s" }}
         />
-        {/* Trait -> Page */}
         <path
-          d={`M${centerX} 160 L${centerX} 110`}
+          d={`M${centerX} ${centerY - 40} L${centerX} ${centerY - 160}`}
           stroke={gold}
           strokeWidth="2"
           className={styles.connectionLine}
           style={{ animationDelay: "1.2s" }}
         />
 
-
-
-
-        {/* === Transitions (Arrows & Events) === */}
+        {/* === Transitions (Outward Arcs) === */}
         {transitions.map((t, i) => {
           const start = statePositions[t.from];
           const end = statePositions[t.to];
           if (!start || !end) return null;
 
-          // Simple straight line or curve?
-          // "U" curve logic for generic is hard. 
-          // Straight lines with arrowheads are robust for generic N.
-          // But let's try a quad curve if they are far apart? Default to straight.
-          // Special case for Order Fulfillment preserved via hardcoded fallback logic potentially... 
-          // Actually, let's just use straight lines for generic and maybe specific overrides.
+          // Calculate Control Point for Outward Curve
+          // 1. Midpoint of chord
+          const mx = (start.x + end.x) / 2;
+          const my = (start.y + end.y) / 2;
 
-          // For 4-state corner logic (Fallback):
-          let pathD = `M${start.x + 35} ${start.y + 15} L${end.x + 35} ${end.y + 15}`;
-
-          // Customize for the specific visual requested earlier if matches
-          if (states.length === 4 && states[0].name === "placed") {
-            if (t.from === "placed" && t.to === "prep") pathD = `M85 185 L85 235`;
-            if (t.from === "prep" && t.to === "shipped") pathD = `M135 265 Q250 340 365 265`;
-            if (t.from === "shipped" && t.to === "done") pathD = `M415 235 L415 185`;
+          // 2. Vector from Center to Midpoint
+          let vcx = mx - centerX;
+          let vcy = my - centerY;
+          // Normalize
+          const vLen = Math.sqrt(vcx * vcx + vcy * vcy);
+          if (vLen > 0) {
+            vcx /= vLen;
+            vcy /= vLen;
           }
 
-          // Calculate label position (midpoint)
-          // Midpoint logic depends on path... simplified for custom paths
-          let lx = (start.x + end.x) / 2 + 35;
-          let ly = (start.y + end.y) / 2 + 15;
+          // 3. Push control point OUT
+          const curveFactor = 60; // How much to bulge out
+          const cpx = mx + vcx * curveFactor;
+          const cpy = my + vcy * curveFactor;
 
-          if (states.length === 4 && states[0].name === "placed") {
-            if (t.from === "placed") { lx = 85; ly = 210; }
-            if (t.from === "prep") { lx = 250; ly = 315; }
-            if (t.from === "shipped") { lx = 415; ly = 210; }
-          }
+          // Shorten the end point straight towards the control point to expose the arrow
+          // Target is a Pill (80x36), radius ~40/18.
+          // We shorten by ~42px to be safe and land on edge.
+          const shortEnd = getShortenedEnd(start, { x: cpx, y: cpy }, end, 42);
+
+          // Quadratic Bezier: Start -> Control -> ShortEnd
+          let pathD = `M${start.x} ${start.y} Q${cpx} ${cpy} ${shortEnd.x} ${shortEnd.y}`;
+
+          // Label Position: Approx t=0.5 on the ORIGINAL construction (not shortened) so it stays centered visually
+          const lx = 0.25 * start.x + 0.5 * cpx + 0.25 * end.x;
+          const ly = 0.25 * start.y + 0.5 * cpy + 0.25 * end.y;
 
           return (
             <g key={`trans-${i}`} className={styles.fadeIn} style={{ animationDelay: `${2.4 + i * 0.2}s` }}>
@@ -281,9 +277,16 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
                 fill="none"
                 markerEnd={`url(#${markerId})`}
               />
-              {/* Event Label Box */}
-              <rect x={lx - 20} y={ly - 7} width="40" height="14" rx="4" fill={isDark ? "#1e293b" : "#ffffff"} opacity="0.8" />
-              <text x={lx} y={ly + 3} textAnchor="middle" fontSize="9" fill={gold} fontFamily="'IBM Plex Mono', monospace" fontWeight="600">
+              {/* Event Label Box: Opaque to "sit on top" */}
+              <rect
+                x={lx - 30} y={ly - 9}
+                width="60" height="18" rx="4"
+                fill={isDark ? "#0f172a" : "#ffffff"}
+                stroke={isDark ? "#334155" : "#e2e8f0"}
+                strokeWidth="1"
+                opacity="1"
+              />
+              <text x={lx} y={ly + 4} textAnchor="middle" fontSize="10" fill={gold} fontFamily="'IBM Plex Mono', monospace" fontWeight="600">
                 {t.event}
               </text>
             </g>
@@ -291,11 +294,11 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
         })}
 
 
-        {/* === Entity Node (Matter) === */}
+        {/* === Entity Node (Bottom) === */}
         <g className={styles.nodeGroup} style={{ animationDelay: "0.3s" }}>
           <Box
             x={centerX - 30}
-            y="340"
+            y={centerY + 160}
             width="60"
             height="60"
             stroke={teal}
@@ -306,9 +309,9 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           />
           <text
             x={labelX}
-            y="370"
+            y={centerY + 190}
             textAnchor="start"
-            fontSize="13"
+            fontSize="14"
             fontWeight="700"
             fontFamily="'Source Serif 4', Georgia, serif"
             fill={nodeText}
@@ -318,9 +321,9 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           </text>
           <text
             x={labelX}
-            y="385"
+            y={centerY + 205}
             textAnchor="start"
-            fontSize="10"
+            fontSize="11"
             fill={textColor}
             fontFamily="'IBM Plex Mono', monospace"
             className={styles.nodeLabel}
@@ -329,26 +332,26 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           </text>
         </g>
 
-        {/* === Trait Node (Energy) === */}
+        {/* === Trait Node (Center) === */}
         <g className={styles.nodeGroup} style={{ animationDelay: "0.6s" }}>
-          <circle cx={centerX} cy="200" r="38" fill={traitBg} className={styles.fadeIn} />
-          <circle cx={centerX} cy="200" r="42" stroke={gold} strokeWidth="1.5" fill="none" opacity="0.3" className={styles.pulseRing} />
+          <circle cx={centerX} cy={centerY} r="45" fill={traitBg} className={styles.fadeIn} />
+          <circle cx={centerX} cy={centerY} r="50" stroke={gold} strokeWidth="1.5" fill="none" opacity="0.3" className={styles.pulseRing} />
           <Zap
-            x={centerX - 28}
-            y="172"
-            width="56"
-            height="56"
+            x={centerX - 30}
+            y={centerY - 30}
+            width="60"
+            height="60"
             stroke={gold}
-            strokeWidth="2.5"
+            strokeWidth="3"
             fill={goldFill}
             strokeDasharray="1000" strokeDashoffset="1000"
             className={styles.nodeShape}
           />
           <text
             x={labelX}
-            y="200"
+            y={centerY}
             textAnchor="start"
-            fontSize="13"
+            fontSize="14"
             fontWeight="700"
             fontFamily="'Source Serif 4', Georgia, serif"
             fill={nodeText}
@@ -358,9 +361,9 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           </text>
           <text
             x={labelX}
-            y="215"
+            y={centerY + 15}
             textAnchor="start"
-            fontSize="10"
+            fontSize="11"
             fill={textColor}
             fontFamily="'IBM Plex Mono', monospace"
             className={styles.nodeLabel}
@@ -369,11 +372,11 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           </text>
         </g>
 
-        {/* === Page Node (Space) === */}
+        {/* === Page Node (Top) === */}
         <g className={styles.nodeGroup} style={{ animationDelay: "0.9s" }}>
           <Layout
             x={centerX - 30}
-            y="50"
+            y={centerY - 220}
             width="60"
             height="60"
             stroke={teal}
@@ -384,9 +387,9 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           />
           <text
             x={labelX}
-            y="80"
+            y={centerY - 190}
             textAnchor="start"
-            fontSize="13"
+            fontSize="14"
             fontWeight="700"
             fontFamily="'Source Serif 4', Georgia, serif"
             fill={nodeText}
@@ -396,9 +399,9 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           </text>
           <text
             x={labelX}
-            y="95"
+            y={centerY - 175}
             textAnchor="start"
-            fontSize="10"
+            fontSize="11"
             fill={textColor}
             fontFamily="'IBM Plex Mono', monospace"
             className={styles.nodeLabel}
@@ -407,7 +410,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           </text>
         </g>
 
-        {/* === State Nodes (Pills) === */}
+        {/* === State Nodes === */}
         {states.map((state, i) => {
           const pos = statePositions[state.name];
           if (!pos) return null;
@@ -419,21 +422,21 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           return (
             <g key={state.name} className={styles.nodeGroup} style={{ animationDelay: `${1.4 + i * 0.1}s` }}>
               <rect
-                x={pos.x}
-                y={pos.y}
-                width="70"
-                height="30"
-                rx="15"
+                x={pos.x - 40}
+                y={pos.y - 18}
+                width="80"
+                height="36"
+                rx="18"
                 stroke={strokeColor}
-                strokeWidth="1.5"
+                strokeWidth="2"
                 fill={fillColor}
                 className={styles.nodeShape}
               />
               <text
-                x={pos.x + 35}
-                y={pos.y + 19}
+                x={pos.x}
+                y={pos.y + 4}
                 textAnchor="middle"
-                fontSize="10"
+                fontSize="11"
                 fontWeight={isTerminal ? "700" : "500"}
                 fill={isTerminal ? gold : (state.name === 'placed' ? textColor : teal)}
                 fontFamily="'IBM Plex Mono', monospace"
@@ -448,9 +451,9 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
         {/* === Key Labels === */}
         <text
           x={centerX}
-          y="435"
+          y={viewBoxH - 25}
           textAnchor="middle"
-          fontSize="10"
+          fontSize="11"
           fill={muted}
           opacity="0.7"
           fontFamily="'IBM Plex Mono', monospace"
