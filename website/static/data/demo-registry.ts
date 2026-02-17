@@ -4,6 +4,9 @@
  * Each entry returns a { Component, args } tuple via dynamic import.
  * This replaces the old iframe-based Storybook embedding with direct
  * React component rendering (portable stories pattern).
+ *
+ * All imports reference src/design-systems/ which is synced from the
+ * monorepo via tools/sync-website-design-systems.sh.
  */
 
 export interface DemoEntry {
@@ -17,8 +20,8 @@ type DemoLoader = () => Promise<DemoEntry>;
 
 const executiveDashboard: DemoLoader = () =>
     Promise.all([
-        import('../../../../projects/winning-11/design-system/templates/AdminDashboardTemplate'),
-        import('../../../../projects/winning-11/design-system/templates/AdminDashboardTemplate.stories'),
+        import('../design-systems/winning-11/templates/AdminDashboardTemplate'),
+        import('../design-systems/winning-11/templates/AdminDashboardTemplate.stories'),
     ]).then(([mod, stories]) => ({
         Component: mod.AdminDashboardTemplate,
         args: (stories.Default as any).args ?? {},
@@ -26,8 +29,8 @@ const executiveDashboard: DemoLoader = () =>
 
 const trustIntelligence: DemoLoader = () =>
     Promise.all([
-        import('../../../../projects/winning-11/design-system/templates/TrustIntelligenceTemplate'),
-        import('../../../../projects/winning-11/design-system/templates/TrustIntelligenceTemplate.stories'),
+        import('../design-systems/winning-11/templates/TrustIntelligenceTemplate'),
+        import('../design-systems/winning-11/templates/TrustIntelligenceTemplate.stories'),
     ]).then(([mod, stories]) => ({
         Component: mod.TrustIntelligenceTemplate,
         args: (stories.Default as any).args ?? {},
@@ -35,8 +38,8 @@ const trustIntelligence: DemoLoader = () =>
 
 const graphIntelligence: DemoLoader = () =>
     Promise.all([
-        import('../../../../projects/winning-11/design-system/templates/GraphIntelligenceTemplate'),
-        import('../../../../projects/winning-11/design-system/templates/GraphIntelligenceTemplate.stories'),
+        import('../design-systems/winning-11/templates/GraphIntelligenceTemplate'),
+        import('../design-systems/winning-11/templates/GraphIntelligenceTemplate.stories'),
     ]).then(([mod, stories]) => ({
         Component: mod.GraphIntelligenceTemplate,
         args: (stories.HighDensityNetwork as any).args ?? {},
@@ -44,8 +47,8 @@ const graphIntelligence: DemoLoader = () =>
 
 const userProfile360: DemoLoader = () =>
     Promise.all([
-        import('../../../../projects/winning-11/design-system/templates/UserProfileTemplate'),
-        import('../../../../projects/winning-11/design-system/templates/UserProfileTemplate.stories'),
+        import('../design-systems/winning-11/templates/UserProfileTemplate'),
+        import('../design-systems/winning-11/templates/UserProfileTemplate.stories'),
     ]).then(([mod, stories]) => ({
         Component: mod.UserProfileTemplate,
         args: (stories.Default as any).args ?? {},
@@ -55,8 +58,8 @@ const userProfile360: DemoLoader = () =>
 
 const inspectionManagement: DemoLoader = () =>
     Promise.all([
-        import('../../../../projects/inspection-system/design-system/templates/InspectionsTemplate'),
-        import('../../../../projects/inspection-system/design-system/templates/InspectionsTemplate.stories'),
+        import('../design-systems/inspection-system/templates/InspectionsTemplate'),
+        import('../design-systems/inspection-system/templates/InspectionsTemplate.stories'),
     ]).then(([mod, stories]) => ({
         Component: mod.InspectionsTemplate,
         args: (stories.Default as any).args ?? {},
@@ -64,8 +67,8 @@ const inspectionManagement: DemoLoader = () =>
 
 const inspectionForm: DemoLoader = () =>
     Promise.all([
-        import('../../../../projects/inspection-system/design-system/templates/InspectionFormTemplate'),
-        import('../../../../projects/inspection-system/design-system/templates/InspectionFormTemplate.stories'),
+        import('../design-systems/inspection-system/templates/InspectionFormTemplate'),
+        import('../design-systems/inspection-system/templates/InspectionFormTemplate.stories'),
     ]).then(([mod, stories]) => ({
         Component: mod.InspectionFormTemplate,
         args: (stories.TradeInspection as any).args ?? {},
@@ -75,8 +78,8 @@ const inspectionForm: DemoLoader = () =>
 
 const fitnessTracker: DemoLoader = () =>
     Promise.all([
-        import('../../../../projects/blaz-klemenc/design-system/templates/FitnessTemplate'),
-        import('../../../../projects/blaz-klemenc/design-system/templates/FitnessTemplate.stories'),
+        import('../design-systems/blaz-klemenc/templates/FitnessTemplate'),
+        import('../design-systems/blaz-klemenc/templates/FitnessTemplate.stories'),
     ]).then(([mod, stories]) => ({
         Component: mod.FitnessTemplate,
         args: (stories.Default as any).args ?? {},
@@ -84,8 +87,8 @@ const fitnessTracker: DemoLoader = () =>
 
 const mealPlanDetail: DemoLoader = () =>
     Promise.all([
-        import('../../../../projects/blaz-klemenc/design-system/templates/MealPlanDetailTemplate'),
-        import('../../../../projects/blaz-klemenc/design-system/templates/MealPlanDetailTemplate.stories'),
+        import('../design-systems/blaz-klemenc/templates/MealPlanDetailTemplate'),
+        import('../design-systems/blaz-klemenc/templates/MealPlanDetailTemplate.stories'),
     ]).then(([mod, stories]) => ({
         Component: mod.MealPlanDetailTemplate,
         args: (stories.Default as any).args ?? {},
@@ -93,8 +96,8 @@ const mealPlanDetail: DemoLoader = () =>
 
 const trainingSchedule: DemoLoader = () =>
     Promise.all([
-        import('../../../../projects/blaz-klemenc/design-system/templates/ScheduleTemplate'),
-        import('../../../../projects/blaz-klemenc/design-system/templates/ScheduleTemplate.stories'),
+        import('../design-systems/blaz-klemenc/templates/ScheduleTemplate'),
+        import('../design-systems/blaz-klemenc/templates/ScheduleTemplate.stories'),
     ]).then(([mod, stories]) => ({
         Component: mod.ScheduleTemplate,
         args: (stories.BusyWeek as any).args ?? {},
@@ -104,8 +107,8 @@ const trainingSchedule: DemoLoader = () =>
 
 const almadarStudio: DemoLoader = () =>
     Promise.all([
-        import('../../../../projects/builder/design-system/templates/StudioProjectTemplate'),
-        import('../../../../projects/builder/design-system/templates/StudioProjectTemplate.stories'),
+        import('../design-systems/builder/templates/StudioProjectTemplate'),
+        import('../design-systems/builder/templates/StudioProjectTemplate.stories'),
     ]).then(([mod, stories]) => ({
         Component: mod.StudioProjectTemplate,
         args: (stories.HQMode as any).args ?? {},
@@ -113,8 +116,8 @@ const almadarStudio: DemoLoader = () =>
 
 const studioFullView: DemoLoader = () =>
     Promise.all([
-        import('../../../../projects/builder/design-system/templates/StudioProjectTemplate'),
-        import('../../../../projects/builder/design-system/templates/StudioProjectTemplate.stories'),
+        import('../design-systems/builder/templates/StudioProjectTemplate'),
+        import('../design-systems/builder/templates/StudioProjectTemplate.stories'),
     ]).then(([mod, stories]) => ({
         Component: mod.StudioProjectTemplate,
         args: (stories.WithAllPanels as any).args ?? {},
@@ -122,8 +125,8 @@ const studioFullView: DemoLoader = () =>
 
 const aiAgentPanel: DemoLoader = () =>
     Promise.all([
-        import('../../../../projects/builder/design-system/organisms/agent/AgentChatPanel'),
-        import('../../../../projects/builder/design-system/organisms/agent/AgentChatPanel.stories'),
+        import('../design-systems/builder/organisms/agent/AgentChatPanel'),
+        import('../design-systems/builder/organisms/agent/AgentChatPanel.stories'),
     ]).then(([mod, stories]) => ({
         Component: mod.AgentChatPanel,
         args: (stories.Running as any).args ?? {},
@@ -133,8 +136,8 @@ const aiAgentPanel: DemoLoader = () =>
 
 const gameMapEditor: DemoLoader = () =>
     Promise.all([
-        import('../../../../packages/almadar-ui/components/organisms/game/BattleBoard'),
-        import('../../../../packages/almadar-ui/components/organisms/game/BattleBoard.stories'),
+        import('../design-systems/almadar-ui/components/organisms/game/BattleBoard'),
+        import('../design-systems/almadar-ui/components/organisms/game/BattleBoard.stories'),
     ]).then(([mod, stories]) => ({
         Component: mod.BattleBoard,
         args: (stories.Editor as any).args ?? {},
@@ -142,8 +145,8 @@ const gameMapEditor: DemoLoader = () =>
 
 const interactiveGraph: DemoLoader = () =>
     Promise.all([
-        import('../../../../packages/almadar-ui/components/organisms/GraphCanvas'),
-        import('../../../../packages/almadar-ui/components/organisms/GraphCanvas.stories'),
+        import('../design-systems/almadar-ui/components/organisms/GraphCanvas'),
+        import('../design-systems/almadar-ui/components/organisms/GraphCanvas.stories'),
     ]).then(([mod, stories]) => ({
         Component: mod.GraphCanvas,
         args: (stories.Interactive as any).args ?? {},

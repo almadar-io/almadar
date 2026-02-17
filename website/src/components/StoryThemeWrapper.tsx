@@ -3,7 +3,7 @@ import React from 'react';
 // Import @almadar/ui theme CSS — provides data-theme CSS variable definitions.
 // Tailwind utilities come from custom.css via @tailwind components/utilities.
 // We do NOT import index.css here — its @tailwind base conflicts with Docusaurus resets.
-import '../../../../packages/almadar-ui/themes/index.css';
+import '../design-systems/almadar-ui/themes/index.css';
 
 interface StoryThemeWrapperProps {
     children: React.ReactNode;

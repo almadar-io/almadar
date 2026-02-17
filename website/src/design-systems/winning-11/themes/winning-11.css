@@ -1,0 +1,202 @@
+/**
+ * Winning 11 Theme
+ *
+ * Relationship intelligence platform with garden metaphor.
+ * Warm earth tones — rich soil browns and leaf greens with
+ * golden harvest accents. Organic, trustworthy aesthetic.
+ */
+
+/* ==========================================================================
+ * LIGHT MODE
+ * ========================================================================== */
+[data-theme="winning-11-light"] {
+    /* Shadows - Warm earth shadow */
+    --shadow-main:
+        0 4px 14px rgba(120, 53, 15, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-sm: 0 2px 4px rgba(120, 53, 15, 0.06);
+    --shadow-lg:
+        0 8px 30px rgba(120, 53, 15, 0.12), 0 4px 10px rgba(0, 0, 0, 0.06);
+    --shadow-inner: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-none: none;
+    --shadow-hover: 0 12px 40px rgba(120, 53, 15, 0.14);
+    --shadow-active: 0 2px 8px rgba(120, 53, 15, 0.1);
+
+    /* Border radius - Soft organic */
+    --radius-none: 0px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+
+    /* Border width */
+    --border-width: 1px;
+    --border-width-thin: 1px;
+    --border-width-thick: 2px;
+
+    /* Colors - Earth green primary, amber accents */
+    --color-primary: #65a30d;
+    --color-primary-hover: #4d7c0f;
+    --color-primary-foreground: #ffffff;
+
+    --color-secondary: #fefce8;
+    --color-secondary-hover: #fef9c3;
+    --color-secondary-foreground: #422006;
+
+    --color-accent: #d97706;
+    --color-accent-foreground: #ffffff;
+
+    --color-muted: #f7f6f3;
+    --color-muted-foreground: #78716c;
+
+    --color-background: #fafaf7;
+    --color-foreground: #292524;
+    --color-card: #ffffff;
+    --color-card-foreground: #292524;
+    --color-surface: #f5f5f0;
+    --color-border: rgba(101, 163, 13, 0.25);
+    --color-input: rgba(101, 163, 13, 0.15);
+    --color-ring: #65a30d;
+
+    /* Semantic colors */
+    --color-error: #dc2626;
+    --color-error-foreground: #ffffff;
+    --color-success: #16a34a;
+    --color-success-foreground: #ffffff;
+    --color-warning: #d97706;
+    --color-warning-foreground: #000000;
+    --color-info: #0284c7;
+    --color-info-foreground: #ffffff;
+
+    /* Typography */
+    --font-family:
+        "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 600;
+    --letter-spacing: -0.01em;
+    --line-height: 1.65;
+
+    /* Icon styling */
+    --icon-stroke-width: 1.75;
+    --icon-color: #4d7c0f;
+
+    /* Transitions - Organic, slightly slower */
+    --transition-fast: 150ms;
+    --transition-normal: 300ms;
+    --transition-slow: 500ms;
+    --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Hover/Active transforms */
+    --hover-scale: 1.02;
+    --hover-translate-y: -2px;
+    --hover-translate-x: 0;
+    --active-scale: 0.98;
+    --active-translate-y: 0;
+
+    /* Focus ring */
+    --focus-ring-width: 2px;
+    --focus-ring-offset: 2px;
+    --focus-ring-color: #65a30d;
+
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+}
+
+/* ==========================================================================
+ * DARK MODE
+ * ========================================================================== */
+[data-theme="winning-11-dark"] {
+    /* Shadows - Warm garden glow */
+    --shadow-main:
+        0 4px 14px rgba(101, 163, 13, 0.12), 0 1px 3px rgba(0, 0, 0, 0.2);
+    --shadow-sm: 0 2px 4px rgba(101, 163, 13, 0.08);
+    --shadow-lg:
+        0 8px 30px rgba(101, 163, 13, 0.2), 0 4px 10px rgba(0, 0, 0, 0.15);
+    --shadow-inner: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+    --shadow-none: none;
+    --shadow-hover:
+        0 12px 40px rgba(101, 163, 13, 0.25), 0 4px 12px rgba(217, 119, 6, 0.15);
+    --shadow-active: 0 2px 8px rgba(101, 163, 13, 0.15);
+
+    /* Border radius */
+    --radius-none: 0px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+
+    /* Border width */
+    --border-width: 1px;
+    --border-width-thin: 1px;
+    --border-width-thick: 2px;
+
+    /* Colors - Lime green on deep earth brown */
+    --color-primary: #84cc16;
+    --color-primary-hover: #a3e635;
+    --color-primary-foreground: #1a2e05;
+
+    --color-secondary: #292218;
+    --color-secondary-hover: #3d3425;
+    --color-secondary-foreground: #fef3c7;
+
+    --color-accent: #fbbf24;
+    --color-accent-foreground: #78350f;
+
+    --color-muted: #292218;
+    --color-muted-foreground: #a8a29e;
+
+    --color-background: #141008;
+    --color-foreground: #fafaf7;
+    --color-card: #1f1a10;
+    --color-card-foreground: #fafaf7;
+    --color-surface: #292218;
+    --color-border: rgba(132, 204, 22, 0.2);
+    --color-input: rgba(132, 204, 22, 0.15);
+    --color-ring: #84cc16;
+
+    /* Semantic colors */
+    --color-error: #f87171;
+    --color-error-foreground: #000000;
+    --color-success: #4ade80;
+    --color-success-foreground: #000000;
+    --color-warning: #fbbf24;
+    --color-warning-foreground: #000000;
+    --color-info: #38bdf8;
+    --color-info-foreground: #000000;
+
+    /* Typography */
+    --font-family:
+        "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 600;
+    --letter-spacing: -0.01em;
+    --line-height: 1.65;
+
+    /* Icon styling */
+    --icon-stroke-width: 1.75;
+    --icon-color: #84cc16;
+
+    /* Transitions */
+    --transition-fast: 150ms;
+    --transition-normal: 300ms;
+    --transition-slow: 500ms;
+    --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Hover/Active transforms */
+    --hover-scale: 1.02;
+    --hover-translate-y: -2px;
+    --hover-translate-x: 0;
+    --active-scale: 0.98;
+    --active-translate-y: 0;
+
+    /* Focus ring */
+    --focus-ring-width: 2px;
+    --focus-ring-offset: 2px;
+    --focus-ring-color: #84cc16;
+
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+}

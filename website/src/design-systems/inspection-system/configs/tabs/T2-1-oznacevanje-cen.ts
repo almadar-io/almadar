@@ -1,0 +1,1265 @@
+export default {
+  "tabId": "T2-1",
+  "name": "T2-1",
+  "globalVariablesSet": [
+    "UPG-2_CENOZN",
+    "UPG-2_VIDOZN",
+    "UPG-2_OZNEVR",
+    "PG-2_VKLDDV",
+    "PG-2_SAMENO",
+    "PG-2_TUDENO",
+    "PG-2_ENOSPL",
+    "PG-2_MOZZAM",
+    "PG-2_NAPNIO",
+    "PG-2_IMEBLA",
+    "PG-2_NETPRO",
+    "PG-2_CENNED"
+  ],
+  "globalVariablesRequired": [
+    "HG-POTROSNIKI",
+    "HG-PRODAJNI_PROSTOR",
+    "HG-POTORSNIKI"
+  ],
+  "localVariables": [
+    "H-OZNACENO"
+  ],
+  "sections": [
+    {
+      "id": "S-1",
+      "title": "* HG-POTROSNIKI: [T-001].",
+      "fields": []
+    },
+    {
+      "id": "S-1",
+      "title": "* HG-PRODAJNI_PROSTOR: [T-2].",
+      "fields": [
+        {
+          "id": "2",
+          "label": "NADZOR OZNAČEVANJA CEN",
+          "type": "dropdown",
+          "required": false,
+          "repeatable": false,
+          "options": [
+            {
+              "value": "T2-1",
+              "label": "T2-1",
+              "isDefault": true
+            }
+          ],
+          "defaultValue": "T2-1"
+        },
+        {
+          "id": "21",
+          "label": "Opravlja se nadzor označevanja blaga s ceno (ZVPOT-1 14).",
+          "type": "radio",
+          "required": false,
+          "repeatable": false,
+          "options": [
+            {
+              "value": "DA",
+              "label": "da",
+              "isDefault": false
+            },
+            {
+              "value": "SOS",
+              "label": "sos",
+              "isDefault": false
+            },
+            {
+              "value": "SE NE PREGLEDUJE",
+              "label": "SE NE PREGLEDUJE",
+              "isDefault": true
+            }
+          ],
+          "defaultValue": "SE NE PREGLEDUJE",
+          "contextMenu": [
+            "Nova sodelujoča oseba",
+            "Opis dejanskega stanja"
+          ],
+          "condition": [
+            "and",
+            [
+              "=",
+              "@entity.globalVariables.HG_POTORSNIKI",
+              "DA«"
+            ],
+            [
+              "!=",
+              "@entity.globalVariables.HG_PRODAJNI_PROSTOR",
+              "S PRODAJNIM AVTOMATOM«"
+            ],
+            [
+              "!=",
+              "@entity.globalVariables.HG_PRODAJNI_PROSTOR",
+              "Z UPRAVLJANJEM TRŽNICE«"
+            ],
+            [
+              "!=",
+              "@entity.globalVariables.HG_PRODAJNI_PROSTOR",
+              "Z UPRAVLJANJEM VELETRŽNICE«"
+            ]
+          ]
+        },
+        {
+          "id": "21",
+          "label": "= »SOS«: Opis dejanskega stanja:",
+          "type": "textarea",
+          "required": false,
+          "repeatable": true
+        },
+        {
+          "id": "22",
+          "label": "Podjetje je zavezanec za plačilo davka na dodano vrednost (DDV).",
+          "type": "radio",
+          "required": false,
+          "repeatable": false,
+          "options": [
+            {
+              "value": "DA",
+              "label": "da",
+              "isDefault": false
+            },
+            {
+              "value": "NE",
+              "label": "ne",
+              "isDefault": false
+            },
+            {
+              "value": "NI MOGOČE PREVERITI",
+              "label": "NI MOGOČE PREVERITI",
+              "isDefault": true
+            }
+          ],
+          "defaultValue": "NI MOGOČE PREVERITI",
+          "contextMenu": [
+            "Priloga",
+            "Izjava osebe"
+          ],
+          "condition": [
+            "=",
+            "@entity.formValues.21",
+            "DA«"
+          ]
+        },
+        {
+          "id": "23",
+          "label": "Prodajalna ima površino prodajnega prostora 500 m2 ali več.",
+          "type": "radio",
+          "required": false,
+          "repeatable": false,
+          "options": [
+            {
+              "value": "DA",
+              "label": "da",
+              "isDefault": false
+            },
+            {
+              "value": "NE",
+              "label": "ne",
+              "isDefault": false
+            }
+          ],
+          "contextMenu": [
+            "Izjava osebe",
+            "Opis dejanskega stanja",
+            "Priloga"
+          ],
+          "condition": [
+            "and",
+            [
+              "=",
+              "@entity.formValues.21",
+              "DA«"
+            ],
+            [
+              "=",
+              "@entity.globalVariables.HG_PRODAJNI_PROSTOR",
+              "V PRODAJALNI«"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S-1",
+      "title": "V2.1 = »DA«: 2.I. Pregled blaga glede označitve s ceno",
+      "fields": [
+        {
+          "id": "24",
+          "label": "Pregled označevanja cen (ZVPOT-1 14) se opravlja na naslednjem naključno izbranem blagu, ki je ponujeno v prodajo potrošnikom:",
+          "type": "text",
+          "required": false,
+          "repeatable": false,
+          "contextMenu": [
+            "Priloga"
+          ]
+        },
+        {
+          "id": "25",
+          "label": "Izbrano blago je ...",
+          "type": "radio",
+          "required": false,
+          "repeatable": false,
+          "options": [
+            {
+              "value": "V PRODAJI",
+              "label": "V PRODAJI",
+              "isDefault": true
+            },
+            {
+              "value": "V IZLOŽBI",
+              "label": "v izložbi",
+              "isDefault": false
+            },
+            {
+              "value": "RAZSTAVLJENO",
+              "label": "razstavljeno",
+              "isDefault": false
+            }
+          ],
+          "defaultValue": "V PRODAJI",
+          "contextMenu": [
+            "Nova sodelujoča oseba",
+            "Izjava osebe",
+            "Opis dejanskega stanja",
+            "Priloga"
+          ],
+          "condition": [
+            "!=",
+            "@entity.globalVariables.HG_PRODAJNI_PROSTOR",
+            "S PRODAJO NA DALJAVO«"
+          ]
+        },
+        {
+          "id": "26",
+          "label": "Blago v izložbi je namenjeno prodaji.",
+          "type": "radio",
+          "required": false,
+          "repeatable": false,
+          "options": [
+            {
+              "value": "DA",
+              "label": "da",
+              "isDefault": false
+            },
+            {
+              "value": "NE",
+              "label": "NE",
+              "isDefault": true
+            }
+          ],
+          "defaultValue": "NE",
+          "condition": [
+            "=",
+            "@entity.formValues.25",
+            "V IZLOŽBI«"
+          ]
+        },
+        {
+          "id": "27",
+          "label": "Razstavljeno blago je …",
+          "type": "dropdown",
+          "required": false,
+          "repeatable": false,
+          "options": [
+            {
+              "value": "NAMENJENO PRODAJI",
+              "label": "namenjeno prodaji",
+              "isDefault": false
+            },
+            {
+              "value": "NAMENJENO ZBIRANJU PONUDB",
+              "label": "namenjeno zbiranju ponudb",
+              "isDefault": false
+            },
+            {
+              "value": "SAMO RAZSTAVLJENO",
+              "label": "SAMO RAZSTAVLJENO",
+              "isDefault": true
+            }
+          ],
+          "defaultValue": "SAMO RAZSTAVLJENO",
+          "condition": [
+            "=",
+            "@entity.formValues.25",
+            "RAZSTAVLJENO«"
+          ]
+        }
+      ],
+      "repeatable": true,
+      "subsections": [
+        {
+          "id": "S-1-1",
+          "title": "(HG-POTROSNIKI = »DA« and HG-PRODAJNI_PROSTOR = »S PRODAJO NA DALJAVO«) or V2.5 = »V PRODAJI« or (V2.5 = »V IZLOŽBI« and V2.6 = »DA«) or (V2.5 = »RAZSTAVLJENO« and V2.7 = »NAMENJENO PRODAJI«) or (V2.5 = »RAZSTAVLJENO« and V2.7 = »NAMENJENO ZBIRANJU PONUDB«): 2.I.a. Označevanje s ceno in skladnost cene z ZVPOT-1",
+          "fields": [
+            {
+              "id": "28",
+              "label": "Izbrano blago je OZNAČENO s ceno (ZVPOT-1 14/1) …",
+              "type": "dropdown",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "NA BLAGU",
+                  "label": "na blagu",
+                  "isDefault": false
+                },
+                {
+                  "value": "NA POLICI, KJER JE BLAGO NAMEŠČENO",
+                  "label": "na polici, kjer je blago nameščeno",
+                  "isDefault": false
+                },
+                {
+                  "value": "NA IZVIRNI EMBALAŽI BLAGA",
+                  "label": "na izvirni embalaži blaga",
+                  "isDefault": false
+                },
+                {
+                  "value": "V OBLIKI CENIKA",
+                  "label": "v obliki cenika",
+                  "isDefault": false
+                },
+                {
+                  "value": "V KATALOGU",
+                  "label": "v katalogu",
+                  "isDefault": false
+                },
+                {
+                  "value": "NA DRUG USTREZEN NAČIN",
+                  "label": "na drug ustrezen način",
+                  "isDefault": false
+                },
+                {
+                  "value": "NI OZNAČENO",
+                  "label": "ni označeno",
+                  "isDefault": false
+                }
+              ],
+              "lawReference": {
+                "law": "ZVPOT-1",
+                "article": "14/1",
+                "type": "measure"
+              },
+              "contextMenu": [
+                "Priloga",
+                "Izjava osebe"
+              ]
+            },
+            {
+              "id": "29",
+              "label": "Cena je označena na drug ustrezen način tako, da je ...",
+              "type": "textarea",
+              "required": false,
+              "repeatable": false,
+              "condition": [
+                "=",
+                "@entity.formValues.28",
+                "NA DRUG USTREZEN NAČIN«"
+              ]
+            },
+            {
+              "id": "210",
+              "label": "Cena izbranega blaga je VIDNO OZNAČENA (ZVPOT-1 14/1).",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA",
+                  "label": "da",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "ne",
+                  "isDefault": false
+                }
+              ],
+              "lawReference": {
+                "law": "ZVPOT-1",
+                "article": "14/1",
+                "type": "measure"
+              },
+              "contextMenu": [
+                "Priloga",
+                "Izjava osebe"
+              ],
+              "condition": [
+                "!=",
+                "@entity.formValues.28",
+                "NI OZNAČENO«"
+              ]
+            },
+            {
+              "id": "211",
+              "label": "Cena izbranega blaga VKLJUČUJE DDV, ker se nadzor opravlja pri zavezancu za DDV (ZVPOT-1 14/1).",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA",
+                  "label": "da",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "ne",
+                  "isDefault": false
+                }
+              ],
+              "lawReference": {
+                "law": "ZVPOT-1",
+                "article": "14/1",
+                "type": "measure"
+              },
+              "contextMenu": [
+                "Priloga",
+                "Izjava osebe",
+                "Opis dejanskega stanja"
+              ],
+              "condition": [
+                "and",
+                [
+                  "=",
+                  "@entity.formValues.22",
+                  "DA«"
+                ],
+                [
+                  "!=",
+                  "@entity.formValues.28",
+                  "NI OZNAČENO«"
+                ]
+              ]
+            },
+            {
+              "id": "212",
+              "label": "Cena izbranega blaga je OZNAČENA V EVRIH (ZVPOT-1 14/2).",
+              "type": "dropdown",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA, Z ENO CENO",
+                  "label": "da, z eno ceno",
+                  "isDefault": false
+                },
+                {
+                  "value": "DA, Z DVEMA CENAMA",
+                  "label": "da, z dvema cenama",
+                  "isDefault": false
+                },
+                {
+                  "value": "DRUGAČE",
+                  "label": "drugače",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "ne",
+                  "isDefault": false
+                }
+              ],
+              "contextMenu": [
+                "Priloga",
+                "Izjava osebe",
+                "Opis dejanskega stanja"
+              ],
+              "condition": [
+                "!=",
+                "@entity.formValues.28",
+                "NI OZNAČENO«"
+              ]
+            },
+            {
+              "id": "213",
+              "label": "Cena izbranega blaga … (opiši, kako je cena v evrih označena drugače kot z eno ali dvema cenama)",
+              "type": "textarea",
+              "required": false,
+              "repeatable": false,
+              "condition": [
+                "=",
+                "@entity.formValues.212",
+                "DRUGAČE«"
+              ]
+            },
+            {
+              "id": "214",
+              "label": "Označena (prva, višja) cena znaša:",
+              "type": "currency",
+              "required": false,
+              "repeatable": false,
+              "condition": [
+                "!=",
+                "@entity.formValues.212",
+                "NE«"
+              ]
+            },
+            {
+              "id": "215",
+              "label": "Označena (prva, višja) cena je prečrtana.",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA",
+                  "label": "da",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "ne",
+                  "isDefault": false
+                }
+              ],
+              "condition": [
+                "=",
+                "@entity.formValues.212",
+                "DA, Z DVEMA CENAMA«"
+              ]
+            },
+            {
+              "id": "216",
+              "label": "Druga (nižja) označena cena znaša:",
+              "type": "currency",
+              "required": false,
+              "repeatable": false,
+              "condition": [
+                "=",
+                "@entity.formValues.212",
+                "DA, Z DVEMA CENAMA«"
+              ]
+            },
+            {
+              "id": "217",
+              "label": "Označen je odstotek popusta.",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA",
+                  "label": "da",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "NE",
+                  "isDefault": true
+                }
+              ],
+              "defaultValue": "NE",
+              "contextMenu": [
+                "Priloga",
+                "Izjava osebe",
+                "Opis dejanskega stanja"
+              ],
+              "condition": [
+                "!=",
+                "@entity.formValues.212",
+                "NE«"
+              ]
+            },
+            {
+              "id": "218",
+              "label": "Odstotek popusta:",
+              "type": "decimal",
+              "required": false,
+              "repeatable": false,
+              "condition": [
+                "=",
+                "@entity.formValues.217",
+                "DA«"
+              ]
+            },
+            {
+              "id": "219",
+              "label": "Pregled označevanja cen se nadaljuje po Pravilniku o načinu označevanja cen blaga in storitev (P-NOCBDVSOZCB).",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA",
+                  "label": "da",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "NE",
+                  "isDefault": true
+                }
+              ],
+              "defaultValue": "NE",
+              "condition": [
+                "!=",
+                "@entity.formValues.28",
+                "NI OZNAČENO«"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "S-1-1",
+          "title": "Konec",
+          "fields": []
+        },
+        {
+          "id": "S-1-2",
+          "title": "V2.19 = »DA«: 2.I.b. Označevanje s ceno in skladnost cene po P-NOCBDVSOZCB",
+          "fields": [
+            {
+              "id": "220",
+              "label": "Izbrano blago se prodaja …",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "PAKIRANO",
+                  "label": "pakirano",
+                  "isDefault": false
+                },
+                {
+                  "value": "NEPAKIRANO",
+                  "label": "nepakirano",
+                  "isDefault": false
+                }
+              ],
+              "contextMenu": [
+                "Priloga",
+                "Izjava osebe",
+                "Opis dejanskega stanja"
+              ]
+            },
+            {
+              "id": "221",
+              "label": "Izbrano blago, ki se prodaja nepakirano v razsutem stanju, je označeno samo z eno ceno in sicer SAMO S CENO ZA ENOTO IZDELKA (P-NOCBDVSOZCB 4/3 v povezavi z ZVPOT-1 14/5).",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA",
+                  "label": "da",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "ne",
+                  "isDefault": false
+                },
+                {
+                  "value": "SE NE PREGLEDUJE",
+                  "label": "SE NE PREGLEDUJE",
+                  "isDefault": true
+                }
+              ],
+              "defaultValue": "SE NE PREGLEDUJE",
+              "lawReference": {
+                "law": "ZVPOT-1",
+                "article": "14/5, P-NOCBDVSOZCB 4/3",
+                "type": "measure"
+              },
+              "contextMenu": [
+                "Priloga",
+                "Izjava osebe",
+                "Opis dejanskega stanja"
+              ],
+              "condition": [
+                "=",
+                "@entity.formValues.220",
+                "NEPAKIRANO«"
+              ]
+            },
+            {
+              "id": "220",
+              "label": "= »PAKIRANO«: Izjeme iz P-NOCBDVSOZCB 4/2: Cene za enoto ni potrebno označevati, če je enaka prodajni ceni ali če to ne bi bilo koristno zaradi narave ali namena blaga, zlasti če količina blaga ni pomembna za primerjavo cen ali se v isti embalaži prodaja različno blago.",
+              "type": "comment",
+              "required": false,
+              "repeatable": false
+            },
+            {
+              "id": "222",
+              "label": "Izbrano blago, razen če je izjema iz P-NOCBDVSOZCB 4/2, je označeno TUDI S CENO ZA ENOTO (P-NOCBDVSOZCB 4/2 v povezavi z ZVPOT-1 14/5).",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA",
+                  "label": "da",
+                  "isDefault": false
+                },
+                {
+                  "value": "BLAGO JE IZJEMA",
+                  "label": "blago je izjema",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "ne",
+                  "isDefault": false
+                },
+                {
+                  "value": "SE NE PREGLEDUJE",
+                  "label": "SE NE PREGLEDUJE",
+                  "isDefault": true
+                }
+              ],
+              "defaultValue": "SE NE PREGLEDUJE",
+              "lawReference": {
+                "law": "ZVPOT-1",
+                "article": "14/5, P-NOCBDVSOZCB 4/2",
+                "type": "measure"
+              },
+              "contextMenu": [
+                "Priloga",
+                "Izjava osebe",
+                "Opis dejanskega stanja"
+              ],
+              "condition": [
+                "=",
+                "@entity.formValues.220",
+                "PAKIRANO«"
+              ]
+            },
+            {
+              "id": "223",
+              "label": "Izbrano blago je po P-NOCBDVSOZCB 4/2 izjema od obveze označevanja s ceno za enoto, ...",
+              "type": "textarea",
+              "required": false,
+              "repeatable": false,
+              "condition": [
+                "=",
+                "@entity.formValues.222",
+                "BLAGO JE IZJEMA«"
+              ]
+            },
+            {
+              "id": "224",
+              "label": "Označena cena za enoto je:",
+              "type": "text",
+              "required": false,
+              "repeatable": false,
+              "condition": [
+                "=",
+                "@entity.formValues.222",
+                "DA«"
+              ]
+            },
+            {
+              "id": "225",
+              "label": "Blago je označeno z dvema cenama za enoto.",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA",
+                  "label": "da",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "ne",
+                  "isDefault": false
+                }
+              ],
+              "condition": [
+                "=",
+                "@entity.formValues.222",
+                "DA«"
+              ]
+            },
+            {
+              "id": "226",
+              "label": "Druga označena cena za enoto je:",
+              "type": "text",
+              "required": false,
+              "repeatable": false,
+              "contextMenu": [
+                "Opis dejanskega stanja"
+              ],
+              "condition": [
+                "=",
+                "@entity.formValues.225",
+                "DA«"
+              ]
+            },
+            {
+              "id": "227",
+              "label": "Enota pri ceni za enoto je (P-NOCBDVSOZCB 2/2) …",
+              "type": "dropdown",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "1 KILOGRAM",
+                  "label": "1 kilogram",
+                  "isDefault": false
+                },
+                {
+                  "value": "1 LITER",
+                  "label": "1 liter",
+                  "isDefault": false
+                },
+                {
+                  "value": "1 METER",
+                  "label": "1 meter",
+                  "isDefault": false
+                },
+                {
+                  "value": "1 KVADRATNI METER",
+                  "label": "1 kvadratni meter",
+                  "isDefault": false
+                },
+                {
+                  "value": "1 KUBIČNI METER",
+                  "label": "1 kubični meter",
+                  "isDefault": false
+                },
+                {
+                  "value": "DRUGO",
+                  "label": "DRUGO",
+                  "isDefault": true
+                }
+              ],
+              "defaultValue": "DRUGO",
+              "condition": [
+                "or",
+                [
+                  "=",
+                  "@entity.formValues.221",
+                  "DA«"
+                ],
+                [
+                  "=",
+                  "@entity.formValues.222",
+                  "DA«"
+                ]
+              ]
+            },
+            {
+              "id": "228",
+              "label": "Označena enota pri ceni za enoto je …",
+              "type": "text",
+              "required": false,
+              "repeatable": false,
+              "condition": [
+                "=",
+                "@entity.formValues.227",
+                "DRUGO«"
+              ]
+            },
+            {
+              "id": "229",
+              "label": "Označena enota pri ceni za enoto je enota, ki se splošno in običajno uporablja pri prodaji tega blaga.",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA",
+                  "label": "da",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "NE",
+                  "isDefault": true
+                }
+              ],
+              "defaultValue": "NE",
+              "contextMenu": [
+                "Opis dejanskega stanja",
+                "Izjava osebe"
+              ],
+              "condition": [
+                "=",
+                "@entity.formValues.227",
+                "DRUGO«"
+              ]
+            },
+            {
+              "id": "230",
+              "label": "Cena je tako označena, da ne obstaja MOŽNOST ZAMENJAVE s ceno drugega blaga (P-NOCBDVSOZCB 6/2 v povezavi z ZVPOT-1 14/5).",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA",
+                  "label": "da",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "ne",
+                  "isDefault": false
+                },
+                {
+                  "value": "SE NE PREGLEDUJE",
+                  "label": "SE NE PREGLEDUJE",
+                  "isDefault": true
+                }
+              ],
+              "defaultValue": "SE NE PREGLEDUJE",
+              "lawReference": {
+                "law": "ZVPOT-1",
+                "article": "14/5, P-NOCBDVSOZCB 6/2",
+                "type": "measure"
+              },
+              "contextMenu": [
+                "Priloga",
+                "Izjava osebe"
+              ],
+              "condition": [
+                "=",
+                "@entity.localVariables.H_OZNACENO",
+                true
+              ]
+            },
+            {
+              "id": "231",
+              "label": "Cena izbranega blaga, ki je označena na polici, je označena … (P-NOCBDVSOZCB 7/1 v povezavi z ZVPOT-1 14/5)",
+              "type": "dropdown",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "PRED BLAGOM",
+                  "label": "pred blagom",
+                  "isDefault": false
+                },
+                {
+                  "value": "POD BLAGOM",
+                  "label": "pod blagom",
+                  "isDefault": false
+                },
+                {
+                  "value": "NAD BLAGOM",
+                  "label": "nad blagom",
+                  "isDefault": false
+                },
+                {
+                  "value": "NIČ OD NAŠTETEGA",
+                  "label": "nič od naštetega",
+                  "isDefault": false
+                },
+                {
+                  "value": "SE NE PREGLEDUJE",
+                  "label": "SE NE PREGLEDUJE",
+                  "isDefault": true
+                }
+              ],
+              "defaultValue": "SE NE PREGLEDUJE",
+              "lawReference": {
+                "law": "ZVPOT-1",
+                "article": "14/5, P-NOCBDVSOZCB 7/1",
+                "type": "measure"
+              },
+              "contextMenu": [
+                "Priloga",
+                "Opis dejanskega stanja",
+                "Izjava osebe"
+              ],
+              "condition": [
+                "=",
+                "@entity.formValues.28",
+                "NA POLICI, KJER JE BLAGO NAMEŠČENO«"
+              ]
+            },
+            {
+              "id": "232",
+              "label": "Poleg cene izbranega blaga je tudi ime blaga (P-NOCBDVSOZCB 7/1 v povezavi z ZVPOT-1 14/5).",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA",
+                  "label": "da",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "NE",
+                  "isDefault": true
+                }
+              ],
+              "defaultValue": "NE",
+              "lawReference": {
+                "law": "ZVPOT-1",
+                "article": "14/5, P-NOCBDVSOZCB 7/1",
+                "type": "measure"
+              },
+              "condition": [
+                "and",
+                [
+                  "=",
+                  "@entity.formValues.28",
+                  "NA POLICI, KJER JE BLAGO NAMEŠČENO«"
+                ],
+                [
+                  "!=",
+                  "@entity.formValues.231",
+                  "SE NE PREGLEDUJE«"
+                ]
+              ]
+            },
+            {
+              "id": "233",
+              "label": "Poleg izbranega blaga zavezanec prodaja istovrstno blago z različno neto težo ali z različno prostornino (P-NOCBDVSOZCB 7/2 v povezavi z ZVPOT-1 14/5).",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA",
+                  "label": "da",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "ne",
+                  "isDefault": false
+                }
+              ],
+              "lawReference": {
+                "law": "ZVPOT-1",
+                "article": "14/5, P-NOCBDVSOZCB 7/2",
+                "type": "measure"
+              },
+              "condition": [
+                "and",
+                [
+                  "=",
+                  "@entity.formValues.28",
+                  "NA POLICI, KJER JE BLAGO NAMEŠČENO«"
+                ],
+                [
+                  "!=",
+                  "@entity.formValues.231",
+                  "SE NE PREGLEDUJE«"
+                ]
+              ]
+            },
+            {
+              "id": "234",
+              "label": "Pri istovrstnem blagu z različno neto težo ali z različno prostornino, je na oznaki cene tudi navedba neto teže ali prostornine (P-NOCBDVSOZCB 7/2 v povezavi z ZVPOT-1 14/5).",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA, NETO TEŽE",
+                  "label": "da, neto teže",
+                  "isDefault": false
+                },
+                {
+                  "value": "DA, PROSTORNINE",
+                  "label": "da, prostornine",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "NE",
+                  "isDefault": true
+                }
+              ],
+              "defaultValue": "NE",
+              "lawReference": {
+                "law": "ZVPOT-1",
+                "article": "14/5, P-NOCBDVSOZCB 7/2",
+                "type": "measure"
+              },
+              "contextMenu": [
+                "Priloga",
+                "Opis dejanskega stanja",
+                "Izjava osebe"
+              ],
+              "condition": [
+                "=",
+                "@entity.formValues.233",
+                "DA«"
+              ]
+            },
+            {
+              "id": "235",
+              "label": "Pregleduje se označitev cen v skladu s P-NOCBDVSOZCB 6 in P-NOCBDVSOZCB 7, ki mora biti nedvoumna, lahko prepoznavna, čitljiva in za potrošnika na vidnem in dosegljivem mestu (P-NOCBDVSOZCB 8/1).",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA",
+                  "label": "da",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "ne",
+                  "isDefault": false
+                }
+              ],
+              "contextMenu": [
+                "Priloga",
+                "Opis dejanskega stanja",
+                "Izjava osebe"
+              ]
+            },
+            {
+              "id": "236",
+              "label": "Cena je označena:",
+              "type": "comment",
+              "required": false,
+              "repeatable": false,
+              "condition": [
+                "=",
+                "@entity.formValues.235",
+                "DA«"
+              ]
+            },
+            {
+              "id": "235",
+              "label": "= »DA«: 2.36/1 nedvoumno:",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA",
+                  "label": "da",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "NE",
+                  "isDefault": true
+                }
+              ],
+              "defaultValue": "NE",
+              "lawReference": {
+                "law": "ZVPOT-1",
+                "article": "14/5, P-NOCBDVSOZCB 8/1",
+                "type": "measure"
+              }
+            },
+            {
+              "id": "235",
+              "label": "= »DA«: 2.36/2 lahko prepoznavno:",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA",
+                  "label": "da",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "NE",
+                  "isDefault": true
+                }
+              ],
+              "defaultValue": "NE",
+              "lawReference": {
+                "law": "ZVPOT-1",
+                "article": "14/5, P-NOCBDVSOZCB 8/1",
+                "type": "measure"
+              }
+            },
+            {
+              "id": "235",
+              "label": "= »DA«: 2.36/3 čitljivo:",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA",
+                  "label": "da",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "NE",
+                  "isDefault": true
+                }
+              ],
+              "defaultValue": "NE",
+              "lawReference": {
+                "law": "ZVPOT-1",
+                "article": "14/5, P-NOCBDVSOZCB 8/1",
+                "type": "measure"
+              }
+            },
+            {
+              "id": "235",
+              "label": "= »DA«: 2.36/4 na vidnem mestu:",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA",
+                  "label": "da",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "NE",
+                  "isDefault": true
+                }
+              ],
+              "defaultValue": "NE",
+              "lawReference": {
+                "law": "ZVPOT-1",
+                "article": "14/5, P-NOCBDVSOZCB 8/1",
+                "type": "measure"
+              }
+            },
+            {
+              "id": "235",
+              "label": "= »DA«: 2.36/5 na dosegljivem mestu:",
+              "type": "radio",
+              "required": false,
+              "repeatable": false,
+              "options": [
+                {
+                  "value": "DA",
+                  "label": "da",
+                  "isDefault": false
+                },
+                {
+                  "value": "NE",
+                  "label": "NE",
+                  "isDefault": true
+                }
+              ],
+              "defaultValue": "NE",
+              "lawReference": {
+                "law": "ZVPOT-1",
+                "article": "14/5, P-NOCBDVSOZCB 8/1",
+                "type": "measure"
+              }
+            }
+          ]
+        },
+        {
+          "id": "S-1-2",
+          "title": "Konec",
+          "fields": []
+        }
+      ]
+    },
+    {
+      "id": "S-1",
+      "title": "Konec",
+      "fields": []
+    }
+  ]
+};

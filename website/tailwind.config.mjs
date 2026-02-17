@@ -1,17 +1,78 @@
 /**
- * Tailwind config for the website + storybook.
- * Re-exports the @almadar/ui config with expanded content paths
- * to scan all project design system components.
+ * Tailwind config for the Almadar website.
+ *
+ * Self-contained — does NOT import from monorepo paths so the website
+ * can build standalone in CI (almadar repo is separate from the monorepo).
+ *
+ * The theme extension mirrors packages/almadar-ui/tailwind.config.js
+ * using CSS variable references so any @almadar/ui theme works.
  */
-import baseConfig from '../../packages/almadar-ui/tailwind.config.js';
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  ...baseConfig,
   content: [
-    '../../packages/almadar-ui/components/**/*.{js,ts,jsx,tsx}',
-    '../../projects/*/design-system/**/*.{js,ts,jsx,tsx}',
+    // Synced design systems (source of truth for both local dev and CI)
+    './src/design-systems/**/*.{js,ts,jsx,tsx}',
+    // Storybook dev
     './.storybook/**/*.{js,ts,jsx,tsx}',
+    // Website source
     './src/**/*.{js,ts,jsx,tsx}',
   ],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          DEFAULT: 'var(--color-primary)',
+          foreground: 'var(--color-primary-foreground)',
+        },
+        secondary: {
+          DEFAULT: 'var(--color-secondary)',
+          foreground: 'var(--color-secondary-foreground)',
+        },
+        muted: {
+          DEFAULT: 'var(--color-muted)',
+          foreground: 'var(--color-muted-foreground)',
+        },
+        accent: {
+          DEFAULT: 'var(--color-accent)',
+          foreground: 'var(--color-accent-foreground)',
+        },
+        background: 'var(--color-background)',
+        foreground: 'var(--color-foreground)',
+        card: {
+          DEFAULT: 'var(--color-card)',
+          foreground: 'var(--color-card-foreground)',
+        },
+        border: 'var(--color-border)',
+        input: 'var(--color-input)',
+        ring: 'var(--color-ring)',
+      },
+      borderRadius: {
+        none: 'var(--radius-none)',
+        sm: 'var(--radius-sm)',
+        md: 'var(--radius-md)',
+        lg: 'var(--radius-lg)',
+        xl: 'var(--radius-xl)',
+        full: 'var(--radius-full)',
+      },
+      boxShadow: {
+        sm: 'var(--shadow-sm)',
+        DEFAULT: 'var(--shadow-main)',
+        lg: 'var(--shadow-lg)',
+        inner: 'var(--shadow-inner)',
+      },
+      fontWeight: {
+        normal: 'var(--font-weight-normal)',
+        medium: 'var(--font-weight-medium)',
+        bold: 'var(--font-weight-bold)',
+      },
+      transitionDuration: {
+        fast: 'var(--transition-fast)',
+        normal: 'var(--transition-normal)',
+        slow: 'var(--transition-slow)',
+      },
+    },
+  },
+  plugins: [],
 };

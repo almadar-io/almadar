@@ -1,0 +1,136 @@
+{
+  "tabId": "T-007",
+  "name": "Odločbe in ukrepi",
+  "description": "Decisions and orders based on findings",
+  "phase": "preparation",
+  "globalVariablesSet": [
+    "HG-DECISION_COUNT"
+  ],
+  "globalVariablesRequired": [
+    "HG-FINDING_COUNT"
+  ],
+  "localVariables": [],
+  "entityMapping": {
+    "entity": "Decision",
+    "mode": "create_multiple",
+    "parentField": "inspectionId"
+  },
+  "sections": [
+    {
+      "id": "S-1",
+      "title": "Pregled ugotovitev",
+      "description": "Summary of findings requiring decisions",
+      "readOnly": true,
+      "condition": [">", "@entity.globalVariables.HG_FINDING_COUNT", 0],
+      "dataSource": {
+        "entity": "Finding",
+        "filter": ["=", "@item.inspectionId", "@entity.inspectionId"],
+        "displayType": "summary-cards"
+      },
+      "fields": [
+        {
+          "id": "findingsSummary",
+          "label": "Ugotovitve",
+          "type": "entity-cards",
+          "readOnly": true,
+          "displayFields": ["description", "severity"]
+        }
+      ]
+    },
+    {
+      "id": "S-2",
+      "title": "Odločbe",
+      "description": "Orders and actions required of the inspectee",
+      "repeatable": true,
+      "minItems": 0,
+      "addButtonLabel": "Dodaj odločbo",
+      "fields": [
+        {
+          "id": "findingId",
+          "label": "Povezana ugotovitev",
+          "type": "dropdown",
+          "required": true,
+          "dataSource": {
+            "entity": "Finding",
+            "filter": ["=", "@item.inspectionId", "@entity.inspectionId"],
+            "valueField": "id",
+            "labelField": "description"
+          },
+          "entityField": "findingId"
+        },
+        {
+          "id": "actionOrdered",
+          "label": "Odrejen ukrep",
+          "type": "textarea",
+          "required": true,
+          "minLength": 10,
+          "maxLength": 1000,
+          "placeholder": "Opišite kaj mora zavezanec storiti...",
+          "entityField": "actionOrdered"
+        },
+        {
+          "id": "deadline",
+          "label": "Rok za izpolnitev",
+          "type": "date",
+          "required": true,
+          "minDate": "@now",
+          "entityField": "deadline"
+        },
+        {
+          "id": "legalBasis",
+          "label": "Pravna podlaga",
+          "type": "text",
+          "required": true,
+          "placeholder": "npr. ZIN 15. člen",
+          "entityField": "legalBasis"
+        },
+        {
+          "id": "status",
+          "label": "Status",
+          "type": "dropdown",
+          "required": true,
+          "defaultValue": "pending",
+          "options": [
+            { "value": "pending", "label": "V čakanju" },
+            { "value": "acknowledged", "label": "Potrjeno" },
+            { "value": "in_progress", "label": "V izvajanju" },
+            { "value": "completed", "label": "Izpolnjeno" },
+            { "value": "overdue", "label": "Zamujeno" }
+          ],
+          "entityField": "status"
+        }
+      ],
+      "hiddenCalculations": [
+        {
+          "variable": "HG-DECISION_COUNT",
+          "expression": ["array/length", "@entity.decisions"],
+          "scope": "global"
+        }
+      ]
+    },
+    {
+      "id": "S-3",
+      "title": "Brez ugotovitev",
+      "description": "No findings message",
+      "condition": ["=", "@entity.globalVariables.HG_FINDING_COUNT", 0],
+      "fields": [
+        {
+          "id": "noFindingsMessage",
+          "label": "",
+          "type": "info-display",
+          "displayTemplate": {
+            "variant": "success",
+            "icon": "check-circle",
+            "title": "Brez ugotovitev",
+            "content": "Pri pregledu niso bile ugotovljene kršitve. Odločbe niso potrebne."
+          }
+        }
+      ]
+    }
+  ],
+  "validationRules": [],
+  "contextMenu": [
+    "Dodaj odločbo",
+    "Priloga"
+  ]
+}

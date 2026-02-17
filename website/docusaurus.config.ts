@@ -3,8 +3,6 @@ import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 import path from "path";
 
-const workspaceRoot = path.resolve(__dirname, "../..");
-
 const config: Config = {
   title: "Almadar",
   tagline: "The Physics of Software | فيزياء البرمجيات",
@@ -55,7 +53,7 @@ const config: Config = {
           return {
             resolve: {
               alias: {
-                "@almadar/ui": path.join(workspaceRoot, "packages/almadar-ui/components/index.ts"),
+                "@almadar/ui": path.join(__dirname, "src/design-systems/almadar-ui/components/index.ts"),
                 "react-force-graph-2d": path.join(__dirname, ".storybook/stubs/react-force-graph-2d.ts"),
               },
             },

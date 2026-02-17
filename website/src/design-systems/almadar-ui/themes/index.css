@@ -1,0 +1,27 @@
+/**
+ * Theme index - exports all built-in theme CSS files
+ *
+ * Each theme provides both light and dark modes via:
+ *   [data-theme="themename-light"] { ... }
+ *   [data-theme="themename-dark"] { ... }
+ */
+
+/* Core themes */
+@import "./wireframe.css";
+@import "./minimalist.css";
+@import "./almadar.css";
+@import "./trait-wars.css";
+
+/* Extended themes */
+@import "./ocean.css";
+@import "./forest.css";
+@import "./sunset.css";
+@import "./lavender.css";
+@import "./rose.css";
+@import "./slate.css";
+@import "./ember.css";
+@import "./midnight.css";
+@import "./sand.css";
+@import "./neon.css";
+@import "./arctic.css";
+@import "./copper.css";
