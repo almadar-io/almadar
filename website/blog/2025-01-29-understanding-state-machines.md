@@ -9,7 +9,31 @@ State machines are at the heart of Almadar. In this post, we explore why we chos
 
 <!-- truncate -->
 
-<OrbitalDiagram />
+import HeroSchemaAnimation from '@site/src/components/HeroSchemaAnimation';
+
+export const toggleSchema = {
+  name: "ToggleApp",
+  orbitals: [{
+    name: "Toggle",
+    entity: { name: "Switch" },
+    traits: [{
+      name: "Toggleable",
+      stateMachine: {
+        states: [
+          { name: "off", isInitial: true },
+          { name: "on" }
+        ],
+        transitions: [
+          { from: "off", to: "on", event: "TOGGLE" },
+          { from: "on", to: "off", event: "TOGGLE" }
+        ]
+      }
+    }],
+    pages: [{ name: "Demo" }]
+  }]
+};
+
+<HeroSchemaAnimation schema={toggleSchema} />
 
 ## Why State Machines?
 

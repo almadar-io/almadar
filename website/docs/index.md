@@ -28,7 +28,38 @@ Your Vision → OrbitalSchema (.orb) → Full-Stack Application
 | Documentation as afterthought | Schema IS documentation |
 | Testing is complex | State machines are inherently testable |
 
-<OrbitalDiagram />
+import HeroSchemaAnimation from '@site/src/components/HeroSchemaAnimation';
+
+export const taskSchema = {
+  name: "TaskManager",
+  orbitals: [{
+    name: "Tasks",
+    entity: {
+      name: "Task",
+      fields: [
+        { name: "title", type: "string" },
+        { name: "status", type: "enum", values: ["pending", "done"] }
+      ]
+    },
+    traits: [{
+      name: "TaskLifecycle",
+      stateMachine: {
+        states: [
+          { name: "Pending", isInitial: true },
+          { name: "Done", isTerminal: true }
+        ],
+        transitions: [{
+          from: "Pending",
+          to: "Done",
+          event: "COMPLETE"
+        }]
+      }
+    }],
+    pages: [{ name: "TaskList" }]
+  }]
+};
+
+<HeroSchemaAnimation schema={taskSchema} />
 
 ## Quick Example
 

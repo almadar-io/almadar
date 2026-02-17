@@ -146,8 +146,9 @@ section {
 }
 
 .card:hover {
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    transform: none;
+    border-color: var(--sand-gold);
 }
 
 /* ===========================
@@ -553,8 +554,8 @@ nav.nav-dark .mobile-menu-toggle span {
 }
 
 .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(20, 184, 166, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(20, 184, 166, 0.2);
     color: #fff;
 }
 
@@ -658,9 +659,9 @@ nav.nav-dark .mobile-menu-toggle span {
 }
 
 .feature:hover {
-    border-color: var(--teal);
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
+    border-color: var(--sand-gold);
+    transform: none;
+    box-shadow: var(--shadow-md);
 }
 
 .icon-box {
@@ -692,7 +693,7 @@ nav.nav-dark .mobile-menu-toggle span {
 }
 
 .definition-card:hover {
-    border-color: var(--teal);
+    border-color: var(--sand-gold);
     box-shadow: var(--shadow-md);
 }
 
@@ -744,9 +745,9 @@ nav.nav-dark .mobile-menu-toggle span {
 }
 
 .case-card:hover {
-    border-color: var(--teal);
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
+    border-color: var(--sand-gold);
+    transform: none;
+    box-shadow: var(--shadow-md);
 }
 
 .case-header {
@@ -832,7 +833,7 @@ nav.nav-dark .mobile-menu-toggle span {
 }
 
 .team-card:hover {
-    border-color: var(--teal);
+    border-color: var(--sand-gold);
     box-shadow: var(--shadow-md);
 }
 
@@ -1669,7 +1670,7 @@ li code {
     /* Typography */
     --font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
     --font-heading: 'Source Serif 4', 'Georgia', serif;
-
+    
     /* Border Radius */
     --radius-sm: 8px;
     --radius-md: 12px;
@@ -1716,10 +1717,10 @@ li code {
 
     /* === Light Mode (Primary) === */
 
-    /* Background Colors */
-    --bg-primary: #f8fafc;        /* White/Parchment - main background */
-    --bg-secondary: #ffffff;       /* Pure white - cards, elevated surfaces */
-    --bg-tertiary: #f1f5f9;       /* Subtle gray - subtle contrast */
+    /* Background Colors — warmed from cool blue-white to cream parchment */
+    --bg-primary: #faf8f5;        /* Warm parchment - main background */
+    --bg-secondary: #fffefa;       /* Warm white - cards, elevated surfaces */
+    --bg-tertiary: #f5f2ed;       /* Warm gray - subtle contrast */
     --bg-dark: var(--midnight);    /* Midnight blue - dark sections, footer */
     --bg-darker: #020617;          /* Deep midnight - hover states on dark */
 
@@ -1729,9 +1730,9 @@ li code {
     --text-light: #f8fafc;         /* Light text on dark backgrounds */
     --text-accent: var(--teal);    /* Teal for links and accents */
 
-    /* Border Colors */
-    --border: #e2e8f0;             /* Light border for cards */
-    --border-subtle: #f1f5f9;      /* Very subtle dividers */
+    /* Border Colors — warmed */
+    --border: #e8e4de;             /* Warm border for cards */
+    --border-subtle: #f5f2ed;      /* Warm subtle dividers */
     --border-accent: var(--teal);  /* Teal accent borders */
     --border-gold: var(--sand-gold); /* Heritage gold accent line */
 
@@ -1763,10 +1764,10 @@ li code {
     --shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.1);
     --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.1), 0 1px 2px rgba(15, 23, 42, 0.06);
 
-    /* === Transitions === */
-    --transition-fast: 0.15s ease;
-    --transition-normal: 0.25s ease;
-    --transition-slow: 0.4s ease;
+    /* === Transitions — unhurried, deliberate === */
+    --transition-fast: 0.25s ease;
+    --transition-normal: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 
     /* === Geometric Pattern (Digital Mashrabiya) === */
     --pattern-grid: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0v60M0 30h60' stroke='%2314b8a6' stroke-width='0.5' fill='none' opacity='0.1'/%3E%3C/svg%3E");

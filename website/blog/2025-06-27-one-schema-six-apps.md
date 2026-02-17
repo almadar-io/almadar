@@ -13,7 +13,135 @@ Here's how — and why it matters.
 
 <!-- truncate -->
 
-<OrbitalDiagram />
+import HeroSchemaAnimation from '@site/src/components/HeroSchemaAnimation';
+
+export const inspectionSchema = {
+  name: "InspectionSystem",
+  orbitals: [{
+    name: "Inspection",
+    entity: { name: "Inspection" },
+    traits: [{
+      name: "Workflow",
+      stateMachine: {
+        states: [
+          { name: "Intro", isInitial: true },
+          { name: "Content" },
+          { name: "Prep" },
+          { name: "Record" },
+          { name: "Closing", isTerminal: true }
+        ],
+        transitions: [
+          { from: "Intro", to: "Content", event: "PROCEED" },
+          { from: "Content", to: "Prep", event: "PROCEED" },
+          { from: "Prep", to: "Record", event: "SAVE" },
+          { from: "Record", to: "Closing", event: "CLOSE" }
+        ]
+      }
+    }],
+    pages: [{ name: "Form" }]
+  }]
+};
+
+export const kflowSchema = {
+  name: "KFlowPlatform",
+  orbitals: [{
+    name: "Concept",
+    entity: { name: "Concept" },
+    traits: [{
+      name: "Expansion",
+      stateMachine: {
+        states: [
+          { name: "seed", isInitial: true },
+          { name: "expanding" },
+          { name: "expanded" },
+          { name: "published", isTerminal: true }
+        ],
+        transitions: [
+          { from: "seed", to: "expanding", event: "EXPAND" },
+          { from: "expanding", to: "expanded", event: "AI_DONE" },
+          { from: "expanded", to: "published", event: "PUBLISH" }
+        ]
+      }
+    }],
+    pages: [{ name: "Graph" }]
+  }]
+};
+
+export const fitnessSchema = {
+  name: "FitnessTracker",
+  orbitals: [{
+    name: "Session",
+    entity: { name: "Session" },
+    traits: [{
+      name: "Booking",
+      stateMachine: {
+        states: [
+          { name: "open", isInitial: true }, // available -> open to fit
+          { name: "booked" },
+          { name: "done", isTerminal: true }, // completed -> done
+          { name: "cancelled" }
+        ],
+        transitions: [
+          { from: "open", to: "booked", event: "BOOK" },
+          { from: "booked", to: "cancelled", event: "CANCEL" },
+          { from: "booked", to: "done", event: "COMPLETE" }
+        ]
+      }
+    }],
+    pages: [{ name: "Schedule" }]
+  }]
+};
+
+export const traitWarsSchema = {
+  name: "TraitWars",
+  orbitals: [{
+    name: "Unit",
+    entity: { name: "Unit" },
+    traits: [{
+      name: "Combat",
+      stateMachine: {
+        states: [
+          { name: "idle", isInitial: true },
+          { name: "moving" },
+          { name: "attacking" },
+          { name: "dead", isTerminal: true }
+        ],
+        transitions: [
+          { from: "idle", to: "moving", event: "MOVE" },
+          { from: "moving", to: "attacking", event: "ATTACK" },
+          { from: "attacking", to: "idle", event: "END_TURN" },
+          { from: "idle", to: "dead", event: "DIE" }
+        ]
+      }
+    }],
+    pages: [{ name: "Battlefield" }]
+  }]
+};
+
+export const iramSchema = {
+  name: "Iram",
+  orbitals: [{
+    name: "Boss",
+    entity: { name: "Boss" },
+    traits: [{
+      name: "Encounter",
+      stateMachine: {
+        states: [
+          { name: "dormant", isInitial: true },
+          { name: "phase1" },
+          { name: "phase2" },
+          { name: "defeated", isTerminal: true }
+        ],
+        transitions: [
+          { from: "dormant", to: "phase1", event: "ENGAGE" },
+          { from: "phase1", to: "phase2", event: "DAMAGE" },
+          { from: "phase2", to: "defeated", event: "KILL" }
+        ]
+      }
+    }],
+    pages: [{ name: "Dungeon" }]
+  }]
+};
 
 ## The Claim
 
@@ -60,6 +188,7 @@ Now let's see this in action across five domains.
 Built for government inspectors, this system guides them through Introduction → Content → Preparation → Record → Closing phases. Legal requirements are enforced by guards — you can't advance without completing mandatory fields.
 
 ### The Entity
+<HeroSchemaAnimation schema={inspectionSchema} />
 
 The inspection entity captures everything an inspector needs in the field:
 
@@ -193,6 +322,7 @@ The form page uses a single trait that renders different forms per phase via `re
 KFlow transforms a seed topic (like "JavaScript") into a structured knowledge graph with interconnected concepts, AI-generated lessons, and publishable courses.
 
 ### The Entity
+<HeroSchemaAnimation schema={kflowSchema} />
 
 The concept entity is the knowledge graph node:
 
@@ -348,6 +478,7 @@ The graph explorer page composes concept expansion with visualization — expand
 Built for a personal trainer managing multiple clients. Features a credit-based session booking system, lift tracking, meal plan management, and AI-powered nutritional analysis.
 
 ### The Entity
+<HeroSchemaAnimation schema={fitnessSchema} />
 
 The session entity manages bookings with credit tracking:
 
@@ -495,6 +626,7 @@ The trainee dashboard composes three traits on one page — bookings, workouts, 
 Trait Wars is a Heroes of Might and Magic-inspired strategy game where units equip **Traits** — visible state machines that define their behavior. The core innovation: players can read enemy state machines and exploit transition windows.
 
 ### The Entity
+<HeroSchemaAnimation schema={traitWarsSchema} />
 
 Every unit on the battlefield is an entity with combat stats, position, and equipped traits:
 
@@ -628,6 +760,7 @@ A page is just a route that binds traits. `/battle/:matchId` activates both the 
 Iram is set inside a Dyson Sphere called the Iram Dominion. Players descend through 5 dungeon zones, defeat bosses, and collect **Orbital Shards** — fragments of behavior that compose into new abilities.
 
 ### The Entity
+<HeroSchemaAnimation schema={iramSchema} />
 
 The player entity tracks health, inventory, and the 8 orbital slots:
 
