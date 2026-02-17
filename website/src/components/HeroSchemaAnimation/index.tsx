@@ -233,14 +233,14 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
 
         {/* === Vertical Connections (Entity-Trait-Page) === */}
         <path
-          d={`M${centerX} ${centerY + 160} L${centerX} ${centerY + 40}`}
+          d={`M${centerX} ${centerY + 200} L${centerX} ${centerY + 40}`}
           stroke={gold}
           strokeWidth="2"
           className={styles.connectionLine}
           style={{ animationDelay: "1.0s" }}
         />
         <path
-          d={`M${centerX} ${centerY - 40} L${centerX} ${centerY - 160}`}
+          d={`M${centerX} ${centerY - 40} L${centerX} ${centerY - 190}`}
           stroke={gold}
           strokeWidth="2"
           className={styles.connectionLine}
@@ -280,7 +280,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
         <g className={styles.nodeGroup} style={{ animationDelay: "0.3s" }}>
           <Box
             x={centerX - 30}
-            y={centerY + 160}
+            y={centerY + 200}
             width="60"
             height="60"
             stroke={teal}
@@ -291,7 +291,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           />
           <text
             x={labelX}
-            y={centerY + 190}
+            y={centerY + 230}
             textAnchor="start"
             fontSize="14"
             fontWeight="700"
@@ -303,7 +303,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           </text>
           <text
             x={labelX}
-            y={centerY + 205}
+            y={centerY + 245}
             textAnchor="start"
             fontSize="11"
             fill={textColor}
@@ -358,7 +358,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
         <g className={styles.nodeGroup} style={{ animationDelay: "0.9s" }}>
           <Layout
             x={centerX - 30}
-            y={centerY - 220}
+            y={centerY - 250}
             width="60"
             height="60"
             stroke={teal}
@@ -369,7 +369,8 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           />
           <text
             x={labelX}
-            y={centerY - 190}
+            y={centerY - 220}
+
             textAnchor="start"
             fontSize="14"
             fontWeight="700"
