@@ -81,8 +81,6 @@ function extractVisualizationData(schema?: OrbitalSchema) {
   }
 
   // If no states found in schema, use default (or empty?)
-  // User wants "viz would work", so if no states, maybe just show core?
-  // But let's fallback to default if purely empty to avoid broken viz.
   if (states.length === 0) {
     return {
       appName,
@@ -125,19 +123,22 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
     [schema]
   );
 
-  // Calculate State Positions (Circular/Oval Layout)
+  // Calculate State Positions with explicit Angles
   const statePositions = useMemo(() => {
     const count = states.length;
     if (count === 0) return {};
 
-    const positions: Record<string, { x: number; y: number }> = {};
-    const startAngle = -135 * (Math.PI / 180); // Top Left start
+    const positions: Record<string, { x: number; y: number; angle: number }> = {};
+    // Start top-left (-135 degrees is standard ergonomic start for circles)
+    const startAngle = -135 * (Math.PI / 180);
 
     states.forEach((state, i) => {
+      // Calculate angle for this state
       const angle = startAngle + (i * (2 * Math.PI)) / count;
+
       const x = centerX + radiusX * Math.cos(angle);
       const y = centerY + radiusY * Math.sin(angle);
-      positions[state.name] = { x, y };
+      positions[state.name] = { x, y, angle };
     });
 
     return positions;
@@ -146,20 +147,36 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
   // Helper to get definition for marker
   const markerId = "arrowhead";
 
-  // Helper to shorten the end of a bezier curve so the arrow doesn't get buried
+  // Helper to calculate control point based on angles for perfect symmetry
+  const getControlPoint = (angle1: number, angle2: number) => {
+    // Determine the mid-angle.
+    // We need to handle the wrap-around case (e.g. 350 -> 10 deg). 
+    // Assuming transitions are generally "forward" in the list order or close neighbors.
+    let diff = angle2 - angle1;
+    // Normalize diff to -PI to +PI
+    while (diff <= -Math.PI) diff += 2 * Math.PI;
+    while (diff > Math.PI) diff -= 2 * Math.PI;
+
+    const midAngle = angle1 + diff / 2;
+
+    // For the control point dist, we push OUT significantly to create the arc effect.
+    // Use a slightly larger radius for the control point.
+    // If diff is large (cross-circle), this ensures it bows "out" correctly.
+    const controlDistX = radiusX * 1.35; // 35% larger than node radius
+    const controlDistY = radiusY * 1.5;  // 50% larger (oval compensation)
+
+    return {
+      x: centerX + controlDistX * Math.cos(midAngle),
+      y: centerY + controlDistY * Math.sin(midAngle)
+    };
+  }
+
+  // Helper to shorten the end of a curve
   const getShortenedEnd = (start: { x: number, y: number }, cp: { x: number, y: number }, end: { x: number, y: number }, shortenBy: number) => {
-    // Vector from CP to End (approximate for Quad Bezier approaching end)
-    // Actually for Quad Bezier B(t), tangent at t=1 is 2(P2 - P1).
-    // So vector is End - CP.
     const dx = end.x - cp.x;
     const dy = end.y - cp.y;
     const len = Math.sqrt(dx * dx + dy * dy);
     if (len === 0) return end;
-
-    // We want to stop 'shortenBy' pixels before 'end'.
-    // t param is not linear with distance, but for small shortening near end, linear approx on the vector P1->P2 is okay ish?
-    // Actually, we can just move the end point P2 back along the vector P1->P2.
-    // New P2' = P2 - (v/len)*shortenBy
     const t = Math.max(0, len - shortenBy) / len;
     return {
       x: cp.x + dx * t,
@@ -230,69 +247,34 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           style={{ animationDelay: "1.2s" }}
         />
 
-        {/* === Transitions (Outward Arcs) === */}
+        {/* === Lines Layer (Rendered First so they are underneath labels) === */}
         {transitions.map((t, i) => {
           const start = statePositions[t.from];
           const end = statePositions[t.to];
           if (!start || !end) return null;
 
-          // Calculate Control Point for Outward Curve
-          // 1. Midpoint of chord
-          const mx = (start.x + end.x) / 2;
-          const my = (start.y + end.y) / 2;
+          // Symmetrical Control Point
+          const cp = getControlPoint(start.angle, end.angle);
 
-          // 2. Vector from Center to Midpoint
-          let vcx = mx - centerX;
-          let vcy = my - centerY;
-          // Normalize
-          const vLen = Math.sqrt(vcx * vcx + vcy * vcy);
-          if (vLen > 0) {
-            vcx /= vLen;
-            vcy /= vLen;
-          }
+          // Shorten End Logic
+          const shortEnd = getShortenedEnd(start, cp, end, 42);
 
-          // 3. Push control point OUT
-          const curveFactor = 60; // How much to bulge out
-          const cpx = mx + vcx * curveFactor;
-          const cpy = my + vcy * curveFactor;
-
-          // Shorten the end point straight towards the control point to expose the arrow
-          // Target is a Pill (80x36), radius ~40/18.
-          // We shorten by ~42px to be safe and land on edge.
-          const shortEnd = getShortenedEnd(start, { x: cpx, y: cpy }, end, 42);
-
-          // Quadratic Bezier: Start -> Control -> ShortEnd
-          let pathD = `M${start.x} ${start.y} Q${cpx} ${cpy} ${shortEnd.x} ${shortEnd.y}`;
-
-          // Label Position: Approx t=0.5 on the ORIGINAL construction (not shortened) so it stays centered visually
-          const lx = 0.25 * start.x + 0.5 * cpx + 0.25 * end.x;
-          const ly = 0.25 * start.y + 0.5 * cpy + 0.25 * end.y;
+          // Path Logic
+          const pathD = `M${start.x} ${start.y} Q${cp.x} ${cp.y} ${shortEnd.x} ${shortEnd.y}`;
 
           return (
-            <g key={`trans-${i}`} className={styles.fadeIn} style={{ animationDelay: `${2.4 + i * 0.2}s` }}>
-              <path
-                d={pathD}
-                stroke={gold}
-                strokeWidth="1.5"
-                fill="none"
-                markerEnd={`url(#${markerId})`}
-              />
-              {/* Event Label Box: Opaque to "sit on top" */}
-              <rect
-                x={lx - 30} y={ly - 9}
-                width="60" height="18" rx="4"
-                fill={isDark ? "#0f172a" : "#ffffff"}
-                stroke={isDark ? "#334155" : "#e2e8f0"}
-                strokeWidth="1"
-                opacity="1"
-              />
-              <text x={lx} y={ly + 4} textAnchor="middle" fontSize="10" fill={gold} fontFamily="'IBM Plex Mono', monospace" fontWeight="600">
-                {t.event}
-              </text>
-            </g>
+            <path
+              key={`line-${i}`}
+              d={pathD}
+              stroke={gold}
+              strokeWidth="1.5"
+              fill="none"
+              markerEnd={`url(#${markerId})`}
+              className={styles.fadeIn}
+              style={{ animationDelay: `${2.4 + i * 0.2}s` }}
+            />
           );
         })}
-
 
         {/* === Entity Node (Bottom) === */}
         <g className={styles.nodeGroup} style={{ animationDelay: "0.3s" }}>
@@ -443,6 +425,38 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
                 className={styles.nodeLabel}
               >
                 {state.name}
+              </text>
+            </g>
+          );
+        })}
+
+        {/* === Labels Layer (Rendered Last so they are on top) === */}
+        {transitions.map((t, i) => {
+          const start = statePositions[t.from];
+          const end = statePositions[t.to];
+          if (!start || !end) return null;
+
+          // Recalculate CP for label pos (same logic as lines)
+          const cp = getControlPoint(start.angle, end.angle);
+
+          // Label Position: Midpoint of Curve (t=0.5)
+          // B(0.5) = 0.25*P0 + 0.5*P1 + 0.25*P2
+          const lx = 0.25 * start.x + 0.5 * cp.x + 0.25 * end.x;
+          const ly = 0.25 * start.y + 0.5 * cp.y + 0.25 * end.y;
+
+          return (
+            <g key={`label-${i}`} className={styles.fadeIn} style={{ animationDelay: `${2.4 + i * 0.2}s` }}>
+              {/* Opaque Background for Label */}
+              <rect
+                x={lx - 35} y={ly - 10}
+                width="70" height="20" rx="4"
+                fill={isDark ? "#0f172a" : "#ffffff"}
+                stroke={isDark ? "#334155" : "#e2e8f0"}
+                strokeWidth="1"
+                opacity="1"
+              />
+              <text x={lx} y={ly + 4} textAnchor="middle" fontSize="10" fill={gold} fontFamily="'IBM Plex Mono', monospace" fontWeight="600">
+                {t.event}
               </text>
             </g>
           );
