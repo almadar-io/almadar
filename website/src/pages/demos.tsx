@@ -7,7 +7,20 @@ import HeroSection from '../components/HeroSection';
 import styles from './demos.module.css';
 import demos from '../data/demos.json';
 
+import { useState } from 'react';
+import HeroSchemaAnimation from '../components/HeroSchemaAnimation';
+import { demoSchemas } from '../data/demo-schemas';
+
 export default function Demos(): React.JSX.Element {
+    const [viewMode, setViewMode] = useState<Record<string, 'live' | 'arch'>>({});
+
+    const toggleView = (id: string) => {
+        setViewMode(prev => ({
+            ...prev,
+            [id]: prev[id] === 'arch' ? 'live' : 'arch'
+        }));
+    };
+
     return (
         <Layout
             title={translate({ id: 'demos.meta.title', message: 'Interactive Demos' })}
@@ -31,18 +44,52 @@ export default function Demos(): React.JSX.Element {
                                 const translatedTitle = translate({ id: `demo.${demo.key}.title`, message: demo.title });
                                 const translatedDesc = translate({ id: `demo.${demo.key}.description`, message: demo.description });
                                 const translatedCategory = translate({ id: `demo.category.${demo.categoryKey}`, message: demo.category });
+                                const isArch = viewMode[demo.id] === 'arch';
+                                const schema = demoSchemas[demo.key];
+
                                 return (
                                     <div key={demo.id} id={demo.id} className={styles.demoWrapper}>
                                         <div className={styles.demoMeta}>
-                                            <span className={styles.badge}>{translatedCategory}</span>
-                                            <h2>{translatedTitle}</h2>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                                                <div>
+                                                    <span className={styles.badge}>{translatedCategory}</span>
+                                                    <h2>{translatedTitle}</h2>
+                                                </div>
+                                                {schema && (
+                                                    <button
+                                                        className="button button--secondary button--sm"
+                                                        onClick={() => toggleView(demo.id)}
+                                                        style={{ marginLeft: '1rem' }}
+                                                    >
+                                                        {isArch ? 'View Demo' : 'View Architecture'}
+                                                    </button>
+                                                )}
+                                            </div>
                                             <p>{translatedDesc}</p>
                                         </div>
-                                        <StorybookDemo
-                                            id={demo.id}
-                                            title={translatedTitle}
-                                            height={demo.height}
-                                        />
+
+                                        {isArch && schema ? (
+                                            <div style={{
+                                                height: demo.height,
+                                                background: 'var(--ifm-background-surface-color)',
+                                                borderRadius: 'var(--radius-lg)',
+                                                border: '1px solid var(--ifm-color-emphasis-200)',
+                                                overflow: 'hidden',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center'
+                                            }}>
+                                                <div style={{ transform: 'scale(1.2)' }}>
+                                                    <HeroSchemaAnimation schema={schema} />
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <StorybookDemo
+                                                id={demo.id}
+                                                title={translatedTitle}
+                                                height={demo.height}
+                                            />
+                                        )}
                                     </div>
                                 );
                             })}
