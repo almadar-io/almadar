@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { AgentActivityFeed, type ActivityItem } from "./AgentActivityFeed";
 
 const meta: Meta<typeof AgentActivityFeed> = {
@@ -84,8 +83,8 @@ export const Default: Story = {
   args: {
     activities: mockActivities,
     autoScroll: true,
-    onRetryError: fn(),
-    onDismissError: fn(),
+    onRetryError: () => {},
+    onDismissError: () => {},
   },
 };
 
@@ -120,8 +119,8 @@ export const WithErrors: Story = {
         timestamp: now - 5000,
       },
     ],
-    onRetryError: fn(),
-    onDismissError: fn(),
+    onRetryError: () => {},
+    onDismissError: () => {},
   },
 };
 
@@ -186,7 +185,7 @@ export const LongFeed: Story = {
       },
     ],
     autoScroll: true,
-    onRetryError: fn(),
-    onDismissError: fn(),
+    onRetryError: () => {},
+    onDismissError: () => {},
   },
 };

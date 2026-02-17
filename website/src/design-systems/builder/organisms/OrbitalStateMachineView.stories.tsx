@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { DomStateMachineVisualizer } from "./OrbitalStateMachineView";
 import {
   renderStateMachineToDomData,
@@ -19,8 +18,8 @@ const meta: Meta<typeof DomStateMachineVisualizer> = {
     ),
   ],
   args: {
-    onTransitionClick: fn(),
-    onStateClick: fn(),
+    onTransitionClick: () => {},
+    onStateClick: () => {},
   },
 };
 

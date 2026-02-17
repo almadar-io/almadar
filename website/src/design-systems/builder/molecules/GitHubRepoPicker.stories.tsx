@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { GitHubRepoPicker } from "./GitHubRepoPicker";
 
 /**
@@ -30,7 +29,7 @@ type Story = StoryObj<typeof GitHubRepoPicker>;
 
 export const Default: Story = {
   args: {
-    onRepoSelect: fn(),
-    onBranchSelect: fn(),
+    onRepoSelect: () => {},
+    onBranchSelect: () => {},
   },
 };

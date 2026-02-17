@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { DomainGuardRow } from "./DomainGuardRow";
 import type { GuardExpression } from "./DomainGuardRow";
 
@@ -39,21 +38,21 @@ const userCheckGuard: GuardExpression = {
 export const Default: Story = {
   args: {
     guard: comparisonGuard,
-    onEdit: fn(),
+    onEdit: () => {},
   },
 };
 
 export const FieldCheck: Story = {
   args: {
     guard: fieldCheckGuard,
-    onEdit: fn(),
+    onEdit: () => {},
   },
 };
 
 export const UserCheck: Story = {
   args: {
     guard: userCheckGuard,
-    onEdit: fn(),
+    onEdit: () => {},
   },
 };
 
@@ -66,7 +65,7 @@ export const LogicalComposite: Story = {
       left: comparisonGuard,
       right: userCheckGuard,
     },
-    onEdit: fn(),
+    onEdit: () => {},
   },
 };
 
@@ -80,7 +79,7 @@ export const WithError: Story = {
       value: true,
     },
     error: "Field 'missing_field' does not exist on entity Order",
-    onEdit: fn(),
+    onEdit: () => {},
   },
 };
 
@@ -88,6 +87,6 @@ export const Small: Story = {
   args: {
     guard: comparisonGuard,
     size: "sm",
-    onEdit: fn(),
+    onEdit: () => {},
   },
 };

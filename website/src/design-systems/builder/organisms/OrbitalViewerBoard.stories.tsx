@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { OrbitalViewer } from "./OrbitalViewerBoard";
 import type { OrbitalSchema } from "@almadar/core";
 
@@ -8,7 +7,7 @@ const meta: Meta<typeof OrbitalViewer> = {
   component: OrbitalViewer,
   tags: ["autodocs"],
   args: {
-    onSchemaChange: fn(),
+    onSchemaChange: () => {},
   },
 };
 

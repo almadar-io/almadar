@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { ComponentTreeBoard } from "./ComponentTreeBoard";
 
 const meta: Meta<typeof ComponentTreeBoard> = {
@@ -14,7 +13,7 @@ const meta: Meta<typeof ComponentTreeBoard> = {
     ),
   ],
   args: {
-    onComponentSelect: fn(),
+    onComponentSelect: () => {},
   },
 };
 

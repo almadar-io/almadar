@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { DomainRelationshipRow } from "./DomainRelationshipRow";
 
 const meta: Meta<typeof DomainRelationshipRow> = {
@@ -18,9 +17,9 @@ export const Default: Story = {
   args: {
     relationshipType: "belongs_to",
     targetEntity: "User",
-    onEdit: fn(),
-    onDelete: fn(),
-    onTargetClick: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
+    onTargetClick: () => {},
   },
 };
 
@@ -28,9 +27,9 @@ export const HasMany: Story = {
   args: {
     relationshipType: "has_many",
     targetEntity: "Order",
-    onEdit: fn(),
-    onDelete: fn(),
-    onTargetClick: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
+    onTargetClick: () => {},
   },
 };
 
@@ -38,9 +37,9 @@ export const HasOne: Story = {
   args: {
     relationshipType: "has_one",
     targetEntity: "Profile",
-    onEdit: fn(),
-    onDelete: fn(),
-    onTargetClick: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
+    onTargetClick: () => {},
   },
 };
 
@@ -49,9 +48,9 @@ export const WithAlias: Story = {
     relationshipType: "belongs_to",
     targetEntity: "User",
     alias: "Assignee",
-    onEdit: fn(),
-    onDelete: fn(),
-    onTargetClick: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
+    onTargetClick: () => {},
   },
 };
 
@@ -60,9 +59,9 @@ export const WithSource: Story = {
     relationshipType: "has_many",
     targetEntity: "LineItem",
     sourceEntity: "Task",
-    onEdit: fn(),
-    onDelete: fn(),
-    onTargetClick: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
+    onTargetClick: () => {},
   },
 };
 
@@ -71,6 +70,6 @@ export const ReadOnly: Story = {
     relationshipType: "belongs_to",
     targetEntity: "Organization",
     editable: false,
-    onTargetClick: fn(),
+    onTargetClick: () => {},
   },
 };

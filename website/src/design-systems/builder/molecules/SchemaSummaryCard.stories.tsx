@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { SchemaSummaryCard } from "./SchemaSummaryCard";
 
 const meta: Meta<typeof SchemaSummaryCard> = {
@@ -84,8 +83,8 @@ export const WithActions: Story = {
     },
     appId: "app-project-tracker-001",
     validated: true,
-    onPreview: fn(),
-    onEdit: fn(),
+    onPreview: () => {},
+    onEdit: () => {},
   },
 };
 

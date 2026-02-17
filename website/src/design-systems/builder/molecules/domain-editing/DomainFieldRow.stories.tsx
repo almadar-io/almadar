@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { DomainFieldRow } from "./DomainFieldRow";
 
 const meta: Meta<typeof DomainFieldRow> = {
@@ -18,8 +17,8 @@ export const Default: Story = {
   args: {
     name: "title",
     fieldType: "text",
-    onEdit: fn(),
-    onDelete: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
   },
 };
 
@@ -31,8 +30,8 @@ export const WithConstraints: Story = {
       { type: "required" },
       { type: "unique" },
     ],
-    onEdit: fn(),
-    onDelete: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
   },
 };
 
@@ -41,8 +40,8 @@ export const EnumField: Story = {
     name: "status",
     fieldType: "enum",
     enumValues: ["active", "pending", "done"],
-    onEdit: fn(),
-    onDelete: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
   },
 };
 
@@ -51,8 +50,8 @@ export const WithError: Story = {
     name: "amount",
     fieldType: "number",
     error: "Field name conflicts with a reserved keyword",
-    onEdit: fn(),
-    onDelete: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
   },
 };
 
@@ -62,8 +61,8 @@ export const Draggable: Story = {
     fieldType: "text",
     draggable: true,
     constraints: [{ type: "required" }],
-    onEdit: fn(),
-    onDelete: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
   },
 };
 

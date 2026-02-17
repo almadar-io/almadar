@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { AgentStatusHeader } from "./AgentStatusHeader";
 
 const meta: Meta<typeof AgentStatusHeader> = {
@@ -30,7 +29,7 @@ export const Running: Story = {
   args: {
     status: "running",
     skill: "kflow-orbitals",
-    onCancel: fn(),
+    onCancel: () => {},
   },
 };
 
@@ -38,7 +37,7 @@ export const Interrupted: Story = {
   args: {
     status: "interrupted",
     skill: "kflow-orbitals",
-    onCancel: fn(),
+    onCancel: () => {},
   },
 };
 
@@ -61,6 +60,6 @@ export const WithThread: Story = {
     status: "running",
     skill: "kflow-orbitals",
     threadId: "thread-abc-123-def-456",
-    onCancel: fn(),
+    onCancel: () => {},
   },
 };

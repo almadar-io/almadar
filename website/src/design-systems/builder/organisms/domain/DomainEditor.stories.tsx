@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import { DomainEditor } from './DomainEditor';
 
 const meta: Meta<typeof DomainEditor> = {
@@ -62,7 +61,7 @@ const shortDomainText = `Entity Task
 export const Default: Story = {
   args: {
     value: sampleDomainText,
-    onChange: fn(),
+    onChange: () => {},
     showLineNumbers: true,
     height: '500px',
   },
@@ -71,7 +70,7 @@ export const Default: Story = {
 export const WithErrors: Story = {
   args: {
     value: sampleDomainText,
-    onChange: fn(),
+    onChange: () => {},
     showLineNumbers: true,
     height: '500px',
     errors: [
@@ -110,7 +109,7 @@ export const ReadOnly: Story = {
 export const NoLineNumbers: Story = {
   args: {
     value: shortDomainText,
-    onChange: fn(),
+    onChange: () => {},
     showLineNumbers: false,
     height: '200px',
   },
@@ -119,12 +118,12 @@ export const NoLineNumbers: Story = {
 export const WithToolbar: Story = {
   args: {
     value: sampleDomainText,
-    onChange: fn(),
+    onChange: () => {},
     showLineNumbers: true,
     height: '500px',
-    onSync: fn(),
-    onCopy: fn(),
-    onDownload: fn(),
-    onUpload: fn(),
+    onSync: () => {},
+    onCopy: () => {},
+    onDownload: () => {},
+    onUpload: () => {},
   },
 };

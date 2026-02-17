@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { ValidationReportBoard } from "./ValidationReportBoard";
 import type { ValidationError } from "./ValidationReportBoard";
 
@@ -8,9 +7,9 @@ const meta: Meta<typeof ValidationReportBoard> = {
   component: ValidationReportBoard,
   tags: ["autodocs"],
   args: {
-    onApplyFix: fn(),
-    onApplyAllFixes: fn(),
-    onRerunValidation: fn(),
+    onApplyFix: () => {},
+    onApplyAllFixes: () => {},
+    onRerunValidation: () => {},
   },
   decorators: [
     (Story) => (

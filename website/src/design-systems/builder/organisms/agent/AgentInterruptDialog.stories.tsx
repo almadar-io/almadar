@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import {
   AgentInterruptDialog,
   type DeepAgentInterrupt,
@@ -56,8 +55,8 @@ const twoActionInterrupt: DeepAgentInterrupt = {
 export const Default: Story = {
   args: {
     interrupt: twoActionInterrupt,
-    onSubmit: fn(),
-    onCancel: fn(),
+    onSubmit: () => {},
+    onCancel: () => {},
   },
 };
 
@@ -81,8 +80,8 @@ export const SingleCall: Story = {
         },
       ],
     },
-    onSubmit: fn(),
-    onCancel: fn(),
+    onSubmit: () => {},
+    onCancel: () => {},
   },
 };
 
@@ -127,8 +126,8 @@ export const MixedStatus: Story = {
         },
       ],
     },
-    onSubmit: fn(),
-    onCancel: fn(),
+    onSubmit: () => {},
+    onCancel: () => {},
   },
 };
 
@@ -191,7 +190,7 @@ export const ManyActions: Story = {
         },
       ],
     },
-    onSubmit: fn(),
-    onCancel: fn(),
+    onSubmit: () => {},
+    onCancel: () => {},
   },
 };

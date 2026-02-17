@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { StudioSidebar } from "./StudioSidebar";
 import type { AppSummary } from "./StudioSidebar";
 
@@ -8,7 +7,7 @@ const meta: Meta<typeof StudioSidebar> = {
   component: StudioSidebar,
   tags: ["autodocs"],
   args: {
-    onCollapsedChange: fn(),
+    onCollapsedChange: () => {},
   },
   decorators: [
     (Story) => (

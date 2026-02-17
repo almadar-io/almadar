@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { EditableJsonViewer } from "./EditableJsonViewer";
 
 const meta: Meta<typeof EditableJsonViewer> = {
@@ -15,7 +14,7 @@ type Story = StoryObj<typeof EditableJsonViewer>;
 export const Default: Story = {
   args: {
     data: { name: "TaskManager", version: "1.0", orbitals: 3 },
-    onSave: fn(),
+    onSave: () => {},
   },
 };
 
@@ -30,7 +29,7 @@ export const WithTitle: Story = {
   args: {
     data: { name: "TaskManager", version: "1.0", orbitals: 3 },
     title: "Schema JSON",
-    onSave: fn(),
+    onSave: () => {},
   },
 };
 
@@ -76,7 +75,7 @@ export const LargeData: Story = {
     },
     title: "Full Schema",
     maxHeight: "500px",
-    onSave: fn(),
+    onSave: () => {},
   },
 };
 

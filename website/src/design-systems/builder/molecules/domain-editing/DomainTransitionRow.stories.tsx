@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { DomainTransitionRow } from "./DomainTransitionRow";
 import type { GuardExpression } from "./DomainGuardRow";
 import type { TransitionEffect } from "./DomainTransitionRow";
@@ -51,9 +50,9 @@ export const Default: Story = {
     fromState: "Browsing",
     toState: "Creating",
     event: "CREATE",
-    onEdit: fn(),
-    onDelete: fn(),
-    onStateClick: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
+    onStateClick: () => {},
   },
 };
 
@@ -63,9 +62,9 @@ export const WithGuards: Story = {
     toState: "Approved",
     event: "APPROVE",
     guards: sampleGuards,
-    onEdit: fn(),
-    onDelete: fn(),
-    onStateClick: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
+    onStateClick: () => {},
   },
 };
 
@@ -75,9 +74,9 @@ export const WithEffects: Story = {
     toState: "Completed",
     event: "COMPLETE",
     effects: sampleEffects,
-    onEdit: fn(),
-    onDelete: fn(),
-    onStateClick: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
+    onStateClick: () => {},
   },
 };
 
@@ -88,9 +87,9 @@ export const WithGuardsAndEffects: Story = {
     event: "APPROVE",
     guards: [sampleGuards[0]],
     effects: [sampleEffects[0], sampleEffects[1]],
-    onEdit: fn(),
-    onDelete: fn(),
-    onStateClick: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
+    onStateClick: () => {},
   },
 };
 
@@ -105,9 +104,9 @@ export const WildcardFrom: Story = {
         description: "Redirect to error page",
       },
     ],
-    onEdit: fn(),
-    onDelete: fn(),
-    onStateClick: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
+    onStateClick: () => {},
   },
 };
 
@@ -117,6 +116,6 @@ export const ReadOnly: Story = {
     toState: "Active",
     event: "INIT",
     editable: false,
-    onStateClick: fn(),
+    onStateClick: () => {},
   },
 };

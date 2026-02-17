@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { GraphJSONViewer } from "./GraphJSONViewer";
 
 const meta: Meta<typeof GraphJSONViewer> = {
@@ -26,7 +25,7 @@ export const Default: Story = {
         },
       ],
     },
-    onClose: fn(),
+    onClose: () => {},
   },
 };
 
@@ -35,7 +34,7 @@ export const Loading: Story = {
     isOpen: true,
     data: null,
     isLoading: true,
-    onClose: fn(),
+    onClose: () => {},
   },
 };
 
@@ -44,7 +43,7 @@ export const WithError: Story = {
     isOpen: true,
     data: null,
     error: "Failed to load schema graph. Please try again.",
-    onClose: fn(),
+    onClose: () => {},
   },
 };
 
@@ -53,7 +52,7 @@ export const CustomTitle: Story = {
     isOpen: true,
     data: { nodes: 12, edges: 18, connected: true },
     title: "Orbital Graph Data",
-    onClose: fn(),
+    onClose: () => {},
   },
 };
 
@@ -61,6 +60,6 @@ export const Closed: Story = {
   args: {
     isOpen: false,
     data: { name: "Hidden" },
-    onClose: fn(),
+    onClose: () => {},
   },
 };

@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import { PageNavigation } from './PageNavigation';
 import type { PreviewPage } from './PageNavigation';
 
@@ -77,7 +76,7 @@ export const Default: Story = {
   args: {
     pages: threePages,
     currentPage: 'PatientList',
-    onPageChange: fn(),
+    onPageChange: () => {},
   },
 };
 
@@ -85,7 +84,7 @@ export const SinglePage: Story = {
   args: {
     pages: singlePage,
     currentPage: 'HomePage',
-    onPageChange: fn(),
+    onPageChange: () => {},
   },
 };
 
@@ -93,7 +92,7 @@ export const ActivePage: Story = {
   args: {
     pages: threePages,
     currentPage: 'PatientDetail',
-    onPageChange: fn(),
+    onPageChange: () => {},
   },
 };
 
@@ -101,7 +100,7 @@ export const Collapsed: Story = {
   args: {
     pages: threePages,
     currentPage: 'PatientList',
-    onPageChange: fn(),
+    onPageChange: () => {},
     collapsed: true,
   },
   decorators: [
@@ -117,7 +116,7 @@ export const ManyPages: Story = {
   args: {
     pages: manyPages,
     currentPage: 'Dashboard',
-    onPageChange: fn(),
+    onPageChange: () => {},
   },
   decorators: [
     (Story) => (

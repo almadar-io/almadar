@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import {
   AnalysisResultBoard,
   type AnalysisResult,
@@ -144,10 +143,10 @@ export const Default: Story = {
   args: {
     analysis: moderateAnalysis,
     answers: partialAnswers,
-    onAnswerChange: fn(),
+    onAnswerChange: () => {},
     canSubmit: false,
-    onSubmit: fn(),
-    onCancel: fn(),
+    onSubmit: () => {},
+    onCancel: () => {},
   },
 };
 
@@ -172,10 +171,10 @@ export const HighComplexity: Story = {
       estimatedMinutes: 25,
     },
     answers: emptyAnswers,
-    onAnswerChange: fn(),
+    onAnswerChange: () => {},
     canSubmit: false,
-    onSubmit: fn(),
-    onCancel: fn(),
+    onSubmit: () => {},
+    onCancel: () => {},
   },
 };
 
@@ -183,10 +182,10 @@ export const AllAnswered: Story = {
   args: {
     analysis: moderateAnalysis,
     answers: allAnswers,
-    onAnswerChange: fn(),
+    onAnswerChange: () => {},
     canSubmit: true,
-    onSubmit: fn(),
-    onCancel: fn(),
+    onSubmit: () => {},
+    onCancel: () => {},
   },
 };
 
@@ -211,10 +210,10 @@ export const NoQuestions: Story = {
       estimatedMinutes: 3,
     },
     answers: {},
-    onAnswerChange: fn(),
+    onAnswerChange: () => {},
     canSubmit: true,
-    onSubmit: fn(),
-    onCancel: fn(),
+    onSubmit: () => {},
+    onCancel: () => {},
   },
 };
 
@@ -222,10 +221,10 @@ export const Submitting: Story = {
   args: {
     analysis: moderateAnalysis,
     answers: allAnswers,
-    onAnswerChange: fn(),
+    onAnswerChange: () => {},
     canSubmit: true,
-    onSubmit: fn(),
+    onSubmit: () => {},
     isSubmitting: true,
-    onCancel: fn(),
+    onCancel: () => {},
   },
 };

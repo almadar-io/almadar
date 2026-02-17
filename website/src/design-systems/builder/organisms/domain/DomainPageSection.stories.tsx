@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import { DomainPageSection } from './DomainPageSection';
 import type { PageData } from './DomainPageSection';
 
@@ -82,11 +81,11 @@ export const Default: Story = {
     page: patientListPage,
     expanded: true,
     editable: true,
-    onEdit: fn(),
-    onDelete: fn(),
-    onUrlClick: fn(),
-    onAddSection: fn(),
-    onAddAction: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
+    onUrlClick: () => {},
+    onAddSection: () => {},
+    onAddAction: () => {},
   },
 };
 
@@ -95,13 +94,13 @@ export const WithSections: Story = {
     page: pageWithSections,
     expanded: true,
     editable: true,
-    onEdit: fn(),
-    onDelete: fn(),
-    onUrlClick: fn(),
-    onAddSection: fn(),
-    onEditSection: fn(),
-    onDeleteSection: fn(),
-    onAddAction: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
+    onUrlClick: () => {},
+    onAddSection: () => {},
+    onEditSection: () => {},
+    onDeleteSection: () => {},
+    onAddAction: () => {},
   },
 };
 
@@ -110,13 +109,13 @@ export const WithActions: Story = {
     page: pageWithActions,
     expanded: true,
     editable: true,
-    onEdit: fn(),
-    onDelete: fn(),
-    onUrlClick: fn(),
-    onAddSection: fn(),
-    onAddAction: fn(),
-    onEditAction: fn(),
-    onDeleteAction: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
+    onUrlClick: () => {},
+    onAddSection: () => {},
+    onAddAction: () => {},
+    onEditAction: () => {},
+    onDeleteAction: () => {},
   },
 };
 
@@ -125,15 +124,15 @@ export const FullPage: Story = {
     page: fullPage,
     expanded: true,
     editable: true,
-    onEdit: fn(),
-    onDelete: fn(),
-    onUrlClick: fn(),
-    onAddSection: fn(),
-    onEditSection: fn(),
-    onDeleteSection: fn(),
-    onAddAction: fn(),
-    onEditAction: fn(),
-    onDeleteAction: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
+    onUrlClick: () => {},
+    onAddSection: () => {},
+    onEditSection: () => {},
+    onDeleteSection: () => {},
+    onAddAction: () => {},
+    onEditAction: () => {},
+    onDeleteAction: () => {},
   },
 };
 
@@ -142,6 +141,6 @@ export const ReadOnly: Story = {
     page: fullPage,
     expanded: true,
     editable: false,
-    onUrlClick: fn(),
+    onUrlClick: () => {},
   },
 };

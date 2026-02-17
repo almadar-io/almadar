@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { OrbitalVisualizerModal } from "./OrbitalDetailModal";
 import type { OrbitalSchema } from "@almadar/core";
 
@@ -11,7 +10,7 @@ const meta: Meta<typeof OrbitalVisualizerModal> = {
   },
   tags: ["autodocs"],
   args: {
-    onClose: fn(),
+    onClose: () => {},
   },
 };
 

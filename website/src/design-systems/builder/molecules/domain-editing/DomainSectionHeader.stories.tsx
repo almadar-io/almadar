@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import React from "react";
 import { DomainSectionHeader } from "./DomainSectionHeader";
 
@@ -20,9 +19,9 @@ export const Default: Story = {
     title: "Patient",
     sectionType: "entity",
     count: 8,
-    onEdit: fn(),
-    onDelete: fn(),
-    onAdd: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
+    onAdd: () => {},
   },
 };
 
@@ -32,9 +31,9 @@ export const BehaviorSection: Story = {
     sectionType: "behavior",
     count: 5,
     subtitle: "Manages CRUD operations for tasks",
-    onEdit: fn(),
-    onDelete: fn(),
-    onAdd: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
+    onAdd: () => {},
   },
 };
 
@@ -43,8 +42,8 @@ export const PageSection: Story = {
     title: "DashboardPage",
     sectionType: "page",
     subtitle: "Main dashboard view at /dashboard",
-    onEdit: fn(),
-    onDelete: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
   },
 };
 
@@ -53,8 +52,8 @@ export const TickSection: Story = {
     title: "AutoArchive",
     sectionType: "tick",
     subtitle: "Archives completed tasks after 30 days",
-    onEdit: fn(),
-    onDelete: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
   },
 };
 
@@ -64,9 +63,9 @@ export const WithChildren: Story = {
     sectionType: "entity",
     count: 3,
     expanded: true,
-    onEdit: fn(),
-    onDelete: fn(),
-    onAdd: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
+    onAdd: () => {},
     children: React.createElement(
       "div",
       { style: { display: "flex", flexDirection: "column", gap: "4px" } },
@@ -116,8 +115,8 @@ export const WithError: Story = {
     sectionType: "entity",
     count: 2,
     hasError: true,
-    onEdit: fn(),
-    onDelete: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
   },
 };
 
@@ -128,8 +127,8 @@ export const Collapsed: Story = {
     expanded: false,
     count: 12,
     subtitle: "This section is collapsed",
-    onEdit: fn(),
-    onDelete: fn(),
+    onEdit: () => {},
+    onDelete: () => {},
     children: React.createElement("div", null, "This content is hidden when collapsed"),
   },
 };

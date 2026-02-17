@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { AgentChatInput } from "./AgentChatInput";
 
 const meta: Meta<typeof AgentChatInput> = {
@@ -16,27 +15,27 @@ type Story = StoryObj<typeof AgentChatInput>;
 
 export const Default: Story = {
   args: {
-    onSend: fn(),
+    onSend: () => {},
   },
 };
 
 export const Disabled: Story = {
   args: {
-    onSend: fn(),
+    onSend: () => {},
     disabled: true,
   },
 };
 
 export const Loading: Story = {
   args: {
-    onSend: fn(),
+    onSend: () => {},
     isProcessing: true,
   },
 };
 
 export const CustomPlaceholder: Story = {
   args: {
-    onSend: fn(),
+    onSend: () => {},
     placeholder: "Ask the AI assistant...",
   },
 };

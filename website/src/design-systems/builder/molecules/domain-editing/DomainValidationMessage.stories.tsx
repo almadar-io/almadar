@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { DomainValidationMessage, DomainValidationSummary } from "./DomainValidationMessage";
 
 const meta: Meta<typeof DomainValidationMessage> = {
@@ -60,7 +59,7 @@ export const WithQuickFix: Story = {
     suggestion: "Add a listens declaration in the target trait or remove the emit.",
     quickFix: {
       label: "Add listener to TaskArchival",
-      onClick: fn(),
+      onClick: () => {},
     },
   },
 };
@@ -78,7 +77,7 @@ export const Dismissible: Story = {
     message: "This page has no traits assigned to it",
     severity: "warning",
     dismissible: true,
-    onDismiss: fn(),
+    onDismiss: () => {},
   },
 };
 
@@ -86,7 +85,7 @@ export const ValidationSummaryErrors: Story = {
   render: () => (
     <DomainValidationSummary
       summary={{ errors: 3, warnings: 7 }}
-      onClick={fn()}
+      onClick={() => {}}
     />
   ),
 };

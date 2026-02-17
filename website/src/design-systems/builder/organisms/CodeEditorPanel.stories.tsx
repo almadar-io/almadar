@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { CodeEditorPanel } from "./CodeEditorPanel";
 
 const meta: Meta<typeof CodeEditorPanel> = {
@@ -17,8 +16,8 @@ const meta: Meta<typeof CodeEditorPanel> = {
     ),
   ],
   args: {
-    onChange: fn(),
-    onMount: fn(),
+    onChange: () => {},
+    onMount: () => {},
   },
 };
 

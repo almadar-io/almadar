@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { SchemaEditorModal } from "./SchemaEditor";
 import type { OrbitalSchema } from "@almadar/core";
 
@@ -11,8 +10,8 @@ const meta: Meta<typeof SchemaEditorModal> = {
   },
   tags: ["autodocs"],
   args: {
-    onClose: fn(),
-    onSave: fn(),
+    onClose: () => {},
+    onSave: () => {},
   },
 };
 
