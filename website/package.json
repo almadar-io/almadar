@@ -34,7 +34,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "three": "^0.182.0",
-    "@almadar/core": "workspace:*"
+    "@almadar/core": "^1.0.17"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.7.0",

@@ -35,23 +35,6 @@ jobs:
         working-directory: website
         run: npm install
 
-      - name: Download pre-built Storybook
-        working-directory: website/static
-        run: |
-          # Download the latest storybook.tar.gz from GitHub releases
-          gh release download --pattern "storybook.tar.gz" --dir . || true
-          if [ -f storybook.tar.gz ]; then
-            mkdir -p storybook
-            tar -xzf storybook.tar.gz -C storybook
-            rm storybook.tar.gz
-            echo "Storybook extracted from release artifact"
-          else
-            echo "No storybook artifact found — demos will be unavailable"
-            mkdir -p storybook
-          fi
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Build website
         working-directory: website
         run: npm run build:site
