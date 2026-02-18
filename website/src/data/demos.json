@@ -45,15 +45,6 @@
     "theme": "sand-light"
   },
   {
-    "key": "inspectionForm",
-    "title": "Inspection Form",
-    "description": "Multi-step inspection form with conditional fields, law references, and violation capture.",
-    "height": "850px",
-    "category": "Gov Tech",
-    "categoryKey": "govTech",
-    "theme": "copper-light"
-  },
-  {
     "key": "fitnessTracker",
     "title": "Fitness Tracker",
     "description": "Workout logging with lift tracking, progress charts, and daily wellness input.",
@@ -90,15 +81,6 @@
     "theme": "almadar-dark"
   },
   {
-    "key": "studioFullView",
-    "title": "Studio Full View",
-    "description": "Complete IDE layout with agent panel, inspector, schema editor, and live preview.",
-    "height": "850px",
-    "category": "Dev Tools",
-    "categoryKey": "devTools",
-    "theme": "neon-dark"
-  },
-  {
     "key": "aiAgentPanel",
     "title": "AI Agent Panel",
     "description": "Real-time AI assistant with tool calls, todo tracking, and schema diffs.",
@@ -115,14 +97,5 @@
     "category": "Game Tools",
     "categoryKey": "gameTools",
     "theme": "trait-wars-dark"
-  },
-  {
-    "key": "interactiveGraph",
-    "title": "Concept Detail",
-    "description": "AI-generated lesson with code examples, flashcard review, and progress tracking for learning paths.",
-    "height": "800px",
-    "category": "Ed Tech",
-    "categoryKey": "edTech",
-    "theme": "sunset-light"
   }
 ]
