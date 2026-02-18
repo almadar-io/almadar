@@ -70,7 +70,7 @@ const inspectionForm: DemoLoader = () =>
         import('../design-systems/inspection-system/templates/InspectionFormTemplate'),
         import('../design-systems/inspection-system/templates/InspectionFormTemplate.stories'),
     ]).then(([mod, stories]) => ({
-        Component: mod.InspectionFormTemplate,
+        Component: mod.InspectionFormDemoTemplate,
         args: (stories.TradeInspection as any).args ?? {},
     }));
 
@@ -140,16 +140,18 @@ const gameMapEditor: DemoLoader = () =>
         import('../design-systems/almadar-ui/components/organisms/game/BattleBoard.stories'),
     ]).then(([mod, stories]) => ({
         Component: mod.BattleBoard,
-        args: (stories.Editor as any).args ?? {},
+        args: (stories.WithSlots as any).args ?? {},
     }));
+
+// ─── KFlow (Ed Tech) ────────────────────────────────────────
 
 const interactiveGraph: DemoLoader = () =>
     Promise.all([
-        import('../design-systems/almadar-ui/components/organisms/GraphCanvas'),
-        import('../design-systems/almadar-ui/components/organisms/GraphCanvas.stories'),
+        import('../design-systems/kflow/templates/ConceptDetailTemplate'),
+        import('../design-systems/kflow/templates/ConceptDetailTemplate.stories'),
     ]).then(([mod, stories]) => ({
-        Component: mod.GraphCanvas,
-        args: (stories.Interactive as any).args ?? {},
+        Component: mod.ConceptDetailTemplate,
+        args: (stories.Default as any).args ?? {},
     }));
 
 // ─── Registry ────────────────────────────────────────────────

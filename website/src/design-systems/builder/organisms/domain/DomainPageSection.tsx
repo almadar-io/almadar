@@ -7,6 +7,7 @@
 import React from 'react';
 import { clsx as cn } from 'clsx';
 import { Plus, ExternalLink, Edit2, Trash2 } from 'lucide-react';
+import { Box, HStack, VStack, Button, Typography, Icon } from '@almadar/ui';
 import { DomainKeyword } from '../../atoms/domain';
 import { DomainSectionHeader } from '../../molecules/domain-editing';
 
@@ -146,32 +147,33 @@ export const DomainPageSection: React.FC<DomainPageSectionProps> = ({
       hasError={hasError}
       className={className}
     >
-      <div className="space-y-4">
+      <VStack gap="md">
         {/* Page header */}
-        <div className="text-sm text-[var(--color-muted-foreground)]">
+        <Typography variant="body2" className="text-[var(--color-muted-foreground)]">
           <DomainKeyword category="page">The</DomainKeyword>
           {' '}
-          <span className="font-semibold text-[var(--color-foreground)]">{displayName}</span>
+          <Typography as="span" variant="body2" className="font-semibold text-[var(--color-foreground)]">{displayName}</Typography>
           {' '}
           <DomainKeyword category="page">shows</DomainKeyword>
           {' '}
           {page.description}
-        </div>
+        </Typography>
 
         {/* Purpose */}
         {page.purpose && (
-          <div className="text-sm text-[var(--color-muted-foreground)]">
+          <Typography variant="body2" className="text-[var(--color-muted-foreground)]">
             <DomainKeyword category="page">Purpose:</DomainKeyword>
             {' '}
             {page.purpose}
-          </div>
+          </Typography>
         )}
 
         {/* URL */}
-        <div className="flex items-center gap-2 text-sm">
+        <HStack gap="sm" align="center">
           <DomainKeyword category="page">URL:</DomainKeyword>
-          <button
-            type="button"
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={onUrlClick}
             className={cn(
               'font-mono px-2 py-0.5 rounded',
@@ -183,104 +185,115 @@ export const DomainPageSection: React.FC<DomainPageSectionProps> = ({
             }}
           >
             {page.url}
-            {onUrlClick && <ExternalLink className="inline-block w-3 h-3 ml-1" />}
-          </button>
-        </div>
+            {onUrlClick && <Icon icon={ExternalLink} size="xs" className="inline-block ml-1" />}
+          </Button>
+        </HStack>
 
         {/* Sections */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-[var(--color-muted-foreground)]">
+        <VStack gap="sm">
+          <HStack justify="between" align="center">
+            <Typography variant="body2" className="font-medium text-[var(--color-muted-foreground)]">
               <DomainKeyword category="page">It displays:</DomainKeyword>
-            </span>
+            </Typography>
             {editable && onAddSection && (
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={onAddSection}
                 className="flex items-center gap-1 px-2 py-1 text-xs rounded hover:bg-[var(--color-secondary)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
               >
-                <Plus className="w-3 h-3" />
+                <Icon icon={Plus} size="xs" />
                 Add section
-              </button>
+              </Button>
             )}
-          </div>
+          </HStack>
 
           {hasSections ? (
-            <div className="space-y-1 ml-4">
+            <VStack gap="xs" className="ml-4">
               {page.sections.map((section, index) => (
-                <div
+                <HStack
                   key={`${section.description}-${index}`}
-                  className="group flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[var(--color-secondary)]"
+                  gap="md"
+                  align="center"
+                  className="group px-3 py-2 rounded-lg hover:bg-[var(--color-secondary)]"
                 >
-                  <span className="text-[var(--color-muted-foreground)] font-mono">-</span>
-                  <span className="flex-1 text-sm text-[var(--color-foreground)]">
+                  <Typography variant="caption" className="text-[var(--color-muted-foreground)] font-mono">-</Typography>
+                  <Typography variant="body2" className="flex-1 text-[var(--color-foreground)]">
                     {section.description}
-                  </span>
+                  </Typography>
                   {section.pattern && (
-                    <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--color-secondary)] text-[var(--color-muted-foreground)]">
+                    <Typography
+                      variant="caption"
+                      className="px-1.5 py-0.5 rounded bg-[var(--color-secondary)] text-[var(--color-muted-foreground)]"
+                    >
                       {section.pattern}
-                    </span>
+                    </Typography>
                   )}
                   {editable && (
-                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <HStack gap="xs" align="center" className="opacity-0 group-hover:opacity-100 transition-opacity">
                       {onEditSection && (
-                        <button
-                          type="button"
+                        <Button
+                          variant="ghost"
+                          size="sm"
                           onClick={() => onEditSection(index)}
                           className="p-1 rounded hover:bg-[var(--color-secondary)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
                         >
-                          <Edit2 className="w-3.5 h-3.5" />
-                        </button>
+                          <Icon icon={Edit2} size="xs" />
+                        </Button>
                       )}
                       {onDeleteSection && (
-                        <button
-                          type="button"
+                        <Button
+                          variant="ghost"
+                          size="sm"
                           onClick={() => onDeleteSection(index)}
                           className="p-1 rounded hover:bg-[var(--color-error)]/10 text-[var(--color-muted-foreground)] hover:text-[var(--color-error)]"
                         >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
+                          <Icon icon={Trash2} size="xs" />
+                        </Button>
                       )}
-                    </div>
+                    </HStack>
                   )}
-                </div>
+                </HStack>
               ))}
-            </div>
+            </VStack>
           ) : (
-            <div className="ml-4 text-sm text-[var(--color-muted-foreground)] italic">
+            <Typography variant="body2" className="ml-4 text-[var(--color-muted-foreground)] italic">
               No sections defined
-            </div>
+            </Typography>
           )}
-        </div>
+        </VStack>
 
         {/* Actions */}
         {(hasActions || editable) && (
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-[var(--color-muted-foreground)]">
+          <VStack gap="sm">
+            <HStack justify="between" align="center">
+              <Typography variant="body2" className="font-medium text-[var(--color-muted-foreground)]">
                 <DomainKeyword category="page">Users can:</DomainKeyword>
-              </span>
+              </Typography>
               {editable && onAddAction && (
-                <button
-                  type="button"
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={onAddAction}
                   className="flex items-center gap-1 px-2 py-1 text-xs rounded hover:bg-[var(--color-secondary)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
                 >
-                  <Plus className="w-3 h-3" />
+                  <Icon icon={Plus} size="xs" />
                   Add action
-                </button>
+                </Button>
               )}
-            </div>
+            </HStack>
 
             {hasActions ? (
-              <div className="space-y-1 ml-4">
+              <VStack gap="xs" className="ml-4">
                 {page.actions.map((action, index) => (
-                  <div
+                  <HStack
                     key={`${action.trigger}-${index}`}
-                    className="group flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[var(--color-secondary)]"
+                    gap="md"
+                    align="center"
+                    className="group px-3 py-2 rounded-lg hover:bg-[var(--color-secondary)]"
                   >
-                    <span className="text-[var(--color-muted-foreground)] font-mono">-</span>
-                    <span className="text-sm text-[var(--color-foreground)]">
+                    <Typography variant="caption" className="text-[var(--color-muted-foreground)] font-mono">-</Typography>
+                    <Typography variant="body2" className="text-[var(--color-foreground)]">
                       {action.trigger}
                       {action.action && (
                         <>
@@ -290,49 +303,51 @@ export const DomainPageSection: React.FC<DomainPageSectionProps> = ({
                           {action.action}
                         </>
                       )}
-                    </span>
+                    </Typography>
                     {editable && (
-                      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity ml-auto">
+                      <HStack gap="xs" align="center" className="opacity-0 group-hover:opacity-100 transition-opacity ml-auto">
                         {onEditAction && (
-                          <button
-                            type="button"
+                          <Button
+                            variant="ghost"
+                            size="sm"
                             onClick={() => onEditAction(index)}
                             className="p-1 rounded hover:bg-[var(--color-secondary)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
                           >
-                            <Edit2 className="w-3.5 h-3.5" />
-                          </button>
+                            <Icon icon={Edit2} size="xs" />
+                          </Button>
                         )}
                         {onDeleteAction && (
-                          <button
-                            type="button"
+                          <Button
+                            variant="ghost"
+                            size="sm"
                             onClick={() => onDeleteAction(index)}
                             className="p-1 rounded hover:bg-[var(--color-error)]/10 text-[var(--color-muted-foreground)] hover:text-[var(--color-error)]"
                           >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
+                            <Icon icon={Trash2} size="xs" />
+                          </Button>
                         )}
-                      </div>
+                      </HStack>
                     )}
-                  </div>
+                  </HStack>
                 ))}
-              </div>
+              </VStack>
             ) : (
-              <div className="ml-4 text-sm text-[var(--color-muted-foreground)] italic">
+              <Typography variant="body2" className="ml-4 text-[var(--color-muted-foreground)] italic">
                 No actions defined
-              </div>
+              </Typography>
             )}
-          </div>
+          </VStack>
         )}
 
         {/* On Access */}
         {page.onAccess && (
-          <div className="text-sm text-[var(--color-muted-foreground)]">
+          <Typography variant="body2" className="text-[var(--color-muted-foreground)]">
             <DomainKeyword category="page">When accessed:</DomainKeyword>
             {' '}
             {page.onAccess}
-          </div>
+          </Typography>
         )}
-      </div>
+      </VStack>
     </DomainSectionHeader>
   );
 };

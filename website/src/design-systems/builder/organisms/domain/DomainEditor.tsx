@@ -8,6 +8,7 @@
 import React, { useState, useCallback, useRef } from 'react';
 import { clsx as cn } from 'clsx';
 import { Copy, Check, Download, Upload, RefreshCw, Eye, Edit3 } from 'lucide-react';
+import { Box, HStack, VStack, Button, Typography, Icon, Textarea } from '@almadar/ui';
 import { DomainValidationMessage, DomainValidationSummary, ValidationSummary } from '../../molecules/domain-editing';
 
 export interface ValidationError {
@@ -109,20 +110,25 @@ function highlightDomainText(text: string): React.ReactNode {
     // Section headers
     if (line.startsWith('# ')) {
       return (
-        <span key={lineIndex} className="text-[var(--color-muted-foreground)] font-bold text-lg">
+        <Typography
+          as="span"
+          key={lineIndex}
+          variant="body1"
+          className="text-[var(--color-muted-foreground)] font-bold"
+        >
           {line}
           {'\n'}
-        </span>
+        </Typography>
       );
     }
 
     // Separators
     if (line.trim() === '---') {
       return (
-        <span key={lineIndex} className="text-[var(--color-border)]">
+        <Typography as="span" key={lineIndex} variant="body2" className="text-[var(--color-border)]">
           {line}
           {'\n'}
-        </span>
+        </Typography>
       );
     }
 
@@ -130,16 +136,24 @@ function highlightDomainText(text: string): React.ReactNode {
     const tokens = tokenizeLine(line);
 
     return (
-      <span key={lineIndex}>
+      <Typography as="span" key={lineIndex} variant="body2">
         {tokens.map((token, tokenIndex) => (
           (token.className || token.style) ? (
-            <span key={tokenIndex} className={token.className} style={token.style}>{token.text}</span>
+            <Typography
+              as="span"
+              key={tokenIndex}
+              variant="body2"
+              className={token.className}
+              style={token.style}
+            >
+              {token.text}
+            </Typography>
           ) : (
             <React.Fragment key={tokenIndex}>{token.text}</React.Fragment>
           )
         ))}
         {'\n'}
-      </span>
+      </Typography>
     );
   });
 }
@@ -262,7 +276,7 @@ export const DomainEditor: React.FC<DomainEditorProps> = ({
   const lineCount = value.split('\n').length;
 
   return (
-    <div
+    <Box
       className={cn(
         'rounded-lg border border-[var(--color-border)]',
         'bg-[var(--color-card)]',
@@ -271,15 +285,20 @@ export const DomainEditor: React.FC<DomainEditorProps> = ({
       )}
     >
       {/* Toolbar */}
-      <div className="flex items-center justify-between px-4 py-2 border-b border-[var(--color-border)] bg-[var(--color-secondary)]">
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-[var(--color-muted-foreground)]">
+      <HStack
+        justify="between"
+        align="center"
+        className="px-4 py-2 border-b border-[var(--color-border)] bg-[var(--color-secondary)]"
+      >
+        <HStack gap="sm" align="center">
+          <Typography variant="body2" className="font-medium text-[var(--color-muted-foreground)]">
             Domain Language
-          </span>
+          </Typography>
           {!readOnly && (
-            <div className="flex items-center rounded-md border border-[var(--color-border)] overflow-hidden">
-              <button
-                type="button"
+            <Box className="flex items-center rounded-md border border-[var(--color-border)] overflow-hidden">
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => setMode('view')}
                 className={cn(
                   'px-2 py-1 text-xs flex items-center gap-1',
@@ -288,11 +307,12 @@ export const DomainEditor: React.FC<DomainEditorProps> = ({
                     : 'text-[var(--color-muted-foreground)] hover:bg-[var(--color-secondary)]'
                 )}
               >
-                <Eye className="w-3 h-3" />
+                <Icon icon={Eye} size="xs" />
                 View
-              </button>
-              <button
-                type="button"
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => setMode('edit')}
                 className={cn(
                   'px-2 py-1 text-xs flex items-center gap-1',
@@ -301,17 +321,18 @@ export const DomainEditor: React.FC<DomainEditorProps> = ({
                     : 'text-[var(--color-muted-foreground)] hover:bg-[var(--color-secondary)]'
                 )}
               >
-                <Edit3 className="w-3 h-3" />
+                <Icon icon={Edit3} size="xs" />
                 Edit
-              </button>
-            </div>
+              </Button>
+            </Box>
           )}
-        </div>
+        </HStack>
 
-        <div className="flex items-center gap-1">
+        <HStack gap="xs" align="center">
           {onSync && (
-            <button
-              type="button"
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={onSync}
               disabled={syncing}
               className={cn(
@@ -321,53 +342,62 @@ export const DomainEditor: React.FC<DomainEditorProps> = ({
               )}
               title="Sync with schema"
             >
-              <RefreshCw className="w-4 h-4" />
-            </button>
+              <Icon icon={RefreshCw} size="sm" />
+            </Button>
           )}
           {onUpload && (
-            <button
-              type="button"
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={onUpload}
               className="p-1.5 rounded hover:bg-[var(--color-secondary)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
               title="Import"
             >
-              <Upload className="w-4 h-4" />
-            </button>
+              <Icon icon={Upload} size="sm" />
+            </Button>
           )}
           {onDownload && (
-            <button
-              type="button"
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={onDownload}
               className="p-1.5 rounded hover:bg-[var(--color-secondary)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
               title="Export"
             >
-              <Download className="w-4 h-4" />
-            </button>
+              <Icon icon={Download} size="sm" />
+            </Button>
           )}
-          <button
-            type="button"
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={handleCopy}
             className="p-1.5 rounded hover:bg-[var(--color-secondary)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
             title={copied ? 'Copied!' : 'Copy'}
           >
-            {copied ? <Check className="w-4 h-4" style={{ color: 'var(--color-success)' }} /> : <Copy className="w-4 h-4" />}
-          </button>
-        </div>
-      </div>
+            {copied
+              ? <Icon icon={Check} size="sm" style={{ color: 'var(--color-success)' }} />
+              : <Icon icon={Copy} size="sm" />
+            }
+          </Button>
+        </HStack>
+      </HStack>
 
       {/* Validation summary */}
       {errors.length > 0 && (
-        <div className="px-4 py-2 border-b border-[var(--color-border)]">
+        <Box className="px-4 py-2 border-b border-[var(--color-border)]">
           <DomainValidationSummary
             summary={validationSummary}
             onClick={() => setShowErrors(!showErrors)}
           />
-        </div>
+        </Box>
       )}
 
       {/* Error details */}
       {showErrors && errors.length > 0 && (
-        <div className="px-4 py-2 space-y-2 border-b border-[var(--color-border)] bg-[var(--color-secondary)] max-h-40 overflow-y-auto">
+        <VStack
+          gap="sm"
+          className="px-4 py-2 border-b border-[var(--color-border)] bg-[var(--color-secondary)] max-h-40 overflow-y-auto"
+        >
           {errors.map((error, index) => (
             <DomainValidationMessage
               key={index}
@@ -377,26 +407,28 @@ export const DomainEditor: React.FC<DomainEditorProps> = ({
               compact
             />
           ))}
-        </div>
+        </VStack>
       )}
 
       {/* Editor content */}
-      <div className="flex" style={{ height }}>
+      <HStack gap="none" style={{ height }}>
         {/* Line numbers */}
         {showLineNumbers && (
-          <div className="flex-shrink-0 w-12 px-2 py-3 text-right font-mono text-xs text-[var(--color-muted-foreground)] bg-[var(--color-secondary)] border-r border-[var(--color-border)] select-none overflow-hidden">
+          <Box className="flex-shrink-0 w-12 px-2 py-3 text-right font-mono text-xs text-[var(--color-muted-foreground)] bg-[var(--color-secondary)] border-r border-[var(--color-border)] select-none overflow-hidden">
             {Array.from({ length: lineCount }, (_, i) => (
-              <div key={i + 1} className="leading-6">
-                {i + 1}
-              </div>
+              <Box key={i + 1} className="leading-6">
+                <Typography variant="caption" className="font-mono text-[var(--color-muted-foreground)]">
+                  {i + 1}
+                </Typography>
+              </Box>
             ))}
-          </div>
+          </Box>
         )}
 
         {/* Content area */}
-        <div className="flex-1 relative overflow-auto">
+        <Box className="flex-1 relative overflow-auto">
           {mode === 'edit' ? (
-            <textarea
+            <Textarea
               ref={textareaRef}
               value={value}
               onChange={handleChange}
@@ -413,23 +445,30 @@ export const DomainEditor: React.FC<DomainEditorProps> = ({
               spellCheck={false}
             />
           ) : (
-            <pre className="p-3 font-mono text-sm leading-6 whitespace-pre-wrap">
+            <Box
+              as="pre"
+              className="p-3 font-mono text-sm leading-6 whitespace-pre-wrap"
+            >
               {highlightDomainText(value)}
-            </pre>
+            </Box>
           )}
-        </div>
-      </div>
+        </Box>
+      </HStack>
 
       {/* Footer */}
-      <div className="flex items-center justify-between px-4 py-1.5 border-t border-[var(--color-border)] bg-[var(--color-secondary)] text-xs text-[var(--color-muted-foreground)]">
-        <span>
+      <HStack
+        justify="between"
+        align="center"
+        className="px-4 py-1.5 border-t border-[var(--color-border)] bg-[var(--color-secondary)]"
+      >
+        <Typography variant="caption" className="text-[var(--color-muted-foreground)]">
           {lineCount} line{lineCount !== 1 ? 's' : ''} • {value.length} characters
-        </span>
-        <span>
+        </Typography>
+        <Typography variant="caption" className="text-[var(--color-muted-foreground)]">
           Domain Language v1
-        </span>
-      </div>
-    </div>
+        </Typography>
+      </HStack>
+    </Box>
   );
 };
 

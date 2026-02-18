@@ -10,7 +10,7 @@
 
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { X, ChevronDown, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
-import { Typography, LoadingState } from '@almadar/ui';
+import { Typography, LoadingState, Button, Box, VStack, HStack, Icon } from '@almadar/ui';
 import type { OrbitalSchema, EntityRef } from '@almadar/core';
 import { isEntityReference } from '@almadar/core';
 import {
@@ -211,40 +211,55 @@ export const OrbitalVisualizerModal: React.FC<OrbitalVisualizerModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50">
+    <Box className="fixed inset-0 z-50">
       {/* Full screen modal - no backdrop, direct full screen */}
-      <div
+      <Box
         ref={containerRef}
         className="w-screen h-screen flex flex-col overflow-hidden"
         style={{ backgroundColor: 'var(--color-card)' }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-3 border-b" style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-card)' }}>
-          <div className="flex items-center gap-4">
+        <HStack
+          justify="between"
+          align="center"
+          className="px-6 py-3 border-b"
+          style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-card)' }}
+        >
+          <HStack gap="md" align="center">
             <Typography variant="h5" style={{ color: 'var(--color-foreground)' }}>
               State Machine Visualizer
             </Typography>
 
             {/* Trait Selector Dropdown */}
             {traits.length > 0 && (
-              <div className="relative">
-                <button
+              <Box className="relative">
+                <Button
+                  variant="secondary"
+                  size="sm"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="flex items-center gap-2 px-3 py-1.5 border rounded-lg transition-colors"
+                  className="flex items-center gap-2"
                   style={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-border)' }}
                 >
-                  <span className="text-sm font-medium" style={{ color: 'var(--color-foreground)' }}>
+                  <Typography variant="label" weight="medium" style={{ color: 'var(--color-foreground)' }}>
                     {currentTrait?.name || 'Select Trait'}
-                  </span>
-                  <ChevronDown className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} style={{ color: 'var(--color-muted-foreground)' }} />
-                </button>
+                  </Typography>
+                  <Icon
+                    icon={ChevronDown}
+                    size="sm"
+                    className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
+                    style={{ color: 'var(--color-muted-foreground)' }}
+                  />
+                </Button>
 
                 {isDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-1 w-64 border rounded-lg shadow-lg z-10 max-h-64 overflow-auto"
-                    style={{ backgroundColor: 'var(--color-card)', borderColor: 'var(--color-border)' }}>
+                  <Box
+                    className="absolute top-full left-0 mt-1 w-64 border rounded-lg shadow-lg z-10 max-h-64 overflow-auto"
+                    style={{ backgroundColor: 'var(--color-card)', borderColor: 'var(--color-border)' }}
+                  >
                     {traits.map((trait) => (
-                      <button
+                      <Button
                         key={`${trait.orbitalName}-${trait.name}`}
+                        variant="ghost"
                         onClick={() => {
                           setSelectedTrait(trait.name);
                           setIsDropdownOpen(false);
@@ -252,93 +267,112 @@ export const OrbitalVisualizerModal: React.FC<OrbitalVisualizerModalProps> = ({
                         className="w-full text-left px-4 py-2 transition-colors"
                         style={selectedTrait === trait.name ? { backgroundColor: 'color-mix(in srgb, var(--color-info) 10%, transparent)' } : {}}
                       >
-                        <div className="text-sm font-medium" style={{ color: 'var(--color-foreground)' }}>
-                          {trait.name}
-                        </div>
-                        <div className="text-xs" style={{ color: 'var(--color-muted-foreground)' }}>
-                          {trait.orbitalName} • {trait.stateMachine.states?.length || 0} states
-                        </div>
-                      </button>
+                        <VStack gap="xs">
+                          <Typography variant="label" weight="medium" style={{ color: 'var(--color-foreground)' }}>
+                            {trait.name}
+                          </Typography>
+                          <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>
+                            {trait.orbitalName} • {trait.stateMachine.states?.length || 0} states
+                          </Typography>
+                        </VStack>
+                      </Button>
                     ))}
-                  </div>
+                  </Box>
                 )}
-              </div>
+              </Box>
             )}
-          </div>
+          </HStack>
 
-          <div className="flex items-center gap-2">
+          <HStack gap="sm" align="center">
             {/* Theme Toggle */}
-            <button
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={() => setIsDarkTheme(!isDarkTheme)}
-              className="px-3 py-1.5 text-xs font-medium rounded-lg transition-colors"
               style={{ backgroundColor: 'var(--color-surface)', color: 'var(--color-muted-foreground)' }}
             >
-              {isDarkTheme ? '☀️ Light' : '🌙 Dark'}
-            </button>
+              <Typography variant="caption" weight="medium">
+                {isDarkTheme ? '☀️ Light' : '🌙 Dark'}
+              </Typography>
+            </Button>
 
             {/* Zoom Controls */}
-            <div className="flex items-center gap-1 px-2 py-1 rounded-lg" style={{ backgroundColor: 'var(--color-surface)' }}>
-              <button
+            <HStack
+              gap="xs"
+              align="center"
+              className="px-2 py-1 rounded-lg"
+              style={{ backgroundColor: 'var(--color-surface)' }}
+            >
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={handleZoomOut}
-                className="p-1"
-                style={{ color: 'var(--color-muted-foreground)' }}
+                style={{ color: 'var(--color-muted-foreground)', padding: '4px' }}
                 title="Zoom Out"
               >
-                <ZoomOut className="w-4 h-4" />
-              </button>
-              <span className="text-xs font-medium min-w-[3rem] text-center" style={{ color: 'var(--color-muted-foreground)' }}>
-                {Math.round(zoom * 100)}%
-              </span>
-              <button
-                onClick={handleZoomIn}
-                className="p-1"
+                <Icon icon={ZoomOut} size="sm" />
+              </Button>
+              <Typography
+                variant="caption"
+                weight="medium"
+                className="min-w-[3rem] text-center"
                 style={{ color: 'var(--color-muted-foreground)' }}
+              >
+                {Math.round(zoom * 100)}%
+              </Typography>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleZoomIn}
+                style={{ color: 'var(--color-muted-foreground)', padding: '4px' }}
                 title="Zoom In"
               >
-                <ZoomIn className="w-4 h-4" />
-              </button>
-              <button
+                <Icon icon={ZoomIn} size="sm" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={handleResetZoom}
-                className="p-1"
-                style={{ color: 'var(--color-muted-foreground)' }}
+                style={{ color: 'var(--color-muted-foreground)', padding: '4px' }}
                 title="Reset Zoom"
               >
-                <RotateCcw className="w-4 h-4" />
-              </button>
-            </div>
+                <Icon icon={RotateCcw} size="sm" />
+              </Button>
+            </HStack>
 
             {/* Close Button */}
-            <button
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={onClose}
-              className="p-2 rounded-lg transition-colors"
               style={{ color: 'var(--color-muted-foreground)' }}
               title="Close (Esc)"
             >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
+              <Icon icon={X} size="md" />
+            </Button>
+          </HStack>
+        </HStack>
 
         {/* Content - Full remaining height */}
-        <div className="flex-1 overflow-auto" style={{ backgroundColor: 'var(--color-background)' }}>
+        <Box className="flex-1 overflow-auto" style={{ backgroundColor: 'var(--color-background)' }}>
           {traits.length === 0 ? (
-            <div className="flex items-center justify-center h-full">
-              <div className="text-center">
+            <VStack align="center" justify="center" className="h-full">
+              <VStack gap="sm" align="center">
                 <Typography variant="h6" className="mb-2" style={{ color: 'var(--color-muted-foreground)' }}>
                   No Traits Found
                 </Typography>
                 <Typography variant="body2" style={{ color: 'var(--color-muted-foreground)' }}>
                   This schema doesn't contain any traits with state machines.
                 </Typography>
-              </div>
-            </div>
+              </VStack>
+            </VStack>
           ) : !layoutData ? (
-            <div className="flex items-center justify-center h-full">
+            <VStack align="center" justify="center" className="h-full">
               <LoadingState message="Loading diagram..." />
-            </div>
+            </VStack>
           ) : (
-            <div
-              ref={svgContainerRef}
+            <Box
+              ref={svgContainerRef as React.Ref<HTMLDivElement>}
               className="min-h-full min-w-full p-8"
               style={{
                 zoom: zoom,
@@ -349,11 +383,11 @@ export const OrbitalVisualizerModal: React.FC<OrbitalVisualizerModalProps> = ({
                 layoutData={layoutData}
                 className="inline-block"
               />
-            </div>
+            </Box>
           )}
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

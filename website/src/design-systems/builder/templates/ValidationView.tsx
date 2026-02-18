@@ -82,8 +82,8 @@ export const ValidationView: React.FC<ValidationViewProps> = ({
                 <Badge variant={isValid ? 'success' : 'warning'} size="sm">
                   <HStack style={{ alignItems: 'center', gap: '0.375rem' }}>
                     {isValid
-                      ? <><CheckCircle2 style={{ width: 14, height: 14 }} /><span>Valid</span></>
-                      : <><AlertTriangle style={{ width: 14, height: 14 }} /><span>{totalIssues} Issue{totalIssues !== 1 ? 's' : ''}</span></>
+                      ? <><CheckCircle2 style={{ width: 14, height: 14 }} /><Typography variant="small" color="inherit" as="span">Valid</Typography></>
+                      : <><AlertTriangle style={{ width: 14, height: 14 }} /><Typography variant="small" color="inherit" as="span">{totalIssues} Issue{totalIssues !== 1 ? 's' : ''}</Typography></>
                     }
                   </HStack>
                 </Badge>
@@ -116,7 +116,7 @@ export const ValidationView: React.FC<ValidationViewProps> = ({
             <Alert variant="info">
               <HStack style={{ alignItems: 'center', gap: '0.75rem' }}>
                 <LoadingState message="" />
-                <span>{progressMessage || (isValidating ? 'Validating schema...' : 'Fixing errors...')}</span>
+                <Typography variant="small" color="inherit" as="span">{progressMessage || (isValidating ? 'Validating schema...' : 'Fixing errors...')}</Typography>
               </HStack>
             </Alert>
           </Box>

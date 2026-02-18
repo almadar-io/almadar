@@ -20,7 +20,7 @@ import {
   FileText,
   Settings,
 } from 'lucide-react';
-import { Typography, Badge, useEventBus } from '@almadar/ui';
+import { Box, Typography, Badge, useEventBus } from '@almadar/ui';
 
 // =============================================================================
 // Types
@@ -125,8 +125,8 @@ const FileTreeNode: React.FC<FileTreeNodeProps> = ({
   });
 
   return (
-    <div>
-      <div
+    <Box>
+      <Box
         className="flex items-center gap-1 py-1 px-2 cursor-pointer rounded-sm transition-colors duration-100"
         style={{
           paddingLeft: `${depth * 12 + 8}px`,
@@ -140,18 +140,18 @@ const FileTreeNode: React.FC<FileTreeNodeProps> = ({
         aria-expanded={isDirectory ? isExpanded : undefined}
       >
         {isDirectory ? (
-          <div className="w-4 h-4 flex items-center justify-center shrink-0">
+          <Box className="w-4 h-4 flex items-center justify-center shrink-0">
             {hasChildren && (
               isExpanded
                 ? <ChevronDown size={14} style={{ color: 'var(--color-muted-foreground)' }} />
                 : <ChevronRight size={14} style={{ color: 'var(--color-muted-foreground)' }} />
             )}
-          </div>
+          </Box>
         ) : (
-          <div className="w-4 shrink-0" />
+          <Box className="w-4 shrink-0" />
         )}
 
-        <div className="shrink-0">
+        <Box className="shrink-0">
           {isDirectory ? (
             isExpanded
               ? <FolderOpen size={16} style={{ color: 'var(--color-warning)' }} />
@@ -159,7 +159,7 @@ const FileTreeNode: React.FC<FileTreeNodeProps> = ({
           ) : (
             getFileIcon(node.name)
           )}
-        </div>
+        </Box>
 
         <Typography
           variant="caption"
@@ -178,10 +178,10 @@ const FileTreeNode: React.FC<FileTreeNodeProps> = ({
             {getBadgeConfig(node.badge).label}
           </Badge>
         )}
-      </div>
+      </Box>
 
       {isDirectory && isExpanded && sortedChildren && (
-        <div role="group">
+        <Box role="group">
           {sortedChildren.map((child) => (
             <FileTreeNode
               key={child.path}
@@ -194,9 +194,9 @@ const FileTreeNode: React.FC<FileTreeNodeProps> = ({
               showBadges={showBadges}
             />
           ))}
-        </div>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };
 
@@ -239,16 +239,16 @@ export const FileTreePanel: React.FC<FileTreePanelProps> = ({
 
   if (files.length === 0) {
     return (
-      <div className={`flex items-center justify-center w-full h-full ${className}`}>
+      <Box className={`flex items-center justify-center w-full h-full ${className}`}>
         <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>
           No files to display
         </Typography>
-      </div>
+      </Box>
     );
   }
 
   return (
-    <div
+    <Box
       className={`overflow-auto h-full ${className}`}
       role="tree"
       aria-label="File explorer"
@@ -265,7 +265,7 @@ export const FileTreePanel: React.FC<FileTreePanelProps> = ({
           showBadges={showBadges}
         />
       ))}
-    </div>
+    </Box>
   );
 };
 

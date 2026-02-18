@@ -18,7 +18,7 @@
  */
 
 import React, { useMemo } from "react";
-import { Box, useEventBus } from "@almadar/ui";
+import { Box, VStack, Typography, useEventBus } from "@almadar/ui";
 
 // ============ Types ============
 
@@ -172,7 +172,7 @@ const OrbitalSphere: React.FC<{
 }> = ({ config, size, animated }) => {
   const sphereSize = size * config.scale * 0.4;
   return (
-    <div
+    <Box
       className="absolute rounded-full"
       style={{
         width: sphereSize,
@@ -199,7 +199,7 @@ const DumbbellOrbital: React.FC<{
   const lobeSize = size * config.scale * 0.25;
   const offset = size * 0.18;
   return (
-    <div
+    <Box
       className="absolute"
       style={{
         width: size,
@@ -210,7 +210,7 @@ const DumbbellOrbital: React.FC<{
         animation: animated ? "orbital-rotate 8s linear infinite" : undefined,
       }}
     >
-      <div
+      <Box
         className="absolute rounded-full"
         style={{
           width: lobeSize,
@@ -223,7 +223,7 @@ const DumbbellOrbital: React.FC<{
           borderRadius: "50% 50% 40% 40%",
         }}
       />
-      <div
+      <Box
         className="absolute rounded-full"
         style={{
           width: lobeSize,
@@ -237,7 +237,7 @@ const DumbbellOrbital: React.FC<{
         }}
       />
       {config.hasNode && (
-        <div
+        <Box
           className="absolute rounded-full"
           style={{
             backgroundColor: 'var(--color-card)',
@@ -250,7 +250,7 @@ const DumbbellOrbital: React.FC<{
           }}
         />
       )}
-    </div>
+    </Box>
   );
 };
 
@@ -264,7 +264,7 @@ const CloverleafOrbital: React.FC<{
   const lobeSize = size * 0.18;
   const lobeDistance = size * 0.22;
   return (
-    <div
+    <Box
       className="absolute"
       style={{
         width: size,
@@ -280,7 +280,7 @@ const CloverleafOrbital: React.FC<{
         const x = Math.cos(angle) * lobeDistance;
         const y = Math.sin(angle) * lobeDistance;
         return (
-          <div
+          <Box
             key={i}
             className="absolute rounded-full"
             style={{
@@ -295,7 +295,7 @@ const CloverleafOrbital: React.FC<{
           />
         );
       })}
-      <div
+      <Box
         className="absolute rounded-full"
         style={{
           backgroundColor: 'var(--color-card)',
@@ -307,7 +307,7 @@ const CloverleafOrbital: React.FC<{
           boxShadow: `0 0 ${size * 0.06}px rgba(255,255,255,0.9)`,
         }}
       />
-    </div>
+    </Box>
   );
 };
 
@@ -396,15 +396,17 @@ export const OrbitalVisualizationBoard: React.FC<
   };
 
   return (
-    <Box
-      className={`relative flex flex-col items-center justify-center cursor-pointer ${className}`}
+    <VStack
+      align="center"
+      justify="center"
+      className={`relative cursor-pointer ${className}`}
       style={{
         width: pixelSize,
         height: pixelSize + (showLabel ? 60 : 0),
       }}
       onClick={handleClick}
     >
-      <div
+      <Box
         className="relative"
         style={{
           width: pixelSize,
@@ -412,7 +414,7 @@ export const OrbitalVisualizationBoard: React.FC<
           perspective: pixelSize * 2,
         }}
       >
-        <div
+        <Box
           className="absolute rounded-full opacity-30"
           style={{
             width: pixelSize * 0.8,
@@ -425,15 +427,17 @@ export const OrbitalVisualizationBoard: React.FC<
           }}
         />
         {renderOrbital()}
-      </div>
+      </Box>
 
       {showLabel && (
-        <div className="mt-4 text-center">
-          <div className="text-lg font-semibold" style={{ color: 'var(--color-foreground)' }}>{config.name}</div>
-          <div className="text-sm" style={{ color: 'var(--color-muted-foreground)' }}>
+        <VStack gap="none" align="center" className="mt-4">
+          <Typography variant="h5" style={{ color: 'var(--color-foreground)' }}>
+            {config.name}
+          </Typography>
+          <Typography variant="body2" style={{ color: 'var(--color-muted-foreground)' }}>
             Complexity: {complexity} units
-          </div>
-        </div>
+          </Typography>
+        </VStack>
       )}
 
       <style>{`
@@ -446,7 +450,7 @@ export const OrbitalVisualizationBoard: React.FC<
           to { transform: translate(-50%, -50%) rotate(360deg); }
         }
       `}</style>
-    </Box>
+    </VStack>
   );
 };
 

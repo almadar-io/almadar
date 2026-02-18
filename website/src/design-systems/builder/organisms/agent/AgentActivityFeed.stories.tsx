@@ -44,7 +44,7 @@ const mockActivities: ActivityItem[] = [
   },
   {
     type: "file_operation",
-    operation: "write",
+    operation: "write_file",
     path: "/project/schema.orb",
     success: true,
     timestamp: now - 200000,
@@ -159,7 +159,7 @@ export const LongFeed: Story = {
       },
       {
         type: "file_operation",
-        operation: "write",
+        operation: "write_file",
         path: "/project/design-system/organisms/TaskTable.tsx",
         success: true,
         timestamp: now - 140000,

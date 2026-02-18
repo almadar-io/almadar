@@ -7,6 +7,7 @@
 
 import React from 'react';
 import { clsx as cn } from 'clsx';
+import { Typography } from '@almadar/ui';
 import {
   Circle,
   CheckCircle,
@@ -195,9 +196,9 @@ export const DomainState: React.FC<DomainStateProps> = ({
       title={isInitial ? 'Initial state' : undefined}
     >
       {showIcon && <Icon className={iconSizeClasses[size]} />}
-      <span>{name}</span>
+      <Typography variant="small" color="inherit" as="span">{name}</Typography>
       {isInitial && (
-        <span className="ml-1 text-xs opacity-60">(start)</span>
+        <Typography variant="caption" color="inherit" as="span" className="ml-1 opacity-60">(start)</Typography>
       )}
     </Component>
   );

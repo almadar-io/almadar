@@ -14,7 +14,7 @@ type Story = StoryObj<typeof EditableJsonViewer>;
 export const Default: Story = {
   args: {
     data: { name: "TaskManager", version: "1.0", orbitals: 3 },
-    onSave: () => {},
+    onSave: async () => {},
   },
 };
 
@@ -29,7 +29,7 @@ export const WithTitle: Story = {
   args: {
     data: { name: "TaskManager", version: "1.0", orbitals: 3 },
     title: "Schema JSON",
-    onSave: () => {},
+    onSave: async () => {},
   },
 };
 
@@ -75,7 +75,7 @@ export const LargeData: Story = {
     },
     title: "Full Schema",
     maxHeight: "500px",
-    onSave: () => {},
+    onSave: async () => {},
   },
 };
 

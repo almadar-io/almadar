@@ -110,13 +110,13 @@ export const StudioHomeElectronBoard: React.FC<StudioHomeElectronBoardProps> = (
           <Button size="lg" onClick={handleCreateNew}>
             <HStack gap="xs" align="center">
               <Icon icon={Plus} size="sm" />
-              <span>New Project</span>
+              <Typography as="span" variant="body2">New Project</Typography>
             </HStack>
           </Button>
           <Button size="lg" variant="secondary" onClick={handleOpenFile}>
             <HStack gap="xs" align="center">
               <Icon icon={FolderOpen} size="sm" />
-              <span>Open File</span>
+              <Typography as="span" variant="body2">Open File</Typography>
             </HStack>
           </Button>
         </HStack>
@@ -129,7 +129,7 @@ export const StudioHomeElectronBoard: React.FC<StudioHomeElectronBoardProps> = (
               <Button variant="ghost" size="sm" onClick={handleClearRecent}>
                 <HStack gap="xs" align="center">
                   <Icon icon={Trash2} size="sm" />
-                  <span>Clear All</span>
+                  <Typography as="span" variant="body2">Clear All</Typography>
                 </HStack>
               </Button>
             )}

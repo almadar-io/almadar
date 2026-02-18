@@ -29,7 +29,7 @@ function ev(name: string) {
 // Mock Schemas
 // =============================================================================
 
-const singleTraitSchema: OrbitalSchema = {
+const singleTraitSchema = {
   name: "TaskManager",
   version: "1.0.0",
   orbitals: [
@@ -123,9 +123,9 @@ const singleTraitSchema: OrbitalSchema = {
       ],
     },
   ],
-};
+} as unknown as OrbitalSchema;
 
-const multiTraitSchema: OrbitalSchema = {
+const multiTraitSchema = {
   name: "ECommerce",
   version: "1.0.0",
   orbitals: [
@@ -204,7 +204,7 @@ const multiTraitSchema: OrbitalSchema = {
       ],
     },
   ],
-};
+} as unknown as OrbitalSchema;
 
 // =============================================================================
 // Stories

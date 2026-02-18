@@ -170,7 +170,7 @@ export function AgentActivityFeed({
       })}
 
       {/* Scroll anchor */}
-      <div ref={bottomRef} />
+      <Box ref={bottomRef} />
     </VStack>
   );
 }

@@ -7,6 +7,7 @@
 
 import React from 'react';
 import { clsx as cn } from 'clsx';
+import { Typography } from '@almadar/ui';
 
 export type OperatorType =
   | 'AND'
@@ -147,7 +148,10 @@ export const DomainOperator: React.FC<DomainOperatorProps> = ({
   };
 
   return (
-    <span
+    <Typography
+      as="span"
+      variant="small"
+      color="inherit"
       className={cn(
         'inline-block font-mono font-semibold',
         sizeClasses[size],
@@ -162,7 +166,7 @@ export const DomainOperator: React.FC<DomainOperatorProps> = ({
       }}
     >
       {displayText}
-    </span>
+    </Typography>
   );
 };
 
@@ -210,7 +214,10 @@ export const DomainArrow: React.FC<DomainArrowProps> = ({
   };
 
   return (
-    <span
+    <Typography
+      as="span"
+      variant="small"
+      color="inherit"
       className={cn(
         'inline-block font-mono mx-1',
         sizeClasses[size],
@@ -220,7 +227,7 @@ export const DomainArrow: React.FC<DomainArrowProps> = ({
       aria-label={`${direction} arrow`}
     >
       {arrows[direction]}
-    </span>
+    </Typography>
   );
 };
 

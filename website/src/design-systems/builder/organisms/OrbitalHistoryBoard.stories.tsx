@@ -14,8 +14,8 @@ const meta: Meta<typeof OrbitalHistoryBoard> = {
     ),
   ],
   args: {
-    onRevertToSnapshot: fn(async () => ({ success: true })),
-    onRefresh: fn(async () => {}),
+    onRevertToSnapshot: async () => ({ success: true }),
+    onRefresh: async () => {},
   },
 };
 

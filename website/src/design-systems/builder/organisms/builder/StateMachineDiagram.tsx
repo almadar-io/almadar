@@ -5,6 +5,7 @@
  */
 
 import React, { useMemo } from 'react';
+import { Box, Typography } from '@almadar/ui';
 import type { BuilderGraph, GraphNode } from './types';
 
 export interface StateMachineDiagramProps {
@@ -229,9 +230,9 @@ export const StateMachineDiagram: React.FC<StateMachineDiagramProps> = ({
 
   if (states.length === 0) {
     return (
-      <div className={`flex items-center justify-center ${className}`} style={{ width, height }}>
-        <p style={{ color: 'var(--color-muted-foreground)' }}>No states defined</p>
-      </div>
+      <Box className={`flex items-center justify-center ${className}`} style={{ width, height }}>
+        <Typography variant="body2" style={{ color: 'var(--color-muted-foreground)' }}>No states defined</Typography>
+      </Box>
     );
   }
 

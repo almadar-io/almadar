@@ -17,7 +17,9 @@ const config: StorybookConfig = {
     stories: [
         // Core @almadar/ui — only the specific stories used in demos
         path.join(workspaceRoot, "packages/almadar-ui/components/organisms/game/BattleBoard.stories.tsx"),
-        path.join(workspaceRoot, "packages/almadar-ui/components/organisms/GraphCanvas.stories.tsx"),
+
+        // KFlow (Ed Tech)
+        path.join(workspaceRoot, "projects/kflow/design-system/templates/ConceptDetailTemplate.stories.tsx"),
 
         // Winning-11
         path.join(workspaceRoot, "projects/winning-11/design-system/templates/AdminDashboardTemplate.stories.tsx"),

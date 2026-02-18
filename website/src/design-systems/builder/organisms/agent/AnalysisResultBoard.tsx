@@ -7,7 +7,7 @@
 
 import React from 'react';
 import { clsx } from 'clsx';
-import { Card, Badge, Button, ProgressBar } from '@almadar/ui';
+import { Card, Badge, Button, ProgressBar, Box, VStack, HStack, Typography } from '@almadar/ui';
 import { WorkItemCard } from './WorkItemCard';
 import type { AnalyzedWorkItem, WorkItemQuestion } from './WorkItemCard';
 
@@ -85,25 +85,27 @@ const ComplexityMeter: React.FC<{
   };
 
   return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between">
-        <span className="text-sm font-medium text-[var(--color-foreground)]">
+    <VStack gap="sm">
+      <HStack align="center" justify="between">
+        <Typography variant="label">
           Complexity
-        </span>
+        </Typography>
         <Badge
           variant={category === 'simple' ? 'success' : category === 'moderate' ? 'warning' : 'danger'}
         >
           {categoryLabels[category]} ({score}/100)
         </Badge>
-      </div>
-      <div className="w-full bg-[var(--color-secondary)] rounded-full h-2">
-        <div
+      </HStack>
+      <Box
+        className="w-full bg-[var(--color-secondary)] rounded-full h-2"
+      >
+        <Box
           className="h-2 rounded-full transition-all"
           style={{ width: `${score}%`, backgroundColor: categoryColors[category] }}
         />
-      </div>
-      <p className="text-xs text-[var(--color-muted-foreground)]">{reasoning}</p>
-    </div>
+      </Box>
+      <Typography variant="caption">{reasoning}</Typography>
+    </VStack>
   );
 };
 
@@ -129,12 +131,12 @@ const RouteIndicator: React.FC<{ route: AnalysisRoute }> = ({ route }) => {
   const info = routeInfo[route];
 
   return (
-    <div className="flex items-center gap-2">
-      <span className="font-medium" style={{ color: info.color }}>{info.label}</span>
-      <span className="text-xs text-[var(--color-muted-foreground)]">
+    <HStack align="center" gap="sm">
+      <Typography variant="label" style={{ color: info.color }}>{info.label}</Typography>
+      <Typography variant="caption">
         - {info.description}
-      </span>
-    </div>
+      </Typography>
+    </HStack>
   );
 };
 
@@ -149,22 +151,24 @@ const RequirementsSummary: React.FC<{ requirements: GlobalRequirements }> = ({ r
   if (items.length === 0) return null;
 
   return (
-    <div className="space-y-2">
-      <h4 className="text-sm font-medium text-[var(--color-foreground)]">
+    <VStack gap="sm">
+      <Typography variant="h4" size="sm" weight="medium">
         Detected Requirements
-      </h4>
-      <div className="flex flex-wrap gap-2">
+      </Typography>
+      <HStack wrap gap="sm">
         {items.map(item => (
-          <div
+          <HStack
             key={item.label}
-            className="flex items-center gap-1 px-2 py-1 bg-[var(--color-secondary)] rounded"
+            align="center"
+            gap="xs"
+            className="px-2 py-1 bg-[var(--color-secondary)] rounded"
           >
-            <span className="text-xs text-[var(--color-muted-foreground)]">{item.label}:</span>
-            <span className="text-sm font-medium text-[var(--color-foreground)]">{item.count}</span>
-          </div>
+            <Typography variant="caption">{item.label}:</Typography>
+            <Typography variant="small" weight="medium">{item.count}</Typography>
+          </HStack>
         ))}
-      </div>
-    </div>
+      </HStack>
+    </VStack>
   );
 };
 
@@ -208,63 +212,63 @@ export const AnalysisResultBoard: React.FC<AnalysisResultBoardProps> = ({
   const unansweredCount = totalQuestions - answeredQuestions;
 
   return (
-    <div className={clsx('space-y-6', className)}>
+    <VStack gap="lg" className={clsx(className)}>
       {/* Summary Card */}
       <Card className="shadow-sm">
-        <div className="p-4 border-b border-[var(--color-border)]">
-          <h3 className="text-lg font-semibold text-[var(--color-foreground)]">Analysis Summary</h3>
-        </div>
-        <div className="p-4 space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Box className="p-4 border-b border-[var(--color-border)]">
+          <Typography variant="h3" size="lg" weight="semibold">Analysis Summary</Typography>
+        </Box>
+        <VStack gap="md" className="p-4">
+          <HStack className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <ComplexityMeter
               score={analysis.complexity.score}
               category={analysis.complexity.category}
               reasoning={analysis.complexity.reasoning}
             />
-            <div className="space-y-3">
-              <div>
-                <span className="text-sm font-medium text-[var(--color-foreground)]">
+            <VStack gap="sm">
+              <VStack gap="xs">
+                <Typography variant="label">
                   Execution Route
-                </span>
+                </Typography>
                 <RouteIndicator route={analysis.route} />
-              </div>
+              </VStack>
               {analysis.estimatedMinutes && (
-                <div>
-                  <span className="text-sm font-medium text-[var(--color-foreground)]">
+                <VStack gap="xs">
+                  <Typography variant="label">
                     Estimated Time
-                  </span>
-                  <p className="text-sm text-[var(--color-muted-foreground)]">
+                  </Typography>
+                  <Typography variant="body2" color="muted">
                     ~{analysis.estimatedMinutes} minutes
-                  </p>
-                </div>
+                  </Typography>
+                </VStack>
               )}
-            </div>
-          </div>
+            </VStack>
+          </HStack>
 
           <RequirementsSummary requirements={analysis.globalRequirements} />
 
           {totalQuestions > 0 && (
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-[var(--color-foreground)]">Questions Progress</span>
-                <span className="text-[var(--color-muted-foreground)]">
+            <VStack gap="sm">
+              <HStack align="center" justify="between" className="text-sm">
+                <Typography variant="small">Questions Progress</Typography>
+                <Typography variant="small" color="muted">
                   {answeredQuestions}/{totalQuestions} answered
-                </span>
-              </div>
+                </Typography>
+              </HStack>
               <ProgressBar
                 value={(answeredQuestions / totalQuestions) * 100}
                 color={canSubmit ? 'success' : 'primary'}
               />
-            </div>
+            </VStack>
           )}
-        </div>
+        </VStack>
       </Card>
 
       {/* Work Items */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-[var(--color-foreground)]">
+      <VStack gap="md">
+        <Typography variant="h3" size="lg" weight="semibold">
           Work Items ({analysis.workItems.length})
-        </h3>
+        </Typography>
         {analysis.workItems.map((workItem, index) => (
           <WorkItemCard
             key={workItem.id}
@@ -276,23 +280,23 @@ export const AnalysisResultBoard: React.FC<AnalysisResultBoardProps> = ({
             index={index}
           />
         ))}
-      </div>
+      </VStack>
 
       {/* Action Bar */}
       <Card className="bg-[var(--color-card)]/50">
-        <div className="p-4 flex items-center justify-between">
-          <div className="text-sm text-[var(--color-muted-foreground)]">
+        <HStack align="center" justify="between" className="p-4">
+          <Box className="text-sm">
             {canSubmit ? (
-              <span style={{ color: 'var(--color-success)' }}>
+              <Typography variant="small" style={{ color: 'var(--color-success)' }}>
                 Ready to execute {analysis.workItems.length} work item(s)
-              </span>
+              </Typography>
             ) : (
-              <span style={{ color: 'var(--color-warning)' }}>
+              <Typography variant="small" style={{ color: 'var(--color-warning)' }}>
                 Please answer {unansweredCount} remaining question(s)
-              </span>
+              </Typography>
             )}
-          </div>
-          <div className="flex gap-3">
+          </Box>
+          <HStack gap="sm">
             {onCancel && (
               <Button variant="ghost" onClick={onCancel} disabled={isSubmitting}>
                 Cancel
@@ -306,10 +310,10 @@ export const AnalysisResultBoard: React.FC<AnalysisResultBoardProps> = ({
             >
               {isSubmitting ? 'Executing...' : 'Execute Plan'}
             </Button>
-          </div>
-        </div>
+          </HStack>
+        </HStack>
       </Card>
-    </div>
+    </VStack>
   );
 };
 

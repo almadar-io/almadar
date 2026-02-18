@@ -7,6 +7,7 @@
 import React from 'react';
 import { clsx as cn } from 'clsx';
 import { AlertCircle, AlertTriangle, Info, CheckCircle, X, Lightbulb } from 'lucide-react';
+import { Typography, Button, HStack, VStack, Box } from '@almadar/ui';
 
 export type ValidationSeverity = 'error' | 'warning' | 'info' | 'success';
 
@@ -69,7 +70,7 @@ export interface DomainValidationMessageProps {
 }
 
 const severityConfig: Record<ValidationSeverity, {
-  icon: React.ComponentType<{ className?: string }>;
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
   colorVar: string;
 }> = {
   error: {
@@ -115,95 +116,91 @@ export const DomainValidationMessage: React.FC<DomainValidationMessageProps> = (
 
   if (compact) {
     return (
-      <div
-        className={cn(
-          'flex items-center gap-2 px-2 py-1 rounded text-sm',
-          'border',
-          className
-        )}
+      <HStack
+        gap="sm"
+        align="center"
+        className={cn('px-2 py-1 rounded border', className)}
         style={{ ...bgStyle, ...borderStyle }}
       >
         <Icon className="w-4 h-4 flex-shrink-0" style={iconStyle} />
-        <span className="flex-1" style={{ color: config.colorVar }}>{message}</span>
+        <Typography variant="small" className="flex-1" style={{ color: config.colorVar }}>
+          {message}
+        </Typography>
         {dismissible && onDismiss && (
-          <button
-            type="button"
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={onDismiss}
-            className="p-0.5 rounded hover:bg-[var(--color-secondary)]"
+            className="p-0.5"
           >
             <X className="w-3 h-3 text-[var(--color-muted-foreground)]" />
-          </button>
+          </Button>
         )}
-      </div>
+      </HStack>
     );
   }
 
   return (
-    <div
-      className={cn(
-        'rounded-lg border p-4',
-        className
-      )}
+    <Box
+      className={cn('rounded-lg border p-4', className)}
       style={{ ...bgStyle, ...borderStyle }}
       role="alert"
     >
-      <div className="flex gap-3">
+      <HStack gap="sm" align="start">
         {/* Icon */}
         <Icon className="w-5 h-5 flex-shrink-0 mt-0.5" style={iconStyle} />
 
         {/* Content */}
-        <div className="flex-1 min-w-0">
+        <VStack gap="sm" className="flex-1 min-w-0">
           {/* Section label */}
           {sectionLabel && (
-            <span className="block text-xs font-medium text-[var(--color-muted-foreground)] mb-1">
+            <Typography variant="caption" className="font-medium text-[var(--color-muted-foreground)]">
               {sectionLabel}
-            </span>
+            </Typography>
           )}
 
           {/* Message */}
-          <p className="font-medium" style={{ color: config.colorVar }}>
+          <Typography variant="body2" className="font-medium" style={{ color: config.colorVar }}>
             {message}
-          </p>
+          </Typography>
 
           {/* Suggestion */}
           {suggestion && (
-            <div className="flex items-start gap-2 mt-2 text-sm text-[var(--color-muted-foreground)]">
+            <HStack gap="sm" align="start" className="text-sm text-[var(--color-muted-foreground)]">
               <Lightbulb className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: 'var(--color-warning)' }} />
-              <span>{suggestion}</span>
-            </div>
+              <Typography variant="body2" className="text-[var(--color-muted-foreground)]">
+                {suggestion}
+              </Typography>
+            </HStack>
           )}
 
           {/* Quick fix */}
           {quickFix && (
-            <button
-              type="button"
+            <Button
+              variant="secondary"
+              size="sm"
               onClick={quickFix.onClick}
-              className={cn(
-                'mt-3 px-3 py-1.5 text-sm font-medium rounded-md',
-                'bg-[var(--color-card)]',
-                'border border-[var(--color-border)]',
-                'hover:bg-[var(--color-secondary)]',
-                'transition-colors'
-              )}
+              className="mt-1 self-start"
             >
               {quickFix.label}
-            </button>
+            </Button>
           )}
-        </div>
+        </VStack>
 
         {/* Dismiss button */}
         {dismissible && onDismiss && (
-          <button
-            type="button"
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={onDismiss}
-            className="p-1 rounded hover:bg-[var(--color-secondary)]"
             aria-label="Dismiss"
+            className="p-1"
           >
             <X className="w-4 h-4 text-[var(--color-muted-foreground)]" />
-          </button>
+          </Button>
         )}
-      </div>
-    </div>
+      </HStack>
+    </Box>
   );
 };
 
@@ -245,35 +242,31 @@ export const DomainValidationSummary: React.FC<DomainValidationSummaryProps> = (
 
   if (isValid) {
     return (
-      <div
-        className={cn(
-          'flex items-center gap-2 px-3 py-2 rounded-lg',
-          'border',
-          className
-        )}
+      <HStack
+        gap="sm"
+        align="center"
+        className={cn('px-3 py-2 rounded-lg border', className)}
         style={{
           backgroundColor: 'color-mix(in srgb, var(--color-success) 10%, transparent)',
           borderColor: 'color-mix(in srgb, var(--color-success) 30%, transparent)',
         }}
       >
         <CheckCircle className="w-4 h-4" style={{ color: 'var(--color-success)' }} />
-        <span className="text-sm" style={{ color: 'var(--color-success)' }}>
+        <Typography variant="small" style={{ color: 'var(--color-success)' }}>
           All validations passed
-        </span>
-      </div>
+        </Typography>
+      </HStack>
     );
   }
 
   const summaryColor = hasErrors ? 'var(--color-error)' : 'var(--color-warning)';
 
   return (
-    <button
-      type="button"
+    <Button
+      variant="ghost"
       onClick={onClick}
       className={cn(
-        'flex items-center gap-3 px-3 py-2 rounded-lg w-full',
-        'border',
-        'hover:brightness-95 transition-all',
+        'flex items-center gap-3 px-3 py-2 rounded-lg w-full border hover:brightness-95 transition-all',
         className
       )}
       style={{
@@ -287,23 +280,29 @@ export const DomainValidationSummary: React.FC<DomainValidationSummaryProps> = (
         <AlertTriangle className="w-4 h-4" style={{ color: 'var(--color-warning)' }} />
       )}
 
-      <span className="text-sm">
+      <Typography variant="small" as="span">
         {hasErrors && (
-          <span className="font-medium" style={{ color: 'var(--color-error)' }}>
+          <Typography variant="small" as="span" className="font-medium" style={{ color: 'var(--color-error)' }}>
             {summary.errors} error{summary.errors > 1 ? 's' : ''}
-          </span>
+          </Typography>
         )}
-        {hasErrors && hasWarnings && <span className="text-[var(--color-muted-foreground)] mx-1">•</span>}
+        {hasErrors && hasWarnings && (
+          <Typography variant="small" as="span" className="text-[var(--color-muted-foreground)] mx-1">
+            •
+          </Typography>
+        )}
         {hasWarnings && (
-          <span className="font-medium" style={{ color: 'var(--color-warning)' }}>
+          <Typography variant="small" as="span" className="font-medium" style={{ color: 'var(--color-warning)' }}>
             {summary.warnings} warning{summary.warnings > 1 ? 's' : ''}
-          </span>
+          </Typography>
         )}
-      </span>
+      </Typography>
 
-      <span className="flex-1" />
-      <span className="text-xs text-[var(--color-muted-foreground)]">Click to view</span>
-    </button>
+      <Box className="flex-1" />
+      <Typography variant="caption" className="text-[var(--color-muted-foreground)]">
+        Click to view
+      </Typography>
+    </Button>
   );
 };
 

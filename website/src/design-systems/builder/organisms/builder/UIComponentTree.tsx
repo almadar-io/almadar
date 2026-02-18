@@ -7,11 +7,10 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
 import type { BuilderGraph, GraphNode } from './types';
-import { Typography, Button, Badge } from '@almadar/ui';
+import { Typography, Button, Badge, Icon, Box, VStack, HStack } from '@almadar/ui';
 import { Card, CardBody, CardHeader } from '@almadar/ui';
 import {
   Layout,
-  Box,
   Layers,
   Component,
   Circle,
@@ -168,17 +167,17 @@ export const UIComponentTree: React.FC<UIComponentTreeProps> = ({
   const getNodeIcon = (type: string) => {
     switch (type) {
       case 'Page':
-        return <FileText className="w-4 h-4" style={{ color: 'var(--color-info)' }} />;
+        return <Icon icon={FileText} size="sm" style={{ color: 'var(--color-info)' }} />;
       case 'Template':
-        return <Layout className="w-4 h-4" style={{ color: 'var(--color-primary)' }} />;
+        return <Icon icon={Layout} size="sm" style={{ color: 'var(--color-primary)' }} />;
       case 'Organism':
-        return <Layers className="w-4 h-4" style={{ color: 'var(--color-success)' }} />;
+        return <Icon icon={Layers} size="sm" style={{ color: 'var(--color-success)' }} />;
       case 'Molecule':
-        return <Component className="w-4 h-4" style={{ color: 'var(--color-warning)' }} />;
+        return <Icon icon={Component} size="sm" style={{ color: 'var(--color-warning)' }} />;
       case 'Atom':
-        return <Circle className="w-4 h-4" style={{ color: 'var(--color-warning)' }} />;
+        return <Icon icon={Circle} size="sm" style={{ color: 'var(--color-warning)' }} />;
       default:
-        return <Box className="w-4 h-4" style={{ color: 'var(--color-muted-foreground)' }} />;
+        return <Icon name="layout" size="sm" style={{ color: 'var(--color-muted-foreground)' }} />;
     }
   };
 
@@ -209,9 +208,9 @@ export const UIComponentTree: React.FC<UIComponentTreeProps> = ({
     const isHovered = hoveredNodeId === node.id;
 
     return (
-      <div key={node.id} className="select-none">
-        <div
-          className={`flex items-center gap-2 py-2 px-3 rounded-lg cursor-pointer transition-colors`}
+      <Box key={node.id} className="select-none">
+        <Box
+          className="flex items-center gap-2 py-2 px-3 rounded-lg cursor-pointer transition-colors"
           style={{
             paddingLeft: `${depth * 24 + 12}px`,
             ...(isSelected
@@ -226,8 +225,10 @@ export const UIComponentTree: React.FC<UIComponentTreeProps> = ({
         >
           {/* Expand/Collapse Button */}
           {hasChildren ? (
-            <button
-              className="w-5 h-5 flex items-center justify-center"
+            <Button
+              size="sm"
+              variant="ghost"
+              className="w-5 h-5 flex items-center justify-center p-0"
               style={{ color: 'var(--color-muted-foreground)' }}
               onClick={(e) => {
                 e.stopPropagation();
@@ -235,21 +236,21 @@ export const UIComponentTree: React.FC<UIComponentTreeProps> = ({
               }}
             >
               {isExpanded ? (
-                <ChevronDown className="w-4 h-4" />
+                <Icon icon={ChevronDown} size="sm" />
               ) : (
-                <ChevronRight className="w-4 h-4" />
+                <Icon icon={ChevronRight} size="sm" />
               )}
-            </button>
+            </Button>
           ) : (
-            <span className="w-5" />
+            <Box className="w-5" />
           )}
 
           {/* Icon */}
           {getNodeIcon(node.type)}
 
           {/* Name & Type */}
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2">
+          <VStack gap="none" flex className="min-w-0">
+            <HStack gap="xs" align="center">
               <Typography variant="body2" className="truncate" style={{ color: 'var(--color-foreground)' }}>
                 {String(node.properties.name || node.properties.componentType || node.id)}
               </Typography>
@@ -261,29 +262,33 @@ export const UIComponentTree: React.FC<UIComponentTreeProps> = ({
               {node.type === 'Page' && Boolean(node.properties.isInitial) && (
                 <Badge size="sm" variant="success">Initial</Badge>
               )}
-            </div>
+            </HStack>
 
             {/* Bindings & Triggers indicators */}
             {(bindings.length > 0 || triggers.length > 0) && (
-              <div className="flex items-center gap-2 mt-1">
+              <HStack gap="xs" align="center" className="mt-1">
                 {bindings.length > 0 && (
-                  <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--color-info)' }}>
-                    <Link2 className="w-3 h-3" />
-                    {bindings.length} binding{bindings.length > 1 ? 's' : ''}
-                  </span>
+                  <HStack gap="xs" align="center" className="text-xs" style={{ color: 'var(--color-info)' }}>
+                    <Icon icon={Link2} size="xs" />
+                    <Typography variant="caption">
+                      {bindings.length} binding{bindings.length > 1 ? 's' : ''}
+                    </Typography>
+                  </HStack>
                 )}
                 {triggers.length > 0 && (
-                  <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--color-warning)' }}>
-                    <Zap className="w-3 h-3" />
-                    {triggers.length} trigger{triggers.length > 1 ? 's' : ''}
-                  </span>
+                  <HStack gap="xs" align="center" className="text-xs" style={{ color: 'var(--color-warning)' }}>
+                    <Icon icon={Zap} size="xs" />
+                    <Typography variant="caption">
+                      {triggers.length} trigger{triggers.length > 1 ? 's' : ''}
+                    </Typography>
+                  </HStack>
                 )}
-              </div>
+              </HStack>
             )}
-          </div>
+          </VStack>
 
           {/* Actions */}
-          <div className="flex items-center gap-1">
+          <HStack gap="xs" align="center">
             {/* View JSON button - always visible */}
             <Button
               size="sm"
@@ -295,7 +300,7 @@ export const UIComponentTree: React.FC<UIComponentTreeProps> = ({
               title="View component properties"
               style={{ color: 'var(--color-muted-foreground)' }}
             >
-              <Eye className="w-3 h-3" />
+              <Icon icon={Eye} size="xs" />
             </Button>
 
             {/* Other actions - only visible when selected or hovered */}
@@ -314,7 +319,7 @@ export const UIComponentTree: React.FC<UIComponentTreeProps> = ({
                       onCreateComponent?.(node.id, childType);
                     }}
                   >
-                    <Plus className="w-3 h-3" />
+                    <Icon icon={Plus} size="xs" />
                   </Button>
                 )}
                 <Button
@@ -325,7 +330,7 @@ export const UIComponentTree: React.FC<UIComponentTreeProps> = ({
                     onEditNode?.(node.id);
                   }}
                 >
-                  <Edit2 className="w-3 h-3" />
+                  <Icon icon={Edit2} size="xs" />
                 </Button>
                 {node.type !== 'Page' || !Boolean(node.properties.isInitial) && (
                   <Button
@@ -337,29 +342,29 @@ export const UIComponentTree: React.FC<UIComponentTreeProps> = ({
                       onDeleteNode?.(node.id);
                     }}
                   >
-                    <Trash2 className="w-3 h-3" />
+                    <Icon icon={Trash2} size="xs" />
                   </Button>
                 )}
               </>
             )}
-          </div>
-        </div>
+          </HStack>
+        </Box>
 
         {/* Children */}
         {isExpanded && hasChildren && (
-          <div className="ml-2 border-l" style={{ borderColor: 'var(--color-border)' }}>
+          <Box className="ml-2 border-l" style={{ borderColor: 'var(--color-border)' }}>
             {children.map((child) => renderNode(child, depth + 1))}
-          </div>
+          </Box>
         )}
-      </div>
+      </Box>
     );
   };
 
   return (
-    <div className={`space-y-6 ${className}`}>
+    <VStack gap="lg" className={className}>
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
+      <HStack justify="between" align="center">
+        <VStack gap="none">
           <Typography variant="h4" style={{ color: 'var(--color-foreground)' }}>
             UI Components
           </Typography>
@@ -367,37 +372,37 @@ export const UIComponentTree: React.FC<UIComponentTreeProps> = ({
             {componentCounts.pages} pages, {componentCounts.organisms} organisms,{' '}
             {componentCounts.molecules} molecules, {componentCounts.atoms} atoms
           </Typography>
-        </div>
+        </VStack>
         {!readOnly && (
           <Button
             size="sm"
             variant="secondary"
-            leftIcon={<Plus className="w-4 h-4" />}
+            leftIcon={<Icon icon={Plus} size="sm" />}
             onClick={onCreatePage}
           >
             Add Page
           </Button>
         )}
-      </div>
+      </HStack>
 
       {/* Stats Bar */}
-      <div className="flex flex-wrap gap-3">
+      <HStack gap="sm" wrap>
         <Badge variant="primary">
-          <FileText className="w-3 h-3 mr-1" /> {componentCounts.pages} Pages
+          <Icon icon={FileText} size="xs" className="mr-1" /> {componentCounts.pages} Pages
         </Badge>
         <Badge variant="success">
-          <Layers className="w-3 h-3 mr-1" /> {componentCounts.organisms} Organisms
+          <Icon icon={Layers} size="xs" className="mr-1" /> {componentCounts.organisms} Organisms
         </Badge>
         <Badge variant="warning">
-          <Component className="w-3 h-3 mr-1" /> {componentCounts.molecules} Molecules
+          <Icon icon={Component} size="xs" className="mr-1" /> {componentCounts.molecules} Molecules
         </Badge>
         <Badge variant="danger">
-          <Circle className="w-3 h-3 mr-1" /> {componentCounts.atoms} Atoms
+          <Icon icon={Circle} size="xs" className="mr-1" /> {componentCounts.atoms} Atoms
         </Badge>
         <Badge variant="info">
-          <Link2 className="w-3 h-3 mr-1" /> {componentCounts.dataFields} Data Fields
+          <Icon icon={Link2} size="xs" className="mr-1" /> {componentCounts.dataFields} Data Fields
         </Badge>
-      </div>
+      </HStack>
 
       {/* Component Tree */}
       <Card style={{ backgroundColor: 'var(--color-card)', borderColor: 'var(--color-border)' }}>
@@ -408,8 +413,8 @@ export const UIComponentTree: React.FC<UIComponentTreeProps> = ({
         </CardHeader>
         <CardBody className="max-h-[500px] overflow-auto">
           {pages.length === 0 ? (
-            <div className="text-center py-12">
-              <FileText className="w-12 h-12 mx-auto mb-4" style={{ color: 'var(--color-muted-foreground)' }} />
+            <VStack align="center" gap="sm" className="py-12">
+              <Icon icon={FileText} size="xl" className="mx-auto mb-4" style={{ color: 'var(--color-muted-foreground)' }} />
               <Typography variant="h4" className="mb-2" style={{ color: 'var(--color-muted-foreground)' }}>
                 No Pages Yet
               </Typography>
@@ -417,15 +422,15 @@ export const UIComponentTree: React.FC<UIComponentTreeProps> = ({
                 Create a page to start building your UI
               </Typography>
               {!readOnly && (
-                <Button onClick={onCreatePage} leftIcon={<Plus className="w-4 h-4" />}>
+                <Button onClick={onCreatePage} leftIcon={<Icon icon={Plus} size="sm" />}>
                   Create First Page
                 </Button>
               )}
-            </div>
+            </VStack>
           ) : (
-            <div className="space-y-1">
+            <VStack gap="xs">
               {pages.map((page) => renderNode(page, 0))}
-            </div>
+            </VStack>
           )}
         </CardBody>
       </Card>
@@ -436,36 +441,36 @@ export const UIComponentTree: React.FC<UIComponentTreeProps> = ({
           <Typography variant="caption" className="block mb-3" style={{ color: 'var(--color-muted-foreground)' }}>
             Atomic Design Hierarchy
           </Typography>
-          <div className="flex flex-wrap gap-4 text-sm">
-            <span className="flex items-center gap-2">
-              <FileText className="w-4 h-4" style={{ color: 'var(--color-info)' }} />
-              <span style={{ color: 'var(--color-foreground)' }}>Page</span>
-              <span style={{ color: 'var(--color-muted-foreground)' }}>→ Contains templates/organisms</span>
-            </span>
-            <span className="flex items-center gap-2">
-              <Layout className="w-4 h-4" style={{ color: 'var(--color-primary)' }} />
-              <span style={{ color: 'var(--color-foreground)' }}>Template</span>
-              <span style={{ color: 'var(--color-muted-foreground)' }}>→ Page layouts</span>
-            </span>
-            <span className="flex items-center gap-2">
-              <Layers className="w-4 h-4" style={{ color: 'var(--color-success)' }} />
-              <span style={{ color: 'var(--color-foreground)' }}>Organism</span>
-              <span style={{ color: 'var(--color-muted-foreground)' }}>→ Complex sections</span>
-            </span>
-            <span className="flex items-center gap-2">
-              <Component className="w-4 h-4" style={{ color: 'var(--color-warning)' }} />
-              <span style={{ color: 'var(--color-foreground)' }}>Molecule</span>
-              <span style={{ color: 'var(--color-muted-foreground)' }}>→ Composite components</span>
-            </span>
-            <span className="flex items-center gap-2">
-              <Circle className="w-4 h-4" style={{ color: 'var(--color-warning)' }} />
-              <span style={{ color: 'var(--color-foreground)' }}>Atom</span>
-              <span style={{ color: 'var(--color-muted-foreground)' }}>→ Basic elements</span>
-            </span>
-          </div>
+          <HStack wrap gap="md" className="text-sm">
+            <HStack gap="xs" align="center">
+              <Icon icon={FileText} size="sm" style={{ color: 'var(--color-info)' }} />
+              <Typography variant="body2" style={{ color: 'var(--color-foreground)' }}>Page</Typography>
+              <Typography variant="body2" style={{ color: 'var(--color-muted-foreground)' }}>→ Contains templates/organisms</Typography>
+            </HStack>
+            <HStack gap="xs" align="center">
+              <Icon icon={Layout} size="sm" style={{ color: 'var(--color-primary)' }} />
+              <Typography variant="body2" style={{ color: 'var(--color-foreground)' }}>Template</Typography>
+              <Typography variant="body2" style={{ color: 'var(--color-muted-foreground)' }}>→ Page layouts</Typography>
+            </HStack>
+            <HStack gap="xs" align="center">
+              <Icon icon={Layers} size="sm" style={{ color: 'var(--color-success)' }} />
+              <Typography variant="body2" style={{ color: 'var(--color-foreground)' }}>Organism</Typography>
+              <Typography variant="body2" style={{ color: 'var(--color-muted-foreground)' }}>→ Complex sections</Typography>
+            </HStack>
+            <HStack gap="xs" align="center">
+              <Icon icon={Component} size="sm" style={{ color: 'var(--color-warning)' }} />
+              <Typography variant="body2" style={{ color: 'var(--color-foreground)' }}>Molecule</Typography>
+              <Typography variant="body2" style={{ color: 'var(--color-muted-foreground)' }}>→ Composite components</Typography>
+            </HStack>
+            <HStack gap="xs" align="center">
+              <Icon icon={Circle} size="sm" style={{ color: 'var(--color-warning)' }} />
+              <Typography variant="body2" style={{ color: 'var(--color-foreground)' }}>Atom</Typography>
+              <Typography variant="body2" style={{ color: 'var(--color-muted-foreground)' }}>→ Basic elements</Typography>
+            </HStack>
+          </HStack>
         </CardBody>
       </Card>
-    </div>
+    </VStack>
   );
 };
 

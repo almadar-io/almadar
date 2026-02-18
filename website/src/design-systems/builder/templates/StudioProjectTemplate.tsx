@@ -84,6 +84,12 @@ export interface StudioProjectTemplateProps {
   validationView?: React.ReactNode;
   /** Slot: Domain logic view component (rendered in domain-logic tab) */
   domainLogicView?: React.ReactNode;
+  /** Slot: Embedded preview panel for Build mode preview tab */
+  previewPanel?: React.ReactNode;
+  /** Slot: App sidebar */
+  sidebarSlot?: React.ReactNode;
+  /** Slot: Modals and overlays */
+  modalsSlot?: React.ReactNode;
 
   /** Additional CSS classes */
   className?: string;
@@ -106,6 +112,9 @@ export const StudioProjectTemplate: React.FC<StudioProjectTemplateProps> = ({
   glossaryView,
   validationView,
   domainLogicView,
+  previewPanel,
+  sidebarSlot,
+  modalsSlot,
   className,
   onSave,
   onCompile,
@@ -148,6 +157,9 @@ export const StudioProjectTemplate: React.FC<StudioProjectTemplateProps> = ({
       glossaryView={glossaryView}
       validationView={validationView}
       domainLogicView={domainLogicView}
+      previewPanel={previewPanel}
+      sidebarSlot={sidebarSlot}
+      modalsSlot={modalsSlot}
       className={className}
       saveEvent={onSave || "SAVE"}
       compileEvent={onCompile || "COMPILE"}

@@ -6,6 +6,7 @@
 
 import React from 'react';
 import { Plus } from 'lucide-react';
+import { Box, HStack, VStack, Button, Typography, Icon } from '@almadar/ui';
 import { DomainKeyword, DomainState } from '../../atoms/domain';
 import {
   DomainSectionHeader,
@@ -160,38 +161,39 @@ export const DomainEntitySection: React.FC<DomainEntitySectionProps> = ({
       hasError={hasError}
       className={className}
     >
-      <div className="space-y-4">
+      <VStack gap="md">
         {/* Entity header text */}
-        <div className="text-sm text-[var(--color-muted-foreground)]">
+        <Typography variant="body2" className="text-[var(--color-muted-foreground)]">
           <DomainKeyword category="entity">{article}</DomainKeyword>
           {' '}
-          <span className="font-semibold text-[var(--color-foreground)]">{entity.name}</span>
+          <Typography as="span" variant="body2" className="font-semibold text-[var(--color-foreground)]">{entity.name}</Typography>
           {' '}
           <DomainKeyword category="entity">is</DomainKeyword>
           {' '}
           {entity.description}
-        </div>
+        </Typography>
 
         {/* Fields section */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-[var(--color-muted-foreground)]">
+        <VStack gap="sm">
+          <HStack justify="between" align="center">
+            <Typography variant="body2" className="font-medium text-[var(--color-muted-foreground)]">
               <DomainKeyword category="property">It has:</DomainKeyword>
-            </span>
+            </Typography>
             {editable && onAddField && (
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={onAddField}
                 className="flex items-center gap-1 px-2 py-1 text-xs rounded hover:bg-[var(--color-secondary)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
               >
-                <Plus className="w-3 h-3" />
+                <Icon icon={Plus} size="xs" />
                 Add field
-              </button>
+              </Button>
             )}
-          </div>
+          </HStack>
 
           {hasFields ? (
-            <div className="space-y-1 ml-4">
+            <VStack gap="xs" className="ml-4">
               {entity.fields.map((field, index) => (
                 <DomainFieldRow
                   key={`${field.name}-${index}`}
@@ -205,35 +207,36 @@ export const DomainEntitySection: React.FC<DomainEntitySectionProps> = ({
                   onDelete={onDeleteField ? () => onDeleteField(index) : undefined}
                 />
               ))}
-            </div>
+            </VStack>
           ) : (
-            <div className="ml-4 text-sm text-[var(--color-muted-foreground)] italic">
+            <Typography variant="body2" className="ml-4 text-[var(--color-muted-foreground)] italic">
               No fields defined
-            </div>
+            </Typography>
           )}
-        </div>
+        </VStack>
 
         {/* Relationships section */}
         {(hasRelationships || editable) && (
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-[var(--color-muted-foreground)]">
+          <VStack gap="sm">
+            <HStack justify="between" align="center">
+              <Typography variant="body2" className="font-medium text-[var(--color-muted-foreground)]">
                 Relationships
-              </span>
+              </Typography>
               {editable && onAddRelationship && (
-                <button
-                  type="button"
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={onAddRelationship}
                   className="flex items-center gap-1 px-2 py-1 text-xs rounded hover:bg-[var(--color-secondary)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
                 >
-                  <Plus className="w-3 h-3" />
+                  <Icon icon={Plus} size="xs" />
                   Add relationship
-                </button>
+                </Button>
               )}
-            </div>
+            </HStack>
 
             {hasRelationships ? (
-              <div className="space-y-1">
+              <VStack gap="xs">
                 {entity.relationships.map((rel, index) => (
                   <DomainRelationshipRow
                     key={`${rel.targetEntity}-${index}`}
@@ -246,22 +249,22 @@ export const DomainEntitySection: React.FC<DomainEntitySectionProps> = ({
                     onTargetClick={onEntityClick ? () => onEntityClick(rel.targetEntity) : undefined}
                   />
                 ))}
-              </div>
+              </VStack>
             ) : (
-              <div className="text-sm text-[var(--color-muted-foreground)] italic">
+              <Typography variant="body2" className="text-[var(--color-muted-foreground)] italic">
                 No relationships defined
-              </div>
+              </Typography>
             )}
-          </div>
+          </VStack>
         )}
 
         {/* States section */}
         {hasStates && (
-          <div className="space-y-2">
-            <span className="text-sm font-medium text-[var(--color-muted-foreground)]">
+          <VStack gap="sm">
+            <Typography variant="body2" className="font-medium text-[var(--color-muted-foreground)]">
               <DomainKeyword category="state">It can be:</DomainKeyword>
-            </span>
-            <div className="flex flex-wrap gap-2 ml-4">
+            </Typography>
+            <Box className="flex flex-wrap gap-2 ml-4">
               {entity.states!.map((state) => (
                 <DomainState
                   key={state}
@@ -270,17 +273,17 @@ export const DomainEntitySection: React.FC<DomainEntitySectionProps> = ({
                   onClick={onStateClick ? () => onStateClick(state) : undefined}
                 />
               ))}
-            </div>
+            </Box>
             {entity.initialState && (
-              <div className="ml-4 text-sm text-[var(--color-muted-foreground)]">
+              <Typography variant="body2" className="ml-4 text-[var(--color-muted-foreground)]">
                 <DomainKeyword category="state">It starts as</DomainKeyword>
                 {' '}
-                <span className="font-medium">{entity.initialState}</span>
-              </div>
+                <Typography as="span" variant="body2" className="font-medium">{entity.initialState}</Typography>
+              </Typography>
             )}
-          </div>
+          </VStack>
         )}
-      </div>
+      </VStack>
     </DomainSectionHeader>
   );
 };

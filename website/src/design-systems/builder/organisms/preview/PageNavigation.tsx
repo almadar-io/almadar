@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { VStack, Box, Typography, cn } from '@almadar/ui';
+import { VStack, Box, Typography, Button, cn } from '@almadar/ui';
 
 /** Local type compatible with runtime ResolvedPage */
 export interface PreviewPage {
@@ -93,8 +93,9 @@ export const PageNavigation: React.FC<PageNavigationProps> = ({
                     const icon = getPageIcon(page);
 
                     return (
-                        <li key={page.name}>
-                            <button
+                        <Box as="li" key={page.name}>
+                            <Button
+                                variant="ghost"
                                 onClick={() => onPageChange(page.name)}
                                 title={collapsed ? page.name : undefined}
                                 className={cn(
@@ -108,7 +109,6 @@ export const PageNavigation: React.FC<PageNavigationProps> = ({
                                     gap: '0.75rem',
                                     padding: '0.5rem 0.75rem',
                                     textAlign: 'left',
-                                    border: 'none',
                                     cursor: 'pointer',
                                     transition: 'background-color 150ms, color 150ms',
                                     backgroundColor: isActive ? 'var(--color-primary)' : 'transparent',
@@ -116,22 +116,24 @@ export const PageNavigation: React.FC<PageNavigationProps> = ({
                                 }}
                                 onMouseEnter={(e) => {
                                     if (!isActive) {
-                                        e.currentTarget.style.backgroundColor = 'var(--color-secondary)';
+                                        (e.currentTarget as HTMLElement).style.backgroundColor = 'var(--color-secondary)';
                                     }
                                 }}
                                 onMouseLeave={(e) => {
                                     if (!isActive) {
-                                        e.currentTarget.style.backgroundColor = 'transparent';
+                                        (e.currentTarget as HTMLElement).style.backgroundColor = 'transparent';
                                     }
                                 }}
                             >
-                                <span
-                                    style={{ fontSize: '1.125rem' }}
-                                    role="img"
-                                    aria-hidden="true"
-                                >
-                                    {icon}
-                                </span>
+                                <Box className="text-lg" role="img" aria-hidden="true">
+                                    <Typography
+                                        as="span"
+                                        variant="body1"
+                                        style={{ fontSize: '1.125rem' }}
+                                    >
+                                        {icon}
+                                    </Typography>
+                                </Box>
                                 {!collapsed && (
                                     <Box style={{ flex: 1, minWidth: 0 }}>
                                         <Typography
@@ -161,8 +163,8 @@ export const PageNavigation: React.FC<PageNavigationProps> = ({
                                         )}
                                     </Box>
                                 )}
-                            </button>
-                        </li>
+                            </Button>
+                        </Box>
                     );
                 })}
             </VStack>

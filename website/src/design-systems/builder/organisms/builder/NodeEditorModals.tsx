@@ -5,7 +5,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Typography, Button, Input, Badge, Modal, FormField } from '@almadar/ui';
+import { Typography, Button, Input, Badge, Modal, FormField, VStack, HStack, Box, Checkbox, Select, Label } from '@almadar/ui';
 
 // =============================================================================
 // State Modal
@@ -34,26 +34,26 @@ export const StateModal: React.FC<StateModalProps> = ({ isOpen, onClose, onSave,
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={isEditing ? 'Edit State' : 'Create State'} size="md"
       footer={<><Button variant="ghost" onClick={onClose}>Cancel</Button><Button onClick={handleSave} disabled={!formData.name.trim()}>{isEditing ? 'Save Changes' : 'Create State'}</Button></>}>
-      <div className="space-y-4">
+      <VStack gap="md">
         <FormField label="State Name" required>
           <Input value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="e.g., Idle, Loading, Active" />
         </FormField>
         <FormField label="Description">
           <Input value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} placeholder="Optional description..." />
         </FormField>
-        <div className="flex gap-4">
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" checked={formData.isInitial} onChange={(e) => setFormData({ ...formData, isInitial: e.target.checked, isFinal: e.target.checked ? false : formData.isFinal })}
-              className="w-4 h-4 rounded" style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-surface)', accentColor: 'var(--color-primary)' }} />
-            <span style={{ color: 'var(--color-foreground)' }}>Initial State</span>
-          </label>
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" checked={formData.isFinal} onChange={(e) => setFormData({ ...formData, isFinal: e.target.checked, isInitial: e.target.checked ? false : formData.isInitial })}
-              className="w-4 h-4 rounded" style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-surface)', accentColor: 'var(--color-primary)' }} />
-            <span style={{ color: 'var(--color-foreground)' }}>Final State</span>
-          </label>
-        </div>
-      </div>
+        <HStack gap="md">
+          <Checkbox
+            label="Initial State"
+            checked={formData.isInitial}
+            onChange={(e) => setFormData({ ...formData, isInitial: e.target.checked, isFinal: e.target.checked ? false : formData.isFinal })}
+          />
+          <Checkbox
+            label="Final State"
+            checked={formData.isFinal}
+            onChange={(e) => setFormData({ ...formData, isFinal: e.target.checked, isInitial: e.target.checked ? false : formData.isInitial })}
+          />
+        </HStack>
+      </VStack>
     </Modal>
   );
 };
@@ -92,20 +92,23 @@ export const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, onSave,
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={isEditing ? 'Edit Event' : 'Create Event'} size="md"
       footer={<><Button variant="ghost" onClick={onClose}>Cancel</Button><Button onClick={handleSave} disabled={!formData.key.trim() || !formData.name.trim()}>{isEditing ? 'Save Changes' : 'Create Event'}</Button></>}>
-      <div className="space-y-4">
+      <VStack gap="md">
         <FormField label="Event Name" required>
           <Input value={formData.name} onChange={(e) => handleNameChange(e.target.value)} placeholder="e.g., Submit Form, Toggle Menu" />
         </FormField>
         <FormField label="Event Key" required>
           <Input value={formData.key} onChange={(e) => handleKeyChange(e.target.value)} placeholder="e.g., SUBMIT_FORM" />
           <Typography variant="caption" className="mt-1" style={{ color: 'var(--color-muted-foreground)' }}>
-            Auto-generated from name. Used in code: <code style={{ color: 'var(--color-primary)' }}>executeEvent("{formData.key || 'EVENT_KEY'}")</code>
+            Auto-generated from name. Used in code:{' '}
+            <Typography as="span" variant="caption" className="font-mono" style={{ color: 'var(--color-primary)' }}>
+              executeEvent("{formData.key || 'EVENT_KEY'}")
+            </Typography>
           </Typography>
         </FormField>
         <FormField label="Description">
           <Input value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} placeholder="What triggers this event?" />
         </FormField>
-      </div>
+      </VStack>
     </Modal>
   );
 };
@@ -142,17 +145,17 @@ export const PageModal: React.FC<PageModalProps> = ({ isOpen, onClose, onSave, i
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={isEditing ? 'Edit Page' : 'Create Page'} size="md"
       footer={<><Button variant="ghost" onClick={onClose}>Cancel</Button><Button onClick={handleSave} disabled={!formData.name.trim() || !formData.path.trim()}>{isEditing ? 'Save Changes' : 'Create Page'}</Button></>}>
-      <div className="space-y-4">
+      <VStack gap="md">
         <FormField label="Page Name" required><Input value={formData.name} onChange={(e) => handleNameChange(e.target.value)} placeholder="e.g., Home, Login" /></FormField>
         <FormField label="URL Path" required><Input value={formData.path} onChange={(e) => setFormData({ ...formData, path: e.target.value })} placeholder="e.g., /, /login" /></FormField>
         <FormField label="Page Title"><Input value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} placeholder="Browser tab title" /></FormField>
         <FormField label="Description"><Input value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} placeholder="What is this page for?" /></FormField>
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" checked={formData.isInitial} onChange={(e) => setFormData({ ...formData, isInitial: e.target.checked })}
-            className="w-4 h-4 rounded" style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-surface)', accentColor: 'var(--color-primary)' }} />
-          <span style={{ color: 'var(--color-foreground)' }}>Initial Page (shown first)</span>
-        </label>
-      </div>
+        <Checkbox
+          label="Initial Page (shown first)"
+          checked={formData.isInitial}
+          onChange={(e) => setFormData({ ...formData, isInitial: e.target.checked })}
+        />
+      </VStack>
     </Modal>
   );
 };
@@ -186,18 +189,24 @@ export const ComponentModal: React.FC<ComponentModalProps> = ({ isOpen, onClose,
   const handleSave = () => { if (!formData.name.trim() || !formData.componentType.trim()) return; onSave(formData); onClose(); };
   const componentOptions = COMPONENT_OPTIONS[nodeType] || [];
 
+  const selectOptions = [
+    ...componentOptions.map((opt) => ({ value: opt, label: opt })),
+    { value: 'custom', label: 'Custom Component' },
+  ];
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={isEditing ? `Edit ${nodeType}` : `Add ${nodeType}`} size="md"
       footer={<><Button variant="ghost" onClick={onClose}>Cancel</Button><Button onClick={handleSave} disabled={!formData.name.trim() || !formData.componentType.trim()}>{isEditing ? 'Save Changes' : `Add ${nodeType}`}</Button></>}>
-      <div className="space-y-4">
+      <VStack gap="md">
         <FormField label="Component Type" required>
-          <select value={formData.componentType} onChange={(e) => handleTypeChange(e.target.value)}
+          <Select
+            value={formData.componentType}
+            onChange={(e) => handleTypeChange(e.target.value)}
+            options={selectOptions}
+            placeholder="Select a component..."
             className="w-full px-3 py-2 rounded-lg border focus:ring-1"
-            style={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-border)', color: 'var(--color-foreground)' }}>
-            <option value="">Select a component...</option>
-            {componentOptions.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
-            <option value="custom">Custom Component</option>
-          </select>
+            style={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-border)', color: 'var(--color-foreground)' }}
+          />
         </FormField>
         {formData.componentType === 'custom' && (
           <FormField label="Custom Component Name" required>
@@ -207,7 +216,10 @@ export const ComponentModal: React.FC<ComponentModalProps> = ({ isOpen, onClose,
         <FormField label="Instance Name" required>
           <Input value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder={`e.g., Main${formData.componentType || nodeType}`} />
         </FormField>
-        <div className="p-3 rounded-lg border" style={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-border)' }}>
+        <Box
+          className="p-3 rounded-lg border"
+          style={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-border)' }}
+        >
           <Typography variant="caption" className="block mb-2" style={{ color: 'var(--color-muted-foreground)' }}>Atomic Design Level</Typography>
           <Badge variant={nodeType === 'Organism' ? 'success' : nodeType === 'Molecule' ? 'warning' : 'danger'}>{nodeType}</Badge>
           <Typography variant="caption" className="block mt-2" style={{ color: 'var(--color-muted-foreground)' }}>
@@ -215,8 +227,8 @@ export const ComponentModal: React.FC<ComponentModalProps> = ({ isOpen, onClose,
             {nodeType === 'Molecule' && 'Composite components made from atoms'}
             {nodeType === 'Atom' && 'Basic building blocks (buttons, inputs, text)'}
           </Typography>
-        </div>
-      </div>
+        </Box>
+      </VStack>
     </Modal>
   );
 };
@@ -242,45 +254,60 @@ export const TransitionModal: React.FC<TransitionModalProps> = ({ isOpen, onClos
 
   const handleSave = () => { if (!formData.fromStateId || !formData.toStateId || !formData.eventId) return; onSave(formData); onClose(); };
 
+  const stateOptions = states.map((s) => ({ value: s.id, label: s.name }));
+  const eventOptions = events.map((e) => ({ value: e.id, label: `${e.key} - ${e.name}` }));
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Create Transition" size="md"
       footer={<><Button variant="ghost" onClick={onClose}>Cancel</Button><Button onClick={handleSave} disabled={!formData.fromStateId || !formData.toStateId || !formData.eventId}>Create Transition</Button></>}>
-      <div className="space-y-4">
+      <VStack gap="md">
         <FormField label="From State" required>
-          <select value={formData.fromStateId} onChange={(e) => setFormData({ ...formData, fromStateId: e.target.value })}
+          <Select
+            value={formData.fromStateId}
+            onChange={(e) => setFormData({ ...formData, fromStateId: e.target.value })}
+            options={stateOptions}
+            placeholder="Select source state..."
             className="w-full px-3 py-2 rounded-lg border focus:ring-1"
-            style={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-border)', color: 'var(--color-foreground)' }}>
-            <option value="">Select source state...</option>
-            {states.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
-          </select>
+            style={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-border)', color: 'var(--color-foreground)' }}
+          />
         </FormField>
         <FormField label="On Event" required>
-          <select value={formData.eventId} onChange={(e) => setFormData({ ...formData, eventId: e.target.value })}
+          <Select
+            value={formData.eventId}
+            onChange={(e) => setFormData({ ...formData, eventId: e.target.value })}
+            options={eventOptions}
+            placeholder="Select event..."
             className="w-full px-3 py-2 rounded-lg border focus:ring-1"
-            style={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-border)', color: 'var(--color-foreground)' }}>
-            <option value="">Select event...</option>
-            {events.map((e) => <option key={e.id} value={e.id}>{e.key} - {e.name}</option>)}
-          </select>
+            style={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-border)', color: 'var(--color-foreground)' }}
+          />
         </FormField>
         <FormField label="To State" required>
-          <select value={formData.toStateId} onChange={(e) => setFormData({ ...formData, toStateId: e.target.value })}
+          <Select
+            value={formData.toStateId}
+            onChange={(e) => setFormData({ ...formData, toStateId: e.target.value })}
+            options={stateOptions}
+            placeholder="Select target state..."
             className="w-full px-3 py-2 rounded-lg border focus:ring-1"
-            style={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-border)', color: 'var(--color-foreground)' }}>
-            <option value="">Select target state...</option>
-            {states.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
-          </select>
+            style={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-border)', color: 'var(--color-foreground)' }}
+          />
         </FormField>
         <FormField label="Guard Expression (optional)">
           <Input value={formData.guardExpression || ''} onChange={(e) => setFormData({ ...formData, guardExpression: e.target.value })} placeholder="e.g., state.isValid == true" />
         </FormField>
-        <div className="p-3 rounded-lg border" style={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-border)' }}>
+        <Box
+          className="p-3 rounded-lg border"
+          style={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-border)' }}
+        >
           <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>
-            This creates a transition: When in <strong>{states.find(s => s.id === formData.fromStateId)?.name || '?'}</strong> state and{' '}
-            <strong>{events.find(e => e.id === formData.eventId)?.key || '?'}</strong> event fires, transition to{' '}
-            <strong>{states.find(s => s.id === formData.toStateId)?.name || '?'}</strong>.
+            This creates a transition: When in{' '}
+            <Typography as="span" variant="caption" className="font-bold">{states.find(s => s.id === formData.fromStateId)?.name || '?'}</Typography>
+            {' '}state and{' '}
+            <Typography as="span" variant="caption" className="font-bold">{events.find(e => e.id === formData.eventId)?.key || '?'}</Typography>
+            {' '}event fires, transition to{' '}
+            <Typography as="span" variant="caption" className="font-bold">{states.find(s => s.id === formData.toStateId)?.name || '?'}</Typography>.
           </Typography>
-        </div>
-      </div>
+        </Box>
+      </VStack>
     </Modal>
   );
 };

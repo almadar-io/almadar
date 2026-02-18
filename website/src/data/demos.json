@@ -118,11 +118,11 @@
   },
   {
     "key": "interactiveGraph",
-    "title": "Interactive Graph",
-    "description": "Force-directed graph canvas with draggable nodes, zoom controls, and grouped layouts.",
-    "height": "700px",
-    "category": "Data Viz",
-    "categoryKey": "dataViz",
+    "title": "Concept Detail",
+    "description": "AI-generated lesson with code examples, flashcard review, and progress tracking for learning paths.",
+    "height": "800px",
+    "category": "Ed Tech",
+    "categoryKey": "edTech",
     "theme": "sunset-light"
   }
 ]

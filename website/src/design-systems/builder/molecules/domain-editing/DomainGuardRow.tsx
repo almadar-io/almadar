@@ -7,6 +7,7 @@
 import React from 'react';
 import { clsx as cn } from 'clsx';
 import { Edit2, Shield, AlertCircle } from 'lucide-react';
+import { Typography, Button, HStack, Box } from '@almadar/ui';
 import { DomainKeyword, DomainOperator } from '../../atoms/domain';
 
 export type GuardType = 'field_check' | 'comparison' | 'user_check' | 'logical';
@@ -101,63 +102,63 @@ function renderGuardExpression(guard: GuardExpression, size: 'sm' | 'md'): React
   switch (guard.type) {
     case 'field_check':
       return (
-        <span className={cn('inline-flex items-center gap-1', fontSize)}>
-          <span className="font-medium text-[var(--color-foreground)]">
+        <HStack gap="xs" align="center" className={cn('inline-flex', fontSize)}>
+          <Typography variant="small" as="span" className="font-medium text-[var(--color-foreground)]">
             {guard.field?.fieldName || 'field'}
-          </span>
+          </Typography>
           <DomainKeyword category="guard" size={size}>
             {guard.operator === 'provided' ? 'is provided' :
              guard.operator === 'empty' ? 'is empty' :
              `is ${guard.value}`}
           </DomainKeyword>
-        </span>
+        </HStack>
       );
 
     case 'comparison':
       return (
-        <span className={cn('inline-flex items-center gap-1', fontSize)}>
-          <span className="font-mono text-[var(--color-foreground)]">
+        <HStack gap="xs" align="center" className={cn('inline-flex', fontSize)}>
+          <Typography variant="small" as="span" className="font-mono text-[var(--color-foreground)]">
             {guard.field?.entityName}.{guard.field?.fieldName}
-          </span>
+          </Typography>
           <DomainOperator operator={guard.operator || '=='} size={size} />
-          <span className="font-mono" style={{ color: 'var(--color-success)' }}>
+          <Typography variant="small" as="span" className="font-mono" style={{ color: 'var(--color-success)' }}>
             {typeof guard.value === 'string' ? `"${guard.value}"` : guard.value}
-          </span>
-        </span>
+          </Typography>
+        </HStack>
       );
 
     case 'user_check':
       if (guard.role) {
         return (
-          <span className={cn('inline-flex items-center gap-1', fontSize)}>
+          <HStack gap="xs" align="center" className={cn('inline-flex', fontSize)}>
             <DomainKeyword category="guard" size={size}>user is</DomainKeyword>
-            <span className="font-medium" style={{ color: 'var(--color-accent)' }}>
+            <Typography variant="small" as="span" className="font-medium" style={{ color: 'var(--color-accent)' }}>
               {guard.role}
-            </span>
-          </span>
+            </Typography>
+          </HStack>
         );
       }
       return (
-        <span className={cn('inline-flex items-center gap-1', fontSize)}>
+        <HStack gap="xs" align="center" className={cn('inline-flex', fontSize)}>
           <DomainKeyword category="guard" size={size}>user owns this</DomainKeyword>
-        </span>
+        </HStack>
       );
 
     case 'logical':
       return (
-        <span className={cn('inline-flex items-center gap-1 flex-wrap', fontSize)}>
+        <HStack gap="xs" align="center" wrap className={cn('inline-flex', fontSize)}>
           {guard.left && renderGuardExpression(guard.left, size)}
           <DomainOperator operator={guard.operator as 'AND' | 'OR'} size={size} />
           {guard.right && renderGuardExpression(guard.right, size)}
-        </span>
+        </HStack>
       );
 
     default:
       // Fallback to raw text
       return (
-        <span className={cn('font-mono text-[var(--color-muted-foreground)]', fontSize)}>
+        <Typography variant="small" as="span" className={cn('font-mono text-[var(--color-muted-foreground)]', fontSize)}>
           {guard.raw}
-        </span>
+        </Typography>
       );
   }
 }
@@ -174,10 +175,11 @@ export const DomainGuardRow: React.FC<DomainGuardRowProps> = ({
   const paddingClasses = size === 'sm' ? 'px-2 py-1' : 'px-3 py-2';
 
   return (
-    <div
+    <HStack
+      gap="sm"
+      align="center"
       className={cn(
-        'group flex items-center gap-2 rounded-lg',
-        'border',
+        'group rounded-lg border',
         paddingClasses,
         className
       )}
@@ -203,33 +205,30 @@ export const DomainGuardRow: React.FC<DomainGuardRowProps> = ({
       )}
 
       {/* Guard expression */}
-      <div className="flex-1 min-w-0">
+      <Box className="flex-1 min-w-0">
         {renderGuardExpression(guard, size)}
-      </div>
+      </Box>
 
       {/* Error indicator */}
       {error && (
-        <div className="flex items-center gap-1" style={{ color: 'var(--color-error)' }} title={error}>
+        <Box className="flex items-center gap-1" style={{ color: 'var(--color-error)' }} title={error}>
           <AlertCircle className="w-4 h-4 flex-shrink-0" />
-        </div>
+        </Box>
       )}
 
       {/* Edit button */}
       {editable && onEdit && (
-        <button
-          type="button"
+        <Button
+          variant="ghost"
+          size="sm"
           onClick={onEdit}
-          className={cn(
-            'p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity',
-            'hover:bg-[color-mix(in_srgb,var(--color-error)_15%,transparent)]',
-            'text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]'
-          )}
           title="Edit guard"
+          className="p-1 opacity-0 group-hover:opacity-100 transition-opacity text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
         >
           <Edit2 className={size === 'sm' ? 'w-3 h-3' : 'w-3.5 h-3.5'} />
-        </button>
+        </Button>
       )}
-    </div>
+    </HStack>
   );
 };
 

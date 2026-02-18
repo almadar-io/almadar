@@ -9,8 +9,18 @@
  */
 
 import React, { useState, useMemo } from 'react';
-import { ChevronRight, ChevronDown, Box, Layers, Zap, Settings } from 'lucide-react';
-import { Typography, useEventBus } from '@almadar/ui';
+import { ChevronRight, ChevronDown, Box as BoxIcon, Layers, Zap, Settings } from 'lucide-react';
+import {
+  Box,
+  VStack,
+  HStack,
+  Center,
+  Typography,
+  Badge,
+  Icon,
+  Select,
+  useEventBus,
+} from '@almadar/ui';
 
 // =============================================================================
 // Types
@@ -130,13 +140,13 @@ const TreeNodeComponent: React.FC<{
   };
 
   return (
-    <div className="select-none">
-      <div
+    <Box className="select-none">
+      <HStack
+        gap="xs"
+        align="center"
         onClick={handleClick}
-        className={`flex items-center gap-2 py-1.5 px-2 rounded cursor-pointer transition-colors duration-150 border-l-2 ${
-          isSelected
-            ? ''
-            : 'border-transparent'
+        className={`py-1.5 px-2 rounded cursor-pointer transition-colors duration-150 border-l-2 ${
+          isSelected ? '' : 'border-transparent'
         }`}
         style={{
           paddingLeft: `${depth * 16 + 8}px`,
@@ -148,28 +158,56 @@ const TreeNodeComponent: React.FC<{
             : {}),
         }}
       >
-        <span className="w-4 h-4 flex items-center justify-center" style={{ color: 'var(--color-muted-foreground)' }}>
+        <Box
+          display="inline-flex"
+          className="w-4 h-4 items-center justify-center"
+          style={{ color: 'var(--color-muted-foreground)' }}
+        >
           {hasChildren ? (
-            isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />
+            isExpanded
+              ? <Icon icon={ChevronDown} size="sm" />
+              : <Icon icon={ChevronRight} size="sm" />
           ) : (
-            <span className="w-1 h-1 rounded-full" style={{ backgroundColor: 'var(--color-border)' }} />
+            <Box
+              className="w-1 h-1 rounded-full"
+              style={{ backgroundColor: 'var(--color-border)' }}
+            />
           )}
-        </span>
+        </Box>
 
-        <span style={{ color: node.isSystem ? 'var(--color-accent)' : 'var(--color-primary)' }}>
-          {node.type === 'Page' ? <Layers className="w-4 h-4" /> : node.isSystem ? <Settings className="w-4 h-4" /> : <Box className="w-4 h-4" />}
-        </span>
+        <Box
+          display="inline-flex"
+          style={{ color: node.isSystem ? 'var(--color-accent)' : 'var(--color-primary)' }}
+        >
+          {node.type === 'Page'
+            ? <Icon icon={Layers} size="sm" />
+            : node.isSystem
+              ? <Icon icon={Settings} size="sm" />
+              : <Icon icon={BoxIcon} size="sm" />
+          }
+        </Box>
 
-        <span className="text-sm" style={{ color: node.isSystem ? 'var(--color-accent)' : 'var(--color-foreground)' }}>
+        <Typography
+          variant="body2"
+          style={{ color: node.isSystem ? 'var(--color-accent)' : 'var(--color-foreground)' }}
+        >
           {node.name}
-        </span>
+        </Typography>
 
         {node.componentType && node.componentType !== node.name && (
-          <span className="text-xs px-1.5 py-0.5 rounded" style={{ color: 'var(--color-muted-foreground)', backgroundColor: 'var(--color-card)' }}>{node.componentType}</span>
+          <Badge
+            variant="neutral"
+            size="sm"
+            style={{ color: 'var(--color-muted-foreground)', backgroundColor: 'var(--color-card)' }}
+          >
+            {node.componentType}
+          </Badge>
         )}
+
         {node.isSystem && (
-          <span
-            className="text-xs px-1.5 py-0.5 rounded border"
+          <Badge
+            variant="info"
+            size="sm"
             style={{
               color: 'var(--color-accent)',
               backgroundColor: 'color-mix(in srgb, var(--color-accent) 10%, transparent)',
@@ -177,58 +215,87 @@ const TreeNodeComponent: React.FC<{
             }}
           >
             system
-          </span>
+          </Badge>
         )}
+
         {node.events && node.events.length > 0 && (
-          <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--color-warning)' }}>
-            <Zap className="w-3 h-3" />
-            {node.events.join(', ')}
-          </span>
+          <HStack gap="xs" align="center" style={{ color: 'var(--color-warning)' }}>
+            <Icon icon={Zap} size="xs" />
+            <Typography variant="caption" style={{ color: 'var(--color-warning)' }}>
+              {node.events.join(', ')}
+            </Typography>
+          </HStack>
         )}
-      </div>
+      </HStack>
 
       {isExpanded && hasChildren && (
-        <div>
+        <Box>
           {node.children.map(child => (
             <TreeNodeComponent key={child.id} node={child} depth={depth + 1} selectedId={selectedId} onSelect={onSelect} />
           ))}
-        </div>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };
 
 const ComponentDetails: React.FC<{ node: TreeNode }> = ({ node }) => (
-  <div className="p-3 rounded-lg border text-sm" style={{ backgroundColor: 'var(--color-card)', borderColor: 'var(--color-border)' }}>
-    <Typography variant="h6" className="mb-3" style={{ color: 'var(--color-foreground)' }}>{node.name}</Typography>
-    <div className="space-y-3">
-      <div>
+  <Box
+    padding="sm"
+    rounded="md"
+    border
+    style={{ backgroundColor: 'var(--color-card)', borderColor: 'var(--color-border)' }}
+  >
+    <Typography variant="h6" className="mb-3" style={{ color: 'var(--color-foreground)' }}>
+      {node.name}
+    </Typography>
+    <VStack gap="sm">
+      <VStack gap="none">
         <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>Type</Typography>
-        <div style={{ color: 'var(--color-foreground)' }}>{node.componentType || node.type}</div>
-      </div>
+        <Typography variant="body2" style={{ color: 'var(--color-foreground)' }}>
+          {node.componentType || node.type}
+        </Typography>
+      </VStack>
+
       {node.props && Object.keys(node.props).length > 0 && (
-        <div>
+        <VStack gap="none">
           <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>Props</Typography>
-          <div className="mt-1 space-y-1 max-h-48 overflow-auto">
-            {Object.entries(node.props).map(([key, value]) => (
-              <div key={key} className="flex items-start gap-2 text-xs">
-                <span className="font-mono" style={{ color: 'var(--color-primary)' }}>{key}:</span>
-                <span className="font-mono truncate max-w-[150px]" style={{ color: 'var(--color-muted-foreground)' }}>
-                  {typeof value === 'object' ? JSON.stringify(value).slice(0, 80) + (JSON.stringify(value).length > 80 ? '...' : '') : String(value)}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
+          <Box className="mt-1" overflow="auto" style={{ maxHeight: '12rem' }}>
+            <VStack gap="xs">
+              {Object.entries(node.props).map(([key, value]) => (
+                <HStack key={key} gap="xs" align="start">
+                  <Typography
+                    variant="caption"
+                    className="font-mono"
+                    style={{ color: 'var(--color-primary)' }}
+                  >
+                    {key}:
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                    className="font-mono truncate"
+                    style={{ color: 'var(--color-muted-foreground)', maxWidth: '150px' }}
+                  >
+                    {typeof value === 'object'
+                      ? JSON.stringify(value).slice(0, 80) + (JSON.stringify(value).length > 80 ? '...' : '')
+                      : String(value)}
+                  </Typography>
+                </HStack>
+              ))}
+            </VStack>
+          </Box>
+        </VStack>
       )}
+
       {node.events && node.events.length > 0 && (
-        <div>
+        <VStack gap="none">
           <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>Event Triggers</Typography>
-          <div className="mt-1 flex flex-wrap gap-1">
+          <HStack gap="xs" wrap className="mt-1">
             {node.events.map(event => (
-              <span
+              <Badge
                 key={event}
-                className="text-xs px-2 py-0.5 rounded border"
+                variant="warning"
+                size="sm"
                 style={{
                   backgroundColor: 'color-mix(in srgb, var(--color-warning) 20%, transparent)',
                   color: 'var(--color-warning)',
@@ -236,19 +303,22 @@ const ComponentDetails: React.FC<{ node: TreeNode }> = ({ node }) => (
                 }}
               >
                 {event}
-              </span>
+              </Badge>
             ))}
-          </div>
-        </div>
+          </HStack>
+        </VStack>
       )}
+
       {node.children.length > 0 && (
-        <div>
+        <VStack gap="none">
           <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>Children</Typography>
-          <div style={{ color: 'var(--color-foreground)' }}>{node.children.length} components</div>
-        </div>
+          <Typography variant="body2" style={{ color: 'var(--color-foreground)' }}>
+            {node.children.length} components
+          </Typography>
+        </VStack>
       )}
-    </div>
-  </div>
+    </VStack>
+  </Box>
 );
 
 // =============================================================================
@@ -295,54 +365,84 @@ export const ComponentTreeBoard: React.FC<ComponentTreeBoardProps> = ({
   const totalComponents = countNodes(componentTree);
   const systemCount = countNodes(componentTree, n => !!n.isSystem);
 
+  const pageSelectOptions = pages.map(page => ({
+    value: page.name,
+    label: `${page.name} (${page.path})`,
+  }));
+
   return (
-    <div className={`flex flex-col h-full ${className}`}>
-      <div className="flex items-center gap-2 p-3 border-b" style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-surface)' }}>
+    <VStack gap="none" className={`h-full ${className}`}>
+      <HStack
+        gap="xs"
+        align="center"
+        className="p-2 border-b"
+        style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-surface)' }}
+      >
         <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>Page:</Typography>
-        <select
+        <Select
+          className="flex-1 text-sm rounded"
           value={activePageName || ''}
-          onChange={(e) => { setActivePageName(e.target.value || undefined); setSelectedNodeId(null); }}
-          className="flex-1 text-sm rounded px-2 py-1 border focus:outline-none"
+          onChange={(e) => {
+            setActivePageName((e.target as HTMLSelectElement).value || undefined);
+            setSelectedNodeId(null);
+          }}
+          options={pageSelectOptions}
+          placeholder="Select a page..."
           style={{
             backgroundColor: 'var(--color-surface)',
             color: 'var(--color-foreground)',
             borderColor: 'var(--color-border)',
           }}
-        >
-          <option value="">Select a page...</option>
-          {pages.map(page => (
-            <option key={page.name} value={page.name}>{page.name} ({page.path})</option>
-          ))}
-        </select>
+        />
         {activePageName && (
-          <span className="text-xs" style={{ color: 'var(--color-muted-foreground)' }}>
-            {totalComponents} components
-            {systemCount > 0 && <span className="ml-1" style={{ color: 'var(--color-accent)' }}>({systemCount} system)</span>}
-          </span>
+          <HStack gap="xs" align="center">
+            <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>
+              {totalComponents} components
+            </Typography>
+            {systemCount > 0 && (
+              <Typography variant="caption" style={{ color: 'var(--color-accent)' }}>
+                ({systemCount} system)
+              </Typography>
+            )}
+          </HStack>
         )}
-      </div>
+      </HStack>
 
-      <div className="flex-1 flex overflow-hidden">
-        <div className="flex-1 overflow-auto p-2" style={{ backgroundColor: 'var(--color-card)' }}>
+      <HStack gap="none" flex className="overflow-hidden">
+        <Box
+          className="flex-1 overflow-auto p-1"
+          style={{ backgroundColor: 'var(--color-card)' }}
+        >
           {componentTree ? (
-            <TreeNodeComponent node={componentTree} depth={0} selectedId={selectedNodeId || undefined} onSelect={handleSelect} />
+            <TreeNodeComponent
+              node={componentTree}
+              depth={0}
+              selectedId={selectedNodeId || undefined}
+              onSelect={handleSelect}
+            />
           ) : pages.length === 0 ? (
-            <div className="flex items-center justify-center h-full" style={{ color: 'var(--color-muted-foreground)' }}>
+            <Center fullHeight style={{ color: 'var(--color-muted-foreground)' }}>
               <Typography variant="body2">No pages found in schema</Typography>
-            </div>
+            </Center>
           ) : (
-            <div className="flex items-center justify-center h-full" style={{ color: 'var(--color-muted-foreground)' }}>
+            <Center fullHeight style={{ color: 'var(--color-muted-foreground)' }}>
               <Typography variant="body2">Select a page to view its component tree</Typography>
-            </div>
+            </Center>
           )}
-        </div>
+        </Box>
+
         {selectedNode && (
-          <div className="w-72 border-l overflow-auto p-2" style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-surface)' }}>
+          <Box
+            overflow="auto"
+            padding="xs"
+            className="w-72 border-l"
+            style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-surface)' }}
+          >
             <ComponentDetails node={selectedNode} />
-          </div>
+          </Box>
         )}
-      </div>
-    </div>
+      </HStack>
+    </VStack>
   );
 };
 

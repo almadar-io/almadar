@@ -51,11 +51,12 @@ import {
   Badge,
   Card,
   useEventBus,
+  cn,
 } from '@almadar/ui';
 
 export type StudioMode = "hq" | "build";
 export type HQTab = "story" | "flow" | "glossary" | "history" | "info" | "proposal" | "design-system" | "preview";
-export type BuildTab = "schema" | "visualization" | "validation" | "domain-logic";
+export type BuildTab = "schema" | "visualization" | "validation" | "domain-logic" | "preview";
 
 export interface ProjectInfo {
   id: string;
@@ -110,6 +111,12 @@ export interface StudioProjectBoardProps {
   domainLogicView?: React.ReactNode;
   /** Slot: Preview view component (rendered in HQ preview tab) */
   previewView?: React.ReactNode;
+  /** Slot: Embedded preview panel for Build mode preview tab */
+  previewPanel?: React.ReactNode;
+  /** Slot: App sidebar */
+  sidebarSlot?: React.ReactNode;
+  /** Slot: Modals and overlays (rendered inside the layout but visually floating) */
+  modalsSlot?: React.ReactNode;
 
   /** Additional CSS classes */
   className?: string;
@@ -176,6 +183,9 @@ export const StudioProjectBoard: React.FC<StudioProjectBoardProps> = ({
   validationView,
   domainLogicView,
   previewView,
+  previewPanel,
+  sidebarSlot,
+  modalsSlot,
   className = "",
   saveEvent,
   compileEvent,
@@ -254,12 +264,16 @@ export const StudioProjectBoard: React.FC<StudioProjectBoardProps> = ({
     { id: "domain-logic" as const, label: "Domain Logic", icon: FileText },
     { id: "visualization" as const, label: "Visualization", icon: GitBranch },
     { id: "validation" as const, label: "Validation", icon: CheckCircle },
+    { id: "preview" as const, label: "Preview", icon: Play },
   ];
 
   const currentTabs = mode === "hq" ? hqTabs : buildTabs;
 
   return (
     <HStack gap="none" className={`h-screen ${className}`}>
+      {/* App Sidebar (from connected wrapper) */}
+      {sidebarSlot}
+
       {/* Left Sidebar - Mode Switcher */}
       <Box
         border
@@ -361,13 +375,13 @@ export const StudioProjectBoard: React.FC<StudioProjectBoardProps> = ({
                   >
                     <HStack gap="xs" align="center">
                       <Icon icon={CheckCircle} size="sm" />
-                      <span>Validate</span>
+                      <Typography as="span" variant="body2">Validate</Typography>
                     </HStack>
                   </Button>
                   <Button variant="secondary" size="sm" onClick={handleCompile}>
                     <HStack gap="xs" align="center">
                       <Icon icon={Package} size="sm" />
-                      <span>Compile</span>
+                      <Typography as="span" variant="body2">Compile</Typography>
                     </HStack>
                   </Button>
                 </>
@@ -375,13 +389,13 @@ export const StudioProjectBoard: React.FC<StudioProjectBoardProps> = ({
               <Button variant="secondary" size="sm" onClick={handlePreview}>
                 <HStack gap="xs" align="center">
                   <Icon icon={Play} size="sm" />
-                  <span>Preview</span>
+                  <Typography as="span" variant="body2">Preview</Typography>
                 </HStack>
               </Button>
               <Button onClick={handleSave}>
                 <HStack gap="xs" align="center">
                   <Icon icon={Save} size="sm" />
-                  <span>Save</span>
+                  <Typography as="span" variant="body2">Save</Typography>
                 </HStack>
               </Button>
               <Button variant={showAgentPanel ? "default" : "ghost"} size="sm" onClick={handleToggleAgent} title="AI Assistant">
@@ -412,7 +426,7 @@ export const StudioProjectBoard: React.FC<StudioProjectBoardProps> = ({
               >
                 <HStack gap="xs" align="center">
                   <Icon icon={tab.icon} size="sm" />
-                  <span>{tab.label}</span>
+                  <Typography as="span" variant="body2">{tab.label}</Typography>
                 </HStack>
               </Button>
             ))}
@@ -422,7 +436,7 @@ export const StudioProjectBoard: React.FC<StudioProjectBoardProps> = ({
         {/* Content Area */}
         <HStack gap="none" flex className="overflow-hidden">
           {/* Main Panel */}
-          <VStack flex className="h-full overflow-auto p-6">
+          <VStack flex className={cn("h-full overflow-auto", activeTab !== "preview" && "p-6")}>
             {/* HQ Mode Content */}
             {/* Story Tab */}
             {mode === "hq" && activeTab === "story" && (
@@ -796,6 +810,34 @@ export const StudioProjectBoard: React.FC<StudioProjectBoardProps> = ({
                 )}
               </Box>
             )}
+
+            {mode === "build" && activeTab === "preview" && (
+              <Box className="h-full overflow-hidden">
+                {previewPanel || (
+                  <Card padding="lg" className="h-full">
+                    <VStack
+                      gap="md"
+                      align="center"
+                      justify="center"
+                      className="h-full"
+                    >
+                      <Icon
+                        icon={Play}
+                        size="lg"
+                        className="text-[var(--color-muted-foreground)] opacity-50"
+                      />
+                      <Typography
+                        variant="body1"
+                        className="text-[var(--color-muted-foreground)]"
+                      >
+                        Compile and preview your app here
+                      </Typography>
+                      <Button onClick={handleCompile}>Compile &amp; Preview</Button>
+                    </VStack>
+                  </Card>
+                )}
+              </Box>
+            )}
           </VStack>
 
           {/* Inspector is now a tooltip/popover anchored to the PanelRight button in the top bar */}
@@ -837,6 +879,9 @@ export const StudioProjectBoard: React.FC<StudioProjectBoardProps> = ({
           </VStack>
         </Box>
       )}
+
+      {/* Modals and overlays — rendered inside layout, positioned by CSS */}
+      {modalsSlot}
     </HStack>
   );
 };

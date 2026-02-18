@@ -7,6 +7,7 @@
 
 import React from 'react';
 import { clsx as cn } from 'clsx';
+import { Typography } from '@almadar/ui';
 import {
   Type,
   Hash,
@@ -139,7 +140,10 @@ export const DomainFieldType: React.FC<DomainFieldTypeProps> = ({
   };
 
   return (
-    <span
+    <Typography
+      as="span"
+      variant="small"
+      color="inherit"
       className={cn(
         'inline-flex items-center font-medium rounded-md',
         sizeClasses[size],
@@ -151,8 +155,8 @@ export const DomainFieldType: React.FC<DomainFieldTypeProps> = ({
       }}
     >
       {showIcon && <Icon className={iconSizeClasses[size]} />}
-      <span>{config.label}</span>
-    </span>
+      {config.label}
+    </Typography>
   );
 };
 

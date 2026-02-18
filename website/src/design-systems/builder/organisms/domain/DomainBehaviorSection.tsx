@@ -6,6 +6,7 @@
 
 import React from 'react';
 import { Plus, Clock, AlertCircle } from 'lucide-react';
+import { Box, HStack, VStack, Button, Typography, Icon } from '@almadar/ui';
 import { DomainKeyword, DomainState } from '../../atoms/domain';
 import {
   DomainSectionHeader,
@@ -162,27 +163,28 @@ export const DomainBehaviorSection: React.FC<DomainBehaviorSectionProps> = ({
       hasError={hasError}
       className={className}
     >
-      <div className="space-y-6">
+      <VStack gap="lg">
         {/* States */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-[var(--color-muted-foreground)]">
+        <VStack gap="sm">
+          <HStack justify="between" align="center">
+            <Typography variant="body2" className="font-medium text-[var(--color-muted-foreground)]">
               <DomainKeyword category="state">States:</DomainKeyword>
-            </span>
+            </Typography>
             {editable && onAddState && (
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={onAddState}
                 className="flex items-center gap-1 px-2 py-1 text-xs rounded hover:bg-[var(--color-secondary)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
               >
-                <Plus className="w-3 h-3" />
+                <Icon icon={Plus} size="xs" />
                 Add state
-              </button>
+              </Button>
             )}
-          </div>
+          </HStack>
 
           {hasStates ? (
-            <div className="flex flex-wrap gap-2 ml-4">
+            <Box className="flex flex-wrap gap-2 ml-4">
               {behavior.states.map((state) => (
                 <DomainState
                   key={state}
@@ -191,34 +193,35 @@ export const DomainBehaviorSection: React.FC<DomainBehaviorSectionProps> = ({
                   onClick={onStateClick ? () => onStateClick(state) : undefined}
                 />
               ))}
-            </div>
+            </Box>
           ) : (
-            <div className="ml-4 text-sm text-[var(--color-muted-foreground)] italic">
+            <Typography variant="body2" className="ml-4 text-[var(--color-muted-foreground)] italic">
               No states defined
-            </div>
+            </Typography>
           )}
-        </div>
+        </VStack>
 
         {/* Transitions */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-[var(--color-muted-foreground)]">
+        <VStack gap="sm">
+          <HStack justify="between" align="center">
+            <Typography variant="body2" className="font-medium text-[var(--color-muted-foreground)]">
               <DomainKeyword category="behavior">Transitions:</DomainKeyword>
-            </span>
+            </Typography>
             {editable && onAddTransition && (
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={onAddTransition}
                 className="flex items-center gap-1 px-2 py-1 text-xs rounded hover:bg-[var(--color-secondary)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
               >
-                <Plus className="w-3 h-3" />
+                <Icon icon={Plus} size="xs" />
                 Add transition
-              </button>
+              </Button>
             )}
-          </div>
+          </HStack>
 
           {hasTransitions ? (
-            <div className="space-y-2 ml-4">
+            <VStack gap="sm" className="ml-4">
               {behavior.transitions.map((transition, index) => (
                 <DomainTransitionRow
                   key={`${transition.fromState}-${transition.toState}-${transition.event}`}
@@ -233,78 +236,82 @@ export const DomainBehaviorSection: React.FC<DomainBehaviorSectionProps> = ({
                   onStateClick={onStateClick}
                 />
               ))}
-            </div>
+            </VStack>
           ) : (
-            <div className="ml-4 text-sm text-[var(--color-muted-foreground)] italic">
+            <Typography variant="body2" className="ml-4 text-[var(--color-muted-foreground)] italic">
               No transitions defined
-            </div>
+            </Typography>
           )}
-        </div>
+        </VStack>
 
         {/* Ticks */}
         {(hasTicks || editable) && (
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-[var(--color-muted-foreground)]">
+          <VStack gap="sm">
+            <HStack justify="between" align="center">
+              <Typography variant="body2" className="font-medium text-[var(--color-muted-foreground)]">
                 <DomainKeyword category="behavior">Scheduled Tasks (Ticks):</DomainKeyword>
-              </span>
+              </Typography>
               {editable && onAddTick && (
-                <button
-                  type="button"
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={onAddTick}
                   className="flex items-center gap-1 px-2 py-1 text-xs rounded hover:bg-[var(--color-secondary)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
                 >
-                  <Plus className="w-3 h-3" />
+                  <Icon icon={Plus} size="xs" />
                   Add tick
-                </button>
+                </Button>
               )}
-            </div>
+            </HStack>
 
             {hasTicks ? (
-              <div className="space-y-3 ml-4">
+              <VStack gap="md" className="ml-4">
                 {behavior.ticks.map((tick, index) => (
-                  <div
+                  <Box
                     key={tick.name}
                     className="rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] p-3 space-y-2"
                   >
                     {/* Tick header */}
-                    <div className="flex items-center gap-2">
+                    <HStack gap="sm" align="center">
                       <Clock className="w-4 h-4" style={{ color: 'var(--color-accent)' }} />
                       <DomainKeyword category="behavior">Every</DomainKeyword>
-                      <span
-                        className="font-mono text-sm px-2 py-0.5 rounded"
+                      <Typography
+                        variant="caption"
+                        className="font-mono px-2 py-0.5 rounded"
                         style={{
                           backgroundColor: 'color-mix(in srgb, var(--color-accent) 15%, transparent)',
                           color: 'var(--color-accent)',
                         }}
                       >
                         {tick.interval}
-                      </span>
-                      <span className="text-[var(--color-muted-foreground)]">:</span>
+                      </Typography>
+                      <Typography variant="body2" className="text-[var(--color-muted-foreground)]">:</Typography>
 
                       {editable && (
-                        <div className="flex items-center gap-1 ml-auto">
+                        <HStack gap="xs" align="center" className="ml-auto">
                           {onEditTick && (
-                            <button
-                              type="button"
+                            <Button
+                              variant="ghost"
+                              size="sm"
                               onClick={() => onEditTick(index)}
                               className="p-1 rounded hover:bg-[var(--color-secondary)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
                             >
                               Edit
-                            </button>
+                            </Button>
                           )}
                           {onDeleteTick && (
-                            <button
-                              type="button"
+                            <Button
+                              variant="ghost"
+                              size="sm"
                               onClick={() => onDeleteTick(index)}
                               className="p-1 rounded hover:bg-[var(--color-error)]/10 text-[var(--color-muted-foreground)] hover:text-[var(--color-error)]"
                             >
                               Delete
-                            </button>
+                            </Button>
                           )}
-                        </div>
+                        </HStack>
                       )}
-                    </div>
+                    </HStack>
 
                     {/* Tick guard */}
                     {tick.guard && (
@@ -313,58 +320,62 @@ export const DomainBehaviorSection: React.FC<DomainBehaviorSectionProps> = ({
 
                     {/* Tick effects */}
                     {tick.effects.length > 0 && (
-                      <div className="space-y-1">
+                      <VStack gap="xs">
                         {tick.effects.map((effect, effectIndex) => (
-                          <div
+                          <HStack
                             key={effectIndex}
-                            className="flex items-center gap-2 px-3 py-1.5 rounded text-sm"
+                            gap="sm"
+                            align="center"
+                            className="px-3 py-1.5 rounded"
                             style={{ backgroundColor: 'color-mix(in srgb, var(--color-warning) 10%, transparent)' }}
                           >
-                            <span className="text-[var(--color-muted-foreground)] font-mono">-</span>
-                            <span className="text-[var(--color-foreground)]">
+                            <Typography variant="caption" className="text-[var(--color-muted-foreground)] font-mono">-</Typography>
+                            <Typography variant="body2" className="text-[var(--color-foreground)]">
                               {effect.description}
-                            </span>
-                          </div>
+                            </Typography>
+                          </HStack>
                         ))}
-                      </div>
+                      </VStack>
                     )}
-                  </div>
+                  </Box>
                 ))}
-              </div>
+              </VStack>
             ) : (
-              <div className="ml-4 text-sm text-[var(--color-muted-foreground)] italic">
+              <Typography variant="body2" className="ml-4 text-[var(--color-muted-foreground)] italic">
                 No scheduled tasks defined
-              </div>
+              </Typography>
             )}
-          </div>
+          </VStack>
         )}
 
         {/* Rules */}
         {hasRules && (
-          <div className="space-y-2">
-            <span className="text-sm font-medium text-[var(--color-muted-foreground)]">
+          <VStack gap="sm">
+            <Typography variant="body2" className="font-medium text-[var(--color-muted-foreground)]">
               <DomainKeyword category="guard">Rules:</DomainKeyword>
-            </span>
-            <div className="space-y-1 ml-4">
+            </Typography>
+            <VStack gap="xs" className="ml-4">
               {behavior.rules.map((rule, index) => (
-                <div
+                <HStack
                   key={index}
-                  className="flex items-start gap-2 px-3 py-2 rounded-lg border"
+                  gap="sm"
+                  align="start"
+                  className="px-3 py-2 rounded-lg border"
                   style={{
                     backgroundColor: 'color-mix(in srgb, var(--color-warning) 10%, transparent)',
                     borderColor: 'color-mix(in srgb, var(--color-warning) 30%, transparent)',
                   }}
                 >
                   <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: 'var(--color-warning)' }} />
-                  <span className="text-sm text-[var(--color-foreground)]">
+                  <Typography variant="body2" className="text-[var(--color-foreground)]">
                     {rule}
-                  </span>
-                </div>
+                  </Typography>
+                </HStack>
               ))}
-            </div>
-          </div>
+            </VStack>
+          </VStack>
         )}
-      </div>
+      </VStack>
     </DomainSectionHeader>
   );
 };

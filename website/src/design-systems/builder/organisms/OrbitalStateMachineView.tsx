@@ -23,6 +23,8 @@ import type {
     DomOutputsBox,
     VisualizerConfig,
 } from '@almadar/ui/lib';
+import { Box, VStack, HStack, Typography, Button, Icon } from '@almadar/ui';
+import { X } from 'lucide-react';
 
 // =============================================================================
 // Types
@@ -79,7 +81,7 @@ const StateNode: React.FC<{
     }
 
     return (
-        <div
+        <Box
             className="absolute flex items-center justify-center cursor-pointer transition-all hover:scale-105"
             style={{
                 left: state.x - state.radius,
@@ -92,7 +94,7 @@ const StateNode: React.FC<{
             title={state.description}
         >
             {/* Main circle */}
-            <div
+            <Box
                 className="absolute inset-0 rounded-full flex items-center justify-center"
                 style={{
                     backgroundColor: config.colors.node,
@@ -101,7 +103,7 @@ const StateNode: React.FC<{
             >
                 {/* Inner circle for final states */}
                 {state.isFinal && (
-                    <div
+                    <Box
                         className="absolute rounded-full"
                         style={{
                             width: size - 12,
@@ -110,8 +112,11 @@ const StateNode: React.FC<{
                         }}
                     />
                 )}
-                <span
-                    className="font-semibold text-center px-2"
+                <Typography
+                    variant="label"
+                    weight="semibold"
+                    align="center"
+                    className="px-2"
                     style={{
                         color: config.colors.nodeText,
                         fontSize: '18px',
@@ -119,8 +124,8 @@ const StateNode: React.FC<{
                     }}
                 >
                     {state.name}
-                </span>
-            </div>
+                </Typography>
+            </Box>
 
             {/* Initial state indicator arrow */}
             {state.isInitial && (
@@ -156,15 +161,15 @@ const StateNode: React.FC<{
                     />
                 </svg>
             )}
-        </div>
+        </Box>
     );
 };
 
-/** 
+/**
  * Renders a transition bundle (one or more transitions same direction)
  * Single transition: shows event name inline
  * Multiple transitions: shows "N events" with bundle indicator
- * 
+ *
  * Includes obstacle avoidance - curves around intermediate states
  */
 const TransitionBundleArrow: React.FC<{
@@ -538,7 +543,7 @@ const BundleTooltip: React.FC<{
         : 'translate(-50%, -100%)'; // Position above
 
     return createPortal(
-        <div
+        <Box
             className={`fixed z-50 animate-in fade-in-0 zoom-in-95 duration-150 ${tooltip.pinned ? 'pointer-events-auto' : 'pointer-events-none'}`}
             style={{
                 left: safeX,
@@ -548,7 +553,7 @@ const BundleTooltip: React.FC<{
                 overflow: 'auto',
             }}
         >
-            <div
+            <Box
                 className="rounded-lg shadow-xl border px-4 py-3 max-w-lg relative"
                 style={{
                     backgroundColor: 'rgba(22, 27, 34, 0.98)',
@@ -558,111 +563,124 @@ const BundleTooltip: React.FC<{
             >
                 {/* Close button when pinned */}
                 {tooltip.pinned && (
-                    <button
+                    <Button
+                        variant="ghost"
+                        size="sm"
                         onClick={onClose}
-                        className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-white text-sm font-bold hover:scale-110 transition-transform"
-                        style={{ backgroundColor: '#ef4444' }}
+                        className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
+                        style={{ backgroundColor: '#ef4444', padding: 0 }}
                         title="Close"
                     >
-                        ×
-                    </button>
+                        <Icon icon={X} size="xs" style={{ color: '#ffffff' }} />
+                    </Button>
                 )}
 
                 {/* Pinned indicator */}
                 {tooltip.pinned && (
-                    <div
-                        className="absolute -top-2 left-1/2 transform -translate-x-1/2 px-2 py-0.5 rounded-full text-xs font-semibold"
-                        style={{ backgroundColor: '#22c55e', color: '#fff' }}
+                    <Box
+                        className="absolute -top-2 left-1/2 transform -translate-x-1/2 px-2 py-0.5 rounded-full"
+                        style={{ backgroundColor: '#22c55e' }}
                     >
-                        📌 Pinned
-                    </div>
+                        <Typography variant="caption" weight="semibold" style={{ color: '#fff' }}>
+                            📌 Pinned
+                        </Typography>
+                    </Box>
                 )}
+
                 {/* Header for bundles */}
                 {!isSingle && (
-                    <div
-                        className="font-bold mb-3 pb-2 border-b flex items-center gap-2"
+                    <HStack
+                        gap="sm"
+                        align="center"
+                        className="font-bold mb-3 pb-2 border-b"
                         style={{
                             color: '#a5b4fc',
                             borderColor: '#4f46e5',
                         }}
                     >
-                        <span className="text-lg">{bundle.from}</span>
-                        <span style={{ color: '#6b7280' }}>→</span>
-                        <span className="text-lg">{bundle.to}</span>
-                        <span
-                            className="ml-2 px-2 py-0.5 rounded-full text-xs"
-                            style={{ backgroundColor: '#4f46e5', color: '#fff' }}
+                        <Typography variant="large" style={{ color: '#a5b4fc' }}>{bundle.from}</Typography>
+                        <Typography variant="label" style={{ color: '#6b7280' }}>→</Typography>
+                        <Typography variant="large" style={{ color: '#a5b4fc' }}>{bundle.to}</Typography>
+                        <Box
+                            className="ml-2 px-2 py-0.5 rounded-full"
+                            style={{ backgroundColor: '#4f46e5' }}
                         >
-                            {bundle.labels.length} events
-                        </span>
-                    </div>
+                            <Typography variant="caption" style={{ color: '#fff' }}>
+                                {bundle.labels.length} events
+                            </Typography>
+                        </Box>
+                    </HStack>
                 )}
 
                 {/* Events list */}
-                <div className="space-y-3">
+                <VStack gap="sm">
                     {bundle.labels.map((label, idx) => (
-                        <div
+                        <Box
                             key={label.id}
                             className={!isSingle && idx > 0 ? 'pt-2 border-t' : ''}
                             style={{ borderColor: '#30363d' }}
                         >
                             {/* Event name */}
-                            <div
-                                className="font-semibold mb-1"
+                            <Typography
+                                variant="label"
+                                weight="semibold"
+                                className="mb-1"
                                 style={{
                                     color: config.colors.arrowText,
                                     fontFamily: 'JetBrains Mono, monospace',
                                     fontSize: isSingle ? '14px' : '13px',
                                 }}
                             >
-                                {!isSingle && <span style={{ color: '#6b7280' }}>• </span>}
+                                {!isSingle && <Typography variant="caption" as="span" style={{ color: '#6b7280' }}>• </Typography>}
                                 {label.event}
-                            </div>
+                            </Typography>
 
                             {/* Guard */}
                             {label.guardText && (
-                                <div className="flex items-start gap-2 ml-3 mb-0.5">
-                                    <span
-                                        className="font-semibold text-xs"
+                                <HStack gap="sm" align="start" className="ml-3 mb-0.5">
+                                    <Typography
+                                        variant="caption"
+                                        weight="semibold"
                                         style={{ color: config.colors.guardText }}
                                     >
                                         if:
-                                    </span>
-                                    <span
-                                        className="text-xs"
+                                    </Typography>
+                                    <Typography
+                                        variant="caption"
                                         style={{ color: config.colors.guardText }}
                                     >
                                         {label.guardText}
-                                    </span>
-                                </div>
+                                    </Typography>
+                                </HStack>
                             )}
 
                             {/* Effects */}
                             {label.effectTexts.length > 0 && (
-                                <div className="ml-3 space-y-0.5">
+                                <VStack gap="none" className="ml-3">
                                     {label.effectTexts.map((effect, effIdx) => (
-                                        <div key={effIdx} className="flex items-start gap-2">
-                                            <span
-                                                className="font-semibold text-xs"
+                                        <HStack key={effIdx} gap="sm" align="start">
+                                            <Typography
+                                                variant="caption"
+                                                weight="semibold"
                                                 style={{ color: config.colors.effectText }}
                                             >
                                                 {effIdx === 0 ? '→' : ' '}
-                                            </span>
-                                            <span
-                                                className="text-xs"
+                                            </Typography>
+                                            <Typography
+                                                variant="caption"
                                                 style={{ color: config.colors.effectText }}
                                             >
                                                 {effect}
-                                            </span>
-                                        </div>
+                                            </Typography>
+                                        </HStack>
                                     ))}
-                                </div>
+                                </VStack>
                             )}
-                        </div>
+                        </Box>
                     ))}
-                </div>
-            </div>
-        </div>,
+                </VStack>
+            </Box>
+        </Box>,
         document.body
     );
 };
@@ -672,7 +690,7 @@ const EntityBox: React.FC<{
     entity: DomEntityBox;
 }> = ({ entity }) => {
     return (
-        <div
+        <Box
             className="absolute rounded-lg border-2 p-3"
             style={{
                 left: entity.x,
@@ -684,22 +702,25 @@ const EntityBox: React.FC<{
                 zIndex: 5,
             }}
         >
-            <div
-                className="text-center font-semibold mb-2"
+            <Typography
+                variant="label"
+                weight="semibold"
+                align="center"
+                className="mb-2"
                 style={{ color: '#4a9eff', fontSize: '14px' }}
             >
                 📦 {entity.name}
-            </div>
+            </Typography>
             {entity.fields.map((field, idx) => (
-                <div
+                <Typography
                     key={idx}
-                    className="text-xs"
+                    variant="caption"
                     style={{ color: '#8b949e', fontFamily: 'JetBrains Mono, monospace' }}
                 >
                     • {field}
-                </div>
+                </Typography>
             ))}
-        </div>
+        </Box>
     );
 };
 
@@ -708,7 +729,7 @@ const OutputsBox: React.FC<{
     outputs: DomOutputsBox;
 }> = ({ outputs }) => {
     return (
-        <div
+        <Box
             className="absolute rounded-lg border-2 p-3"
             style={{
                 left: outputs.x,
@@ -720,22 +741,26 @@ const OutputsBox: React.FC<{
                 zIndex: 5,
             }}
         >
-            <div
-                className="text-center font-semibold mb-2"
+            <Typography
+                variant="caption"
+                weight="semibold"
+                align="center"
+                className="mb-2"
                 style={{ color: '#ffb86c', fontSize: '13px' }}
             >
                 📤 External Effects
-            </div>
+            </Typography>
             {outputs.outputs.map((output, idx) => (
-                <div
+                <Typography
                     key={idx}
-                    className="text-xs mb-0.5"
+                    variant="caption"
+                    className="mb-0.5"
                     style={{ color: '#e6edf3', fontFamily: 'Inter, sans-serif' }}
                 >
                     • {output}
-                </div>
+                </Typography>
             ))}
-        </div>
+        </Box>
     );
 };
 
@@ -752,28 +777,30 @@ const Legend: React.FC<{
     ];
 
     return (
-        <div
-            className="absolute flex items-center gap-4"
+        <HStack
+            gap="md"
+            align="center"
+            className="absolute"
             style={{ left: 20, top: y, zIndex: 15 }}
         >
             {items.map((item) => (
-                <div key={item.label} className="flex items-center gap-2">
-                    <div
+                <HStack key={item.label} gap="xs" align="center">
+                    <Box
                         className="w-3 h-3 rounded-full"
                         style={{
                             backgroundColor: item.label === 'Multi-event' ? item.color : config.colors.node,
                             border: item.label !== 'Multi-event' ? `2px solid ${item.color}` : 'none',
                         }}
                     />
-                    <span
-                        className="text-xs"
+                    <Typography
+                        variant="caption"
                         style={{ color: config.colors.arrowText }}
                     >
                         {item.label}
-                    </span>
-                </div>
+                    </Typography>
+                </HStack>
             ))}
-        </div>
+        </HStack>
     );
 };
 
@@ -865,7 +892,7 @@ export const DomStateMachineVisualizer: React.FC<DomStateMachineVisualizerProps>
     }, [labels]);
 
     return (
-        <div
+        <Box
             className={`relative ${className}`}
             style={{
                 width,
@@ -876,8 +903,11 @@ export const DomStateMachineVisualizer: React.FC<DomStateMachineVisualizerProps>
         >
             {/* Title */}
             {title && (
-                <div
-                    className="absolute text-center font-semibold"
+                <Typography
+                    variant="label"
+                    weight="semibold"
+                    align="center"
+                    className="absolute"
                     style={{
                         left: 0,
                         right: 0,
@@ -889,11 +919,11 @@ export const DomStateMachineVisualizer: React.FC<DomStateMachineVisualizerProps>
                     }}
                 >
                     {title}
-                </div>
+                </Typography>
             )}
 
             {/* Content offset for title */}
-            <div
+            <Box
                 className="absolute inset-0"
                 style={{ top: title ? 30 : 0 }}
             >
@@ -933,14 +963,14 @@ export const DomStateMachineVisualizer: React.FC<DomStateMachineVisualizerProps>
 
                 {/* Outputs Box */}
                 {outputs && <OutputsBox outputs={outputs} />}
-            </div>
+            </Box>
 
             {/* Legend */}
             <Legend config={config} y={height - 25} />
 
             {/* Portaled Tooltip */}
             <BundleTooltip tooltip={tooltip} config={config} onClose={handleCloseTooltip} />
-        </div>
+        </Box>
     );
 };
 

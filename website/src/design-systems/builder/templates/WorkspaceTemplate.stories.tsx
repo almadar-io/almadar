@@ -19,32 +19,32 @@ const mockFiles = [
   {
     name: "src",
     path: "/src",
-    isDirectory: true,
+    type: "directory" as const,
     children: [
       {
         name: "components",
         path: "/src/components",
-        isDirectory: true,
+        type: "directory" as const,
         children: [
-          { name: "TaskList.tsx", path: "/src/components/TaskList.tsx", isDirectory: false },
-          { name: "TaskForm.tsx", path: "/src/components/TaskForm.tsx", isDirectory: false },
-          { name: "TaskDetail.tsx", path: "/src/components/TaskDetail.tsx", isDirectory: false },
+          { name: "TaskList.tsx", path: "/src/components/TaskList.tsx", type: "file" as const },
+          { name: "TaskForm.tsx", path: "/src/components/TaskForm.tsx", type: "file" as const },
+          { name: "TaskDetail.tsx", path: "/src/components/TaskDetail.tsx", type: "file" as const },
         ],
       },
       {
         name: "features",
         path: "/src/features",
-        isDirectory: true,
+        type: "directory" as const,
         children: [
-          { name: "TaskInteraction.ts", path: "/src/features/TaskInteraction.ts", isDirectory: false },
+          { name: "TaskInteraction.ts", path: "/src/features/TaskInteraction.ts", type: "file" as const },
         ],
       },
-      { name: "App.tsx", path: "/src/App.tsx", isDirectory: false },
-      { name: "main.tsx", path: "/src/main.tsx", isDirectory: false },
+      { name: "App.tsx", path: "/src/App.tsx", type: "file" as const },
+      { name: "main.tsx", path: "/src/main.tsx", type: "file" as const },
     ],
   },
-  { name: "package.json", path: "/package.json", isDirectory: false },
-  { name: "tsconfig.json", path: "/tsconfig.json", isDirectory: false },
+  { name: "package.json", path: "/package.json", type: "file" as const },
+  { name: "tsconfig.json", path: "/tsconfig.json", type: "file" as const },
 ];
 
 const baseEntity: WorkspaceEntity = {

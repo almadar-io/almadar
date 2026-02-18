@@ -10,3 +10,13 @@ export type { BehaviorData, TransitionData, TickData, DomainBehaviorSectionProps
 
 export { DomainEditor } from './DomainEditor';
 export type { DomainEditorProps, ValidationError } from './DomainEditor';
+
+// Domain HQ tab organisms
+export { StoryView } from './StoryView';
+export type { StoryViewProps } from './StoryView';
+
+export { FlowView } from './FlowView';
+export type { FlowViewProps } from './FlowView';
+
+export { GlossaryView } from './GlossaryView';
+export type { GlossaryViewProps } from './GlossaryView';

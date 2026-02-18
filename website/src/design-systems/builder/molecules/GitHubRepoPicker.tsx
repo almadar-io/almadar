@@ -5,7 +5,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Box, Label } from '@almadar/ui';
+import { VStack, Typography, Label, Select } from '@almadar/ui';
 import { useGitHubRepos, useGitHubBranches, type GitHubRepo } from '@almadar/ui/hooks';
 
 export interface GitHubRepoPickerProps {
@@ -76,78 +76,55 @@ export const GitHubRepoPicker: React.FC<GitHubRepoPickerProps> = ({
     }
   }, [branches, selectedBranch, selectedRepo, onBranchSelect]);
 
+  const repoOptions = repos.map((repo) => ({
+    value: repo.fullName,
+    label: `${repo.fullName} ${repo.isPrivate ? '(Private)' : '(Public)'}`,
+  }));
+
+  const branchOptions = branches.map((branch) => ({
+    value: branch,
+    label: `${branch}${branch === selectedRepo?.defaultBranch ? ' (default)' : ''}`,
+  }));
+
   return (
-    <Box className={className}>
+    <VStack gap="md" className={className}>
       {/* Repository Select */}
-      <Box className="mb-4">
-        <Label htmlFor="github-repo" className="block text-sm font-medium mb-2" style={{ color: 'var(--color-foreground)' }}>
+      <VStack gap="sm">
+        <Label htmlFor="github-repo" className="block text-sm font-medium" style={{ color: 'var(--color-foreground)' }}>
           Repository
         </Label>
-        <select
+        <Select
           id="github-repo"
           value={selectedRepo?.fullName || ''}
           onChange={handleRepoChange}
           disabled={reposLoading}
-          className="w-full px-3 py-2 rounded-md shadow-sm disabled:cursor-not-allowed"
-          style={{
-            borderWidth: '1px',
-            borderStyle: 'solid',
-            borderColor: 'var(--color-border)',
-            backgroundColor: reposLoading ? 'var(--color-muted)' : 'var(--color-card)',
-            color: 'var(--color-foreground)',
-            outlineColor: 'var(--color-primary)',
-          }}
-        >
-          <option value="">
-            {reposLoading ? 'Loading repositories...' : 'Select a repository'}
-          </option>
-          {repos.map((repo) => (
-            <option key={repo.id} value={repo.fullName}>
-              {repo.fullName} {repo.isPrivate ? '(Private)' : '(Public)'}
-            </option>
-          ))}
-        </select>
+          placeholder={reposLoading ? 'Loading repositories...' : 'Select a repository'}
+          options={repoOptions}
+        />
         {selectedRepo && (
-          <p className="mt-1 text-xs" style={{ color: 'var(--color-muted-foreground)' }}>
+          <Typography variant="caption" className="mt-1" style={{ color: 'var(--color-muted-foreground)' }}>
             {selectedRepo.description || 'No description'}
-          </p>
+          </Typography>
         )}
-      </Box>
+      </VStack>
 
       {/* Branch Select */}
       {selectedRepo && (
-        <Box>
-          <Label htmlFor="github-branch" className="block text-sm font-medium mb-2" style={{ color: 'var(--color-foreground)' }}>
+        <VStack gap="sm">
+          <Label htmlFor="github-branch" className="block text-sm font-medium" style={{ color: 'var(--color-foreground)' }}>
             Branch
           </Label>
-          <select
+          <Select
             id="github-branch"
             value={selectedBranch || ''}
             onChange={handleBranchChange}
             disabled={branchesLoading}
-            className="w-full px-3 py-2 rounded-md shadow-sm disabled:cursor-not-allowed"
-            style={{
-              borderWidth: '1px',
-              borderStyle: 'solid',
-              borderColor: 'var(--color-border)',
-              backgroundColor: branchesLoading ? 'var(--color-muted)' : 'var(--color-card)',
-              color: 'var(--color-foreground)',
-              outlineColor: 'var(--color-primary)',
-            }}
-          >
-            <option value="">
-              {branchesLoading ? 'Loading branches...' : 'Select a branch'}
-            </option>
-            {branches.map((branch) => (
-              <option key={branch} value={branch}>
-                {branch}
-                {branch === selectedRepo.defaultBranch ? ' (default)' : ''}
-              </option>
-            ))}
-          </select>
-        </Box>
+            placeholder={branchesLoading ? 'Loading branches...' : 'Select a branch'}
+            options={branchOptions}
+          />
+        </VStack>
       )}
-    </Box>
+    </VStack>
   );
 };
 

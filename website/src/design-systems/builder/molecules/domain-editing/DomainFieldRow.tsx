@@ -7,6 +7,7 @@
 import React from 'react';
 import { clsx as cn } from 'clsx';
 import { Edit2, Trash2, GripVertical, AlertCircle } from 'lucide-react';
+import { Typography, Button, HStack, Box } from '@almadar/ui';
 import { DomainFieldType, FieldType } from '../../atoms/domain';
 
 export interface FieldConstraint {
@@ -84,11 +85,11 @@ export const DomainFieldRow: React.FC<DomainFieldRowProps> = ({
   const isEnum = fieldType === 'enum' && enumValues && enumValues.length > 0;
 
   return (
-    <div
+    <HStack
+      gap="sm"
+      align="center"
       className={cn(
-        'group flex items-center gap-3 px-3 py-2 rounded-lg',
-        'hover:bg-[var(--color-secondary)]',
-        'transition-colors',
+        'group px-3 py-2 rounded-lg hover:bg-[var(--color-secondary)] transition-colors',
         error && 'border',
         className
       )}
@@ -99,52 +100,64 @@ export const DomainFieldRow: React.FC<DomainFieldRowProps> = ({
     >
       {/* Drag handle */}
       {draggable && (
-        <div className="cursor-grab opacity-0 group-hover:opacity-100 transition-opacity">
+        <Box className="cursor-grab opacity-0 group-hover:opacity-100 transition-opacity">
           <GripVertical className="w-4 h-4 text-[var(--color-muted-foreground)]" />
-        </div>
+        </Box>
       )}
 
       {/* Dash indicator */}
-      <span className="text-[var(--color-muted-foreground)] font-mono">-</span>
+      <Typography variant="small" as="span" className="text-[var(--color-muted-foreground)] font-mono">
+        -
+      </Typography>
 
       {/* Field name */}
-      <span className="font-medium text-[var(--color-foreground)] min-w-[120px]">
+      <Typography variant="small" as="span" className="font-medium text-[var(--color-foreground)] min-w-[120px]">
         {name}
-      </span>
+      </Typography>
 
       {/* Colon separator */}
-      <span className="text-[var(--color-muted-foreground)]">:</span>
+      <Typography variant="small" as="span" className="text-[var(--color-muted-foreground)]">
+        :
+      </Typography>
 
       {/* Field type */}
       {isEnum ? (
-        <div className="flex items-center gap-1.5">
+        <HStack gap="xs" align="center">
           {enumValues!.map((value, index) => (
             <React.Fragment key={value}>
-              {index > 0 && <span className="text-[var(--color-muted-foreground)]">|</span>}
-              <span
-                className="px-1.5 py-0.5 text-sm rounded font-mono"
+              {index > 0 && (
+                <Typography variant="small" as="span" className="text-[var(--color-muted-foreground)]">
+                  |
+                </Typography>
+              )}
+              <Typography
+                variant="small"
+                as="span"
+                className="px-1.5 py-0.5 rounded font-mono"
                 style={{
                   backgroundColor: 'color-mix(in srgb, var(--color-warning) 10%, transparent)',
                   color: 'var(--color-warning)',
                 }}
               >
                 {value}
-              </span>
+              </Typography>
             </React.Fragment>
           ))}
-        </div>
+        </HStack>
       ) : (
         <DomainFieldType type={fieldType as FieldType} size="sm" />
       )}
 
       {/* Constraints */}
       {hasConstraints && (
-        <div className="flex items-center gap-2 ml-2">
+        <HStack gap="sm" align="center" className="ml-2">
           {constraints.map((constraint, index) => (
-            <span
+            <Typography
               key={`${constraint.type}-${index}`}
+              variant="caption"
+              as="span"
               className={cn(
-                'px-1.5 py-0.5 text-xs rounded font-medium',
+                'px-1.5 py-0.5 rounded font-medium',
                 constraint.type === 'default' && 'bg-[var(--color-secondary)] text-[var(--color-muted-foreground)]'
               )}
               style={
@@ -158,48 +171,52 @@ export const DomainFieldRow: React.FC<DomainFieldRowProps> = ({
               }
             >
               {constraint.type === 'default' ? `default ${constraint.value}` : constraint.type}
-            </span>
+            </Typography>
           ))}
-        </div>
+        </HStack>
       )}
 
       {/* Error indicator */}
       {error && (
-        <div className="flex items-center gap-1" style={{ color: 'var(--color-error)' }} title={error}>
+        <Box className="flex items-center gap-1" style={{ color: 'var(--color-error)' }} title={error}>
           <AlertCircle className="w-4 h-4" />
-          <span className="text-xs">{error}</span>
-        </div>
+          <Typography variant="caption" as="span">
+            {error}
+          </Typography>
+        </Box>
       )}
 
       {/* Spacer */}
-      <div className="flex-1" />
+      <Box className="flex-1" />
 
       {/* Actions */}
       {editable && (
-        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+        <HStack gap="xs" align="center" className="opacity-0 group-hover:opacity-100 transition-opacity">
           {onEdit && (
-            <button
-              type="button"
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={onEdit}
-              className="p-1 rounded hover:bg-[var(--color-secondary)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
               title="Edit field"
+              className="p-1 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
             >
               <Edit2 className="w-3.5 h-3.5" />
-            </button>
+            </Button>
           )}
           {onDelete && (
-            <button
-              type="button"
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={onDelete}
-              className="p-1 rounded hover:bg-[var(--color-error)]/10 text-[var(--color-muted-foreground)] hover:text-[var(--color-error)]"
               title="Delete field"
+              className="p-1 text-[var(--color-muted-foreground)] hover:text-[var(--color-error)] hover:bg-[var(--color-error)]/10"
             >
               <Trash2 className="w-3.5 h-3.5" />
-            </button>
+            </Button>
           )}
-        </div>
+        </HStack>
       )}
-    </div>
+    </HStack>
   );
 };
 

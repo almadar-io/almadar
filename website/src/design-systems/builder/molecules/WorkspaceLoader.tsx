@@ -7,6 +7,7 @@
 import React from 'react';
 import { clsx as cn } from 'clsx';
 import { Loader2, Server, FileCode, Package, Play, CheckCircle, AlertCircle } from 'lucide-react';
+import { Typography, VStack, HStack, Box } from '@almadar/ui';
 
 export type WebContainerStatus = 'idle' | 'booting' | 'ready' | 'installing' | 'starting' | 'running' | 'error';
 
@@ -64,10 +65,13 @@ export const WorkspaceLoader: React.FC<WorkspaceLoaderProps> = ({ status, isLoad
   if (status === 'running' && !isLoading && !error) return null;
 
   return (
-    <div className={cn('fixed inset-0 z-50 flex items-center justify-center bg-[var(--color-background)]/95 backdrop-blur-sm', className)}>
-      <div className="w-full max-w-md p-8">
-        <div className="text-center mb-8">
-          <div
+    <Box
+      position="fixed"
+      className={cn('inset-0 z-50 flex items-center justify-center bg-[var(--color-background)]/95 backdrop-blur-sm', className)}
+    >
+      <VStack gap="none" className="w-full max-w-md p-8">
+        <VStack gap="none" align="center" className="text-center mb-8">
+          <Box
             className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-4"
             style={{ backgroundColor: 'color-mix(in srgb, var(--color-info) 15%, transparent)' }}
           >
@@ -75,53 +79,77 @@ export const WorkspaceLoader: React.FC<WorkspaceLoaderProps> = ({ status, isLoad
               ? <AlertCircle className="w-8 h-8" style={{ color: 'var(--color-error)' }} />
               : <Loader2 className="w-8 h-8 animate-spin" style={{ color: 'var(--color-info)' }} />
             }
-          </div>
-          <h2 className="text-xl font-semibold" style={{ color: 'var(--color-foreground)' }}>
+          </Box>
+          <Typography variant="h5" className="text-xl font-semibold" style={{ color: 'var(--color-foreground)' }}>
             {status === 'error' ? 'Initialization Failed' : 'Initializing Workspace'}
-          </h2>
-          {appName && <p className="text-sm mt-1" style={{ color: 'var(--color-muted-foreground)' }}>{appName}</p>}
-        </div>
+          </Typography>
+          {appName && (
+            <Typography variant="body2" className="mt-1" style={{ color: 'var(--color-muted-foreground)' }}>
+              {appName}
+            </Typography>
+          )}
+        </VStack>
 
         {error && (
-          <div
+          <Box
             className="mb-6 p-4 rounded-lg border"
             style={{
               backgroundColor: 'color-mix(in srgb, var(--color-error) 10%, transparent)',
               borderColor: 'color-mix(in srgb, var(--color-error) 20%, transparent)',
             }}
           >
-            <p className="text-sm" style={{ color: 'var(--color-error)' }}>{error}</p>
-          </div>
+            <Typography variant="body2" style={{ color: 'var(--color-error)' }}>
+              {error}
+            </Typography>
+          </Box>
         )}
 
-        <div className="space-y-4">
+        <VStack gap="md">
           {steps.map((step, index) => {
             const state = getStepState(index, currentIndex, status);
             return (
-              <div key={step.id} className={cn(
-                'flex items-center gap-4 p-3 rounded-lg transition-all duration-300',
-                state === 'completed' && 'opacity-60',
-                state === 'pending' && 'opacity-40',
-              )} style={(state === 'current' || state === 'error') ? stepBgStyles[state] : undefined}>
-                <div
+              <HStack
+                key={step.id}
+                gap="md"
+                align="center"
+                className={cn(
+                  'p-3 rounded-lg transition-all duration-300',
+                  state === 'completed' && 'opacity-60',
+                  state === 'pending' && 'opacity-40',
+                )}
+                style={(state === 'current' || state === 'error') ? stepBgStyles[state] : undefined}
+              >
+                <Box
                   className="flex items-center justify-center w-10 h-10 rounded-full shrink-0"
                   style={stepIconBgStyles[state]}
                 >
                   {state === 'completed' ? <CheckCircle size={20} /> : state === 'current' ? (
-                    <div className="relative">{step.icon}<Loader2 size={28} className="absolute -top-1 -left-1 animate-spin" style={{ color: 'var(--color-info)' }} /></div>
+                    <Box className="relative">
+                      {step.icon}
+                      <Loader2 size={28} className="absolute -top-1 -left-1 animate-spin" style={{ color: 'var(--color-info)' }} />
+                    </Box>
                   ) : step.icon}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="font-medium" style={stepLabelStyles[state]}>{step.label}</p>
-                  {state === 'current' && <p className="text-sm truncate" style={{ color: 'var(--color-muted-foreground)' }}>{step.description}</p>}
-                </div>
-              </div>
+                </Box>
+                <VStack gap="none" className="flex-1 min-w-0">
+                  <Typography variant="body2" className="font-medium" style={stepLabelStyles[state]}>
+                    {step.label}
+                  </Typography>
+                  {state === 'current' && (
+                    <Typography variant="body2" className="truncate" style={{ color: 'var(--color-muted-foreground)' }}>
+                      {step.description}
+                    </Typography>
+                  )}
+                </VStack>
+              </HStack>
             );
           })}
-        </div>
-        <p className="text-center text-xs mt-8" style={{ color: 'var(--color-muted-foreground)' }}>This may take a minute on first load</p>
-      </div>
-    </div>
+        </VStack>
+
+        <Typography variant="caption" align="center" className="mt-8" style={{ color: 'var(--color-muted-foreground)' }}>
+          This may take a minute on first load
+        </Typography>
+      </VStack>
+    </Box>
   );
 };
 

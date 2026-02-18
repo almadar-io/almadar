@@ -10,7 +10,7 @@
  */
 
 import React, { useState } from 'react';
-import { Typography, Button, Spinner, ThemeToggle, Alert, useEventBus } from '@almadar/ui';
+import { Typography, Button, Spinner, ThemeToggle, Alert, useEventBus, Box, VStack, HStack, Icon, Badge } from '@almadar/ui';
 import { AgentActivityFeed, TodoList, SchemaDiffViewer } from '../organisms/agent';
 import { ValidationReportBoard, type ValidationError as ReportValidationError } from '../organisms';
 import {
@@ -100,42 +100,52 @@ export const ValidationTemplate: React.FC<ValidationTemplateProps> = ({
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[var(--color-surface)] flex items-center justify-center transition-colors">
+      <Box className="min-h-screen bg-[var(--color-surface)] flex items-center justify-center transition-colors">
         <Spinner size="lg" />
-      </div>
+      </Box>
     );
   }
 
   if (loadError) {
     return (
-      <div className="min-h-screen bg-[var(--color-surface)] flex flex-col items-center justify-center p-6 transition-colors">
+      <VStack className="min-h-screen bg-[var(--color-surface)] items-center justify-center p-6 transition-colors">
         <Alert variant="error" className="max-w-md">{loadError}</Alert>
         <Button className="mt-4" onClick={() => emit('UI:NAVIGATE_HOME', {})}>Back to Home</Button>
-      </div>
+      </VStack>
     );
   }
 
   const sections = [
-    { id: 'schema', label: 'KFlow Schema', icon: <FileJson className="w-5 h-5" />, active: false, event: 'UI:NAVIGATE_BUILDER' },
-    { id: 'domain-logic', label: 'Domain Logic', icon: <FileCode className="w-5 h-5" />, active: false, event: 'UI:NAVIGATE_BUILDER' },
-    { id: 'validation', label: 'Validation', icon: <ShieldCheck className="w-5 h-5" />, active: true, event: '' },
-    { id: 'workspace', label: 'Workspace', icon: <FolderOpen className="w-5 h-5" />, active: false, event: 'UI:NAVIGATE_WORKSPACE' },
-    { id: 'preview', label: 'Preview', icon: <Play className="w-5 h-5" />, active: false, event: 'UI:NAVIGATE_PREVIEW' },
+    { id: 'schema', label: 'KFlow Schema', icon: <Icon icon={FileJson} size="md" />, active: false, event: 'UI:NAVIGATE_BUILDER' },
+    { id: 'domain-logic', label: 'Domain Logic', icon: <Icon icon={FileCode} size="md" />, active: false, event: 'UI:NAVIGATE_BUILDER' },
+    { id: 'validation', label: 'Validation', icon: <Icon icon={ShieldCheck} size="md" />, active: true, event: '' },
+    { id: 'workspace', label: 'Workspace', icon: <Icon icon={FolderOpen} size="md" />, active: false, event: 'UI:NAVIGATE_WORKSPACE' },
+    { id: 'preview', label: 'Preview', icon: <Icon icon={Play} size="md" />, active: false, event: 'UI:NAVIGATE_PREVIEW' },
   ];
 
   return (
-    <div className={`flex h-screen bg-[var(--color-background)] ${className || ''}`}>
+    <HStack gap="none" className={`h-screen bg-[var(--color-background)] ${className || ''}`}>
       {/* App Sidebar */}
-      <div className="hidden lg:block">{sidebarSlot}</div>
+      <Box className="hidden lg:block">{sidebarSlot}</Box>
 
       {/* Section Sidebar */}
-      <aside className={`hidden md:flex flex-col transition-all duration-200 border-r border-[var(--color-border)] bg-[var(--color-background)] ${sectionSidebarCollapsed ? 'w-16' : 'w-56'}`}>
-        <div className="p-3 border-b border-[var(--color-border)]">
-          {!sectionSidebarCollapsed && <span className="text-[var(--color-muted-foreground)] uppercase tracking-wide text-xs">Sections</span>}
-        </div>
-        <nav className="flex-1 p-2">
+      <VStack
+        as="aside"
+        gap="none"
+        className={`hidden md:flex transition-all duration-200 border-r border-[var(--color-border)] bg-[var(--color-background)] ${sectionSidebarCollapsed ? 'w-16' : 'w-56'}`}
+      >
+        <Box className="p-3 border-b border-[var(--color-border)]">
+          {!sectionSidebarCollapsed && (
+            <Typography variant="caption" className="text-[var(--color-muted-foreground)] uppercase tracking-wide">
+              Sections
+            </Typography>
+          )}
+        </Box>
+        <Box as="nav" className="flex-1 p-2">
           {sections.map((item) => (
-            <button key={item.id}
+            <Button
+              key={item.id}
+              variant="ghost"
               onClick={() => item.event && emit(item.event, { appId })}
               className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg mb-1 transition-colors ${
                 item.active
@@ -145,159 +155,244 @@ export const ValidationTemplate: React.FC<ValidationTemplateProps> = ({
               title={sectionSidebarCollapsed ? item.label : undefined}
             >
               {item.icon}
-              {!sectionSidebarCollapsed && <span className="text-sm">{item.label}</span>}
-            </button>
+              {!sectionSidebarCollapsed && (
+                <Typography variant="body2">{item.label}</Typography>
+              )}
+            </Button>
           ))}
-        </nav>
-        <div className="p-2 border-t border-[var(--color-border)]">
-          <button onClick={() => setSectionSidebarCollapsed(!sectionSidebarCollapsed)}
-            className="w-full flex items-center justify-center p-2 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] text-sm">
+        </Box>
+        <Box className="p-2 border-t border-[var(--color-border)]">
+          <Button
+            variant="ghost"
+            onClick={() => setSectionSidebarCollapsed(!sectionSidebarCollapsed)}
+            className="w-full flex items-center justify-center p-2 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] text-sm"
+          >
             {sectionSidebarCollapsed ? '→' : '←'}
-          </button>
-        </div>
-      </aside>
+          </Button>
+        </Box>
+      </VStack>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden bg-[var(--color-surface)] transition-colors">
+      <VStack gap="none" flex className="overflow-hidden bg-[var(--color-surface)] transition-colors">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-1 px-3 sm:px-6 py-2 bg-[var(--color-secondary)] border-b border-[var(--color-border)] text-sm">
-          <button onClick={() => emit('UI:NAVIGATE_HOME', {})} className="flex items-center gap-1 text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] transition-colors">
-            <Home className="w-4 h-4" /><span className="hidden sm:inline">Home</span>
-          </button>
-          <ChevronRight className="w-4 h-4 text-[var(--color-muted-foreground)]" />
-          <button onClick={() => emit('UI:NAVIGATE_BUILDER', { appId })} className="text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] transition-colors truncate max-w-[150px] sm:max-w-[250px]">
+        <HStack
+          gap="xs"
+          align="center"
+          className="px-3 sm:px-6 py-2 bg-[var(--color-secondary)] border-b border-[var(--color-border)] text-sm"
+        >
+          <Button
+            variant="ghost"
+            onClick={() => emit('UI:NAVIGATE_HOME', {})}
+            className="flex items-center gap-1 text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] transition-colors"
+          >
+            <Icon icon={Home} size="sm" />
+            <Typography variant="body2" className="hidden sm:inline">Home</Typography>
+          </Button>
+          <Icon icon={ChevronRight} size="sm" className="text-[var(--color-muted-foreground)]" />
+          <Button
+            variant="ghost"
+            onClick={() => emit('UI:NAVIGATE_BUILDER', { appId })}
+            className="text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] transition-colors truncate max-w-[150px] sm:max-w-[250px]"
+          >
             {appName}
-          </button>
-          <ChevronRight className="w-4 h-4 text-[var(--color-muted-foreground)]" />
-          <span className="text-[var(--color-foreground)] font-medium">Validation</span>
-        </div>
+          </Button>
+          <Icon icon={ChevronRight} size="sm" className="text-[var(--color-muted-foreground)]" />
+          <Typography variant="body2" className="text-[var(--color-foreground)] font-medium">Validation</Typography>
+        </HStack>
 
         {/* Header */}
-        <header className="flex items-center justify-between px-3 sm:px-6 py-3 sm:py-4 border-b border-[var(--color-border)] bg-[var(--color-card)]">
-          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+        <Box
+          as="header"
+          className="flex items-center justify-between px-3 sm:px-6 py-3 sm:py-4 border-b border-[var(--color-border)] bg-[var(--color-card)]"
+        >
+          <HStack gap="sm" align="center" className="min-w-0">
             <Button variant="ghost" size="sm" onClick={() => emit('UI:NAVIGATE_BUILDER', { appId })}>
-              <ArrowLeft className="w-4 h-4 mr-1" />Back
+              <Icon icon={ArrowLeft} size="sm" className="mr-1" />Back
             </Button>
-            <div className="w-px h-6 bg-[var(--color-border)]" />
+            <Box className="w-px h-6 bg-[var(--color-border)]" />
             <Typography variant="h5" className="text-[var(--color-foreground)] truncate text-base sm:text-lg">Schema Validation</Typography>
             {stage === 'complete' && (
-              <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
-                isValid ? 'bg-[var(--color-success)]/10 text-[var(--color-success)]' : 'bg-[var(--color-warning)]/10 text-[var(--color-warning)]'
-              }`}>
-                {isValid ? <><CheckCircle2 className="w-3.5 h-3.5" /><span>Valid</span></> : <><AlertTriangle className="w-3.5 h-3.5" /><span>{totalIssues} Issue{totalIssues !== 1 ? 's' : ''}</span></>}
-              </div>
+              <Badge
+                variant={isValid ? 'success' : 'warning'}
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium"
+              >
+                {isValid ? (
+                  <>
+                    <Icon icon={CheckCircle2} size="xs" />
+                    <Typography variant="caption">Valid</Typography>
+                  </>
+                ) : (
+                  <>
+                    <Icon icon={AlertTriangle} size="xs" />
+                    <Typography variant="caption">{totalIssues} Issue{totalIssues !== 1 ? 's' : ''}</Typography>
+                  </>
+                )}
+              </Badge>
             )}
-          </div>
-          <div className="flex items-center gap-2">
-            <Button variant={agentPanelOpen ? 'secondary' : 'ghost'} size="sm"
+          </HStack>
+          <HStack gap="sm" align="center">
+            <Button
+              variant={agentPanelOpen ? 'secondary' : 'ghost'}
+              size="sm"
               onClick={() => setAgentPanelOpen(!agentPanelOpen)}
-              leftIcon={agentPanelOpen ? <PanelRightClose className="w-4 h-4" /> : <PanelRightOpen className="w-4 h-4" />}>
-              <span className="hidden sm:inline">Agent</span>
-              {isAgentWorking && <span className="ml-1 w-2 h-2 bg-[var(--color-primary)] rounded-full animate-pulse" />}
+              leftIcon={agentPanelOpen ? <Icon icon={PanelRightClose} size="sm" /> : <Icon icon={PanelRightOpen} size="sm" />}
+            >
+              <Typography variant="body2" className="hidden sm:inline">Agent</Typography>
+              {isAgentWorking && (
+                <Box className="ml-1 w-2 h-2 bg-[var(--color-primary)] rounded-full animate-pulse" />
+              )}
             </Button>
             <ThemeToggle size="sm" />
-          </div>
-        </header>
+          </HStack>
+        </Box>
 
         {/* Content */}
-        <div className="flex-1 flex overflow-hidden">
-          <main className={`flex-1 overflow-auto p-6 transition-all ${agentPanelOpen ? 'pr-0' : ''}`}>
+        <HStack gap="none" flex className="overflow-hidden">
+          <Box
+            as="main"
+            className={`flex-1 overflow-auto p-6 transition-all ${agentPanelOpen ? 'pr-0' : ''}`}
+          >
             {validationError && <Alert variant="error" className="mb-6">{validationError}</Alert>}
             {(isValidating || isFixing) && !agentPanelOpen && (
               <Alert variant="info" className="mb-6">
-                <div className="flex items-center gap-3"><Spinner size="sm" /><span>{progressMessage || (isValidating ? 'Validating schema...' : 'Fixing errors...')}</span></div>
+                <HStack gap="sm" align="center">
+                  <Spinner size="sm" />
+                  <Typography variant="body2">{progressMessage || (isValidating ? 'Validating schema...' : 'Fixing errors...')}</Typography>
+                </HStack>
               </Alert>
             )}
-            <div className="flex items-center justify-between mb-6">
+            <HStack justify="between" align="center" className="mb-6">
               <Typography variant="h4" className="text-[var(--color-foreground)]">Validation Results</Typography>
-              <div className="flex items-center gap-2">
+              <HStack gap="sm" align="center">
                 <Button variant="secondary" onClick={() => emit('UI:VALIDATE', {})} disabled={isValidating || isAgentWorking}>
-                  <RefreshCw className={`w-4 h-4 mr-2 ${isValidating ? 'animate-spin' : ''}`} />
+                  <Icon icon={RefreshCw} size="sm" className={`mr-2 ${isValidating ? 'animate-spin' : ''}`} />
                   {isValidating ? 'Validating...' : 'Revalidate'}
                 </Button>
                 {totalIssues > 0 && (
-                  <Button variant="primary" onClick={() => { setAgentPanelOpen(true); setActiveTab('activity'); emit('UI:FIX_ALL', {}); }} disabled={isValidating || isAgentWorking}>
-                    <Wrench className="w-4 h-4 mr-2" />{isAgentWorking ? 'Fixing...' : `Fix All (${totalIssues})`}
+                  <Button
+                    variant="primary"
+                    onClick={() => { setAgentPanelOpen(true); setActiveTab('activity'); emit('UI:FIX_ALL', {}); }}
+                    disabled={isValidating || isAgentWorking}
+                  >
+                    <Icon icon={Wrench} size="sm" className="mr-2" />
+                    {isAgentWorking ? 'Fixing...' : `Fix All (${totalIssues})`}
                   </Button>
                 )}
-              </div>
-            </div>
+              </HStack>
+            </HStack>
             <ValidationReportBoard errors={errors as ReportValidationError[]} warnings={warnings as ReportValidationError[]} onRerunValidation={() => emit('UI:VALIDATE', {})} isValidating={isValidating} />
-          </main>
+          </Box>
 
           {/* Agent Panel */}
           {agentPanelOpen && (
-            <aside className="w-[400px] xl:w-[480px] border-l border-[var(--color-border)] bg-[var(--color-card)] flex flex-col overflow-hidden">
-              <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--color-border)] bg-[var(--color-surface)]">
-                <div className="flex items-center gap-2">
-                  <Bot className="w-5 h-5 text-[var(--color-primary)]" />
+            <VStack
+              as="aside"
+              gap="none"
+              className="w-[400px] xl:w-[480px] border-l border-[var(--color-border)] bg-[var(--color-card)] overflow-hidden"
+            >
+              <HStack
+                justify="between"
+                align="center"
+                className="px-4 py-3 border-b border-[var(--color-border)] bg-[var(--color-surface)]"
+              >
+                <HStack gap="sm" align="center">
+                  <Icon icon={Bot} size="md" className="text-[var(--color-primary)]" />
                   <Typography variant="h6" className="text-[var(--color-foreground)]">Fix Agent</Typography>
-                  {isAgentWorking && <span className="px-2 py-0.5 text-xs font-medium bg-[var(--color-primary)]/10 text-[var(--color-primary)] rounded-full">Working...</span>}
-                </div>
-                <button onClick={() => setAgentPanelOpen(false)} className="p-1.5 rounded hover:bg-[var(--color-secondary)] transition-colors">
-                  <XCircle className="w-4 h-4 text-[var(--color-muted-foreground)]" />
-                </button>
-              </div>
+                  {isAgentWorking && (
+                    <Badge
+                      variant="primary"
+                      className="px-2 py-0.5 text-xs font-medium rounded-full"
+                    >
+                      Working...
+                    </Badge>
+                  )}
+                </HStack>
+                <Button
+                  variant="ghost"
+                  onClick={() => setAgentPanelOpen(false)}
+                  className="p-1.5 rounded hover:bg-[var(--color-secondary)] transition-colors"
+                >
+                  <Icon icon={XCircle} size="sm" className="text-[var(--color-muted-foreground)]" />
+                </Button>
+              </HStack>
 
               {(hasTodos || hasDiffs || (activities as unknown[]).length > 0) && (
-                <div className="flex border-b border-[var(--color-border)] bg-[var(--color-surface)]">
+                <HStack
+                  gap="none"
+                  className="border-b border-[var(--color-border)] bg-[var(--color-surface)]"
+                >
                   {hasTodos && (
-                    <button onClick={() => setActiveTab('todos')} className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium transition-colors ${activeTab === 'todos' ? 'text-[var(--color-primary)] border-b-2 border-[var(--color-primary)]' : 'text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]'}`}>
-                      <ListTodo className="w-3.5 h-3.5" />Tasks ({completedTodos}/{todos.length})
-                    </button>
+                    <Button
+                      variant="ghost"
+                      onClick={() => setActiveTab('todos')}
+                      className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium transition-colors ${activeTab === 'todos' ? 'text-[var(--color-primary)] border-b-2 border-[var(--color-primary)]' : 'text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]'}`}
+                    >
+                      <Icon icon={ListTodo} size="xs" />
+                      Tasks ({completedTodos}/{todos.length})
+                    </Button>
                   )}
-                  <button onClick={() => setActiveTab('activity')} className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium transition-colors ${activeTab === 'activity' ? 'text-[var(--color-primary)] border-b-2 border-[var(--color-primary)]' : 'text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]'}`}>
-                    <MessageSquare className="w-3.5 h-3.5" />Activity
-                  </button>
+                  <Button
+                    variant="ghost"
+                    onClick={() => setActiveTab('activity')}
+                    className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium transition-colors ${activeTab === 'activity' ? 'text-[var(--color-primary)] border-b-2 border-[var(--color-primary)]' : 'text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]'}`}
+                  >
+                    <Icon icon={MessageSquare} size="xs" />
+                    Activity
+                  </Button>
                   {hasDiffs && (
-                    <button onClick={() => setActiveTab('changes')} className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium transition-colors ${activeTab === 'changes' ? 'text-[var(--color-primary)] border-b-2 border-[var(--color-primary)]' : 'text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]'}`}>
-                      <GitCompare className="w-3.5 h-3.5" />Changes ({(schemaDiffs as unknown[]).length})
-                    </button>
+                    <Button
+                      variant="ghost"
+                      onClick={() => setActiveTab('changes')}
+                      className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium transition-colors ${activeTab === 'changes' ? 'text-[var(--color-primary)] border-b-2 border-[var(--color-primary)]' : 'text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]'}`}
+                    >
+                      <Icon icon={GitCompare} size="xs" />
+                      Changes ({(schemaDiffs as unknown[]).length})
+                    </Button>
                   )}
-                </div>
+                </HStack>
               )}
 
-              <div className="flex-1 overflow-y-auto">
+              <Box className="flex-1 overflow-y-auto">
                 {activeTab === 'activity' && (
-                  <div className="p-4">
+                  <Box className="p-4">
                     {(activities as unknown[]).length > 0 ? (
                       <AgentActivityFeed activities={activities as never[]} className="space-y-3" />
                     ) : (
-                      <div className="flex flex-col items-center justify-center py-12 text-center">
-                        <Bot className="w-12 h-12 text-[var(--color-muted-foreground)] mb-3" />
+                      <VStack align="center" className="py-12 text-center">
+                        <Icon icon={Bot} size="xl" className="text-[var(--color-muted-foreground)] mb-3" />
                         <Typography variant="body2" color="muted">Click "Fix All" to start the agent</Typography>
                         <Typography variant="caption" color="muted" className="mt-1 max-w-[200px]">The agent will analyze and fix validation errors automatically</Typography>
-                      </div>
+                      </VStack>
                     )}
-                  </div>
+                  </Box>
                 )}
                 {activeTab === 'todos' && hasTodos && (
-                  <div className="p-4"><TodoList todos={todos as never[]} showHeader={false} /></div>
+                  <Box className="p-4"><TodoList todos={todos as never[]} showHeader={false} /></Box>
                 )}
                 {activeTab === 'changes' && hasDiffs && (
-                  <div className="p-4"><SchemaDiffViewer diffs={schemaDiffs as never[]} title="Schema Changes" /></div>
+                  <Box className="p-4"><SchemaDiffViewer diffs={schemaDiffs as never[]} title="Schema Changes" /></Box>
                 )}
-              </div>
+              </Box>
 
               {agentError && (
-                <div className="p-4 border-t border-[var(--color-error)]/20 bg-[var(--color-error)]/5">
-                  <div className="flex items-start gap-2">
-                    <XCircle className="w-4 h-4 text-[var(--color-error)] flex-shrink-0 mt-0.5" />
+                <Box className="p-4 border-t border-[var(--color-error)]/20 bg-[var(--color-error)]/5">
+                  <HStack gap="sm" align="start">
+                    <Icon icon={XCircle} size="sm" className="text-[var(--color-error)] flex-shrink-0 mt-0.5" />
                     <Typography variant="caption" className="text-[var(--color-error)]">{agentError}</Typography>
-                  </div>
-                </div>
+                  </HStack>
+                </Box>
               )}
 
               {isAgentWorking && (
-                <div className="p-4 border-t border-[var(--color-border)]">
+                <Box className="p-4 border-t border-[var(--color-border)]">
                   <Button variant="secondary" size="sm" onClick={() => emit('UI:CANCEL_AGENT', {})} className="w-full">Cancel</Button>
-                </div>
+                </Box>
               )}
-            </aside>
+            </VStack>
           )}
-        </div>
-      </div>
-    </div>
+        </HStack>
+      </VStack>
+    </HStack>
   );
 };
 

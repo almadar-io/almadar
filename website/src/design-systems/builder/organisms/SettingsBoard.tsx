@@ -11,7 +11,7 @@
  */
 
 import React, { useState } from 'react';
-import { Box, useEventBus } from '@almadar/ui';
+import { Box, VStack, HStack, Typography, Button, useEventBus } from '@almadar/ui';
 import { GitHubIntegration } from './GitHubIntegration';
 
 export type SettingsTab = 'general' | 'integrations' | 'appearance' | 'advanced';
@@ -49,95 +49,106 @@ export const SettingsBoard: React.FC<SettingsBoardProps> = ({
   return (
     <Box className={className}>
       {/* Header */}
-      <Box className="border-b" style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-card)' }}>
+      <Box
+        style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-card)' }}
+        className="border-b"
+      >
         <Box className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <h1 className="text-2xl font-bold text-[var(--color-foreground)]">Settings</h1>
-          <p className="mt-1 text-sm text-[var(--color-muted-foreground)]">
-            Manage your Builder preferences and integrations
-          </p>
+          <VStack gap="xs">
+            <Typography variant="h1">Settings</Typography>
+            <Typography variant="body2" className="text-[var(--color-muted-foreground)]">
+              Manage your Builder preferences and integrations
+            </Typography>
+          </VStack>
         </Box>
       </Box>
 
       {/* Content */}
       <Box className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Box className="flex gap-8">
+        <HStack gap="xl" align="start">
           {/* Sidebar Navigation */}
           <Box className="w-64 flex-shrink-0">
-            <nav className="space-y-1">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => handleTabChange(tab.id)}
-                  className="w-full flex items-center gap-3 px-4 py-2 text-sm font-medium rounded-md transition-colors border"
-                  style={
-                    activeTab === tab.id
-                      ? {
-                          backgroundColor: 'color-mix(in srgb, var(--color-info) 10%, transparent)',
-                          color: 'var(--color-info)',
-                          borderColor: 'color-mix(in srgb, var(--color-info) 30%, transparent)',
-                        }
-                      : {
-                          color: 'var(--color-foreground)',
-                          borderColor: 'transparent',
-                        }
-                  }
-                >
-                  <span className="text-lg">{tab.icon}</span>
-                  <span>{tab.label}</span>
-                </button>
-              ))}
-            </nav>
+            <Box as="nav" className="space-y-1">
+              <VStack gap="xs">
+                {tabs.map((tab) => (
+                  <Button
+                    key={tab.id}
+                    variant="ghost"
+                    onClick={() => handleTabChange(tab.id)}
+                    className="w-full justify-start border"
+                    style={
+                      activeTab === tab.id
+                        ? {
+                            backgroundColor: 'color-mix(in srgb, var(--color-info) 10%, transparent)',
+                            color: 'var(--color-info)',
+                            borderColor: 'color-mix(in srgb, var(--color-info) 30%, transparent)',
+                          }
+                        : {
+                            color: 'var(--color-foreground)',
+                            borderColor: 'transparent',
+                          }
+                    }
+                  >
+                    <HStack gap="sm" align="center">
+                      <Typography as="span" variant="body1">{tab.icon}</Typography>
+                      <Typography as="span" variant="body2">{tab.label}</Typography>
+                    </HStack>
+                  </Button>
+                ))}
+              </VStack>
+            </Box>
           </Box>
 
           {/* Main Content */}
           <Box className="flex-1 min-w-0">
             {activeTab === 'general' && (
-              <Box>
-                <h2 className="text-lg font-semibold text-[var(--color-foreground)] mb-4">General Settings</h2>
-                <Box className="space-y-4">
-                  <p className="text-sm text-[var(--color-muted-foreground)]">General settings coming soon...</p>
-                </Box>
-              </Box>
+              <VStack gap="md">
+                <Typography variant="h2">General Settings</Typography>
+                <Typography variant="body2" className="text-[var(--color-muted-foreground)]">
+                  General settings coming soon...
+                </Typography>
+              </VStack>
             )}
 
             {activeTab === 'integrations' && (
-              <Box>
-                <h2 className="text-lg font-semibold text-[var(--color-foreground)] mb-4">Integrations</h2>
-                <Box className="space-y-6">
-                  {/* GitHub Integration */}
-                  <GitHubIntegration />
+              <VStack gap="lg">
+                <Typography variant="h2">Integrations</Typography>
+                {/* GitHub Integration */}
+                <GitHubIntegration />
 
-                  {/* Placeholder for other integrations */}
-                  <Box className="p-6 border-2 border-dashed rounded-lg text-center" style={{ borderColor: 'var(--color-border)' }}>
-                    <p className="text-sm text-[var(--color-muted-foreground)]">
-                      More integrations coming soon...
-                      <br />
-                      (Stripe, Twilio, SendGrid, etc.)
-                    </p>
-                  </Box>
+                {/* Placeholder for other integrations */}
+                <Box
+                  className="p-6 border-2 border-dashed rounded-lg text-center"
+                  style={{ borderColor: 'var(--color-border)' }}
+                >
+                  <Typography variant="body2" className="text-[var(--color-muted-foreground)]">
+                    More integrations coming soon...
+                    <br />
+                    (Stripe, Twilio, SendGrid, etc.)
+                  </Typography>
                 </Box>
-              </Box>
+              </VStack>
             )}
 
             {activeTab === 'appearance' && (
-              <Box>
-                <h2 className="text-lg font-semibold text-[var(--color-foreground)] mb-4">Appearance</h2>
-                <Box className="space-y-4">
-                  <p className="text-sm text-[var(--color-muted-foreground)]">Theme and appearance settings coming soon...</p>
-                </Box>
-              </Box>
+              <VStack gap="md">
+                <Typography variant="h2">Appearance</Typography>
+                <Typography variant="body2" className="text-[var(--color-muted-foreground)]">
+                  Theme and appearance settings coming soon...
+                </Typography>
+              </VStack>
             )}
 
             {activeTab === 'advanced' && (
-              <Box>
-                <h2 className="text-lg font-semibold text-[var(--color-foreground)] mb-4">Advanced Settings</h2>
-                <Box className="space-y-4">
-                  <p className="text-sm text-[var(--color-muted-foreground)]">Advanced settings coming soon...</p>
-                </Box>
-              </Box>
+              <VStack gap="md">
+                <Typography variant="h2">Advanced Settings</Typography>
+                <Typography variant="body2" className="text-[var(--color-muted-foreground)]">
+                  Advanced settings coming soon...
+                </Typography>
+              </VStack>
             )}
           </Box>
-        </Box>
+        </HStack>
       </Box>
     </Box>
   );

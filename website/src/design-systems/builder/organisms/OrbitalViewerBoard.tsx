@@ -23,6 +23,15 @@ import {
 } from 'lucide-react';
 import type { OrbitalSchema, Orbital, Trait, TraitRef } from '@almadar/core';
 import { isOrbitalDefinition, isInlineTrait } from '@almadar/core';
+import {
+  Box,
+  VStack,
+  HStack,
+  Typography,
+  Badge,
+  Button,
+  Icon,
+} from '@almadar/ui';
 // OrbitalJsonViewer is a code viewer — will be wired as a slot from the page
 // DomainEditor is now part of the DS domain organisms
 import { DomainEditor } from './domain/DomainEditor';
@@ -210,14 +219,25 @@ export const OrbitalViewer: React.FC<OrbitalViewerProps> = ({
   }, [schema, externalDomainText]);
 
   return (
-    <div className={`flex flex-col rounded-lg border ${className}`} style={{ backgroundColor: 'var(--color-background)', borderColor: 'var(--color-border)' }}>
+    <VStack
+      gap="none"
+      className={`rounded-lg border ${className}`}
+      style={{ backgroundColor: 'var(--color-background)', borderColor: 'var(--color-border)' }}
+    >
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'var(--color-border)' }}>
-        <div className="flex items-center gap-3">
-          <Atom className="w-5 h-5" style={{ color: 'var(--color-primary)' }} />
-          <h3 className="font-medium" style={{ color: 'var(--color-foreground)' }}>{schema.name || 'Orbital Schema'}</h3>
+      <HStack
+        justify="between"
+        align="center"
+        className="px-4 py-3 border-b"
+        style={{ borderColor: 'var(--color-border)' }}
+      >
+        <HStack align="center" gap="sm">
+          <Icon icon={Atom} size="md" style={{ color: 'var(--color-primary)' }} />
+          <Typography variant="label" weight="medium" style={{ color: 'var(--color-foreground)' }}>
+            {schema.name || 'Orbital Schema'}
+          </Typography>
           {orbitalCount > 0 && (
-            <span
+            <Badge
               className="px-2 py-0.5 text-xs rounded"
               style={{
                 backgroundColor: 'color-mix(in srgb, var(--color-primary) 20%, transparent)',
@@ -225,19 +245,25 @@ export const OrbitalViewer: React.FC<OrbitalViewerProps> = ({
               }}
             >
               {orbitalCount} orbital{orbitalCount !== 1 ? 's' : ''}
-            </span>
+            </Badge>
           )}
           {hasErrors ? (
-            <AlertCircle className="w-4 h-4" style={{ color: 'var(--color-error)' }} />
+            <Icon icon={AlertCircle} size="sm" style={{ color: 'var(--color-error)' }} />
           ) : (
-            <CheckCircle2 className="w-4 h-4" style={{ color: 'var(--color-success)' }} />
+            <Icon icon={CheckCircle2} size="sm" style={{ color: 'var(--color-success)' }} />
           )}
-        </div>
+        </HStack>
 
-        <div className="flex items-center gap-2">
+        <HStack align="center" gap="sm">
           {/* View Mode Tabs */}
-          <div className="flex rounded-lg p-1" style={{ backgroundColor: 'var(--color-card)' }}>
-            <button
+          <HStack
+            gap="none"
+            className="rounded-lg p-1"
+            style={{ backgroundColor: 'var(--color-card)' }}
+          >
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={() => setViewMode('json')}
               className="flex items-center gap-1 px-3 py-1 text-sm rounded transition-colors"
               style={viewMode === 'json'
@@ -245,10 +271,12 @@ export const OrbitalViewer: React.FC<OrbitalViewerProps> = ({
                 : { color: 'var(--color-muted-foreground)' }
               }
             >
-              <Code className="w-4 h-4" />
+              <Icon icon={Code} size="sm" />
               Orb
-            </button>
-            <button
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={() => setViewMode('orbital')}
               className="flex items-center gap-1 px-3 py-1 text-sm rounded transition-colors"
               style={viewMode === 'orbital'
@@ -256,10 +284,12 @@ export const OrbitalViewer: React.FC<OrbitalViewerProps> = ({
                 : { color: 'var(--color-muted-foreground)' }
               }
             >
-              <Layers className="w-4 h-4" />
+              <Icon icon={Layers} size="sm" />
               Orbital
-            </button>
-            <button
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={() => setViewMode('domain')}
               className="flex items-center gap-1 px-3 py-1 text-sm rounded transition-colors"
               style={viewMode === 'domain'
@@ -267,39 +297,53 @@ export const OrbitalViewer: React.FC<OrbitalViewerProps> = ({
                 : { color: 'var(--color-muted-foreground)' }
               }
             >
-              <BookOpen className="w-4 h-4" />
+              <Icon icon={BookOpen} size="sm" />
               Domain
-            </button>
-          </div>
+            </Button>
+          </HStack>
 
-          <button
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={handleCopy}
             className="flex items-center gap-1 px-3 py-1.5 text-sm rounded transition-colors"
             style={{ backgroundColor: 'var(--color-card)', color: 'var(--color-foreground)' }}
           >
-            {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+            {copied ? <Icon icon={Check} size="sm" /> : <Icon icon={Copy} size="sm" />}
             {copied ? 'Copied!' : 'Copy'}
-          </button>
-        </div>
-      </div>
+          </Button>
+        </HStack>
+      </HStack>
 
       {/* Content */}
-      <div className="flex-1 overflow-auto" style={{ maxHeight }}>
+      <Box className="flex-1 overflow-auto" style={{ maxHeight }}>
         {viewMode === 'orbital' && (
-          <div className="p-4 space-y-4">
+          <VStack gap="md" className="p-4">
             {/* All Traits (collected from orbitals) */}
             {(() => {
               const allTraits = collectAllTraits(schema);
               return allTraits.length > 0 && (
-                <div className="border rounded-lg overflow-hidden" style={{ borderColor: 'var(--color-border)' }}>
-                  <div className="px-4 py-3 border-b flex items-center gap-2" style={{ backgroundColor: 'var(--color-card)', borderColor: 'var(--color-border)' }}>
-                    <Layers className="w-4 h-4" style={{ color: 'var(--color-accent)' }} />
-                    <span className="font-medium" style={{ color: 'var(--color-foreground)' }}>App Traits</span>
-                    <span className="text-xs" style={{ color: 'var(--color-muted-foreground)' }}>({allTraits.length})</span>
-                  </div>
-                  <div className="p-4 flex flex-wrap gap-2">
+                <Box
+                  className="border rounded-lg overflow-hidden"
+                  style={{ borderColor: 'var(--color-border)' }}
+                >
+                  <HStack
+                    align="center"
+                    gap="sm"
+                    className="px-4 py-3 border-b"
+                    style={{ backgroundColor: 'var(--color-card)', borderColor: 'var(--color-border)' }}
+                  >
+                    <Icon icon={Layers} size="sm" style={{ color: 'var(--color-accent)' }} />
+                    <Typography variant="label" weight="medium" style={{ color: 'var(--color-foreground)' }}>
+                      App Traits
+                    </Typography>
+                    <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>
+                      ({allTraits.length})
+                    </Typography>
+                  </HStack>
+                  <HStack wrap gap="sm" className="p-4">
                     {allTraits.map((trait, i) => (
-                      <div
+                      <Box
                         key={i}
                         className="group relative rounded-lg px-3 py-2 border"
                         style={{
@@ -307,19 +351,34 @@ export const OrbitalViewer: React.FC<OrbitalViewerProps> = ({
                           backgroundColor: 'color-mix(in srgb, var(--color-accent) 10%, transparent)',
                         }}
                       >
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium" style={{ color: 'var(--color-accent)' }}>{trait.name}</span>
+                        <HStack align="center" gap="sm">
+                          <Typography
+                            variant="small"
+                            weight="medium"
+                            style={{ color: 'var(--color-accent)' }}
+                          >
+                            {trait.name}
+                          </Typography>
                           {trait.description && (
-                            <span className="text-xs" style={{ color: 'color-mix(in srgb, var(--color-accent) 70%, transparent)' }}>- {trait.description}</span>
+                            <Typography
+                              variant="caption"
+                              style={{ color: 'color-mix(in srgb, var(--color-accent) 70%, transparent)' }}
+                            >
+                              - {trait.description}
+                            </Typography>
                           )}
-                        </div>
-                        <div className="mt-1 flex gap-2 text-[10px] uppercase tracking-wider" style={{ color: 'var(--color-muted-foreground)' }}>
-                          {trait.stateMachine && <span>State Machine</span>}
-                        </div>
-                      </div>
+                        </HStack>
+                        <HStack gap="sm" className="mt-1 text-[10px] uppercase tracking-wider" style={{ color: 'var(--color-muted-foreground)' }}>
+                          {trait.stateMachine && (
+                            <Typography variant="caption" as="span" style={{ color: 'var(--color-muted-foreground)' }}>
+                              State Machine
+                            </Typography>
+                          )}
+                        </HStack>
+                      </Box>
                     ))}
-                  </div>
-                </div>
+                  </HStack>
+                </Box>
               );
             })()}
 
@@ -334,54 +393,65 @@ export const OrbitalViewer: React.FC<OrbitalViewerProps> = ({
               />
             ))}
             {(!schema.orbitals || schema.orbitals.length === 0) && (
-              <div className="flex flex-col items-center justify-center py-12" style={{ color: 'var(--color-muted-foreground)' }}>
-                <Atom className="w-12 h-12 mb-4" />
-                <p>No orbitals defined</p>
-              </div>
+              <VStack align="center" justify="center" className="py-12" style={{ color: 'var(--color-muted-foreground)' }}>
+                <Icon icon={Atom} size="xl" className="mb-4" />
+                <Typography variant="body2">No orbitals defined</Typography>
+              </VStack>
             )}
-          </div>
+          </VStack>
         )}
 
         {viewMode === 'domain' && (
-          <div className="h-full">
+          <Box className="h-full">
             <DomainEditor
               value={domainLanguage}
               readOnly={true}
               height={maxHeight}
               showLineNumbers={true}
             />
-          </div>
+          </Box>
         )}
 
         {viewMode === 'json' && (
-          <div className="h-full overflow-auto" style={{ maxHeight }}>
-            <pre className="p-4 text-xs rounded-lg font-mono whitespace-pre-wrap" style={{ color: 'var(--color-foreground)', backgroundColor: 'var(--color-background)' }}>
+          <Box className="h-full overflow-auto" style={{ maxHeight }}>
+            <Box
+              as="pre"
+              className="p-4 text-xs rounded-lg font-mono whitespace-pre-wrap"
+              style={{ color: 'var(--color-foreground)', backgroundColor: 'var(--color-background)' }}
+            >
               {JSON.stringify(schema, null, 2)}
-            </pre>
-          </div>
+            </Box>
+          </Box>
         )}
-      </div>
+      </Box>
 
       {/* Validation Errors (hidden in JSON mode since OrbitalJsonViewer shows them) */}
       {validationErrors.length > 0 && viewMode !== 'json' && (
-        <div className="border-t p-4" style={{ borderColor: 'var(--color-border)' }}>
-          <h4 className="text-sm font-medium mb-2 flex items-center gap-2" style={{ color: 'var(--color-error)' }}>
-            <AlertCircle className="w-4 h-4" />
-            Validation Errors ({validationErrors.length})
-          </h4>
-          <div className="space-y-1 max-h-32 overflow-auto">
+        <Box className="border-t p-4" style={{ borderColor: 'var(--color-border)' }}>
+          <HStack align="center" gap="sm" className="mb-2">
+            <Icon icon={AlertCircle} size="sm" style={{ color: 'var(--color-error)' }} />
+            <Typography variant="small" weight="medium" style={{ color: 'var(--color-error)' }}>
+              Validation Errors ({validationErrors.length})
+            </Typography>
+          </HStack>
+          <VStack gap="xs" className="max-h-32 overflow-auto">
             {validationErrors.map((error, index) => (
-              <div key={index} className="text-xs" style={{ color: 'var(--color-muted-foreground)' }}>
-                <span style={{ color: 'var(--color-error)' }}>{error.code}</span>: {error.message}
+              <Box key={index} className="text-xs" style={{ color: 'var(--color-muted-foreground)' }}>
+                <Typography variant="caption" as="span" style={{ color: 'var(--color-error)' }}>
+                  {error.code}
+                </Typography>
+                <Typography variant="caption" as="span">: {error.message}</Typography>
                 {error.path && (
-                  <span className="ml-2" style={{ color: 'var(--color-muted-foreground)' }}>({error.path})</span>
+                  <Typography variant="caption" as="span" className="ml-2" style={{ color: 'var(--color-muted-foreground)' }}>
+                    ({error.path})
+                  </Typography>
                 )}
-              </div>
+              </Box>
             ))}
-          </div>
-        </div>
+          </VStack>
+        </Box>
       )}
-    </div>
+    </VStack>
   );
 };
 
@@ -407,7 +477,7 @@ const OrbitalCard: React.FC<OrbitalCardProps> = ({
   const pageCount = (orbital as any).pages?.length || 0;
 
   return (
-    <div
+    <Box
       className="border rounded-lg"
       style={{
         borderColor: hasErrors
@@ -416,74 +486,101 @@ const OrbitalCard: React.FC<OrbitalCardProps> = ({
       }}
     >
       {/* Header */}
-      <button
+      <Button
+        variant="ghost"
         onClick={onToggle}
         className="w-full flex items-center gap-3 px-4 py-3 transition-colors"
       >
         {expanded ? (
-          <ChevronDown className="w-4 h-4" style={{ color: 'var(--color-muted-foreground)' }} />
+          <Icon icon={ChevronDown} size="sm" style={{ color: 'var(--color-muted-foreground)' }} />
         ) : (
-          <ChevronRight className="w-4 h-4" style={{ color: 'var(--color-muted-foreground)' }} />
+          <Icon icon={ChevronRight} size="sm" style={{ color: 'var(--color-muted-foreground)' }} />
         )}
-        <Atom className="w-4 h-4" style={{ color: 'var(--color-primary)' }} />
-        <span className="font-medium" style={{ color: 'var(--color-foreground)' }}>{orbital.name}</span>
-        <div className="flex items-center gap-2 ml-auto text-xs" style={{ color: 'var(--color-muted-foreground)' }}>
-          <span className="flex items-center gap-1">
-            <Database className="w-3 h-3" />
-            {entityFieldCount} fields
-          </span>
-          <span className="flex items-center gap-1">
-            <Layers className="w-3 h-3" />
-            {traitCount} traits
-          </span>
-          <span className="flex items-center gap-1">
-            <FileText className="w-3 h-3" />
-            {pageCount} pages
-          </span>
-        </div>
-      </button>
+        <Icon icon={Atom} size="sm" style={{ color: 'var(--color-primary)' }} />
+        <Typography variant="label" weight="medium" style={{ color: 'var(--color-foreground)' }}>
+          {orbital.name}
+        </Typography>
+        <HStack align="center" gap="sm" className="ml-auto text-xs" style={{ color: 'var(--color-muted-foreground)' }}>
+          <HStack align="center" gap="xs">
+            <Icon icon={Database} size="xs" />
+            <Typography variant="caption">{entityFieldCount} fields</Typography>
+          </HStack>
+          <HStack align="center" gap="xs">
+            <Icon icon={Layers} size="xs" />
+            <Typography variant="caption">{traitCount} traits</Typography>
+          </HStack>
+          <HStack align="center" gap="xs">
+            <Icon icon={FileText} size="xs" />
+            <Typography variant="caption">{pageCount} pages</Typography>
+          </HStack>
+        </HStack>
+      </Button>
 
       {/* Content */}
       {expanded && (
-        <div className="px-4 pb-4 space-y-4">
+        <VStack gap="md" className="px-4 pb-4">
           {/* Entity */}
           {(orbital as any).entity && (
-            <div>
-              <h5 className="text-xs font-medium uppercase mb-2" style={{ color: 'var(--color-muted-foreground)' }}>Entity</h5>
-              <div className="rounded p-3" style={{ backgroundColor: 'var(--color-card)' }}>
-                <div className="flex items-center gap-2 mb-2">
-                  <Database className="w-4 h-4" style={{ color: 'var(--color-info)' }} />
-                  <span className="text-sm font-medium" style={{ color: 'var(--color-foreground)' }}>{(orbital as any).entity.name}</span>
+            <VStack gap="xs">
+              <Typography
+                variant="overline"
+                className="text-xs font-medium uppercase mb-2"
+                style={{ color: 'var(--color-muted-foreground)' }}
+              >
+                Entity
+              </Typography>
+              <Box className="rounded p-3" style={{ backgroundColor: 'var(--color-card)' }}>
+                <HStack align="center" gap="sm" className="mb-2">
+                  <Icon icon={Database} size="sm" style={{ color: 'var(--color-info)' }} />
+                  <Typography variant="small" weight="medium" style={{ color: 'var(--color-foreground)' }}>
+                    {(orbital as any).entity.name}
+                  </Typography>
                   {(orbital as any).entity.collection && (
-                    <span className="text-xs" style={{ color: 'var(--color-muted-foreground)' }}>({(orbital as any).entity.collection})</span>
+                    <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>
+                      ({(orbital as any).entity.collection})
+                    </Typography>
                   )}
-                </div>
+                </HStack>
                 {(orbital as any).entity.fields && (orbital as any).entity.fields.length > 0 && (
-                  <div className="space-y-1 ml-6">
+                  <VStack gap="xs" className="ml-6">
                     {(orbital as any).entity.fields.map((field: any, i: number) => (
-                      <div key={i} className="text-xs" style={{ color: 'var(--color-muted-foreground)' }}>
-                        <span style={{ color: 'var(--color-foreground)' }}>{field.name}</span>
-                        <span style={{ color: 'var(--color-muted-foreground)' }}>: {field.type}</span>
-                        {field.required && <span className="ml-1" style={{ color: 'var(--color-error)' }}>*</span>}
-                      </div>
+                      <Box key={i} className="text-xs" style={{ color: 'var(--color-muted-foreground)' }}>
+                        <Typography variant="caption" as="span" style={{ color: 'var(--color-foreground)' }}>
+                          {field.name}
+                        </Typography>
+                        <Typography variant="caption" as="span" style={{ color: 'var(--color-muted-foreground)' }}>
+                          : {field.type}
+                        </Typography>
+                        {field.required && (
+                          <Typography variant="caption" as="span" className="ml-1" style={{ color: 'var(--color-error)' }}>
+                            *
+                          </Typography>
+                        )}
+                      </Box>
                     ))}
-                  </div>
+                  </VStack>
                 )}
-              </div>
-            </div>
+              </Box>
+            </VStack>
           )}
 
           {/* Traits */}
           {orbital.traits && orbital.traits.length > 0 && (
-            <div>
-              <h5 className="text-xs font-medium uppercase mb-2" style={{ color: 'var(--color-muted-foreground)' }}>Traits</h5>
-              <div className="flex flex-wrap gap-2">
+            <VStack gap="xs">
+              <Typography
+                variant="overline"
+                className="text-xs font-medium uppercase mb-2"
+                style={{ color: 'var(--color-muted-foreground)' }}
+              >
+                Traits
+              </Typography>
+              <HStack wrap gap="sm">
                 {orbital.traits.map((trait, i) => {
                   const traitName = typeof trait === 'string'
                     ? trait
                     : (trait as any).ref || (trait as any).name;
                   return (
-                    <span
+                    <Badge
                       key={i}
                       className="px-2 py-1 text-xs rounded"
                       style={{
@@ -492,50 +589,62 @@ const OrbitalCard: React.FC<OrbitalCardProps> = ({
                       }}
                     >
                       {traitName}
-                    </span>
+                    </Badge>
                   );
                 })}
-              </div>
-            </div>
+              </HStack>
+            </VStack>
           )}
 
           {/* Pages */}
           {(orbital as any).pages && (orbital as any).pages.length > 0 && (
-            <div>
-              <h5 className="text-xs font-medium uppercase mb-2" style={{ color: 'var(--color-muted-foreground)' }}>Pages</h5>
-              <div className="space-y-2">
+            <VStack gap="xs">
+              <Typography
+                variant="overline"
+                className="text-xs font-medium uppercase mb-2"
+                style={{ color: 'var(--color-muted-foreground)' }}
+              >
+                Pages
+              </Typography>
+              <VStack gap="sm">
                 {(orbital as any).pages.map((page: any, i: number) => (
-                  <div key={i} className="rounded p-2" style={{ backgroundColor: 'var(--color-card)' }}>
-                    <div className="flex items-center gap-2">
-                      <FileText className="w-4 h-4" style={{ color: 'var(--color-success)' }} />
-                      <span className="text-sm" style={{ color: 'var(--color-foreground)' }}>{page.name}</span>
-                      <span className="text-xs" style={{ color: 'var(--color-muted-foreground)' }}>{page.path}</span>
-                    </div>
+                  <Box key={i} className="rounded p-2" style={{ backgroundColor: 'var(--color-card)' }}>
+                    <HStack align="center" gap="sm">
+                      <Icon icon={FileText} size="sm" style={{ color: 'var(--color-success)' }} />
+                      <Typography variant="small" style={{ color: 'var(--color-foreground)' }}>
+                        {page.name}
+                      </Typography>
+                      <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>
+                        {page.path}
+                      </Typography>
+                    </HStack>
                     {page.traits && page.traits.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mt-1 ml-6">
+                      <HStack wrap gap="xs" className="mt-1 ml-6">
                         {page.traits.map((t: any, j: number) => {
                           const name = typeof t === 'string' ? t : t.ref;
                           return (
-                            <span
+                            <Badge
                               key={j}
                               className="px-1.5 py-0.5 text-xs rounded"
                               style={{ backgroundColor: 'var(--color-secondary)', color: 'var(--color-foreground)' }}
                             >
                               {name}
-                            </span>
+                            </Badge>
                           );
                         })}
-                      </div>
+                      </HStack>
                     )}
-                  </div>
+                  </Box>
                 ))}
-              </div>
-            </div>
+              </VStack>
+            </VStack>
           )}
-        </div>
+        </VStack>
       )}
-    </div>
+    </Box>
   );
 };
+
+OrbitalViewer.displayName = 'OrbitalViewer';
 
 export default OrbitalViewer;

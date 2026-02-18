@@ -8,7 +8,20 @@
 
 import React, { useState } from 'react';
 import { clsx } from 'clsx';
-import { Card, Badge, ProgressBar } from '@almadar/ui';
+import {
+  Card,
+  Badge,
+  ProgressBar,
+  Box,
+  VStack,
+  HStack,
+  Typography,
+  Button,
+  Label,
+  Icon,
+  Input,
+  Textarea,
+} from '@almadar/ui';
 import { ChevronDown, X } from 'lucide-react';
 
 // =============================================================================
@@ -125,12 +138,14 @@ const SchemaImpactBadge: React.FC<{ impact?: string }> = ({ impact }) => {
   if (!impact) return null;
 
   return (
-    <span
-      className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium"
+    <Typography
+      as="span"
+      variant="caption"
+      className="inline-flex items-center px-1.5 py-0.5 rounded font-medium"
       style={impactStyles[impact] || defaultImpactStyle}
     >
       {impact}
-    </span>
+    </Typography>
   );
 };
 
@@ -145,21 +160,23 @@ const ScopeDisplay: React.FC<{ scope: WorkItemScope }> = ({ scope }) => {
   if (items.length === 0) return null;
 
   return (
-    <div className="mt-3 space-y-2">
+    <VStack gap="xs" className="mt-3">
       {items.map(item => (
-        <div key={item.label} className="flex flex-wrap gap-1 items-center">
-          <span
-            className="text-xs min-w-[60px]"
+        <HStack key={item.label} gap="xs" align="center" wrap>
+          <Typography
+            as="span"
+            variant="caption"
+            className="min-w-[60px]"
             style={{ color: 'var(--color-muted-foreground)' }}
           >
             {item.label}:
-          </span>
+          </Typography>
           {item.values.map(value => (
             <Badge key={value} variant="default" size="sm">{value}</Badge>
           ))}
-        </div>
+        </HStack>
       ))}
-    </div>
+    </VStack>
   );
 };
 
@@ -189,12 +206,6 @@ const disabledStyle: React.CSSProperties = {
   color: 'var(--color-muted-foreground)',
 };
 
-const inputStyle: React.CSSProperties = {
-  borderColor: 'var(--color-border)',
-  backgroundColor: 'var(--color-card)',
-  color: 'var(--color-foreground)',
-};
-
 const QuestionInput: React.FC<{
   question: WorkItemQuestion;
   value: string;
@@ -205,24 +216,26 @@ const QuestionInput: React.FC<{
   switch (question.inputType) {
     case 'yesno':
       return (
-        <div className="flex gap-2">
-          <button
+        <HStack gap="sm">
+          <Button
             type="button"
             onClick={() => onChange('Yes')}
-            className="px-4 py-2 rounded-md text-sm font-medium transition-colors"
+            variant="default"
+            size="md"
             style={value === 'Yes' ? selectedStyle.yes : unselectedStyle}
           >
             Yes
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             onClick={() => onChange('No')}
-            className="px-4 py-2 rounded-md text-sm font-medium transition-colors"
+            variant="default"
+            size="md"
             style={value === 'No' ? selectedStyle.no : unselectedStyle}
           >
             No
-          </button>
-        </div>
+          </Button>
+        </HStack>
       );
 
     case 'multiselect': {
@@ -230,14 +243,14 @@ const QuestionInput: React.FC<{
       const { hasOther } = parseOtherValue(value);
 
       return (
-        <div className="space-y-2">
-          <div className="flex flex-wrap gap-2">
+        <VStack gap="sm">
+          <HStack gap="sm" wrap>
             {question.suggestedAnswers?.map(option => {
               const isOther = isOtherOption(option);
               const isSelected = isOther ? hasOther : selectedValues.includes(option);
 
               return (
-                <button
+                <Button
                   key={option}
                   type="button"
                   onClick={() => {
@@ -257,17 +270,18 @@ const QuestionInput: React.FC<{
                       onChange(newSelected.join(', '));
                     }
                   }}
-                  className="px-3 py-1.5 rounded-md text-sm transition-colors"
+                  variant="default"
+                  size="sm"
                   style={isSelected ? selectedStyle.blue : unselectedStyle}
                 >
                   {isOther ? 'Other' : option}
-                </button>
+                </Button>
               );
             })}
-          </div>
+          </HStack>
           {hasOther && (
-            <input
-              type="text"
+            <Input
+              inputType="text"
               value={otherText || parseOtherValue(value).otherText}
               onChange={(e) => {
                 const newOtherText = e.target.value;
@@ -277,11 +291,10 @@ const QuestionInput: React.FC<{
                 onChange(newSelected.join(', '));
               }}
               placeholder="Please specify..."
-              className="w-full px-3 py-2 rounded-md border text-sm focus:ring-2 focus:ring-[var(--color-info)] focus:border-transparent"
-              style={inputStyle}
+              className="w-full"
             />
           )}
-        </div>
+        </VStack>
       );
     }
 
@@ -290,14 +303,14 @@ const QuestionInput: React.FC<{
       const { otherText: parsedOtherText } = parseOtherValue(value);
 
       return (
-        <div className="space-y-2">
-          <div className="flex flex-wrap gap-2">
+        <VStack gap="sm">
+          <HStack gap="sm" wrap>
             {question.suggestedAnswers?.map(option => {
               const isOther = isOtherOption(option);
               const isSelected = isOther ? isOtherSelected : value === option;
 
               return (
-                <button
+                <Button
                   key={option}
                   type="button"
                   onClick={() => {
@@ -309,17 +322,18 @@ const QuestionInput: React.FC<{
                       setOtherText('');
                     }
                   }}
-                  className="px-3 py-1.5 rounded-md text-sm transition-colors"
+                  variant="default"
+                  size="sm"
                   style={isSelected ? selectedStyle.blue : unselectedStyle}
                 >
                   {isOther ? 'Other' : option}
-                </button>
+                </Button>
               );
             })}
-          </div>
+          </HStack>
           {isOtherSelected && (
-            <input
-              type="text"
+            <Input
+              inputType="text"
               value={otherText || parsedOtherText}
               onChange={(e) => {
                 const newOtherText = e.target.value;
@@ -327,11 +341,10 @@ const QuestionInput: React.FC<{
                 onChange(`Other: ${newOtherText}`);
               }}
               placeholder="Please specify..."
-              className="w-full px-3 py-2 rounded-md border text-sm focus:ring-2 focus:ring-[var(--color-info)] focus:border-transparent"
-              style={inputStyle}
+              className="w-full"
             />
           )}
-        </div>
+        </VStack>
       );
     }
 
@@ -340,70 +353,87 @@ const QuestionInput: React.FC<{
       const suggestedItems = question.suggestedAnswers || [];
 
       return (
-        <div className="space-y-3">
+        <VStack gap="sm">
           {suggestedItems.length > 0 && (
-            <div className="flex flex-wrap gap-1">
-              <span className="text-xs" style={{ color: 'var(--color-muted-foreground)' }}>Suggestions:</span>
+            <HStack gap="xs" wrap align="center">
+              <Typography
+                as="span"
+                variant="caption"
+                style={{ color: 'var(--color-muted-foreground)' }}
+              >
+                Suggestions:
+              </Typography>
               {suggestedItems.map(item => {
                 const isAdded = items.includes(item);
                 return (
-                  <button
+                  <Button
                     key={item}
                     type="button"
                     onClick={() => { if (!isAdded) onChange([...items, item].join('\n')); }}
                     disabled={isAdded}
-                    className={clsx(
-                      'px-2 py-0.5 rounded text-xs transition-colors',
-                      isAdded ? 'cursor-not-allowed' : ''
-                    )}
+                    variant="default"
+                    size="sm"
+                    className={clsx(isAdded ? 'cursor-not-allowed' : '')}
                     style={isAdded ? disabledStyle : unselectedStyle}
                   >
                     + {item}
-                  </button>
+                  </Button>
                 );
               })}
-            </div>
+            </HStack>
           )}
 
           {items.length > 0 && (
-            <div className="space-y-1">
+            <VStack gap="xs">
               {items.map((item, index) => (
-                <div
+                <HStack
                   key={`${item}-${index}`}
-                  className="flex items-center gap-2 px-3 py-2 rounded-md"
+                  align="center"
+                  gap="sm"
+                  className="px-3 py-2 rounded-md"
                   style={{ backgroundColor: 'var(--color-surface)' }}
                 >
-                  <span
-                    className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-medium"
+                  <Typography
+                    as="span"
+                    variant="caption"
+                    className="flex items-center justify-center w-6 h-6 rounded-full font-medium flex-shrink-0"
                     style={{ backgroundColor: 'color-mix(in srgb, var(--color-info) 15%, transparent)', color: 'var(--color-info)' }}
                   >
                     {index + 1}
-                  </span>
-                  <span className="flex-1 text-sm" style={{ color: 'var(--color-foreground)' }}>{item}</span>
-                  <button
+                  </Typography>
+                  <Typography
+                    as="span"
+                    variant="small"
+                    className="flex-1"
+                    style={{ color: 'var(--color-foreground)' }}
+                  >
+                    {item}
+                  </Typography>
+                  <Button
                     type="button"
                     onClick={() => {
                       const newItems = [...items];
                       newItems.splice(index, 1);
                       onChange(newItems.join('\n'));
                     }}
-                    className="transition-colors"
-                    style={{ color: 'var(--color-muted-foreground)' }}
+                    variant="ghost"
+                    size="sm"
                     aria-label="Remove item"
+                    style={{ color: 'var(--color-muted-foreground)' }}
+                    className="p-1"
                   >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
+                    <Icon icon={X} size="sm" />
+                  </Button>
+                </HStack>
               ))}
-            </div>
+            </VStack>
           )}
 
-          <div className="flex gap-2">
-            <input
-              type="text"
+          <HStack gap="sm">
+            <Input
+              inputType="text"
               placeholder="Add custom item..."
-              className="flex-1 px-3 py-2 rounded-md border text-sm focus:ring-2 focus:ring-[var(--color-info)] focus:border-transparent"
-              style={inputStyle}
+              className="flex-1"
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   const input = e.target as HTMLInputElement;
@@ -416,20 +446,19 @@ const QuestionInput: React.FC<{
                 }
               }}
             />
-          </div>
-        </div>
+          </HStack>
+        </VStack>
       );
     }
 
     default:
       return (
-        <textarea
+        <Textarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="Enter your answer..."
           rows={2}
-          className="w-full px-3 py-2 rounded-md border text-sm focus:ring-2 focus:ring-[var(--color-info)] focus:border-transparent"
-          style={inputStyle}
+          className="w-full"
         />
       );
   }
@@ -477,50 +506,63 @@ export const WorkItemCard: React.FC<WorkItemCardProps> = ({
       }}
     >
       {/* Header */}
-      <div
+      <Box
         className="cursor-pointer select-none p-4"
         style={{
           backgroundColor: expanded ? 'color-mix(in srgb, var(--color-info) 10%, transparent)' : undefined,
         }}
         onClick={toggleExpand}
       >
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1">
-            <div className="flex items-center gap-2">
-              <span
-                className="flex items-center justify-center w-6 h-6 rounded-full text-sm font-medium"
+        <HStack align="start" justify="between" gap="md">
+          <Box className="flex-1">
+            <HStack align="center" gap="sm">
+              <Typography
+                as="span"
+                variant="caption"
+                className="flex items-center justify-center w-6 h-6 rounded-full font-medium flex-shrink-0"
                 style={{ backgroundColor: 'color-mix(in srgb, var(--color-info) 15%, transparent)', color: 'var(--color-info)' }}
               >
                 {index + 1}
-              </span>
-              <h3 className="text-lg font-semibold" style={{ color: 'var(--color-foreground)' }}>
+              </Typography>
+              <Typography
+                variant="h3"
+                className="text-lg font-semibold"
+                style={{ color: 'var(--color-foreground)' }}
+              >
                 {workItem.name}
-              </h3>
-            </div>
-            <p className="text-sm mt-1 ml-8" style={{ color: 'var(--color-muted-foreground)' }}>
+              </Typography>
+            </HStack>
+            <Typography
+              variant="body2"
+              className="mt-1 ml-8"
+              style={{ color: 'var(--color-muted-foreground)' }}
+            >
               {workItem.description}
-            </p>
-          </div>
-          <div className="flex items-center gap-2 flex-shrink-0">
+            </Typography>
+          </Box>
+          <HStack align="center" gap="sm" className="flex-shrink-0">
             <ComplexityBadge complexity={workItem.estimatedComplexity} />
             {totalQuestions > 0 && (
               <Badge variant={allAnswered ? 'success' : 'warning'} size="sm">
                 {answeredQuestions}/{totalQuestions} answered
               </Badge>
             )}
-            <ChevronDown
-              className={clsx('w-5 h-5 transition-transform', expanded ? 'rotate-180' : '')}
+            <Icon
+              icon={ChevronDown}
+              size="md"
+              className={clsx('transition-transform', expanded ? 'rotate-180' : '')}
               style={{ color: 'var(--color-muted-foreground)' }}
             />
-          </div>
-        </div>
+          </HStack>
+        </HStack>
         <ScopeDisplay scope={workItem.scope} />
-      </div>
+      </Box>
 
       {/* Questions */}
       {expanded && workItem.questions.length > 0 && (
-        <div
-          className="p-4 space-y-4 border-t"
+        <VStack
+          gap="md"
+          className="p-4 border-t"
           style={{ borderColor: 'var(--color-border)' }}
         >
           {workItem.questions.map((question, qIndex) => {
@@ -530,41 +572,56 @@ export const WorkItemCard: React.FC<WorkItemCardProps> = ({
             }
 
             return (
-              <div key={question.id} className="space-y-2">
-                <div className="flex items-start justify-between gap-2">
-                  <label className="block text-sm font-medium flex-1" style={{ color: 'var(--color-foreground)' }}>
-                    <span className="flex items-center gap-2">
-                      <span className="text-xs" style={{ color: 'var(--color-muted-foreground)' }}>Q{qIndex + 1}</span>
+              <VStack key={question.id} gap="sm">
+                <HStack align="start" justify="between" gap="sm">
+                  <Label className="block text-sm font-medium flex-1" style={{ color: 'var(--color-foreground)' }}>
+                    <HStack as="span" align="center" gap="sm">
+                      <Typography
+                        as="span"
+                        variant="caption"
+                        style={{ color: 'var(--color-muted-foreground)' }}
+                      >
+                        Q{qIndex + 1}
+                      </Typography>
                       {question.question}
-                    </span>
+                    </HStack>
                     {question.reason && (
-                      <span className="block text-xs font-normal mt-1" style={{ color: 'var(--color-muted-foreground)' }}>
+                      <Typography
+                        as="span"
+                        variant="caption"
+                        className="block font-normal mt-1"
+                        style={{ color: 'var(--color-muted-foreground)' }}
+                      >
                         {question.reason}
-                      </span>
+                      </Typography>
                     )}
-                  </label>
+                  </Label>
                   <SchemaImpactBadge impact={question.impactsSchemaElement} />
-                </div>
+                </HStack>
                 <QuestionInput
                   question={question}
                   value={answers[question.id] || ''}
                   onChange={(value) => onAnswerChange(question.id, value)}
                 />
-              </div>
+              </VStack>
             );
           })}
-        </div>
+        </VStack>
       )}
 
       {expanded && workItem.questions.length === 0 && (
-        <div
+        <Box
           className="p-4 border-t"
           style={{ borderColor: 'var(--color-border)' }}
         >
-          <p className="text-sm italic" style={{ color: 'var(--color-muted-foreground)' }}>
+          <Typography
+            variant="body2"
+            className="italic"
+            style={{ color: 'var(--color-muted-foreground)' }}
+          >
             No questions for this work item. It will be executed automatically.
-          </p>
-        </div>
+          </Typography>
+        </Box>
       )}
     </Card>
   );

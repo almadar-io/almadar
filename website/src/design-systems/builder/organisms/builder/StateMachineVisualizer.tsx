@@ -7,7 +7,7 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
 import type { BuilderGraph, GraphNode } from './types';
-import { Typography, Button, Badge } from '@almadar/ui';
+import { Typography, Button, Badge, Box, VStack, HStack, Icon } from '@almadar/ui';
 import { Card, CardBody, CardHeader, Modal } from '@almadar/ui';
 import {
   Circle,
@@ -138,19 +138,19 @@ export const StateMachineVisualizer: React.FC<StateMachineVisualizerProps> = ({
   );
 
   return (
-    <div className={`space-y-6 ${className}`}>
+    <VStack gap="lg" className={className}>
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
+      <HStack justify="between" align="start">
+        <VStack gap="xs">
           <Typography variant="h4">
             State Machine
           </Typography>
           <Typography variant="caption" color="muted">
             {states.length} states, {events.length} events, {transitions.length} transitions
           </Typography>
-        </div>
+        </VStack>
         {!readOnly && (
-          <div className="flex gap-2">
+          <HStack gap="sm">
             <Button
               size="sm"
               variant="secondary"
@@ -167,21 +167,21 @@ export const StateMachineVisualizer: React.FC<StateMachineVisualizerProps> = ({
             >
               Add Event
             </Button>
-          </div>
+          </HStack>
         )}
-      </div>
+      </HStack>
 
       {/* States Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <Box className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* States List */}
         <Card>
           <CardHeader>
-            <div className="flex items-center gap-2">
-              <Circle className="w-5 h-5" style={{ color: 'var(--color-primary)' }} />
+            <HStack gap="sm">
+              <Icon icon={Circle} size="md" style={{ color: 'var(--color-primary)' }} />
               <Typography variant="h5">
                 States ({states.length})
               </Typography>
-            </div>
+            </HStack>
           </CardHeader>
           <CardBody className="space-y-2 max-h-96 overflow-auto">
             {states.length === 0 ? (
@@ -190,7 +190,7 @@ export const StateMachineVisualizer: React.FC<StateMachineVisualizerProps> = ({
               </Typography>
             ) : (
               states.map((state) => (
-                <div
+                <Box
                   key={state.id}
                   className={`p-3 rounded-lg border transition-colors cursor-pointer ${selectedStateId === state.id
                       ? ''
@@ -202,16 +202,16 @@ export const StateMachineVisualizer: React.FC<StateMachineVisualizerProps> = ({
                   }
                   onClick={() => setSelectedStateId(state.id)}
                 >
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-2">
+                  <HStack justify="between" align="start">
+                    <HStack gap="sm">
                       {state.properties.isInitial ? (
-                        <Play className="w-4 h-4" style={{ color: 'var(--color-success)' }} />
+                        <Icon icon={Play} size="sm" style={{ color: 'var(--color-success)' }} />
                       ) : state.properties.isFinal ? (
-                        <Square className="w-4 h-4" style={{ color: 'var(--color-error)' }} />
+                        <Icon icon={Square} size="sm" style={{ color: 'var(--color-error)' }} />
                       ) : (
-                        <Circle className="w-4 h-4" style={{ color: 'var(--color-muted-foreground)' }} />
+                        <Icon icon={Circle} size="sm" style={{ color: 'var(--color-muted-foreground)' }} />
                       )}
-                      <div>
+                      <VStack gap="xs">
                         <Typography variant="body2" className="font-medium">
                           {state.properties.name}
                         </Typography>
@@ -220,21 +220,24 @@ export const StateMachineVisualizer: React.FC<StateMachineVisualizerProps> = ({
                             {state.properties.description}
                           </Typography>
                         )}
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1">
+                      </VStack>
+                    </HStack>
+                    <HStack gap="xs">
                       {state.properties.isInitial && (
                         <Badge size="sm" variant="success">Initial</Badge>
                       )}
                       {state.properties.isFinal && (
                         <Badge size="sm" variant="warning">Final</Badge>
                       )}
-                    </div>
-                  </div>
+                    </HStack>
+                  </HStack>
 
                   {/* Transitions from this state */}
                   {selectedStateId === state.id && (
-                    <div className="mt-3 pt-3 border-t" style={{ borderColor: 'var(--color-border)' }}>
+                    <Box
+                      className="mt-3 pt-3 border-t"
+                      style={{ borderColor: 'var(--color-border)' }}
+                    >
                       <Typography variant="caption" color="muted" className="block mb-2">
                         Outgoing transitions:
                       </Typography>
@@ -243,36 +246,37 @@ export const StateMachineVisualizer: React.FC<StateMachineVisualizerProps> = ({
                           None
                         </Typography>
                       ) : (
-                        <div className="space-y-1">
+                        <VStack gap="xs">
                           {getTransitionsFrom(state.id).map((t) => (
-                            <div
+                            <HStack
                               key={t.transition.id}
-                              className="flex items-center gap-2 text-sm cursor-pointer hover:opacity-80"
-                              onClick={(e) => {
+                              gap="sm"
+                              className="text-sm cursor-pointer hover:opacity-80"
+                              onClick={(e: React.MouseEvent) => {
                                 e.stopPropagation();
                                 setShowTransitionDetails(t);
                               }}
                             >
-                              <ArrowRight className="w-3 h-3" style={{ color: 'var(--color-muted-foreground)' }} />
-                              <span style={{ color: 'var(--color-primary)' }}>
+                              <Icon icon={ArrowRight} size="xs" style={{ color: 'var(--color-muted-foreground)' }} />
+                              <Typography variant="caption" style={{ color: 'var(--color-primary)' }}>
                                 {t.event?.properties.key || 'Unknown'}
-                              </span>
-                              <span style={{ color: 'var(--color-muted-foreground)' }}>→</span>
-                              <span style={{ color: 'var(--color-info)' }}>
+                              </Typography>
+                              <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>→</Typography>
+                              <Typography variant="caption" style={{ color: 'var(--color-info)' }}>
                                 {t.toState?.properties.name || 'Unknown'}
-                              </span>
-                            </div>
+                              </Typography>
+                            </HStack>
                           ))}
-                        </div>
+                        </VStack>
                       )}
 
                       {!readOnly && (
-                        <div className="flex gap-2 mt-3">
+                        <HStack gap="sm" className="mt-3">
                           <Button
                             size="sm"
                             variant="ghost"
                             leftIcon={<Plus className="w-3 h-3" />}
-                            onClick={(e) => {
+                            onClick={(e: React.MouseEvent) => {
                               e.stopPropagation();
                               onCreateTransition?.(state.id);
                             }}
@@ -283,7 +287,7 @@ export const StateMachineVisualizer: React.FC<StateMachineVisualizerProps> = ({
                             size="sm"
                             variant="ghost"
                             leftIcon={<Edit2 className="w-3 h-3" />}
-                            onClick={(e) => {
+                            onClick={(e: React.MouseEvent) => {
                               e.stopPropagation();
                               onEditState?.(state.id);
                             }}
@@ -296,7 +300,7 @@ export const StateMachineVisualizer: React.FC<StateMachineVisualizerProps> = ({
                               variant="ghost"
                               style={{ color: 'var(--color-error)' }}
                               leftIcon={<Trash2 className="w-3 h-3" />}
-                              onClick={(e) => {
+                              onClick={(e: React.MouseEvent) => {
                                 e.stopPropagation();
                                 onDeleteState?.(state.id);
                               }}
@@ -304,11 +308,11 @@ export const StateMachineVisualizer: React.FC<StateMachineVisualizerProps> = ({
                               Delete
                             </Button>
                           )}
-                        </div>
+                        </HStack>
                       )}
-                    </div>
+                    </Box>
                   )}
-                </div>
+                </Box>
               ))
             )}
           </CardBody>
@@ -317,12 +321,12 @@ export const StateMachineVisualizer: React.FC<StateMachineVisualizerProps> = ({
         {/* Events List */}
         <Card>
           <CardHeader>
-            <div className="flex items-center gap-2">
-              <Zap className="w-5 h-5" style={{ color: 'var(--color-warning)' }} />
+            <HStack gap="sm">
+              <Icon icon={Zap} size="md" style={{ color: 'var(--color-warning)' }} />
               <Typography variant="h5">
                 Events ({events.length})
               </Typography>
-            </div>
+            </HStack>
           </CardHeader>
           <CardBody className="space-y-2 max-h-96 overflow-auto">
             {events.length === 0 ? (
@@ -331,29 +335,29 @@ export const StateMachineVisualizer: React.FC<StateMachineVisualizerProps> = ({
               </Typography>
             ) : (
               events.map((event) => (
-                <div
+                <Box
                   key={event.id}
                   className="p-3 rounded-lg border transition-colors"
                   style={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-border)' }}
                 >
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <div className="flex items-center gap-2">
+                  <HStack justify="between" align="start">
+                    <VStack gap="xs">
+                      <HStack gap="sm">
                         <Badge size="sm" variant="info">
                           {event.properties.key}
                         </Badge>
                         <Typography variant="body2">
                           {event.properties.name}
                         </Typography>
-                      </div>
+                      </HStack>
                       {event.properties.description && (
                         <Typography variant="caption" color="muted" className="mt-1 block">
                           {event.properties.description}
                         </Typography>
                       )}
-                    </div>
+                    </VStack>
                     {!readOnly && (
-                      <div className="flex gap-1">
+                      <HStack gap="xs">
                         <Button
                           size="sm"
                           variant="ghost"
@@ -369,25 +373,25 @@ export const StateMachineVisualizer: React.FC<StateMachineVisualizerProps> = ({
                         >
                           <Trash2 className="w-3 h-3" />
                         </Button>
-                      </div>
+                      </HStack>
                     )}
-                  </div>
-                </div>
+                  </HStack>
+                </Box>
               ))
             )}
           </CardBody>
         </Card>
-      </div>
+      </Box>
 
       {/* Transition Flow Diagram */}
       <Card>
         <CardHeader>
-          <div className="flex items-center gap-2">
-            <ArrowRight className="w-5 h-5" style={{ color: 'var(--color-info)' }} />
+          <HStack gap="sm">
+            <Icon icon={ArrowRight} size="md" style={{ color: 'var(--color-info)' }} />
             <Typography variant="h5">
               Transition Flow
             </Typography>
-          </div>
+          </HStack>
         </CardHeader>
         <CardBody>
           {transitionDetails.length === 0 ? (
@@ -395,52 +399,53 @@ export const StateMachineVisualizer: React.FC<StateMachineVisualizerProps> = ({
               No transitions defined. Create states and events first, then add transitions.
             </Typography>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="text-left border-b" style={{ borderColor: 'var(--color-border)' }}>
-                    <th className="pb-2 font-medium" style={{ color: 'var(--color-muted-foreground)' }}>From State</th>
-                    <th className="pb-2 font-medium" style={{ color: 'var(--color-muted-foreground)' }}>Event</th>
-                    <th className="pb-2 font-medium" style={{ color: 'var(--color-muted-foreground)' }}>To State</th>
+            <Box className="overflow-x-auto">
+              <Box as="table" className="w-full">
+                <Box as="thead">
+                  <Box as="tr" className="text-left border-b" style={{ borderColor: 'var(--color-border)' }}>
+                    <Box as="th" className="pb-2 font-medium" style={{ color: 'var(--color-muted-foreground)' }}>From State</Box>
+                    <Box as="th" className="pb-2 font-medium" style={{ color: 'var(--color-muted-foreground)' }}>Event</Box>
+                    <Box as="th" className="pb-2 font-medium" style={{ color: 'var(--color-muted-foreground)' }}>To State</Box>
                     {!readOnly && (
-                      <th className="pb-2 font-medium w-20" style={{ color: 'var(--color-muted-foreground)' }}>Actions</th>
+                      <Box as="th" className="pb-2 font-medium w-20" style={{ color: 'var(--color-muted-foreground)' }}>Actions</Box>
                     )}
-                  </tr>
-                </thead>
-                <tbody>
+                  </Box>
+                </Box>
+                <Box as="tbody">
                   {transitionDetails.map((t) => (
-                    <tr
+                    <Box
+                      as="tr"
                       key={t.transition.id}
                       className="border-b"
                       style={{ borderColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)' }}
                     >
-                      <td className="py-3">
-                        <div className="flex items-center gap-2">
+                      <Box as="td" className="py-3">
+                        <HStack gap="sm">
                           {t.fromState?.properties.isInitial && (
-                            <Play className="w-3 h-3" style={{ color: 'var(--color-success)' }} />
+                            <Icon icon={Play} size="xs" style={{ color: 'var(--color-success)' }} />
                           )}
                           <Typography variant="body2">
                             {t.fromState?.properties.name || 'Unknown'}
                           </Typography>
-                        </div>
-                      </td>
-                      <td className="py-3">
+                        </HStack>
+                      </Box>
+                      <Box as="td" className="py-3">
                         <Badge variant="info" size="sm">
                           {t.event?.properties.key || 'Unknown'}
                         </Badge>
-                      </td>
-                      <td className="py-3">
-                        <div className="flex items-center gap-2">
+                      </Box>
+                      <Box as="td" className="py-3">
+                        <HStack gap="sm">
                           {t.toState?.properties.isFinal && (
-                            <Square className="w-3 h-3" style={{ color: 'var(--color-error)' }} />
+                            <Icon icon={Square} size="xs" style={{ color: 'var(--color-error)' }} />
                           )}
                           <Typography variant="body2">
                             {t.toState?.properties.name || 'Unknown'}
                           </Typography>
-                        </div>
-                      </td>
+                        </HStack>
+                      </Box>
                       {!readOnly && (
-                        <td className="py-3">
+                        <Box as="td" className="py-3">
                           <Button
                             size="sm"
                             variant="ghost"
@@ -449,13 +454,13 @@ export const StateMachineVisualizer: React.FC<StateMachineVisualizerProps> = ({
                           >
                             <Trash2 className="w-3 h-3" />
                           </Button>
-                        </td>
+                        </Box>
                       )}
-                    </tr>
+                    </Box>
                   ))}
-                </tbody>
-              </table>
-            </div>
+                </Box>
+              </Box>
+            </Box>
           )}
         </CardBody>
       </Card>
@@ -468,30 +473,30 @@ export const StateMachineVisualizer: React.FC<StateMachineVisualizerProps> = ({
           title="Transition Details"
           size="md"
         >
-          <div className="space-y-4">
-            <div>
+          <VStack gap="md">
+            <Box>
               <Typography variant="caption" color="muted">From State</Typography>
               <Typography variant="body1">
                 {showTransitionDetails.fromState?.properties.name || 'Unknown'}
               </Typography>
-            </div>
-            <div>
+            </Box>
+            <Box>
               <Typography variant="caption" color="muted">Event</Typography>
               <Typography variant="body1">
                 {showTransitionDetails.event?.properties.name || 'Unknown'} (
                 {showTransitionDetails.event?.properties.key})
               </Typography>
-            </div>
-            <div>
+            </Box>
+            <Box>
               <Typography variant="caption" color="muted">To State</Typography>
               <Typography variant="body1">
                 {showTransitionDetails.toState?.properties.name || 'Unknown'}
               </Typography>
-            </div>
-          </div>
+            </Box>
+          </VStack>
         </Modal>
       )}
-    </div>
+    </VStack>
   );
 };
 

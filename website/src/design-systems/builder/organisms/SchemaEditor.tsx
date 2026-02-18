@@ -12,12 +12,12 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import Editor, { OnMount } from "@monaco-editor/react";
 import type { editor } from "monaco-editor";
-import { Box, VStack, Button, Typography, LoadingState } from "@almadar/ui";
+import { Box, VStack, HStack, Button, Typography, LoadingState, Icon } from "@almadar/ui";
 import { Save, X } from "lucide-react";
 import type { OrbitalSchema } from "@almadar/core";
 // syntax may not be exported - using stub with required methods
-const syntax = { 
-  keywords: [], 
+const syntax = {
+  keywords: [],
   operators: [],
   getEffectOperators: () => [],
   getLogicOperators: () => [],
@@ -396,18 +396,24 @@ export const SchemaEditorModal: React.FC<SchemaEditorModalProps> = ({
 
   // Footer buttons
   const footer = (
-    <div className="flex items-center justify-between">
-      <div className="text-sm text-[var(--color-muted-foreground)]">
-        App ID:{" "}
-        <code className="bg-[var(--color-secondary)] px-1 rounded">
+    <HStack className="items-center justify-between">
+      <HStack className="items-center gap-2">
+        <Typography variant="body2" color="muted">
+          App ID:{" "}
+        </Typography>
+        <Typography
+          variant="caption"
+          as="code"
+          className="bg-[var(--color-secondary)] px-1 rounded"
+        >
           {appId}
-        </code>
-      </div>
-      <div className="flex items-center gap-2">
+        </Typography>
+      </HStack>
+      <HStack className="items-center gap-2">
         <Button
           variant="ghost"
           onClick={handleClose}
-          leftIcon={<X className="w-4 h-4" />}
+          leftIcon={<Icon icon={X} size="sm" />}
         >
           Cancel
         </Button>
@@ -416,40 +422,55 @@ export const SchemaEditorModal: React.FC<SchemaEditorModalProps> = ({
           onClick={handleSave}
           isLoading={isSaving}
           disabled={!hasChanges || isSaving}
-          leftIcon={<Save className="w-4 h-4" />}
+          leftIcon={<Icon icon={Save} size="sm" />}
         >
           Save Schema
         </Button>
-      </div>
-    </div>
+      </HStack>
+    </HStack>
   );
 
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex flex-col bg-[var(--color-background)]">
+        <Box
+          position="fixed"
+          className="inset-0 z-50 flex flex-col bg-[var(--color-background)]"
+        >
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-3 border-b border-[var(--color-border)]">
+          <HStack className="items-center justify-between px-6 py-3 border-b border-[var(--color-border)]">
             <Typography variant="h5">Edit Orbital Schema</Typography>
             <Button variant="ghost" size="sm" onClick={handleClose}>
-              <X className="w-4 h-4" />
+              <Icon icon={X} size="sm" />
             </Button>
-          </div>
+          </HStack>
 
           {/* Content */}
-          <div className="flex-1 flex flex-col p-6 overflow-hidden">
+          <VStack className="flex-1 p-6 overflow-hidden">
             {/* Error Banner */}
             {error && (
-              <div className="mb-4 flex items-center gap-2 p-3 rounded-lg bg-[var(--color-error)]/10 border border-[var(--color-error)]/30 text-[var(--color-error)] text-sm">
-                <span className="flex-1">{error}</span>
-                <button onClick={() => setError(null)} className="text-[var(--color-error)] opacity-60 hover:opacity-100">
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
+              <HStack className="mb-4 items-center gap-2 p-3 rounded-lg bg-[var(--color-error)]/10 border border-[var(--color-error)]/30">
+                <Typography
+                  variant="body2"
+                  className="flex-1"
+                  style={{ color: "var(--color-error)" }}
+                >
+                  {error}
+                </Typography>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setError(null)}
+                  style={{ color: "var(--color-error)", opacity: 0.6 }}
+                  className="hover:opacity-100"
+                >
+                  <Icon icon={X} size="sm" />
+                </Button>
+              </HStack>
             )}
 
             {/* Monaco Editor */}
-            <div className="flex-1 overflow-hidden rounded-lg border border-[var(--color-border)]">
+            <Box className="flex-1 overflow-hidden rounded-lg border border-[var(--color-border)]">
               <Editor
                 height="100%"
                 width="100%"
@@ -462,38 +483,117 @@ export const SchemaEditorModal: React.FC<SchemaEditorModalProps> = ({
                 options={editorOptions}
                 loading={<EditorLoading />}
               />
-            </div>
+            </Box>
 
             {/* Status Bar */}
-            <div className="mt-2 flex flex-col gap-1 text-xs text-[var(--color-muted-foreground)]">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <span>{hasChanges ? "● Unsaved changes" : "✓ No changes"}</span>
-                  <span className="hidden sm:flex items-center gap-2 text-[10px]">
-                    <span className="font-bold" style={{ color: 'var(--color-info)' }}>@bindings</span>
-                    <span className="font-bold" style={{ color: 'var(--color-accent)' }}>effects</span>
-                    <span className="font-bold" style={{ color: 'var(--color-warning)' }}>patterns</span>
-                    <span style={{ color: 'var(--color-warning)' }}>EVENTS</span>
-                    <span style={{ color: 'var(--color-success)' }}>States</span>
-                  </span>
-                </div>
-                <span>{editorContent.split("\n").length} lines</span>
-              </div>
-              <div className="text-[10px] text-[var(--color-muted-foreground)]">
-                Internal fields hidden:{" "}
-                <code className="text-[var(--color-muted-foreground)]">_metadata</code>,{" "}
-                <code className="text-[var(--color-muted-foreground)]">_historyMeta</code>,{" "}
-                <code className="text-[var(--color-muted-foreground)]">_operational</code>{" "}
-                (auto-preserved on save)
-              </div>
-            </div>
-          </div>
+            <VStack className="mt-2 gap-1">
+              <HStack className="items-center justify-between">
+                <HStack className="items-center gap-4">
+                  <Typography variant="caption" color="muted">
+                    {hasChanges ? "● Unsaved changes" : "✓ No changes"}
+                  </Typography>
+                  <HStack className="hidden sm:flex items-center gap-2">
+                    <Typography
+                      variant="caption"
+                      weight="bold"
+                      style={{ fontSize: "10px", color: "var(--color-info)" }}
+                    >
+                      @bindings
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      weight="bold"
+                      style={{ fontSize: "10px", color: "var(--color-accent)" }}
+                    >
+                      effects
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      weight="bold"
+                      style={{ fontSize: "10px", color: "var(--color-warning)" }}
+                    >
+                      patterns
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      style={{ fontSize: "10px", color: "var(--color-warning)" }}
+                    >
+                      EVENTS
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      style={{ fontSize: "10px", color: "var(--color-success)" }}
+                    >
+                      States
+                    </Typography>
+                  </HStack>
+                </HStack>
+                <Typography variant="caption" color="muted">
+                  {editorContent.split("\n").length} lines
+                </Typography>
+              </HStack>
+              <HStack className="items-center gap-1 flex-wrap">
+                <Typography
+                  variant="caption"
+                  color="muted"
+                  style={{ fontSize: "10px" }}
+                >
+                  Internal fields hidden:{" "}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  as="code"
+                  color="muted"
+                  style={{ fontSize: "10px" }}
+                >
+                  _metadata
+                </Typography>
+                <Typography
+                  variant="caption"
+                  color="muted"
+                  style={{ fontSize: "10px" }}
+                >
+                  ,{" "}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  as="code"
+                  color="muted"
+                  style={{ fontSize: "10px" }}
+                >
+                  _historyMeta
+                </Typography>
+                <Typography
+                  variant="caption"
+                  color="muted"
+                  style={{ fontSize: "10px" }}
+                >
+                  ,{" "}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  as="code"
+                  color="muted"
+                  style={{ fontSize: "10px" }}
+                >
+                  _operational
+                </Typography>
+                <Typography
+                  variant="caption"
+                  color="muted"
+                  style={{ fontSize: "10px" }}
+                >
+                  {" "}(auto-preserved on save)
+                </Typography>
+              </HStack>
+            </VStack>
+          </VStack>
 
           {/* Footer */}
-          <div className="px-6 py-3 border-t border-[var(--color-border)]">
+          <Box className="px-6 py-3 border-t border-[var(--color-border)]">
             {footer}
-          </div>
-        </div>
+          </Box>
+        </Box>
       )}
     </>
   );

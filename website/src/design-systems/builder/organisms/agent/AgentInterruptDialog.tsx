@@ -6,7 +6,15 @@
  */
 
 import React, { useState } from 'react';
-import { Button } from '@almadar/ui';
+import {
+  Button,
+  Box,
+  VStack,
+  HStack,
+  Typography,
+  Label,
+  Textarea,
+} from '@almadar/ui';
 
 // =============================================================================
 // Types (inlined from useDeepAgentGeneration + stubs/deepagent)
@@ -95,50 +103,72 @@ function ActionRequestCard({
   };
 
   return (
-    <div className="border border-[var(--color-border)] rounded-lg p-4 bg-[var(--color-card)]">
+    <Box
+      className="border border-[var(--color-border)] rounded-lg p-4 bg-[var(--color-card)]"
+    >
       {/* Header */}
-      <div className="flex items-center gap-2 mb-3">
-        <span className="px-2 py-1 text-xs font-medium rounded" style={{ backgroundColor: 'color-mix(in srgb, var(--color-info) 10%, transparent)', color: 'var(--color-info)' }}>
+      <HStack align="center" gap="sm" className="mb-3">
+        <Typography
+          as="span"
+          variant="caption"
+          className="px-2 py-1 rounded font-medium"
+          style={{ backgroundColor: 'color-mix(in srgb, var(--color-info) 10%, transparent)', color: 'var(--color-info)' }}
+        >
           Action {index + 1}
-        </span>
-        <span className="font-mono text-sm font-semibold text-[var(--color-foreground)]">
+        </Typography>
+        <Typography
+          as="span"
+          variant="small"
+          className="font-mono font-semibold text-[var(--color-foreground)]"
+        >
           {request.tool}
-        </span>
-      </div>
+        </Typography>
+      </HStack>
 
       {/* Description */}
       {request.description && (
-        <div className="mb-4 p-3 border rounded" style={{ backgroundColor: 'color-mix(in srgb, var(--color-warning) 10%, transparent)', borderColor: 'color-mix(in srgb, var(--color-warning) 30%, transparent)' }}>
-          <p className="text-sm whitespace-pre-wrap" style={{ color: 'var(--color-warning)' }}>
+        <Box
+          className="mb-4 p-3 border rounded"
+          style={{ backgroundColor: 'color-mix(in srgb, var(--color-warning) 10%, transparent)', borderColor: 'color-mix(in srgb, var(--color-warning) 30%, transparent)' }}
+        >
+          <Typography
+            variant="body2"
+            className="whitespace-pre-wrap"
+            style={{ color: 'var(--color-warning)' }}
+          >
             {request.description}
-          </p>
-        </div>
+          </Typography>
+        </Box>
       )}
 
       {/* Arguments */}
-      <div className="mb-4">
-        <label className="text-xs text-[var(--color-muted-foreground)] uppercase tracking-wide block mb-1">
+      <VStack gap="xs" className="mb-4">
+        <Label className="text-xs text-[var(--color-muted-foreground)] uppercase tracking-wide">
           Arguments
-        </label>
+        </Label>
         {isEditing ? (
-          <textarea
+          <Textarea
             value={editedArgs}
             onChange={(e) => handleArgsChange(e.target.value)}
             className="w-full h-32 font-mono text-xs bg-[var(--color-background)] border border-[var(--color-border)] rounded p-2 text-[var(--color-foreground)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         ) : (
-          <pre className="font-mono text-xs bg-[var(--color-background)] text-[var(--color-foreground)] p-3 rounded overflow-auto max-h-32">
+          <Box
+            as="pre"
+            className="font-mono text-xs bg-[var(--color-background)] text-[var(--color-foreground)] p-3 rounded overflow-auto max-h-32"
+          >
             {JSON.stringify(request.args, null, 2)}
-          </pre>
+          </Box>
         )}
-      </div>
+      </VStack>
 
       {/* Decision Buttons */}
-      <div className="flex gap-2">
+      <HStack gap="sm">
         {request.allowedDecisions.includes('approve') && (
-          <button
+          <Button
             onClick={() => handleDecisionTypeChange('approve')}
-            className="flex-1 px-4 py-2 rounded font-medium transition-colors"
+            variant="default"
+            className="flex-1"
             style={
               decision.type === 'approve'
                 ? { backgroundColor: 'var(--color-success)', color: 'white' }
@@ -146,12 +176,13 @@ function ActionRequestCard({
             }
           >
             Approve
-          </button>
+          </Button>
         )}
         {request.allowedDecisions.includes('edit') && (
-          <button
+          <Button
             onClick={() => handleDecisionTypeChange('edit')}
-            className="flex-1 px-4 py-2 rounded font-medium transition-colors"
+            variant="default"
+            className="flex-1"
             style={
               decision.type === 'edit'
                 ? { backgroundColor: 'var(--color-warning)', color: 'white' }
@@ -159,12 +190,13 @@ function ActionRequestCard({
             }
           >
             Edit
-          </button>
+          </Button>
         )}
         {request.allowedDecisions.includes('reject') && (
-          <button
+          <Button
             onClick={() => handleDecisionTypeChange('reject')}
-            className="flex-1 px-4 py-2 rounded font-medium transition-colors"
+            variant="default"
+            className="flex-1"
             style={
               decision.type === 'reject'
                 ? { backgroundColor: 'var(--color-error)', color: 'white' }
@@ -172,10 +204,10 @@ function ActionRequestCard({
             }
           >
             Reject
-          </button>
+          </Button>
         )}
-      </div>
-    </div>
+      </HStack>
+    </Box>
   );
 }
 
@@ -220,30 +252,36 @@ export function AgentInterruptDialog({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
+    <Box className="fixed inset-0 z-50 overflow-y-auto">
       {/* Backdrop */}
-      <div
+      <Box
         className="fixed inset-0 bg-black/60 transition-opacity"
         onClick={onCancel}
       />
 
       {/* Dialog */}
-      <div className="flex min-h-full items-center justify-center p-4">
-        <div className="relative bg-[var(--color-card)] rounded-xl shadow-xl max-w-2xl w-full mx-auto transform transition-all">
+      <Box className="flex min-h-full items-center justify-center p-4">
+        <Box className="relative bg-[var(--color-card)] rounded-xl shadow-xl max-w-2xl w-full mx-auto transform transition-all">
           {/* Header */}
-          <div className="px-6 py-4 border-b border-[var(--color-border)]">
-            <h2 className="text-xl font-bold text-[var(--color-foreground)]">
+          <Box className="px-6 py-4 border-b border-[var(--color-border)]">
+            <Typography
+              variant="h2"
+              className="text-xl font-bold text-[var(--color-foreground)]"
+            >
               Action Approval Required
-            </h2>
-            <p className="mt-1 text-sm text-[var(--color-muted-foreground)]">
+            </Typography>
+            <Typography
+              variant="body2"
+              className="mt-1 text-[var(--color-muted-foreground)]"
+            >
               The agent wants to perform the following action(s). Please review
               and decide how to proceed.
-            </p>
-          </div>
+            </Typography>
+          </Box>
 
           {/* Content */}
-          <div className="px-6 py-4 max-h-[60vh] overflow-y-auto bg-[var(--color-background)]/50">
-            <div className="space-y-4">
+          <Box className="px-6 py-4 max-h-[60vh] overflow-y-auto bg-[var(--color-background)]/50">
+            <VStack gap="md">
               {interrupt.actionRequests.map((request, index) => (
                 <ActionRequestCard
                   key={index}
@@ -253,15 +291,20 @@ export function AgentInterruptDialog({
                   onDecisionChange={(d) => handleDecisionChange(index, d)}
                 />
               ))}
-            </div>
-          </div>
+            </VStack>
+          </Box>
 
           {/* Footer */}
-          <div className="px-6 py-4 border-t border-[var(--color-border)] flex flex-wrap justify-between gap-3">
+          <HStack
+            justify="between"
+            wrap
+            gap="sm"
+            className="px-6 py-4 border-t border-[var(--color-border)]"
+          >
             <Button variant="ghost" onClick={onCancel}>
               Cancel
             </Button>
-            <div className="flex gap-3">
+            <HStack gap="sm">
               <Button
                 variant="secondary"
                 onClick={handleApproveAll}
@@ -272,11 +315,11 @@ export function AgentInterruptDialog({
               <Button variant="primary" onClick={handleSubmit}>
                 Submit
               </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            </HStack>
+          </HStack>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 

@@ -26,7 +26,7 @@ import {
   RefreshCw,
   CheckCircle,
 } from 'lucide-react';
-import { Button } from '@almadar/ui';
+import { Button, Typography, Badge, Box, VStack, HStack, Icon } from '@almadar/ui';
 
 // =============================================================================
 // Types (inlined from useOrbitalHistory hook)
@@ -121,7 +121,7 @@ function TimelineItemCard({
   const isSnapshot = item.type === 'snapshot';
 
   return (
-    <div
+    <Box
       className="relative border rounded-lg transition-all duration-200"
       style={{
         backgroundColor: isSnapshot
@@ -134,18 +134,20 @@ function TimelineItemCard({
       }}
     >
       {/* Timeline connector line */}
-      <div
+      <Box
         className="absolute left-6 top-0 bottom-0 w-0.5 -z-10"
         style={{ backgroundColor: 'var(--color-muted)' }}
       />
 
       {/* Header */}
-      <div
-        className="flex items-start gap-3 p-3 cursor-pointer"
+      <HStack
+        className="p-3 cursor-pointer"
+        align="start"
+        gap="sm"
         onClick={onToggleExpand}
       >
         {/* Timeline dot */}
-        <div
+        <Box
           className="relative z-10 flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center"
           style={{
             backgroundColor: isSnapshot ? 'var(--color-accent)' : 'var(--color-muted)',
@@ -153,23 +155,25 @@ function TimelineItemCard({
           }}
         >
           {isSnapshot ? (
-            <Camera className="w-4 h-4" />
+            <Icon icon={Camera} size="sm" />
           ) : (
-            <GitBranch className="w-4 h-4" />
+            <Icon icon={GitBranch} size="sm" />
           )}
-        </div>
+        </Box>
 
         {/* Content */}
-        <div className="flex-1 min-w-0">
+        <VStack gap="xs" className="flex-1 min-w-0">
           {/* Version and type badge */}
-          <div className="flex items-center gap-2 mb-1">
-            <span
+          <HStack gap="xs" align="center" className="mb-1">
+            <Typography
+              variant="label"
               className="font-mono font-medium text-sm"
               style={{ color: 'var(--color-foreground)' }}
             >
               v{item.version}
-            </span>
-            <span
+            </Typography>
+            <Typography
+              variant="caption"
               className="text-xs px-2 py-0.5 rounded-full"
               style={{
                 backgroundColor: isSnapshot
@@ -181,9 +185,10 @@ function TimelineItemCard({
               }}
             >
               {isSnapshot ? 'Snapshot' : 'Changeset'}
-            </span>
+            </Typography>
             {isCurrent && (
-              <span
+              <Typography
+                variant="caption"
                 className="text-xs px-2 py-0.5 rounded-full"
                 style={{
                   backgroundColor: 'color-mix(in srgb, var(--color-info) 20%, transparent)',
@@ -191,95 +196,116 @@ function TimelineItemCard({
                 }}
               >
                 Current
-              </span>
+              </Typography>
             )}
-          </div>
+          </HStack>
 
           {/* Timestamp */}
-          <div className="flex items-center gap-1 text-xs mb-2" style={{ color: 'var(--color-muted-foreground)' }}>
-            <Clock className="w-3 h-3" />
-            <span title={formatFullDate(item.timestamp)}>
-              {formatRelativeTime(item.timestamp)}
-            </span>
+          <HStack gap="xs" align="center" className="text-xs mb-2" style={{ color: 'var(--color-muted-foreground)' }}>
+            <Icon icon={Clock} size="xs" />
+            <Box title={formatFullDate(item.timestamp)} display="inline-block">
+              <Typography
+                variant="caption"
+                style={{ color: 'var(--color-muted-foreground)' }}
+              >
+                {formatRelativeTime(item.timestamp)}
+              </Typography>
+            </Box>
             {item.source && (
-              <span
-                className="flex items-center gap-1 ml-2 px-1.5 py-0.5 rounded"
+              <HStack
+                gap="xs"
+                align="center"
+                className="ml-2 px-1.5 py-0.5 rounded"
                 style={{ backgroundColor: 'var(--color-muted)' }}
               >
-                <Bot className="w-3 h-3" />
-                <span>{item.source}</span>
-              </span>
+                <Icon icon={Bot} size="xs" />
+                <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>
+                  {item.source}
+                </Typography>
+              </HStack>
             )}
-          </div>
+          </HStack>
 
           {/* Description */}
-          <p className="text-sm font-medium" style={{ color: 'var(--color-foreground)' }}>
+          <Typography variant="body2" weight="medium" style={{ color: 'var(--color-foreground)' }}>
             {item.description}
-          </p>
+          </Typography>
 
           {/* Change summary for changesets */}
           {item.summary && (
-            <div className="flex items-center gap-2 mt-2">
+            <HStack gap="xs" align="center" className="mt-2">
               {item.summary.added > 0 && (
-                <span
-                  className="flex items-center gap-1 text-xs px-2 py-0.5 rounded"
+                <HStack
+                  gap="xs"
+                  align="center"
+                  className="text-xs px-2 py-0.5 rounded"
                   style={{
                     color: 'var(--color-success)',
                     backgroundColor: 'color-mix(in srgb, var(--color-success) 15%, transparent)',
                   }}
                 >
-                  <Plus className="w-3 h-3" />
-                  {item.summary.added}
-                </span>
+                  <Icon icon={Plus} size="xs" />
+                  <Typography variant="caption" style={{ color: 'var(--color-success)' }}>
+                    {item.summary.added}
+                  </Typography>
+                </HStack>
               )}
               {item.summary.modified > 0 && (
-                <span
-                  className="flex items-center gap-1 text-xs px-2 py-0.5 rounded"
+                <HStack
+                  gap="xs"
+                  align="center"
+                  className="text-xs px-2 py-0.5 rounded"
                   style={{
                     color: 'var(--color-warning)',
                     backgroundColor: 'color-mix(in srgb, var(--color-warning) 15%, transparent)',
                   }}
                 >
-                  <Edit className="w-3 h-3" />
-                  {item.summary.modified}
-                </span>
+                  <Icon icon={Edit} size="xs" />
+                  <Typography variant="caption" style={{ color: 'var(--color-warning)' }}>
+                    {item.summary.modified}
+                  </Typography>
+                </HStack>
               )}
               {item.summary.removed > 0 && (
-                <span
-                  className="flex items-center gap-1 text-xs px-2 py-0.5 rounded"
+                <HStack
+                  gap="xs"
+                  align="center"
+                  className="text-xs px-2 py-0.5 rounded"
                   style={{
                     color: 'var(--color-error)',
                     backgroundColor: 'color-mix(in srgb, var(--color-error) 15%, transparent)',
                   }}
                 >
-                  <Minus className="w-3 h-3" />
-                  {item.summary.removed}
-                </span>
+                  <Icon icon={Minus} size="xs" />
+                  <Typography variant="caption" style={{ color: 'var(--color-error)' }}>
+                    {item.summary.removed}
+                  </Typography>
+                </HStack>
               )}
-            </div>
+            </HStack>
           )}
 
           {/* Snapshot reason */}
           {item.reason && (
-            <p className="text-xs mt-1" style={{ color: 'var(--color-accent)' }}>
+            <Typography variant="caption" className="mt-1" style={{ color: 'var(--color-accent)' }}>
               Reason: {item.reason}
-            </p>
+            </Typography>
           )}
-        </div>
+        </VStack>
 
         {/* Expand/collapse icon */}
-        <button style={{ color: 'var(--color-muted-foreground)' }}>
+        <Button variant="ghost" size="sm" style={{ color: 'var(--color-muted-foreground)', padding: 0 }}>
           {isExpanded ? (
-            <ChevronDown className="w-4 h-4" />
+            <Icon icon={ChevronDown} size="sm" />
           ) : (
-            <ChevronRight className="w-4 h-4" />
+            <Icon icon={ChevronRight} size="sm" />
           )}
-        </button>
-      </div>
+        </Button>
+      </HStack>
 
       {/* Expanded content with revert action */}
       {isExpanded && isSnapshot && !isCurrent && (
-        <div
+        <Box
           className="border-t p-3"
           style={{
             borderColor: 'var(--color-border)',
@@ -295,12 +321,12 @@ function TimelineItemCard({
             }}
             disabled={isReverting}
           >
-            <Undo2 className="w-4 h-4 mr-1" />
+            <Icon icon={Undo2} size="sm" className="mr-1" />
             {isReverting ? 'Restoring...' : 'Restore to this snapshot'}
           </Button>
-        </div>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 }
 
@@ -339,96 +365,116 @@ export function OrbitalHistoryBoard({
   };
 
   return (
-    <div
-      className={`flex flex-col h-full ${className}`}
+    <VStack
+      gap="none"
+      className={`h-full ${className}`}
       style={{ backgroundColor: 'var(--color-card)' }}
     >
       {/* Header */}
-      <div
-        className="flex items-center justify-between px-4 py-3 border-b"
+      <HStack
+        justify="between"
+        align="center"
+        className="px-4 py-3 border-b"
         style={{
           borderColor: 'var(--color-border)',
           backgroundColor: 'var(--color-surface)',
         }}
       >
-        <div className="flex items-center gap-2">
-          <History className="w-5 h-5" style={{ color: 'var(--color-muted-foreground)' }} />
-          <h3 className="font-semibold" style={{ color: 'var(--color-foreground)' }}>
+        <HStack gap="sm" align="center">
+          <Icon icon={History} size="md" style={{ color: 'var(--color-muted-foreground)' }} />
+          <Typography variant="label" weight="semibold" style={{ color: 'var(--color-foreground)' }}>
             Schema History
-          </h3>
-          <span className="text-sm" style={{ color: 'var(--color-muted-foreground)' }}>
+          </Typography>
+          <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>
             (v{currentVersion}, {timeline.length} items)
-          </span>
-        </div>
+          </Typography>
+        </HStack>
         <Button
           variant="ghost"
           size="sm"
           onClick={onRefresh}
           disabled={isLoading}
         >
-          <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
+          <Icon icon={RefreshCw} size="sm" animation={isLoading ? 'spin' : 'none'} />
         </Button>
-      </div>
+      </HStack>
 
       {/* Success message */}
       {revertResult?.success && (
-        <div
-          className="mx-4 mt-3 flex items-center gap-2 p-3 rounded-lg text-sm"
+        <HStack
+          gap="sm"
+          align="center"
+          className="mx-4 mt-3 p-3 rounded-lg text-sm"
           style={{
             backgroundColor: 'color-mix(in srgb, var(--color-success) 10%, transparent)',
             borderWidth: '1px',
             borderStyle: 'solid',
             borderColor: 'color-mix(in srgb, var(--color-success) 30%, transparent)',
-            color: 'var(--color-success)',
           }}
         >
-          <CheckCircle className="w-5 h-5" />
-          <span>Successfully restored to snapshot</span>
-        </div>
+          <Icon icon={CheckCircle} size="md" style={{ color: 'var(--color-success)' }} />
+          <Typography variant="body2" style={{ color: 'var(--color-success)' }}>
+            Successfully restored to snapshot
+          </Typography>
+        </HStack>
       )}
 
       {/* Error message */}
       {(error || revertResult?.error) && (
-        <div
-          className="mx-4 mt-3 flex items-center gap-2 p-3 rounded-lg text-sm"
+        <HStack
+          gap="sm"
+          align="center"
+          className="mx-4 mt-3 p-3 rounded-lg text-sm"
           style={{
             backgroundColor: 'color-mix(in srgb, var(--color-error) 10%, transparent)',
             borderWidth: '1px',
             borderStyle: 'solid',
             borderColor: 'color-mix(in srgb, var(--color-error) 30%, transparent)',
-            color: 'var(--color-error)',
           }}
         >
-          <AlertCircle className="w-5 h-5" />
-          <span>{error || revertResult?.error}</span>
-        </div>
+          <Icon icon={AlertCircle} size="md" style={{ color: 'var(--color-error)' }} />
+          <Typography variant="body2" style={{ color: 'var(--color-error)' }}>
+            {error || revertResult?.error}
+          </Typography>
+        </HStack>
       )}
 
       {/* Content */}
-      <div
+      <Box
         className="flex-1 overflow-y-auto p-4 space-y-3"
         style={{ maxHeight }}
       >
         {/* Loading state */}
         {isLoading && timeline.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-12" style={{ color: 'var(--color-muted-foreground)' }}>
-            <RefreshCw className="w-8 h-8 mb-3 animate-spin" />
-            <p className="text-sm">Loading history...</p>
-          </div>
+          <VStack align="center" justify="center" gap="sm" className="py-12" style={{ color: 'var(--color-muted-foreground)' }}>
+            <Icon icon={RefreshCw} size="xl" animation="spin" style={{ color: 'var(--color-muted-foreground)' }} />
+            <Typography variant="body2" style={{ color: 'var(--color-muted-foreground)' }}>
+              Loading history...
+            </Typography>
+          </VStack>
         )}
 
         {/* Empty state */}
         {!isLoading && timeline.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-12" style={{ color: 'var(--color-muted-foreground)' }}>
-            <GitBranch className="w-12 h-12 mb-3" style={{ color: 'var(--color-muted-foreground)', opacity: 0.5 }} />
-            <p className="text-sm">No history yet</p>
-            <p className="text-xs mt-1">Changes will appear here after updates</p>
-          </div>
+          <VStack align="center" justify="center" gap="sm" className="py-12" style={{ color: 'var(--color-muted-foreground)' }}>
+            <Icon
+              icon={GitBranch}
+              size="xl"
+              style={{ color: 'var(--color-muted-foreground)', opacity: 0.5 }}
+              className="w-12 h-12"
+            />
+            <Typography variant="body2" style={{ color: 'var(--color-muted-foreground)' }}>
+              No history yet
+            </Typography>
+            <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>
+              Changes will appear here after updates
+            </Typography>
+          </VStack>
         )}
 
         {/* Timeline items */}
         {timeline.length > 0 && (
-          <div className="relative pl-4">
+          <Box className="relative pl-4">
             {timeline.map((item) => (
               <TimelineItemCard
                 key={item.id}
@@ -442,10 +488,10 @@ export function OrbitalHistoryBoard({
                 isReverting={revertingId === item.id}
               />
             ))}
-          </div>
+          </Box>
         )}
-      </div>
-    </div>
+      </Box>
+    </VStack>
   );
 }
 

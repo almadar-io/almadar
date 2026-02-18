@@ -111,9 +111,9 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
 
   // Layout Constants
   const viewBoxW = 600;
-  const viewBoxH = 600;
-  const centerX = viewBoxW / 2; // 300
-  const centerY = viewBoxH / 2; // 300 - Trait Center
+  const viewBoxH = 720; // Increased height for spacing
+  const centerX = viewBoxW / 2;
+  const centerY = viewBoxH / 2;
   const labelX = centerX + 55;
 
   // Use a SINGLE uniform radius for a perfect circle
@@ -147,6 +147,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
 
   // Helper to get definition for marker
   const markerId = "arrowhead";
+  const maskId = "hero-animation-mask";
 
   // Helper to calculate control point based on angles for perfect symmetry
   const getControlPoint = (angle1: number, angle2: number) => {
@@ -203,6 +204,26 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           >
             <polygon points="0 0, 10 3.5, 0 7" fill={gold} />
           </marker>
+
+          <mask id={maskId} maskUnits="userSpaceOnUse">
+            <rect x="0" y="0" width={viewBoxW} height={viewBoxH} fill="white" />
+            {/* Mask out State Nodes */}
+            {states.map((state) => {
+              const pos = statePositions[state.name];
+              if (!pos) return null;
+              return (
+                <rect
+                  key={`mask-${state.name}`}
+                  x={pos.x - 42}
+                  y={pos.y - 20}
+                  width="84"
+                  height="40"
+                  rx="18"
+                  fill="black"
+                />
+              );
+            })}
+          </mask>
         </defs>
 
         {/* === Application Frame === */}
@@ -232,20 +253,22 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
         </text>
 
         {/* === Vertical Connections (Entity-Trait-Page) === */}
-        <path
-          d={`M${centerX} ${centerY + 230} L${centerX} ${centerY + 40}`}
-          stroke={gold}
-          strokeWidth="2"
-          className={styles.connectionLine}
-          style={{ animationDelay: "1.0s" }}
-        />
-        <path
-          d={`M${centerX} ${centerY - 40} L${centerX} ${centerY - 220}`}
-          stroke={gold}
-          strokeWidth="2"
-          className={styles.connectionLine}
-          style={{ animationDelay: "1.2s" }}
-        />
+        <g mask={`url(#${maskId})`}>
+          <path
+            d={`M${centerX} ${centerY + 280} L${centerX} ${centerY + 40}`}
+            stroke={gold}
+            strokeWidth="2"
+            className={styles.connectionLine}
+            style={{ animationDelay: "1.0s" }}
+          />
+          <path
+            d={`M${centerX} ${centerY - 40} L${centerX} ${centerY - 270}`}
+            stroke={gold}
+            strokeWidth="2"
+            className={styles.connectionLine}
+            style={{ animationDelay: "1.2s" }}
+          />
+        </g>
 
         {/* === Lines Layer (Rendered First so they are underneath labels) === */}
         {transitions.map((t, i) => {
@@ -291,7 +314,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
         <g className={styles.nodeGroup} style={{ animationDelay: "0.3s" }}>
           <Box
             x={centerX - 30}
-            y={centerY + 230}
+            y={centerY + 280}
             width="60"
             height="60"
             stroke={teal}
@@ -302,7 +325,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           />
           <text
             x={labelX}
-            y={centerY + 260}
+            y={centerY + 310}
             textAnchor="start"
             fontSize="14"
             fontWeight="700"
@@ -314,7 +337,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           </text>
           <text
             x={labelX}
-            y={centerY + 275}
+            y={centerY + 325}
             textAnchor="start"
             fontSize="11"
             fill={textColor}
@@ -369,7 +392,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
         <g className={styles.nodeGroup} style={{ animationDelay: "0.9s" }}>
           <Layout
             x={centerX - 30}
-            y={centerY - 280}
+            y={centerY - 330}
             width="60"
             height="60"
             stroke={teal}
@@ -380,8 +403,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           />
           <text
             x={labelX}
-            y={centerY - 220}
-
+            y={centerY - 300}
             textAnchor="start"
             fontSize="14"
             fontWeight="700"
@@ -393,7 +415,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           </text>
           <text
             x={labelX}
-            y={centerY - 175}
+            y={centerY - 285}
             textAnchor="start"
             fontSize="11"
             fill={textColor}
@@ -476,9 +498,9 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
 
         {/* === Key Labels === */}
         <text
-          x={centerX}
-          y={viewBoxH - 25}
-          textAnchor="middle"
+          x={24}
+          y={viewBoxH - 24}
+          textAnchor="start"
           fontSize="11"
           fill={muted}
           opacity="0.7"
@@ -486,7 +508,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           className={styles.edgeLabel}
           style={{ animationDelay: "3.2s" }}
         >
-          Orbital Unit
+          Orbital Unit = Entity + Traits + Pages
         </text>
 
       </svg>

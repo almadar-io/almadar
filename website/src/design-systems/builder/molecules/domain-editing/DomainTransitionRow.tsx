@@ -7,6 +7,7 @@
 import React, { useState } from 'react';
 import { clsx as cn } from 'clsx';
 import { Edit2, Trash2, ChevronDown, ChevronRight } from 'lucide-react';
+import { Typography, Button, HStack, VStack, Box } from '@almadar/ui';
 import { DomainKeyword, DomainState, DomainArrow } from '../../atoms/domain';
 import { DomainGuardRow, GuardExpression } from './DomainGuardRow';
 
@@ -108,17 +109,18 @@ export const DomainTransitionRow: React.FC<DomainTransitionRowProps> = ({
   const displayFromState = fromState === '*' ? 'any' : fromState;
 
   return (
-    <div
+    <Box
       className={cn(
-        'rounded-lg border border-[var(--color-border)]',
-        'bg-[var(--color-card)]',
+        'rounded-lg border border-[var(--color-border)] bg-[var(--color-card)]',
         className
       )}
     >
       {/* Main transition row */}
-      <div
+      <HStack
+        gap="sm"
+        align="center"
         className={cn(
-          'group flex items-center gap-3 px-3 py-2',
+          'group px-3 py-2',
           hasDetails && 'cursor-pointer hover:bg-[var(--color-secondary)]',
           expanded && hasDetails && 'border-b border-[var(--color-border)]'
         )}
@@ -130,7 +132,9 @@ export const DomainTransitionRow: React.FC<DomainTransitionRowProps> = ({
         )}
 
         {/* Dash */}
-        <span className="text-[var(--color-muted-foreground)] font-mono">-</span>
+        <Typography variant="small" as="span" className="text-[var(--color-muted-foreground)] font-mono">
+          -
+        </Typography>
 
         {/* From */}
         <DomainKeyword category="behavior">From</DomainKeyword>
@@ -153,76 +157,89 @@ export const DomainTransitionRow: React.FC<DomainTransitionRowProps> = ({
 
         {/* Event */}
         <DomainKeyword category="behavior">when</DomainKeyword>
-        <span
-          className="font-mono text-sm px-2 py-0.5 rounded"
+        <Typography
+          variant="small"
+          as="span"
+          className="font-mono px-2 py-0.5 rounded"
           style={{
             backgroundColor: 'color-mix(in srgb, var(--color-success) 15%, transparent)',
             color: 'var(--color-success)',
           }}
         >
           {event}
-        </span>
+        </Typography>
 
         {/* Indicators for guards/effects */}
         {!expanded && guards.length > 0 && (
-          <span
-            className="text-xs px-1.5 py-0.5 rounded"
+          <Typography
+            variant="caption"
+            as="span"
+            className="px-1.5 py-0.5 rounded"
             style={{
               backgroundColor: 'color-mix(in srgb, var(--color-error) 10%, transparent)',
               color: 'var(--color-error)',
             }}
           >
             {guards.length} guard{guards.length > 1 ? 's' : ''}
-          </span>
+          </Typography>
         )}
         {!expanded && effects.length > 0 && (
-          <span
-            className="text-xs px-1.5 py-0.5 rounded"
+          <Typography
+            variant="caption"
+            as="span"
+            className="px-1.5 py-0.5 rounded"
             style={{
               backgroundColor: 'color-mix(in srgb, var(--color-warning) 10%, transparent)',
               color: 'var(--color-warning)',
             }}
           >
             {effects.length} effect{effects.length > 1 ? 's' : ''}
-          </span>
+          </Typography>
         )}
 
         {/* Spacer */}
-        <div className="flex-1" />
+        <Box className="flex-1" />
 
         {/* Actions */}
         {editable && (
-          <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity" onClick={(e) => e.stopPropagation()}>
+          <HStack
+            gap="xs"
+            align="center"
+            className="opacity-0 group-hover:opacity-100 transition-opacity"
+            onClick={(e) => e.stopPropagation()}
+          >
             {onEdit && (
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={onEdit}
-                className="p-1 rounded hover:bg-[var(--color-secondary)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
                 title="Edit transition"
+                className="p-1 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
               >
                 <Edit2 className="w-3.5 h-3.5" />
-              </button>
+              </Button>
             )}
             {onDelete && (
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={onDelete}
-                className="p-1 rounded hover:bg-[var(--color-error)]/10 text-[var(--color-muted-foreground)] hover:text-[var(--color-error)]"
                 title="Delete transition"
+                className="p-1 text-[var(--color-muted-foreground)] hover:text-[var(--color-error)] hover:bg-[var(--color-error)]/10"
               >
                 <Trash2 className="w-3.5 h-3.5" />
-              </button>
+              </Button>
             )}
-          </div>
+          </HStack>
         )}
-      </div>
+      </HStack>
 
       {/* Expanded details */}
       {expanded && hasDetails && (
-        <div className="px-4 py-3 space-y-3 bg-[var(--color-secondary)]">
+        <VStack gap="sm" className="px-4 py-3 bg-[var(--color-secondary)]">
           {/* Guards */}
           {guards.length > 0 && (
-            <div className="space-y-2">
+            <VStack gap="sm">
               {guards.map((guard, index) => (
                 <DomainGuardRow
                   key={index}
@@ -231,33 +248,37 @@ export const DomainTransitionRow: React.FC<DomainTransitionRowProps> = ({
                   editable={editable}
                 />
               ))}
-            </div>
+            </VStack>
           )}
 
           {/* Effects */}
           {effects.length > 0 && (
-            <div className="space-y-2">
+            <VStack gap="sm">
               {effects.map((effect, index) => (
-                <div
+                <HStack
                   key={index}
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg border"
+                  gap="sm"
+                  align="center"
+                  className="px-3 py-2 rounded-lg border"
                   style={{
                     backgroundColor: 'color-mix(in srgb, var(--color-warning) 10%, transparent)',
                     borderColor: 'color-mix(in srgb, var(--color-warning) 20%, transparent)',
                   }}
                 >
-                  <span className="text-lg">{effectIcons[effect.type] || '⚙️'}</span>
+                  <Typography variant="body1" as="span" className="text-lg">
+                    {effectIcons[effect.type] || '⚙️'}
+                  </Typography>
                   <DomainKeyword category="effect">then</DomainKeyword>
-                  <span className="text-sm text-[var(--color-foreground)]">
+                  <Typography variant="body2" className="text-[var(--color-foreground)]">
                     {effect.description}
-                  </span>
-                </div>
+                  </Typography>
+                </HStack>
               ))}
-            </div>
+            </VStack>
           )}
-        </div>
+        </VStack>
       )}
-    </div>
+    </Box>
   );
 };
 

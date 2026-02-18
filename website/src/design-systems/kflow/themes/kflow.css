@@ -1,0 +1,202 @@
+/**
+ * KFlow Theme
+ *
+ * AI-driven learning and knowledge graph platform. Cool blue
+ * primary with cyan neural-network accents. Intellectual,
+ * focused aesthetic that aids concentration and learning.
+ */
+
+/* ==========================================================================
+ * LIGHT MODE
+ * ========================================================================== */
+[data-theme="kflow-light"] {
+    /* Shadows - Cool blue tint */
+    --shadow-main:
+        0 4px 14px rgba(37, 99, 235, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-sm: 0 2px 4px rgba(37, 99, 235, 0.08);
+    --shadow-lg:
+        0 8px 30px rgba(37, 99, 235, 0.15), 0 4px 10px rgba(0, 0, 0, 0.06);
+    --shadow-inner: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-none: none;
+    --shadow-hover: 0 12px 40px rgba(37, 99, 235, 0.18);
+    --shadow-active: 0 2px 8px rgba(37, 99, 235, 0.12);
+
+    /* Border radius - Clean, scholarly */
+    --radius-none: 0px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+    --radius-full: 9999px;
+
+    /* Border width */
+    --border-width: 1px;
+    --border-width-thin: 1px;
+    --border-width-thick: 2px;
+
+    /* Colors - Blue primary, cyan accents */
+    --color-primary: #2563eb;
+    --color-primary-hover: #1d4ed8;
+    --color-primary-foreground: #ffffff;
+
+    --color-secondary: #eff6ff;
+    --color-secondary-hover: #dbeafe;
+    --color-secondary-foreground: #1e3a5f;
+
+    --color-accent: #06b6d4;
+    --color-accent-foreground: #ffffff;
+
+    --color-muted: #f0f4f8;
+    --color-muted-foreground: #64748b;
+
+    --color-background: #f8fafc;
+    --color-foreground: #0f172a;
+    --color-card: #ffffff;
+    --color-card-foreground: #0f172a;
+    --color-surface: #eff6ff;
+    --color-border: rgba(37, 99, 235, 0.2);
+    --color-input: rgba(37, 99, 235, 0.12);
+    --color-ring: #2563eb;
+
+    /* Semantic colors */
+    --color-error: #dc2626;
+    --color-error-foreground: #ffffff;
+    --color-success: #16a34a;
+    --color-success-foreground: #ffffff;
+    --color-warning: #ca8a04;
+    --color-warning-foreground: #000000;
+    --color-info: #0ea5e9;
+    --color-info-foreground: #ffffff;
+
+    /* Typography - Clean reading font */
+    --font-family:
+        "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 600;
+    --letter-spacing: -0.01em;
+    --line-height: 1.7;
+
+    /* Icon styling */
+    --icon-stroke-width: 1.75;
+    --icon-color: #1d4ed8;
+
+    /* Transitions */
+    --transition-fast: 150ms;
+    --transition-normal: 250ms;
+    --transition-slow: 400ms;
+    --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Hover/Active transforms */
+    --hover-scale: 1.02;
+    --hover-translate-y: -2px;
+    --hover-translate-x: 0;
+    --active-scale: 0.98;
+    --active-translate-y: 0;
+
+    /* Focus ring */
+    --focus-ring-width: 2px;
+    --focus-ring-offset: 2px;
+    --focus-ring-color: #2563eb;
+
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+}
+
+/* ==========================================================================
+ * DARK MODE
+ * ========================================================================== */
+[data-theme="kflow-dark"] {
+    /* Shadows - Blue neural glow */
+    --shadow-main:
+        0 4px 14px rgba(59, 130, 246, 0.15), 0 1px 3px rgba(0, 0, 0, 0.2);
+    --shadow-sm: 0 2px 4px rgba(59, 130, 246, 0.1);
+    --shadow-lg:
+        0 8px 30px rgba(59, 130, 246, 0.25), 0 4px 10px rgba(0, 0, 0, 0.15);
+    --shadow-inner: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+    --shadow-none: none;
+    --shadow-hover:
+        0 12px 40px rgba(59, 130, 246, 0.3), 0 4px 12px rgba(6, 182, 212, 0.2);
+    --shadow-active: 0 2px 8px rgba(59, 130, 246, 0.2);
+
+    /* Border radius */
+    --radius-none: 0px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+    --radius-full: 9999px;
+
+    /* Border width */
+    --border-width: 1px;
+    --border-width-thin: 1px;
+    --border-width-thick: 2px;
+
+    /* Colors - Blue/Cyan on deep navy */
+    --color-primary: #3b82f6;
+    --color-primary-hover: #60a5fa;
+    --color-primary-foreground: #0c1524;
+
+    --color-secondary: #172033;
+    --color-secondary-hover: #1e3050;
+    --color-secondary-foreground: #dbeafe;
+
+    --color-accent: #22d3ee;
+    --color-accent-foreground: #083344;
+
+    --color-muted: #172033;
+    --color-muted-foreground: #94a3b8;
+
+    --color-background: #0b1120;
+    --color-foreground: #e2e8f0;
+    --color-card: #131d33;
+    --color-card-foreground: #e2e8f0;
+    --color-surface: #172033;
+    --color-border: rgba(59, 130, 246, 0.25);
+    --color-input: rgba(59, 130, 246, 0.2);
+    --color-ring: #3b82f6;
+
+    /* Semantic colors */
+    --color-error: #f87171;
+    --color-error-foreground: #000000;
+    --color-success: #4ade80;
+    --color-success-foreground: #000000;
+    --color-warning: #fbbf24;
+    --color-warning-foreground: #000000;
+    --color-info: #38bdf8;
+    --color-info-foreground: #000000;
+
+    /* Typography */
+    --font-family:
+        "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 600;
+    --letter-spacing: -0.01em;
+    --line-height: 1.7;
+
+    /* Icon styling */
+    --icon-stroke-width: 1.75;
+    --icon-color: #3b82f6;
+
+    /* Transitions */
+    --transition-fast: 150ms;
+    --transition-normal: 250ms;
+    --transition-slow: 400ms;
+    --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Hover/Active transforms */
+    --hover-scale: 1.02;
+    --hover-translate-y: -2px;
+    --hover-translate-x: 0;
+    --active-scale: 0.98;
+    --active-translate-y: 0;
+
+    /* Focus ring */
+    --focus-ring-width: 2px;
+    --focus-ring-offset: 2px;
+    --focus-ring-color: #3b82f6;
+
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+}

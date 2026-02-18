@@ -42,6 +42,7 @@ import {
   Input,
   Card,
   Badge,
+  Select,
   ThemeToggle,
   Spinner,
   useEventBus,
@@ -240,10 +241,10 @@ const ProjectCard: React.FC<{
             >
               {project.domain.category}
               {project.domain.subDomain && (
-                <span className="opacity-70">
+                <Typography as="span" variant="caption" className="opacity-70">
                   {" "}
                   &rsaquo; {project.domain.subDomain}
-                </span>
+                </Typography>
               )}
             </Typography>
           </HStack>
@@ -251,7 +252,7 @@ const ProjectCard: React.FC<{
 
         {/* Stats grid */}
         {project.stats && (
-          <div className="grid grid-cols-4 gap-2">
+          <Box className="grid grid-cols-4 gap-2">
             {[
               {
                 icon: Layers,
@@ -294,7 +295,7 @@ const ProjectCard: React.FC<{
                 </Typography>
               </VStack>
             ))}
-          </div>
+          </Box>
         )}
 
         {/* Orbital/trait/page counts (fallback for simpler data) */}
@@ -553,7 +554,7 @@ export const StudioHomeWebBoard: React.FC<StudioHomeWebBoardProps> = ({
               <Button onClick={handleCreateProject}>
                 <HStack gap="xs" align="center">
                   <Icon icon={Plus} size="sm" />
-                  <span>New Application</span>
+                  <Typography as="span" variant="body2">New Application</Typography>
                 </HStack>
               </Button>
               <ThemeToggle size="sm" />
@@ -626,7 +627,7 @@ export const StudioHomeWebBoard: React.FC<StudioHomeWebBoardProps> = ({
               <VStack gap="lg">
                 {/* Summary Stats */}
                 {hasStats && (
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <Box className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <StatCard
                       icon={FolderOpen}
                       value={summaryStats.totalApps}
@@ -678,7 +679,7 @@ export const StudioHomeWebBoard: React.FC<StudioHomeWebBoardProps> = ({
                           : 'color-mix(in srgb, var(--color-success) 15%, transparent)',
                       }}
                     />
-                  </div>
+                  </Box>
                 )}
 
                 {/* Search + Sort */}
@@ -706,17 +707,18 @@ export const StudioHomeWebBoard: React.FC<StudioHomeWebBoardProps> = ({
                       size="sm"
                       className="text-[var(--color-muted-foreground)]"
                     />
-                    <select
+                    <Select
                       value={localSort}
                       onChange={(e) =>
                         handleSortChange(e.target.value as SortBy)
                       }
                       className="px-3 py-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-sm focus:ring-2 focus:ring-[var(--color-primary)]"
-                    >
-                      <option value="updated">Recently Updated</option>
-                      <option value="created">Recently Created</option>
-                      <option value="name">Name (A-Z)</option>
-                    </select>
+                      options={[
+                        { value: "updated", label: "Recently Updated" },
+                        { value: "created", label: "Recently Created" },
+                        { value: "name", label: "Name (A-Z)" },
+                      ]}
+                    />
                   </HStack>
                 </HStack>
 
@@ -744,7 +746,7 @@ export const StudioHomeWebBoard: React.FC<StudioHomeWebBoardProps> = ({
                     </VStack>
                   </Card>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <Box className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {sortedProjects.map((project) => (
                       <ProjectCard
                         key={project.id}
@@ -756,7 +758,7 @@ export const StudioHomeWebBoard: React.FC<StudioHomeWebBoardProps> = ({
                         onDelete={(e) => handleDeleteProject(project, e)}
                       />
                     ))}
-                  </div>
+                  </Box>
                 )}
               </VStack>
             )}

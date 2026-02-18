@@ -8,7 +8,7 @@
 import React, { useCallback, useRef } from 'react';
 import Editor, { OnMount, OnChange } from '@monaco-editor/react';
 import type { editor } from 'monaco-editor';
-import { Typography, LoadingState } from '@almadar/ui';
+import { Box, VStack, LoadingState } from '@almadar/ui';
 
 // =============================================================================
 // Language Mapping
@@ -134,7 +134,7 @@ export const CodeEditorPanel: React.FC<CodeEditorPanelProps> = ({
   };
 
   return (
-    <div className={`h-full w-full ${className}`}>
+    <Box className={`h-full w-full ${className}`}>
       <Editor
         height="100%"
         width="100%"
@@ -145,17 +145,17 @@ export const CodeEditorPanel: React.FC<CodeEditorPanelProps> = ({
         onMount={handleEditorMount}
         options={editorOptions}
         loading={
-          <div
-            className="flex items-center justify-center w-full h-full"
+          <VStack
+            align="center"
+            justify="center"
+            className="w-full h-full"
             style={{ backgroundColor: 'var(--color-card)' }}
           >
-            <div className="flex flex-col items-center gap-3">
-              <LoadingState message="Loading editor..." />
-            </div>
-          </div>
+            <LoadingState message="Loading editor..." />
+          </VStack>
         }
       />
-    </div>
+    </Box>
   );
 };
 

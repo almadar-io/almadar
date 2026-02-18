@@ -11,7 +11,7 @@ const meta: Meta<typeof SchemaEditorModal> = {
   tags: ["autodocs"],
   args: {
     onClose: () => {},
-    onSave: () => {},
+    onSave: async () => {},
   },
 };
 

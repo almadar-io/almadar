@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { Typography, Button } from '@almadar/ui';
+import { Typography, Button, VStack, HStack, Box } from '@almadar/ui';
 import {
   CheckCircle2,
   AlertCircle,
@@ -57,12 +57,17 @@ export const SchemaSummaryCard: React.FC<SchemaSummaryCardProps> = ({
   ];
 
   return (
-    <div className={`p-6 rounded-2xl bg-[var(--color-card)] border border-[var(--color-border)] shadow-[var(--shadow-main)] space-y-4 ${className || ''}`}>
-      <div className="flex items-start gap-4">
-        <div className="w-10 h-10 rounded-xl bg-[var(--color-success)]/10 flex items-center justify-center flex-shrink-0">
+    <VStack
+      gap="md"
+      className={`p-6 rounded-2xl bg-[var(--color-card)] border border-[var(--color-border)] shadow-[var(--shadow-main)] ${className || ''}`}
+    >
+      <HStack gap="md" align="start">
+        <Box
+          className="w-10 h-10 rounded-xl bg-[var(--color-success)]/10 flex items-center justify-center flex-shrink-0"
+        >
           <CheckCircle2 className="w-5 h-5 text-[var(--color-success)]" />
-        </div>
-        <div className="flex-1 min-w-0">
+        </Box>
+        <VStack gap="none" className="flex-1 min-w-0">
           <Typography variant="h4" className="text-[var(--color-foreground)] mb-1 truncate">
             {schema.name}
           </Typography>
@@ -71,53 +76,70 @@ export const SchemaSummaryCard: React.FC<SchemaSummaryCardProps> = ({
               {schema.description}
             </Typography>
           )}
-        </div>
-      </div>
+        </VStack>
+      </HStack>
 
       {validated !== null && validated !== undefined && (
-        <div className={`flex items-center gap-2 px-3 py-2 rounded-lg border ${
-          validated
-            ? 'bg-[var(--color-success)]/5 border-[var(--color-success)]/20'
-            : 'bg-[var(--color-warning)]/5 border-[var(--color-warning)]/20'
-        }`}>
+        <HStack
+          gap="sm"
+          align="center"
+          className={`px-3 py-2 rounded-lg border ${
+            validated
+              ? 'bg-[var(--color-success)]/5 border-[var(--color-success)]/20'
+              : 'bg-[var(--color-warning)]/5 border-[var(--color-warning)]/20'
+          }`}
+        >
           {validated
             ? <CheckCircle2 className="w-4 h-4 text-[var(--color-success)]" />
             : <AlertCircle className="w-4 h-4 text-[var(--color-warning)]" />
           }
-          <span className={`text-sm ${validated ? 'text-[var(--color-success)]' : 'text-[var(--color-warning)]'}`}>
+          <Typography
+            variant="small"
+            className={validated ? 'text-[var(--color-success)]' : 'text-[var(--color-warning)]'}
+          >
             {validated ? 'Schema validated' : 'Schema has validation warnings'}
-          </span>
-        </div>
+          </Typography>
+        </HStack>
       )}
 
       {schema.domainContext && (
-        <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[var(--color-primary)]/5 border border-[var(--color-primary)]/20">
+        <HStack
+          gap="sm"
+          align="center"
+          className="px-3 py-2 rounded-lg bg-[var(--color-primary)]/5 border border-[var(--color-primary)]/20"
+        >
           <Building2 className="w-4 h-4 text-[var(--color-primary)]" />
-          <span className="text-sm text-[var(--color-primary)]">{schema.domainContext.category}</span>
-        </div>
+          <Typography variant="small" className="text-[var(--color-primary)]">
+            {schema.domainContext.category}
+          </Typography>
+        </HStack>
       )}
 
-      <div className="grid grid-cols-4 gap-2">
+      <HStack gap="sm" className="grid grid-cols-4">
         {stats.map((stat, idx) => (
-          <div key={idx} className="flex flex-col items-center p-2 rounded-lg bg-[var(--color-surface)]">
+          <VStack key={idx} gap="none" align="center" className="p-2 rounded-lg bg-[var(--color-surface)]">
             <stat.icon className="w-4 h-4 text-[var(--color-primary)] mb-1" />
-            <span className="text-lg font-bold text-[var(--color-foreground)]">{stat.value}</span>
-            <span className="text-xs text-[var(--color-muted-foreground)]">{stat.label}</span>
-          </div>
+            <Typography variant="body1" className="text-lg font-bold text-[var(--color-foreground)]">
+              {stat.value}
+            </Typography>
+            <Typography variant="caption" className="text-[var(--color-muted-foreground)]">
+              {stat.label}
+            </Typography>
+          </VStack>
         ))}
-      </div>
+      </HStack>
 
       {appId && (
-        <div className="flex items-center gap-3 pt-2">
+        <HStack gap="sm" align="center" className="pt-2">
           <Button variant="primary" size="sm" onClick={onPreview} leftIcon={<ExternalLink className="w-4 h-4" />}>
             Preview
           </Button>
           <Button variant="secondary" size="sm" onClick={onEdit}>
             Edit in Builder
           </Button>
-        </div>
+        </HStack>
       )}
-    </div>
+    </VStack>
   );
 };
 

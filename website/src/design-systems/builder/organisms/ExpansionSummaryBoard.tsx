@@ -6,7 +6,7 @@
  */
 
 import React, { useMemo } from 'react';
-import { Card, Typography } from '@almadar/ui';
+import { Box, VStack, HStack, Card, Typography, Badge, Divider } from '@almadar/ui';
 
 // =============================================================================
 // Types
@@ -150,20 +150,36 @@ const DomainSystemBar: React.FC<{
   const systemPct = total > 0 ? (system / total) * 100 : 0;
 
   return (
-    <div className="space-y-1">
-      <div className="flex justify-between text-sm">
-        <span style={{ color: 'var(--color-muted-foreground)' }}>{label}</span>
-        <span style={{ color: 'var(--color-foreground)' }}>{total}</span>
-      </div>
-      <div className="h-3 rounded-full overflow-hidden flex" style={{ backgroundColor: 'var(--color-secondary)' }}>
-        {domainPct > 0 && <div className="h-full transition-all duration-300" style={{ width: `${domainPct}%`, backgroundColor: 'var(--color-primary)' }} title={`Domain: ${domain}`} />}
-        {systemPct > 0 && <div className="h-full transition-all duration-300" style={{ width: `${systemPct}%`, backgroundColor: 'var(--color-accent)' }} title={`System: ${system}`} />}
-      </div>
-      <div className="flex justify-between text-xs" style={{ color: 'var(--color-muted-foreground)' }}>
-        <span>Domain: {domain}</span>
-        <span>System: {system}</span>
-      </div>
-    </div>
+    <VStack gap="xs">
+      <HStack justify="between" className="text-sm">
+        <Typography variant="body2" style={{ color: 'var(--color-muted-foreground)' }}>{label}</Typography>
+        <Typography variant="body2" style={{ color: 'var(--color-foreground)' }}>{total}</Typography>
+      </HStack>
+      <Box
+        className="h-3 rounded-full overflow-hidden"
+        display="flex"
+        style={{ backgroundColor: 'var(--color-secondary)' }}
+      >
+        {domainPct > 0 && (
+          <Box
+            className="h-full transition-all duration-300"
+            style={{ width: `${domainPct}%`, backgroundColor: 'var(--color-primary)' }}
+            title={`Domain: ${domain}`}
+          />
+        )}
+        {systemPct > 0 && (
+          <Box
+            className="h-full transition-all duration-300"
+            style={{ width: `${systemPct}%`, backgroundColor: 'var(--color-accent)' }}
+            title={`System: ${system}`}
+          />
+        )}
+      </Box>
+      <HStack justify="between" className="text-xs" style={{ color: 'var(--color-muted-foreground)' }}>
+        <Typography variant="caption">Domain: {domain}</Typography>
+        <Typography variant="caption">System: {system}</Typography>
+      </HStack>
+    </VStack>
   );
 };
 
@@ -180,32 +196,32 @@ const EffectBadge: React.FC<{ type: string; count: number }> = ({ type, count })
   const colors = colorMap[type];
   if (colors) {
     return (
-      <span
+      <Badge
         className="px-2 py-1 text-xs rounded border"
         style={{ backgroundColor: colors.bg, color: colors.text, borderColor: colors.border }}
       >
         {type}: {count}
-      </span>
+      </Badge>
     );
   }
   return (
-    <span
+    <Badge
       className="px-2 py-1 text-xs rounded border"
       style={{ backgroundColor: 'var(--color-secondary)', color: 'var(--color-muted-foreground)', borderColor: 'var(--color-border)' }}
     >
       {type}: {count}
-    </span>
+    </Badge>
   );
 };
 
 const StatBox: React.FC<{ label: string; value: number; systemCount?: number }> = ({ label, value, systemCount }) => (
-  <div className="text-center p-3 rounded-lg" style={{ backgroundColor: 'var(--color-background)' }}>
+  <VStack align="center" className="p-3 rounded-lg" style={{ backgroundColor: 'var(--color-background)' }}>
     <Typography variant="h4" style={{ color: 'var(--color-foreground)' }}>{value}</Typography>
     <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>{label}</Typography>
     {systemCount !== undefined && systemCount > 0 && (
-      <div className="text-xs mt-1" style={{ color: 'var(--color-accent)' }}>+{systemCount} system</div>
+      <Typography variant="caption" className="mt-1" style={{ color: 'var(--color-accent)' }}>+{systemCount} system</Typography>
     )}
-  </div>
+  </VStack>
 );
 
 // =============================================================================
@@ -223,84 +239,96 @@ export const ExpansionSummaryBoard: React.FC<ExpansionSummaryBoardProps> = ({
   const expansionPercent = totalElements > 0 ? Math.round((systemAdditions / totalElements) * 100) : 0;
 
   return (
-    <div className={`space-y-6 ${className}`}>
+    <VStack gap="lg" className={className}>
       {/* Summary Header */}
       <Card style={{ backgroundColor: 'var(--color-card)', borderColor: 'var(--color-border)' }}>
-        <div className="p-4">
-          <div className="flex items-center justify-between mb-4">
+        <Box padding="md">
+          <HStack justify="between" align="center" className="mb-4">
             <Typography variant="h5" style={{ color: 'var(--color-foreground)' }}>Builder Expansion Summary</Typography>
-            <div className="text-right">
+            <VStack align="end">
               <Typography variant="h4" style={{ color: 'var(--color-primary)' }}>+{systemAdditions}</Typography>
               <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>system elements added</Typography>
-            </div>
-          </div>
+            </VStack>
+          </HStack>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+          <Box className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
             <StatBox label="States" value={stats.states.total} systemCount={stats.states.system} />
             <StatBox label="Events" value={stats.events.total} systemCount={stats.events.system} />
             <StatBox label="Transitions" value={stats.transitions.total} systemCount={stats.transitions.system} />
             <StatBox label="Effects" value={stats.effects.total} />
-          </div>
+          </Box>
 
-          <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--color-muted-foreground)' }}>
-            <div className="w-3 h-3 rounded" style={{ backgroundColor: 'var(--color-primary)' }} />
-            <span>Domain (Requirements)</span>
-            <div className="w-3 h-3 rounded ml-4" style={{ backgroundColor: 'var(--color-accent)' }} />
-            <span>System (Builder)</span>
-            <span className="ml-auto" style={{ color: 'var(--color-muted-foreground)' }}>{expansionPercent}% expansion</span>
-          </div>
-        </div>
+          <HStack gap="sm" align="center" className="text-sm" style={{ color: 'var(--color-muted-foreground)' }}>
+            <Box className="w-3 h-3 rounded" style={{ backgroundColor: 'var(--color-primary)' }} />
+            <Typography variant="body2">Domain (Requirements)</Typography>
+            <Box className="w-3 h-3 rounded ml-4" style={{ backgroundColor: 'var(--color-accent)' }} />
+            <Typography variant="body2">System (Builder)</Typography>
+            <Typography variant="body2" className="ml-auto" style={{ color: 'var(--color-muted-foreground)' }}>{expansionPercent}% expansion</Typography>
+          </HStack>
+        </Box>
       </Card>
 
       {/* Detailed Breakdown */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <Box className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card style={{ backgroundColor: 'var(--color-card)', borderColor: 'var(--color-border)' }}>
-          <div className="p-4">
+          <Box padding="md">
             <Typography variant="h6" className="mb-4" style={{ color: 'var(--color-foreground)' }}>State Machine</Typography>
-            <div className="space-y-4">
+            <VStack gap="md">
               <DomainSystemBar label="States" domain={stats.states.domain} system={stats.states.system} total={stats.states.total} />
               <DomainSystemBar label="Events" domain={stats.events.domain} system={stats.events.system} total={stats.events.total} />
               <DomainSystemBar label="Transitions" domain={stats.transitions.domain} system={stats.transitions.system} total={stats.transitions.total} />
-            </div>
-          </div>
+            </VStack>
+          </Box>
         </Card>
 
         <Card style={{ backgroundColor: 'var(--color-card)', borderColor: 'var(--color-border)' }}>
-          <div className="p-4">
+          <Box padding="md">
             <Typography variant="h6" className="mb-4" style={{ color: 'var(--color-foreground)' }}>Effects ({stats.effects.total})</Typography>
             {stats.effects.total > 0 ? (
-              <div className="flex flex-wrap gap-2">
+              <HStack wrap gap="sm">
                 {Object.entries(stats.effects.byType).map(([type, count]) => (
                   <EffectBadge key={type} type={type} count={count} />
                 ))}
-              </div>
+              </HStack>
             ) : (
               <Typography variant="body2" style={{ color: 'var(--color-muted-foreground)' }}>No effects defined yet</Typography>
             )}
 
-            <div className="mt-4 pt-4 border-t" style={{ borderColor: 'var(--color-border)' }}>
-              <div className="flex justify-between items-center mb-2">
+            <Box className="mt-4 pt-4" style={{ borderTop: `1px solid var(--color-border)` }}>
+              <HStack justify="between" align="center" className="mb-2">
                 <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>Pages: {stats.pages.total}</Typography>
                 <Typography variant="caption" style={{ color: 'var(--color-primary)' }}>Components: {stats.components.total}</Typography>
-              </div>
+              </HStack>
               {stats.components.total > 0 && (
-                <div className="flex flex-wrap gap-1 mt-2">
+                <HStack wrap gap="xs" className="mt-2">
                   {Object.entries(stats.components.byType)
                     .sort(([, a], [, b]) => b - a)
                     .slice(0, 8)
                     .map(([type, count]) => (
-                      <span key={type} className="px-1.5 py-0.5 text-xs rounded" style={{ backgroundColor: 'var(--color-secondary)', color: 'var(--color-muted-foreground)' }}>{type}: {count}</span>
+                      <Badge
+                        key={type}
+                        className="px-1.5 py-0.5 text-xs rounded"
+                        style={{ backgroundColor: 'var(--color-secondary)', color: 'var(--color-muted-foreground)' }}
+                      >
+                        {type}: {count}
+                      </Badge>
                     ))}
                   {Object.keys(stats.components.byType).length > 8 && (
-                    <span className="px-1.5 py-0.5 text-xs" style={{ color: 'var(--color-muted-foreground)' }}>+{Object.keys(stats.components.byType).length - 8} more</span>
+                    <Typography
+                      variant="caption"
+                      className="px-1.5 py-0.5"
+                      style={{ color: 'var(--color-muted-foreground)' }}
+                    >
+                      +{Object.keys(stats.components.byType).length - 8} more
+                    </Typography>
                   )}
-                </div>
+                </HStack>
               )}
-            </div>
-          </div>
+            </Box>
+          </Box>
         </Card>
-      </div>
-    </div>
+      </Box>
+    </VStack>
   );
 };
 

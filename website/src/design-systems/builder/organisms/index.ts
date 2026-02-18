@@ -72,6 +72,8 @@ export type { WelcomeBoardProps } from "./WelcomeBoard";
 
 // Preview organisms
 export * from "./preview";
+export { PreviewPanel } from "./PreviewPanel";
+export type { PreviewPanelProps, PreviewPanelEntity } from "./PreviewPanel";
 
 // Builder organisms (graph editing)
 export * from "./builder";

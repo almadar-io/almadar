@@ -7,6 +7,7 @@
 import React, { useState } from 'react';
 import { clsx as cn } from 'clsx';
 import { ChevronDown, ChevronRight, Edit2, Trash2, Plus } from 'lucide-react';
+import { Typography, Button, HStack, VStack, Box, Badge } from '@almadar/ui';
 import { DomainKeyword, KeywordCategory } from '../../atoms/domain';
 
 export type SectionType = 'entity' | 'page' | 'behavior' | 'tick';
@@ -120,7 +121,8 @@ export const DomainSectionHeader: React.FC<DomainSectionHeaderProps> = ({
   const ChevronIcon = expanded ? ChevronDown : ChevronRight;
 
   return (
-    <div
+    <VStack
+      gap="none"
       className={cn('border rounded-lg', className)}
       style={{
         borderColor: hasError
@@ -129,99 +131,101 @@ export const DomainSectionHeader: React.FC<DomainSectionHeaderProps> = ({
       }}
     >
       {/* Header */}
-      <div
+      <HStack
+        gap="sm"
+        align="center"
         className={cn(
-          'flex items-center gap-2 px-4 py-3 cursor-pointer select-none',
-          'hover:bg-[var(--color-secondary)]',
-          'transition-colors',
+          'px-4 py-3 cursor-pointer select-none hover:bg-[var(--color-secondary)] transition-colors',
           expanded && 'border-b border-[var(--color-border)]'
         )}
         onClick={handleToggle}
       >
         <ChevronIcon className="w-4 h-4 text-[var(--color-muted-foreground)]" />
 
-        <span className="text-lg">{config.icon}</span>
+        <Typography variant="body1" as="span" className="text-lg">
+          {config.icon}
+        </Typography>
 
         <DomainKeyword category={config.category}>
           {config.keyword}
         </DomainKeyword>
 
-        <span className="font-semibold text-[var(--color-foreground)]">
+        <Typography variant="body2" as="span" className="font-semibold text-[var(--color-foreground)]">
           {title}
-        </span>
+        </Typography>
 
         {count !== undefined && (
-          <span className="ml-1 px-2 py-0.5 text-xs rounded-full bg-[var(--color-secondary)] text-[var(--color-muted-foreground)]">
+          <Badge variant="secondary" size="sm" className="ml-1">
             {count}
-          </span>
+          </Badge>
         )}
 
         {hasError && (
-          <span
-            className="ml-1 px-2 py-0.5 text-xs rounded-full"
-            style={{
-              backgroundColor: 'color-mix(in srgb, var(--color-error) 10%, transparent)',
-              color: 'var(--color-error)',
-            }}
-          >
+          <Badge variant="error" size="sm" className="ml-1">
             Error
-          </span>
+          </Badge>
         )}
 
         {/* Spacer */}
-        <div className="flex-1" />
+        <Box className="flex-1" />
 
         {/* Actions */}
         {editable && (
-          <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
+          <HStack gap="xs" align="center" onClick={(e) => e.stopPropagation()}>
             {onAdd && (
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={onAdd}
-                className="p-1.5 rounded hover:bg-[var(--color-secondary)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
                 title="Add item"
+                className="p-1.5 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
               >
                 <Plus className="w-4 h-4" />
-              </button>
+              </Button>
             )}
             {onEdit && (
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={onEdit}
-                className="p-1.5 rounded hover:bg-[var(--color-secondary)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
                 title="Edit"
+                className="p-1.5 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
               >
                 <Edit2 className="w-4 h-4" />
-              </button>
+              </Button>
             )}
             {onDelete && (
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={onDelete}
-                className="p-1.5 rounded hover:bg-[var(--color-error)]/10 text-[var(--color-muted-foreground)] hover:text-[var(--color-error)]"
                 title="Delete"
+                className="p-1.5 text-[var(--color-muted-foreground)] hover:text-[var(--color-error)] hover:bg-[var(--color-error)]/10"
               >
                 <Trash2 className="w-4 h-4" />
-              </button>
+              </Button>
             )}
-          </div>
+          </HStack>
         )}
-      </div>
+      </HStack>
 
       {/* Subtitle */}
       {subtitle && expanded && (
-        <div className="px-4 py-2 text-sm text-[var(--color-muted-foreground)] bg-[var(--color-secondary)] border-b border-[var(--color-border)]">
+        <Typography
+          variant="body2"
+          className="px-4 py-2 text-[var(--color-muted-foreground)] bg-[var(--color-secondary)] border-b border-[var(--color-border)]"
+        >
           {subtitle}
-        </div>
+        </Typography>
       )}
 
       {/* Content */}
       {expanded && children && (
-        <div className="px-4 py-3">
+        <Box className="px-4 py-3">
           {children}
-        </div>
+        </Box>
       )}
-    </div>
+    </VStack>
   );
 };
 

@@ -17,7 +17,14 @@
 
 import React, { useState, useMemo, useCallback, useRef } from "react";
 import { createPortal } from "react-dom";
-import { Typography, LoadingState } from "@almadar/ui";
+import {
+  Typography,
+  LoadingState,
+  Box,
+  VStack,
+  HStack,
+  Button,
+} from "@almadar/ui";
 import type {
   OrbitalSchema,
   Orbital,
@@ -760,25 +767,29 @@ const PayloadFieldDisplay: React.FC<{ field: EventPayloadField }> = ({
   const typeColor = payloadTypeColors[field.type as string] || 'var(--color-muted-foreground)';
 
   return (
-    <div className="flex items-start gap-2 text-xs">
-      <span style={{ color: 'var(--color-muted-foreground)' }}>{field.name}</span>
-      <span style={{ color: typeColor }}>{field.type}</span>
-      {field.required && <span style={{ color: 'var(--color-error)' }}>*</span>}
+    <HStack className="items-start gap-2 text-xs">
+      <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>{field.name}</Typography>
+      <Typography variant="caption" style={{ color: typeColor }}>{field.type}</Typography>
+      {field.required && <Typography variant="caption" style={{ color: 'var(--color-error)' }}>*</Typography>}
       {field.entityType && (
-        <span className="text-xs" style={{ color: 'var(--color-info)' }}>({field.entityType})</span>
+        <Typography variant="caption" style={{ color: 'var(--color-info)' }}>({field.entityType})</Typography>
       )}
       {field.description && (
-        <span
-          className="italic truncate max-w-[150px]"
-          style={{ color: 'var(--color-muted-foreground)' }}
-          title={field.description}
-        >
-          - {field.description}
-        </span>
+        <Box className="truncate max-w-[150px]" title={field.description}>
+          <Typography
+            variant="caption"
+            className="italic"
+            style={{ color: 'var(--color-muted-foreground)' }}
+          >
+            - {field.description}
+          </Typography>
+        </Box>
       )}
-    </div>
+    </HStack>
   );
 };
+
+PayloadFieldDisplay.displayName = "PayloadFieldDisplay";
 
 // ============================================================================
 // Event Contract Card Component
@@ -799,22 +810,23 @@ const EventContractCard: React.FC<{ eventInfo: BundledEventInfo }> = ({
     : [null, eventInfo.event];
 
   return (
-    <div className="rounded-lg p-3 space-y-2" style={{ backgroundColor: 'var(--color-card)' }}>
+    <Box className="rounded-lg p-3 space-y-2" style={{ backgroundColor: 'var(--color-card)' }}>
       {/* Event header */}
-      <div className="flex items-center justify-between flex-wrap gap-1">
-        <div className="flex items-center gap-1">
+      <HStack className="items-center justify-between flex-wrap gap-1">
+        <HStack className="items-center gap-1">
           {isNamespaced && (
-            <span className="font-mono text-xs" style={{ color: 'var(--color-accent)' }}>
+            <Typography variant="caption" className="font-mono" style={{ color: 'var(--color-accent)' }}>
               {traitNamespace}.
-            </span>
+            </Typography>
           )}
-          <span className="font-mono font-semibold text-sm" style={{ color: 'var(--color-foreground)' }}>
+          <Typography variant="caption" className="font-mono font-semibold text-sm" style={{ color: 'var(--color-foreground)' }}>
             {originalEvent}
-          </span>
-        </div>
+          </Typography>
+        </HStack>
         {eventInfo.scope && (
-          <span
-            className="px-2 py-0.5 rounded-full text-xs font-medium"
+          <Typography
+            variant="caption"
+            className="px-2 py-0.5 rounded-full font-medium"
             style={
               eventInfo.scope === "external"
                 ? {
@@ -828,88 +840,90 @@ const EventContractCard: React.FC<{ eventInfo: BundledEventInfo }> = ({
             }
           >
             {eventInfo.scope}
-          </span>
+          </Typography>
         )}
-      </div>
+      </HStack>
 
       {/* Description */}
       {eventInfo.description && (
-        <p className="text-xs italic" style={{ color: 'var(--color-muted-foreground)' }}>{eventInfo.description}</p>
+        <Typography variant="caption" className="italic" style={{ color: 'var(--color-muted-foreground)' }}>{eventInfo.description}</Typography>
       )}
 
       {/* Source trait and tick */}
       {(eventInfo.sourceTrait || eventInfo.sourceTick) && (
-        <div className="text-xs" style={{ color: 'var(--color-muted-foreground)' }}>
-          <span style={{ color: 'var(--color-accent)' }}>emit from:</span>{" "}
-          {eventInfo.sourceTrait}
+        <HStack className="text-xs" style={{ color: 'var(--color-muted-foreground)' }}>
+          <Typography variant="caption" style={{ color: 'var(--color-accent)' }}>emit from:</Typography>
+          <Typography variant="caption">{" "}{eventInfo.sourceTrait}</Typography>
           {eventInfo.sourceTick && (
-            <span className="ml-1" style={{ color: 'var(--color-warning)' }}>
+            <Typography variant="caption" className="ml-1" style={{ color: 'var(--color-warning)' }}>
               (tick: {eventInfo.sourceTick})
-            </span>
+            </Typography>
           )}
-        </div>
+        </HStack>
       )}
 
       {/* Payload schema */}
       {hasPayload && (
-        <div className="border-t pt-2 mt-2" style={{ borderColor: 'var(--color-border)' }}>
-          <div className="text-xs font-medium mb-1" style={{ color: 'var(--color-warning)' }}>
+        <Box className="border-t pt-2 mt-2" style={{ borderColor: 'var(--color-border)' }}>
+          <Typography variant="caption" className="font-medium mb-1" style={{ color: 'var(--color-warning)' }}>
             Payload:
-          </div>
-          <div className="space-y-1 pl-2">
+          </Typography>
+          <VStack className="space-y-1 pl-2">
             {eventInfo.payload!.map((field, idx) => (
               <PayloadFieldDisplay key={idx} field={field} />
             ))}
-          </div>
-        </div>
+          </VStack>
+        </Box>
       )}
 
       {/* Listener info */}
       {eventInfo.listener && (
-        <div className="border-t pt-2 mt-2" style={{ borderColor: 'var(--color-border)' }}>
-          <div className="text-xs font-medium mb-1" style={{ color: 'var(--color-success)' }}>
+        <Box className="border-t pt-2 mt-2" style={{ borderColor: 'var(--color-border)' }}>
+          <Typography variant="caption" className="font-medium mb-1" style={{ color: 'var(--color-success)' }}>
             Triggers:{" "}
-            <span className="font-mono" style={{ color: 'var(--color-foreground)' }}>
+            <Typography variant="caption" className="font-mono" style={{ color: 'var(--color-foreground)' }}>
               {eventInfo.listener.triggers}
-            </span>
-          </div>
+            </Typography>
+          </Typography>
           {eventInfo.listener.sourceTrait && (
-            <div className="text-xs" style={{ color: 'var(--color-muted-foreground)' }}>
-              <span style={{ color: 'var(--color-success)' }}>listen in:</span>{" "}
-              {eventInfo.listener.sourceTrait}
-            </div>
+            <HStack className="text-xs" style={{ color: 'var(--color-muted-foreground)' }}>
+              <Typography variant="caption" style={{ color: 'var(--color-success)' }}>listen in:</Typography>
+              <Typography variant="caption">{" "}{eventInfo.listener.sourceTrait}</Typography>
+            </HStack>
           )}
           {eventInfo.listener.guard && (
-            <div className="text-xs mt-1" style={{ color: 'var(--color-accent)' }}>
+            <Typography variant="caption" className="mt-1" style={{ color: 'var(--color-accent)' }}>
               Guard:{" "}
-              <span className="font-mono" style={{ color: 'var(--color-foreground)' }}>
+              <Typography variant="caption" className="font-mono" style={{ color: 'var(--color-foreground)' }}>
                 {eventInfo.listener.guard}
-              </span>
-            </div>
+              </Typography>
+            </Typography>
           )}
           {hasMapping && (
-            <div className="mt-1">
-              <div className="text-xs font-medium" style={{ color: 'var(--color-info)' }}>
+            <VStack className="mt-1">
+              <Typography variant="caption" className="font-medium" style={{ color: 'var(--color-info)' }}>
                 Payload Mapping:
-              </div>
-              <div className="pl-2 space-y-0.5">
+              </Typography>
+              <VStack className="pl-2 space-y-0.5">
                 {Object.entries(eventInfo.listener.payloadMapping!).map(
                   ([key, value]) => (
-                    <div key={key} className="text-xs">
-                      <span style={{ color: 'var(--color-muted-foreground)' }}>{key}</span>
-                      <span className="mx-1" style={{ color: 'var(--color-muted-foreground)' }}>←</span>
-                      <span className="font-mono" style={{ color: 'var(--color-info)' }}>{value}</span>
-                    </div>
+                    <HStack key={key} className="text-xs">
+                      <Typography variant="caption" style={{ color: 'var(--color-muted-foreground)' }}>{key}</Typography>
+                      <Typography variant="caption" className="mx-1" style={{ color: 'var(--color-muted-foreground)' }}>←</Typography>
+                      <Typography variant="caption" className="font-mono" style={{ color: 'var(--color-info)' }}>{value}</Typography>
+                    </HStack>
                   ),
                 )}
-              </div>
-            </div>
+              </VStack>
+            </VStack>
           )}
-        </div>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };
+
+EventContractCard.displayName = "EventContractCard";
 
 // ============================================================================
 // Tooltip Component (enhanced with event contracts)
@@ -1065,7 +1079,7 @@ const BundleTooltip: React.FC<{
   );
 
   return createPortal(
-    <div
+    <Box
       ref={tooltipRef}
       className={`fixed z-[99999] pointer-events-auto ${isDragging ? "cursor-grabbing" : ""}`}
       style={{
@@ -1077,7 +1091,7 @@ const BundleTooltip: React.FC<{
       onMouseLeave={onMouseLeave}
       onMouseDown={handleMouseDown}
     >
-      <div
+      <Box
         className={`rounded-lg shadow-xl border p-4 relative ${state.pinned ? "cursor-grab" : ""}`}
         style={{
           backgroundColor: "rgba(22, 27, 34, 0.98)",
@@ -1090,49 +1104,52 @@ const BundleTooltip: React.FC<{
       >
         {/* Pinned header bar with drag handle and close button */}
         {state.pinned && (
-          <div className="flex items-center justify-between mb-2 -mt-1">
-            <div
-              className="px-2 py-0.5 rounded-full text-xs font-semibold"
+          <HStack className="items-center justify-between mb-2 -mt-1">
+            <Typography
+              variant="caption"
+              className="px-2 py-0.5 rounded-full font-semibold"
               style={{ backgroundColor: "var(--color-success)", color: "#fff" }}
             >
               Drag to move
-            </div>
-            <button
+            </Typography>
+            <Button
               onClick={onClose}
               className="w-6 h-6 rounded-full text-sm flex items-center justify-center pointer-events-auto"
               style={{ backgroundColor: 'var(--color-error)', color: '#fff' }}
+              variant="ghost"
+              size="sm"
             >
               x
-            </button>
-          </div>
+            </Button>
+          </HStack>
         )}
 
         {/* Header */}
-        <div className="flex items-center gap-2 mb-3">
-          <span className="font-semibold" style={{ color: 'var(--color-accent)' }}>
+        <HStack className="items-center gap-2 mb-3">
+          <Typography variant="body2" className="font-semibold" style={{ color: 'var(--color-accent)' }}>
             {state.bundle.from}
-          </span>
-          <span style={{ color: 'var(--color-muted-foreground)' }}>→</span>
-          <span className="font-semibold" style={{ color: 'var(--color-success)' }}>
+          </Typography>
+          <Typography variant="body2" style={{ color: 'var(--color-muted-foreground)' }}>→</Typography>
+          <Typography variant="body2" className="font-semibold" style={{ color: 'var(--color-success)' }}>
             {state.bundle.to}
-          </span>
-        </div>
+          </Typography>
+        </HStack>
 
         {/* Event count summary */}
-        <div className="text-sm mb-3 flex items-center gap-2" style={{ color: 'var(--color-muted-foreground)' }}>
-          <span>
+        <HStack className="text-sm mb-3 items-center gap-2" style={{ color: 'var(--color-muted-foreground)' }}>
+          <Typography variant="body2">
             {state.bundle.events.length} event
             {state.bundle.events.length !== 1 ? "s" : ""}
-          </span>
+          </Typography>
           {!state.pinned && hasDetailedInfo && (
-            <span className="text-xs" style={{ color: 'var(--color-info)' }}>
-              (click to pin & see details)
-            </span>
+            <Typography variant="caption" style={{ color: 'var(--color-info)' }}>
+              (click to pin &amp; see details)
+            </Typography>
           )}
-        </div>
+        </HStack>
 
         {/* Event details - show full info when pinned, compact when not */}
-        <div className="space-y-2">
+        <VStack className="space-y-2">
           {state.pinned
             ? // Full event contract cards when pinned
               eventDetails.map((eventInfo, idx) => (
@@ -1147,37 +1164,39 @@ const BundleTooltip: React.FC<{
                   ? event.split(".")
                   : [null, event];
                 return (
-                  <div
+                  <HStack
                     key={idx}
-                    className="flex items-center gap-2 text-sm font-mono px-2 py-1 rounded"
+                    className="items-center gap-2 text-sm font-mono px-2 py-1 rounded"
                     style={{ backgroundColor: 'var(--color-secondary)' }}
                   >
                     {isNamespaced && (
-                      <span className="text-xs" style={{ color: 'var(--color-accent)' }}>
+                      <Typography variant="caption" style={{ color: 'var(--color-accent)' }}>
                         {traitNs}.
-                      </span>
+                      </Typography>
                     )}
-                    <span style={{ color: 'var(--color-foreground)' }}>{eventName}</span>
+                    <Typography variant="caption" style={{ color: 'var(--color-foreground)' }}>{eventName}</Typography>
                     {eventInfo?.scope === "external" && (
-                      <span className="text-xs" style={{ color: 'var(--color-warning)' }}>ext</span>
+                      <Typography variant="caption" style={{ color: 'var(--color-warning)' }}>ext</Typography>
                     )}
                     {eventInfo?.payload?.length ? (
-                      <span className="text-xs" style={{ color: 'var(--color-warning)' }}>
+                      <Typography variant="caption" style={{ color: 'var(--color-warning)' }}>
                         ({eventInfo.payload.length} fields)
-                      </span>
+                      </Typography>
                     ) : null}
                     {eventInfo?.sourceTick && (
-                      <span className="text-xs" style={{ color: 'var(--color-warning)' }}>tick</span>
+                      <Typography variant="caption" style={{ color: 'var(--color-warning)' }}>tick</Typography>
                     )}
-                  </div>
+                  </HStack>
                 );
               })}
-        </div>
-      </div>
-    </div>,
+        </VStack>
+      </Box>
+    </Box>,
     document.body,
   );
 };
+
+BundleTooltip.displayName = "BundleTooltip";
 
 // ============================================================================
 // Main Component
@@ -1303,16 +1322,16 @@ export const OrbitalSchemaVisualizer: React.FC<
 
   if (!schema) {
     return (
-      <div className="flex items-center justify-center h-full">
+      <Box className="flex items-center justify-center h-full">
         <LoadingState message="Loading schema..." />
-      </div>
+      </Box>
     );
   }
 
   if (nodes.length === 0) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <div className="text-center">
+      <Box className="flex items-center justify-center h-full">
+        <VStack className="text-center">
           <Typography
             variant="h6"
             className="mb-2"
@@ -1326,24 +1345,24 @@ export const OrbitalSchemaVisualizer: React.FC<
           >
             This schema doesn't contain any orbital definitions.
           </Typography>
-        </div>
-      </div>
+        </VStack>
+      </Box>
     );
   }
 
   return (
     <>
-      <div
+      <Box
         ref={containerRef}
         className={`overflow-auto ${className}`}
         style={{ height: "100%", backgroundColor: 'var(--color-background)' }}
       >
-        <div
+        <Box
           className="relative"
           style={{ width, height, minWidth: "100%", minHeight: "100%" }}
         >
           {/* Title */}
-          <div className="absolute top-4 left-6 z-10">
+          <Box className="absolute top-4 left-6 z-10">
             <Typography variant="h5" style={{ color: 'var(--color-foreground)' }}>
               {schema.name} — Orbital Graph
             </Typography>
@@ -1351,7 +1370,7 @@ export const OrbitalSchemaVisualizer: React.FC<
               Click an orbital to view its state machine • Hover connections for
               details
             </Typography>
-          </div>
+          </Box>
 
           {/* SVG Layer for connections */}
           <svg
@@ -1389,7 +1408,7 @@ export const OrbitalSchemaVisualizer: React.FC<
 
           {/* Orbital Nodes (Atomic P-Shell treatment) */}
           {nodes.map((node) => (
-            <div
+            <Box
               key={node.id}
               className="absolute cursor-pointer transition-all duration-200"
               style={{
@@ -1404,7 +1423,7 @@ export const OrbitalSchemaVisualizer: React.FC<
               onMouseLeave={() => setHoveredNode(null)}
             >
               {/* P-Shell Upper Lobe */}
-              <div
+              <Box
                 className="absolute left-1/2 -translate-x-1/2 transition-all duration-300"
                 style={{
                   top: -20,
@@ -1421,7 +1440,7 @@ export const OrbitalSchemaVisualizer: React.FC<
               />
 
               {/* P-Shell Lower Lobe */}
-              <div
+              <Box
                 className="absolute left-1/2 -translate-x-1/2 transition-all duration-300"
                 style={{
                   bottom: -20,
@@ -1438,8 +1457,8 @@ export const OrbitalSchemaVisualizer: React.FC<
               />
 
               {/* Main nucleus orb */}
-              <div
-                className="absolute inset-3 rounded-full flex flex-col items-center justify-center transition-all duration-200"
+              <VStack
+                className="absolute inset-3 rounded-full items-center justify-center transition-all duration-200"
                 style={{
                   background:
                     "linear-gradient(135deg, #0d9488 0%, #0f766e 50%, #115e59 100%)",
@@ -1453,7 +1472,7 @@ export const OrbitalSchemaVisualizer: React.FC<
                 }}
               >
                 {/* Highlight */}
-                <div
+                <Box
                   className="absolute inset-1 rounded-full"
                   style={{
                     background:
@@ -1462,7 +1481,8 @@ export const OrbitalSchemaVisualizer: React.FC<
                 />
 
                 {/* Content */}
-                <span
+                <Typography
+                  variant="caption"
                   className="font-bold text-center px-2 z-10"
                   style={{
                     fontSize: "13px",
@@ -1471,44 +1491,49 @@ export const OrbitalSchemaVisualizer: React.FC<
                   }}
                 >
                   {node.name}
-                </span>
+                </Typography>
                 {node.entityName && (
-                  <span
+                  <Typography
+                    variant="caption"
                     className="text-center z-10 mt-0.5"
                     style={{ fontSize: "10px", opacity: 0.8, color: 'var(--color-primary)' }}
                   >
                     {node.entityName}
-                  </span>
+                  </Typography>
                 )}
-              </div>
+              </VStack>
 
               {/* Stats badges */}
-              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
+              <HStack className="absolute -bottom-8 left-1/2 -translate-x-1/2 gap-1.5 z-20">
                 {node.traitCount > 0 && (
-                  <span
-                    className="px-1.5 py-0.5 text-[10px] font-semibold rounded-md shadow-sm border"
+                  <Typography
+                    variant="caption"
+                    className="px-1.5 py-0.5 font-semibold rounded-md shadow-sm border"
                     style={{
+                      fontSize: "10px",
                       backgroundColor: 'var(--color-card)',
                       borderColor: 'color-mix(in srgb, var(--color-accent) 50%, transparent)',
                       color: 'var(--color-accent)',
                     }}
                   >
                     {node.traitCount}T
-                  </span>
+                  </Typography>
                 )}
                 {node.pageCount > 0 && (
-                  <span
-                    className="px-1.5 py-0.5 text-[10px] font-semibold rounded-md shadow-sm border"
+                  <Typography
+                    variant="caption"
+                    className="px-1.5 py-0.5 font-semibold rounded-md shadow-sm border"
                     style={{
+                      fontSize: "10px",
                       backgroundColor: 'var(--color-card)',
                       borderColor: 'color-mix(in srgb, var(--color-info) 50%, transparent)',
                       color: 'var(--color-info)',
                     }}
                   >
                     {node.pageCount}P
-                  </span>
+                  </Typography>
                 )}
-              </div>
+              </HStack>
 
               {/* Emit/Listen indicators with scope awareness */}
               {node.emits.length > 0 &&
@@ -1518,11 +1543,10 @@ export const OrbitalSchemaVisualizer: React.FC<
                   ).length;
                   const hasPayload = node.emits.some((e) => e.payload?.length);
                   return (
-                    <div
-                      className="absolute -right-1 top-1/2 -translate-y-1/2 flex flex-col items-center gap-0.5"
-                      title={`${node.emits.length} emits (${externalCount} external)`}
+                    <VStack
+                      className="absolute -right-1 top-1/2 -translate-y-1/2 items-center gap-0.5"
                     >
-                      <div
+                      <Box
                         className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold shadow-lg"
                         style={{
                           backgroundColor: externalCount > 0
@@ -1532,15 +1556,15 @@ export const OrbitalSchemaVisualizer: React.FC<
                         }}
                       >
                         ↗
-                      </div>
+                      </Box>
                       {hasPayload && (
-                        <div
+                        <Box
                           className="w-2 h-2 rounded-full"
                           style={{ backgroundColor: 'var(--color-warning)' }}
                           title="Has payload schema"
                         />
                       )}
-                    </div>
+                    </VStack>
                   );
                 })()}
               {node.listens.length > 0 &&
@@ -1554,11 +1578,10 @@ export const OrbitalSchemaVisualizer: React.FC<
                       Object.keys(l.payloadMapping).length > 0,
                   );
                   return (
-                    <div
-                      className="absolute -left-1 top-1/2 -translate-y-1/2 flex flex-col items-center gap-0.5"
-                      title={`${node.listens.length} listens (${externalCount} external)`}
+                    <VStack
+                      className="absolute -left-1 top-1/2 -translate-y-1/2 items-center gap-0.5"
                     >
-                      <div
+                      <Box
                         className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold shadow-lg"
                         style={{
                           backgroundColor: externalCount > 0
@@ -1568,69 +1591,69 @@ export const OrbitalSchemaVisualizer: React.FC<
                         }}
                       >
                         ↙
-                      </div>
+                      </Box>
                       {hasMapping && (
-                        <div
+                        <Box
                           className="w-2 h-2 rounded-full"
                           style={{ backgroundColor: 'var(--color-info)' }}
                           title="Has payload mapping"
                         />
                       )}
-                    </div>
+                    </VStack>
                   );
                 })()}
-            </div>
+            </Box>
           ))}
 
           {/* Legend - Enhanced for event contracts */}
-          <div
+          <Box
             className="absolute bottom-4 right-4 rounded-lg p-3 text-xs z-10"
             style={{
               backgroundColor: 'color-mix(in srgb, var(--color-card) 90%, transparent)',
               color: 'var(--color-muted-foreground)',
             }}
           >
-            <div className="font-medium mb-2" style={{ color: 'var(--color-foreground)' }}>Legend</div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="w-3 h-3 rounded-full" style={{ backgroundColor: 'var(--color-warning)' }}></span>
-              <span>Emits events (external)</span>
-            </div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="w-3 h-3 rounded-full" style={{ backgroundColor: 'color-mix(in srgb, var(--color-warning) 70%, transparent)' }}></span>
-              <span>Emits events (internal)</span>
-            </div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="w-3 h-3 rounded-full" style={{ backgroundColor: 'var(--color-success)' }}></span>
-              <span>Listens to events (external)</span>
-            </div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="w-3 h-3 rounded-full" style={{ backgroundColor: 'color-mix(in srgb, var(--color-success) 70%, transparent)' }}></span>
-              <span>Listens to events (internal)</span>
-            </div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="w-4 h-0.5" style={{ backgroundColor: 'var(--color-accent)' }}></span>
-              <span>Event connection</span>
-            </div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="px-1 text-xs rounded" style={{ backgroundColor: 'var(--color-accent)', color: '#fff' }}>
+            <Typography variant="caption" className="font-medium mb-2" style={{ color: 'var(--color-foreground)' }}>Legend</Typography>
+            <HStack className="items-center gap-2 mb-1">
+              <Box className="w-3 h-3 rounded-full" style={{ backgroundColor: 'var(--color-warning)' }} />
+              <Typography variant="caption">Emits events (external)</Typography>
+            </HStack>
+            <HStack className="items-center gap-2 mb-1">
+              <Box className="w-3 h-3 rounded-full" style={{ backgroundColor: 'color-mix(in srgb, var(--color-warning) 70%, transparent)' }} />
+              <Typography variant="caption">Emits events (internal)</Typography>
+            </HStack>
+            <HStack className="items-center gap-2 mb-1">
+              <Box className="w-3 h-3 rounded-full" style={{ backgroundColor: 'var(--color-success)' }} />
+              <Typography variant="caption">Listens to events (external)</Typography>
+            </HStack>
+            <HStack className="items-center gap-2 mb-1">
+              <Box className="w-3 h-3 rounded-full" style={{ backgroundColor: 'color-mix(in srgb, var(--color-success) 70%, transparent)' }} />
+              <Typography variant="caption">Listens to events (internal)</Typography>
+            </HStack>
+            <HStack className="items-center gap-2 mb-1">
+              <Box className="w-4 h-0.5" style={{ backgroundColor: 'var(--color-accent)' }} />
+              <Typography variant="caption">Event connection</Typography>
+            </HStack>
+            <HStack className="items-center gap-2 mb-1">
+              <Typography variant="caption" className="px-1 rounded" style={{ backgroundColor: 'var(--color-accent)', color: '#fff' }}>
                 N
-              </span>
-              <span>Bundled events</span>
-            </div>
-            <div className="border-t mt-2 pt-2" style={{ borderColor: 'var(--color-border)' }}>
-              <div className="mb-1" style={{ color: 'var(--color-muted-foreground)' }}>Contract indicators:</div>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--color-warning)' }}></span>
-                <span>Has payload schema</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--color-info)' }}></span>
-                <span>Has payload mapping</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+              </Typography>
+              <Typography variant="caption">Bundled events</Typography>
+            </HStack>
+            <Box className="border-t mt-2 pt-2" style={{ borderColor: 'var(--color-border)' }}>
+              <Typography variant="caption" className="mb-1" style={{ color: 'var(--color-muted-foreground)' }}>Contract indicators:</Typography>
+              <HStack className="items-center gap-2 mb-1">
+                <Box className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--color-warning)' }} />
+                <Typography variant="caption">Has payload schema</Typography>
+              </HStack>
+              <HStack className="items-center gap-2">
+                <Box className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--color-info)' }} />
+                <Typography variant="caption">Has payload mapping</Typography>
+              </HStack>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
 
       {/* Tooltip Portal */}
       <BundleTooltip
@@ -1651,6 +1674,8 @@ export const OrbitalSchemaVisualizer: React.FC<
     </>
   );
 };
+
+OrbitalSchemaVisualizer.displayName = "OrbitalSchemaVisualizer";
 
 export { OrbitalSchemaVisualizer as OrbitalNetworkView };
 export default OrbitalSchemaVisualizer;

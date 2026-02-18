@@ -265,13 +265,13 @@ export const ValidationReportBoard: React.FC<ValidationReportBoardProps> = ({
               {hasErrors && (
                 <HStack style={{ alignItems: 'center', gap: '0.25rem', color: 'var(--color-error)' }}>
                   <XCircle style={{ width: 16, height: 16 }} />
-                  <span>{errors.length} error{errors.length !== 1 ? 's' : ''}</span>
+                  <Typography as="span" variant="body2">{errors.length} error{errors.length !== 1 ? 's' : ''}</Typography>
                 </HStack>
               )}
               {hasWarnings && (
                 <HStack style={{ alignItems: 'center', gap: '0.25rem', color: 'var(--color-warning)' }}>
                   <AlertTriangle style={{ width: 16, height: 16 }} />
-                  <span>{warnings.length} warning{warnings.length !== 1 ? 's' : ''}</span>
+                  <Typography as="span" variant="body2">{warnings.length} warning{warnings.length !== 1 ? 's' : ''}</Typography>
                 </HStack>
               )}
             </HStack>

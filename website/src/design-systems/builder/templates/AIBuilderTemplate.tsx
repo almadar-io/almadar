@@ -13,7 +13,19 @@
  */
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Button, Typography, ThemeToggle, useEventBus } from '@almadar/ui';
+import {
+  Avatar,
+  Button,
+  Typography,
+  ThemeToggle,
+  useEventBus,
+  Box,
+  VStack,
+  HStack,
+  Icon,
+  Divider,
+  Textarea,
+} from '@almadar/ui';
 import { AgentInterruptDialog } from '../organisms/agent';
 import { AgentStatusHeader, AgentActivityFeed, TodoList, SchemaDiffViewer } from '../organisms/agent';
 import { AnalysisResultBoard } from '../organisms/agent';
@@ -28,7 +40,6 @@ import {
   Layers,
   ExternalLink,
   LogOut,
-  ChevronDown,
   MessageSquare,
   ListTodo,
   GitCompare,
@@ -36,7 +47,7 @@ import {
   ClipboardList,
   X,
   Leaf,
-  Box,
+  Box as BoxIcon,
   Brain,
   Cpu,
   Zap,
@@ -197,37 +208,42 @@ export const AIBuilderTemplate: React.FC<AIBuilderTemplateProps> = ({ entity, cl
   }, [handleSend]);
 
   return (
-    <div className={`flex h-screen bg-[var(--color-background)] overflow-hidden ${className || ''}`}>
+    <Box className={`flex h-screen bg-[var(--color-background)] overflow-hidden ${className || ''}`}>
       {/* Mobile Sidebar Overlay */}
       {isMobile && !sidebarCollapsed && (
-        <div className="fixed inset-0 z-50 flex">
-          <div
+        <Box className="fixed inset-0 z-50 flex">
+          <Box
             className="absolute inset-0 bg-[var(--color-overlay,rgba(0,0,0,0.5))] backdrop-blur-sm animate-in fade-in duration-200"
             onClick={() => setSidebarCollapsed(true)}
           />
-          <div className="relative w-64 bg-[var(--color-card)] h-full shadow-xl animate-in slide-in-from-left duration-200">
+          <Box className="relative w-64 bg-[var(--color-card)] h-full shadow-xl animate-in slide-in-from-left duration-200">
             {sidebarSlot}
-          </div>
-        </div>
+          </Box>
+        </Box>
       )}
 
       {/* Desktop Sidebar */}
       {!isMobile && sidebarSlot}
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0 bg-[var(--color-background)] transition-colors">
+      <VStack className="flex-1 min-w-0 bg-[var(--color-background)] transition-colors">
         {/* Header */}
-        <header className="flex items-center justify-between px-4 py-2 sm:px-6 sm:py-3 border-b border-[var(--color-border)] bg-[var(--color-card)]/80 backdrop-blur-sm z-10 transition-all">
-          <div className="flex items-center gap-3 overflow-hidden">
+        <Box
+          as="header"
+          className="flex items-center justify-between px-4 py-2 sm:px-6 sm:py-3 border-b border-[var(--color-border)] bg-[var(--color-card)]/80 backdrop-blur-sm z-10 transition-all"
+        >
+          <HStack className="items-center gap-3 overflow-hidden">
             {isMobile && (
-              <button
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => setSidebarCollapsed(false)}
                 className="p-2 -ml-2 rounded-lg text-[var(--color-muted-foreground)] hover:bg-[var(--color-surface)] touch-manipulation"
               >
-                <Layers className="w-5 h-5" />
-              </button>
+                <Icon icon={Layers} size="md" />
+              </Button>
             )}
-            <div className="min-w-0">
+            <VStack className="min-w-0">
               <Typography variant={isMobile ? 'body1' : 'h5'} className="text-[var(--color-foreground)] font-semibold truncate leading-tight">
                 {currentAppId ? 'Builder' : 'Orbitals'}
               </Typography>
@@ -236,10 +252,10 @@ export const AIBuilderTemplate: React.FC<AIBuilderTemplateProps> = ({ entity, cl
                   {status === 'running' ? 'Building...' : 'AI Builder'}
                 </Typography>
               )}
-            </div>
-          </div>
+            </VStack>
+          </HStack>
 
-          <div className="flex items-center gap-2 flex-shrink-0">
+          <HStack className="items-center gap-2 flex-shrink-0">
             {currentAppId && !isMobile && (
               <>
                 <Button variant="ghost" size="sm" onClick={() => emit('UI:PREVIEW', { appId: currentAppId })} leftIcon={<ExternalLink className="w-4 h-4" />}>
@@ -251,77 +267,83 @@ export const AIBuilderTemplate: React.FC<AIBuilderTemplateProps> = ({ entity, cl
                 <Button variant="ghost" size="sm" onClick={() => emit('UI:TOGGLE_JSON', {})}>
                   JSON
                 </Button>
-                <div className="w-px h-6 bg-[var(--color-border)] mx-1" />
+                <Box className="w-px h-6 bg-[var(--color-border)] mx-1" />
               </>
             )}
 
             {currentAppId && isMobile && (
               <Button variant="ghost" size="sm" className="w-9 h-9 p-0" onClick={() => emit('UI:PREVIEW', { appId: currentAppId })}>
-                <ExternalLink className="w-4 h-4" />
+                <Icon icon={ExternalLink} size="sm" />
               </Button>
             )}
 
-            <div className="hidden sm:block"><ThemeToggle size="sm" /></div>
+            <Box className="hidden sm:block"><ThemeToggle size="sm" /></Box>
 
             {user && (
-              <div className="relative ml-1 sm:ml-2">
-                <button
+              <Box className="relative ml-1 sm:ml-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
                   className="flex items-center gap-2 p-1 sm:p-2 rounded-lg hover:bg-[var(--color-surface)] touch-manipulation"
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
                 >
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full overflow-hidden bg-[var(--color-primary)]/10 flex items-center justify-center">
+                  <Box className="w-7 h-7 sm:w-8 sm:h-8 rounded-full overflow-hidden bg-[var(--color-primary)]/10 flex items-center justify-center">
                     {user.photoURL ? (
-                      <img src={user.photoURL} alt="User" className="w-full h-full object-cover" />
+                      <Avatar src={user.photoURL} alt="User" name={user.displayName || user.email || 'U'} size="sm" />
                     ) : (
-                      <span className="text-xs font-medium text-[var(--color-primary)]">
+                      <Typography variant="caption" className="text-xs font-medium text-[var(--color-primary)]">
                         {(user.displayName || user.email || 'U').charAt(0).toUpperCase()}
-                      </span>
+                      </Typography>
                     )}
-                  </div>
-                </button>
+                  </Box>
+                </Button>
 
                 {userMenuOpen && (
                   <>
-                    <div className="fixed inset-0 z-40" onClick={() => setUserMenuOpen(false)} />
-                    <div className="absolute right-0 top-full mt-2 w-48 bg-[var(--color-card)] rounded-lg shadow-[var(--shadow-lg)] border border-[var(--color-border)] py-1 z-50">
-                      <div className="px-4 py-2 border-b border-[var(--color-border)]">
-                        <p className="text-sm font-medium text-[var(--color-foreground)] truncate">{user.displayName || 'User'}</p>
-                        <p className="text-xs text-[var(--color-muted-foreground)] truncate">{user.email}</p>
-                      </div>
+                    <Box className="fixed inset-0 z-40" onClick={() => setUserMenuOpen(false)} />
+                    <Box className="absolute right-0 top-full mt-2 w-48 bg-[var(--color-card)] rounded-lg shadow-[var(--shadow-lg)] border border-[var(--color-border)] py-1 z-50">
+                      <Box className="px-4 py-2 border-b border-[var(--color-border)]">
+                        <Typography variant="body2" className="text-sm font-medium text-[var(--color-foreground)] truncate">{user.displayName || 'User'}</Typography>
+                        <Typography variant="caption" className="text-xs text-[var(--color-muted-foreground)] truncate">{user.email}</Typography>
+                      </Box>
                       {isMobile && (
-                        <div className="border-b border-[var(--color-border)] pb-1">
-                          <div className="w-full flex items-center gap-2 px-4 py-2">
+                        <Box className="border-b border-[var(--color-border)] pb-1">
+                          <HStack className="w-full items-center gap-2 px-4 py-2">
                             <ThemeToggle size="sm" />
-                            <span className="text-sm text-[var(--color-foreground)]">Theme</span>
-                          </div>
-                        </div>
+                            <Typography variant="body2" className="text-sm text-[var(--color-foreground)]">Theme</Typography>
+                          </HStack>
+                        </Box>
                       )}
-                      <button
+                      <Button
+                        variant="ghost"
+                        size="sm"
                         onClick={() => { setUserMenuOpen(false); emit('UI:SIGN_OUT', {}); }}
                         className="w-full flex items-center gap-2 px-4 py-2 text-sm text-[var(--color-error)]"
+                        leftIcon={<Icon icon={LogOut} size="sm" />}
                       >
-                        <LogOut className="h-4 w-4" />
                         Sign out
-                      </button>
-                    </div>
+                      </Button>
+                    </Box>
                   </>
                 )}
-              </div>
+              </Box>
             )}
-          </div>
-        </header>
+          </HStack>
+        </Box>
 
         {/* Main Area */}
-        <div className="flex-1 flex overflow-hidden relative">
-          <div className="flex-1 flex flex-col overflow-hidden w-full">
+        <Box className="flex-1 flex overflow-hidden relative">
+          <VStack className="flex-1 overflow-hidden w-full">
             {showWelcome ? (
               <WelcomeBoard />
             ) : (
-              <div className="flex-1 flex flex-col overflow-hidden w-full">
+              <VStack className="flex-1 overflow-hidden w-full">
                 {/* Tab Bar */}
-                <div className="flex border-b border-[var(--color-border)] bg-[var(--color-surface)]/50 backdrop-blur-sm px-2 sm:px-4 overflow-x-auto no-scrollbar">
+                <HStack className="border-b border-[var(--color-border)] bg-[var(--color-surface)]/50 backdrop-blur-sm px-2 sm:px-4 overflow-x-auto no-scrollbar">
                   {hasTodos && (
-                    <button
+                    <Button
+                      variant="ghost"
+                      size="sm"
                       onClick={() => setActiveTab('todos')}
                       className={`flex items-center gap-2 px-3 sm:px-4 py-3 text-sm font-medium transition-colors border-b-2 whitespace-nowrap ${
                         activeTab === 'todos'
@@ -329,11 +351,13 @@ export const AIBuilderTemplate: React.FC<AIBuilderTemplateProps> = ({ entity, cl
                           : 'text-[var(--color-muted-foreground)] border-transparent hover:text-[var(--color-foreground)]'
                       }`}
                     >
-                      <ListTodo className="w-4 h-4" />
+                      <Icon icon={ListTodo} size="sm" />
                       Tasks ({completedTodos}/{todos.length})
-                    </button>
+                    </Button>
                   )}
-                  <button
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={() => setActiveTab('activity')}
                     className={`flex items-center gap-2 px-3 sm:px-4 py-3 text-sm font-medium transition-colors border-b-2 whitespace-nowrap ${
                       activeTab === 'activity'
@@ -341,11 +365,13 @@ export const AIBuilderTemplate: React.FC<AIBuilderTemplateProps> = ({ entity, cl
                         : 'text-[var(--color-muted-foreground)] border-transparent hover:text-[var(--color-foreground)]'
                     }`}
                   >
-                    <MessageSquare className="w-4 h-4" />
+                    <Icon icon={MessageSquare} size="sm" />
                     Activity
-                  </button>
+                  </Button>
                   {hasDiffs && (
-                    <button
+                    <Button
+                      variant="ghost"
+                      size="sm"
                       onClick={() => setActiveTab('changes')}
                       className={`flex items-center gap-2 px-3 sm:px-4 py-3 text-sm font-medium transition-colors border-b-2 whitespace-nowrap ${
                         activeTab === 'changes'
@@ -353,38 +379,44 @@ export const AIBuilderTemplate: React.FC<AIBuilderTemplateProps> = ({ entity, cl
                           : 'text-[var(--color-muted-foreground)] border-transparent hover:text-[var(--color-foreground)]'
                       }`}
                     >
-                      <GitCompare className="w-4 h-4" />
+                      <Icon icon={GitCompare} size="sm" />
                       Changes
-                    </button>
+                    </Button>
                   )}
-                </div>
+                </HStack>
 
                 {/* Content */}
-                <div className="flex-1 overflow-hidden" ref={activityScrollRef}>
+                <Box className="flex-1 overflow-hidden" ref={activityScrollRef as React.RefObject<HTMLDivElement>}>
                   {activeTab === 'activity' && (
-                    <div className="h-full overflow-y-auto">
-                      <div className="max-w-4xl mx-auto p-4 sm:p-6 pb-20">
+                    <Box className="h-full overflow-y-auto">
+                      <Box className="max-w-4xl mx-auto p-4 sm:p-6 pb-20">
                         {agentError && status === 'error' && (
-                          <div className="mb-4 flex items-start gap-3 p-4 rounded-xl bg-[var(--color-error)]/5 border border-[var(--color-error)]/20 animate-in fade-in slide-in-from-top-2 duration-300">
-                            <AlertCircle className="w-5 h-5 text-[var(--color-error)] flex-shrink-0 mt-0.5" />
-                            <div className="flex-1 min-w-0">
+                          <HStack className="mb-4 items-start gap-3 p-4 rounded-xl bg-[var(--color-error)]/5 border border-[var(--color-error)]/20 animate-in fade-in slide-in-from-top-2 duration-300">
+                            <Icon icon={AlertCircle} size="md" className="text-[var(--color-error)] flex-shrink-0 mt-0.5" />
+                            <Box className="flex-1 min-w-0">
                               <Typography variant="body2" className="text-[var(--color-error)] font-medium">Generation failed</Typography>
                               <Typography variant="caption" className="text-[var(--color-error)] mt-1 block opacity-80">{agentError}</Typography>
-                            </div>
-                            <button onClick={() => emit('UI:CLEAR_HISTORY', {})} className="p-1 rounded-lg hover:bg-[var(--color-error)]/10 text-[var(--color-error)]" title="Dismiss">
-                              <X className="w-4 h-4" />
-                            </button>
-                          </div>
+                            </Box>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => emit('UI:CLEAR_HISTORY', {})}
+                              className="p-1 rounded-lg hover:bg-[var(--color-error)]/10 text-[var(--color-error)]"
+                              title="Dismiss"
+                            >
+                              <Icon icon={X} size="sm" />
+                            </Button>
+                          </HStack>
                         )}
 
                         <AgentStatusHeader status={status} threadId={threadId || undefined} onCancel={() => emit('UI:CANCEL', {})} />
 
-                        <div className="mt-4">
+                        <Box className="mt-4">
                           <AgentActivityFeed activities={activities as never[]} className="space-y-4" />
-                        </div>
+                        </Box>
 
                         {status === 'complete' && schemaSummary && (
-                          <div className="mt-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                          <Box className="mt-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
                             <SchemaSummaryCard
                               schema={schemaSummary}
                               appId={currentAppId || undefined}
@@ -392,89 +424,89 @@ export const AIBuilderTemplate: React.FC<AIBuilderTemplateProps> = ({ entity, cl
                               onPreview={() => currentAppId && emit('UI:PREVIEW', { appId: currentAppId })}
                               onEdit={() => currentAppId && emit('UI:EDIT', { appId: currentAppId })}
                             />
-                          </div>
+                          </Box>
                         )}
-                      </div>
-                    </div>
+                      </Box>
+                    </Box>
                   )}
 
                   {activeTab === 'todos' && hasTodos && (
-                    <div className="h-full overflow-y-auto p-4 sm:p-6 pb-20">
+                    <Box className="h-full overflow-y-auto p-4 sm:p-6 pb-20">
                       <TodoList todos={todos as never[]} showHeader={true} />
-                    </div>
+                    </Box>
                   )}
 
                   {activeTab === 'changes' && hasDiffs && (
-                    <div className="h-full overflow-y-auto p-4 sm:p-6 pb-20">
+                    <Box className="h-full overflow-y-auto p-4 sm:p-6 pb-20">
                       <SchemaDiffViewer diffs={schemaDiffs as never[]} title="Schema Changes" />
-                    </div>
+                    </Box>
                   )}
-                </div>
-              </div>
+                </Box>
+              </VStack>
             )}
 
             {/* Input Area */}
-            <div className={`border-t border-[var(--color-border)] bg-[var(--color-card)]/95 backdrop-blur-lg transition-all duration-200 ${
+            <Box className={`border-t border-[var(--color-border)] bg-[var(--color-card)]/95 backdrop-blur-lg transition-all duration-200 ${
               isMobile ? 'fixed bottom-0 left-0 right-0 z-20 pb-safe' : 'relative'
             }`}>
-              <div className="max-w-4xl mx-auto p-3 sm:p-4">
+              <Box className="max-w-4xl mx-auto p-3 sm:p-4">
                 {/* Toggles */}
                 {!currentAppId && !threadId && (
-                  <div className="flex items-center justify-center gap-3 mb-3">
+                  <HStack className="items-center justify-center gap-3 mb-3">
                     {/* Provider */}
-                    <div className="inline-flex rounded-lg border border-[var(--color-border)] p-0.5 bg-[var(--color-surface)]">
+                    <HStack className="inline-flex rounded-lg border border-[var(--color-border)] p-0.5 bg-[var(--color-surface)]">
                       {(['anthropic', 'openai', 'deepseek', 'kimi'] as const).map((p) => (
-                        <button key={p} onClick={() => emit('UI:SET_PROVIDER', { provider: p })} disabled={isProcessing || isAnalyzing}
+                        <Button key={p} variant="ghost" size="sm" onClick={() => emit('UI:SET_PROVIDER', { provider: p })} disabled={isProcessing || isAnalyzing}
                           title={p === 'anthropic' ? 'Claude' : p === 'openai' ? 'GPT' : p === 'deepseek' ? 'DeepSeek' : 'Kimi'}
                           className={`px-2 py-1 rounded-md text-xs font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
                             provider === p
                               ? 'bg-[var(--color-card)] text-[var(--color-primary)] shadow-sm'
                               : 'text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]'
                           }`}>
-                          {p === 'anthropic' ? <Brain className="w-3.5 h-3.5" /> : p === 'openai' ? <Sparkles className="w-3.5 h-3.5" /> : p === 'deepseek' ? <Cpu className="w-3.5 h-3.5" /> : <Box className="w-3.5 h-3.5" />}
-                        </button>
+                          {p === 'anthropic' ? <Icon icon={Brain} size="xs" /> : p === 'openai' ? <Icon icon={Sparkles} size="xs" /> : p === 'deepseek' ? <Icon icon={Cpu} size="xs" /> : <Icon icon={BoxIcon} size="xs" />}
+                        </Button>
                       ))}
-                    </div>
+                    </HStack>
 
-                    <div className="w-px h-4 bg-[var(--color-border)]" />
+                    <Box className="w-px h-4 bg-[var(--color-border)]" />
 
                     {/* Skill mode */}
-                    <div className="inline-flex rounded-lg border border-[var(--color-border)] p-0.5 bg-[var(--color-surface)]">
-                      <button onClick={() => emit('UI:SET_SKILL_MODE', { skillMode: 'standard' })} disabled={isProcessing || isAnalyzing} title="Standard (JSON)"
+                    <HStack className="inline-flex rounded-lg border border-[var(--color-border)] p-0.5 bg-[var(--color-surface)]">
+                      <Button variant="ghost" size="sm" onClick={() => emit('UI:SET_SKILL_MODE', { skillMode: 'standard' })} disabled={isProcessing || isAnalyzing} title="Standard (JSON)"
                         className={`px-2 py-1 rounded-md text-xs font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
                           skillMode === 'standard' ? 'bg-[var(--color-card)] text-[var(--color-info)] shadow-sm' : 'text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]'
                         }`}>
-                        <Box className="w-3 h-3" />
-                      </button>
-                      <button onClick={() => emit('UI:SET_SKILL_MODE', { skillMode: 'lean' })} disabled={isProcessing || isAnalyzing} title="Lean (Domain Language)"
+                        <Icon icon={BoxIcon} className="w-3 h-3" />
+                      </Button>
+                      <Button variant="ghost" size="sm" onClick={() => emit('UI:SET_SKILL_MODE', { skillMode: 'lean' })} disabled={isProcessing || isAnalyzing} title="Lean (Domain Language)"
                         className={`px-2 py-1 rounded-md text-xs font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
                           skillMode === 'lean' ? 'bg-[var(--color-card)] text-[var(--color-success)] shadow-sm' : 'text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]'
                         }`}>
-                        <Leaf className="w-3 h-3" />
-                      </button>
-                    </div>
+                        <Icon icon={Leaf} className="w-3 h-3" />
+                      </Button>
+                    </HStack>
 
                     {/* Generation mode */}
-                    <div className="inline-flex rounded-lg border border-[var(--color-border)] p-0.5 bg-[var(--color-surface)]">
-                      <button onClick={() => emit('UI:SET_GENERATION_MODE', { generationMode: 'quick' })} disabled={isProcessing || isAnalyzing} title="Quick"
+                    <HStack className="inline-flex rounded-lg border border-[var(--color-border)] p-0.5 bg-[var(--color-surface)]">
+                      <Button variant="ghost" size="sm" onClick={() => emit('UI:SET_GENERATION_MODE', { generationMode: 'quick' })} disabled={isProcessing || isAnalyzing} title="Quick"
                         className={`px-2 py-1 rounded-md text-xs font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
                           generationMode === 'quick' ? 'bg-[var(--color-card)] text-[var(--color-primary)] shadow-sm' : 'text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]'
                         }`}>
-                        <Zap className="w-3 h-3" />
-                      </button>
-                      <button onClick={() => emit('UI:SET_GENERATION_MODE', { generationMode: 'detailed' })} disabled={isProcessing || isAnalyzing} title="Detailed"
+                        <Icon icon={Zap} className="w-3 h-3" />
+                      </Button>
+                      <Button variant="ghost" size="sm" onClick={() => emit('UI:SET_GENERATION_MODE', { generationMode: 'detailed' })} disabled={isProcessing || isAnalyzing} title="Detailed"
                         className={`px-2 py-1 rounded-md text-xs font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
                           generationMode === 'detailed' ? 'bg-[var(--color-card)] text-[var(--color-primary)] shadow-sm' : 'text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]'
                         }`}>
-                        <ClipboardList className="w-3 h-3" />
-                      </button>
-                    </div>
-                  </div>
+                        <Icon icon={ClipboardList} className="w-3 h-3" />
+                      </Button>
+                    </HStack>
+                  </HStack>
                 )}
 
-                <div className="flex items-end gap-2 sm:gap-3">
-                  <div className="flex-1 relative">
-                    <textarea
+                <HStack className="items-end gap-2 sm:gap-3">
+                  <Box className="flex-1 relative">
+                    <Textarea
                       ref={inputRef}
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
@@ -496,30 +528,30 @@ export const AIBuilderTemplate: React.FC<AIBuilderTemplateProps> = ({ entity, cl
                         resize-none transition-all"
                       style={{ minHeight: '44px', maxHeight: '120px' }}
                     />
-                  </div>
+                  </Box>
                   <Button
                     onClick={handleSend}
                     disabled={!input.trim() || isProcessing || isAnalyzing}
                     className="h-[44px] w-[44px] sm:w-auto sm:px-6 rounded-xl flex-shrink-0"
                     leftIcon={(isProcessing || isAnalyzing) ? (
-                      <div className="w-4 h-4 border-2 border-current/30 border-t-current rounded-full animate-spin" />
+                      <Icon icon={Send} size="sm" animation="spin" />
                     ) : (
-                      <Send className="w-4 h-4" />
+                      <Icon icon={Send} size="sm" />
                     )}
                   >
                     {!isMobile && ((isProcessing || isAnalyzing) ? '' : 'Send')}
                   </Button>
-                </div>
+                </HStack>
                 {!isMobile && (
                   <Typography variant="caption" color="muted" className="mt-2 text-center block">
                     {isAnalyzing ? 'Analyzing your request...' : 'Press Enter to send'}
                   </Typography>
                 )}
-              </div>
-            </div>
-            {isMobile && <div className="h-[80px]" />}
-          </div>
-        </div>
+              </Box>
+            </Box>
+            {isMobile && <Box className="h-[80px]" />}
+          </VStack>
+        </Box>
 
         {/* JSON Viewer Modal */}
         {currentAppId && (
@@ -543,22 +575,27 @@ export const AIBuilderTemplate: React.FC<AIBuilderTemplateProps> = ({ entity, cl
 
         {/* Questions Modal */}
         {showQuestionsModal && analysisResult && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center">
-            <div
+          <Box className="fixed inset-0 z-50 flex items-center justify-center">
+            <Box
               className="absolute inset-0 bg-[var(--color-overlay,rgba(0,0,0,0.5))] backdrop-blur-sm"
               onClick={() => emit('UI:QUESTIONS_SKIP', {})}
             />
-            <div className="relative w-full max-w-4xl max-h-[90vh] overflow-auto m-4 bg-[var(--color-card)] rounded-2xl shadow-[var(--shadow-lg)]">
-              <div className="sticky top-0 z-10 flex items-center justify-between p-4 border-b border-[var(--color-border)] bg-[var(--color-card)]/95 backdrop-blur-sm">
-                <div>
+            <Box className="relative w-full max-w-4xl max-h-[90vh] overflow-auto m-4 bg-[var(--color-card)] rounded-2xl shadow-[var(--shadow-lg)]">
+              <HStack className="sticky top-0 z-10 items-center justify-between p-4 border-b border-[var(--color-border)] bg-[var(--color-card)]/95 backdrop-blur-sm">
+                <VStack>
                   <Typography variant="h4" className="text-[var(--color-foreground)]">Clarify Requirements</Typography>
                   <Typography variant="caption" color="muted">Answer questions to improve generation accuracy</Typography>
-                </div>
-                <button onClick={() => emit('UI:QUESTIONS_SKIP', {})} className="p-2 rounded-lg hover:bg-[var(--color-surface)] text-[var(--color-muted-foreground)]">
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-              <div className="p-6">
+                </VStack>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => emit('UI:QUESTIONS_SKIP', {})}
+                  className="p-2 rounded-lg hover:bg-[var(--color-surface)] text-[var(--color-muted-foreground)]"
+                >
+                  <Icon icon={X} size="md" />
+                </Button>
+              </HStack>
+              <Box className="p-6">
                 <AnalysisResultBoard
                   analysis={analysisResult as never}
                   answers={questionAnswers}
@@ -570,12 +607,12 @@ export const AIBuilderTemplate: React.FC<AIBuilderTemplateProps> = ({ entity, cl
                   isSubmitting={isProcessing}
                   onCancel={() => emit('UI:QUESTIONS_SKIP', {})}
                 />
-              </div>
-            </div>
-          </div>
+              </Box>
+            </Box>
+          </Box>
         )}
-      </div>
-    </div>
+      </VStack>
+    </Box>
   );
 };
 

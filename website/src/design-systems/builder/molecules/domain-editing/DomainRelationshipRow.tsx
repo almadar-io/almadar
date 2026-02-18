@@ -7,6 +7,7 @@
 import React from 'react';
 import { clsx as cn } from 'clsx';
 import { Edit2, Trash2, Link, ArrowRight, ArrowLeftRight } from 'lucide-react';
+import { Typography, Button, HStack, Box } from '@almadar/ui';
 import { DomainKeyword } from '../../atoms/domain';
 
 export type RelationshipType = 'belongs_to' | 'has_many' | 'has_one';
@@ -62,7 +63,7 @@ export interface DomainRelationshipRowProps {
 const relationshipConfig: Record<RelationshipType, {
   keyword: string;
   description: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
 }> = {
   belongs_to: {
     keyword: 'belongs to',
@@ -96,11 +97,11 @@ export const DomainRelationshipRow: React.FC<DomainRelationshipRowProps> = ({
   const Icon = config.icon;
 
   return (
-    <div
+    <HStack
+      gap="sm"
+      align="center"
       className={cn(
-        'group flex items-center gap-3 px-3 py-2 rounded-lg',
-        'hover:bg-[var(--color-secondary)]',
-        'transition-colors',
+        'group px-3 py-2 rounded-lg hover:bg-[var(--color-secondary)] transition-colors',
         className
       )}
     >
@@ -108,13 +109,15 @@ export const DomainRelationshipRow: React.FC<DomainRelationshipRowProps> = ({
       <Icon className="w-4 h-4" style={{ color: 'var(--color-error)' }} />
 
       {/* Relationship text */}
-      <div className="flex items-center gap-2">
+      <HStack gap="sm" align="center">
         {sourceEntity && (
           <>
-            <span className="font-medium text-[var(--color-muted-foreground)]">
+            <Typography variant="small" as="span" className="font-medium text-[var(--color-muted-foreground)]">
               {sourceEntity}
-            </span>
-            <span className="text-[var(--color-muted-foreground)]">→</span>
+            </Typography>
+            <Typography variant="small" as="span" className="text-[var(--color-muted-foreground)]">
+              →
+            </Typography>
           </>
         )}
 
@@ -122,62 +125,65 @@ export const DomainRelationshipRow: React.FC<DomainRelationshipRowProps> = ({
           {`It ${config.keyword}`}
         </DomainKeyword>
 
-        <button
-          type="button"
+        <Button
+          variant="ghost"
+          size="sm"
           onClick={onTargetClick}
           className={cn(
-            'font-semibold',
+            'p-0 font-semibold',
             onTargetClick && 'hover:underline cursor-pointer'
           )}
           style={{ color: 'var(--color-error)' }}
         >
           {targetEntity}
-        </button>
+        </Button>
 
         {alias && (
           <>
             <DomainKeyword category="property">as</DomainKeyword>
-            <span className="font-medium text-[var(--color-foreground)]">
+            <Typography variant="small" as="span" className="font-medium text-[var(--color-foreground)]">
               {alias}
-            </span>
+            </Typography>
           </>
         )}
-      </div>
+      </HStack>
 
       {/* Description tooltip */}
-      <span className="text-xs text-[var(--color-muted-foreground)]">
+      <Typography variant="caption" as="span" className="text-[var(--color-muted-foreground)]">
         ({config.description})
-      </span>
+      </Typography>
 
       {/* Spacer */}
-      <div className="flex-1" />
+      <Box className="flex-1" />
 
       {/* Actions */}
       {editable && (
-        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+        <HStack gap="xs" align="center" className="opacity-0 group-hover:opacity-100 transition-opacity">
           {onEdit && (
-            <button
-              type="button"
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={onEdit}
-              className="p-1 rounded hover:bg-[var(--color-secondary)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
               title="Edit relationship"
+              className="p-1 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
             >
               <Edit2 className="w-3.5 h-3.5" />
-            </button>
+            </Button>
           )}
           {onDelete && (
-            <button
-              type="button"
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={onDelete}
-              className="p-1 rounded hover:bg-[var(--color-error)]/10 text-[var(--color-muted-foreground)] hover:text-[var(--color-error)]"
               title="Delete relationship"
+              className="p-1 text-[var(--color-muted-foreground)] hover:text-[var(--color-error)] hover:bg-[var(--color-error)]/10"
             >
               <Trash2 className="w-3.5 h-3.5" />
-            </button>
+            </Button>
           )}
-        </div>
+        </HStack>
       )}
-    </div>
+    </HStack>
   );
 };
 
