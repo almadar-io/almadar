@@ -175,7 +175,7 @@ const config: Config = {
           position: "left",
         },
         {
-          href: "https://discord.gg/YtWJCpnk",
+          href: "https://discord.gg/q83VjPJx",
           label: "Discord",
           position: "right",
         },
@@ -212,7 +212,7 @@ const config: Config = {
           items: [
             {
               label: "Discord",
-              href: "https://discord.gg/YtWJCpnk",
+              href: "https://discord.gg/q83VjPJx",
             },
             {
               label: "GitHub",
