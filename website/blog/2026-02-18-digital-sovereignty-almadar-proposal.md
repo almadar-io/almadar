@@ -39,33 +39,41 @@ The beautiful thing is that this has become practically possible — in ways tha
 
 Investments in Arabic language models are an excellent first step. But a language model alone doesn't build an application. It doesn't manage a service. It doesn't deploy a system.
 
-What's needed are the layers that connect an idea to a working application:
+Between an idea and a working application lie many layers: understanding requirements, designing business logic, building interfaces, connecting systems, deployment, and operations.
 
-```
-Idea → Description → Schema → Application → Deployment → Operations
-```
-
-This is where the real opportunity lies. Whoever builds these layers gains the ability to turn any idea into digital reality — quickly, with quality, and with independence.
+Whoever builds these layers gains the ability to turn any idea into digital reality — quickly, with quality, and with independence.
 
 ---
 
 ## The Almadar Proposal
 
-**Almadar** is a complete system for building applications from description to deployment. The central idea:
+**Almadar** is a complete system that covers the entire application journey — from idea to deployment. It brings together **application building** and **AI agents** in a single platform.
 
-**Describe what you want, and Almadar builds it for you.**
+### Building Applications: Describe What You Need
 
-Every application starts with an **Orbital Schema** — a single document that describes the entities, behaviors, interfaces, and pages. From this schema, the frontend code, backend, and database are generated automatically.
+The traditional way of building software requires technical teams and months of work. Almadar flips this equation.
 
-### What Makes This Different?
+You describe what you need in plain language — an employee management system, an inspection platform, an online store — and Almadar turns that description into a complete working application: user interfaces, business logic, database, everything.
 
-**The schema is readable.** It's not obscure code — it's a clear description of business logic. Anyone who understands the domain can read it. This means knowledge stays in the organization, not just in developers' heads.
+The result isn't a prototype or a demo. It's a **real, production-ready application** — deployable on any infrastructure you choose.
 
-**Build once, deploy everywhere.** From the same schema, web apps, mobile apps, and APIs are generated. No platform or language lock-in.
+And crucially: the application's logic is written in a readable way. Anyone who understands the domain — an operations manager, a business analyst, a decision-maker — can understand how the application works and request changes. Knowledge stays in the organization, not just in programmers' heads.
 
-**Your infrastructure, your choice.** Generated applications run on any server you choose — your local cloud, your own servers, or any provider you prefer.
+### AI Agents: More Than Just Chat
 
-**AI as a tool, not a black box.** Almadar uses AI for requirements analysis and schema generation — but the result is always a readable, inspectable, modifiable document.
+Almadar doesn't just build applications — it provides a complete infrastructure for building **AI agents** that work for you.
+
+**An agent that learns and remembers.** The system learns from every project — your preferences, your work patterns, decisions you've made before. With each new application, it becomes smarter and faster. It doesn't start from zero every time.
+
+**An agent you control.** The agent suggests, never imposes. Every important decision passes through you for approval or modification. Over time, the agent learns what you prefer and needs less intervention — but the decision always remains yours.
+
+**An agent that works continuously.** Long-running tasks don't get lost. You can pause work and resume it later — hours or days later — exactly where you left off. Nothing is lost.
+
+**An agent that's transparent.** Every step the agent takes is logged and clear. You can see what it did and why, at any time.
+
+### An Open, Flexible System
+
+Almadar works across multiple programming languages and supports different environments. It's not a closed system that locks you into one choice. It's a flexible foundation you build on however you want, in whatever way suits you.
 
 ---
 
@@ -78,8 +86,9 @@ Any application any organization needs:
 - **Education systems**: curriculum management, performance tracking, interactive learning platforms
 - **Commercial applications**: custom storefronts, CRM, booking systems
 - **Community tools**: coordination platforms, local marketplaces, communication systems
+- **AI agents**: smart assistants specialized in your field of work
 
-All of these are built from Orbital Schemas — understandable, evolvable, and fully owned by whoever builds them.
+All of this is fully owned by whoever builds it. Runs on your infrastructure. Evolves with your needs.
 
 ---
 
