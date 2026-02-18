@@ -26,6 +26,7 @@ import { Label } from '../atoms/Label';
 import { Spinner } from '../atoms/Spinner';
 import { ProgressBar } from '../atoms/ProgressBar';
 import { Card } from '../atoms/Card';
+import { Box } from '../atoms/Box';
 import { Typography, Heading } from '../atoms/Typography';
 import { Alert, type AlertVariant } from '../molecules/Alert';
 import { Tooltip } from '../molecules/Tooltip';
@@ -36,11 +37,21 @@ import { Container } from '../molecules/Container';
 import { SimpleGrid } from '../molecules/SimpleGrid';
 import { FloatingActionButton } from '../molecules/FloatingActionButton';
 
+/**
+ * Base closed circuit props required by all organism components.
+ */
+interface ClosedCircuitProps {
+  className?: string;
+  isLoading?: boolean;
+  error?: Error | null;
+  entity?: string;
+}
+
 // ============================================================================
 // Interactive Components (emit events via closed circuit)
 // ============================================================================
 
-export interface ButtonPatternProps {
+export interface ButtonPatternProps extends ClosedCircuitProps {
   label: string;
   variant?: ButtonVariant;
   size?: ButtonSize;
@@ -89,7 +100,7 @@ export function ButtonPattern({
 
 ButtonPattern.displayName = 'ButtonPattern';
 
-export interface IconButtonPatternProps {
+export interface IconButtonPatternProps extends ClosedCircuitProps {
   icon: string;
   variant?: ButtonVariant;
   size?: ButtonSize;
@@ -132,7 +143,7 @@ export function IconButtonPattern({
 
 IconButtonPattern.displayName = 'IconButtonPattern';
 
-export interface LinkPatternProps {
+export interface LinkPatternProps extends ClosedCircuitProps {
   label: string;
   href?: string;
   external?: boolean;
@@ -160,6 +171,7 @@ export function LinkPattern({
   };
 
   return (
+    // eslint-disable-next-line almadar/no-raw-dom-elements -- semantic anchor with href
     <a
       href={href ?? '#'}
       target={external ? '_blank' : undefined}
@@ -178,7 +190,7 @@ LinkPattern.displayName = 'LinkPattern';
 // Display Components
 // ============================================================================
 
-export interface TextPatternProps {
+export interface TextPatternProps extends ClosedCircuitProps {
   content: string;
   variant?: 'body' | 'caption' | 'overline';
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -215,7 +227,7 @@ export function TextPattern({
 
 TextPattern.displayName = 'TextPattern';
 
-export interface HeadingPatternProps {
+export interface HeadingPatternProps extends ClosedCircuitProps {
   content: string;
   level?: 1 | 2 | 3 | 4 | 5 | 6;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
@@ -240,7 +252,7 @@ export function HeadingPattern({
 
 HeadingPattern.displayName = 'HeadingPattern';
 
-export interface BadgePatternProps {
+export interface BadgePatternProps extends ClosedCircuitProps {
   label: string;
   variant?: BadgeVariant;
   size?: 'sm' | 'md';
@@ -261,7 +273,7 @@ export function BadgePattern({
 
 BadgePattern.displayName = 'BadgePattern';
 
-export interface AvatarPatternProps {
+export interface AvatarPatternProps extends ClosedCircuitProps {
   src?: string;
   alt?: string;
   name?: string;
@@ -284,7 +296,7 @@ export function AvatarPattern({
 
 AvatarPattern.displayName = 'AvatarPattern';
 
-export interface IconPatternProps {
+export interface IconPatternProps extends ClosedCircuitProps {
   name: string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   color?: string;
@@ -305,7 +317,7 @@ export function IconPattern({
 
 IconPattern.displayName = 'IconPattern';
 
-export interface ImagePatternProps {
+export interface ImagePatternProps extends ClosedCircuitProps {
   src: string;
   alt: string;
   width?: number | string;
@@ -327,6 +339,7 @@ export function ImagePattern({
   className,
 }: ImagePatternProps): React.ReactElement {
   return (
+    // eslint-disable-next-line almadar/no-raw-dom-elements -- semantic img with src/alt
     <img
       src={src}
       alt={alt}
@@ -340,7 +353,7 @@ export function ImagePattern({
 
 ImagePattern.displayName = 'ImagePattern';
 
-export interface CardPatternProps {
+export interface CardPatternProps extends ClosedCircuitProps {
   title?: string;
   subtitle?: string;
   padding?: 'none' | 'sm' | 'md' | 'lg';
@@ -384,7 +397,7 @@ export function CardPattern({
 
 CardPattern.displayName = 'CardPattern';
 
-export interface ProgressBarPatternProps {
+export interface ProgressBarPatternProps extends ClosedCircuitProps {
   value: number;
   max?: number;
   variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger';
@@ -418,7 +431,7 @@ export function ProgressBarPattern({
 
 ProgressBarPattern.displayName = 'ProgressBarPattern';
 
-export interface SpinnerPatternProps {
+export interface SpinnerPatternProps extends ClosedCircuitProps {
   size?: 'xs' | 'sm' | 'md' | 'lg';
   color?: string;
   className?: string;
@@ -440,12 +453,13 @@ SpinnerPattern.displayName = 'SpinnerPattern';
 // Form Input Components
 // ============================================================================
 
-export interface InputPatternProps {
+export interface InputPatternProps extends ClosedCircuitProps {
   value?: string;
   placeholder?: string;
   inputType?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';
   disabled?: boolean;
-  error?: string;
+  /** Field-level validation error message */
+  fieldError?: string;
   onChange?: string;
   onBlur?: string;
   className?: string;
@@ -459,7 +473,7 @@ export function InputPattern({
   placeholder,
   inputType = 'text',
   disabled = false,
-  error,
+  fieldError,
   onChange,
   onBlur,
   className,
@@ -486,7 +500,7 @@ export function InputPattern({
       placeholder={placeholder}
       inputType={inputType}
       disabled={disabled}
-      error={error}
+      error={fieldError}
       onChange={handleChange}
       onBlur={handleBlur}
       className={className}
@@ -496,12 +510,13 @@ export function InputPattern({
 
 InputPattern.displayName = 'InputPattern';
 
-export interface TextareaPatternProps {
+export interface TextareaPatternProps extends ClosedCircuitProps {
   value?: string;
   placeholder?: string;
   rows?: number;
   disabled?: boolean;
-  error?: string;
+  /** Field-level validation error message */
+  fieldError?: string;
   onChange?: string;
   className?: string;
 }
@@ -514,7 +529,7 @@ export function TextareaPattern({
   placeholder,
   rows = 4,
   disabled = false,
-  error,
+  fieldError,
   onChange,
   className,
 }: TextareaPatternProps): React.ReactElement {
@@ -534,7 +549,7 @@ export function TextareaPattern({
       placeholder={placeholder}
       rows={rows}
       disabled={disabled}
-      error={error}
+      error={fieldError}
       onChange={handleChange}
       className={className}
     />
@@ -543,12 +558,13 @@ export function TextareaPattern({
 
 TextareaPattern.displayName = 'TextareaPattern';
 
-export interface SelectPatternProps {
+export interface SelectPatternProps extends ClosedCircuitProps {
   value?: string;
   options: Array<{ value: string; label: string }>;
   placeholder?: string;
   disabled?: boolean;
-  error?: string;
+  /** Field-level validation error message */
+  fieldError?: string;
   onChange?: string;
   className?: string;
 }
@@ -561,7 +577,7 @@ export function SelectPattern({
   options,
   placeholder,
   disabled = false,
-  error,
+  fieldError,
   onChange,
   className,
 }: SelectPatternProps): React.ReactElement {
@@ -581,7 +597,7 @@ export function SelectPattern({
       options={options}
       placeholder={placeholder}
       disabled={disabled}
-      error={error}
+      error={fieldError}
       onChange={handleChange}
       className={className}
     />
@@ -590,7 +606,7 @@ export function SelectPattern({
 
 SelectPattern.displayName = 'SelectPattern';
 
-export interface CheckboxPatternProps {
+export interface CheckboxPatternProps extends ClosedCircuitProps {
   checked?: boolean;
   label?: string;
   disabled?: boolean;
@@ -631,7 +647,7 @@ export function CheckboxPattern({
 
 CheckboxPattern.displayName = 'CheckboxPattern';
 
-export interface RadioPatternProps {
+export interface RadioPatternProps extends ClosedCircuitProps {
   value: string;
   checked?: boolean;
   name?: string;
@@ -676,7 +692,7 @@ export function RadioPattern({
 
 RadioPattern.displayName = 'RadioPattern';
 
-export interface LabelPatternProps {
+export interface LabelPatternProps extends ClosedCircuitProps {
   text: string;
   htmlFor?: string;
   required?: boolean;
@@ -705,7 +721,7 @@ LabelPattern.displayName = 'LabelPattern';
 // Feedback Components
 // ============================================================================
 
-export interface AlertPatternProps {
+export interface AlertPatternProps extends ClosedCircuitProps {
   message: string;
   title?: string;
   variant?: AlertVariant;
@@ -747,7 +763,7 @@ export function AlertPattern({
 
 AlertPattern.displayName = 'AlertPattern';
 
-export interface TooltipPatternProps {
+export interface TooltipPatternProps extends ClosedCircuitProps {
   content: string;
   position?: 'top' | 'bottom' | 'left' | 'right';
   className?: string;
@@ -772,7 +788,7 @@ export function TooltipPattern({
 
 TooltipPattern.displayName = 'TooltipPattern';
 
-export interface PopoverPatternProps {
+export interface PopoverPatternProps extends ClosedCircuitProps {
   content: React.ReactNode;
   position?: 'top' | 'bottom' | 'left' | 'right';
   trigger?: 'click' | 'hover';
@@ -803,7 +819,7 @@ PopoverPattern.displayName = 'PopoverPattern';
 // Navigation Components
 // ============================================================================
 
-export interface MenuPatternProps {
+export interface MenuPatternProps extends ClosedCircuitProps {
   items: Array<{
     label: string;
     event: string;
@@ -839,7 +855,7 @@ export function MenuPattern({
 
 MenuPattern.displayName = 'MenuPattern';
 
-export interface AccordionPatternProps {
+export interface AccordionPatternProps extends ClosedCircuitProps {
   items: Array<{ title: string; content: React.ReactNode }>;
   multiple?: boolean;
   defaultOpen?: number[];
@@ -871,7 +887,7 @@ AccordionPattern.displayName = 'AccordionPattern';
 // Layout Components
 // ============================================================================
 
-export interface ContainerPatternProps {
+export interface ContainerPatternProps extends ClosedCircuitProps {
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
   padding?: 'none' | 'sm' | 'md' | 'lg';
   className?: string;
@@ -896,7 +912,7 @@ export function ContainerPattern({
 
 ContainerPattern.displayName = 'ContainerPattern';
 
-export interface SimpleGridPatternProps {
+export interface SimpleGridPatternProps extends ClosedCircuitProps {
   minChildWidth?: string;
   gap?: 'xs' | 'sm' | 'md' | 'lg';
   className?: string;
@@ -921,7 +937,7 @@ export function SimpleGridPattern({
 
 SimpleGridPattern.displayName = 'SimpleGridPattern';
 
-export interface FloatButtonPatternProps {
+export interface FloatButtonPatternProps extends ClosedCircuitProps {
   icon: string;
   onClick?: string;
   position?: 'bottom-right' | 'bottom-left' | 'bottom-center';
@@ -964,6 +980,7 @@ FloatButtonPattern.displayName = 'FloatButtonPattern';
 // Export Pattern Registry
 // ============================================================================
 
+// eslint-disable-next-line almadar/require-display-name -- registry object, not a component
 export const COMPONENT_PATTERNS = {
   // Interactive
   'button': ButtonPattern,

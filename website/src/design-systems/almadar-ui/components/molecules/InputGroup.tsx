@@ -47,7 +47,7 @@ export const InputGroup: React.FC<InputGroupProps> = ({
     if (!addon) return null;
 
     // Check if it's a LucideIcon
-    if (typeof addon === "function" || (addon as any)?.render) {
+    if (typeof addon === "function" || (typeof addon === "object" && addon !== null && "render" in (addon as object))) {
       return (
         <div
           className={cn(

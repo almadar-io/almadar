@@ -12,6 +12,7 @@
 
 import React from 'react';
 import { Toast, ToastVariant } from '../molecules/Toast';
+import { Box } from '../atoms/Box';
 import { useEventBus } from '../../hooks/useEventBus';
 
 export interface ToastSlotProps {
@@ -25,6 +26,12 @@ export interface ToastSlotProps {
   duration?: number;
   /** Custom class name */
   className?: string;
+  /** Loading state indicator */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name for schema-driven auto-fetch */
+  entity?: string;
 }
 
 /**
@@ -86,7 +93,7 @@ export const ToastSlot: React.FC<ToastSlotProps> = ({
   const isCustomContent = React.isValidElement(children) && !message;
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <Box className="fixed bottom-4 right-4 z-50">
       {isCustomContent ? (
         children
       ) : (
@@ -99,7 +106,7 @@ export const ToastSlot: React.FC<ToastSlotProps> = ({
           className={className}
         />
       )}
-    </div>
+    </Box>
   );
 };
 

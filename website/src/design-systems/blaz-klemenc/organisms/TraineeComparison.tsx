@@ -84,6 +84,10 @@ export interface TraineeComparisonProps {
   maxVisible?: number;
   /** Metric to highlight */
   highlightMetric?: keyof TraineeComparisonData["metrics"];
+  /** Loading state */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
   /** Entity context for events */
   entity?: string;
   /** Additional CSS classes */
@@ -370,7 +374,9 @@ export const TraineeComparison: React.FC<TraineeComparisonProps> = ({
                     className="items-center justify-center h-10 w-10 bg-[var(--color-muted)]"
                   >
                     {trainee.profileImage ? (
-                      <img
+                      <Box
+                        as="img"
+                        // @ts-expect-error -- Box polymorphic 'as' prop passes src/alt to <img>
                         src={trainee.profileImage}
                         alt={trainee.name}
                         className="h-10 w-10 rounded-full object-cover"

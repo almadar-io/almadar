@@ -7,6 +7,7 @@
 import React from 'react';
 import { cn } from '../../lib/cn';
 import { Typography } from '../atoms/Typography';
+import { Box } from '../atoms/Box';
 
 export type SectionPadding = 'none' | 'sm' | 'md' | 'lg' | 'xl';
 export type SectionVariant = 'default' | 'card' | 'bordered' | 'filled';
@@ -34,6 +35,12 @@ export interface SectionProps {
   contentClassName?: string;
   /** HTML element to render as */
   as?: React.ElementType;
+  /** Loading state indicator */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name for schema-driven auto-fetch */
+  entity?: string;
 }
 
 const paddingStyles: Record<SectionPadding, string> = {
@@ -87,7 +94,7 @@ export const Section: React.FC<SectionProps> = ({
       )}
     >
       {hasHeader && (
-        <div
+        <Box
           className={cn(
             'flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4',
             divider && 'pb-4 mb-4 border-b-[length:var(--border-width)] border-[var(--color-border)]',
@@ -95,7 +102,7 @@ export const Section: React.FC<SectionProps> = ({
             headerClassName
           )}
         >
-          <div className="flex-1 min-w-0">
+          <Box className="flex-1 min-w-0">
             {title && (
               <Typography
                 variant="h4"
@@ -113,19 +120,21 @@ export const Section: React.FC<SectionProps> = ({
                 {description}
               </Typography>
             )}
-          </div>
+          </Box>
           {action && (
-            <div className="flex-shrink-0 flex items-center gap-2">
+            <Box className="flex-shrink-0 flex items-center gap-2">
               {action}
-            </div>
+            </Box>
           )}
-        </div>
+        </Box>
       )}
-      <div className={contentClassName}>
+      <Box className={contentClassName}>
         {children}
-      </div>
+      </Box>
     </Component>
   );
 };
+
+Section.displayName = 'Section';
 
 export default Section;

@@ -86,5 +86,7 @@ export const SimpleGrid: React.FC<SimpleGridProps> = ({
   );
 };
 
+SimpleGrid.displayName = 'SimpleGrid';
+
 export default SimpleGrid;
 

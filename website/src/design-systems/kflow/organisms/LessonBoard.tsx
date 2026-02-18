@@ -12,6 +12,8 @@ import {
   VStack,
   HStack,
   Card,
+  Button,
+  Typography,
   useEventBus,
   useTranslate,
 } from '@almadar/ui';
@@ -48,6 +50,8 @@ export interface LessonBoardProps {
   toggleSidebarEvent?: string;
   selectLessonEvent?: string;
   className?: string;
+  isLoading?: boolean;
+  error?: Error | null;
 }
 
 export function LessonBoard({
@@ -91,33 +95,35 @@ export function LessonBoard({
 
   return (
     <Box className={`min-h-screen bg-gray-50 ${className}`}>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200">
+      <Box className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200">
         <HStack justify="between" align="center" className="px-4 h-14">
           <HStack gap="sm" align="center">
-            <button
+            <Button
               onClick={handleToggleSidebar}
-              className="p-2 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:bg-gray-100 rounded"
+              variant="secondary"
+              size="sm"
+              className="p-2 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:bg-gray-100"
             >
               <Menu size={20} />
-            </button>
+            </Button>
             <VStack gap="none" className="min-w-0">
               {entity.courseTitle && (
-                <span className="text-xs text-[var(--color-muted-foreground)] truncate">
+                <Typography variant="small" className="text-xs text-[var(--color-muted-foreground)] truncate">
                   {entity.courseTitle}
-                </span>
+                </Typography>
               )}
-              <span className="font-medium text-[var(--color-foreground)] truncate">
+              <Typography variant="small" className="font-medium text-[var(--color-foreground)] truncate">
                 {entity.title}
-              </span>
+              </Typography>
             </VStack>
           </HStack>
 
           <HStack gap="sm" align="center">
             {entity.isCompleted && (
-              <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded flex items-center gap-1">
+              <Typography variant="small" className="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded flex items-center gap-1">
                 <CheckCircle size={12} />
                 {t('lesson.completed')}
-              </span>
+              </Typography>
             )}
             {entity.courseProgress !== undefined && (
               <HStack gap="xs" align="center" className="w-32">
@@ -127,7 +133,7 @@ export function LessonBoard({
                     style={{ width: `${entity.courseProgress}%` }}
                   />
                 </Box>
-                <span className="text-xs text-[var(--color-muted-foreground)]">{entity.courseProgress}%</span>
+                <Typography variant="small" className="text-xs text-[var(--color-muted-foreground)]">{entity.courseProgress}%</Typography>
               </HStack>
             )}
           </HStack>
@@ -139,7 +145,7 @@ export function LessonBoard({
             style={{ width: `${readingProgress}%` }}
           />
         </Box>
-      </header>
+      </Box>
 
       {sidebarOpen && (
         <>
@@ -147,21 +153,24 @@ export function LessonBoard({
             className="fixed inset-0 bg-black/50 z-40"
             onClick={() => setSidebarOpen(false)}
           />
-          <aside className="fixed top-0 left-0 bottom-0 w-80 bg-white z-50 overflow-y-auto">
+          <Box className="fixed top-0 left-0 bottom-0 w-80 bg-white z-50 overflow-y-auto">
             <HStack justify="between" align="center" className="p-4 border-b border-gray-200">
-              <span className="font-semibold text-[var(--color-foreground)]">{t('lesson.courseContent')}</span>
-              <button
+              <Typography variant="small" className="font-semibold text-[var(--color-foreground)]">{t('lesson.courseContent')}</Typography>
+              <Button
                 onClick={() => setSidebarOpen(false)}
-                className="p-2 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:bg-gray-100 rounded"
+                variant="secondary"
+                size="sm"
+                className="p-2 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:bg-gray-100"
               >
                 <X size={20} />
-              </button>
+              </Button>
             </HStack>
             <VStack gap="none" className="p-2">
               {sidebarItems.map((item) => (
-                <button
+                <Button
                   key={item.id}
                   onClick={() => handleSelectLesson(item.id)}
+                  variant="secondary"
                   className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${
                     item.isCurrent
                       ? 'bg-indigo-50 text-indigo-700 font-medium'
@@ -172,22 +181,22 @@ export function LessonBoard({
                 >
                   <HStack gap="sm" align="center">
                     {item.isCompleted && <CheckCircle size={14} className="text-green-500" />}
-                    <span className="truncate">{item.title}</span>
+                    <Typography variant="small" className="truncate">{item.title}</Typography>
                   </HStack>
-                </button>
+                </Button>
               ))}
             </VStack>
-          </aside>
+          </Box>
         </>
       )}
 
-      <main className="pt-20 pb-24">
-        <article className="max-w-3xl mx-auto px-4">
+      <Box className="pt-20 pb-24">
+        <Box className="max-w-3xl mx-auto px-4">
           <VStack gap="lg">
             <VStack gap="sm">
-              <h1 className="text-3xl font-bold text-[var(--color-foreground)]">{entity.title}</h1>
+              <Typography variant="h1" className="text-3xl font-bold text-[var(--color-foreground)]">{entity.title}</Typography>
               {entity.duration && (
-                <span className="text-sm text-[var(--color-muted-foreground)]">{t('lesson.minRead', { minutes: entity.duration })}</span>
+                <Typography variant="small" className="text-sm text-[var(--color-muted-foreground)]">{t('lesson.minRead', { minutes: entity.duration })}</Typography>
               )}
             </VStack>
 
@@ -195,7 +204,7 @@ export function LessonBoard({
               <SegmentRenderer segments={entity.segments} />
             ) : (
               <Card>
-                <div
+                <Box
                   className="prose prose-indigo max-w-none"
                   dangerouslySetInnerHTML={{ __html: entity.content }}
                 />
@@ -204,44 +213,49 @@ export function LessonBoard({
 
             {!entity.isCompleted && (
               <Box className="text-center py-8">
-                <button
+                <Button
                   onClick={handleComplete}
+                  variant="primary"
                   className="px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 flex items-center gap-2 mx-auto"
                 >
                   <CheckCircle size={20} />
                   {t('lesson.markAsComplete')}
-                </button>
+                </Button>
               </Box>
             )}
           </VStack>
-        </article>
-      </main>
+        </Box>
+      </Box>
 
-      <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-30">
+      <Box className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-30">
         <HStack justify="between" align="center" className="max-w-3xl mx-auto px-4 py-3">
-          <button
+          <Button
             onClick={handlePrev}
             disabled={!hasPrevious}
+            variant="secondary"
+            size="sm"
             className="px-4 py-2 text-sm font-medium text-[var(--color-foreground)] bg-gray-100 rounded hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
           >
             <ChevronLeft size={16} />
             {t('lesson.previous')}
-          </button>
+          </Button>
 
-          <span className="text-sm text-[var(--color-muted-foreground)]">
+          <Typography variant="small" className="text-sm text-[var(--color-muted-foreground)]">
             {entity.isCompleted ? t('lesson.lessonCompleted') : t('lesson.keepLearning')}
-          </span>
+          </Typography>
 
-          <button
+          <Button
             onClick={handleNext}
             disabled={!hasNext}
+            variant="primary"
+            size="sm"
             className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
           >
             {t('lesson.next')}
             <ChevronRight size={16} />
-          </button>
+          </Button>
         </HStack>
-      </footer>
+      </Box>
     </Box>
   );
 }

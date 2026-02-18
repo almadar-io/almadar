@@ -87,7 +87,6 @@ export interface ButtonGroupProps {
  */
 function useSafeNavigate(): (to: string) => void {
   try {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const navigate = useNavigate();
     return navigate;
   } catch {
@@ -102,7 +101,6 @@ function useSafeNavigate(): (to: string) => void {
  */
 function useSafeEventBus() {
   try {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     return useEventBus();
   } catch {
     // Outside EventBusProvider context - return no-op
@@ -118,7 +116,6 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   orientation = 'horizontal',
   className,
   // Filter-group pattern props (entity and filters are used for schema-driven filtering)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   entity: _entity,
   filters,
 }) => {

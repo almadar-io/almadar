@@ -288,7 +288,7 @@ export const ScheduleBoard: React.FC<ScheduleBoardProps> = ({
       {error && (
         <VStack align="center" justify="center" className="py-12 flex-1">
           <Typography variant="body" className="text-red-500">
-            Error: {error.message}
+            {t('schedule.error', { message: error.message })}
           </Typography>
         </VStack>
       )}

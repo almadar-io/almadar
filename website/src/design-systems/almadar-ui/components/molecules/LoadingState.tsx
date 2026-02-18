@@ -1,6 +1,8 @@
 import React from "react";
 import { cn } from "../../lib/cn";
 import { Spinner } from "../atoms";
+import { VStack } from "../atoms/Stack";
+import { Typography } from "../atoms/Typography";
 import { useTranslate } from "../../hooks/useTranslate";
 
 export interface LoadingStateProps {
@@ -17,27 +19,29 @@ export const LoadingState: React.FC<LoadingStateProps> = ({
   const { t } = useTranslate();
   const displayMessage = message ?? t('common.loading');
   return (
-    <div
+    <VStack
+      align="center"
       className={cn(
-        "flex flex-col items-center justify-center py-12",
+        "justify-center py-12",
         className,
       )}
     >
       <Spinner size="lg" />
       {title && (
-        <h3 className="mt-4 text-lg font-semibold text-[var(--color-foreground)]">
+        <Typography variant="h3" className="mt-4 text-lg font-semibold text-[var(--color-foreground)]">
           {title}
-        </h3>
+        </Typography>
       )}
-      <p
+      <Typography
+        variant="small"
         className={cn(
-          "text-sm text-[var(--color-muted-foreground)]",
+          "text-[var(--color-muted-foreground)]",
           title ? "mt-2" : "mt-4",
         )}
       >
         {displayMessage}
-      </p>
-    </div>
+      </Typography>
+    </VStack>
   );
 };
 

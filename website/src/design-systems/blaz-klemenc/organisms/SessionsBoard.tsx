@@ -525,7 +525,7 @@ export const SessionsBoard: React.FC<SessionsBoardProps> = ({
       {error && (
         <VStack align="center" justify="center" className="py-12">
           <Typography variant="body" className="text-red-500">
-            Error: {error.message}
+            {t('sessions.error', { message: error.message })}
           </Typography>
         </VStack>
       )}

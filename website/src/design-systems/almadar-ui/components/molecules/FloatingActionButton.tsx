@@ -10,6 +10,9 @@ import type { LucideIcon } from "lucide-react";
 import * as LucideIcons from "lucide-react";
 import { Plus, X } from "lucide-react";
 import { Button } from "../atoms/Button";
+import { Box } from "../atoms/Box";
+import { HStack, VStack } from "../atoms/Stack";
+import { Typography } from "../atoms/Typography";
 import { cn } from "../../lib/cn";
 import { useEventBus } from "../../hooks/useEventBus";
 import { useTranslate } from "../../hooks/useTranslate";
@@ -166,7 +169,7 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
   // Single action - direct onClick
   if (resolvedAction && (!actions || actions.length === 0)) {
     return (
-      <div className={cn("fixed z-50", positionClasses[position], className)}>
+      <Box className={cn("fixed z-50", positionClasses[position], className)}>
         <Button
           variant={resolvedAction.variant || "primary"}
           size="lg"
@@ -176,10 +179,10 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
           aria-label={resolvedAction.label || "Action"}
         >
           {resolvedAction.label && (
-            <span className="sr-only">{resolvedAction.label}</span>
+            <Typography as="span" className="sr-only">{resolvedAction.label}</Typography>
           )}
         </Button>
-      </div>
+      </Box>
     );
   }
 
@@ -195,7 +198,7 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
     };
 
     return (
-      <div
+      <Box
         ref={fabRef}
         className={cn(
           "fixed z-50 flex flex-col items-end gap-3",
@@ -206,16 +209,18 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
       >
         {/* Expanded Action Buttons */}
         {isExpanded && actions.length > 1 && (
-          <div
+          <VStack
             className={cn(
-              "flex flex-col gap-3",
+              "gap-3",
               position.includes("left") ? "items-start" : "items-end",
             )}
           >
             {actions.map((actionItem, index) => (
-              <div
+              <HStack
                 key={actionItem.id}
-                className="flex items-center gap-2 transition-all duration-200"
+                align="center"
+                gap="sm"
+                className="transition-all duration-200"
                 style={{
                   opacity: isExpanded ? 1 : 0,
                   transform: isExpanded ? "translateY(0)" : "translateY(10px)",
@@ -223,9 +228,9 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
                 }}
               >
                 {position.includes("right") && (
-                  <span className="text-sm text-[var(--color-foreground)] dark:text-[var(--color-foreground)] bg-[var(--color-card)] dark:bg-[var(--color-card)] px-2 py-1 rounded shadow-[var(--shadow-sm)] whitespace-nowrap">
+                  <Typography variant="small" className="text-[var(--color-foreground)] dark:text-[var(--color-foreground)] bg-[var(--color-card)] dark:bg-[var(--color-card)] px-2 py-1 rounded shadow-[var(--shadow-sm)] whitespace-nowrap">
                     {actionItem.label}
-                  </span>
+                  </Typography>
                 )}
                 <Button
                   variant={actionItem.variant || "primary"}
@@ -239,16 +244,16 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
                   className="rounded-[var(--radius-full)] shadow-[var(--shadow-lg)]"
                   aria-label={actionItem.label}
                 >
-                  <span className="sr-only">{actionItem.label}</span>
+                  <Typography as="span" className="sr-only">{actionItem.label}</Typography>
                 </Button>
                 {position.includes("left") && (
-                  <span className="text-sm text-[var(--color-foreground)] dark:text-[var(--color-foreground)] bg-[var(--color-card)] dark:bg-[var(--color-card)] px-2 py-1 rounded shadow-[var(--shadow-sm)] whitespace-nowrap">
+                  <Typography variant="small" className="text-[var(--color-foreground)] dark:text-[var(--color-foreground)] bg-[var(--color-card)] dark:bg-[var(--color-card)] px-2 py-1 rounded shadow-[var(--shadow-sm)] whitespace-nowrap">
                     {actionItem.label}
-                  </span>
+                  </Typography>
                 )}
-              </div>
+              </HStack>
             ))}
-          </div>
+          </VStack>
         )}
 
         {/* Main FAB Button */}
@@ -261,9 +266,9 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
           aria-label={isExpanded ? "Close actions" : "Open actions"}
           aria-expanded={isExpanded}
         >
-          <span className="sr-only">{isExpanded ? t('common.close') : t('common.open')}</span>
+          <Typography as="span" className="sr-only">{isExpanded ? t('common.close') : t('common.open')}</Typography>
         </Button>
-      </div>
+      </Box>
     );
   }
 

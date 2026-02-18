@@ -1,6 +1,9 @@
 import React from "react";
 import { cn } from "../../lib/cn";
 import { Button } from "../atoms";
+import { Box } from "../atoms/Box";
+import { VStack } from "../atoms/Stack";
+import { Typography } from "../atoms/Typography";
 import { AlertCircle } from "lucide-react";
 import { useEventBus } from "../../hooks/useEventBus";
 import { useTranslate } from "../../hooks/useTranslate";
@@ -36,27 +39,28 @@ export const ErrorState: React.FC<ErrorStateProps> = ({
   const resolvedTitle = title ?? t('error.generic');
   const resolvedMessage = message ?? description ?? t('error.occurred');
   return (
-    <div
+    <VStack
+      align="center"
       className={cn(
-        "flex flex-col items-center justify-center py-12 text-center",
+        "justify-center py-12 text-center",
         className,
       )}
     >
-      <div className="mb-4 rounded-[var(--radius-full)] bg-[var(--color-error)]/10 p-3">
+      <Box className="mb-4 rounded-[var(--radius-full)] bg-[var(--color-error)]/10 p-3">
         <AlertCircle className="h-8 w-8 text-[var(--color-error)]" />
-      </div>
-      <h3 className="text-lg font-medium text-[var(--color-foreground)]">
+      </Box>
+      <Typography variant="h3" className="text-lg font-medium text-[var(--color-foreground)]">
         {resolvedTitle}
-      </h3>
-      <p className="mt-1 text-sm text-[var(--color-muted-foreground)] max-w-sm">
+      </Typography>
+      <Typography variant="small" className="mt-1 text-[var(--color-muted-foreground)] max-w-sm">
         {resolvedMessage}
-      </p>
+      </Typography>
       {(onRetry || retryEvent) && (
         <Button variant="secondary" className="mt-4" onClick={handleRetry}>
           {t('error.retry')}
         </Button>
       )}
-    </div>
+    </VStack>
   );
 };
 

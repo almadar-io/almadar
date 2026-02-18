@@ -1,6 +1,12 @@
 import React from "react";
 import { cn } from "../../lib/cn";
-import { Card, CardHeader, CardTitle, CardContent } from "../atoms";
+import { Card } from "../atoms";
+import { Box } from "../atoms/Box";
+import { Typography } from "../atoms/Typography";
+import { Button } from "../atoms/Button";
+import { VStack, HStack } from "../atoms/Stack";
+import { Icon } from "../atoms/Icon";
+import { ChevronDown } from "lucide-react";
 
 export interface FormSectionProps {
   /** Section title */
@@ -18,6 +24,12 @@ export interface FormSectionProps {
   /** Grid columns for fields */
   columns?: 1 | 2 | 3;
   className?: string;
+  /** Loading state */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name */
+  entity?: string;
 }
 
 export const FormSection: React.FC<FormSectionProps> = ({
@@ -41,52 +53,44 @@ export const FormSection: React.FC<FormSectionProps> = ({
   const content = (
     <>
       {(title || description) && (
-        <div className="mb-4">
+        <VStack gap="xs" className="mb-4">
           {title && (
-            <div
-              className={cn(
-                "flex items-center justify-between",
-                collapsible && "cursor-pointer",
-              )}
+            <HStack
+              justify="between"
+              align="center"
+              className={cn(collapsible && "cursor-pointer")}
               onClick={() => collapsible && setCollapsed(!collapsed)}
             >
-              <h3 className="text-base font-semibold text-[var(--color-foreground)]">
+              <Typography variant="h3" weight="semibold">
                 {title}
-              </h3>
+              </Typography>
               {collapsible && (
-                <button
-                  type="button"
-                  className="p-1 rounded hover:bg-[var(--color-muted)]"
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setCollapsed(!collapsed)}
                 >
-                  <svg
+                  <Icon
+                    icon={ChevronDown}
+                    size="sm"
                     className={cn(
-                      "h-5 w-5 text-[var(--color-muted-foreground)] transition-transform",
+                      "text-[var(--color-muted-foreground)] transition-transform",
                       collapsed && "rotate-180",
                     )}
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </button>
+                  />
+                </Button>
               )}
-            </div>
+            </HStack>
           )}
           {description && (
-            <p className="mt-1 text-sm text-[var(--color-muted-foreground)]">
+            <Typography variant="small" color="secondary">
               {description}
-            </p>
+            </Typography>
           )}
-        </div>
+        </VStack>
       )}
       {(!collapsible || !collapsed) && (
-        <div className={cn("grid gap-4", gridClass)}>{children}</div>
+        <Box className={cn("grid gap-4", gridClass)}>{children}</Box>
       )}
     </>
   );
@@ -95,8 +99,10 @@ export const FormSection: React.FC<FormSectionProps> = ({
     return <Card className={cn("p-6", className)}>{content}</Card>;
   }
 
-  return <div className={className}>{content}</div>;
+  return <Box className={className}>{content}</Box>;
 };
+
+FormSection.displayName = "FormSection";
 
 /**
  * Form layout with multiple sections
@@ -106,6 +112,12 @@ export interface FormLayoutProps {
   /** Show section dividers */
   dividers?: boolean;
   className?: string;
+  /** Loading state */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name */
+  entity?: string;
 }
 
 export const FormLayout: React.FC<FormLayoutProps> = ({
@@ -114,18 +126,20 @@ export const FormLayout: React.FC<FormLayoutProps> = ({
   className,
 }) => {
   return (
-    <div
+    <VStack
+      gap="lg"
       className={cn(
-        "space-y-8",
         dividers &&
           "[&>*+*]:pt-8 [&>*+*]:border-t [&>*+*]:border-[var(--color-border)]",
         className,
       )}
     >
       {children}
-    </div>
+    </VStack>
   );
 };
+
+FormLayout.displayName = "FormLayout";
 
 /**
  * Form actions bar (submit/cancel buttons)
@@ -137,6 +151,12 @@ export interface FormActionsProps {
   /** Alignment */
   align?: "left" | "right" | "between" | "center";
   className?: string;
+  /** Loading state */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name */
+  entity?: string;
 }
 
 export const FormActions: React.FC<FormActionsProps> = ({
@@ -153,9 +173,11 @@ export const FormActions: React.FC<FormActionsProps> = ({
   }[align];
 
   return (
-    <div
+    <HStack
+      gap="sm"
+      align="center"
       className={cn(
-        "flex items-center gap-3 pt-6 border-t border-[var(--color-border)]",
+        "pt-6 border-t border-[var(--color-border)]",
         alignClass,
         sticky &&
           "sticky bottom-0 bg-[var(--color-card)] py-4 -mx-6 px-6 shadow-[0_-4px_6px_-1px_rgb(0,0,0,0.05)]",
@@ -163,6 +185,8 @@ export const FormActions: React.FC<FormActionsProps> = ({
       )}
     >
       {children}
-    </div>
+    </HStack>
   );
 };
+
+FormActions.displayName = "FormActions";

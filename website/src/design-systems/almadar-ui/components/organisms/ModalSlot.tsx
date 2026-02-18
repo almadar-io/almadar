@@ -23,6 +23,12 @@ export interface ModalSlotProps {
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
   /** Custom class name */
   className?: string;
+  /** Loading state indicator */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name for schema-driven auto-fetch */
+  entity?: string;
 }
 
 /**

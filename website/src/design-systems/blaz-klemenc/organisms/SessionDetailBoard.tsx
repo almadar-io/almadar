@@ -259,7 +259,7 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
         className={cn("p-6 min-h-[400px]", className)}
       >
         <Typography variant="body" className="text-red-500">
-          Error: {error.message}
+          {t('session.error', { message: error.message })}
         </Typography>
       </VStack>
     );
@@ -502,7 +502,9 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
                           className="items-center justify-center h-8 w-8 bg-[var(--color-muted)]"
                         >
                           {participant.profileImage ? (
-                            <img
+                            <Box
+                              as="img"
+                              // @ts-expect-error -- Box polymorphic 'as' prop passes src/alt to <img>
                               src={participant.profileImage}
                               alt={participant.name}
                               className="h-8 w-8 rounded-full object-cover"

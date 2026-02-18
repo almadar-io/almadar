@@ -12,6 +12,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "../atoms/Button";
 import { Typography } from "../atoms/Typography";
 import { Box } from "../atoms/Box";
+import { HStack } from "../atoms/Stack";
 import { Icon } from "../atoms/Icon";
 import { cn } from "../../lib/cn";
 import { useEventBus } from "../../hooks/useEventBus";
@@ -139,15 +140,15 @@ export const WizardNavigation: React.FC<WizardNavigationProps> = ({
           {resolvedBackLabel}
         </Button>
       ) : (
-        <div /> // Spacer for flex justify-between
+        <Box />
       )}
 
       {/* Step counter */}
-      <div className="flex items-center gap-2">
+      <HStack align="center" gap="sm">
         <Typography variant="caption" className="text-neutral-500">
           {t('wizard.stepOf', { current: String(currentStep + 1), total: String(totalSteps) })}
         </Typography>
-      </div>
+      </HStack>
 
       {/* Next/Complete button */}
       {isLastStep && showComplete ? (
@@ -160,7 +161,7 @@ export const WizardNavigation: React.FC<WizardNavigationProps> = ({
           <Icon icon={ChevronRight} size="sm" />
         </Button>
       ) : (
-        <div /> // Spacer for flex justify-between
+        <Box />
       )}
     </Box>
   );

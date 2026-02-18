@@ -232,35 +232,35 @@ export interface InspectionFormBoardProps {
 const phases: PhaseDefinition[] = [
   {
     id: "introduction",
-    label: "Introduction",
+    label: "inspection.phase.introduction",
     labelSl: "Uvod",
     icon: Briefcase,
     tabs: ["T-001", "T-002", "T-003", "T-004"],
   },
   {
     id: "content",
-    label: "Content",
+    label: "inspection.phase.content",
     labelSl: "Vsebina",
     icon: ClipboardCheck,
     tabs: ["T-005", "T2-1"],
   },
   {
     id: "preparation",
-    label: "Preparation",
+    label: "inspection.phase.preparation",
     labelSl: "Priprava",
     icon: FileText,
     tabs: ["T-006", "T-007"],
   },
   {
     id: "record",
-    label: "Record",
+    label: "inspection.phase.record",
     labelSl: "Zapisnik",
     icon: FileCheck,
     tabs: ["T-008"],
   },
   {
     id: "closing",
-    label: "Closing",
+    label: "inspection.phase.closing",
     labelSl: "Zaključek",
     icon: PenTool,
     tabs: ["T-009"],
@@ -592,7 +592,7 @@ const SingleFieldInput: React.FC<{
                         colSpan={(field.displayFields || ["name"]).length}
                         className="px-3 py-4 text-center text-[var(--color-muted-foreground)]"
                       >
-                        No items to display
+                        {t('common.noItemsToDisplay')}
                       </td>
                     </tr>
                   )}
@@ -631,7 +631,7 @@ const SingleFieldInput: React.FC<{
                 ))
               ) : (
                 <Box className="col-span-full p-4 text-center text-[var(--color-muted-foreground)] border rounded">
-                  No items to display
+                  {t('common.noItemsToDisplay')}
                 </Box>
               )}
             </HStack>
@@ -700,6 +700,7 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
   contextActionEvent,
 }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
 
   if (!isVisible) return null;
   if (field.type === "comment") {
@@ -745,8 +746,8 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
         title={field.label}
         items={items}
         minItems={field.required ? 1 : 0}
-        addLabel={`Add ${field.label}`}
-        emptyMessage={`No ${field.label.toLowerCase()} added yet`}
+        addLabel={t('common.addItem', { item: field.label })}
+        emptyMessage={t('common.noItemsAdded', { item: field.label.toLowerCase() })}
         onAdd={handleAdd}
         onRemove={handleRemove}
         renderItem={(item) => (
@@ -996,6 +997,7 @@ const DebugPanel: React.FC<DebugPanelProps> = ({
   isOpen,
   onToggle,
 }) => {
+  const { t } = useTranslate();
   return (
     <Card className="bg-neutral-900 text-neutral-100 overflow-hidden">
       <Button
@@ -1005,7 +1007,7 @@ const DebugPanel: React.FC<DebugPanelProps> = ({
       >
         <Bug className="h-4 w-4" />
         <Typography variant="small" className="font-mono">
-          Debug Panel
+          {t('inspection.debugPanel')}
         </Typography>
         {isOpen ? (
           <ChevronDown className="h-4 w-4 ml-auto" />
@@ -1018,7 +1020,7 @@ const DebugPanel: React.FC<DebugPanelProps> = ({
         <VStack gap="md" className="p-3 font-mono text-xs">
           <Box>
             <Typography variant="small" className="text-green-400 mb-1">
-              Global Variables (HG-*)
+              {t('inspection.debug.globalVariables')}
             </Typography>
             <pre className="bg-neutral-800 p-2 rounded overflow-x-auto">
               {JSON.stringify(globalVariables, null, 2) || "{}"}
@@ -1027,7 +1029,7 @@ const DebugPanel: React.FC<DebugPanelProps> = ({
 
           <Box>
             <Typography variant="small" className="text-blue-400 mb-1">
-              Local Variables (H-*)
+              {t('inspection.debug.localVariables')}
             </Typography>
             <pre className="bg-neutral-800 p-2 rounded overflow-x-auto">
               {JSON.stringify(localVariables, null, 2) || "{}"}
@@ -1036,7 +1038,7 @@ const DebugPanel: React.FC<DebugPanelProps> = ({
 
           <Box>
             <Typography variant="small" className="text-red-400 mb-1">
-              Violations ({violations.length})
+              {t('inspection.violationsCount', { count: violations.length })}
             </Typography>
             <pre className="bg-neutral-800 p-2 rounded overflow-x-auto">
               {JSON.stringify(violations, null, 2) || "[]"}
@@ -1045,10 +1047,10 @@ const DebugPanel: React.FC<DebugPanelProps> = ({
 
           <Box>
             <Typography variant="small" className="text-yellow-400 mb-1">
-              Completed Tabs
+              {t('inspection.debug.completedTabs')}
             </Typography>
             <pre className="bg-neutral-800 p-2 rounded">
-              {completedTabs.join(", ") || "(none)"}
+              {completedTabs.join(", ") || t('common.none')}
             </pre>
           </Box>
         </VStack>
@@ -1264,9 +1266,9 @@ export function InspectionFormBoard({
         <Box className="max-w-7xl mx-auto p-4">
           <HStack justify="between" align="center">
             <VStack gap="xs">
-              <Typography variant="h3">Inspection Form Demo</Typography>
+              <Typography variant="h3">{t('inspection.form.title')}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Config-driven dynamic forms with all 5 phases
+                {t('inspection.form.subtitle')}
               </Typography>
             </VStack>
             <PhaseIndicator phase={mapPhaseToIndicator(activePhase)} />
@@ -1316,7 +1318,7 @@ export function InspectionFormBoard({
                         isComplete && !isActive && "text-green-700",
                       )}
                     >
-                      {phase.label}
+                      {t(phase.label)}
                     </Typography>
                     <Typography variant="small" className="text-[var(--color-muted-foreground)]">
                       {phase.labelSl}
@@ -1382,14 +1384,13 @@ export function InspectionFormBoard({
                           variant="small"
                           className="text-[var(--color-foreground)]"
                         >
-                          Tab {currentTabConfig.tabId}
+                          {t('inspection.form.tabIndicator', { tabId: currentTabConfig.tabId })}
                         </Typography>
                       </VStack>
                       {currentTabConfig.globalVariablesSet &&
                         currentTabConfig.globalVariablesSet.length > 0 && (
                           <Badge variant="primary">
-                            Sets:{" "}
-                            {currentTabConfig.globalVariablesSet.join(", ")}
+                            {t('inspection.form.setsIndicator', { variables: currentTabConfig.globalVariablesSet.join(", ") })}
                           </Badge>
                         )}
                     </HStack>
@@ -1411,10 +1412,10 @@ export function InspectionFormBoard({
                 <Card className="p-8 text-center">
                   <AlertTriangle className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
                   <Typography variant="h4" className="text-[var(--color-foreground)]">
-                    Config not found for tab: {activeTab}
+                    {t('inspection.form.errorTitle', { tabId: activeTab })}
                   </Typography>
                   <Typography variant="small" className="text-[var(--color-muted-foreground)] mt-2">
-                    Make sure the config file exists in config/tabs/
+                    {t('inspection.form.errorHelp')}
                   </Typography>
                 </Card>
               )}
@@ -1428,7 +1429,7 @@ export function InspectionFormBoard({
                   className="mb-3 flex items-center gap-2"
                 >
                   <AlertTriangle className="h-5 w-5 text-red-500" />
-                  Violations ({formState.violations.length})
+                  {t('inspection.violationsCount', { count: formState.violations.length })}
                 </Typography>
                 <HStack gap="sm" className="flex-wrap">
                   {formState.violations.map((violation) => (
@@ -1464,7 +1465,7 @@ export function InspectionFormBoard({
             {/* Global Variables Panel */}
             <Card className="p-4">
               <Typography variant="h4" className="mb-3">
-                Global Variables
+                {t('inspection.globalVariables')}
               </Typography>
               {Object.keys(formState.globalVariables).length > 0 ? (
                 <HStack gap="sm" className="flex-wrap">
@@ -1483,7 +1484,7 @@ export function InspectionFormBoard({
                 </HStack>
               ) : (
                 <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                  No global variables set yet
+                  {t('inspection.noVariables')}
                 </Typography>
               )}
             </Card>
@@ -1518,7 +1519,7 @@ export function InspectionFormBoard({
             </Button>
 
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              {currentPhaseConfig.label} • {activeTab}
+              {t(currentPhaseConfig.label)} • {activeTab}
             </Typography>
 
             <Button

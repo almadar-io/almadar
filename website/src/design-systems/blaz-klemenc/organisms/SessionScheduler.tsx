@@ -110,6 +110,10 @@ export interface SessionSchedulerProps {
   defaultView?: "week" | "month" | "day" | string;
   /** Show trainee info */
   showTraineeInfo?: boolean;
+  /** Loading state */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
   /** Entity context for events */
   entity?: string;
   /** Operations/actions available */

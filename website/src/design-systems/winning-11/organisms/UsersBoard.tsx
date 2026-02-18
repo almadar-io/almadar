@@ -119,7 +119,7 @@ const UserCard: React.FC<{
               </HStack>
             </VStack>
           </HStack>
-          <Badge variant={getStatusColor(user.status)}>{user.status}</Badge>
+          <Badge variant={getStatusColor(user.status)}>{t(`users.status.${user.status}`)}</Badge>
         </HStack>
 
         {user.primaryCategory && (

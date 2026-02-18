@@ -486,7 +486,7 @@ export const ProgressBoard: React.FC<ProgressBoardProps> = ({
       {error && (
         <VStack align="center" justify="center" className="py-12">
           <Typography variant="body" className="text-red-500">
-            Error: {error.message}
+            {t('progress.error', { message: error.message })}
           </Typography>
         </VStack>
       )}

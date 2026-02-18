@@ -65,6 +65,7 @@ interface D3Link {
 /**
  * Node type color mapping
  */
+// eslint-disable-next-line almadar/require-display-name
 export const NODE_TYPE_COLORS: Record<
   string,
   { color: string; label: string }
@@ -200,6 +201,8 @@ export interface ForceDirectedGraphProps {
   showLegend?: boolean;
   /** Loading state */
   isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
   /** Custom node color function */
   nodeColorFn?: (node: D3Node) => string;
   /** Custom link color function */

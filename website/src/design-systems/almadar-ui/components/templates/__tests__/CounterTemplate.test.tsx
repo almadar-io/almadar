@@ -5,38 +5,47 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { CounterTemplate } from '../CounterTemplate';
+import type { CounterEntity } from '../CounterTemplate';
 
 // Mock react-router-dom for PageHeader
 vi.mock('react-router-dom', () => ({
   useNavigate: () => vi.fn(),
 }));
 
+function makeEntity(overrides: Partial<CounterEntity> = {}): CounterEntity {
+  return {
+    id: 'counter-1',
+    count: 0,
+    ...overrides,
+  };
+}
+
 describe('CounterTemplate', () => {
   describe('Rendering', () => {
     it('should render the count value', () => {
-      render(<CounterTemplate count={42} />);
+      render(<CounterTemplate entity={makeEntity({ count: 42 })} />);
       expect(screen.getByText('42')).toBeInTheDocument();
     });
 
     it('should render the title', () => {
-      render(<CounterTemplate count={0} title="My Counter" />);
+      render(<CounterTemplate entity={makeEntity()} title="My Counter" />);
       expect(screen.getByText('My Counter')).toBeInTheDocument();
     });
 
     it('should render increment and decrement buttons', () => {
-      render(<CounterTemplate count={5} />);
+      render(<CounterTemplate entity={makeEntity({ count: 5 })} />);
       // Look for buttons with Plus and Minus icons
       const buttons = screen.getAllByRole('button');
       expect(buttons.length).toBeGreaterThanOrEqual(2);
     });
 
     it('should render reset button when showReset is true', () => {
-      render(<CounterTemplate count={5} showReset={true} />);
+      render(<CounterTemplate entity={makeEntity({ count: 5 })} showReset={true} />);
       expect(screen.getByText('Reset')).toBeInTheDocument();
     });
 
     it('should not render reset button when showReset is false', () => {
-      render(<CounterTemplate count={5} showReset={false} />);
+      render(<CounterTemplate entity={makeEntity({ count: 5 })} showReset={false} />);
       expect(screen.queryByText('Reset')).not.toBeInTheDocument();
     });
   });
@@ -44,7 +53,7 @@ describe('CounterTemplate', () => {
   describe('Interactions', () => {
     it('should call onIncrement when increment button is clicked', () => {
       const onIncrement = vi.fn();
-      render(<CounterTemplate count={0} onIncrement={onIncrement} />);
+      render(<CounterTemplate entity={makeEntity()} onIncrement={onIncrement} />);
 
       // Get all buttons except Reset, find the primary button with border-2 (unique to primary variant)
       const buttons = screen.getAllByRole('button').filter(btn => !btn.textContent?.includes('Reset'));
@@ -63,7 +72,7 @@ describe('CounterTemplate', () => {
 
     it('should call onDecrement when decrement button is clicked', () => {
       const onDecrement = vi.fn();
-      render(<CounterTemplate count={5} onDecrement={onDecrement} />);
+      render(<CounterTemplate entity={makeEntity({ count: 5 })} onDecrement={onDecrement} />);
 
       // Get all buttons except Reset, find the one with neutral-300 border (secondary)
       const buttons = screen.getAllByRole('button').filter(btn => !btn.textContent?.includes('Reset'));
@@ -82,7 +91,7 @@ describe('CounterTemplate', () => {
 
     it('should call onReset when reset button is clicked', () => {
       const onReset = vi.fn();
-      render(<CounterTemplate count={5} onReset={onReset} />);
+      render(<CounterTemplate entity={makeEntity({ count: 5 })} onReset={onReset} />);
 
       const resetButton = screen.getByText('Reset');
       fireEvent.click(resetButton);
@@ -91,8 +100,8 @@ describe('CounterTemplate', () => {
   });
 
   describe('Constraints', () => {
-    it('should disable decrement when count equals min', () => {
-      render(<CounterTemplate count={0} min={0} />);
+    it('should disable decrement when decrementDisabled is true', () => {
+      render(<CounterTemplate entity={makeEntity({ count: 0, decrementDisabled: true })} />);
 
       // Find the secondary (decrement) button - it should be disabled
       const buttons = screen.getAllByRole('button').filter(btn => !btn.textContent?.includes('Reset'));
@@ -101,8 +110,8 @@ describe('CounterTemplate', () => {
       expect(decrementButton).toBeDisabled();
     });
 
-    it('should disable increment when count equals max', () => {
-      render(<CounterTemplate count={10} max={10} />);
+    it('should disable increment when incrementDisabled is true', () => {
+      render(<CounterTemplate entity={makeEntity({ count: 10, incrementDisabled: true })} />);
 
       // Find the primary (increment) button - it should be disabled
       // Primary button has border-2 class which is unique to primary variant
@@ -115,18 +124,18 @@ describe('CounterTemplate', () => {
 
   describe('Variants', () => {
     it('should render minimal variant', () => {
-      const { container } = render(<CounterTemplate count={5} variant="minimal" />);
+      const { container } = render(<CounterTemplate entity={makeEntity({ count: 5 })} variant="minimal" />);
       // Minimal variant doesn't have Container wrapper
       expect(container.querySelector('.mx-auto')).not.toBeInTheDocument();
     });
 
     it('should render standard variant with title', () => {
-      render(<CounterTemplate count={5} variant="standard" title="Counter" />);
+      render(<CounterTemplate entity={makeEntity({ count: 5 })} variant="standard" title="Counter" />);
       expect(screen.getByText('Counter')).toBeInTheDocument();
     });
 
     it('should render full variant with range info', () => {
-      render(<CounterTemplate count={5} variant="full" min={0} max={100} />);
+      render(<CounterTemplate entity={makeEntity({ count: 5, rangeText: 'Range: 0 to 100' })} variant="full" />);
       expect(screen.getByText(/Range:/)).toBeInTheDocument();
     });
   });

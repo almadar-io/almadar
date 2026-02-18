@@ -54,6 +54,10 @@ export interface WeeklyCalendarProps {
   slotDuration?: number;
   /** Show trainee info */
   showTraineeInfo?: boolean;
+  /** Loading state */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
   /** Entity context for events */
   entity?: string;
   /** Additional CSS classes */

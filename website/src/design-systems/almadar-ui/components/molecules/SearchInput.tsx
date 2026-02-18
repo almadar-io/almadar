@@ -11,6 +11,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import { Input } from '../atoms/Input';
 import { Spinner } from '../atoms/Spinner';
+import { Box } from '../atoms/Box';
 import { cn } from '../../lib/cn';
 import { useEventBus } from '../../hooks/useEventBus';
 import { useQuerySingleton } from '../../hooks/useQuerySingleton';
@@ -173,7 +174,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
   }, [debounceTimer]);
 
   return (
-    <div className={cn('relative', className)}>
+    <Box className={cn('relative', className)}>
       <Input
         type="search"
         value={searchValue}
@@ -187,11 +188,11 @@ export const SearchInput: React.FC<SearchInputProps> = ({
         {...props}
       />
       {isLoading && (
-        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+        <Box className="absolute right-3 top-1/2 -translate-y-1/2">
           <Spinner size="sm" color="primary" />
-        </div>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };
 

@@ -173,7 +173,7 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
         className={cn("p-6 min-h-[400px]", className)}
       >
         <Typography variant="body" className="text-red-500">
-          Error: {error.message}
+          {t('trainee.error', { message: error.message })}
         </Typography>
       </VStack>
     );
@@ -215,7 +215,9 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
             className="items-center justify-center h-16 w-16 bg-[var(--color-muted)]"
           >
             {entity.profileImage ? (
-              <img
+              <Box
+                as="img"
+                // @ts-expect-error -- Box polymorphic 'as' prop passes src/alt to <img>
                 src={entity.profileImage}
                 alt={entity.name}
                 className="h-16 w-16 rounded-full object-cover"

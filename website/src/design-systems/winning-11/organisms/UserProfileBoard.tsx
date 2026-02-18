@@ -28,6 +28,7 @@ import {
   Avatar,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -98,6 +99,7 @@ export const UserProfileBoard: React.FC<UserProfileBoardProps> = ({
   backEvent,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
   const user = entity;
 
   const handleBack = () => {
@@ -115,7 +117,7 @@ export const UserProfileBoard: React.FC<UserProfileBoardProps> = ({
       <VStack align="center" justify="center" className={cn("py-12", className)}>
         <Spinner size="lg" />
         <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-          Loading user profile...
+          {t("profile.loading")}
         </Typography>
       </VStack>
     );
@@ -125,7 +127,7 @@ export const UserProfileBoard: React.FC<UserProfileBoardProps> = ({
     return (
       <VStack align="center" justify="center" className={cn("py-12", className)}>
         <Typography variant="body" className="text-red-500">
-          Error: {error.message}
+          {t("profile.error", { message: error.message })}
         </Typography>
       </VStack>
     );
@@ -135,7 +137,7 @@ export const UserProfileBoard: React.FC<UserProfileBoardProps> = ({
     return (
       <VStack align="center" justify="center" className={cn("py-12", className)}>
         <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-          User not found
+          {t("profile.notFound")}
         </Typography>
       </VStack>
     );
@@ -149,17 +151,17 @@ export const UserProfileBoard: React.FC<UserProfileBoardProps> = ({
           {showBack && (
             <Button variant="ghost" onClick={handleBack} className="gap-2">
               <ArrowLeft className="h-4 w-4" />
-              Back
+              {t("profile.back")}
             </Button>
           )}
           <VStack gap="xs">
-            <Typography variant="h1">User Profile</Typography>
+            <Typography variant="h1">{t("profile.title")}</Typography>
           </VStack>
         </HStack>
 
         <Button variant="primary" onClick={handleEdit} className="gap-2">
           <Edit className="h-4 w-4" />
-          Edit Profile
+          {t("profile.editProfile")}
         </Button>
       </HStack>
 
@@ -170,12 +172,12 @@ export const UserProfileBoard: React.FC<UserProfileBoardProps> = ({
           <VStack align="center" gap="md" className="min-w-[150px]">
             <Avatar name={user.name} size="xl" />
             <Badge variant={getStatusColor(user.status)} size="lg">
-              {user.status}
+              {t(`users.status.${user.status}`)}
             </Badge>
             {user.isBetaUser && (
               <Badge variant="info" className="gap-1">
                 <Star className="h-3 w-3" />
-                Beta User
+                {t("profile.betaUser")}
               </Badge>
             )}
           </VStack>
@@ -194,7 +196,7 @@ export const UserProfileBoard: React.FC<UserProfileBoardProps> = ({
               {user.primaryCategory && (
                 <VStack gap="xs">
                   <Typography variant="label" className="text-[var(--color-muted-foreground)]">
-                    Primary Category
+                    {t("profile.primaryCategory")}
                   </Typography>
                   <Typography variant="body">{user.primaryCategory}</Typography>
                 </VStack>
@@ -202,12 +204,12 @@ export const UserProfileBoard: React.FC<UserProfileBoardProps> = ({
 
               <VStack gap="xs">
                 <Typography variant="label" className="text-[var(--color-muted-foreground)]">
-                  Connection Slots
+                  {t("profile.connectionSlots")}
                 </Typography>
                 <HStack gap="xs" align="center">
                   <Users className="h-4 w-4 text-[var(--color-muted-foreground)]" />
                   <Typography variant="body">
-                    {user.usedSlots || 0} / {user.connectionSlots || 10} used
+                    {t("profile.slotsUsed", { used: user.usedSlots || 0, total: user.connectionSlots || 10 })}
                   </Typography>
                 </HStack>
               </VStack>
@@ -215,7 +217,7 @@ export const UserProfileBoard: React.FC<UserProfileBoardProps> = ({
               {user.createdAt && (
                 <VStack gap="xs">
                   <Typography variant="label" className="text-[var(--color-muted-foreground)]">
-                    Member Since
+                    {t("profile.memberSince")}
                   </Typography>
                   <HStack gap="xs" align="center">
                     <Calendar className="h-4 w-4 text-[var(--color-muted-foreground)]" />
@@ -229,7 +231,7 @@ export const UserProfileBoard: React.FC<UserProfileBoardProps> = ({
               {user.lastActiveAt && (
                 <VStack gap="xs">
                   <Typography variant="label" className="text-[var(--color-muted-foreground)]">
-                    Last Active
+                    {t("profile.lastActive")}
                   </Typography>
                   <HStack gap="xs" align="center">
                     <Activity className="h-4 w-4 text-[var(--color-muted-foreground)]" />
@@ -243,7 +245,7 @@ export const UserProfileBoard: React.FC<UserProfileBoardProps> = ({
               {user.inviteCode && (
                 <VStack gap="xs">
                   <Typography variant="label" className="text-[var(--color-muted-foreground)]">
-                    Invite Code
+                    {t("profile.inviteCode")}
                   </Typography>
                   <Typography variant="body" className="font-mono">
                     {user.inviteCode}
@@ -262,15 +264,15 @@ export const UserProfileBoard: React.FC<UserProfileBoardProps> = ({
           <VStack gap="sm">
             <HStack gap="sm" align="center">
               <Shield className="h-5 w-5 text-blue-500" />
-              <Typography variant="h4">Trust Score</Typography>
+              <Typography variant="h4">{t("profile.trustScore")}</Typography>
             </HStack>
             {user.trustScoreId ? (
               <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-                Score ID: {user.trustScoreId}
+                {t("profile.scoreId", { id: user.trustScoreId })}
               </Typography>
             ) : (
               <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-                No trust score calculated yet
+                {t("profile.noTrustScore")}
               </Typography>
             )}
             <Button
@@ -280,7 +282,7 @@ export const UserProfileBoard: React.FC<UserProfileBoardProps> = ({
                 eventBus.emit("UI:VIEW_TRUST_SCORE", { userId: user.id })
               }
             >
-              View Trust Details
+              {t("profile.viewTrustDetails")}
             </Button>
           </VStack>
         </Card>
@@ -290,15 +292,15 @@ export const UserProfileBoard: React.FC<UserProfileBoardProps> = ({
           <VStack gap="sm">
             <HStack gap="sm" align="center">
               <Activity className="h-5 w-5 text-emerald-500" />
-              <Typography variant="h4">Assessment</Typography>
+              <Typography variant="h4">{t("profile.assessment")}</Typography>
             </HStack>
             {user.assessmentId ? (
               <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-                Assessment ID: {user.assessmentId}
+                {t("profile.assessmentId", { id: user.assessmentId })}
               </Typography>
             ) : (
               <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-                No assessment completed yet
+                {t("profile.noAssessment")}
               </Typography>
             )}
             <Button
@@ -308,7 +310,7 @@ export const UserProfileBoard: React.FC<UserProfileBoardProps> = ({
                 eventBus.emit("UI:VIEW_ASSESSMENT", { userId: user.id })
               }
             >
-              View Assessment
+              {t("profile.viewAssessment")}
             </Button>
           </VStack>
         </Card>

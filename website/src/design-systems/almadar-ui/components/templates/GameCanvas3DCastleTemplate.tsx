@@ -21,6 +21,11 @@
 import React from 'react';
 import { GameCanvas3D, type GameCanvas3DProps } from '../organisms/game/GameCanvas3D';
 import type { IsometricTile, IsometricUnit, IsometricFeature } from '../organisms/game/types/isometric';
+import { Box } from '../atoms/Box';
+import { VStack, HStack } from '../atoms/Stack';
+import { Typography } from '../atoms/Typography';
+import { cn } from '../../lib/cn';
+import type { TemplateProps } from './types';
 
 export interface Castle3DEntity {
     /** Castle grounds tiles */
@@ -36,12 +41,10 @@ export interface Castle3DEntity {
     /** Owner faction */
     owner?: string;
     /** Entity ID */
-    id?: string;
+    id: string;
 }
 
-export interface GameCanvas3DCastleTemplateProps {
-    /** Castle entity data */
-    entity: Castle3DEntity;
+export interface GameCanvas3DCastleTemplateProps extends TemplateProps<Castle3DEntity> {
     /** 3D camera mode */
     cameraMode?: 'isometric' | 'perspective' | 'top-down';
     /** Show grid helper */
@@ -66,8 +69,8 @@ export interface GameCanvas3DCastleTemplateProps {
     availableBuildSites?: Array<{ x: number; z: number }>;
     /** Show castle name header */
     showHeader?: boolean;
-    /** Additional CSS classes */
-    className?: string;
+    /** Pre-computed selected tile IDs array */
+    selectedTileIds?: string[];
 }
 
 /**
@@ -98,23 +101,24 @@ export function GameCanvas3DCastleTemplate({
     recruitEvent,
     exitEvent,
     selectedBuildingId,
+    selectedTileIds = [],
     availableBuildSites,
     showHeader = true,
     className,
 }: GameCanvas3DCastleTemplateProps): JSX.Element {
     return (
-        <div className={`game-canvas-3d-castle-template ${className || ''}`}>
+        <VStack className={cn('game-canvas-3d-castle-template', className)}>
             {/* Castle header */}
             {showHeader && entity.name && (
-                <div className="castle-template__header">
-                    <h2 className="header__name">{entity.name}</h2>
+                <HStack gap="md" align="center" className="castle-template__header">
+                    <Typography variant="h2" className="header__name">{entity.name}</Typography>
                     {entity.level && (
-                        <span className="header__level">Level {entity.level}</span>
+                        <Typography variant="small" className="header__level">Level {entity.level}</Typography>
                     )}
                     {entity.owner && (
-                        <span className="header__owner">{entity.owner}</span>
+                        <Typography variant="small" color="muted" className="header__owner">{entity.owner}</Typography>
                     )}
-                </div>
+                </HStack>
             )}
 
             <GameCanvas3D
@@ -129,19 +133,19 @@ export function GameCanvas3DCastleTemplate({
                 backgroundColor={backgroundColor}
                 featureClickEvent={buildingClickEvent}
                 unitClickEvent={unitClickEvent}
-                selectedTileIds={selectedBuildingId ? [selectedBuildingId] : []}
+                selectedTileIds={selectedTileIds}
                 validMoves={availableBuildSites}
                 className="game-canvas-3d-castle-template__canvas"
             />
 
             {/* Garrison info overlay */}
             {entity.units.length > 0 && (
-                <div className="castle-template__garrison-info">
-                    <span className="garrison-info__label">Garrison:</span>
-                    <span className="garrison-info__count">{entity.units.length} units</span>
-                </div>
+                <HStack gap="sm" align="center" className="castle-template__garrison-info">
+                    <Typography variant="small" className="garrison-info__label">Garrison:</Typography>
+                    <Typography variant="small" weight="bold" className="garrison-info__count">{entity.units.length} units</Typography>
+                </HStack>
             )}
-        </div>
+        </VStack>
     );
 }
 

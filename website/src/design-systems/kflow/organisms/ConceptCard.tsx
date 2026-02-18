@@ -24,6 +24,8 @@ import {
   VStack,
   HStack,
   Card,
+  Button,
+  Typography,
   useEventBus,
   useTranslate,
 } from '@almadar/ui';
@@ -63,6 +65,10 @@ export interface ConceptCardProps {
   }>;
   /** Additional CSS classes */
   className?: string;
+  /** Loading state */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
   // Entity-aware props (for schema compatibility)
   /** Data to display */
   data?: unknown | unknown[];
@@ -169,9 +175,11 @@ export const ConceptCard: React.FC<ConceptCardProps> = ({
         {/* Header */}
         <HStack gap="sm" align="start">
           {hasChildren && (
-            <button
+            <Button
               type="button"
               onClick={handleExpand}
+              variant="secondary"
+              size="sm"
               className="flex-shrink-0 mt-1 p-1 hover:bg-gray-100 rounded"
             >
               {expanded ? (
@@ -179,7 +187,7 @@ export const ConceptCard: React.FC<ConceptCardProps> = ({
               ) : (
                 <ChevronRight size={16} className="text-[var(--color-muted-foreground)]" />
               )}
-            </button>
+            </Button>
           )}
 
           {/* Status indicator */}
@@ -199,36 +207,37 @@ export const ConceptCard: React.FC<ConceptCardProps> = ({
 
           <VStack gap="xs" className="flex-1 min-w-0">
             <HStack gap="sm" align="center">
-              <span className="font-semibold text-[var(--color-foreground)]">{entity.name}</span>
+              <Typography variant="small" className="font-semibold text-[var(--color-foreground)]">{entity.name}</Typography>
               {!hideLessonBadge && isHighlighted && !isCompleted && (
-                <span className="px-2 py-0.5 text-xs font-medium bg-emerald-100 text-emerald-700 rounded">
+                <Typography variant="small" className="px-2 py-0.5 text-xs font-medium bg-emerald-100 text-emerald-700 rounded">
                   {t('concept.lessonReady')}
-                </span>
+                </Typography>
               )}
               {!hideLessonBadge && !isHighlighted && !isCompleted && (
-                <span className="px-2 py-0.5 text-xs font-medium bg-gray-100 text-[var(--color-foreground)] rounded">
+                <Typography variant="small" className="px-2 py-0.5 text-xs font-medium bg-gray-100 text-[var(--color-foreground)] rounded">
                   {t('concept.noLesson')}
-                </span>
+                </Typography>
               )}
             </HStack>
 
             {entity.description && (
-              <p className="text-sm text-[var(--color-foreground)]">{entity.description}</p>
+              <Typography variant="body" className="text-sm text-[var(--color-foreground)]">{entity.description}</Typography>
             )}
 
             {/* Prerequisites */}
             {entity.prerequisites && entity.prerequisites.length > 0 && (
               <HStack gap="xs" wrap className="mt-1">
-                <span className="text-xs font-semibold text-indigo-600">
+                <Typography variant="small" className="text-xs font-semibold text-indigo-600">
                   {t('concept.prerequisites')}:
-                </span>
+                </Typography>
                 {entity.prerequisites.map((prereq, idx) => (
-                  <span
+                  <Typography
                     key={idx}
+                    variant="small"
                     className="px-2 py-0.5 text-xs font-medium bg-indigo-100 text-indigo-700 rounded"
                   >
                     {prereq}
-                  </span>
+                  </Typography>
                 ))}
               </HStack>
             )}
@@ -236,14 +245,15 @@ export const ConceptCard: React.FC<ConceptCardProps> = ({
             {/* Parents */}
             {entity.parents && entity.parents.length > 0 && (
               <HStack gap="xs" wrap className="mt-1">
-                <span className="text-xs text-[var(--color-muted-foreground)]">{t('concept.parents')}:</span>
+                <Typography variant="small" className="text-xs text-[var(--color-muted-foreground)]">{t('concept.parents')}:</Typography>
                 {entity.parents.map((parent, idx) => (
-                  <span
+                  <Typography
                     key={idx}
+                    variant="small"
                     className="px-2 py-0.5 text-xs font-medium bg-gray-100 text-[var(--color-foreground)] rounded"
                   >
                     {parent}
-                  </span>
+                  </Typography>
                 ))}
               </HStack>
             )}
@@ -266,8 +276,10 @@ export const ConceptCard: React.FC<ConceptCardProps> = ({
             {operations.map((op, idx) => {
               const OpIcon = op.icon;
               return (
-                <button
+                <Button
                   key={idx}
+                  variant={op.variant === "primary" ? "primary" : op.variant === "danger" ? "danger" : "secondary"}
+                  size="sm"
                   className={`px-3 py-1.5 text-sm font-medium rounded flex items-center gap-1 ${
                     op.variant === "primary"
                       ? "bg-indigo-600 text-white hover:bg-indigo-700"
@@ -279,7 +291,7 @@ export const ConceptCard: React.FC<ConceptCardProps> = ({
                 >
                   {OpIcon && <OpIcon size={14} />}
                   {op.label}
-                </button>
+                </Button>
               );
             })}
           </HStack>

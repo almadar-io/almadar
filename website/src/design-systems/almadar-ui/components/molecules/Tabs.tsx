@@ -10,6 +10,7 @@ import type { LucideIcon } from 'lucide-react';
 import { Icon } from '../atoms/Icon';
 import { Badge } from '../atoms/Badge';
 import { Typography } from '../atoms/Typography';
+import { Box } from '../atoms/Box';
 import { cn } from '../../lib/cn';
 import { useEventBus } from '../../hooks/useEventBus';
 import { useTranslate } from '../../hooks/useTranslate';
@@ -74,7 +75,7 @@ export const Tabs: React.FC<TabsProps> = ({
     defaultActiveTab || initialActive || safeItems[0]?.id || ''
   );
   const activeTab = controlledActiveTab !== undefined ? controlledActiveTab : internalActiveTab;
-  const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const tabRefs = useRef<Record<string, HTMLElement | null>>({});
 
   const handleTabChange = (tabId: string, tabEvent?: string) => {
     if (controlledActiveTab === undefined) {
@@ -114,11 +115,11 @@ export const Tabs: React.FC<TabsProps> = ({
   // Graceful handling for empty tabs
   if (safeItems.length === 0) {
     return (
-      <div className={cn('w-full', className)}>
-        <div className="text-[var(--color-muted-foreground)] text-sm py-4">
+      <Box className={cn('w-full', className)}>
+        <Typography variant="small" color="muted" className="py-4">
           {t('empty.noItems')}
-        </div>
-      </div>
+        </Typography>
+      </Box>
     );
   }
 
@@ -141,8 +142,8 @@ export const Tabs: React.FC<TabsProps> = ({
   };
 
   return (
-    <div className={cn('w-full', className)}>
-      <div
+    <Box className={cn('w-full', className)}>
+      <Box
         role="tablist"
         className={cn(
           'flex',
@@ -158,23 +159,23 @@ export const Tabs: React.FC<TabsProps> = ({
           const isDisabled = item.disabled;
 
           return (
-            <button
+            <Box
               key={item.id}
-              ref={(el) => {
+              as="button"
+              ref={(el: HTMLDivElement | null) => {
                 tabRefs.current[item.id] = el;
               }}
               role="tab"
               aria-selected={isActive}
               aria-controls={`tabpanel-${item.id}`}
               aria-disabled={isDisabled}
-              disabled={isDisabled}
               onClick={() => !isDisabled && handleTabChange(item.id, item.event)}
-              onKeyDown={(e) => handleKeyDown(e, index)}
+              onKeyDown={(e: React.KeyboardEvent) => handleKeyDown(e, index)}
               data-active={isActive}
               className={cn(
                 'flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all',
                 'focus:outline-none focus:ring-2 focus:ring-[var(--color-ring)] focus:ring-offset-2',
-                'disabled:opacity-50 disabled:cursor-not-allowed',
+                isDisabled && 'opacity-50 cursor-not-allowed',
                 variantClasses[variant],
                 isActive
                   ? 'text-[var(--color-foreground)] font-bold'
@@ -190,20 +191,20 @@ export const Tabs: React.FC<TabsProps> = ({
                   {item.badge}
                 </Badge>
               )}
-            </button>
+            </Box>
           );
         })}
-      </div>
+      </Box>
 
-      <div
+      <Box
         role="tabpanel"
         id={`tabpanel-${activeTab}`}
         aria-labelledby={`tab-${activeTab}`}
         className="mt-4"
       >
         {activeTabContent}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

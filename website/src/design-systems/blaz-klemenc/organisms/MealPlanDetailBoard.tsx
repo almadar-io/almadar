@@ -166,7 +166,7 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
         className={cn("p-6 min-h-[400px]", className)}
       >
         <Typography variant="body" className="text-red-500">
-          Error: {error.message}
+          {t('mealPlan.error', { message: error.message })}
         </Typography>
       </VStack>
     );

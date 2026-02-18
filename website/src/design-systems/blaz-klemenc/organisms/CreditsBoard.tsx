@@ -452,7 +452,7 @@ export const CreditsBoard: React.FC<CreditsBoardProps> = ({
       {error && (
         <VStack align="center" justify="center" className="py-12">
           <Typography variant="body" className="text-red-500">
-            Error: {error.message}
+            {t('credits.error', { message: error.message })}
           </Typography>
         </VStack>
       )}

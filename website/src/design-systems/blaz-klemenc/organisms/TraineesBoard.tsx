@@ -153,7 +153,9 @@ const UserCard: React.FC<{
               className="items-center justify-center h-12 w-12 bg-[var(--color-muted)]"
             >
               {user.profileImage ? (
-                <img
+                <Box
+                  as="img"
+                  // @ts-expect-error -- Box polymorphic 'as' prop passes src/alt to <img>
                   src={user.profileImage}
                   alt={user.name}
                   className="h-12 w-12 rounded-full object-cover"
@@ -174,7 +176,7 @@ const UserCard: React.FC<{
           </HStack>
           <Badge className={getRoleColor(user.role)}>
             <RoleIcon className="h-3 w-3 mr-1" />
-            {user.role}
+            {t('trainees.role.' + user.role)}
           </Badge>
         </HStack>
 
@@ -401,7 +403,7 @@ export const TraineesBoard: React.FC<TraineesBoardProps> = ({
       {error && (
         <VStack align="center" justify="center" className="py-12">
           <Typography variant="body" className="text-red-500">
-            Error: {error.message}
+            {t('trainees.error', { message: error.message })}
           </Typography>
         </VStack>
       )}

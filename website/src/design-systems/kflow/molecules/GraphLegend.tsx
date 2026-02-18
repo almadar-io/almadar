@@ -14,6 +14,7 @@ import {
   Box,
   VStack,
   HStack,
+  Typography,
   useEventBus,
 } from '@almadar/ui';
 
@@ -64,7 +65,7 @@ export const GraphLegend: React.FC<GraphLegendProps> = ({
       className={`p-3 bg-white rounded-lg shadow-sm border border-gray-200 ${className}`}
     >
       {title && (
-        <span className="text-sm font-semibold text-[var(--color-foreground)]">{title}</span>
+        <Typography variant="small" className="text-sm font-semibold text-[var(--color-foreground)]">{title}</Typography>
       )}
       <Container gap="sm" wrap={direction === "horizontal"}>
         {items.map((item) => (
@@ -81,11 +82,11 @@ export const GraphLegend: React.FC<GraphLegendProps> = ({
                 className="w-4 h-4 rounded-full flex-shrink-0"
                 style={{ backgroundColor: item.color }}
               />
-              <span className="text-sm text-[var(--color-foreground)]">{item.label}</span>
+              <Typography variant="small" className="text-sm text-[var(--color-foreground)]">{item.label}</Typography>
               {item.count !== undefined && (
-                <span className="text-xs text-[var(--color-muted-foreground)] ml-1">
+                <Typography variant="small" className="text-xs text-[var(--color-muted-foreground)] ml-1">
                   ({item.count})
-                </span>
+                </Typography>
               )}
             </HStack>
           </Box>
@@ -100,6 +101,7 @@ GraphLegend.displayName = "GraphLegend";
 /**
  * Default node type colors for knowledge graphs
  */
+// eslint-disable-next-line almadar/require-display-name
 export const NODE_TYPE_COLORS: Record<string, string> = {
   concept: "#6366f1", // indigo
   topic: "#8b5cf6", // violet
@@ -113,6 +115,7 @@ export const NODE_TYPE_COLORS: Record<string, string> = {
 /**
  * Default edge type colors for knowledge graphs
  */
+// eslint-disable-next-line almadar/require-display-name
 export const EDGE_TYPE_COLORS: Record<string, string> = {
   prerequisite: "#ef4444", // red
   related: "#6366f1", // indigo

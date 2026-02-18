@@ -19,6 +19,9 @@ import {
 import { useEventBus, type KFlowEvent } from '../../hooks/useEventBus';
 import { useQuerySingleton } from '../../hooks/useQuerySingleton';
 import { Button } from '../atoms';
+import { Box } from '../atoms/Box';
+import { Typography } from '../atoms/Typography';
+import { VStack, HStack } from '../atoms/Stack';
 import { Pagination } from '../molecules/Pagination';
 
 export type CardGridGap = 'none' | 'sm' | 'md' | 'lg' | 'xl';
@@ -279,7 +282,7 @@ export const CardGrid: React.FC<CardGridProps> = ({
     console.log('[CardGrid] First record:', JSON.stringify(data[0]));
     console.log(
       '[CardGrid] All statuses:',
-      data.map((d: any) => d.status)
+      data.map((d: Record<string, unknown>) => d.status)
     );
   }
 
@@ -339,26 +342,26 @@ export const CardGrid: React.FC<CardGridProps> = ({
     // Show loading state
     if (isLoading) {
       return (
-        <div className="col-span-full text-center py-8 text-[var(--color-muted-foreground)]">
-          Loading {entity || 'items'}...
-        </div>
+        <Box className="col-span-full text-center py-8 text-[var(--color-muted-foreground)]">
+          <Typography variant="body" color="secondary">Loading {entity || 'items'}...</Typography>
+        </Box>
       );
     }
 
     // Show error state
     if (error) {
       return (
-        <div className="col-span-full text-center py-8 text-[var(--color-error)]">
-          Error loading {entity || 'items'}: {error.message}
-        </div>
+        <Box className="col-span-full text-center py-8 text-[var(--color-error)]">
+          <Typography variant="body" color="error">Error loading {entity || 'items'}: {error.message}</Typography>
+        </Box>
       );
     }
 
     if (normalizedData.length === 0) {
       return (
-        <div className="col-span-full text-center py-8 text-[var(--color-muted-foreground)]">
-          No {entity || 'items'} found
-        </div>
+        <Box className="col-span-full text-center py-8 text-[var(--color-muted-foreground)]">
+          <Typography variant="body" color="secondary">No {entity || 'items'} found</Typography>
+        </Box>
       );
     }
 
@@ -390,7 +393,7 @@ export const CardGrid: React.FC<CardGridProps> = ({
       };
 
       return (
-        <div
+        <Box
           key={id}
           className={cn(
             'bg-[var(--color-card)] rounded-[var(--radius-lg)] border border-[var(--color-border)] p-4 shadow-[var(--shadow-sm)]',
@@ -402,17 +405,17 @@ export const CardGrid: React.FC<CardGridProps> = ({
             const value = getNestedValue(itemData, field);
             if (value === undefined || value === null) return null;
             return (
-              <div key={field} className="mb-2 last:mb-0">
-                <span className="text-xs text-[var(--color-muted-foreground)] uppercase">
+              <Box key={field} className="mb-2 last:mb-0">
+                <Typography variant="caption" color="secondary" className="uppercase">
                   {field}
-                </span>
-                <div className="text-sm text-[var(--color-foreground)]">{String(value)}</div>
-              </div>
+                </Typography>
+                <Typography variant="small">{String(value)}</Typography>
+              </Box>
             );
           })}
           {/* Item Actions */}
           {itemActions && itemActions.length > 0 && (
-            <div className="mt-3 pt-3 border-t border-[var(--color-border)] flex gap-2">
+            <HStack gap="sm" className="mt-3 pt-3 border-t border-[var(--color-border)]">
               {itemActions.map((action, actionIdx) => {
                 // Cast variant to Button's expected type, defaulting to 'secondary'
                 const buttonVariant = (action.variant || 'secondary') as
@@ -433,16 +436,16 @@ export const CardGrid: React.FC<CardGridProps> = ({
                   </Button>
                 );
               })}
-            </div>
+            </HStack>
           )}
-        </div>
+        </Box>
       );
     });
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <div
+    <VStack gap="md">
+      <Box
         className={cn(
           'grid',
           gapStyles[gap],
@@ -458,7 +461,7 @@ export const CardGrid: React.FC<CardGridProps> = ({
         style={!maxCols ? { gridTemplateColumns } : undefined}
       >
         {renderContent()}
-      </div>
+      </Box>
 
       {/* Pagination controls */}
       {enablePagination && paginationInfo && paginationInfo.totalPages > 1 && (
@@ -473,7 +476,7 @@ export const CardGrid: React.FC<CardGridProps> = ({
           onPageSizeChange={handlePageSizeChange}
         />
       )}
-    </div>
+    </VStack>
   );
 };
 

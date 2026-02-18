@@ -190,5 +190,7 @@ export const Grid: React.FC<GridProps> = ({
   );
 };
 
+Grid.displayName = 'Grid';
+
 export default Grid;
 

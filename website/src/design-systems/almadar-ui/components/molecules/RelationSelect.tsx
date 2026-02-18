@@ -195,9 +195,9 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
   );
 
   return (
-    <div ref={containerRef} className={cn("relative", className)}>
+    <Box ref={containerRef} className={cn("relative", className)}>
       {/* Hidden input for form submission */}
-      <input type="hidden" name={name} value={value || ""} />
+      <Input type="hidden" name={name} value={value || ""} />
 
       {/* Trigger button */}
       <Button
@@ -220,7 +220,7 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
           {isLoading ? (
             <HStack gap="xs" align="center">
               <Spinner size="sm" />
-              <span>{t('common.loading')}</span>
+              <Typography as="span">{t('common.loading')}</Typography>
             </HStack>
           ) : selectedOption ? (
             selectedOption.label
@@ -230,12 +230,13 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
         </Typography>
         <HStack gap="xs" align="center">
           {clearable && selectedOption && !disabled && (
-            <span
+            <Box
+              as="button"
               className="p-0.5 hover:bg-[var(--color-muted)] rounded cursor-pointer"
               onClick={handleClear}
             >
               <X className="h-4 w-4 text-[var(--color-muted-foreground)]" />
-            </span>
+            </Box>
           )}
           <ChevronDown
             className={cn(
@@ -325,7 +326,7 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
           {error}
         </Typography>
       )}
-    </div>
+    </Box>
   );
 };
 

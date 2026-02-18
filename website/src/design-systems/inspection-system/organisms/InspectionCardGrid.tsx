@@ -31,6 +31,7 @@ import {
   Spinner,
   cn,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 export type { InspectionPhase } from "../atoms/PhaseIndicator";
@@ -76,6 +77,7 @@ const InspectionCard: React.FC<{
   inspection: InspectionEntity;
 }> = ({ inspection }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
 
   const handleAction = (action: string) => {
     emit(`UI:${action}`, { row: inspection, entity: "Inspection" });
@@ -114,13 +116,13 @@ const InspectionCard: React.FC<{
         {inspection.complianceRate !== undefined && (
           <HStack gap="sm" align="center">
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Compliance:
+              {t('inspections.compliance')}
             </Typography>
             <Badge variant={getComplianceColor(inspection.complianceRate)}>
               {inspection.complianceRate}%
             </Badge>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              ({inspection.rulesChecked}/{inspection.totalRules} rules)
+              ({inspection.rulesChecked}/{inspection.totalRules} {t('inspections.rules')})
             </Typography>
           </HStack>
         )}
@@ -128,24 +130,24 @@ const InspectionCard: React.FC<{
         <HStack gap="sm" className="pt-2 border-t">
           <Button variant="ghost" size="sm" onClick={() => handleAction("VIEW")} className="gap-1">
             <Eye className="h-3 w-3" />
-            View
+            {t('common.view')}
           </Button>
           {inspection.phase === "preparation" && (
             <Button variant="primary" size="sm" onClick={() => handleAction("START")} className="gap-1">
               <Play className="h-3 w-3" />
-              Start
+              {t('inspections.start')}
             </Button>
           )}
           {inspection.phase === "execution" && (
             <Button variant="primary" size="sm" onClick={() => handleAction("CONTINUE")} className="gap-1">
               <Play className="h-3 w-3" />
-              Continue
+              {t('inspections.continue')}
             </Button>
           )}
           {inspection.phase === "completed" && (
             <Button variant="secondary" size="sm" onClick={() => handleAction("REPORT")} className="gap-1">
               <FileText className="h-3 w-3" />
-              Report
+              {t('inspections.report')}
             </Button>
           )}
         </HStack>
@@ -166,6 +168,7 @@ export function InspectionCardGrid({
   className,
 }: InspectionCardGridProps): JSX.Element {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (value: string) => {
@@ -192,13 +195,13 @@ export function InspectionCardGrid({
           <VStack gap="xs">
             <Typography variant="h1">{title}</Typography>
             <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-              Manage field inspections
+              {t('inspections.subtitle')}
             </Typography>
           </VStack>
 
           <Button variant="primary" onClick={handleCreate} className="gap-2">
             <Plus className="h-4 w-4" />
-            New Inspection
+            {t('inspections.newInspection')}
           </Button>
         </HStack>
       )}
@@ -206,7 +209,7 @@ export function InspectionCardGrid({
       {showSearch && (
         <Box className="w-full max-w-sm">
           <Input
-            placeholder="Search inspections..."
+            placeholder={t('inspections.search')}
             value={searchTerm}
             onChange={(e) => handleSearch(e.target.value)}
             leftIcon={<Search className="h-4 w-4 text-[var(--color-muted-foreground)]" />}
@@ -218,7 +221,7 @@ export function InspectionCardGrid({
         <VStack align="center" justify="center" className="py-12">
           <Spinner size="lg" />
           <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-            Loading inspections...
+            {t('inspections.loading')}
           </Typography>
         </VStack>
       )}
@@ -226,7 +229,7 @@ export function InspectionCardGrid({
       {error && (
         <VStack align="center" justify="center" className="py-12">
           <Typography variant="body" className="text-red-500">
-            Error: {error.message}
+            {t('error.prefix')} {error.message}
           </Typography>
         </VStack>
       )}
@@ -237,10 +240,10 @@ export function InspectionCardGrid({
             <VStack align="center" justify="center" className="py-12">
               <ClipboardList className="h-12 w-12 text-[var(--color-muted-foreground)]" />
               <Typography variant="h3" className="text-[var(--color-muted-foreground)]">
-                No inspections found
+                {t('inspections.empty.title')}
               </Typography>
               <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-                Create a new inspection to get started
+                {t('inspections.empty.description')}
               </Typography>
             </VStack>
           ) : (

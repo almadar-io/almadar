@@ -6,6 +6,7 @@
  */
 import React from 'react';
 import { cn } from '../../lib/cn';
+import { Box } from '../atoms/Box';
 
 export type SplitRatio = '1:1' | '1:2' | '2:1' | '1:3' | '3:1' | '1:4' | '4:1' | '2:3' | '3:2';
 export type SplitGap = 'none' | 'sm' | 'md' | 'lg' | 'xl';
@@ -31,6 +32,12 @@ export interface SplitProps {
   rightClassName?: string;
   /** Exactly two children: [left, right] */
   children: [React.ReactNode, React.ReactNode];
+  /** Loading state indicator */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name for schema-driven auto-fetch */
+  entity?: string;
 }
 
 const gapStyles: Record<SplitGap, string> = {
@@ -97,7 +104,7 @@ export const Split: React.FC<SplitProps> = ({
     : rightRatio;
 
   return (
-    <div
+    <Box
       className={cn(
         'flex',
         stackOnMobile ? `flex-col ${bp}flex-row` : 'flex-row',
@@ -107,15 +114,17 @@ export const Split: React.FC<SplitProps> = ({
         className
       )}
     >
-      <div className={cn(leftWidth, leftClassName)}>
+      <Box className={cn(leftWidth, leftClassName)}>
         {left}
-      </div>
-      <div className={cn(rightWidth, rightClassName)}>
+      </Box>
+      <Box className={cn(rightWidth, rightClassName)}>
         {right}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
+
+Split.displayName = 'Split';
 
 export default Split;
 

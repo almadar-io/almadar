@@ -17,6 +17,9 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { cn } from "../../lib/cn";
+import { Box } from "../atoms/Box";
+import { HStack } from "../atoms/Stack";
+import { Typography } from "../atoms/Typography";
 
 export interface GameShellProps {
     /** Application / game title shown in the HUD bar */
@@ -42,17 +45,16 @@ export const GameShell: React.FC<GameShellProps> = ({
     showTopBar = true,
 }) => {
     return (
-        <div
+        <Box
+            display="flex"
             className={cn(
                 "game-shell",
-                "flex flex-col w-full h-screen overflow-hidden",
+                "flex-col w-full h-screen overflow-hidden",
                 className
             )}
             style={{
                 width: "100vw",
                 height: "100vh",
-                display: "flex",
-                flexDirection: "column",
                 overflow: "hidden",
                 background: "var(--color-background, #0a0a0f)",
                 color: "var(--color-text, #e0e0e0)",
@@ -60,33 +62,32 @@ export const GameShell: React.FC<GameShellProps> = ({
         >
             {/* Minimal top bar */}
             {showTopBar && (
-                <header
+                <HStack
+                    align="center"
+                    justify="between"
                     className="game-shell__header"
                     style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
                         padding: "0.5rem 1rem",
                         borderBottom: "1px solid var(--color-border, #2a2a3a)",
                         background: "var(--color-surface, #12121f)",
                         flexShrink: 0,
                     }}
                 >
-                    <span
+                    <Typography
+                        variant="h6"
                         style={{
                             fontWeight: 700,
-                            fontSize: "1.1rem",
                             letterSpacing: "0.02em",
                         }}
                     >
                         {appName}
-                    </span>
-                    {hud && <div className="game-shell__hud">{hud}</div>}
-                </header>
+                    </Typography>
+                    {hud && <Box className="game-shell__hud">{hud}</Box>}
+                </HStack>
             )}
 
             {/* Main game area — child routes render here */}
-            <main
+            <Box
                 className="game-shell__content"
                 style={{
                     flex: 1,
@@ -95,8 +96,8 @@ export const GameShell: React.FC<GameShellProps> = ({
                 }}
             >
                 <Outlet />
-            </main>
-        </div>
+            </Box>
+        </Box>
     );
 };
 

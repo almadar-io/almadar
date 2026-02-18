@@ -26,6 +26,12 @@ export interface DrawerSlotProps {
   size?: DrawerSize;
   /** Custom class name */
   className?: string;
+  /** Loading state */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name for schema-driven auto-fetch */
+  entity?: string;
 }
 
 /**

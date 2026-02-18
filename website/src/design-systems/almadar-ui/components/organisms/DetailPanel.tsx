@@ -33,6 +33,7 @@ import {
   Divider,
   ProgressBar,
 } from "../atoms";
+import { Box } from "../atoms/Box";
 import { VStack, HStack } from "../atoms/Stack";
 import { SimpleGrid } from "../molecules/SimpleGrid";
 import { LoadingState } from "../molecules/LoadingState";
@@ -522,7 +523,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
               )}
 
               {status && (
-                <Badge variant={(status.variant as any) || "default"}>
+                <Badge variant={status.variant ?? "default"}>
                   {status.label}
                 </Badge>
               )}
@@ -639,7 +640,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
   );
 
   return (
-    <div
+    <Box
       className={cn(
         slideOver &&
           "fixed inset-y-0 right-0 w-full max-w-2xl bg-[var(--color-card)] shadow-[var(--shadow-lg)] z-50 overflow-y-auto p-6",
@@ -647,7 +648,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
       )}
     >
       {content}
-    </div>
+    </Box>
   );
 };
 

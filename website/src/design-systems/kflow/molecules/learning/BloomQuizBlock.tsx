@@ -33,6 +33,7 @@ import {
 } from "../../utils/parseLessonSegments";
 
 // Bloom's Taxonomy configuration with colors and labels
+// eslint-disable-next-line almadar/require-display-name
 export const BLOOM_CONFIG: Record<
   BloomLevel,
   {

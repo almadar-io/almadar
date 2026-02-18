@@ -15,6 +15,9 @@
  */
 
 import React, { useMemo } from "react";
+import { Box } from "../atoms/Box";
+import { Typography } from "../atoms/Typography";
+import { cn } from "../../lib/cn";
 
 // ============ Types ============
 
@@ -37,6 +40,12 @@ export interface OrbitalVisualizationProps {
   onClick?: () => void;
   /** Additional CSS classes */
   className?: string;
+  /** Loading state indicator */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name for schema-driven auto-fetch */
+  entity?: string;
 }
 
 interface OrbitalConfig {
@@ -167,6 +176,10 @@ interface OrbitalSphereProps {
   config: OrbitalConfig;
   size: number;
   animated: boolean;
+  className?: string;
+  isLoading?: boolean;
+  error?: Error | null;
+  entity?: string;
 }
 
 /** Renders a single sphere lobe */
@@ -178,7 +191,7 @@ const OrbitalSphere: React.FC<OrbitalSphereProps> = ({
   const sphereSize = size * config.scale * 0.4;
 
   return (
-    <div
+    <Box
       className="absolute rounded-full"
       style={{
         width: sphereSize,
@@ -206,6 +219,10 @@ interface DumbbellOrbitalProps {
   size: number;
   animated: boolean;
   rotation?: number;
+  className?: string;
+  isLoading?: boolean;
+  error?: Error | null;
+  entity?: string;
 }
 
 /** Renders a p-orbital dumbbell shape */
@@ -219,7 +236,7 @@ const DumbbellOrbital: React.FC<DumbbellOrbitalProps> = ({
   const offset = size * 0.18;
 
   return (
-    <div
+    <Box
       className="absolute"
       style={{
         width: size,
@@ -231,7 +248,7 @@ const DumbbellOrbital: React.FC<DumbbellOrbitalProps> = ({
       }}
     >
       {/* Top lobe */}
-      <div
+      <Box
         className="absolute rounded-full"
         style={{
           width: lobeSize,
@@ -245,7 +262,7 @@ const DumbbellOrbital: React.FC<DumbbellOrbitalProps> = ({
         }}
       />
       {/* Bottom lobe */}
-      <div
+      <Box
         className="absolute rounded-full"
         style={{
           width: lobeSize,
@@ -260,7 +277,7 @@ const DumbbellOrbital: React.FC<DumbbellOrbitalProps> = ({
       />
       {/* Node (nucleus) */}
       {config.hasNode && (
-        <div
+        <Box
           className="absolute rounded-[var(--radius-full)] bg-[var(--color-foreground)]"
           style={{
             width: size * 0.06,
@@ -272,7 +289,7 @@ const DumbbellOrbital: React.FC<DumbbellOrbitalProps> = ({
           }}
         />
       )}
-    </div>
+    </Box>
   );
 };
 
@@ -280,6 +297,10 @@ interface CloverleafOrbitalProps {
   config: OrbitalConfig;
   size: number;
   animated: boolean;
+  className?: string;
+  isLoading?: boolean;
+  error?: Error | null;
+  entity?: string;
 }
 
 /** Renders a d-orbital cloverleaf shape */
@@ -294,7 +315,7 @@ const CloverleafOrbital: React.FC<CloverleafOrbitalProps> = ({
   const lobeDistance = size * 0.22;
 
   return (
-    <div
+    <Box
       className="absolute"
       style={{
         width: size,
@@ -311,7 +332,7 @@ const CloverleafOrbital: React.FC<CloverleafOrbitalProps> = ({
         const y = Math.sin(angle) * lobeDistance;
 
         return (
-          <div
+          <Box
             key={i}
             className="absolute rounded-full"
             style={{
@@ -327,7 +348,7 @@ const CloverleafOrbital: React.FC<CloverleafOrbitalProps> = ({
         );
       })}
       {/* Central node */}
-      <div
+      <Box
         className="absolute rounded-[var(--radius-full)] bg-[var(--color-foreground)]"
         style={{
           width: size * 0.08,
@@ -338,7 +359,7 @@ const CloverleafOrbital: React.FC<CloverleafOrbitalProps> = ({
           boxShadow: `0 0 ${size * 0.06}px rgba(255,255,255,0.9)`,
         }}
       />
-    </div>
+    </Box>
   );
 };
 
@@ -414,15 +435,15 @@ export const OrbitalVisualization: React.FC<OrbitalVisualizationProps> = ({
   };
 
   return (
-    <div
-      className={`relative flex flex-col items-center justify-center ${className}`}
+    <Box
+      className={cn("relative flex flex-col items-center justify-center", className)}
       style={{ width: pixelSize, height: pixelSize + (showLabel ? 60 : 0) }}
       onClick={onClick}
       role={onClick ? "button" : undefined}
       tabIndex={onClick ? 0 : undefined}
     >
       {/* Orbital container */}
-      <div
+      <Box
         className="relative"
         style={{
           width: pixelSize,
@@ -432,7 +453,7 @@ export const OrbitalVisualization: React.FC<OrbitalVisualizationProps> = ({
         }}
       >
         {/* Background glow */}
-        <div
+        <Box
           className="absolute rounded-full opacity-30"
           style={{
             width: pixelSize * 0.8,
@@ -447,18 +468,18 @@ export const OrbitalVisualization: React.FC<OrbitalVisualizationProps> = ({
 
         {/* Orbital shape */}
         {renderOrbital()}
-      </div>
+      </Box>
 
       {/* Label */}
       {showLabel && (
-        <div className="mt-4 text-center">
-          <div className="text-lg font-semibold text-[var(--color-foreground)]">
+        <Box className="mt-4 text-center">
+          <Typography variant="body" className="text-lg font-semibold text-[var(--color-foreground)]">
             {config.name}
-          </div>
-          <div className="text-sm text-[var(--color-muted-foreground)]">
+          </Typography>
+          <Typography variant="small" color="muted">
             Complexity: {complexity} units
-          </div>
-        </div>
+          </Typography>
+        </Box>
       )}
 
       {/* CSS Animations */}
@@ -473,8 +494,10 @@ export const OrbitalVisualization: React.FC<OrbitalVisualizationProps> = ({
           to { transform: translate(-50%, -50%) rotate(360deg); }
         }
       `}</style>
-    </div>
+    </Box>
   );
 };
+
+OrbitalVisualization.displayName = "OrbitalVisualization";
 
 export default OrbitalVisualization;

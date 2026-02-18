@@ -127,5 +127,7 @@ export const Flex: React.FC<FlexProps> = ({
   );
 };
 
+Flex.displayName = 'Flex';
+
 export default Flex;
 

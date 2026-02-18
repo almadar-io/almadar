@@ -9,10 +9,18 @@
 import React from "react";
 import { cn } from "../../lib/cn";
 import { Box } from "../atoms/Box";
+import { HStack } from "../atoms/Stack";
 import { Typography } from "../atoms/Typography";
 import { Button } from "../atoms/Button";
+import type { TemplateProps } from "./types";
 
-export interface GenericAppTemplateProps {
+interface GenericAppEntity {
+  id: string;
+  title?: string;
+  subtitle?: string;
+}
+
+export interface GenericAppTemplateProps extends TemplateProps<GenericAppEntity> {
   /** Page title */
   title: string;
   /** Subtitle or description */
@@ -28,6 +36,7 @@ export interface GenericAppTemplateProps {
 }
 
 export const GenericAppTemplate: React.FC<GenericAppTemplateProps> = ({
+  entity,
   title,
   subtitle,
   children,
@@ -43,16 +52,16 @@ export const GenericAppTemplate: React.FC<GenericAppTemplateProps> = ({
         border
         className="border-b-2 border-x-0 border-t-0 border-[var(--color-border)] flex items-center justify-between flex-shrink-0"
       >
-        <div>
+        <Box>
           <Typography variant="h3">{title}</Typography>
           {subtitle && (
             <Typography variant="body2" color="secondary" className="mt-1">
               {subtitle}
             </Typography>
           )}
-        </div>
+        </Box>
         {headerActions && (
-          <div className="flex items-center gap-2">{headerActions}</div>
+          <HStack gap="sm" align="center">{headerActions}</HStack>
         )}
       </Box>
 

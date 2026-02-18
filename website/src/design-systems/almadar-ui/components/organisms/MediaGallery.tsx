@@ -243,6 +243,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
                                     )}
                                     onClick={() => handleItemClick(item)}
                                 >
+                                    {/* eslint-disable-next-line almadar/no-raw-dom-elements -- semantic img with src/alt */}
                                     <img
                                         src={item.thumbnail || item.src}
                                         alt={item.alt || item.caption || ""}
@@ -306,6 +307,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
                                 className="text-white hover:bg-white/20"
                             />
                         </HStack>
+                        {/* eslint-disable-next-line almadar/no-raw-dom-elements -- semantic img with src/alt */}
                         <img
                             src={lightboxItem.src}
                             alt={lightboxItem.alt || lightboxItem.caption || ""}

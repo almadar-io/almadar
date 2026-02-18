@@ -12,19 +12,29 @@ import { VStack, HStack } from "../atoms/Stack";
 import { Typography } from "../atoms/Typography";
 import { Button } from "../atoms/Button";
 import { Minus, Plus, RotateCcw } from "lucide-react";
+import type { TemplateProps } from "./types";
 
 export type CounterSize = "sm" | "md" | "lg";
 export type CounterVariant = "minimal" | "standard" | "full";
 
-export interface CounterTemplateProps {
+export interface CounterEntity {
+  /** Entity ID */
+  id: string;
   /** Current count value */
   count: number;
-  /** Minimum allowed value */
-  min?: number;
-  /** Maximum allowed value */
-  max?: number;
-  /** Step size for increment/decrement */
-  step?: number;
+  /** Whether decrement button is disabled */
+  decrementDisabled?: boolean;
+  /** Whether increment button is disabled */
+  incrementDisabled?: boolean;
+  /** Step label for decrement button (e.g. "-5") */
+  decrementLabel?: string;
+  /** Step label for increment button (e.g. "+5") */
+  incrementLabel?: string;
+  /** Formatted range text (e.g. "Range: 0 to 100") */
+  rangeText?: string;
+}
+
+export interface CounterTemplateProps extends TemplateProps<CounterEntity> {
   /** Called when increment is clicked */
   onIncrement?: () => void;
   /** Called when decrement is clicked */
@@ -39,8 +49,6 @@ export interface CounterTemplateProps {
   size?: CounterSize;
   /** Template variant */
   variant?: CounterVariant;
-  /** Additional class name */
-  className?: string;
 }
 
 const sizeStyles: Record<
@@ -52,33 +60,23 @@ const sizeStyles: Record<
   lg: { display: "text-8xl", button: "lg" },
 };
 
-export const CounterTemplate: React.FC<CounterTemplateProps> = ({
-  count,
-  min = -Infinity,
-  max = Infinity,
-  step = 1,
-  onIncrement,
-  onDecrement,
-  onReset,
-  title = "Counter",
-  showReset = true,
+function CounterMinimal({
+  entity,
   size = "md",
-  variant = "standard",
+  onDecrement,
+  onIncrement,
   className,
-}) => {
-  const canDecrement = count - step >= min;
-  const canIncrement = count + step <= max;
-
-  const renderMinimal = () => (
+}: CounterTemplateProps): JSX.Element {
+  return (
     <HStack gap="lg" align="center" justify="center" className={className}>
       <Button
         variant="secondary"
         size={sizeStyles[size].button}
         onClick={onDecrement}
-        disabled={!canDecrement}
-        leftIcon={<Minus className="h-4 w-4" />}
+        disabled={entity.decrementDisabled}
+        icon={Minus}
       >
-        {step > 1 ? `-${step}` : ""}
+        {entity.decrementLabel}
       </Button>
       <Typography
         variant="h1"
@@ -87,21 +85,33 @@ export const CounterTemplate: React.FC<CounterTemplateProps> = ({
           "font-bold tabular-nums min-w-[3ch] text-center",
         )}
       >
-        {count}
+        {entity.count}
       </Typography>
       <Button
         variant="secondary"
         size={sizeStyles[size].button}
         onClick={onIncrement}
-        disabled={!canIncrement}
-        leftIcon={<Plus className="h-4 w-4" />}
+        disabled={entity.incrementDisabled}
+        icon={Plus}
       >
-        {step > 1 ? `+${step}` : ""}
+        {entity.incrementLabel}
       </Button>
     </HStack>
   );
+}
+CounterMinimal.displayName = "CounterMinimal";
 
-  const renderStandard = () => (
+function CounterStandard({
+  entity,
+  size = "md",
+  title = "Counter",
+  showReset = true,
+  onDecrement,
+  onIncrement,
+  onReset,
+  className,
+}: CounterTemplateProps): JSX.Element {
+  return (
     <Container size="sm" padding="lg" className={className}>
       <VStack gap="lg" align="center">
         <Typography
@@ -117,22 +127,22 @@ export const CounterTemplate: React.FC<CounterTemplateProps> = ({
             "font-bold tabular-nums text-primary-600",
           )}
         >
-          {count}
+          {entity.count}
         </Typography>
         <HStack gap="md">
           <Button
             variant="secondary"
             size={sizeStyles[size].button}
             onClick={onDecrement}
-            disabled={!canDecrement}
-            leftIcon={<Minus className="h-4 w-4" />}
+            disabled={entity.decrementDisabled}
+            icon={Minus}
           />
           <Button
             variant="primary"
             size={sizeStyles[size].button}
             onClick={onIncrement}
-            disabled={!canIncrement}
-            leftIcon={<Plus className="h-4 w-4" />}
+            disabled={entity.incrementDisabled}
+            icon={Plus}
           />
         </HStack>
         {showReset && (
@@ -140,7 +150,7 @@ export const CounterTemplate: React.FC<CounterTemplateProps> = ({
             variant="ghost"
             size="sm"
             onClick={onReset}
-            leftIcon={<RotateCcw className="h-4 w-4" />}
+            icon={RotateCcw}
           >
             Reset
           </Button>
@@ -148,8 +158,20 @@ export const CounterTemplate: React.FC<CounterTemplateProps> = ({
       </VStack>
     </Container>
   );
+}
+CounterStandard.displayName = "CounterStandard";
 
-  const renderFull = () => (
+function CounterFull({
+  entity,
+  size = "md",
+  title = "Counter",
+  showReset = true,
+  onDecrement,
+  onIncrement,
+  onReset,
+  className,
+}: CounterTemplateProps): JSX.Element {
+  return (
     <Container size="sm" padding="lg" className={className}>
       <VStack gap="xl" align="center">
         <Typography
@@ -166,12 +188,11 @@ export const CounterTemplate: React.FC<CounterTemplateProps> = ({
               "font-bold tabular-nums text-primary-600",
             )}
           >
-            {count}
+            {entity.count}
           </Typography>
-          {(min !== -Infinity || max !== Infinity) && (
+          {entity.rangeText && (
             <Typography variant="small" color="muted">
-              Range: {min === -Infinity ? "-∞" : min} to{" "}
-              {max === Infinity ? "∞" : max}
+              {entity.rangeText}
             </Typography>
           )}
         </VStack>
@@ -180,19 +201,19 @@ export const CounterTemplate: React.FC<CounterTemplateProps> = ({
             variant="secondary"
             size={sizeStyles[size].button}
             onClick={onDecrement}
-            disabled={!canDecrement}
-            leftIcon={<Minus className="h-4 w-4" />}
+            disabled={entity.decrementDisabled}
+            icon={Minus}
           >
-            {step > 1 ? step : ""}
+            {entity.decrementLabel}
           </Button>
           <Button
             variant="primary"
             size={sizeStyles[size].button}
             onClick={onIncrement}
-            disabled={!canIncrement}
-            leftIcon={<Plus className="h-4 w-4" />}
+            disabled={entity.incrementDisabled}
+            icon={Plus}
           >
-            {step > 1 ? step : ""}
+            {entity.incrementLabel}
           </Button>
         </HStack>
         {showReset && (
@@ -200,7 +221,7 @@ export const CounterTemplate: React.FC<CounterTemplateProps> = ({
             variant="ghost"
             size="sm"
             onClick={onReset}
-            leftIcon={<RotateCcw className="h-4 w-4" />}
+            icon={RotateCcw}
           >
             Reset to 0
           </Button>
@@ -208,14 +229,17 @@ export const CounterTemplate: React.FC<CounterTemplateProps> = ({
       </VStack>
     </Container>
   );
+}
+CounterFull.displayName = "CounterFull";
 
-  switch (variant) {
+export const CounterTemplate: React.FC<CounterTemplateProps> = (props) => {
+  switch (props.variant) {
     case "minimal":
-      return renderMinimal();
+      return <CounterMinimal {...props} />;
     case "full":
-      return renderFull();
+      return <CounterFull {...props} />;
     default:
-      return renderStandard();
+      return <CounterStandard {...props} />;
   }
 };
 

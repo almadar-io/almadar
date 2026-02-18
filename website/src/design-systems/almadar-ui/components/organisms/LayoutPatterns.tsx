@@ -32,6 +32,12 @@ export interface LayoutPatternProps {
   className?: string;
   /** Inline styles */
   style?: React.CSSProperties;
+  /** Loading state */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name */
+  entity?: string;
 }
 
 // ============================================================================
@@ -235,6 +241,14 @@ CenterPattern.displayName = 'CenterPattern';
 export interface SpacerPatternProps {
   /** Size or 'flex' for flexible */
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'flex';
+  /** Additional CSS classes */
+  className?: string;
+  /** Loading state */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name */
+  entity?: string;
 }
 
 /**
@@ -255,7 +269,7 @@ export function SpacerPattern({ size = 'flex' }: SpacerPatternProps): React.Reac
     xl: '2rem',
   };
 
-  return <div style={{ width: sizeMap[size], height: sizeMap[size], flexShrink: 0 }} />;
+  return <Box style={{ width: sizeMap[size], height: sizeMap[size], flexShrink: 0 }} />;
 }
 
 SpacerPattern.displayName = 'SpacerPattern';
@@ -273,6 +287,14 @@ export interface DividerPatternProps {
   color?: string;
   /** Spacing around divider */
   spacing?: 'xs' | 'sm' | 'md' | 'lg';
+  /** Additional CSS classes */
+  className?: string;
+  /** Loading state */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name */
+  entity?: string;
 }
 
 /**
@@ -314,6 +336,7 @@ DividerPattern.displayName = 'DividerPattern';
 // Exports
 // ============================================================================
 
+// eslint-disable-next-line almadar/require-display-name -- registry object, not a component
 export const LAYOUT_PATTERNS = {
   'vstack': VStackPattern,
   'hstack': HStackPattern,

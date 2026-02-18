@@ -9,11 +9,18 @@
 import React from "react";
 import { cn } from "../../lib/cn";
 import { Box } from "../atoms/Box";
+import { HStack } from "../atoms/Stack";
 import { Typography } from "../atoms/Typography";
 import { Button } from "../atoms/Button";
 import { LucideIcon, Play, Pause, RotateCcw } from "lucide-react";
+import type { TemplateProps } from "./types";
 
-export interface GameTemplateProps {
+interface GameEntity {
+  id: string;
+  title?: string;
+}
+
+export interface GameTemplateProps extends TemplateProps<GameEntity> {
   /** Title of the game */
   title?: string;
   /** The main game canvas or content */
@@ -36,6 +43,7 @@ export interface GameTemplateProps {
 }
 
 export const GameTemplate: React.FC<GameTemplateProps> = ({
+  entity,
   title = "Game",
   children,
   hud,
@@ -61,12 +69,12 @@ export const GameTemplate: React.FC<GameTemplateProps> = ({
           <Typography variant="h4">{title}</Typography>
 
           {controls && (
-            <div className="flex items-center gap-2">
+            <HStack gap="sm" align="center">
               {controls.isPlaying ? (
                 <Button
                   variant="secondary"
                   size="sm"
-                  leftIcon={<Pause className="h-4 w-4" />}
+                  icon={Pause}
                   onClick={controls.onPause}
                 >
                   Pause
@@ -75,7 +83,7 @@ export const GameTemplate: React.FC<GameTemplateProps> = ({
                 <Button
                   variant="primary"
                   size="sm"
-                  leftIcon={<Play className="h-4 w-4" />}
+                  icon={Play}
                   onClick={controls.onPlay}
                 >
                   Play
@@ -84,12 +92,12 @@ export const GameTemplate: React.FC<GameTemplateProps> = ({
               <Button
                 variant="ghost"
                 size="sm"
-                leftIcon={<RotateCcw className="h-4 w-4" />}
+                icon={RotateCcw}
                 onClick={controls.onReset}
               >
                 Reset
               </Button>
-            </div>
+            </HStack>
           )}
         </Box>
 

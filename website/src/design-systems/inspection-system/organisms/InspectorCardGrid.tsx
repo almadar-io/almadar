@@ -33,6 +33,7 @@ import {
   Spinner,
   cn,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 export interface InspectorEntity {
@@ -68,6 +69,7 @@ const InspectorCard: React.FC<{
   inspector: InspectorEntity;
 }> = ({ inspector }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const fullName = `${inspector.name} ${inspector.surname}`;
 
   const handleAction = (action: string) => {
@@ -90,7 +92,7 @@ const InspectorCard: React.FC<{
             </VStack>
           </HStack>
           <Badge variant={inspector.isActive ? "success" : "neutral"}>
-            {inspector.isActive ? "Active" : "Inactive"}
+            {inspector.isActive ? t('inspectors.active') : t('inspectors.inactive')}
           </Badge>
         </HStack>
 
@@ -121,7 +123,7 @@ const InspectorCard: React.FC<{
           <HStack gap="xs" align="center" className="text-[var(--color-muted-foreground)]">
             <ClipboardList className="h-3 w-3" />
             <Typography variant="small">
-              {inspector.inspectionCount} inspection{inspector.inspectionCount !== 1 ? "s" : ""}
+              {inspector.inspectionCount} {inspector.inspectionCount !== 1 ? t('inspectors.inspectionsPlural') : t('inspectors.inspectionSingular')}
             </Typography>
           </HStack>
         )}
@@ -129,16 +131,16 @@ const InspectorCard: React.FC<{
         <HStack gap="sm" className="pt-2 border-t">
           <Button variant="ghost" size="sm" onClick={() => handleAction("VIEW")} className="gap-1">
             <Eye className="h-3 w-3" />
-            View
+            {t('common.view')}
           </Button>
           <Button variant="ghost" size="sm" onClick={() => handleAction("EDIT")} className="gap-1">
             <Edit className="h-3 w-3" />
-            Edit
+            {t('common.edit')}
           </Button>
           {inspector.isActive && (
             <Button variant="ghost" size="sm" onClick={() => handleAction("DEACTIVATE")} className="gap-1 text-red-600">
               <UserX className="h-3 w-3" />
-              Deactivate
+              {t('inspectors.deactivate')}
             </Button>
           )}
         </HStack>
@@ -158,6 +160,7 @@ export function InspectorCardGrid({
   className,
 }: InspectorCardGridProps): JSX.Element {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (value: string) => {
@@ -186,20 +189,20 @@ export function InspectorCardGrid({
           <VStack gap="xs">
             <Typography variant="h1">{title}</Typography>
             <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-              Manage government inspectors
+              {t('inspectors.subtitle')}
             </Typography>
           </VStack>
 
           <Button variant="primary" onClick={handleCreate} className="gap-2">
             <Plus className="h-4 w-4" />
-            Add Inspector
+            {t('inspectors.addInspector')}
           </Button>
         </HStack>
       )}
 
       <Box className="w-full max-w-sm">
         <Input
-          placeholder="Search inspectors..."
+          placeholder={t('inspectors.search')}
           value={searchTerm}
           onChange={(e) => handleSearch(e.target.value)}
           leftIcon={<Search className="h-4 w-4 text-[var(--color-muted-foreground)]" />}
@@ -214,7 +217,7 @@ export function InspectorCardGrid({
 
       {error && (
         <Typography variant="body" className="text-red-500 text-center py-12">
-          Error: {error.message}
+          {t('error.prefix')} {error.message}
         </Typography>
       )}
 
@@ -224,7 +227,7 @@ export function InspectorCardGrid({
             <VStack align="center" justify="center" className="py-12">
               <User className="h-12 w-12 text-[var(--color-muted-foreground)]" />
               <Typography variant="h3" className="text-[var(--color-muted-foreground)]">
-                No inspectors found
+                {t('inspectors.empty.title')}
               </Typography>
             </VStack>
           ) : (

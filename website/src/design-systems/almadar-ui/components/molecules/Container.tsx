@@ -74,5 +74,7 @@ export const Container: React.FC<ContainerProps> = ({
   );
 };
 
+Container.displayName = 'Container';
+
 export default Container;
 

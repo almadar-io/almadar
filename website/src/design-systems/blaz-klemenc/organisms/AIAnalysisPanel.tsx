@@ -50,6 +50,8 @@ export interface AIAnalysisPanelProps {
   showRegenerate?: boolean;
   /** Is regenerating */
   isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
   /** Compact mode */
   compact?: boolean;
   /** Entity context for events */

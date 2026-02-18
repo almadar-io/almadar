@@ -1,7 +1,8 @@
 /**
  * CustomPattern Component
  *
- * Renders freeform HTML elements with Tailwind classes for custom UI designs.
+ * Renders freeform elements with Tailwind classes for custom UI designs.
+ * Uses Box with the `as` prop to render different element types.
  * Supports nested children and the closed circuit pattern (action prop for events).
  *
  * @packageDocumentation
@@ -10,14 +11,19 @@
 import React from "react";
 import { useEventBus } from "../../hooks/useEventBus";
 import { cn } from "../../lib/cn";
+import { Box } from "../atoms/Box";
+import { Typography } from "../atoms/Typography";
+import { Button } from "../atoms/Button";
+import { Input } from "../atoms/Input";
 
 // ============================================================================
 // Types
 // ============================================================================
 
 /**
- * Allowed HTML elements for custom patterns.
+ * Allowed element types for custom patterns.
  */
+// eslint-disable-next-line almadar/require-display-name -- constant array, not a component
 export const ALLOWED_CUSTOM_COMPONENTS = [
   "div",
   "span",
@@ -71,12 +77,24 @@ export function isInteractiveElement(component: string): boolean {
   return INTERACTIVE_ELEMENTS.has(component);
 }
 
+/**
+ * Heading level mapping for Typography variant.
+ */
+const HEADING_VARIANT_MAP: Record<string, "h1" | "h2" | "h3" | "h4" | "h5" | "h6"> = {
+  h1: "h1",
+  h2: "h2",
+  h3: "h3",
+  h4: "h4",
+  h5: "h5",
+  h6: "h6",
+};
+
 // ============================================================================
 // Props
 // ============================================================================
 
 export interface CustomPatternProps {
-  /** HTML element to render */
+  /** Element type to render */
   component: AllowedCustomComponent;
   /** Tailwind classes */
   className?: string;
@@ -102,6 +120,12 @@ export interface CustomPatternProps {
   disabled?: boolean;
   /** Additional HTML attributes */
   htmlProps?: Record<string, unknown>;
+  /** Loading state */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name */
+  entity?: string;
 }
 
 // ============================================================================
@@ -109,9 +133,10 @@ export interface CustomPatternProps {
 // ============================================================================
 
 /**
- * Renders a custom HTML element with Tailwind styling.
+ * Renders a custom element with Tailwind styling.
  *
  * Follows the closed circuit pattern - interactive elements emit events via action prop.
+ * Uses Box with `as` prop for all element types to comply with the design system.
  *
  * @example
  * ```tsx
@@ -126,7 +151,6 @@ export interface CustomPatternProps {
 export function CustomPattern({
   component,
   className,
-  token,
   content,
   action,
   payload,
@@ -139,23 +163,22 @@ export function CustomPattern({
   htmlProps,
 }: CustomPatternProps): React.ReactElement | null {
   const { emit } = useEventBus();
-  // Note: token prop is deprecated/unused - use className with CSS variables instead
   const classes = cn(className);
 
   // Validate component
   if (!isAllowedComponent(component)) {
     console.warn(
-      `CustomPattern: Unknown component "${component}", falling back to div`,
+      `CustomPattern: Unknown component "${component}", falling back to Box`,
     );
     return (
-      <div
+      <Box
         className={cn(
           classes,
           "p-4 border border-dashed border-[var(--color-error)]/50 text-[var(--color-error)]",
         )}
       >
         Unknown component: {component}
-      </div>
+      </Box>
     );
   }
 
@@ -174,6 +197,9 @@ export function CustomPattern({
       emit(`UI:${action}`, payload ?? {});
     }
   };
+
+  // Determine content to render
+  const renderContent = children ?? content;
 
   // Build common props
   const commonProps: Record<string, unknown> = {
@@ -194,27 +220,29 @@ export function CustomPattern({
     }
   }
 
-  // Determine content to render
-  const renderContent = children ?? content;
-
-  // Render based on component type
+  // Render based on component type using design system components
   switch (component) {
     case "button":
       return (
-        <button
-          {...(commonProps as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+        <Button
+          variant="secondary"
+          className={classes}
+          disabled={disabled}
+          onClick={handleClick}
+          {...(htmlProps as Record<string, unknown>)}
         >
           {renderContent}
-        </button>
+        </Button>
       );
 
     case "a":
       return (
+        // eslint-disable-next-line almadar/no-raw-dom-elements -- semantic anchor with href
         <a
           href={href ?? "#"}
           target={external ? "_blank" : undefined}
           rel={external ? "noopener noreferrer" : undefined}
-          {...(commonProps as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+          {...commonProps}
         >
           {renderContent}
         </a>
@@ -222,165 +250,152 @@ export function CustomPattern({
 
     case "img":
       return (
+        // eslint-disable-next-line almadar/no-raw-dom-elements -- semantic img with src/alt
         <img
           src={src}
           alt={alt ?? ""}
-          {...(commonProps as React.ImgHTMLAttributes<HTMLImageElement>)}
+          {...commonProps}
         />
       );
 
     case "input":
       return (
-        <input
-          {...(commonProps as React.InputHTMLAttributes<HTMLInputElement>)}
+        <Input
+          className={classes}
+          disabled={disabled}
+          {...(htmlProps as Record<string, unknown>)}
         />
       );
 
     case "label":
       return (
-        <label
-          {...(commonProps as React.LabelHTMLAttributes<HTMLLabelElement>)}
+        <Typography
+          as="label"
+          className={classes}
+          {...(htmlProps as Record<string, unknown>)}
         >
           {renderContent}
-        </label>
+        </Typography>
       );
 
     case "form":
       return (
-        <form
-          onSubmit={(e) => {
+        <Box
+          as="form"
+          onSubmit={(e: React.FormEvent) => {
             e.preventDefault();
             if (action) {
               emit(`UI:${action}`, payload ?? {});
             }
           }}
-          {...(commonProps as React.FormHTMLAttributes<HTMLFormElement>)}
+          {...commonProps}
         >
           {renderContent}
-        </form>
+        </Box>
       );
 
-    // Heading elements
+    // Heading elements — use Typography with appropriate variant
     case "h1":
-      return (
-        <h1 {...(commonProps as React.HTMLAttributes<HTMLHeadingElement>)}>
-          {renderContent}
-        </h1>
-      );
     case "h2":
-      return (
-        <h2 {...(commonProps as React.HTMLAttributes<HTMLHeadingElement>)}>
-          {renderContent}
-        </h2>
-      );
     case "h3":
-      return (
-        <h3 {...(commonProps as React.HTMLAttributes<HTMLHeadingElement>)}>
-          {renderContent}
-        </h3>
-      );
     case "h4":
-      return (
-        <h4 {...(commonProps as React.HTMLAttributes<HTMLHeadingElement>)}>
-          {renderContent}
-        </h4>
-      );
     case "h5":
-      return (
-        <h5 {...(commonProps as React.HTMLAttributes<HTMLHeadingElement>)}>
-          {renderContent}
-        </h5>
-      );
     case "h6":
       return (
-        <h6 {...(commonProps as React.HTMLAttributes<HTMLHeadingElement>)}>
+        <Typography
+          variant={HEADING_VARIANT_MAP[component]}
+          className={classes}
+          {...(htmlProps as Record<string, unknown>)}
+        >
           {renderContent}
-        </h6>
+        </Typography>
       );
 
-    // List elements
+    // List elements — use Box with semantic `as`
     case "ul":
       return (
-        <ul {...(commonProps as React.HTMLAttributes<HTMLUListElement>)}>
+        <Box as="ul" {...commonProps}>
           {renderContent}
-        </ul>
+        </Box>
       );
     case "ol":
       return (
-        <ol {...(commonProps as React.HTMLAttributes<HTMLOListElement>)}>
+        <Box as="ol" {...commonProps}>
           {renderContent}
-        </ol>
+        </Box>
       );
     case "li":
       return (
-        <li {...(commonProps as React.HTMLAttributes<HTMLLIElement>)}>
+        <Box as="li" {...commonProps}>
           {renderContent}
-        </li>
+        </Box>
       );
 
-    // Semantic elements
+    // Semantic elements — use Box with semantic `as`
     case "header":
       return (
-        <header {...(commonProps as React.HTMLAttributes<HTMLElement>)}>
+        <Box as="header" {...commonProps}>
           {renderContent}
-        </header>
+        </Box>
       );
     case "footer":
       return (
-        <footer {...(commonProps as React.HTMLAttributes<HTMLElement>)}>
+        <Box as="footer" {...commonProps}>
           {renderContent}
-        </footer>
+        </Box>
       );
     case "section":
       return (
-        <section {...(commonProps as React.HTMLAttributes<HTMLElement>)}>
+        <Box as="section" {...commonProps}>
           {renderContent}
-        </section>
+        </Box>
       );
     case "article":
       return (
-        <article {...(commonProps as React.HTMLAttributes<HTMLElement>)}>
+        <Box as="article" {...commonProps}>
           {renderContent}
-        </article>
+        </Box>
       );
     case "nav":
       return (
-        <nav {...(commonProps as React.HTMLAttributes<HTMLElement>)}>
+        <Box as="nav" {...commonProps}>
           {renderContent}
-        </nav>
+        </Box>
       );
     case "main":
       return (
-        <main {...(commonProps as React.HTMLAttributes<HTMLElement>)}>
+        <Box as="main" {...commonProps}>
           {renderContent}
-        </main>
+        </Box>
       );
     case "aside":
       return (
-        <aside {...(commonProps as React.HTMLAttributes<HTMLElement>)}>
+        <Box as="aside" {...commonProps}>
           {renderContent}
-        </aside>
+        </Box>
       );
 
-    // Generic elements
+    // Text elements
     case "span":
       return (
-        <span {...(commonProps as React.HTMLAttributes<HTMLSpanElement>)}>
+        <Typography variant="body" as="span" className={classes} {...(htmlProps as Record<string, unknown>)}>
           {renderContent}
-        </span>
+        </Typography>
       );
     case "p":
       return (
-        <p {...(commonProps as React.HTMLAttributes<HTMLParagraphElement>)}>
+        <Typography variant="body" className={classes} {...(htmlProps as Record<string, unknown>)}>
           {renderContent}
-        </p>
+        </Typography>
       );
+
+    // Default — use Box
     case "div":
     default:
       return (
-        <div {...(commonProps as React.HTMLAttributes<HTMLDivElement>)}>
+        <Box {...commonProps}>
           {renderContent}
-        </div>
+        </Box>
       );
   }
 }

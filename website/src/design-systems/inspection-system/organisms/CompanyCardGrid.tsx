@@ -29,6 +29,7 @@ import {
   Spinner,
   cn,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 export interface CompanyEntity {
@@ -80,6 +81,7 @@ const CompanyCard: React.FC<{
   actionEvent?: string;
 }> = ({ company, actionEvent }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
 
   const handleAction = (action: string) => {
     if (actionEvent) {
@@ -124,8 +126,7 @@ const CompanyCard: React.FC<{
             <HStack gap="xs" align="center">
               <ClipboardList className="h-3 w-3" />
               <Typography variant="small">
-                {company.inspectionCount} inspection
-                {company.inspectionCount !== 1 ? "s" : ""}
+                {company.inspectionCount} {company.inspectionCount !== 1 ? t('companies.inspectionsPlural') : t('companies.inspectionSingular')}
               </Typography>
             </HStack>
           )}
@@ -133,7 +134,7 @@ const CompanyCard: React.FC<{
             <HStack gap="xs" align="center">
               <Building2 className="h-3 w-3" />
               <Typography variant="small">
-                {company.units.length} unit{company.units.length !== 1 ? "s" : ""}
+                {company.units.length} {company.units.length !== 1 ? t('companies.unitsPlural') : t('companies.unitSingular')}
               </Typography>
             </HStack>
           )}
@@ -142,15 +143,15 @@ const CompanyCard: React.FC<{
         <HStack gap="sm" className="pt-2 border-t">
           <Button variant="ghost" size="sm" onClick={() => handleAction("VIEW")} className="gap-1">
             <Eye className="h-3 w-3" />
-            View
+            {t('common.view')}
           </Button>
           <Button variant="ghost" size="sm" onClick={() => handleAction("EDIT")} className="gap-1">
             <Edit className="h-3 w-3" />
-            Edit
+            {t('common.edit')}
           </Button>
           <Button variant="ghost" size="sm" onClick={() => handleAction("NEW_INSPECTION")} className="gap-1 text-blue-600">
             <ClipboardList className="h-3 w-3" />
-            Inspect
+            {t('companies.inspect')}
           </Button>
         </HStack>
       </VStack>
@@ -170,6 +171,7 @@ export function CompanyCardGrid({
   className,
 }: CompanyCardGridProps): JSX.Element {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (value: string) => {
@@ -197,20 +199,20 @@ export function CompanyCardGrid({
           <VStack gap="xs">
             <Typography variant="h1">{title}</Typography>
             <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-              Manage registered companies
+              {t('companies.subtitle')}
             </Typography>
           </VStack>
 
           <Button variant="primary" onClick={handleCreate} className="gap-2">
             <Plus className="h-4 w-4" />
-            Add Company
+            {t('companies.addCompany')}
           </Button>
         </HStack>
       )}
 
       <Box className="w-full max-w-sm">
         <Input
-          placeholder="Search companies..."
+          placeholder={t('companies.search')}
           value={searchTerm}
           onChange={(e) => handleSearch(e.target.value)}
           leftIcon={<Search className="h-4 w-4 text-[var(--color-muted-foreground)]" />}
@@ -225,7 +227,7 @@ export function CompanyCardGrid({
 
       {error && (
         <Typography variant="body" className="text-red-500 text-center py-12">
-          Error: {error.message}
+          {t('error.prefix')} {error.message}
         </Typography>
       )}
 
@@ -235,7 +237,7 @@ export function CompanyCardGrid({
             <VStack align="center" justify="center" className="py-12">
               <Building2 className="h-12 w-12 text-[var(--color-muted-foreground)]" />
               <Typography variant="h3" className="text-[var(--color-muted-foreground)]">
-                No companies found
+                {t('companies.empty.title')}
               </Typography>
             </VStack>
           ) : (

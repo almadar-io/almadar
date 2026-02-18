@@ -19,6 +19,8 @@ import {
   Box,
   VStack,
   HStack,
+  Button,
+  Typography,
   useEventBus,
   useTranslate,
 } from '@almadar/ui';
@@ -45,6 +47,10 @@ export interface FlashCardProps {
   showActions?: boolean;
   /** Additional CSS classes */
   className?: string;
+  /** Loading state */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
 }
 
 export const FlashCard: React.FC<FlashCardProps> = ({
@@ -96,10 +102,10 @@ export const FlashCard: React.FC<FlashCardProps> = ({
       {progress !== undefined && (
         <VStack gap="xs">
           <HStack justify="between">
-            <span className="text-sm text-[var(--color-muted-foreground)]">
+            <Typography variant="small" className="text-sm text-[var(--color-muted-foreground)]">
               {t('flashcard.cardProgress', { current: currentCard, total: totalCards })}
-            </span>
-            <span className="text-sm text-[var(--color-muted-foreground)]">{Math.round(progress)}%</span>
+            </Typography>
+            <Typography variant="small" className="text-sm text-[var(--color-muted-foreground)]">{Math.round(progress)}%</Typography>
           </HStack>
           <Box className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
             <Box
@@ -129,11 +135,11 @@ export const FlashCard: React.FC<FlashCardProps> = ({
             style={{ backfaceVisibility: 'hidden', transform: 'rotateY(0deg)' }}
           >
             <VStack gap="sm" align="center" className="text-center">
-              <span className="text-sm text-[var(--color-muted-foreground)]">{t('flashcard.question')}</span>
-              <span className="text-xl font-semibold text-[var(--color-foreground)]">
+              <Typography variant="small" className="text-sm text-[var(--color-muted-foreground)]">{t('flashcard.question')}</Typography>
+              <Typography variant="small" className="text-xl font-semibold text-[var(--color-foreground)]">
                 {entity.front}
-              </span>
-              <span className="text-sm text-[var(--color-muted-foreground)]">{t('flashcard.clickToFlip')}</span>
+              </Typography>
+              <Typography variant="small" className="text-sm text-[var(--color-muted-foreground)]">{t('flashcard.clickToFlip')}</Typography>
             </VStack>
           </Box>
 
@@ -146,14 +152,14 @@ export const FlashCard: React.FC<FlashCardProps> = ({
             }}
           >
             <VStack gap="sm" align="center" className="text-center">
-              <span className="text-sm text-[var(--color-muted-foreground)]">{t('flashcard.answer')}</span>
-              <span className="text-xl font-semibold text-[var(--color-foreground)]">
+              <Typography variant="small" className="text-sm text-[var(--color-muted-foreground)]">{t('flashcard.answer')}</Typography>
+              <Typography variant="small" className="text-xl font-semibold text-[var(--color-foreground)]">
                 {entity.back}
-              </span>
+              </Typography>
               {entity.studied && (
-                <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded mt-2">
+                <Typography variant="small" className="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded mt-2">
                   {t('flashcard.studied')}
-                </span>
+                </Typography>
               )}
             </VStack>
           </Box>
@@ -163,38 +169,46 @@ export const FlashCard: React.FC<FlashCardProps> = ({
       {/* Actions */}
       {showActions && (
         <HStack gap="sm" justify="center">
-          <button
+          <Button
+            variant="primary"
+            size="sm"
             className="px-4 py-2 text-sm font-medium bg-green-600 text-white rounded hover:bg-green-700 flex items-center gap-2"
             onClick={handleMarkStudied}
           >
             <Check size={16} />
             {t('flashcard.markAsStudied')}
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="secondary"
+            size="sm"
             className="px-4 py-2 text-sm font-medium bg-gray-100 text-[var(--color-foreground)] rounded hover:bg-gray-200 flex items-center gap-2"
             onClick={handleReset}
           >
             <RotateCcw size={16} />
             {t('flashcard.reset')}
-          </button>
+          </Button>
         </HStack>
       )}
 
       {/* Navigation */}
       {showNavigation && (
         <HStack gap="sm" justify="center">
-          <button
+          <Button
+            variant="secondary"
+            size="sm"
             className="px-4 py-2 text-sm font-medium bg-gray-100 text-[var(--color-foreground)] rounded hover:bg-gray-200"
             onClick={handlePrev}
           >
             {t('flashcard.previous')}
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="primary"
+            size="sm"
             className="px-4 py-2 text-sm font-medium bg-indigo-600 text-white rounded hover:bg-indigo-700"
             onClick={handleNext}
           >
             {t('flashcard.next')}
-          </button>
+          </Button>
         </HStack>
       )}
     </VStack>

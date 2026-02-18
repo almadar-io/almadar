@@ -8,7 +8,7 @@
  * - Emits: UI:QUICK_ACTION { action, context }
  */
 
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import {
   Plus,
   X,
@@ -25,7 +25,9 @@ import {
   VStack,
   HStack,
   Typography,
+  Button,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 export interface FloatingAction {
@@ -53,47 +55,56 @@ export interface FloatingActionMenuProps {
     | unknown;
   /** Additional CSS classes */
   className?: string;
+  /** Loading state indicator */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name for schema-driven auto-fetch */
+  entity?: string;
   /** Action click handler */
   onAction?: (actionId: string) => void;
 }
 
-const defaultActions: FloatingAction[] = [
-  {
-    id: "add_participant",
-    label: "Add Participant",
-    icon: UserPlus,
-    color: "text-purple-600",
-    bgColor: "bg-purple-100",
-  },
-  {
-    id: "take_photo",
-    label: "Take Photo",
-    icon: Camera,
-    color: "text-blue-600",
-    bgColor: "bg-blue-100",
-  },
-  {
-    id: "add_note",
-    label: "Add Note",
-    icon: FileText,
-    color: "text-green-600",
-    bgColor: "bg-green-100",
-  },
-  {
-    id: "record_objection",
-    label: "Record Objection",
-    icon: AlertCircle,
-    color: "text-amber-600",
-    bgColor: "bg-amber-100",
-  },
-  {
-    id: "sos",
-    label: "Emergency",
-    icon: Phone,
-    color: "text-red-600",
-    bgColor: "bg-red-100",
-  },
-];
+function useDefaultActions(): FloatingAction[] {
+  const { t } = useTranslate();
+  return useMemo(() => [
+    {
+      id: "add_participant",
+      label: t('floatingMenu.addParticipant'),
+      icon: UserPlus,
+      color: "text-purple-600",
+      bgColor: "bg-purple-100",
+    },
+    {
+      id: "take_photo",
+      label: t('floatingMenu.takePhoto'),
+      icon: Camera,
+      color: "text-blue-600",
+      bgColor: "bg-blue-100",
+    },
+    {
+      id: "add_note",
+      label: t('floatingMenu.addNote'),
+      icon: FileText,
+      color: "text-green-600",
+      bgColor: "bg-green-100",
+    },
+    {
+      id: "record_objection",
+      label: t('floatingMenu.recordObjection'),
+      icon: AlertCircle,
+      color: "text-amber-600",
+      bgColor: "bg-amber-100",
+    },
+    {
+      id: "sos",
+      label: t('floatingMenu.emergency'),
+      icon: Phone,
+      color: "text-red-600",
+      bgColor: "bg-red-100",
+    },
+  ], [t]);
+}
 
 const positionClasses: Record<string, string> = {
   "bottom-right": "right-4 bottom-4",
@@ -102,13 +113,15 @@ const positionClasses: Record<string, string> = {
 };
 
 export const FloatingActionMenu: React.FC<FloatingActionMenuProps> = ({
-  actions = defaultActions,
+  actions: actionsProp,
   context = {},
   position = "bottom-right",
   className,
   onAction,
 }) => {
   const eventBus = useEventBus();
+  const defaultActions = useDefaultActions();
+  const actions = actionsProp ?? defaultActions;
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -163,8 +176,8 @@ export const FloatingActionMenu: React.FC<FloatingActionMenuProps> = ({
                     </Typography>
                   </Box>
 
-                  <button
-                    type="button"
+                  <Button
+                    variant="ghost"
                     onClick={() => handleAction(action.id)}
                     className={cn(
                       "p-3 rounded-full shadow-lg transition-transform hover:scale-110",
@@ -173,15 +186,15 @@ export const FloatingActionMenu: React.FC<FloatingActionMenuProps> = ({
                     )}
                   >
                     <Icon className="h-5 w-5" />
-                  </button>
+                  </Button>
                 </HStack>
               );
             })}
           </VStack>
         )}
 
-        <button
-          type="button"
+        <Button
+          variant="ghost"
           onClick={handleToggle}
           className={cn(
             "p-4 rounded-full shadow-lg transition-all",
@@ -191,7 +204,7 @@ export const FloatingActionMenu: React.FC<FloatingActionMenuProps> = ({
           )}
         >
           {isOpen ? <X className="h-6 w-6" /> : <Plus className="h-6 w-6" />}
-        </button>
+        </Button>
       </VStack>
     </Box>
   );

@@ -1,6 +1,8 @@
 import React from "react";
 import { cn } from "../../lib/cn";
 import { Button } from "../atoms";
+import { Box } from "../atoms/Box";
+import { Typography } from "../atoms/Typography";
 import { ArrowLeft, LucideIcon } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEventBus } from "../../hooks/useEventBus";
@@ -47,6 +49,10 @@ export interface PageHeaderProps {
   actions?: readonly Readonly<SchemaAction>[];
   /** Loading state indicator */
   isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name for schema-driven auto-fetch */
+  entity?: string;
   /** Tabs for sub-navigation */
   tabs?: ReadonlyArray<{
     label: string;
@@ -119,19 +125,20 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   };
 
   return (
-    <div className={cn("mb-6", className)}>
+    <Box className={cn("mb-6", className)}>
       {/* Breadcrumbs */}
       {breadcrumbs && breadcrumbs.length > 0 && (
-        <nav className="mb-4">
-          <ol className="flex items-center gap-2 text-sm">
+        <Box as="nav" className="mb-4">
+          <Box as="ol" className="flex items-center gap-2 text-sm">
             {breadcrumbs.map((crumb, idx) => (
               <React.Fragment key={idx}>
                 {idx > 0 && (
-                  <span className="text-[var(--color-muted-foreground)]">
+                  <Typography variant="small" color="muted">
                     /
-                  </span>
+                  </Typography>
                 )}
                 {crumb.href ? (
+                  // eslint-disable-next-line almadar/no-raw-dom-elements -- semantic anchor with href
                   <a
                     href={crumb.href}
                     className="text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
@@ -139,53 +146,55 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
                     {crumb.label}
                   </a>
                 ) : (
-                  <span className="text-[var(--color-foreground)] font-medium">
+                  <Typography variant="small" className="text-[var(--color-foreground)] font-medium">
                     {crumb.label}
-                  </span>
+                  </Typography>
                 )}
               </React.Fragment>
             ))}
-          </ol>
-        </nav>
+          </Box>
+        </Box>
       )}
 
       {/* Main header row */}
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex items-start gap-4">
+      <Box className="flex items-start justify-between gap-4">
+        <Box className="flex items-start gap-4">
           {showBack && (
-            <button
+            <Button
+              variant="ghost"
               onClick={handleBack}
-              className="mt-1 p-2 rounded-[var(--radius-lg)] hover:bg-[var(--color-muted)] transition-colors"
+              className="mt-1 p-2 rounded-[var(--radius-lg)]"
             >
               <ArrowLeft className="h-5 w-5 text-[var(--color-muted-foreground)]" />
-            </button>
+            </Button>
           )}
-          <div>
-            <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-bold text-[var(--color-foreground)]">
+          <Box>
+            <Box className="flex items-center gap-3">
+              <Typography variant="h1" className="text-2xl font-bold text-[var(--color-foreground)]">
                 {title != null ? String(title) : ""}
-              </h1>
+              </Typography>
               {status && (
-                <span
+                <Typography
+                  variant="small"
                   className={cn(
                     "px-2.5 py-1 rounded-[var(--radius-full)] text-xs font-medium",
                     statusColors[status.variant || "default"],
                   )}
                 >
                   {status.label}
-                </span>
+                </Typography>
               )}
-            </div>
+            </Box>
             {subtitle != null && subtitle !== "" && (
-              <p className="mt-1 text-sm text-[var(--color-muted-foreground)]">
+              <Typography variant="body" color="muted" className="mt-1 text-sm">
                 {String(subtitle)}
-              </p>
+              </Typography>
             )}
-          </div>
-        </div>
+          </Box>
+        </Box>
 
         {/* Actions */}
-        <div className="flex items-center gap-2 shrink-0">
+        <Box className="flex items-center gap-2 shrink-0">
           {actions?.map((action, idx) => (
             <Button
               key={`action-${idx}`}
@@ -200,16 +209,17 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
               {action.label}
             </Button>
           ))}
-        </div>
-      </div>
+        </Box>
+      </Box>
 
       {/* Tabs */}
       {tabs && tabs.length > 0 && (
-        <div className="mt-6 border-b border-[var(--color-border)]">
-          <nav className="flex gap-6">
+        <Box className="mt-6 border-b border-[var(--color-border)]">
+          <Box as="nav" className="flex gap-6">
             {tabs.map((tab) => (
-              <button
+              <Button
                 key={tab.value}
+                variant="ghost"
                 onClick={() => onTabChange?.(tab.value)}
                 className={cn(
                   "pb-3 text-sm font-bold border-b-2 transition-colors rounded-none",
@@ -220,7 +230,8 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
               >
                 {tab.label}
                 {tab.count !== undefined && (
-                  <span
+                  <Typography
+                    variant="small"
                     className={cn(
                       "ml-2 px-2 py-0.5 rounded-[var(--radius-full)] text-xs",
                       activeTab === tab.value
@@ -229,16 +240,18 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
                     )}
                   >
                     {tab.count}
-                  </span>
+                  </Typography>
                 )}
-              </button>
+              </Button>
             ))}
-          </nav>
-        </div>
+          </Box>
+        </Box>
       )}
 
       {/* Custom content */}
       {children}
-    </div>
+    </Box>
   );
 };
+
+PageHeader.displayName = "PageHeader";

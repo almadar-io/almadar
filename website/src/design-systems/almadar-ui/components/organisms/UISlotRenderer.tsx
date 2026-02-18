@@ -22,6 +22,8 @@ import {
 import { Modal } from "../molecules/Modal";
 import { Drawer } from "../molecules/Drawer";
 import { Toast } from "../molecules/Toast";
+import { Box } from "../atoms/Box";
+import { Typography } from "../atoms/Typography";
 import { cn } from "../../lib/cn";
 
 // Shared renderer imports (synced from orbital-shared/design-system/renderer)
@@ -96,7 +98,7 @@ import { CustomPattern } from "./CustomPattern";
  *
  * Component names match those in orbital-shared/patterns/component-mapping.json
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line almadar/require-display-name
 export const COMPONENT_REGISTRY: Record<string, React.ComponentType<any>> = {
   // Display patterns
   PageHeader,
@@ -276,6 +278,9 @@ interface UISlotComponentProps {
     | "bottom-left";
   className?: string;
   draggable?: boolean;
+  isLoading?: boolean;
+  error?: Error | null;
+  entity?: string;
 }
 
 /**
@@ -297,7 +302,7 @@ function UISlotComponent({
     // For non-portal slots, render an empty placeholder
     if (!portal) {
       return (
-        <div
+        <Box
           id={`slot-${slot}`}
           className={cn("ui-slot", `ui-slot-${slot}`, className)}
         />
@@ -325,14 +330,14 @@ function UISlotComponent({
 
   // Inline slots
   return (
-    <div
+    <Box
       id={`slot-${slot}`}
       className={cn("ui-slot", `ui-slot-${slot}`, className)}
       data-pattern={content.pattern}
       data-source-trait={content.sourceTrait}
     >
       <SlotContentRenderer content={content} onDismiss={handleDismiss} />
-    </div>
+    </Box>
   );
 }
 
@@ -345,6 +350,10 @@ interface SlotPortalProps {
   content: SlotContent;
   position?: string;
   onDismiss: () => void;
+  className?: string;
+  isLoading?: boolean;
+  error?: Error | null;
+  entity?: string;
 }
 
 function SlotPortal({
@@ -403,7 +412,7 @@ function SlotPortal({
 
     case "toast":
       wrapper = (
-        <div className={cn("fixed z-50", getToastPosition(position))}>
+        <Box className={cn("fixed z-50", getToastPosition(position))}>
           <Toast
             variant={
               (content.props.variant as
@@ -416,30 +425,30 @@ function SlotPortal({
             message={(content.props.message as string) ?? ""}
             onDismiss={onDismiss}
           />
-        </div>
+        </Box>
       );
       break;
 
     case "overlay":
       wrapper = (
-        <div
+        <Box
           className="fixed inset-0 z-50 bg-[var(--color-foreground)]/50 flex items-center justify-center"
           onClick={onDismiss}
         >
-          <div onClick={(e) => e.stopPropagation()}>
+          <Box onClick={(e: React.MouseEvent) => e.stopPropagation()}>
             <SlotContentRenderer content={content} onDismiss={onDismiss} />
-          </div>
-        </div>
+          </Box>
+        </Box>
       );
       break;
 
     case "center":
       wrapper = (
-        <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-          <div className="pointer-events-auto">
+        <Box className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
+          <Box className="pointer-events-auto">
             <SlotContentRenderer content={content} onDismiss={onDismiss} />
-          </div>
-        </div>
+          </Box>
+        </Box>
       );
       break;
 
@@ -472,6 +481,10 @@ function getToastPosition(position?: string): string {
 interface SlotContentRendererProps {
   content: SlotContent;
   onDismiss: () => void;
+  className?: string;
+  isLoading?: boolean;
+  error?: Error | null;
+  entity?: string;
 }
 
 /**
@@ -538,7 +551,7 @@ function SlotContentRenderer({
     const { children: _childrenConfig, ...restProps } = content.props;
 
     return (
-      <div
+      <Box
         className="slot-content"
         data-pattern={content.pattern}
         data-id={content.id}
@@ -546,26 +559,26 @@ function SlotContentRenderer({
         <PatternComponent {...restProps} onDismiss={onDismiss}>
           {renderedChildren}
         </PatternComponent>
-      </div>
+      </Box>
     );
   }
 
   // Fallback for unknown patterns - show placeholder
   return (
-    <div
+    <Box
       className="slot-content"
       data-pattern={content.pattern}
       data-id={content.id}
     >
       {(content.props.children as React.ReactNode) ?? (
-        <div className="p-4 text-sm text-[var(--color-muted-foreground)] border border-dashed border-[var(--color-border)] rounded">
+        <Box className="p-4 text-sm text-[var(--color-muted-foreground)] border border-dashed border-[var(--color-border)] rounded">
           Unknown pattern: {content.pattern}
           {content.sourceTrait && (
-            <span className="ml-2">(from {content.sourceTrait})</span>
+            <Typography variant="small" className="ml-2">(from {content.sourceTrait})</Typography>
           )}
-        </div>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 }
 
@@ -580,6 +593,12 @@ export interface UISlotRendererProps {
   includeFloating?: boolean;
   /** Additional class name for the container */
   className?: string;
+  /** Loading state indicator */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name for schema-driven auto-fetch */
+  entity?: string;
 }
 
 /**
@@ -604,7 +623,7 @@ export function UISlotRenderer({
   className,
 }: UISlotRendererProps): React.ReactElement {
   return (
-    <div className={cn("ui-slot-renderer", className)}>
+    <Box className={cn("ui-slot-renderer", className)}>
       {/* Layout slots */}
       <UISlotComponent slot="sidebar" className="ui-slot-sidebar" />
       <UISlotComponent slot="main" className="ui-slot-main flex-1" />
@@ -634,7 +653,7 @@ export function UISlotRenderer({
       {includeFloating && (
         <UISlotComponent slot="floating" className="fixed z-50" draggable />
       )}
-    </div>
+    </Box>
   );
 }
 

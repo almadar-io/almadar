@@ -22,6 +22,11 @@
 import React from 'react';
 import { GameCanvas3D, type GameCanvas3DProps } from '../organisms/game/GameCanvas3D';
 import type { IsometricTile, IsometricUnit, IsometricFeature } from '../organisms/game/types/isometric';
+import { Box } from '../atoms/Box';
+import { HStack } from '../atoms/Stack';
+import { Typography } from '../atoms/Typography';
+import { cn } from '../../lib/cn';
+import type { TemplateProps } from './types';
 
 export interface Battle3DEntity {
     /** Battlefield tiles */
@@ -35,12 +40,10 @@ export interface Battle3DEntity {
     /** Round number */
     round?: number;
     /** Entity ID */
-    id?: string;
+    id: string;
 }
 
-export interface GameCanvas3DBattleTemplateProps {
-    /** Battle entity data */
-    entity: Battle3DEntity;
+export interface GameCanvas3DBattleTemplateProps extends TemplateProps<Battle3DEntity> {
     /** 3D camera mode - defaults to perspective for dramatic effect */
     cameraMode?: 'isometric' | 'perspective' | 'top-down';
     /** Show grid helper */
@@ -69,8 +72,6 @@ export interface GameCanvas3DBattleTemplateProps {
     attackTargets?: Array<{ x: number; z: number }>;
     /** Show turn indicator overlay */
     showTurnIndicator?: boolean;
-    /** Additional CSS classes */
-    className?: string;
 }
 
 /**
@@ -109,7 +110,7 @@ export function GameCanvas3DBattleTemplate({
     className,
 }: GameCanvas3DBattleTemplateProps): JSX.Element {
     return (
-        <div className={`game-canvas-3d-battle-template ${className || ''}`}>
+        <Box className={cn('game-canvas-3d-battle-template', className)}>
             <GameCanvas3D
                 tiles={entity.tiles}
                 units={entity.units}
@@ -127,22 +128,25 @@ export function GameCanvas3DBattleTemplate({
                 attackTargets={attackTargets}
                 className="game-canvas-3d-battle-template__canvas"
             />
-            
+
             {/* Turn indicator overlay */}
             {entity.currentTurn && (
-                <div 
-                    className="battle-template__turn-indicator"
-                    data-turn={entity.currentTurn}
+                <HStack
+                    gap="sm"
+                    align="center"
+                    className={cn('battle-template__turn-indicator', `battle-template__turn-indicator--${entity.currentTurn}`)}
                 >
-                    <span className="turn-indicator__label">
+                    <Typography variant="body" className="turn-indicator__label">
                         {entity.currentTurn === 'player' ? 'Your Turn' : "Enemy's Turn"}
-                    </span>
+                    </Typography>
                     {entity.round && (
-                        <span className="turn-indicator__round">Round {entity.round}</span>
+                        <Typography variant="small" className="turn-indicator__round">
+                            Round {entity.round}
+                        </Typography>
                     )}
-                </div>
+                </HStack>
             )}
-        </div>
+        </Box>
     );
 }
 

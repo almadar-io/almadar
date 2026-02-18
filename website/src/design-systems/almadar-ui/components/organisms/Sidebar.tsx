@@ -9,6 +9,9 @@ import React, { useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { Badge } from '../atoms/Badge';
+import { Button } from '../atoms/Button';
+import { Box } from '../atoms/Box';
+import { Typography } from '../atoms/Typography';
 import { cn } from '../../lib/cn';
 
 export interface SidebarItem {
@@ -61,6 +64,12 @@ export interface SidebarProps {
   onLogoClick?: () => void;
   /** Additional CSS classes */
   className?: string;
+  /** Loading state indicator */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name for schema-driven auto-fetch */
+  entity?: string;
 }
 
 /**
@@ -74,7 +83,8 @@ const SidebarNavItem: React.FC<{
   const isActive = item.active ?? item.isActive;
 
   return (
-    <button
+    <Button
+      variant="ghost"
       onClick={item.onClick}
       className={cn(
         'w-full flex items-center gap-3 px-3 py-2.5 transition-all duration-[var(--transition-fast)] group relative',
@@ -104,7 +114,7 @@ const SidebarNavItem: React.FC<{
       )}
 
       {!collapsed && (
-        <span className="font-medium truncate flex-1 text-left">{item.label}</span>
+        <Typography variant="body" className="font-medium truncate flex-1 text-left">{item.label}</Typography>
       )}
 
       {!collapsed && item.badge !== undefined && (
@@ -113,7 +123,7 @@ const SidebarNavItem: React.FC<{
 
       {/* Tooltip for collapsed state */}
       {collapsed && (
-        <div className={cn(
+        <Box className={cn(
           'absolute left-full ml-2 px-2 py-1 text-xs opacity-0 group-hover:opacity-100',
           'pointer-events-none whitespace-nowrap z-50 transition-opacity',
           'bg-[var(--color-primary)] text-[var(--color-primary-foreground)]',
@@ -121,9 +131,9 @@ const SidebarNavItem: React.FC<{
           'rounded-[var(--radius-sm)]'
         )}>
           {item.label}
-        </div>
+        </Box>
       )}
-    </button>
+    </Button>
   );
 };
 
@@ -155,7 +165,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   };
 
   return (
-    <aside
+    <Box
+      as="aside"
       className={cn(
         'flex flex-col h-full',
         'bg-[var(--color-card)] border-r border-[var(--color-border)]',
@@ -165,8 +176,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
       )}
     >
       {/* Header with Logo */}
-      <div className="h-16 flex items-center justify-between px-4 border-b border-[var(--color-border)] flex-shrink-0">
-        <div
+      <Box className="h-16 flex items-center justify-between px-4 border-b border-[var(--color-border)] flex-shrink-0">
+        <Box
           className={cn(
             'flex items-center gap-3 cursor-pointer',
             collapsed && 'justify-center w-full'
@@ -176,29 +187,32 @@ export const Sidebar: React.FC<SidebarProps> = ({
           {/* Logo image or custom logo */}
           {logo ? (
             typeof logo === 'string' ? (
+              // eslint-disable-next-line almadar/no-raw-dom-elements -- semantic img with src/alt
               <img src={logo} alt={brandName} className="h-8 w-8" />
             ) : (
               logo
             )
           ) : logoSrc ? (
+            // eslint-disable-next-line almadar/no-raw-dom-elements -- semantic img with src/alt
             <img src={logoSrc} alt={brandName} className="h-8 w-8" />
           ) : (
-            <div className="h-8 w-8 bg-[var(--color-primary)] flex items-center justify-center rounded-[var(--radius-sm)]">
-              <span className="text-[var(--color-primary-foreground)] font-bold text-sm">K</span>
-            </div>
+            <Box className="h-8 w-8 bg-[var(--color-primary)] flex items-center justify-center rounded-[var(--radius-sm)]">
+              <Typography variant="small" className="text-[var(--color-primary-foreground)] font-bold text-sm">K</Typography>
+            </Box>
           )}
 
           {/* Brand name */}
           {!collapsed && (
-            <span className="text-xl font-bold text-[var(--color-foreground)]">
+            <Typography variant="body" className="text-xl font-bold text-[var(--color-foreground)]">
               {brandName}
-            </span>
+            </Typography>
           )}
-        </div>
+        </Box>
 
         {/* Collapse button */}
         {!hideCollapseButton && (
-          <button
+          <Button
+            variant="ghost"
             onClick={handleToggle}
             className={cn(
               'p-1.5 hover:bg-[var(--color-muted)] text-[var(--color-foreground)] hidden lg:block',
@@ -208,23 +222,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
             title={collapsed ? "Expand Sidebar" : "Collapse Sidebar"}
           >
             {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
-          </button>
+          </Button>
         )}
 
         {/* Close button for mobile */}
         {showCloseButton && (
-          <button
+          <Button
+            variant="ghost"
             onClick={onClose}
             className="p-1.5 hover:bg-[var(--color-muted)] text-[var(--color-foreground)] lg:hidden rounded-[var(--radius-sm)]"
             aria-label="Close sidebar"
           >
             <X size={18} />
-          </button>
+          </Button>
         )}
-      </div>
+      </Box>
 
       {/* Navigation */}
-      <nav className="flex-1 py-6 px-3 space-y-1 overflow-y-auto">
+      <Box as="nav" className="flex-1 py-6 px-3 space-y-1 overflow-y-auto">
         {items.map((item) => (
           <SidebarNavItem
             key={item.id}
@@ -232,38 +247,39 @@ export const Sidebar: React.FC<SidebarProps> = ({
             collapsed={collapsed}
           />
         ))}
-      </nav>
+      </Box>
 
       {/* Footer with User Section and additional content */}
       {(footerContent || userSection) && (
-        <div className="p-3 border-t border-[var(--color-border)] space-y-1 flex-shrink-0">
-          <div className={cn(
+        <Box className="p-3 border-t border-[var(--color-border)] space-y-1 flex-shrink-0">
+          <Box className={cn(
             'flex items-center',
             collapsed ? 'justify-center flex-col gap-4' : 'justify-between px-2'
           )}>
             {footerContent && (
-              <div className="flex items-center">
+              <Box className="flex items-center">
                 {footerContent}
-              </div>
+              </Box>
             )}
             {userSection && (
-              <div className="flex items-center">
+              <Box className="flex items-center">
                 {userSection}
-              </div>
+              </Box>
             )}
-          </div>
+          </Box>
 
           {collapsed && !hideCollapseButton && (
-            <button
+            <Button
+              variant="ghost"
               onClick={handleToggle}
               className="w-full flex justify-center p-2 mt-2 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] lg:hidden"
             >
               <ChevronRight size={20} />
-            </button>
+            </Button>
           )}
-        </div>
+        </Box>
       )}
-    </aside>
+    </Box>
   );
 };
 

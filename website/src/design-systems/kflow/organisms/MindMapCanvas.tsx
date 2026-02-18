@@ -37,6 +37,10 @@ export interface MindMapCanvasProps {
   onPanChange?: (pan: { x: number; y: number }) => void;
   /** Additional CSS classes */
   className?: string;
+  /** Loading state */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
   // Entity-aware props (for schema compatibility)
   /** Entity type */
   entity?: string;

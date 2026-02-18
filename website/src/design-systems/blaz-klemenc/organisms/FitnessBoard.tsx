@@ -372,7 +372,7 @@ export const FitnessBoard: React.FC<FitnessBoardProps> = ({
           {error && (
             <VStack align="center" justify="center" className="py-12">
               <Typography variant="body" className="text-red-500">
-                Error: {error.message}
+                {t('fitness.error', { message: error.message })}
               </Typography>
             </VStack>
           )}

@@ -249,7 +249,7 @@ export const MealPlansBoard: React.FC<MealPlansBoardProps> = ({
       {error && (
         <VStack align="center" justify="center" className="py-12">
           <Typography variant="body" className="text-red-500">
-            Error: {error.message}
+            {t('mealPlans.error', { message: error.message })}
           </Typography>
         </VStack>
       )}

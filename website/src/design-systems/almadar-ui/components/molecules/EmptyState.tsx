@@ -1,6 +1,9 @@
 import React from "react";
 import { cn } from "../../lib/cn";
 import { Button } from "../atoms";
+import { Box } from "../atoms/Box";
+import { VStack } from "../atoms/Stack";
+import { Typography } from "../atoms/Typography";
 import { useEventBus } from "../../hooks/useEventBus";
 import { useTranslate } from "../../hooks/useTranslate";
 import {
@@ -84,14 +87,15 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   // Support both title and message (message is alias for title)
   const displayText = title || message || t('empty.noItems');
   return (
-    <div
+    <VStack
+      align="center"
       className={cn(
-        "flex flex-col items-center justify-center py-12 text-center",
+        "justify-center py-12 text-center",
         className,
       )}
     >
       {Icon && (
-        <div
+        <Box
           className={cn(
             "mb-4 rounded-[var(--radius-full)] p-3",
             isDestructive
@@ -111,9 +115,10 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
                   : "text-[var(--color-muted-foreground)]",
             )}
           />
-        </div>
+        </Box>
       )}
-      <h3
+      <Typography
+        variant="h3"
         className={cn(
           "text-lg font-medium",
           isDestructive
@@ -124,11 +129,11 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
         )}
       >
         {displayText}
-      </h3>
+      </Typography>
       {description && (
-        <p className="mt-1 text-sm text-[var(--color-muted-foreground)] max-w-sm">
+        <Typography variant="small" className="mt-1 text-[var(--color-muted-foreground)] max-w-sm">
           {description}
-        </p>
+        </Typography>
       )}
       {actionLabel && (onAction || actionEvent) && (
         <Button
@@ -139,7 +144,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
           {actionLabel}
         </Button>
       )}
-    </div>
+    </VStack>
   );
 };
 

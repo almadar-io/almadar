@@ -12,6 +12,8 @@ import {
   VStack,
   HStack,
   Card,
+  Button,
+  Typography,
   useEventBus,
   useTranslate,
 } from '@almadar/ui';
@@ -52,6 +54,8 @@ export interface KnowledgeGraphBoardProps {
   toggleViewEvent?: string;
   viewConceptEvent?: string;
   className?: string;
+  isLoading?: boolean;
+  error?: Error | null;
 }
 
 export function KnowledgeGraphBoard({
@@ -94,22 +98,24 @@ export function KnowledgeGraphBoard({
 
   return (
     <Box className={`min-h-screen bg-gray-50 ${className}`}>
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
+      <Box className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <VStack gap="none" className="max-w-7xl mx-auto">
           <HStack justify="between" align="center" className="px-4 py-4">
             <VStack gap="xs">
-              <h1 className="text-2xl font-bold text-[var(--color-foreground)]">
+              <Typography variant="h1" className="text-2xl font-bold text-[var(--color-foreground)]">
                 {entity.title}
-              </h1>
+              </Typography>
               {entity.description && (
-                <p className="text-[var(--color-foreground)]">{entity.description}</p>
+                <Typography variant="body" className="text-[var(--color-foreground)]">{entity.description}</Typography>
               )}
             </VStack>
 
             <HStack gap="md" align="center">
               <HStack gap="xs" className="bg-gray-100 rounded-lg p-1">
-                <button
+                <Button
                   onClick={() => handleToggleView("graph")}
+                  variant="secondary"
+                  size="sm"
                   className={`px-3 py-1.5 rounded text-sm font-medium transition-colors flex items-center gap-1 ${
                     viewMode === "graph"
                       ? "bg-white text-[var(--color-foreground)] shadow-sm"
@@ -118,9 +124,11 @@ export function KnowledgeGraphBoard({
                 >
                   <Network size={16} />
                   {t('graph.graph')}
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() => handleToggleView("list")}
+                  variant="secondary"
+                  size="sm"
                   className={`px-3 py-1.5 rounded text-sm font-medium transition-colors flex items-center gap-1 ${
                     viewMode === "list"
                       ? "bg-white text-[var(--color-foreground)] shadow-sm"
@@ -129,7 +137,7 @@ export function KnowledgeGraphBoard({
                 >
                   <ListIcon size={16} />
                   {t('graph.list')}
-                </button>
+                </Button>
               </HStack>
             </HStack>
           </HStack>
@@ -144,7 +152,7 @@ export function KnowledgeGraphBoard({
             </Box>
           )}
         </VStack>
-      </header>
+      </Box>
 
       {entity.learningGoal && (
         <Box className="max-w-7xl mx-auto px-4 py-4">
@@ -156,7 +164,7 @@ export function KnowledgeGraphBoard({
         </Box>
       )}
 
-      <main className="max-w-7xl mx-auto px-4 py-6">
+      <Box className="max-w-7xl mx-auto px-4 py-6">
         {viewMode === "graph" ? (
           <HStack gap="lg" align="start">
             <Box className="flex-1">
@@ -186,9 +194,9 @@ export function KnowledgeGraphBoard({
               {selectedNodeId && (
                 <Card>
                   <VStack gap="sm">
-                    <span className="font-semibold text-[var(--color-foreground)]">
+                    <Typography variant="small" className="font-semibold text-[var(--color-foreground)]">
                       {t('graph.selectedConcept')}
-                    </span>
+                    </Typography>
                     {(() => {
                       const node = entity.nodes.find(
                         (n) => n.id === selectedNodeId,
@@ -196,11 +204,12 @@ export function KnowledgeGraphBoard({
                       if (!node) return null;
                       return (
                         <VStack gap="xs">
-                          <span className="text-[var(--color-foreground)]">
+                          <Typography variant="small" className="text-[var(--color-foreground)]">
                             {node.properties.label}
-                          </span>
+                          </Typography>
                           {node.type && (
-                            <span
+                            <Typography
+                              variant="small"
                               className="text-xs px-2 py-0.5 rounded"
                               style={{
                                 backgroundColor: `${NODE_TYPE_COLORS[node.type] || NODE_TYPE_COLORS.default}20`,
@@ -210,45 +219,47 @@ export function KnowledgeGraphBoard({
                               }}
                             >
                               {node.type}
-                            </span>
+                            </Typography>
                           )}
                         </VStack>
                       );
                     })()}
-                    <button
+                    <Button
                       onClick={() => {
                         if (viewConceptEvent) emit(`UI:${viewConceptEvent}`, { conceptId: selectedNodeId });
                       }}
+                      variant="primary"
+                      size="sm"
                       className="w-full px-3 py-2 text-sm font-medium bg-indigo-600 text-white rounded hover:bg-indigo-700"
                     >
                       {t('graph.viewDetails')}
-                    </button>
+                    </Button>
                   </VStack>
                 </Card>
               )}
 
               <Card>
                 <VStack gap="xs">
-                  <span className="font-semibold text-[var(--color-foreground)]">
+                  <Typography variant="small" className="font-semibold text-[var(--color-foreground)]">
                     {t('graph.statistics')}
-                  </span>
+                  </Typography>
                   <HStack justify="between">
-                    <span className="text-sm text-[var(--color-muted-foreground)]">{t('graph.concepts')}</span>
-                    <span className="text-sm font-medium">
+                    <Typography variant="small" className="text-sm text-[var(--color-muted-foreground)]">{t('graph.concepts')}</Typography>
+                    <Typography variant="small" className="text-sm font-medium">
                       {entity.nodes.length}
-                    </span>
+                    </Typography>
                   </HStack>
                   <HStack justify="between">
-                    <span className="text-sm text-[var(--color-muted-foreground)]">{t('graph.connections')}</span>
-                    <span className="text-sm font-medium">
+                    <Typography variant="small" className="text-sm text-[var(--color-muted-foreground)]">{t('graph.connections')}</Typography>
+                    <Typography variant="small" className="text-sm font-medium">
                       {entity.links.length}
-                    </span>
+                    </Typography>
                   </HStack>
                   <HStack justify="between">
-                    <span className="text-sm text-[var(--color-muted-foreground)]">{t('graph.layers')}</span>
-                    <span className="text-sm font-medium">
+                    <Typography variant="small" className="text-sm text-[var(--color-muted-foreground)]">{t('graph.layers')}</Typography>
+                    <Typography variant="small" className="text-sm font-medium">
                       {entity.layers.length}
-                    </span>
+                    </Typography>
                   </HStack>
                 </VStack>
               </Card>
@@ -270,15 +281,15 @@ export function KnowledgeGraphBoard({
               <Card>
                 <VStack gap="md" align="center" className="py-12">
                   <Grid size={48} className="text-[var(--color-muted-foreground)]" />
-                  <span className="text-[var(--color-muted-foreground)]">
+                  <Typography variant="small" className="text-[var(--color-muted-foreground)]">
                     {t('graph.noConceptsInLayer')}
-                  </span>
+                  </Typography>
                 </VStack>
               </Card>
             )}
           </VStack>
         )}
-      </main>
+      </Box>
     </Box>
   );
 }

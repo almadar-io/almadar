@@ -10,6 +10,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "../atoms/Button";
 import { Typography } from "../atoms/Typography";
 import { Input } from "../atoms/Input";
+import { Select } from "../atoms/Select";
+import { HStack } from "../atoms/Stack";
 import { cn } from "../../lib/cn";
 import { useEventBus } from "../../hooks/useEventBus";
 import { useTranslate } from "../../hooks/useTranslate";
@@ -166,8 +168,8 @@ export const Pagination: React.FC<PaginationProps> = ({
   const pageNumbers = getPageNumbers();
 
   return (
-    <div className={cn("flex items-center justify-between gap-4", className)}>
-      <div className="flex items-center gap-2">
+    <HStack align="center" className={cn("justify-between gap-4", className)}>
+      <HStack align="center" gap="sm">
         {showTotal && totalItems !== undefined && (
           <Typography variant="small" color="secondary">
             {t('pagination.total')} {totalItems}
@@ -175,26 +177,24 @@ export const Pagination: React.FC<PaginationProps> = ({
         )}
 
         {showPageSize && pageSize && onPageSizeChange && (
-          <div className="flex items-center gap-2">
+          <HStack align="center" gap="sm">
             <Typography variant="small" color="secondary">
               {t('pagination.show')}
             </Typography>
-            <select
-              value={pageSize}
+            <Select
+              value={String(pageSize)}
               onChange={(e) => handlePageSizeChange(Number(e.target.value))}
-              className="px-2 py-1 text-sm border-[length:var(--border-width)] border-[var(--color-border)] bg-[var(--color-card)] text-[var(--color-foreground)] font-medium focus:outline-none focus:ring-2 focus:ring-[var(--color-ring)]"
-            >
-              {pageSizeOptions.map((size) => (
-                <option key={size} value={size}>
-                  {size}
-                </option>
-              ))}
-            </select>
-          </div>
+              options={pageSizeOptions.map((size) => ({
+                value: String(size),
+                label: String(size),
+              }))}
+              className="px-2 py-1 text-sm"
+            />
+          </HStack>
         )}
-      </div>
+      </HStack>
 
-      <div className="flex items-center gap-1">
+      <HStack align="center" gap="xs">
         <Button
           variant="secondary"
           size="sm"
@@ -205,7 +205,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           {t('pagination.previous')}
         </Button>
 
-        <div className="flex items-center gap-1">
+        <HStack align="center" gap="xs">
           {pageNumbers.map((page, index) => {
             if (page === "ellipsis") {
               return (
@@ -234,7 +234,7 @@ export const Pagination: React.FC<PaginationProps> = ({
               </Button>
             );
           })}
-        </div>
+        </HStack>
 
         <Button
           variant="secondary"
@@ -245,10 +245,10 @@ export const Pagination: React.FC<PaginationProps> = ({
         >
           {t('pagination.next')}
         </Button>
-      </div>
+      </HStack>
 
       {showJumpToPage && (
-        <div className="flex items-center gap-2">
+        <HStack align="center" gap="sm">
           <Typography variant="small" color="secondary">
             {t('pagination.goTo')}
           </Typography>
@@ -267,9 +267,9 @@ export const Pagination: React.FC<PaginationProps> = ({
           <Button variant="ghost" size="sm" onClick={handleJumpToPage}>
             {t('pagination.go')}
           </Button>
-        </div>
+        </HStack>
       )}
-    </div>
+    </HStack>
   );
 };
 

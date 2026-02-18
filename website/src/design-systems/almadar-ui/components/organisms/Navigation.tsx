@@ -10,6 +10,7 @@ import type { LucideIcon } from 'lucide-react';
 import { Menu, MenuItem } from '../molecules/Menu';
 import { Button } from '../atoms/Button';
 import { Badge } from '../atoms/Badge';
+import { Box } from '../atoms/Box';
 import { cn } from '../../lib/cn';
 
 export interface NavigationItem {
@@ -64,17 +65,26 @@ export interface NavigationProps {
    * Navigation items
    */
   items: NavigationItem[];
-  
+
   /**
    * Navigation orientation
    * @default 'horizontal'
    */
   orientation?: 'horizontal' | 'vertical';
-  
+
   /**
    * Additional CSS classes
    */
   className?: string;
+
+  /** Loading state indicator */
+  isLoading?: boolean;
+
+  /** Error state */
+  error?: Error | null;
+
+  /** Entity name for schema-driven auto-fetch */
+  entity?: string;
 }
 
 export const Navigation: React.FC<NavigationProps> = ({
@@ -138,7 +148,8 @@ export const Navigation: React.FC<NavigationProps> = ({
   };
 
   return (
-    <nav
+    <Box
+      as="nav"
       className={cn(
         'flex',
         orientation === 'horizontal' ? 'flex-row items-center gap-1' : 'flex-col gap-1',
@@ -150,7 +161,7 @@ export const Navigation: React.FC<NavigationProps> = ({
         const hasSubMenu = !!(item.subMenu && item.subMenu.length > 0);
         return renderNavigationItem(item, hasSubMenu);
       })}
-    </nav>
+    </Box>
   );
 };
 

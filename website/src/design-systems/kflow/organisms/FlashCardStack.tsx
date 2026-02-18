@@ -19,6 +19,8 @@ import {
   VStack,
   HStack,
   Card,
+  Button,
+  Typography,
   useEventBus,
   useTranslate,
 } from '@almadar/ui';
@@ -35,6 +37,12 @@ export interface FlashCardStackProps {
   showSummary?: boolean;
   /** Additional CSS classes */
   className?: string;
+  /** Loading state */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name */
+  entity?: string;
 }
 
 export const FlashCardStack: React.FC<FlashCardStackProps> = ({
@@ -82,8 +90,8 @@ export const FlashCardStack: React.FC<FlashCardStackProps> = ({
     return (
       <Card className={`border border-gray-200 ${className}`}>
         <VStack gap="sm" align="center" className="py-8 text-[var(--color-muted-foreground)]">
-          <span className="text-lg">{t('flashcard.noFlashcardsAvailable')}</span>
-          <span className="text-sm">{t('flashcard.addCardsToStart')}</span>
+          <Typography variant="small" className="text-lg">{t('flashcard.noFlashcardsAvailable')}</Typography>
+          <Typography variant="small" className="text-sm">{t('flashcard.addCardsToStart')}</Typography>
         </VStack>
       </Card>
     );
@@ -94,19 +102,21 @@ export const FlashCardStack: React.FC<FlashCardStackProps> = ({
       <Card className={`shadow-md ${className} bg-green-50 border-green-200`}>
         <VStack gap="md" align="center" className="py-8">
           <CheckCircle size={48} className="text-green-500" />
-          <span className="text-xl font-semibold text-green-700">
+          <Typography variant="small" className="text-xl font-semibold text-green-700">
             {t('flashcard.allCardsStudied')}
-          </span>
-          <span className="text-sm text-green-600">
+          </Typography>
+          <Typography variant="small" className="text-sm text-green-600">
             {t('flashcard.completedAllCards', { count: cards.length })}
-          </span>
-          <button
+          </Typography>
+          <Button
+            variant="primary"
+            size="sm"
             className="mt-4 px-4 py-2 text-sm font-medium bg-green-600 text-white rounded hover:bg-green-700 flex items-center gap-2"
             onClick={handleReset}
           >
             <RotateCcw size={16} />
             {t('flashcard.studyAgain')}
-          </button>
+          </Button>
         </VStack>
       </Card>
     );
@@ -118,26 +128,30 @@ export const FlashCardStack: React.FC<FlashCardStackProps> = ({
     <VStack gap="md" className={`w-full max-w-md mx-auto ${className}`}>
       {/* Stack Controls */}
       <HStack justify="between" align="center">
-        <span className="text-sm text-[var(--color-muted-foreground)]">
+        <Typography variant="small" className="text-sm text-[var(--color-muted-foreground)]">
           {t('flashcard.studiedCount', { studied: studiedCount, total: cards.length })}
-        </span>
+        </Typography>
         {showShuffle && (
-          <button
+          <Button
+            variant="secondary"
+            size="sm"
             className="p-2 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:bg-gray-100 rounded"
             onClick={handleShuffle}
             title={t('flashcard.shuffleCards')}
           >
             <Shuffle size={18} />
-          </button>
+          </Button>
         )}
       </HStack>
 
       {/* Progress dots */}
       <HStack gap="xs" justify="center" wrap>
         {cards.map((card, idx) => (
-          <button
+          <Button
             key={card.id}
-            className={`w-3 h-3 rounded-full transition-all ${
+            variant="secondary"
+            size="sm"
+            className={`w-3 h-3 rounded-full transition-all p-0 min-w-0 min-h-0 ${
               idx === currentIndex
                 ? "bg-indigo-600 scale-125"
                 : card.studied

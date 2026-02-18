@@ -45,6 +45,10 @@ export interface SegmentRendererProps {
   onAnswerBloom?: (index: number, level: BloomLevel) => void;
   /** Additional CSS classes for container */
   className?: string;
+  /** Loading state */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
   /** Additional CSS classes for inner wrapper */
   containerClassName?: string;
   // Entity-aware props (for schema compatibility)
