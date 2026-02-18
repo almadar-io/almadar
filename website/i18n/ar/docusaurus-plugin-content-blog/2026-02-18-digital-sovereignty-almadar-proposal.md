@@ -123,4 +123,4 @@ tags: [sovereignty, ai, infrastructure, vision, arabic]
 
 ---
 
-*المدار (Almadar) — فيزياء البرمجيات. [almadar.io](https://almadar.io)*
+*المدار (Almadar) — فيزياء البرمجيات. [almadar.io/ar](https://almadar.io/ar)*

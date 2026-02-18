@@ -124,6 +124,7 @@ const config: Config = {
     },
     {
       tagName: "noscript",
+      attributes: {},
       innerHTML: `<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=YOUR_LINKEDIN_PARTNER_ID&fmt=gif" />`,
     },
   ],
