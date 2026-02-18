@@ -233,14 +233,14 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
 
         {/* === Vertical Connections (Entity-Trait-Page) === */}
         <path
-          d={`M${centerX} ${centerY + 200} L${centerX} ${centerY + 40}`}
+          d={`M${centerX} ${centerY + 230} L${centerX} ${centerY + 40}`}
           stroke={gold}
           strokeWidth="2"
           className={styles.connectionLine}
           style={{ animationDelay: "1.0s" }}
         />
         <path
-          d={`M${centerX} ${centerY - 40} L${centerX} ${centerY - 190}`}
+          d={`M${centerX} ${centerY - 40} L${centerX} ${centerY - 220}`}
           stroke={gold}
           strokeWidth="2"
           className={styles.connectionLine}
@@ -256,11 +256,22 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           // Symmetrical Control Point
           const cp = getControlPoint(start.angle, end.angle);
 
-          // Shorten End Logic
-          const shortEnd = getShortenedEnd(start, cp, end, 42);
+          // Shorten Start Logic (Move start point towards CP)
+          // State pill is approx 40px wide (80px total). 45px ensures clear gap.
+          const dxS = cp.x - start.x;
+          const dyS = cp.y - start.y;
+          const lenS = Math.sqrt(dxS * dxS + dyS * dyS);
+          const tS = Math.min(1, 45 / lenS);
+          const shortStart = {
+            x: start.x + dxS * tS,
+            y: start.y + dyS * tS
+          };
+
+          // Shorten End Logic (Move end point back towards CP)
+          const shortEnd = getShortenedEnd(start, cp, end, 48); // Slightly more for arrow tip clearance
 
           // Path Logic
-          const pathD = `M${start.x} ${start.y} Q${cp.x} ${cp.y} ${shortEnd.x} ${shortEnd.y}`;
+          const pathD = `M${shortStart.x} ${shortStart.y} Q${cp.x} ${cp.y} ${shortEnd.x} ${shortEnd.y}`;
 
           return (
             <path
@@ -280,7 +291,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
         <g className={styles.nodeGroup} style={{ animationDelay: "0.3s" }}>
           <Box
             x={centerX - 30}
-            y={centerY + 200}
+            y={centerY + 230}
             width="60"
             height="60"
             stroke={teal}
@@ -291,7 +302,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           />
           <text
             x={labelX}
-            y={centerY + 230}
+            y={centerY + 260}
             textAnchor="start"
             fontSize="14"
             fontWeight="700"
@@ -303,7 +314,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           </text>
           <text
             x={labelX}
-            y={centerY + 245}
+            y={centerY + 275}
             textAnchor="start"
             fontSize="11"
             fill={textColor}
@@ -358,7 +369,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
         <g className={styles.nodeGroup} style={{ animationDelay: "0.9s" }}>
           <Layout
             x={centerX - 30}
-            y={centerY - 250}
+            y={centerY - 280}
             width="60"
             height="60"
             stroke={teal}
