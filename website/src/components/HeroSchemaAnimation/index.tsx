@@ -1,5 +1,7 @@
 import React, { useMemo } from "react";
 import { useColorMode } from "@docusaurus/theme-common";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import Translate, { translate } from "@docusaurus/Translate";
 import { Box, Zap, Layout } from "lucide-react";
 import styles from "./styles.module.css";
 import type { OrbitalSchema, Orbital, Trait, State, Transition } from "./types";
@@ -10,10 +12,10 @@ import type { OrbitalSchema, Orbital, Trait, State, Transition } from "./types";
 function extractVisualizationData(schema?: OrbitalSchema) {
   // Default Data (Order Fulfillment)
   const defaultData = {
-    appName: "Order Fulfillment App",
-    entityName: "Order",
-    pageName: "Track Order",
-    traitName: "Fulfillment",
+    appName: translate({ message: "Order Fulfillment App", id: "hero.viz.appName" }),
+    entityName: translate({ message: "Order", id: "hero.viz.entityName" }),
+    pageName: translate({ message: "Track Order", id: "hero.viz.pageName" }),
+    traitName: translate({ message: "Fulfillment", id: "hero.viz.traitName" }),
     states: [
       { name: "placed", isInitial: true },
       { name: "prep" }, // processing
@@ -31,7 +33,7 @@ function extractVisualizationData(schema?: OrbitalSchema) {
     return defaultData;
   }
 
-  const appName = schema.name || "Application";
+  const appName = schema.name || translate({ message: "Application", id: "hero.viz.defaultApp" });
   const orbital = schema.orbitals[0];
 
   // Extract Entity Name
@@ -97,7 +99,9 @@ function extractVisualizationData(schema?: OrbitalSchema) {
 
 export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema }) {
   const { colorMode } = useColorMode();
+  const { i18n } = useDocusaurusContext();
   const isDark = colorMode === "dark";
+  const isRTL = i18n.currentLocale === 'ar';
 
   const teal = isDark ? "#2dd4bf" : "#0d9488";
   const gold = isDark ? "#e8c547" : "#b8941f";
@@ -114,14 +118,18 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
   const viewBoxH = 720; // Increased height for spacing
   const centerX = viewBoxW / 2;
   const centerY = viewBoxH / 2;
-  const labelX = centerX + 55;
+
+  // RTL Adjustments:
+  // If RTL, label goes to the LEFT of the icon (centerX - 55) and aligns END (which is right-to-left start)
+  const labelX = isRTL ? centerX - 55 : centerX + 55;
+  const labelAnchor = isRTL ? "end" : "start";
 
   // Use a SINGLE uniform radius for a perfect circle
   const radius = 180;
 
   const { appName, entityName, pageName, traitName, states, transitions } = useMemo(
     () => extractVisualizationData(schema),
-    [schema]
+    [schema, i18n.currentLocale]
   );
 
   // Calculate State Positions with explicit Angles
@@ -186,7 +194,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={{ direction: 'ltr' }}> {/* Force LTR for SVG container to keep coords sane */}
       <svg
         viewBox={`0 0 ${viewBoxW} ${viewBoxH}`}
         fill="none"
@@ -240,8 +248,8 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           opacity="0.5"
         />
         <text
-          x="30"
-          y="40"
+          x={30}
+          y={40}
           textAnchor="start"
           fontSize="12"
           fontWeight="600"
@@ -249,7 +257,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           fontFamily="'IBM Plex Mono', monospace"
           className={styles.edgeLabel}
         >
-          APP: {appName.toUpperCase()}
+          <Translate id="hero.viz.appPrefix">APP:</Translate> {appName.toUpperCase()}
         </text>
 
         {/* === Vertical Connections (Entity-Trait-Page) === */}
@@ -326,7 +334,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           <text
             x={labelX}
             y={centerY + 310}
-            textAnchor="start"
+            textAnchor={labelAnchor}
             fontSize="14"
             fontWeight="700"
             fontFamily="'Source Serif 4', Georgia, serif"
@@ -338,13 +346,13 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           <text
             x={labelX}
             y={centerY + 325}
-            textAnchor="start"
+            textAnchor={labelAnchor}
             fontSize="11"
             fill={textColor}
             fontFamily="'IBM Plex Mono', monospace"
             className={styles.nodeLabel}
           >
-            (Entity)
+            <Translate id="hero.viz.entityLabel">(Entity)</Translate>
           </text>
         </g>
 
@@ -366,7 +374,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           <text
             x={labelX}
             y={centerY}
-            textAnchor="start"
+            textAnchor={labelAnchor}
             fontSize="14"
             fontWeight="700"
             fontFamily="'Source Serif 4', Georgia, serif"
@@ -378,13 +386,13 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           <text
             x={labelX}
             y={centerY + 15}
-            textAnchor="start"
+            textAnchor={labelAnchor}
             fontSize="11"
             fill={textColor}
             fontFamily="'IBM Plex Mono', monospace"
             className={styles.nodeLabel}
           >
-            (Trait)
+            <Translate id="hero.viz.traitLabel">(Trait)</Translate>
           </text>
         </g>
 
@@ -404,7 +412,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           <text
             x={labelX}
             y={centerY - 300}
-            textAnchor="start"
+            textAnchor={labelAnchor}
             fontSize="14"
             fontWeight="700"
             fontFamily="'Source Serif 4', Georgia, serif"
@@ -416,13 +424,13 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           <text
             x={labelX}
             y={centerY - 285}
-            textAnchor="start"
+            textAnchor={labelAnchor}
             fontSize="11"
             fill={textColor}
             fontFamily="'IBM Plex Mono', monospace"
             className={styles.nodeLabel}
           >
-            (Page)
+            <Translate id="hero.viz.pageLabel">(Page)</Translate>
           </text>
         </g>
 
@@ -508,7 +516,7 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
           className={styles.edgeLabel}
           style={{ animationDelay: "3.2s" }}
         >
-          Orbital Unit = Entity + Traits + Pages
+          <Translate id="hero.viz.orbitalUnit">Orbital Unit = Entity + Traits + Pages</Translate>
         </text>
 
       </svg>
