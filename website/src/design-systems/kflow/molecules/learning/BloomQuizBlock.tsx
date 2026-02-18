@@ -23,6 +23,7 @@ import {
   HStack,
   VStack,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 import { CodeBlock } from "../markdown/CodeBlock";
 import { MarkdownContent } from "../markdown/MarkdownContent";
@@ -38,7 +39,7 @@ export const BLOOM_CONFIG: Record<
     color: string;
     bgColor: string;
     borderColor: string;
-    label: string;
+    labelKey: string;
     icon: string;
   }
 > = {
@@ -46,42 +47,42 @@ export const BLOOM_CONFIG: Record<
     color: "bg-gray-500",
     bgColor: "bg-gray-50 dark:bg-gray-900/30",
     borderColor: "border-gray-200 dark:border-gray-700",
-    label: "Remember",
+    labelKey: "bloom.remember",
     icon: "📝",
   },
   understand: {
     color: "bg-blue-500",
     bgColor: "bg-blue-50 dark:bg-blue-900/30",
     borderColor: "border-blue-200 dark:border-blue-700",
-    label: "Understand",
+    labelKey: "bloom.understand",
     icon: "💡",
   },
   apply: {
     color: "bg-green-500",
     bgColor: "bg-green-50 dark:bg-green-900/30",
     borderColor: "border-green-200 dark:border-green-700",
-    label: "Apply",
+    labelKey: "bloom.apply",
     icon: "🔧",
   },
   analyze: {
     color: "bg-yellow-500",
     bgColor: "bg-yellow-50 dark:bg-yellow-900/30",
     borderColor: "border-yellow-200 dark:border-yellow-700",
-    label: "Analyze",
+    labelKey: "bloom.analyze",
     icon: "🔍",
   },
   evaluate: {
     color: "bg-orange-500",
     bgColor: "bg-orange-50 dark:bg-orange-900/30",
     borderColor: "border-orange-200 dark:border-orange-700",
-    label: "Evaluate",
+    labelKey: "bloom.evaluate",
     icon: "⚖️",
   },
   create: {
     color: "bg-purple-500",
     bgColor: "bg-purple-50 dark:bg-purple-900/30",
     borderColor: "border-purple-200 dark:border-purple-700",
-    label: "Create",
+    labelKey: "bloom.create",
     icon: "🎨",
   },
 };
@@ -116,6 +117,7 @@ export const BloomQuizBlock: React.FC<BloomQuizBlockProps> = ({
   className,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
   const [revealed, setRevealed] = useState(false);
   const config = BLOOM_CONFIG[level];
 
@@ -156,11 +158,11 @@ export const BloomQuizBlock: React.FC<BloomQuizBlockProps> = ({
                   variant="small"
                   className="text-[var(--color-muted-foreground)] font-medium"
                 >
-                  Question {index + 1}
+                  {t('bloom.question', { number: index + 1 })}
                 </Typography>
               )}
               <Badge className={`${config.color} text-white`} size="sm">
-                {config.icon} {config.label}
+                {config.icon} {t(config.labelKey)}
               </Badge>
             </HStack>
             {isAnswered && (
@@ -194,7 +196,7 @@ export const BloomQuizBlock: React.FC<BloomQuizBlockProps> = ({
 
           {/* Reveal button */}
           <Button variant="primary" size="sm" onClick={handleReveal}>
-            {revealed ? "Hide Answer" : "Reveal Answer"}
+            {revealed ? t('bloom.hideAnswer') : t('bloom.revealAnswer')}
           </Button>
 
           {/* Answer content */}
@@ -206,7 +208,7 @@ export const BloomQuizBlock: React.FC<BloomQuizBlockProps> = ({
                     variant="small"
                     className="text-[var(--color-foreground)] font-medium uppercase tracking-wide"
                   >
-                    Answer:
+                    {t('bloom.answerLabel')}
                   </Typography>
                   {answerSegments.map((segment, idx) =>
                     segment.type === "markdown" ? (

@@ -38,6 +38,7 @@ import {
   Badge,
   Spinner,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 /**
@@ -113,6 +114,7 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
   backEvent,
 }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
 
   // Handle back navigation
   const handleBack = () => {
@@ -149,7 +151,7 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
       >
         <Spinner size="lg" />
         <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-          Loading meal plan...
+          {t('mealPlan.loading')}
         </Typography>
       </VStack>
     );
@@ -180,7 +182,7 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
       >
         <Utensils className="h-12 w-12 text-[var(--color-muted-foreground)]" />
         <Typography variant="h3" className="text-[var(--color-muted-foreground)]">
-          Meal plan not found
+          {t('mealPlan.notFound')}
         </Typography>
       </VStack>
     );
@@ -243,7 +245,7 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
         <HStack gap="sm">
           <Button variant="secondary" onClick={handleEdit}>
             <Edit className="h-4 w-4 mr-1" />
-            Edit
+            {t('mealPlan.edit')}
           </Button>
           {!entity.aiAnalysis && (
             <Button
@@ -252,12 +254,12 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
               disabled={isAnalyzing}
             >
               <Sparkles className="h-4 w-4 mr-1" />
-              {isAnalyzing ? "Analyzing..." : "Analyze"}
+              {isAnalyzing ? t('mealPlan.analyzing') : t('mealPlan.analyze')}
             </Button>
           )}
           <Button variant="secondary" onClick={handleShare}>
             <Share2 className="h-4 w-4 mr-1" />
-            Share
+            {t('mealPlan.share')}
           </Button>
           <Button
             variant="ghost"
@@ -277,7 +279,7 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
           {entity.description && (
             <Card className="p-4">
               <VStack gap="sm">
-                <Typography variant="h4">Description</Typography>
+                <Typography variant="h4">{t('mealPlan.description')}</Typography>
                 <Typography variant="body" className="text-[var(--color-foreground)]">
                   {entity.description}
                 </Typography>
@@ -288,7 +290,7 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
           {/* Nutrition Summary */}
           <Card className="p-4">
             <VStack gap="md">
-              <Typography variant="h4">Nutrition Breakdown</Typography>
+              <Typography variant="h4">{t('mealPlan.nutritionBreakdown')}</Typography>
               <NutritionSummary summary={nutritionData} />
             </VStack>
           </Card>
@@ -297,7 +299,7 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
           {trainee && (
             <Card className="p-4">
               <VStack gap="sm">
-                <Typography variant="h4">Assigned To</Typography>
+                <Typography variant="h4">{t('mealPlan.assignedTo')}</Typography>
                 <HStack gap="sm" align="center">
                   <Box
                     display="flex"
@@ -336,14 +338,13 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
               <VStack gap="md" align="center" className="py-6">
                 <Sparkles className="h-10 w-10 text-purple-300" />
                 <Typography variant="h4" className="text-[var(--color-muted-foreground)]">
-                  No AI Analysis Yet
+                  {t('mealPlan.noAiAnalysis')}
                 </Typography>
                 <Typography
                   variant="body"
                   className="text-[var(--color-muted-foreground)] text-center max-w-xs"
                 >
-                  Get AI-powered insights about this meal plan's nutritional
-                  balance and recommendations.
+                  {t('mealPlan.aiAnalysisDesc')}
                 </Typography>
                 <Button
                   variant="primary"
@@ -351,7 +352,7 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
                   disabled={isAnalyzing}
                 >
                   <Sparkles className="h-4 w-4 mr-1" />
-                  {isAnalyzing ? "Analyzing..." : "Generate Analysis"}
+                  {isAnalyzing ? t('mealPlan.analyzing') : t('mealPlan.generateAnalysis')}
                 </Button>
               </VStack>
             </Card>
@@ -361,7 +362,7 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
           {entity.shareLink ? (
             <Card className="p-4">
               <VStack gap="sm">
-                <Typography variant="h4">Share Link</Typography>
+                <Typography variant="h4">{t('mealPlan.shareLink')}</Typography>
                 <ShareableLinkGenerator
                   existingLink={entity.shareLink}
                   resourceType="MealPlan"
@@ -374,11 +375,11 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
               <VStack gap="md" align="center" className="py-4">
                 <Share2 className="h-8 w-8 text-[var(--color-muted-foreground)]" />
                 <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-                  No share link generated yet
+                  {t('mealPlan.noShareLink')}
                 </Typography>
                 <Button variant="secondary" onClick={handleShare}>
                   <Share2 className="h-4 w-4 mr-1" />
-                  Generate Share Link
+                  {t('mealPlan.generateShareLink')}
                 </Button>
               </VStack>
             </Card>
@@ -387,12 +388,12 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
           {/* Metadata */}
           <Card className="p-4">
             <VStack gap="sm">
-              <Typography variant="h4">Details</Typography>
+              <Typography variant="h4">{t('mealPlan.details')}</Typography>
               <VStack gap="xs">
                 {entity.createdAt && (
                   <HStack justify="between">
                     <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                      Created
+                      {t('mealPlan.created')}
                     </Typography>
                     <Typography variant="small">
                       {formatDate(entity.createdAt)}
@@ -402,7 +403,7 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
                 {entity.updatedAt && (
                   <HStack justify="between">
                     <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                      Last Updated
+                      {t('mealPlan.lastUpdated')}
                     </Typography>
                     <Typography variant="small">
                       {formatDate(entity.updatedAt)}

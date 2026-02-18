@@ -47,6 +47,7 @@ import {
   Card,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 import { MealPlanCard, MealPlanData } from "../molecules/MealPlanCard";
 
@@ -92,6 +93,7 @@ export const MealPlansBoard: React.FC<MealPlansBoardProps> = ({
   searchEvent,
 }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
@@ -160,7 +162,7 @@ export const MealPlansBoard: React.FC<MealPlansBoardProps> = ({
 
           <Button variant="primary" onClick={handleCreate} className="gap-2">
             <Plus className="h-4 w-4" />
-            Create Meal Plan
+            {t('mealPlans.createMealPlan')}
           </Button>
         </HStack>
       )}
@@ -173,7 +175,7 @@ export const MealPlansBoard: React.FC<MealPlansBoardProps> = ({
             <VStack gap="none">
               <Typography variant="h3">{totalPlans}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Meal Plans
+                {t('mealPlans.mealPlans')}
               </Typography>
             </VStack>
           </HStack>
@@ -184,7 +186,7 @@ export const MealPlansBoard: React.FC<MealPlansBoardProps> = ({
             <VStack gap="none">
               <Typography variant="h3">{avgCalories}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Avg Calories
+                {t('mealPlans.avgCalories')}
               </Typography>
             </VStack>
           </HStack>
@@ -195,7 +197,7 @@ export const MealPlansBoard: React.FC<MealPlansBoardProps> = ({
             <VStack gap="none">
               <Typography variant="h3">{plansWithAnalysis}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                AI Analyzed
+                {t('mealPlans.aiAnalyzed')}
               </Typography>
             </VStack>
           </HStack>
@@ -207,7 +209,7 @@ export const MealPlansBoard: React.FC<MealPlansBoardProps> = ({
         {showSearch && (
           <Box className="w-full max-w-sm">
             <Input
-              placeholder="Search meal plans..."
+              placeholder={t('mealPlans.searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => handleSearch(e.target.value)}
               leftIcon={<Search className="h-4 w-4 text-[var(--color-muted-foreground)]" />}
@@ -238,7 +240,7 @@ export const MealPlansBoard: React.FC<MealPlansBoardProps> = ({
         <VStack align="center" justify="center" className="py-12">
           <Spinner size="lg" />
           <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-            Loading meal plans...
+            {t('mealPlans.loading')}
           </Typography>
         </VStack>
       )}
@@ -259,12 +261,12 @@ export const MealPlansBoard: React.FC<MealPlansBoardProps> = ({
             <VStack align="center" justify="center" className="py-12">
               <Utensils className="h-12 w-12 text-[var(--color-muted-foreground)]" />
               <Typography variant="h3" className="text-[var(--color-muted-foreground)]">
-                No meal plans found
+                {t('mealPlans.noMealPlansFound')}
               </Typography>
               <Typography variant="body" className="text-[var(--color-muted-foreground)]">
                 {searchTerm
-                  ? "Try a different search term"
-                  : "Create your first meal plan to get started"}
+                  ? t('mealPlans.tryDifferentSearch')
+                  : t('mealPlans.createFirstMealPlan')}
               </Typography>
             </VStack>
           ) : viewMode === "grid" ? (

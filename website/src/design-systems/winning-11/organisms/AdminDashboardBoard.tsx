@@ -30,6 +30,7 @@ import {
   Badge,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -236,7 +237,7 @@ export const AdminDashboardBoard: React.FC<AdminDashboardBoardProps> = ({
   entity,
   isLoading = false,
   error = null,
-  title = "Admin Dashboard",
+  title,
   className,
   refreshEvent,
   navigateEvent,
@@ -244,6 +245,7 @@ export const AdminDashboardBoard: React.FC<AdminDashboardBoardProps> = ({
 }) => {
   const { stats, recentActivity = [], alerts = [] } = entity || {};
   const eventBus = useEventBus();
+  const { t } = useTranslate();
 
   const handleRefresh = () => {
     eventBus.emit(`UI:${refreshEvent}`, {});
@@ -270,7 +272,7 @@ export const AdminDashboardBoard: React.FC<AdminDashboardBoardProps> = ({
           variant="body"
           className="text-[var(--color-muted-foreground)]"
         >
-          Loading dashboard...
+          {t('admin.loadingDashboard')}
         </Typography>
       </VStack>
     );
@@ -284,7 +286,7 @@ export const AdminDashboardBoard: React.FC<AdminDashboardBoardProps> = ({
         className={cn("py-12", className)}
       >
         <Typography variant="body" className="text-red-500">
-          Error: {error.message}
+          {t('admin.error', { message: error.message })}
         </Typography>
       </VStack>
     );
@@ -295,19 +297,19 @@ export const AdminDashboardBoard: React.FC<AdminDashboardBoardProps> = ({
       {/* Header */}
       <HStack justify="between" align="center" wrap>
         <VStack gap="xs">
-          <Typography variant="h1">{title}</Typography>
+          <Typography variant="h1">{title ?? t('admin.title')}</Typography>
           <Typography
             variant="body"
             className="text-[var(--color-muted-foreground)]"
           >
-            System overview and management
+            {t('admin.subtitle')}
           </Typography>
         </VStack>
 
         <HStack gap="sm">
           <Button variant="secondary" onClick={handleRefresh} className="gap-2">
             <RefreshCw className="h-4 w-4" />
-            Refresh
+            {t('admin.refresh')}
           </Button>
           <Button
             variant="secondary"
@@ -315,7 +317,7 @@ export const AdminDashboardBoard: React.FC<AdminDashboardBoardProps> = ({
             className="gap-2"
           >
             <Settings className="h-4 w-4" />
-            Settings
+            {t('admin.settings')}
           </Button>
         </HStack>
       </HStack>
@@ -334,40 +336,40 @@ export const AdminDashboardBoard: React.FC<AdminDashboardBoardProps> = ({
         <Box className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           <StatCard
             icon={Users}
-            label="Total Users"
+            label={t('admin.totalUsers')}
             value={stats.totalUsers}
-            subtitle={`${stats.activeUsers} active`}
+            subtitle={t('admin.activeCount', { count: stats.activeUsers })}
             iconColor="text-blue-600"
             onClick={() => handleNavigate("/users")}
           />
           <StatCard
             icon={Link2}
-            label="Connections"
+            label={t('admin.connections')}
             value={stats.totalConnections}
-            subtitle={`${stats.pendingConnections} pending`}
+            subtitle={t('admin.pendingCount', { count: stats.pendingConnections })}
             iconColor="text-emerald-600"
             onClick={() => handleNavigate("/connections")}
           />
           <StatCard
             icon={UserPlus}
-            label="Invites"
+            label={t('admin.invites')}
             value={stats.totalInvites}
-            subtitle={`${stats.redeemedInvites} redeemed`}
+            subtitle={t('admin.redeemedCount', { count: stats.redeemedInvites })}
             iconColor="text-purple-600"
             onClick={() => handleNavigate("/invites")}
           />
           <StatCard
             icon={Shield}
-            label="Avg Trust Score"
+            label={t('admin.avgTrustScore')}
             value={stats.averageTrustScore}
             iconColor="text-amber-600"
             onClick={() => handleNavigate("/trust-intelligence")}
           />
           <StatCard
             icon={Leaf}
-            label="Healthy Gardens"
+            label={t('admin.healthyGardens')}
             value={stats.healthyRelationships}
-            subtitle={`${stats.decliningRelationships} need attention`}
+            subtitle={t('admin.needAttentionCount', { count: stats.decliningRelationships })}
             trend={stats.decliningRelationships > 0 ? "down" : "up"}
             iconColor="text-green-600"
             onClick={() => handleNavigate("/garden")}
@@ -381,13 +383,13 @@ export const AdminDashboardBoard: React.FC<AdminDashboardBoardProps> = ({
         <Card className="p-4">
           <VStack gap="md">
             <HStack justify="between" align="center">
-              <Typography variant="h3">Recent Activity</Typography>
+              <Typography variant="h3">{t('admin.recentActivity')}</Typography>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => handleNavigate("/activity")}
               >
-                View All
+                {t('admin.viewAll')}
               </Button>
             </HStack>
 
@@ -398,7 +400,7 @@ export const AdminDashboardBoard: React.FC<AdminDashboardBoardProps> = ({
                   variant="body"
                   className="text-[var(--color-muted-foreground)]"
                 >
-                  No recent activity
+                  {t('admin.noRecentActivity')}
                 </Typography>
               </VStack>
             ) : (
@@ -414,7 +416,7 @@ export const AdminDashboardBoard: React.FC<AdminDashboardBoardProps> = ({
         {/* Quick Actions */}
         <Card className="p-4">
           <VStack gap="md">
-            <Typography variant="h3">Quick Actions</Typography>
+            <Typography variant="h3">{t('admin.quickActions')}</Typography>
 
             <Box className="grid grid-cols-2 gap-3">
               <Button
@@ -425,13 +427,13 @@ export const AdminDashboardBoard: React.FC<AdminDashboardBoardProps> = ({
                 <UserPlus className="h-4 w-4" />
                 <VStack gap="none" align="start">
                   <Typography variant="small" className="font-medium">
-                    Add User
+                    {t('admin.addUser')}
                   </Typography>
                   <Typography
                     variant="small"
                     className="text-[var(--color-muted-foreground)]"
                   >
-                    Register new member
+                    {t('admin.registerNewMember')}
                   </Typography>
                 </VStack>
               </Button>
@@ -444,13 +446,13 @@ export const AdminDashboardBoard: React.FC<AdminDashboardBoardProps> = ({
                 <Users className="h-4 w-4" />
                 <VStack gap="none" align="start">
                   <Typography variant="small" className="font-medium">
-                    Send Invite
+                    {t('admin.sendInvite')}
                   </Typography>
                   <Typography
                     variant="small"
                     className="text-[var(--color-muted-foreground)]"
                   >
-                    Invite new member
+                    {t('admin.inviteNewMember')}
                   </Typography>
                 </VStack>
               </Button>
@@ -463,13 +465,13 @@ export const AdminDashboardBoard: React.FC<AdminDashboardBoardProps> = ({
                 <Shield className="h-4 w-4" />
                 <VStack gap="none" align="start">
                   <Typography variant="small" className="font-medium">
-                    Calculate Trust
+                    {t('admin.calculateTrust')}
                   </Typography>
                   <Typography
                     variant="small"
                     className="text-[var(--color-muted-foreground)]"
                   >
-                    Run trust analysis
+                    {t('admin.runTrustAnalysis')}
                   </Typography>
                 </VStack>
               </Button>
@@ -482,13 +484,13 @@ export const AdminDashboardBoard: React.FC<AdminDashboardBoardProps> = ({
                 <Activity className="h-4 w-4" />
                 <VStack gap="none" align="start">
                   <Typography variant="small" className="font-medium">
-                    Graph Analysis
+                    {t('admin.graphAnalysis')}
                   </Typography>
                   <Typography
                     variant="small"
                     className="text-[var(--color-muted-foreground)]"
                   >
-                    Network insights
+                    {t('admin.networkInsights')}
                   </Typography>
                 </VStack>
               </Button>

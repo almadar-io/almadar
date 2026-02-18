@@ -40,6 +40,7 @@ import {
   Avatar,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 export interface SeedNominationData {
@@ -85,16 +86,16 @@ export interface SeedNetworkBoardProps {
   filterEvent?: string;
 }
 
-const getStatusConfig = (status: SeedNominationData["status"]) => {
+const getStatusConfig = (status: SeedNominationData["status"], t: (key: string) => string) => {
   switch (status) {
     case "approved":
-      return { color: "success" as const, icon: CheckCircle, label: "Approved" };
+      return { color: "success" as const, icon: CheckCircle, label: t("seed.status.approved") };
     case "pending":
-      return { color: "warning" as const, icon: Clock, label: "Pending" };
+      return { color: "warning" as const, icon: Clock, label: t("seed.status.pending") };
     case "rejected":
-      return { color: "error" as const, icon: XCircle, label: "Rejected" };
+      return { color: "error" as const, icon: XCircle, label: t("seed.status.rejected") };
     case "converted":
-      return { color: "info" as const, icon: Star, label: "Converted" };
+      return { color: "info" as const, icon: Star, label: t("seed.status.converted") };
     default:
       return { color: "neutral" as const, icon: Clock, label: status };
   }
@@ -105,7 +106,8 @@ const NominationCard: React.FC<{
   onAction: (action: string, nomination: SeedNominationData) => void;
   viewEvent: string;
 }> = ({ nomination, onAction, viewEvent }) => {
-  const statusConfig = getStatusConfig(nomination.status);
+  const { t } = useTranslate();
+  const statusConfig = getStatusConfig(nomination.status, t);
   const StatusIcon = statusConfig.icon;
   const isPending = nomination.status === "pending";
 
@@ -142,14 +144,14 @@ const NominationCard: React.FC<{
         <HStack gap="xs" align="center" className="text-[var(--color-muted-foreground)]">
           <User className="h-3 w-3" />
           <Typography variant="small">
-            Nominated by {nomination.nominatorName || `User ${nomination.nominatorId.slice(-4)}`}
+            {t("seed.nominatedBy", { name: nomination.nominatorName || t("seed.anonymousUser", { id: nomination.nominatorId.slice(-4) }) })}
           </Typography>
         </HStack>
 
         {/* Reason */}
         <VStack gap="xs">
           <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-            Reason for nomination
+            {t("seed.reasonLabel")}
           </Typography>
           <Typography variant="small" className="text-[var(--color-foreground)] line-clamp-2">
             {nomination.reason}
@@ -161,7 +163,7 @@ const NominationCard: React.FC<{
           <HStack gap="sm" align="center">
             <Star className="h-4 w-4 text-amber-500" />
             <Typography variant="small" className="font-medium">
-              Trust Endorsement: {nomination.trustEndorsement}%
+              {t("seed.trustEndorsement", { value: nomination.trustEndorsement })}
             </Typography>
           </HStack>
         )}
@@ -183,7 +185,7 @@ const NominationCard: React.FC<{
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
-            View
+            {t("seed.actions.view")}
           </Button>
           {isPending && (
             <>
@@ -194,7 +196,7 @@ const NominationCard: React.FC<{
                 className="gap-1"
               >
                 <ThumbsUp className="h-3 w-3" />
-                Approve
+                {t("seed.actions.approve")}
               </Button>
               <Button
                 variant="secondary"
@@ -203,7 +205,7 @@ const NominationCard: React.FC<{
                 className="gap-1"
               >
                 <ThumbsDown className="h-3 w-3" />
-                Reject
+                {t("seed.actions.reject")}
               </Button>
             </>
           )}
@@ -217,8 +219,8 @@ export const SeedNetworkBoard: React.FC<SeedNetworkBoardProps> = ({
   entity,
   isLoading = false,
   error = null,
-  title = "Seed Network",
-  subtitle = "Nominate trusted individuals to join the network",
+  title,
+  subtitle,
   showHeader = true,
   showSearch = true,
   className,
@@ -229,8 +231,12 @@ export const SeedNetworkBoard: React.FC<SeedNetworkBoardProps> = ({
   filterEvent = "FILTER",
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
   const [searchTerm, setSearchTerm] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState<string>("all");
+
+  const resolvedTitle = title ?? t("seed.title");
+  const resolvedSubtitle = subtitle ?? t("seed.subtitle");
 
   const nominations = entity || [];
 
@@ -284,16 +290,16 @@ export const SeedNetworkBoard: React.FC<SeedNetworkBoardProps> = ({
               <Box rounded="lg" padding="sm" className="bg-green-100">
                 <Sprout className="h-6 w-6 text-green-600" />
               </Box>
-              <Typography variant="h1">{title}</Typography>
+              <Typography variant="h1">{resolvedTitle}</Typography>
             </HStack>
             <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-              {subtitle}
+              {resolvedSubtitle}
             </Typography>
           </VStack>
 
           <Button variant="primary" onClick={handleCreate} className="gap-2">
             <Plus className="h-4 w-4" />
-            Nominate Someone
+            {t("seed.nominateSomeone")}
           </Button>
         </HStack>
       )}
@@ -310,7 +316,7 @@ export const SeedNetworkBoard: React.FC<SeedNetworkBoardProps> = ({
           <VStack gap="none" align="center">
             <Typography variant="h4">{stats.total}</Typography>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Total
+              {t("seed.stats.total")}
             </Typography>
           </VStack>
         </Card>
@@ -326,7 +332,7 @@ export const SeedNetworkBoard: React.FC<SeedNetworkBoardProps> = ({
               {stats.pending}
             </Typography>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Pending
+              {t("seed.stats.pending")}
             </Typography>
           </VStack>
         </Card>
@@ -342,7 +348,7 @@ export const SeedNetworkBoard: React.FC<SeedNetworkBoardProps> = ({
               {stats.approved}
             </Typography>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Approved
+              {t("seed.stats.approved")}
             </Typography>
           </VStack>
         </Card>
@@ -358,7 +364,7 @@ export const SeedNetworkBoard: React.FC<SeedNetworkBoardProps> = ({
               {stats.converted}
             </Typography>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Converted
+              {t("seed.stats.converted")}
             </Typography>
           </VStack>
         </Card>
@@ -368,7 +374,7 @@ export const SeedNetworkBoard: React.FC<SeedNetworkBoardProps> = ({
       {showSearch && (
         <Box className="w-full max-w-sm">
           <Input
-            placeholder="Search nominations..."
+            placeholder={t("seed.searchPlaceholder")}
             value={searchTerm}
             onChange={(e) => handleSearch(e.target.value)}
             leftIcon={<Search className="h-4 w-4 text-[var(--color-muted-foreground)]" />}
@@ -381,7 +387,7 @@ export const SeedNetworkBoard: React.FC<SeedNetworkBoardProps> = ({
         <VStack align="center" justify="center" className="py-12">
           <Spinner size="lg" />
           <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-            Loading nominations...
+            {t("seed.loading")}
           </Typography>
         </VStack>
       )}
@@ -390,7 +396,7 @@ export const SeedNetworkBoard: React.FC<SeedNetworkBoardProps> = ({
       {error && (
         <VStack align="center" justify="center" className="py-12">
           <Typography variant="body" className="text-red-500">
-            Error: {error.message}
+            {t("seed.error", { message: error.message })}
           </Typography>
         </VStack>
       )}
@@ -402,12 +408,12 @@ export const SeedNetworkBoard: React.FC<SeedNetworkBoardProps> = ({
             <VStack align="center" justify="center" className="py-12">
               <Sprout className="h-12 w-12 text-[var(--color-muted-foreground)]" />
               <Typography variant="h3" className="text-[var(--color-muted-foreground)]">
-                No nominations found
+                {t("seed.empty.title")}
               </Typography>
               <Typography variant="body" className="text-[var(--color-muted-foreground)]">
                 {searchTerm || statusFilter !== "all"
-                  ? "Try different filters"
-                  : "Be the first to nominate a trusted individual"}
+                  ? t("seed.empty.filtered")
+                  : t("seed.empty.default")}
               </Typography>
             </VStack>
           ) : (

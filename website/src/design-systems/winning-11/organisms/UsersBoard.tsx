@@ -30,6 +30,7 @@ import {
   Avatar,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -97,6 +98,7 @@ const UserCard: React.FC<{
   user: UserData;
   onAction: (action: string, user: UserData) => void;
 }> = ({ user, onAction }) => {
+  const { t } = useTranslate();
   return (
     <Card className="p-4 hover:shadow-md transition-shadow">
       <VStack gap="md">
@@ -138,7 +140,7 @@ const UserCard: React.FC<{
             className="text-[var(--color-muted-foreground)]"
           >
             <Typography variant="small">
-              Connections: {user.usedSlots || 0}/{user.connectionSlots}
+              {t("users.connections", { used: user.usedSlots || 0, total: user.connectionSlots })}
             </Typography>
           </HStack>
         )}
@@ -151,7 +153,7 @@ const UserCard: React.FC<{
           >
             <Calendar className="h-3 w-3" />
             <Typography variant="small">
-              Joined {new Date(user.createdAt).toLocaleDateString()}
+              {t("users.joined", { date: new Date(user.createdAt).toLocaleDateString() })}
             </Typography>
           </HStack>
         )}
@@ -164,7 +166,7 @@ const UserCard: React.FC<{
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
-            View
+            {t("users.view")}
           </Button>
           <Button
             variant="ghost"
@@ -173,7 +175,7 @@ const UserCard: React.FC<{
             className="gap-1"
           >
             <Edit className="h-3 w-3" />
-            Edit
+            {t("users.edit")}
           </Button>
           {user.status !== "suspended" && (
             <Button
@@ -183,7 +185,7 @@ const UserCard: React.FC<{
               className="gap-1 text-red-600 hover:text-red-700"
             >
               <UserX className="h-3 w-3" />
-              Suspend
+              {t("users.suspend")}
             </Button>
           )}
         </HStack>
@@ -198,8 +200,8 @@ export const UsersBoard: React.FC<UsersBoardProps> = ({
   entity,
   isLoading = false,
   error = null,
-  title = "Community Members",
-  subtitle = "Manage your platform users",
+  title,
+  subtitle,
   showHeader = true,
   showSearch = true,
   showFilters = true,
@@ -208,6 +210,7 @@ export const UsersBoard: React.FC<UsersBoardProps> = ({
   searchEvent,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
   const [searchTerm, setSearchTerm] = React.useState("");
 
   const users = entity || [];
@@ -248,12 +251,12 @@ export const UsersBoard: React.FC<UsersBoardProps> = ({
       {showHeader && (
         <HStack justify="between" align="center" wrap>
           <VStack gap="xs">
-            <Typography variant="h1">{title}</Typography>
+            <Typography variant="h1">{title || t("users.title")}</Typography>
             <Typography
               variant="body"
               className="text-[var(--color-muted-foreground)]"
             >
-              {subtitle}
+              {subtitle || t("users.subtitle")}
             </Typography>
           </VStack>
 
@@ -263,7 +266,7 @@ export const UsersBoard: React.FC<UsersBoardProps> = ({
             className="gap-2"
           >
             <Plus className="h-4 w-4" />
-            Register User
+            {t("users.registerUser")}
           </Button>
         </HStack>
       )}
@@ -274,7 +277,7 @@ export const UsersBoard: React.FC<UsersBoardProps> = ({
           {showSearch && (
             <Box className="w-full max-w-sm">
               <Input
-                placeholder="Search users..."
+                placeholder={t("users.searchPlaceholder")}
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
                 leftIcon={
@@ -291,7 +294,7 @@ export const UsersBoard: React.FC<UsersBoardProps> = ({
               className="gap-2"
             >
               <Filter className="h-4 w-4" />
-              Filter
+              {t("users.filter")}
             </Button>
           )}
         </HStack>
@@ -305,7 +308,7 @@ export const UsersBoard: React.FC<UsersBoardProps> = ({
             variant="body"
             className="text-[var(--color-muted-foreground)]"
           >
-            Loading users...
+            {t("users.loading")}
           </Typography>
         </VStack>
       )}
@@ -314,7 +317,7 @@ export const UsersBoard: React.FC<UsersBoardProps> = ({
       {error && (
         <VStack align="center" justify="center" className="py-12">
           <Typography variant="body" className="text-red-500">
-            Error: {error.message}
+            {t("users.error", { message: error.message })}
           </Typography>
         </VStack>
       )}
@@ -329,15 +332,15 @@ export const UsersBoard: React.FC<UsersBoardProps> = ({
                 variant="h3"
                 className="text-[var(--color-muted-foreground)]"
               >
-                No users found
+                {t("users.noUsersFound")}
               </Typography>
               <Typography
                 variant="body"
                 className="text-[var(--color-muted-foreground)]"
               >
                 {searchTerm
-                  ? "Try a different search term"
-                  : "Register your first user to get started"}
+                  ? t("users.tryDifferentSearch")
+                  : t("users.registerFirstUser")}
               </Typography>
             </VStack>
           ) : (

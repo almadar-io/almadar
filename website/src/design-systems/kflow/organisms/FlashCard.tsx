@@ -20,6 +20,7 @@ import {
   VStack,
   HStack,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 export interface FlashCardEntity {
@@ -56,6 +57,7 @@ export const FlashCard: React.FC<FlashCardProps> = ({
   className = '',
 }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const [internalFlipped, setInternalFlipped] = useState(false);
   const flipped = controlledFlipped !== undefined ? controlledFlipped : internalFlipped;
 
@@ -95,7 +97,7 @@ export const FlashCard: React.FC<FlashCardProps> = ({
         <VStack gap="xs">
           <HStack justify="between">
             <span className="text-sm text-[var(--color-muted-foreground)]">
-              Card {currentCard} of {totalCards}
+              {t('flashcard.cardProgress', { current: currentCard, total: totalCards })}
             </span>
             <span className="text-sm text-[var(--color-muted-foreground)]">{Math.round(progress)}%</span>
           </HStack>
@@ -127,11 +129,11 @@ export const FlashCard: React.FC<FlashCardProps> = ({
             style={{ backfaceVisibility: 'hidden', transform: 'rotateY(0deg)' }}
           >
             <VStack gap="sm" align="center" className="text-center">
-              <span className="text-sm text-[var(--color-muted-foreground)]">Question</span>
+              <span className="text-sm text-[var(--color-muted-foreground)]">{t('flashcard.question')}</span>
               <span className="text-xl font-semibold text-[var(--color-foreground)]">
                 {entity.front}
               </span>
-              <span className="text-sm text-[var(--color-muted-foreground)]">Click to flip</span>
+              <span className="text-sm text-[var(--color-muted-foreground)]">{t('flashcard.clickToFlip')}</span>
             </VStack>
           </Box>
 
@@ -144,13 +146,13 @@ export const FlashCard: React.FC<FlashCardProps> = ({
             }}
           >
             <VStack gap="sm" align="center" className="text-center">
-              <span className="text-sm text-[var(--color-muted-foreground)]">Answer</span>
+              <span className="text-sm text-[var(--color-muted-foreground)]">{t('flashcard.answer')}</span>
               <span className="text-xl font-semibold text-[var(--color-foreground)]">
                 {entity.back}
               </span>
               {entity.studied && (
                 <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded mt-2">
-                  Studied
+                  {t('flashcard.studied')}
                 </span>
               )}
             </VStack>
@@ -166,14 +168,14 @@ export const FlashCard: React.FC<FlashCardProps> = ({
             onClick={handleMarkStudied}
           >
             <Check size={16} />
-            Mark as Studied
+            {t('flashcard.markAsStudied')}
           </button>
           <button
             className="px-4 py-2 text-sm font-medium bg-gray-100 text-[var(--color-foreground)] rounded hover:bg-gray-200 flex items-center gap-2"
             onClick={handleReset}
           >
             <RotateCcw size={16} />
-            Reset
+            {t('flashcard.reset')}
           </button>
         </HStack>
       )}
@@ -185,13 +187,13 @@ export const FlashCard: React.FC<FlashCardProps> = ({
             className="px-4 py-2 text-sm font-medium bg-gray-100 text-[var(--color-foreground)] rounded hover:bg-gray-200"
             onClick={handlePrev}
           >
-            Previous
+            {t('flashcard.previous')}
           </button>
           <button
             className="px-4 py-2 text-sm font-medium bg-indigo-600 text-white rounded hover:bg-indigo-700"
             onClick={handleNext}
           >
-            Next
+            {t('flashcard.next')}
           </button>
         </HStack>
       )}

@@ -22,6 +22,7 @@ import {
   Button,
   Card,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 export interface MuscleAssessment {
@@ -101,6 +102,7 @@ export const KinesiologyExamForm: React.FC<KinesiologyExamFormProps> = ({
   className,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
 
   const [formData, setFormData] = useState<Partial<KinesiologyExamData>>({
     traineeId,
@@ -180,7 +182,7 @@ export const KinesiologyExamForm: React.FC<KinesiologyExamFormProps> = ({
             >
               <ClipboardList className="h-5 w-5 text-indigo-600" />
             </Box>
-            <Typography variant="h4">Kinesiology Examination</Typography>
+            <Typography variant="h4">{t('kinesiology.title')}</Typography>
           </HStack>
           {onCancel && (
             <Button variant="ghost" size="sm" onClick={onCancel}>
@@ -191,7 +193,7 @@ export const KinesiologyExamForm: React.FC<KinesiologyExamFormProps> = ({
 
         {/* Date */}
         <VStack gap="xs">
-          <Typography variant="label">Examination Date</Typography>
+          <Typography variant="label">{t('kinesiology.examinationDate')}</Typography>
           <input
             type="date"
             value={
@@ -206,13 +208,13 @@ export const KinesiologyExamForm: React.FC<KinesiologyExamFormProps> = ({
 
         {/* Postural Assessment */}
         <VStack gap="xs">
-          <Typography variant="label">Postural Assessment</Typography>
+          <Typography variant="label">{t('kinesiology.posturalAssessment')}</Typography>
           <textarea
             value={formData.posturalAssessment || ""}
             onChange={(e) =>
               setFormData((prev) => ({ ...prev, posturalAssessment: e.target.value }))
             }
-            placeholder="Describe postural observations..."
+            placeholder={t('kinesiology.posturalPlaceholder')}
             rows={3}
             className="w-full p-2 border rounded-md resize-none"
           />
@@ -220,13 +222,13 @@ export const KinesiologyExamForm: React.FC<KinesiologyExamFormProps> = ({
 
         {/* Movement Patterns */}
         <VStack gap="xs">
-          <Typography variant="label">Movement Pattern Analysis</Typography>
+          <Typography variant="label">{t('kinesiology.movementPatternAnalysis')}</Typography>
           <textarea
             value={formData.movementPatterns || ""}
             onChange={(e) =>
               setFormData((prev) => ({ ...prev, movementPatterns: e.target.value }))
             }
-            placeholder="Describe movement patterns and compensations..."
+            placeholder={t('kinesiology.movementPlaceholder')}
             rows={3}
             className="w-full p-2 border rounded-md resize-none"
           />
@@ -235,10 +237,10 @@ export const KinesiologyExamForm: React.FC<KinesiologyExamFormProps> = ({
         {/* Muscle Assessments */}
         <VStack gap="sm">
           <HStack justify="between" align="center">
-            <Typography variant="label">Muscle Assessments</Typography>
+            <Typography variant="label">{t('kinesiology.muscleAssessments')}</Typography>
             <Button variant="secondary" size="sm" onClick={handleAddMuscle}>
               <Plus className="h-4 w-4 mr-1" />
-              Add Muscle
+              {t('kinesiology.addMuscle')}
             </Button>
           </HStack>
 
@@ -257,7 +259,7 @@ export const KinesiologyExamForm: React.FC<KinesiologyExamFormProps> = ({
                     onChange={(e) => handleMuscleChange(index, "muscle", e.target.value)}
                     className="flex-1 p-2 border rounded-md"
                   >
-                    <option value="">Select muscle...</option>
+                    <option value="">{t('kinesiology.selectMuscle')}</option>
                     {muscleGroups.map((muscle) => (
                       <option key={muscle} value={muscle}>
                         {muscle}
@@ -269,9 +271,9 @@ export const KinesiologyExamForm: React.FC<KinesiologyExamFormProps> = ({
                     onChange={(e) => handleMuscleChange(index, "side", e.target.value)}
                     className="w-24 p-2 border rounded-md"
                   >
-                    <option value="both">Both</option>
-                    <option value="left">Left</option>
-                    <option value="right">Right</option>
+                    <option value="both">{t('kinesiology.both')}</option>
+                    <option value="left">{t('kinesiology.left')}</option>
+                    <option value="right">{t('kinesiology.right')}</option>
                   </select>
                   <Button
                     variant="ghost"
@@ -286,7 +288,7 @@ export const KinesiologyExamForm: React.FC<KinesiologyExamFormProps> = ({
                 <HStack gap="md">
                   <VStack gap="xs" className="flex-1">
                     <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                      Strength: {strengthLabels[assessment.strength]}
+                      {t('kinesiology.strength')}: {strengthLabels[assessment.strength]}
                     </Typography>
                     <input
                       type="range"
@@ -301,7 +303,7 @@ export const KinesiologyExamForm: React.FC<KinesiologyExamFormProps> = ({
                   </VStack>
                   <VStack gap="xs" className="flex-1">
                     <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                      Flexibility: {flexibilityLabels[assessment.flexibility]}
+                      {t('kinesiology.flexibility')}: {flexibilityLabels[assessment.flexibility]}
                     </Typography>
                     <input
                       type="range"
@@ -320,7 +322,7 @@ export const KinesiologyExamForm: React.FC<KinesiologyExamFormProps> = ({
                   type="text"
                   value={assessment.notes || ""}
                   onChange={(e) => handleMuscleChange(index, "notes", e.target.value)}
-                  placeholder="Notes for this muscle..."
+                  placeholder={t('kinesiology.muscleNotesPlaceholder')}
                   className="w-full p-2 border rounded-md text-sm"
                 />
               </VStack>
@@ -334,7 +336,7 @@ export const KinesiologyExamForm: React.FC<KinesiologyExamFormProps> = ({
               className="text-center bg-[var(--color-muted)] border border-dashed"
             >
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                No muscle assessments added. Click "Add Muscle" to begin.
+                {t('kinesiology.noMuscleAssessments')}
               </Typography>
             </Box>
           )}
@@ -342,13 +344,13 @@ export const KinesiologyExamForm: React.FC<KinesiologyExamFormProps> = ({
 
         {/* Recommendations */}
         <VStack gap="xs">
-          <Typography variant="label">Recommendations</Typography>
+          <Typography variant="label">{t('kinesiology.recommendations')}</Typography>
           <textarea
             value={formData.recommendations || ""}
             onChange={(e) =>
               setFormData((prev) => ({ ...prev, recommendations: e.target.value }))
             }
-            placeholder="Training recommendations based on assessment..."
+            placeholder={t('kinesiology.recommendationsPlaceholder')}
             rows={3}
             className="w-full p-2 border rounded-md resize-none"
           />
@@ -356,11 +358,11 @@ export const KinesiologyExamForm: React.FC<KinesiologyExamFormProps> = ({
 
         {/* Notes */}
         <VStack gap="xs">
-          <Typography variant="label">Additional Notes</Typography>
+          <Typography variant="label">{t('kinesiology.additionalNotes')}</Typography>
           <textarea
             value={formData.notes || ""}
             onChange={(e) => setFormData((prev) => ({ ...prev, notes: e.target.value }))}
-            placeholder="Any other observations..."
+            placeholder={t('kinesiology.notesPlaceholder')}
             rows={2}
             className="w-full p-2 border rounded-md resize-none"
           />
@@ -370,12 +372,12 @@ export const KinesiologyExamForm: React.FC<KinesiologyExamFormProps> = ({
         <HStack gap="sm" justify="end" className="border-t pt-4">
           {onCancel && (
             <Button variant="secondary" onClick={onCancel}>
-              Cancel
+              {t('kinesiology.cancel')}
             </Button>
           )}
           <Button variant="primary" onClick={handleSubmit}>
             <Save className="h-4 w-4 mr-1" />
-            Save Examination
+            {t('kinesiology.saveExamination')}
           </Button>
         </HStack>
       </VStack>

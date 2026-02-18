@@ -20,6 +20,7 @@ import {
   HStack,
   Card,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 import { SegmentRenderer } from '../organisms/SegmentRenderer';
 import { FlashCardStack } from '../organisms/FlashCardStack';
@@ -67,6 +68,7 @@ export function ConceptDetailBoard({
   className = '',
 }: ConceptDetailBoardProps): JSX.Element {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const [activeTab, setActiveTab] = useState<'overview' | 'lesson' | 'practice'>('overview');
 
   const handleBack = () => {
@@ -99,14 +101,14 @@ export function ConceptDetailBoard({
               className="p-2 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:bg-gray-100 rounded flex items-center gap-1"
             >
               <ArrowLeft size={20} />
-              <span className="text-sm">Back</span>
+              <span className="text-sm">{t('concept.back')}</span>
             </button>
           )}
           <HStack gap="sm">
             {entity.layer !== undefined && (
               <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-700 rounded flex items-center gap-1">
                 <Layers size={12} />
-                Layer {entity.layer}
+                {t('concept.layer', { number: entity.layer })}
               </span>
             )}
           </HStack>
@@ -123,7 +125,7 @@ export function ConceptDetailBoard({
                   : 'border-transparent text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]'
               }`}
             >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              {t(`concept.tab.${tab}`)}
             </button>
           ))}
         </HStack>
@@ -156,7 +158,7 @@ export function ConceptDetailBoard({
             {entity.prerequisites && entity.prerequisites.length > 0 && (
               <Card>
                 <VStack gap="sm">
-                  <span className="font-semibold text-[var(--color-foreground)]">Prerequisites</span>
+                  <span className="font-semibold text-[var(--color-foreground)]">{t('concept.prerequisites')}</span>
                   <VStack gap="xs">
                     {entity.prerequisites.map((prereq) => (
                       <button
@@ -177,7 +179,7 @@ export function ConceptDetailBoard({
               <Card>
                 <VStack gap="sm">
                   <HStack justify="between" align="center">
-                    <span className="font-semibold text-[var(--color-foreground)]">Progress</span>
+                    <span className="font-semibold text-[var(--color-foreground)]">{t('concept.progress')}</span>
                     <span className="text-sm text-[var(--color-muted-foreground)]">{entity.progress}%</span>
                   </HStack>
                   <Box className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
@@ -197,7 +199,7 @@ export function ConceptDetailBoard({
                   className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 flex items-center gap-2"
                 >
                   <BookOpen size={20} />
-                  Start Lesson
+                  {t('concept.startLesson')}
                 </button>
               )}
               {entity.flashcards && entity.flashcards.length > 0 && (
@@ -206,7 +208,7 @@ export function ConceptDetailBoard({
                   className="px-6 py-3 bg-gray-100 text-[var(--color-foreground)] font-medium rounded-lg hover:bg-gray-200 flex items-center gap-2"
                 >
                   <Brain size={20} />
-                  Practice ({entity.flashcards.length} cards)
+                  {t('concept.practice', { count: entity.flashcards.length })}
                 </button>
               )}
             </HStack>
@@ -221,7 +223,7 @@ export function ConceptDetailBoard({
               <Card>
                 <VStack gap="md" align="center" className="py-12">
                   <BookOpen size={48} className="text-[var(--color-muted-foreground)]" />
-                  <span className="text-[var(--color-muted-foreground)]">No lesson content available</span>
+                  <span className="text-[var(--color-muted-foreground)]">{t('concept.noLessonContent')}</span>
                   {!entity.hasLesson && (
                     <button
                       onClick={() => {
@@ -230,7 +232,7 @@ export function ConceptDetailBoard({
                       className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 flex items-center gap-2"
                     >
                       <PlayCircle size={16} />
-                      Generate Lesson
+                      {t('concept.generateLesson')}
                     </button>
                   )}
                 </VStack>
@@ -247,7 +249,7 @@ export function ConceptDetailBoard({
               <Card>
                 <VStack gap="md" align="center" className="py-12">
                   <Brain size={48} className="text-[var(--color-muted-foreground)]" />
-                  <span className="text-[var(--color-muted-foreground)]">No practice cards available</span>
+                  <span className="text-[var(--color-muted-foreground)]">{t('concept.noPracticeCards')}</span>
                 </VStack>
               </Card>
             )}

@@ -18,6 +18,7 @@ import {
   Card,
   HStack,
   VStack,
+  useTranslate,
 } from '@almadar/ui';
 import { MarkdownContent } from "../markdown/MarkdownContent";
 
@@ -32,6 +33,8 @@ export const ConnectionBlock: React.FC<ConnectionBlockProps> = ({
   content,
   className,
 }) => {
+  const { t } = useTranslate();
+
   return (
     <Card
       className={`bg-emerald-50 dark:bg-emerald-900/20 border-2 border-emerald-200 dark:border-emerald-800 ${className || ""}`}
@@ -48,7 +51,7 @@ export const ConnectionBlock: React.FC<ConnectionBlockProps> = ({
               variant="h4"
               className="font-semibold text-emerald-900 dark:text-emerald-100"
             >
-              Building On What You Know
+              {t('connection.title')}
             </Typography>
             <Box className="text-[var(--color-foreground)]">
               <MarkdownContent content={content} />

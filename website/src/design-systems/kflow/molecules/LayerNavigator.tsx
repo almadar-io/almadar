@@ -13,7 +13,7 @@
 
 import React from 'react';
 import { ChevronLeft, ChevronRight, Layers } from 'lucide-react';
-import { Box, HStack, useEventBus } from '@almadar/ui';
+import { Box, HStack, useEventBus, useTranslate } from '@almadar/ui';
 
 export interface LayerInfo {
   number: number;
@@ -46,6 +46,7 @@ export const LayerNavigator: React.FC<LayerNavigatorProps> = ({
   className = '',
 }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
 
   const sortedLayers = [...layers].sort((a, b) => a.number - b.number);
   const currentIndex = sortedLayers.findIndex((l) => l.number === currentLayer);
@@ -85,7 +86,7 @@ export const LayerNavigator: React.FC<LayerNavigatorProps> = ({
         <HStack gap="xs" align="center" className="px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded-full">
           <Layers size={16} />
           <span className="font-medium">
-            Layer {currentLayer}
+            {t('knowledge.layer', { number: currentLayer })}
             {current?.name && showNames && `: ${current.name}`}
           </span>
         </HStack>

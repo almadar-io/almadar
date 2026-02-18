@@ -30,6 +30,7 @@ import {
   Avatar,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -133,6 +134,7 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
   removeMemberEvent,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
   const team = entity;
 
   const handleBack = () => {
@@ -162,7 +164,7 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
       <VStack align="center" justify="center" className={cn("py-12", className)}>
         <Spinner size="lg" />
         <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-          Loading team...
+          {t('teamDetail.loading')}
         </Typography>
       </VStack>
     );
@@ -172,7 +174,7 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
     return (
       <VStack align="center" justify="center" className={cn("py-12", className)}>
         <Typography variant="body" className="text-red-500">
-          Error: {error.message}
+          {t('teamDetail.error', { message: error.message })}
         </Typography>
       </VStack>
     );
@@ -182,7 +184,7 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
     return (
       <VStack align="center" justify="center" className={cn("py-12", className)}>
         <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-          Team not found
+          {t('teamDetail.notFound')}
         </Typography>
       </VStack>
     );
@@ -200,7 +202,7 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
           {showBack && (
             <Button variant="ghost" onClick={handleBack} className="gap-2">
               <ArrowLeft className="h-4 w-4" />
-              Back
+              {t('teamDetail.back')}
             </Button>
           )}
           <VStack gap="xs">
@@ -216,11 +218,11 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
         <HStack gap="sm">
           <Button variant="secondary" onClick={handleEdit} className="gap-2">
             <Edit className="h-4 w-4" />
-            Edit
+            {t('teamDetail.edit')}
           </Button>
           <Button variant="secondary" className="gap-2">
             <Settings className="h-4 w-4" />
-            Settings
+            {t('teamDetail.settings')}
           </Button>
         </HStack>
       </HStack>
@@ -228,14 +230,14 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
       {/* Status and Meta */}
       <HStack gap="md" wrap>
         <Badge variant={getStatusColor(team.status)} size="lg">
-          {team.status}
+          {t(`teamDetail.status.${team.status}`)}
         </Badge>
         <Badge variant={getTypeColor(team.type)} size="lg">
-          {team.type}
+          {t(`teamDetail.type.${team.type}`)}
         </Badge>
         <HStack gap="xs" align="center">
           <Users className="h-4 w-4 text-[var(--color-muted-foreground)]" />
-          <Typography variant="body">{memberCapacity} members</Typography>
+          <Typography variant="body">{t('teamDetail.membersCount', { count: memberCapacity })}</Typography>
         </HStack>
         {team.tags?.map((tag) => (
           <Badge key={tag} variant="neutral">
@@ -251,9 +253,9 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
           {/* Description */}
           <Card className="p-4">
             <VStack gap="sm">
-              <Typography variant="h4">About</Typography>
+              <Typography variant="h4">{t('teamDetail.about')}</Typography>
               <Typography variant="body" className="text-[var(--color-foreground)]">
-                {team.description || "No description provided."}
+                {team.description || t('teamDetail.noDescription')}
               </Typography>
             </VStack>
           </Card>
@@ -262,7 +264,7 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
           {team.goals && team.goals.length > 0 && (
             <Card className="p-4">
               <VStack gap="md">
-                <Typography variant="h4">Team Goals</Typography>
+                <Typography variant="h4">{t('teamDetail.teamGoals')}</Typography>
                 <VStack gap="sm">
                   {team.goals.map((goal, idx) => (
                     <HStack key={idx} gap="sm" align="start">
@@ -279,7 +281,7 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
           <Card className="p-4">
             <VStack gap="md">
               <HStack justify="between" align="center">
-                <Typography variant="h4">Team Members</Typography>
+                <Typography variant="h4">{t('teamDetail.teamMembers')}</Typography>
                 <Button
                   variant="primary"
                   size="sm"
@@ -287,7 +289,7 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
                   className="gap-1"
                 >
                   <UserPlus className="h-3 w-3" />
-                  Add Member
+                  {t('teamDetail.addMember')}
                 </Button>
               </HStack>
 
@@ -305,15 +307,14 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
                         <HStack gap="sm" align="center">
                           <Typography variant="body" className="font-medium">
                             {member.userName ||
-                              `User ${member.userId.slice(-4)}`}
+                              t('teamDetail.userFallback', { id: member.userId.slice(-4) })}
                           </Typography>
                           {member.role === "leader" && (
                             <Crown className="h-4 w-4 text-amber-500" />
                           )}
                         </HStack>
                         <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                          {member.role} -- Joined{" "}
-                          {new Date(member.joinedAt).toLocaleDateString()}
+                          {t(`teamDetail.role.${member.role}`)} -- {t('teamDetail.joined', { date: new Date(member.joinedAt).toLocaleDateString() })}
                         </Typography>
                       </VStack>
                       {member.trustScore !== undefined && (
@@ -341,7 +342,7 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
                 <VStack align="center" className="py-8">
                   <Users className="h-8 w-8 text-[var(--color-muted-foreground)]" />
                   <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-                    No members yet
+                    {t('teamDetail.noMembers')}
                   </Typography>
                 </VStack>
               )}
@@ -354,7 +355,7 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
           {/* Metrics Card */}
           <Card className="p-4">
             <VStack gap="md">
-              <Typography variant="h4">Team Metrics</Typography>
+              <Typography variant="h4">{t('teamDetail.teamMetrics')}</Typography>
 
               {team.averageTrustScore !== undefined && (
                 <VStack gap="xs">
@@ -362,7 +363,7 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
                     <HStack gap="sm" align="center">
                       <Shield className="h-4 w-4 text-blue-500" />
                       <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                        Average Trust Score
+                        {t('teamDetail.averageTrustScore')}
                       </Typography>
                     </HStack>
                     <Typography variant="h3" className="text-blue-600">
@@ -384,7 +385,7 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
                     <HStack gap="sm" align="center">
                       <Target className="h-4 w-4 text-emerald-500" />
                       <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                        Cohesion Score
+                        {t('teamDetail.cohesionScore')}
                       </Typography>
                     </HStack>
                     <Typography variant="h3" className="text-emerald-600">
@@ -405,17 +406,17 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
           {/* Leader Card */}
           <Card className="p-4">
             <VStack gap="sm">
-              <Typography variant="h4">Team Leader</Typography>
+              <Typography variant="h4">{t('teamDetail.teamLeader')}</Typography>
               <HStack gap="sm" align="center">
                 <Avatar name={team.leaderName || "Leader"} size="md" />
                 <VStack gap="none">
                   <Typography variant="body" className="font-medium">
-                    {team.leaderName || `User ${team.leaderId.slice(-4)}`}
+                    {team.leaderName || t('teamDetail.userFallback', { id: team.leaderId.slice(-4) })}
                   </Typography>
                   <HStack gap="xs" align="center">
                     <Crown className="h-3 w-3 text-amber-500" />
                     <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                      Team Leader
+                      {t('teamDetail.teamLeader')}
                     </Typography>
                   </HStack>
                 </VStack>
@@ -426,11 +427,11 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
           {/* Details Card */}
           <Card className="p-4">
             <VStack gap="md">
-              <Typography variant="h4">Details</Typography>
+              <Typography variant="h4">{t('teamDetail.details')}</Typography>
               <VStack gap="sm">
                 <HStack justify="between">
                   <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                    Created
+                    {t('teamDetail.created')}
                   </Typography>
                   <Typography variant="small">
                     {new Date(team.createdAt).toLocaleDateString()}
@@ -439,7 +440,7 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
                 {team.updatedAt && (
                   <HStack justify="between">
                     <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                      Last Updated
+                      {t('teamDetail.lastUpdated')}
                     </Typography>
                     <Typography variant="small">
                       {new Date(team.updatedAt).toLocaleDateString()}
@@ -449,7 +450,7 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
                 {team.maxMembers && (
                   <HStack justify="between">
                     <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                      Max Members
+                      {t('teamDetail.maxMembers')}
                     </Typography>
                     <Typography variant="small">{team.maxMembers}</Typography>
                   </HStack>
@@ -461,7 +462,7 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
           {/* Quick Actions */}
           <Card className="p-4">
             <VStack gap="sm">
-              <Typography variant="h4">Quick Actions</Typography>
+              <Typography variant="h4">{t('teamDetail.quickActions')}</Typography>
               <Button
                 variant="secondary"
                 className="w-full gap-2 justify-start"
@@ -470,7 +471,7 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
                 }
               >
                 <BarChart3 className="h-4 w-4" />
-                View Analytics
+                {t('teamDetail.viewAnalytics')}
               </Button>
               <Button
                 variant="secondary"
@@ -480,7 +481,7 @@ export const TeamDetailBoard: React.FC<TeamDetailBoardProps> = ({
                 }
               >
                 <Users className="h-4 w-4" />
-                Manage Members
+                {t('teamDetail.manageMembers')}
               </Button>
             </VStack>
           </Card>

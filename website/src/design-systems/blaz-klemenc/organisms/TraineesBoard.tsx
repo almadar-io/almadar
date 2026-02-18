@@ -41,6 +41,7 @@ import {
   Badge,
   Spinner,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 /**
@@ -137,6 +138,7 @@ const UserCard: React.FC<{
   deleteEvent?: string;
 }> = ({ user, viewEvent, editEvent, deleteEvent }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const RoleIcon = getRoleIcon(user.role);
 
   return (
@@ -188,7 +190,7 @@ const UserCard: React.FC<{
         {user.createdAt && (
           <HStack gap="xs" align="center" className="text-[var(--color-muted-foreground)]">
             <Calendar className="h-3 w-3" />
-            <Typography variant="small">Joined {formatDate(user.createdAt)}</Typography>
+            <Typography variant="small">{t('trainees.joinedDate', { date: formatDate(user.createdAt) })}</Typography>
           </HStack>
         )}
 
@@ -201,7 +203,7 @@ const UserCard: React.FC<{
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
-            View
+            {t('trainees.view')}
           </Button>
           <Button
             variant="ghost"
@@ -210,7 +212,7 @@ const UserCard: React.FC<{
             className="gap-1"
           >
             <Edit className="h-3 w-3" />
-            Edit
+            {t('trainees.edit')}
           </Button>
           <Button
             variant="ghost"
@@ -219,7 +221,7 @@ const UserCard: React.FC<{
             className="gap-1 text-red-600 hover:text-red-700"
           >
             <Trash2 className="h-3 w-3" />
-            Delete
+            {t('trainees.delete')}
           </Button>
         </HStack>
       </VStack>
@@ -246,6 +248,7 @@ export const TraineesBoard: React.FC<TraineesBoardProps> = ({
   filterEvent = "FILTER",
 }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState<"all" | "trainer" | "trainee">(defaultRoleFilter);
 
@@ -298,7 +301,7 @@ export const TraineesBoard: React.FC<TraineesBoardProps> = ({
 
           <Button variant="primary" onClick={handleCreate} className="gap-2">
             <Plus className="h-4 w-4" />
-            Add User
+            {t('trainees.addUser')}
           </Button>
         </HStack>
       )}
@@ -311,7 +314,7 @@ export const TraineesBoard: React.FC<TraineesBoardProps> = ({
             <VStack gap="none">
               <Typography variant="h3">{users.length}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Total Users
+                {t('trainees.totalUsers')}
               </Typography>
             </VStack>
           </HStack>
@@ -322,7 +325,7 @@ export const TraineesBoard: React.FC<TraineesBoardProps> = ({
             <VStack gap="none">
               <Typography variant="h3">{trainerCount}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Trainers
+                {t('trainees.trainers')}
               </Typography>
             </VStack>
           </HStack>
@@ -333,7 +336,7 @@ export const TraineesBoard: React.FC<TraineesBoardProps> = ({
             <VStack gap="none">
               <Typography variant="h3">{traineeCount}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Trainees
+                {t('trainees.trainees')}
               </Typography>
             </VStack>
           </HStack>
@@ -346,7 +349,7 @@ export const TraineesBoard: React.FC<TraineesBoardProps> = ({
           {showSearch && (
             <Box className="w-full max-w-sm">
               <Input
-                placeholder="Search users..."
+                placeholder={t('trainees.searchPlaceholder')}
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
                 leftIcon={<Search className="h-4 w-4 text-[var(--color-muted-foreground)]" />}
@@ -361,7 +364,7 @@ export const TraineesBoard: React.FC<TraineesBoardProps> = ({
                 size="sm"
                 onClick={() => handleRoleFilter("all")}
               >
-                All
+                {t('trainees.all')}
               </Button>
               <Button
                 variant={roleFilter === "trainer" ? "primary" : "secondary"}
@@ -369,7 +372,7 @@ export const TraineesBoard: React.FC<TraineesBoardProps> = ({
                 onClick={() => handleRoleFilter("trainer")}
               >
                 <GraduationCap className="h-4 w-4 mr-1" />
-                Trainers
+                {t('trainees.trainers')}
               </Button>
               <Button
                 variant={roleFilter === "trainee" ? "primary" : "secondary"}
@@ -377,7 +380,7 @@ export const TraineesBoard: React.FC<TraineesBoardProps> = ({
                 onClick={() => handleRoleFilter("trainee")}
               >
                 <Dumbbell className="h-4 w-4 mr-1" />
-                Trainees
+                {t('trainees.trainees')}
               </Button>
             </HStack>
           )}
@@ -389,7 +392,7 @@ export const TraineesBoard: React.FC<TraineesBoardProps> = ({
         <VStack align="center" justify="center" className="py-12">
           <Spinner size="lg" />
           <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-            Loading users...
+            {t('trainees.loading')}
           </Typography>
         </VStack>
       )}
@@ -410,12 +413,12 @@ export const TraineesBoard: React.FC<TraineesBoardProps> = ({
             <VStack align="center" justify="center" className="py-12">
               <Users className="h-12 w-12 text-[var(--color-muted-foreground)]" />
               <Typography variant="h3" className="text-[var(--color-muted-foreground)]">
-                No users found
+                {t('trainees.noUsersFound')}
               </Typography>
               <Typography variant="body" className="text-[var(--color-muted-foreground)]">
                 {searchTerm
-                  ? "Try a different search term"
-                  : "Add your first user to get started"}
+                  ? t('trainees.tryDifferentSearch')
+                  : t('trainees.addFirstUser')}
               </Typography>
             </VStack>
           ) : (

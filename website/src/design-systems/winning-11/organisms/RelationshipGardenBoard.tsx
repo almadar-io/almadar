@@ -27,6 +27,7 @@ import {
   Input,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 export interface RelationshipGardenBoardProps {
@@ -76,8 +77,8 @@ export const RelationshipGardenBoard: React.FC<RelationshipGardenBoardProps> = (
   seasonProgress = 50,
   weatherCondition = "sunny",
   weatherForecast,
-  title = "My Garden",
-  subtitle = "Nurture your relationships",
+  title,
+  subtitle,
   showHeader = true,
   showSearch = true,
   showFilters = true,
@@ -89,6 +90,7 @@ export const RelationshipGardenBoard: React.FC<RelationshipGardenBoardProps> = (
   waterEvent = "WATER",
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
   const [searchTerm, setSearchTerm] = React.useState("");
   const [layout, setLayout] = React.useState<"grid" | "rows">("grid");
 
@@ -114,16 +116,16 @@ export const RelationshipGardenBoard: React.FC<RelationshipGardenBoardProps> = (
       {showHeader && (
         <HStack justify="between" align="center" wrap>
           <VStack gap="xs">
-            <Typography variant="h1">{title}</Typography>
+            <Typography variant="h1">{title ?? t('garden.myGarden')}</Typography>
             <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-              {subtitle}
+              {subtitle ?? t('garden.nurtureRelationships')}
             </Typography>
           </VStack>
 
           <HStack gap="sm">
             <Button variant="primary" onClick={handleCreate} className="gap-2">
               <Plus className="h-4 w-4" />
-              Plant New Seed
+              {t('garden.plantNewSeed')}
             </Button>
           </HStack>
         </HStack>
@@ -135,7 +137,7 @@ export const RelationshipGardenBoard: React.FC<RelationshipGardenBoardProps> = (
           {showSearch && (
             <Box className="w-full max-w-sm">
               <Input
-                placeholder="Search relationships..."
+                placeholder={t('garden.searchRelationships')}
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
                 leftIcon={<Search className="h-4 w-4 text-[var(--color-muted-foreground)]" />}
@@ -147,7 +149,7 @@ export const RelationshipGardenBoard: React.FC<RelationshipGardenBoardProps> = (
             {showFilters && (
               <Button variant="secondary" onClick={handleFilter} className="gap-2">
                 <Filter className="h-4 w-4" />
-                Filter
+                {t('garden.filter')}
               </Button>
             )}
 
@@ -177,7 +179,7 @@ export const RelationshipGardenBoard: React.FC<RelationshipGardenBoardProps> = (
         <VStack align="center" justify="center" className="py-12">
           <Spinner size="lg" />
           <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-            Loading your garden...
+            {t('garden.loadingGarden')}
           </Typography>
         </VStack>
       )}
@@ -186,7 +188,7 @@ export const RelationshipGardenBoard: React.FC<RelationshipGardenBoardProps> = (
       {error && (
         <VStack align="center" justify="center" className="py-12">
           <Typography variant="body" className="text-red-500">
-            Error: {error.message}
+            {t('garden.error', { message: error.message })}
           </Typography>
         </VStack>
       )}
@@ -202,8 +204,8 @@ export const RelationshipGardenBoard: React.FC<RelationshipGardenBoardProps> = (
           weatherForecast={weatherForecast}
           showWeather
           showSeason
-          emptyTitle="Your garden is empty"
-          emptyDescription="Start building meaningful relationships by planting your first seed"
+          emptyTitle={t('garden.emptyGardenTitle')}
+          emptyDescription={t('garden.emptyGardenDescription')}
         />
       )}
     </VStack>

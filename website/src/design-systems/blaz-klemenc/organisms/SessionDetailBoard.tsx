@@ -42,6 +42,7 @@ import {
   Badge,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 /**
@@ -120,32 +121,32 @@ type SessionAction = "START" | "COMPLETE" | "CANCEL";
 const statusConfig: Record<
   string,
   {
-    label: string;
+    labelKey: string;
     color: string;
     icon: typeof Calendar;
     actions: SessionAction[];
   }
 > = {
   scheduled: {
-    label: "Scheduled",
+    labelKey: "session.statusScheduled",
     color: "bg-blue-500/15 text-blue-600",
     icon: Calendar,
     actions: ["START", "CANCEL"],
   },
   "in-progress": {
-    label: "In Progress",
+    labelKey: "session.statusInProgress",
     color: "bg-amber-500/15 text-amber-600",
     icon: PlayCircle,
     actions: ["COMPLETE", "CANCEL"],
   },
   completed: {
-    label: "Completed",
+    labelKey: "session.statusCompleted",
     color: "bg-green-500/15 text-green-600",
     icon: CheckCircle2,
     actions: [],
   },
   cancelled: {
-    label: "Cancelled",
+    labelKey: "session.statusCancelled",
     color: "bg-red-500/15 text-red-600",
     icon: XCircle,
     actions: [],
@@ -186,6 +187,7 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
   backEvent,
 }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
 
   // Handle back navigation
   const handleBack = () => {
@@ -242,7 +244,7 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
           variant="body"
           className="text-[var(--color-muted-foreground)]"
         >
-          Loading session details...
+          {t('session.loading')}
         </Typography>
       </VStack>
     );
@@ -276,7 +278,7 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
           variant="h3"
           className="text-[var(--color-muted-foreground)]"
         >
-          Session not found
+          {t('session.notFound')}
         </Typography>
       </VStack>
     );
@@ -301,7 +303,7 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
               <Typography variant="h1">{entity.title}</Typography>
               <Badge className={status.color}>
                 <StatusIcon className="h-3 w-3 mr-1" />
-                {status.label}
+                {t(status.labelKey)}
               </Badge>
             </HStack>
             <HStack
@@ -328,18 +330,18 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
         <HStack gap="sm">
           <Button variant="secondary" onClick={handleEdit}>
             <Edit className="h-4 w-4 mr-1" />
-            Edit
+            {t('session.edit')}
           </Button>
           {status.actions.includes("START") && (
             <Button variant="primary" onClick={handleStart}>
               <PlayCircle className="h-4 w-4 mr-1" />
-              Start Session
+              {t('session.startSession')}
             </Button>
           )}
           {status.actions.includes("COMPLETE") && (
             <Button variant="primary" onClick={handleComplete}>
               <CheckCircle2 className="h-4 w-4 mr-1" />
-              Complete
+              {t('session.complete')}
             </Button>
           )}
           {status.actions.includes("CANCEL") && (
@@ -349,7 +351,7 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
               className="text-amber-600 hover:text-amber-700"
             >
               <XCircle className="h-4 w-4 mr-1" />
-              Cancel
+              {t('session.cancel')}
             </Button>
           )}
           <Button
@@ -369,28 +371,27 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
           {/* Session Info */}
           <Card className="p-4">
             <VStack gap="md">
-              <Typography variant="h4">Session Details</Typography>
+              <Typography variant="h4">{t('session.details')}</Typography>
               <VStack gap="sm">
                 <HStack justify="between">
                   <Typography
                     variant="body"
                     className="text-[var(--color-muted-foreground)]"
                   >
-                    Type
+                    {t('session.type')}
                   </Typography>
                   <HStack gap="xs" align="center">
                     {entity.isGroupSession ? (
                       <>
                         <Users className="h-4 w-4 text-blue-500" />
                         <Typography variant="body">
-                          Group Session ({entity.maxParticipants || "unlimited"}{" "}
-                          max)
+                          {t('session.groupSession', { max: entity.maxParticipants || t('session.unlimited') })}
                         </Typography>
                       </>
                     ) : (
                       <>
                         <User className="h-4 w-4 text-green-500" />
-                        <Typography variant="body">1-on-1 Session</Typography>
+                        <Typography variant="body">{t('session.oneOnOne')}</Typography>
                       </>
                     )}
                   </HStack>
@@ -400,7 +401,7 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
                     variant="body"
                     className="text-[var(--color-muted-foreground)]"
                   >
-                    Duration
+                    {t('session.duration')}
                   </Typography>
                   <Typography variant="body">
                     {formatDuration(entity.duration)}
@@ -412,7 +413,7 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
                       variant="body"
                       className="text-[var(--color-muted-foreground)]"
                     >
-                      Location
+                      {t('session.location')}
                     </Typography>
                     <HStack gap="xs" align="center">
                       <MapPin className="h-4 w-4 text-[var(--color-muted-foreground)]" />
@@ -428,7 +429,7 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
                       variant="body"
                       className="text-[var(--color-muted-foreground)]"
                     >
-                      Trainer
+                      {t('session.trainer')}
                     </Typography>
                     <Typography variant="body">{trainer.name}</Typography>
                   </HStack>
@@ -443,7 +444,7 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
               <VStack gap="sm">
                 <HStack gap="xs" align="center">
                   <FileText className="h-4 w-4 text-[var(--color-muted-foreground)]" />
-                  <Typography variant="h4">Notes</Typography>
+                  <Typography variant="h4">{t('session.notes')}</Typography>
                 </HStack>
                 <Typography
                   variant="body"
@@ -461,11 +462,11 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
               <VStack gap="sm">
                 <HStack gap="xs" align="center">
                   <Youtube className="h-4 w-4 text-red-500" />
-                  <Typography variant="h4">Session Video</Typography>
+                  <Typography variant="h4">{t('session.sessionVideo')}</Typography>
                 </HStack>
                 <ExerciseVideoLink
                   videoUrl={entity.youtubeLink}
-                  exerciseName="Session Recording"
+                  exerciseName={t('session.sessionRecording')}
                 />
               </VStack>
             </Card>
@@ -482,7 +483,7 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
                   <HStack gap="xs" align="center">
                     <Users className="h-4 w-4 text-[var(--color-muted-foreground)]" />
                     <Typography variant="h4">
-                      Participants ({participants.length})
+                      {t('session.participantsCount', { count: participants.length })}
                     </Typography>
                   </HStack>
                 </HStack>
@@ -523,7 +524,7 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
                           }
                           size="sm"
                         >
-                          {participant.attended ? "Attended" : "Absent"}
+                          {participant.attended ? t('session.attended') : t('session.absent')}
                         </Badge>
                       )}
                     </HStack>
@@ -540,7 +541,7 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
                 <HStack gap="xs" align="center">
                   <Dumbbell className="h-4 w-4 text-[var(--color-muted-foreground)]" />
                   <Typography variant="h4">
-                    Exercises ({exercises.length})
+                    {t('session.exercisesCount', { count: exercises.length })}
                   </Typography>
                 </HStack>
                 <VStack gap="sm">

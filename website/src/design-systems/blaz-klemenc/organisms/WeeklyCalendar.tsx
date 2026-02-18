@@ -23,6 +23,7 @@ import {
   Card,
   Badge,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 export interface CalendarEvent {
@@ -129,6 +130,7 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
   className,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
 
   const [currentWeekStart, setCurrentWeekStart] = useState<Date>(
     weekStart ? getStartOfWeek(weekStart) : getStartOfWeek(new Date()),
@@ -254,7 +256,7 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
               <ChevronLeft className="h-4 w-4" />
             </Button>
             <Button variant="secondary" size="sm" onClick={handleToday}>
-              Today
+              {t('schedule.today')}
             </Button>
             <Button variant="ghost" size="sm" onClick={handleNextWeek}>
               <ChevronRight className="h-4 w-4" />
@@ -359,19 +361,19 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
           <HStack gap="xs" align="center">
             <Box className="h-3 w-3 rounded bg-blue-500/15 border border-blue-500/30" />
             <Typography variant="small" className="text-[var(--color-foreground)]">
-              Personal
+              {t('schedule.personal')}
             </Typography>
           </HStack>
           <HStack gap="xs" align="center">
             <Box className="h-3 w-3 rounded bg-purple-500/15 border border-purple-500/30" />
             <Typography variant="small" className="text-[var(--color-foreground)]">
-              Group
+              {t('schedule.group')}
             </Typography>
           </HStack>
           <HStack gap="xs" align="center">
             <Box className="h-3 w-3 rounded bg-[var(--color-muted)] border border-[var(--color-border)]" />
             <Typography variant="small" className="text-[var(--color-foreground)]">
-              Break
+              {t('schedule.break')}
             </Typography>
           </HStack>
         </HStack>

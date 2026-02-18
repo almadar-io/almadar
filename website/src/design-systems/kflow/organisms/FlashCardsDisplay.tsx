@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FlashCard } from '../types';
 import { RotateCcw, Edit2, X, Check, Plus, Trash2 } from 'lucide-react';
+import { useTranslate } from '@almadar/ui';
 
 interface FlashCardsDisplayProps {
   flashCards: FlashCard[];
@@ -17,6 +18,7 @@ const FlashCardsDisplay: React.FC<FlashCardsDisplayProps> = ({
   onCancelEdit,
   onSaveFlashCards,
 }) => {
+  const { t } = useTranslate();
   const [isFlipped, setIsFlipped] = useState<Record<number, boolean>>({});
   const [editCards, setEditCards] = useState<Array<{ front: string; back: string }>>([]);
 
@@ -75,7 +77,7 @@ const FlashCardsDisplay: React.FC<FlashCardsDisplayProps> = ({
     <div className="mt-8">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-xl font-semibold text-[var(--color-foreground)]">
-          Flash Cards
+          {t('flashcard.flashCards')}
         </h3>
         <div className="flex items-center gap-2">
           {isEditing ? (
@@ -85,14 +87,14 @@ const FlashCardsDisplay: React.FC<FlashCardsDisplayProps> = ({
                 className="inline-flex items-center gap-1 px-3 py-1.5 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm"
               >
                 <Check size={16} />
-                Save
+                {t('flashcard.save')}
               </button>
               <button
                 onClick={handleCancel}
                 className="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-500 text-white rounded-lg hover:bg-gray-600 text-sm"
               >
                 <X size={16} />
-                Cancel
+                {t('flashcard.cancel')}
               </button>
             </>
           ) : (
@@ -103,7 +105,7 @@ const FlashCardsDisplay: React.FC<FlashCardsDisplayProps> = ({
                   className="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-[var(--color-foreground)] hover:text-[var(--color-foreground)] border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   <Edit2 size={14} />
-                  Edit
+                  {t('flashcard.edit')}
                 </button>
               )}
               <button
@@ -111,7 +113,7 @@ const FlashCardsDisplay: React.FC<FlashCardsDisplayProps> = ({
                 className="text-sm text-[var(--color-foreground)] hover:text-[var(--color-foreground)] flex items-center gap-1"
               >
                 <RotateCcw size={14} />
-                Reset All
+                {t('flashcard.resetAll')}
               </button>
             </>
           )}
@@ -130,7 +132,7 @@ const FlashCardsDisplay: React.FC<FlashCardsDisplayProps> = ({
                 >
                   <div className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg p-4 shadow-lg">
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-[var(--color-foreground)]">Card {index + 1}</span>
+                      <span className="text-sm font-medium text-[var(--color-foreground)]">{t('flashcard.cardNumber', { number: index + 1 })}</span>
                       <button
                         onClick={() => handleRemoveCard(index)}
                         className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
@@ -140,23 +142,23 @@ const FlashCardsDisplay: React.FC<FlashCardsDisplayProps> = ({
                     </div>
                     <div className="space-y-3">
                       <div>
-                        <label className="block text-xs font-medium text-[var(--color-foreground)] mb-1">Question</label>
+                        <label className="block text-xs font-medium text-[var(--color-foreground)] mb-1">{t('flashcard.question')}</label>
                         <textarea
                           value={card.front}
                           onChange={(e) => handleCardChange(index, 'front', e.target.value)}
                           className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-[var(--color-foreground)] text-sm resize-none"
                           rows={3}
-                          placeholder="Enter question..."
+                          placeholder={t('flashcard.enterQuestion')}
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-[var(--color-foreground)] mb-1">Answer</label>
+                        <label className="block text-xs font-medium text-[var(--color-foreground)] mb-1">{t('flashcard.answer')}</label>
                         <textarea
                           value={card.back}
                           onChange={(e) => handleCardChange(index, 'back', e.target.value)}
                           className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-[var(--color-foreground)] text-sm resize-none"
                           rows={3}
-                          placeholder="Enter answer..."
+                          placeholder={t('flashcard.enterAnswer')}
                         />
                       </div>
                     </div>
@@ -169,7 +171,7 @@ const FlashCardsDisplay: React.FC<FlashCardsDisplayProps> = ({
                   className="w-full h-64 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg flex flex-col items-center justify-center text-[var(--color-muted-foreground)] hover:border-gray-400 dark:hover:border-gray-500 hover:text-[var(--color-foreground)] transition-colors"
                 >
                   <Plus size={32} />
-                  <span className="mt-2 text-sm">Add Card</span>
+                  <span className="mt-2 text-sm">{t('flashcard.addCard')}</span>
                 </button>
               </div>
             </>
@@ -199,7 +201,7 @@ const FlashCardsDisplay: React.FC<FlashCardsDisplayProps> = ({
                       }}
                     >
                       <div className="bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-lg w-full h-full flex flex-col justify-center items-center p-6">
-                        <div className="text-sm text-indigo-100 mb-2 font-medium">Question</div>
+                        <div className="text-sm text-indigo-100 mb-2 font-medium">{t('flashcard.question')}</div>
                         <p className="text-lg font-medium text-center">{card.front}</p>
                       </div>
                     </div>
@@ -213,7 +215,7 @@ const FlashCardsDisplay: React.FC<FlashCardsDisplayProps> = ({
                       }}
                     >
                       <div className="bg-gradient-to-br from-purple-500 to-pink-600 text-white rounded-lg w-full h-full flex flex-col justify-center items-center p-6">
-                        <div className="text-sm text-purple-100 mb-2 font-medium">Answer</div>
+                        <div className="text-sm text-purple-100 mb-2 font-medium">{t('flashcard.answer')}</div>
                         <p className="text-base text-center leading-relaxed">{card.back}</p>
                       </div>
                     </div>
@@ -226,7 +228,7 @@ const FlashCardsDisplay: React.FC<FlashCardsDisplayProps> = ({
       </div>
 
       <p className="text-xs text-[var(--color-muted-foreground)] mt-2 text-center">
-        Click on a card to flip it • {flashCards.length} card{flashCards.length !== 1 ? 's' : ''}
+        {t('flashcard.clickToFlipHint')} • {t('flashcard.cardCount', { count: flashCards.length })}
       </p>
     </div>
   );

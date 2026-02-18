@@ -25,6 +25,7 @@ import {
   Badge,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -97,12 +98,14 @@ export const TrustIntelligenceBoard: React.FC<TrustIntelligenceBoardProps> = ({
   entity,
   isLoading = false,
   error = null,
-  title = "Trust Intelligence",
+  title,
   className,
   viewUserEvent,
 }) => {
   const { userScore, networkAverage = 65, topPerformers = [], recentChanges = [] } = entity || {};
   const eventBus = useEventBus();
+  const { t } = useTranslate();
+  const resolvedTitle = title ?? t('trust.title');
 
   const handleScoreClick = (score: TrustScoreData) => {
     eventBus.emit(`UI:${viewUserEvent}`, { row: score, entity: "TrustScore" });
@@ -113,7 +116,7 @@ export const TrustIntelligenceBoard: React.FC<TrustIntelligenceBoardProps> = ({
       <VStack align="center" justify="center" className={cn("py-12", className)}>
         <Spinner size="lg" />
         <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-          Calculating trust metrics...
+          {t('trust.calculatingMetrics')}
         </Typography>
       </VStack>
     );
@@ -123,7 +126,7 @@ export const TrustIntelligenceBoard: React.FC<TrustIntelligenceBoardProps> = ({
     return (
       <VStack align="center" justify="center" className={cn("py-12", className)}>
         <Typography variant="body" className="text-red-500">
-          Error: {error.message}
+          {t('trust.error', { message: error.message })}
         </Typography>
       </VStack>
     );
@@ -134,14 +137,14 @@ export const TrustIntelligenceBoard: React.FC<TrustIntelligenceBoardProps> = ({
       {/* Header */}
       <HStack justify="between" align="center">
         <VStack gap="xs">
-          <Typography variant="h1">{title}</Typography>
+          <Typography variant="h1">{resolvedTitle}</Typography>
           <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-            Your trust metrics and network insights
+            {t('trust.subtitle')}
           </Typography>
         </VStack>
         <Badge variant="info" className="gap-1">
           <Activity className="h-3 w-3" />
-          Live
+          {t('trust.live')}
         </Badge>
       </HStack>
 
@@ -160,7 +163,7 @@ export const TrustIntelligenceBoard: React.FC<TrustIntelligenceBoardProps> = ({
                 </Box>
                 <VStack gap="none">
                   <Typography variant="label" className="text-[var(--color-muted-foreground)]">
-                    Your Trust Score
+                    {t('trust.yourTrustScore')}
                   </Typography>
                   <HStack gap="sm" align="center">
                     <Typography variant="h1" className="text-blue-600">
@@ -181,11 +184,11 @@ export const TrustIntelligenceBoard: React.FC<TrustIntelligenceBoardProps> = ({
             {/* Score breakdown */}
             <VStack gap="sm" className="min-w-[200px]">
               <Typography variant="label" className="text-[var(--color-muted-foreground)]">
-                Score Breakdown
+                {t('trust.scoreBreakdown')}
               </Typography>
               {userScore.reliabilityScore !== undefined && (
                 <HStack justify="between">
-                  <Typography variant="small">Reliability</Typography>
+                  <Typography variant="small">{t('trust.reliability')}</Typography>
                   <Typography variant="small" className="font-medium">
                     {userScore.reliabilityScore}%
                   </Typography>
@@ -193,7 +196,7 @@ export const TrustIntelligenceBoard: React.FC<TrustIntelligenceBoardProps> = ({
               )}
               {userScore.consistencyScore !== undefined && (
                 <HStack justify="between">
-                  <Typography variant="small">Consistency</Typography>
+                  <Typography variant="small">{t('trust.consistency')}</Typography>
                   <Typography variant="small" className="font-medium">
                     {userScore.consistencyScore}%
                   </Typography>
@@ -201,7 +204,7 @@ export const TrustIntelligenceBoard: React.FC<TrustIntelligenceBoardProps> = ({
               )}
               {userScore.communicationScore !== undefined && (
                 <HStack justify="between">
-                  <Typography variant="small">Communication</Typography>
+                  <Typography variant="small">{t('trust.communication')}</Typography>
                   <Typography variant="small" className="font-medium">
                     {userScore.communicationScore}%
                   </Typography>
@@ -220,12 +223,12 @@ export const TrustIntelligenceBoard: React.FC<TrustIntelligenceBoardProps> = ({
                   <Award className="h-8 w-8 text-amber-600" />
                 </Box>
                 <Typography variant="label" className="text-[var(--color-muted-foreground)]">
-                  Network Rank
+                  {t('trust.networkRank')}
                 </Typography>
                 <Typography variant="h3">
                   #{userScore.rank}{" "}
                   <Typography as="span" variant="small" className="text-[var(--color-muted-foreground)]">
-                    of {userScore.totalUsers}
+                    {t('trust.ofTotal', { total: userScore.totalUsers })}
                   </Typography>
                 </Typography>
               </VStack>
@@ -242,7 +245,7 @@ export const TrustIntelligenceBoard: React.FC<TrustIntelligenceBoardProps> = ({
             <HStack gap="sm" align="center">
               <Users className="h-5 w-5 text-[var(--color-muted-foreground)]" />
               <Typography variant="label" className="text-[var(--color-muted-foreground)]">
-                Network Average
+                {t('trust.networkAverage')}
               </Typography>
             </HStack>
             <Typography variant="h2">{networkAverage}</Typography>
@@ -256,8 +259,8 @@ export const TrustIntelligenceBoard: React.FC<TrustIntelligenceBoardProps> = ({
                 )}
               >
                 {userScore.overallScore > networkAverage
-                  ? `+${userScore.overallScore - networkAverage} above average`
-                  : `${networkAverage - userScore.overallScore} below average`}
+                  ? t('trust.aboveAverage', { diff: userScore.overallScore - networkAverage })
+                  : t('trust.belowAverage', { diff: networkAverage - userScore.overallScore })}
               </Typography>
             )}
           </VStack>
@@ -269,7 +272,7 @@ export const TrustIntelligenceBoard: React.FC<TrustIntelligenceBoardProps> = ({
             <HStack gap="sm" align="center">
               <Award className="h-5 w-5 text-amber-500" />
               <Typography variant="label" className="text-[var(--color-muted-foreground)]">
-                Top Performers
+                {t('trust.topPerformers')}
               </Typography>
             </HStack>
             <VStack gap="xs">
@@ -281,7 +284,7 @@ export const TrustIntelligenceBoard: React.FC<TrustIntelligenceBoardProps> = ({
                   onClick={() => handleScoreClick(performer)}
                 >
                   <Typography variant="small">
-                    #{idx + 1} User {performer.userId?.slice(-4) || performer.id.slice(-4)}
+                    #{idx + 1} {t('trust.user', { id: performer.userId?.slice(-4) || performer.id.slice(-4) })}
                   </Typography>
                   <Typography variant="small" className="font-medium text-emerald-600">
                     {performer.overallScore}
@@ -298,7 +301,7 @@ export const TrustIntelligenceBoard: React.FC<TrustIntelligenceBoardProps> = ({
             <HStack gap="sm" align="center">
               <Activity className="h-5 w-5 text-blue-500" />
               <Typography variant="label" className="text-[var(--color-muted-foreground)]">
-                Recent Changes
+                {t('trust.recentChanges')}
               </Typography>
             </HStack>
             <VStack gap="xs">

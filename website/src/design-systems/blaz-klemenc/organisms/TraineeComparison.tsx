@@ -42,6 +42,7 @@ import {
   Card,
   Badge,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 /**
@@ -92,61 +93,61 @@ export interface TraineeComparisonProps {
 // Metric configuration
 const metricConfig = {
   totalLifts: {
-    label: "Total Lifts",
+    labelKey: "trainee.metricTotalLifts",
     icon: Dumbbell,
     format: (v: number) => v.toString(),
     higherIsBetter: true,
   },
   avgWeightImprovement: {
-    label: "Avg. Improvement",
+    labelKey: "trainee.metricAvgImprovement",
     icon: TrendingUp,
     format: (v: number) => `${v > 0 ? "+" : ""}${v.toFixed(1)}%`,
     higherIsBetter: true,
   },
   consistencyScore: {
-    label: "Consistency",
+    labelKey: "trainee.metricConsistency",
     icon: Activity,
     format: (v: number) => `${v.toFixed(0)}%`,
     higherIsBetter: true,
   },
   totalSessions: {
-    label: "Sessions",
+    labelKey: "trainee.metricSessions",
     icon: Calendar,
     format: (v: number) => v.toString(),
     higherIsBetter: true,
   },
   avgWellnessScore: {
-    label: "Wellness Score",
+    labelKey: "trainee.metricWellnessScore",
     icon: Activity,
     format: (v: number) => v.toFixed(1),
     higherIsBetter: true,
   },
   milestonesAchieved: {
-    label: "Milestones",
+    labelKey: "trainee.metricMilestones",
     icon: Award,
     format: (v: number) => v.toString(),
     higherIsBetter: true,
   },
   currentStreak: {
-    label: "Current Streak",
+    labelKey: "trainee.metricCurrentStreak",
     icon: TrendingUp,
     format: (v: number) => `${v} days`,
     higherIsBetter: true,
   },
   bestLift: {
-    label: "Best Lift",
+    labelKey: "trainee.metricBestLift",
     icon: Dumbbell,
     format: (v: number) => `${v}kg`,
     higherIsBetter: true,
   },
   bodyFatChange: {
-    label: "Body Fat",
+    labelKey: "trainee.metricBodyFat",
     icon: Activity,
     format: (v: number) => `${v > 0 ? "+" : ""}${v.toFixed(1)}%`,
     higherIsBetter: false,
   },
   weightChange: {
-    label: "Weight",
+    labelKey: "trainee.metricWeight",
     icon: Activity,
     format: (v: number) => `${v > 0 ? "+" : ""}${v.toFixed(1)}kg`,
     higherIsBetter: false,
@@ -190,6 +191,7 @@ export const TraineeComparison: React.FC<TraineeComparisonProps> = ({
   className,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
   const [startIndex, setStartIndex] = useState(0);
   const [selectedMetric, setSelectedMetric] =
     useState<keyof TraineeComparisonData["metrics"]>(highlightMetric);
@@ -255,7 +257,7 @@ export const TraineeComparison: React.FC<TraineeComparisonProps> = ({
                 isSelected ? "font-medium text-blue-600" : "text-[var(--color-foreground)]"
               }
             >
-              {config.label}
+              {t(config.labelKey)}
             </Typography>
           </HStack>
           {visibleTrainees.map((trainee) => {
@@ -297,7 +299,7 @@ export const TraineeComparison: React.FC<TraineeComparisonProps> = ({
         <VStack gap="md" align="center" className="py-8">
           <Users className="h-12 w-12 text-[var(--color-muted-foreground)]" />
           <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-            No trainees to compare
+            {t('trainee.noTraineesToCompare')}
           </Typography>
         </VStack>
       </Card>
@@ -319,9 +321,9 @@ export const TraineeComparison: React.FC<TraineeComparisonProps> = ({
               <BarChart3 className="h-5 w-5 text-blue-600" />
             </Box>
             <VStack gap="none">
-              <Typography variant="h4">Trainee Comparison</Typography>
+              <Typography variant="h4">{t('trainee.comparisonTitle')}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Compare {trainees.length} trainees across metrics
+                {t('trainee.compareTrainees', { count: trainees.length })}
               </Typography>
             </VStack>
           </HStack>
@@ -384,7 +386,7 @@ export const TraineeComparison: React.FC<TraineeComparisonProps> = ({
                     {rank === 1 && (
                       <Badge variant="primary" size="sm">
                         <Award className="h-3 w-3 mr-1" />
-                        Top
+                        {t('trainee.top')}
                       </Badge>
                     )}
                   </VStack>
@@ -417,19 +419,19 @@ export const TraineeComparison: React.FC<TraineeComparisonProps> = ({
           <HStack gap="xs" align="center">
             <TrendingUp className="h-3 w-3 text-green-500" />
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Positive trend
+              {t('trainee.positiveTrend')}
             </Typography>
           </HStack>
           <HStack gap="xs" align="center">
             <TrendingDown className="h-3 w-3 text-red-500" />
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Needs attention
+              {t('trainee.needsAttention')}
             </Typography>
           </HStack>
           <HStack gap="xs" align="center">
             <Minus className="h-3 w-3 text-neutral-400" />
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              No change
+              {t('trainee.noChange')}
             </Typography>
           </HStack>
         </HStack>

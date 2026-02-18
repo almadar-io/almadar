@@ -54,6 +54,7 @@ import {
   Card,
   Badge,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 /**
@@ -122,25 +123,25 @@ const statusConfig = {
   scheduled: {
     color: "text-blue-600",
     bgColor: "bg-blue-500/15",
-    label: "Scheduled",
+    labelKey: "schedule.statusScheduled",
     icon: Calendar,
   },
   "in-progress": {
     color: "text-amber-600",
     bgColor: "bg-amber-500/15",
-    label: "In Progress",
+    labelKey: "schedule.statusInProgress",
     icon: Play,
   },
   completed: {
     color: "text-emerald-600",
     bgColor: "bg-emerald-500/15",
-    label: "Completed",
+    labelKey: "schedule.statusCompleted",
     icon: CheckCircle,
   },
   cancelled: {
     color: "text-red-600",
     bgColor: "bg-red-500/15",
-    label: "Cancelled",
+    labelKey: "schedule.statusCancelled",
     icon: XCircle,
   },
 };
@@ -215,6 +216,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
   className,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
 
   // Week navigation state
   const [currentWeekStart, setCurrentWeekStart] = useState<Date>(
@@ -358,7 +360,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
             {session.isGroupSession && (
               <Badge variant="default" size="sm">
                 <Users className="h-3 w-3 mr-1" />
-                Group
+                {t('schedule.group')}
               </Badge>
             )}
             {session.youtubeLink && (
@@ -381,7 +383,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
                 className="text-emerald-600 hover:bg-emerald-500/10"
               >
                 <Play className="h-3 w-3 mr-1" />
-                Start
+                {t('schedule.start')}
               </Button>
               <Button
                 variant="ghost"
@@ -418,7 +420,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
               className="w-full mt-1"
             >
               <CheckCircle className="h-3 w-3 mr-1" />
-              Complete
+              {t('schedule.complete')}
             </Button>
           )}
         </VStack>
@@ -441,7 +443,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
               <Calendar className="h-5 w-5 text-blue-600" />
             </Box>
             <VStack gap="none">
-              <Typography variant="h4">Schedule</Typography>
+              <Typography variant="h4">{t('schedule.title')}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
                 {currentWeekStart.toLocaleDateString("en-US", {
                   month: "long",
@@ -452,11 +454,11 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
           </HStack>
           <HStack gap="sm">
             <Button variant="ghost" size="sm" onClick={handleToday}>
-              Today
+              {t('schedule.today')}
             </Button>
             <Button variant="primary" size="sm" onClick={() => handleCreate()}>
               <Plus className="h-4 w-4 mr-1" />
-              Schedule
+              {t('schedule.schedule')}
             </Button>
           </HStack>
         </HStack>
@@ -467,11 +469,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
             <ChevronLeft className="h-4 w-4" />
           </Button>
           <Typography variant="body" className="font-medium">
-            Week of{" "}
-            {currentWeekStart.toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-            })}
+            {t('schedule.weekOf', { date: currentWeekStart.toLocaleDateString("en-US", { month: "short", day: "numeric" }) })}
           </Typography>
           <Button variant="ghost" size="sm" onClick={handleNextWeek}>
             <ChevronRight className="h-4 w-4" />
@@ -542,7 +540,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
                         });
                       }}
                     >
-                      +{activeSessions.length - 2} more
+                      {t('schedule.moreCount', { count: activeSessions.length - 2 })}
                     </Button>
                   )}
                   {activeSessions.length === 0 && (
@@ -565,7 +563,7 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
         ).length > 0 && (
           <VStack gap="sm">
             <Typography variant="label" className="text-[var(--color-foreground)]">
-              Upcoming Sessions
+              {t('schedule.upcomingSessions')}
             </Typography>
             <VStack gap="xs">
               {sessionData

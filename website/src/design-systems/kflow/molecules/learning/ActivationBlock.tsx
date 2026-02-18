@@ -22,6 +22,7 @@ import {
   HStack,
   Card,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 export interface ActivationBlockProps {
@@ -45,6 +46,7 @@ export const ActivationBlock: React.FC<ActivationBlockProps> = ({
   className,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
   const [response, setResponse] = useState(savedResponse || "");
   const [isExpanded, setIsExpanded] = useState(!savedResponse);
 
@@ -83,7 +85,7 @@ export const ActivationBlock: React.FC<ActivationBlockProps> = ({
               variant="h4"
               className="font-semibold text-indigo-900 dark:text-indigo-100"
             >
-              Before You Begin...
+              {t('activation.title')}
             </Typography>
             <Typography
               variant="body"
@@ -95,7 +97,7 @@ export const ActivationBlock: React.FC<ActivationBlockProps> = ({
             {isExpanded ? (
               <VStack gap="md" className="w-full mt-2">
                 <Textarea
-                  placeholder="Jot down your thoughts..."
+                  placeholder={t('activation.placeholder')}
                   value={response}
                   onChange={(e) => setResponse(e.target.value)}
                   rows={3}
@@ -103,10 +105,10 @@ export const ActivationBlock: React.FC<ActivationBlockProps> = ({
                 />
                 <HStack gap="sm">
                   <Button variant="primary" onClick={handleSubmit}>
-                    Continue to Lesson
+                    {t('activation.continueToLesson')}
                   </Button>
                   <Button variant="ghost" onClick={handleSkip}>
-                    Skip for now
+                    {t('activation.skipForNow')}
                   </Button>
                 </HStack>
               </VStack>
@@ -116,7 +118,7 @@ export const ActivationBlock: React.FC<ActivationBlockProps> = ({
                 onClick={() => setIsExpanded(true)}
                 className="text-indigo-600 dark:text-indigo-400 p-0"
               >
-                Answered - Edit response
+                {t('activation.editResponse')}
               </Button>
             )}
           </VStack>

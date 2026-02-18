@@ -20,6 +20,7 @@ import {
   HStack,
   Card,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 import { FlashCard, FlashCardEntity } from "./FlashCard";
 
@@ -44,6 +45,7 @@ export const FlashCardStack: React.FC<FlashCardStackProps> = ({
   className = "",
 }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const [internalIndex, setInternalIndex] = useState(0);
   const currentIndex =
     controlledIndex !== undefined ? controlledIndex : internalIndex;
@@ -80,8 +82,8 @@ export const FlashCardStack: React.FC<FlashCardStackProps> = ({
     return (
       <Card className={`border border-gray-200 ${className}`}>
         <VStack gap="sm" align="center" className="py-8 text-[var(--color-muted-foreground)]">
-          <span className="text-lg">No flashcards available</span>
-          <span className="text-sm">Add some cards to start studying</span>
+          <span className="text-lg">{t('flashcard.noFlashcardsAvailable')}</span>
+          <span className="text-sm">{t('flashcard.addCardsToStart')}</span>
         </VStack>
       </Card>
     );
@@ -93,17 +95,17 @@ export const FlashCardStack: React.FC<FlashCardStackProps> = ({
         <VStack gap="md" align="center" className="py-8">
           <CheckCircle size={48} className="text-green-500" />
           <span className="text-xl font-semibold text-green-700">
-            All cards studied!
+            {t('flashcard.allCardsStudied')}
           </span>
           <span className="text-sm text-green-600">
-            You've completed all {cards.length} flashcards
+            {t('flashcard.completedAllCards', { count: cards.length })}
           </span>
           <button
             className="mt-4 px-4 py-2 text-sm font-medium bg-green-600 text-white rounded hover:bg-green-700 flex items-center gap-2"
             onClick={handleReset}
           >
             <RotateCcw size={16} />
-            Study Again
+            {t('flashcard.studyAgain')}
           </button>
         </VStack>
       </Card>
@@ -117,13 +119,13 @@ export const FlashCardStack: React.FC<FlashCardStackProps> = ({
       {/* Stack Controls */}
       <HStack justify="between" align="center">
         <span className="text-sm text-[var(--color-muted-foreground)]">
-          {studiedCount} of {cards.length} studied
+          {t('flashcard.studiedCount', { studied: studiedCount, total: cards.length })}
         </span>
         {showShuffle && (
           <button
             className="p-2 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:bg-gray-100 rounded"
             onClick={handleShuffle}
-            title="Shuffle cards"
+            title={t('flashcard.shuffleCards')}
           >
             <Shuffle size={18} />
           </button>
@@ -143,7 +145,7 @@ export const FlashCardStack: React.FC<FlashCardStackProps> = ({
                   : "bg-gray-300 hover:bg-gray-400"
             }`}
             onClick={() => goToCard(idx)}
-            title={`Card ${idx + 1}${card.studied ? " (studied)" : ""}`}
+            title={t('flashcard.cardNumber', { number: idx + 1 }) + (card.studied ? ` (${t('flashcard.studied')})` : '')}
           />
         ))}
       </HStack>

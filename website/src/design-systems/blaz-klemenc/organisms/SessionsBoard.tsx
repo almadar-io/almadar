@@ -59,6 +59,7 @@ import {
   Badge,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 /**
@@ -128,22 +129,22 @@ export interface SessionsBoardProps {
 
 const statusConfig = {
   scheduled: {
-    label: "Scheduled",
+    labelKey: "sessions.statusScheduled",
     color: "bg-blue-500/15 text-blue-600",
     icon: Calendar,
   },
   "in-progress": {
-    label: "In Progress",
+    labelKey: "sessions.statusInProgress",
     color: "bg-amber-500/15 text-amber-600",
     icon: PlayCircle,
   },
   completed: {
-    label: "Completed",
+    labelKey: "sessions.statusCompleted",
     color: "bg-green-500/15 text-green-600",
     icon: CheckCircle2,
   },
   cancelled: {
-    label: "Cancelled",
+    labelKey: "sessions.statusCancelled",
     color: "bg-red-500/15 text-red-600",
     icon: XCircle,
   },
@@ -177,6 +178,7 @@ const SessionCard: React.FC<{
   deleteEvent?: string;
 }> = ({ session, viewEvent, editEvent, startEvent, completeEvent, cancelEvent, deleteEvent }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const status = statusConfig[session.status || "scheduled"];
   const StatusIcon = status.icon;
 
@@ -196,7 +198,7 @@ const SessionCard: React.FC<{
           </VStack>
           <Badge className={status.color}>
             <StatusIcon className="h-3 w-3 mr-1" />
-            {status.label}
+            {t(status.labelKey)}
           </Badge>
         </HStack>
 
@@ -211,20 +213,20 @@ const SessionCard: React.FC<{
               <>
                 <Users className="h-3 w-3" />
                 <Typography variant="small">
-                  Group ({session.maxParticipants || "unlimited"})
+                  {t('sessions.group', { max: session.maxParticipants || t('sessions.unlimited') })}
                 </Typography>
               </>
             ) : (
               <>
                 <User className="h-3 w-3" />
-                <Typography variant="small">1-on-1</Typography>
+                <Typography variant="small">{t('sessions.oneOnOne')}</Typography>
               </>
             )}
           </HStack>
           {session.youtubeLink && (
             <HStack gap="xs" align="center">
               <Youtube className="h-3 w-3 text-red-500" />
-              <Typography variant="small">Video</Typography>
+              <Typography variant="small">{t('sessions.video')}</Typography>
             </HStack>
           )}
         </HStack>
@@ -240,7 +242,7 @@ const SessionCard: React.FC<{
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
-            View
+            {t('sessions.view')}
           </Button>
           <Button
             variant="ghost"
@@ -251,7 +253,7 @@ const SessionCard: React.FC<{
             className="gap-1"
           >
             <Edit className="h-3 w-3" />
-            Edit
+            {t('sessions.edit')}
           </Button>
           {session.status === "scheduled" && (
             <Button
@@ -264,7 +266,7 @@ const SessionCard: React.FC<{
               className="gap-1 text-green-600 hover:text-green-700"
             >
               <PlayCircle className="h-3 w-3" />
-              Start
+              {t('sessions.start')}
             </Button>
           )}
           {session.status === "in-progress" && (
@@ -278,7 +280,7 @@ const SessionCard: React.FC<{
               className="gap-1 text-green-600 hover:text-green-700"
             >
               <CheckCircle2 className="h-3 w-3" />
-              Complete
+              {t('sessions.complete')}
             </Button>
           )}
           {(session.status === "scheduled" || session.status === "in-progress") && (
@@ -292,7 +294,7 @@ const SessionCard: React.FC<{
               className="gap-1 text-amber-600 hover:text-amber-700"
             >
               <XCircle className="h-3 w-3" />
-              Cancel
+              {t('sessions.cancel')}
             </Button>
           )}
           <Box className="flex-1" />
@@ -335,6 +337,7 @@ export const SessionsBoard: React.FC<SessionsBoardProps> = ({
   filterEvent,
 }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<
     "all" | "scheduled" | "in-progress" | "completed" | "cancelled"
@@ -397,7 +400,7 @@ export const SessionsBoard: React.FC<SessionsBoardProps> = ({
 
           <Button variant="primary" onClick={handleCreate} className="gap-2">
             <Plus className="h-4 w-4" />
-            Schedule Session
+            {t('sessions.scheduleSession')}
           </Button>
         </HStack>
       )}
@@ -410,7 +413,7 @@ export const SessionsBoard: React.FC<SessionsBoardProps> = ({
             <VStack gap="none">
               <Typography variant="h3">{scheduledCount}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Scheduled
+                {t('sessions.statusScheduled')}
               </Typography>
             </VStack>
           </HStack>
@@ -421,7 +424,7 @@ export const SessionsBoard: React.FC<SessionsBoardProps> = ({
             <VStack gap="none">
               <Typography variant="h3">{inProgressCount}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                In Progress
+                {t('sessions.statusInProgress')}
               </Typography>
             </VStack>
           </HStack>
@@ -432,7 +435,7 @@ export const SessionsBoard: React.FC<SessionsBoardProps> = ({
             <VStack gap="none">
               <Typography variant="h3">{completedCount}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Completed
+                {t('sessions.statusCompleted')}
               </Typography>
             </VStack>
           </HStack>
@@ -446,7 +449,7 @@ export const SessionsBoard: React.FC<SessionsBoardProps> = ({
             {showSearch && (
               <Box className="w-full max-w-sm">
                 <Input
-                  placeholder="Search sessions..."
+                  placeholder={t('sessions.searchPlaceholder')}
                   value={searchTerm}
                   onChange={(e) => handleSearch(e.target.value)}
                   leftIcon={<Search className="h-4 w-4 text-[var(--color-muted-foreground)]" />}
@@ -463,28 +466,28 @@ export const SessionsBoard: React.FC<SessionsBoardProps> = ({
                   size="sm"
                   onClick={() => handleStatusFilter("all")}
                 >
-                  All
+                  {t('sessions.all')}
                 </Button>
                 <Button
                   variant={statusFilter === "scheduled" ? "primary" : "secondary"}
                   size="sm"
                   onClick={() => handleStatusFilter("scheduled")}
                 >
-                  Scheduled
+                  {t('sessions.statusScheduled')}
                 </Button>
                 <Button
                   variant={statusFilter === "in-progress" ? "primary" : "secondary"}
                   size="sm"
                   onClick={() => handleStatusFilter("in-progress")}
                 >
-                  In Progress
+                  {t('sessions.statusInProgress')}
                 </Button>
                 <Button
                   variant={statusFilter === "completed" ? "primary" : "secondary"}
                   size="sm"
                   onClick={() => handleStatusFilter("completed")}
                 >
-                  Completed
+                  {t('sessions.statusCompleted')}
                 </Button>
               </>
             )}
@@ -513,7 +516,7 @@ export const SessionsBoard: React.FC<SessionsBoardProps> = ({
         <VStack align="center" justify="center" className="py-12">
           <Spinner size="lg" />
           <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-            Loading sessions...
+            {t('sessions.loading')}
           </Typography>
         </VStack>
       )}
@@ -534,12 +537,12 @@ export const SessionsBoard: React.FC<SessionsBoardProps> = ({
             <VStack align="center" justify="center" className="py-12">
               <Calendar className="h-12 w-12 text-[var(--color-muted-foreground)]" />
               <Typography variant="h3" className="text-[var(--color-muted-foreground)]">
-                No sessions found
+                {t('sessions.noSessionsFound')}
               </Typography>
               <Typography variant="body" className="text-[var(--color-muted-foreground)]">
                 {searchTerm
-                  ? "Try a different search term"
-                  : "Schedule your first session to get started"}
+                  ? t('sessions.tryDifferentSearch')
+                  : t('sessions.scheduleFirstSession')}
               </Typography>
             </VStack>
           ) : (

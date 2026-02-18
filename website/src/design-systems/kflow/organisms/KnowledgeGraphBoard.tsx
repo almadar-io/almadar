@@ -13,6 +13,7 @@ import {
   HStack,
   Card,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 import {
   ForceDirectedGraph,
@@ -64,6 +65,7 @@ export function KnowledgeGraphBoard({
   className = "",
 }: KnowledgeGraphBoardProps): JSX.Element {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const [viewMode, setViewMode] = useState<"graph" | "list">(defaultView);
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
 
@@ -115,7 +117,7 @@ export function KnowledgeGraphBoard({
                   }`}
                 >
                   <Network size={16} />
-                  Graph
+                  {t('graph.graph')}
                 </button>
                 <button
                   onClick={() => handleToggleView("list")}
@@ -126,7 +128,7 @@ export function KnowledgeGraphBoard({
                   }`}
                 >
                   <ListIcon size={16} />
-                  List
+                  {t('graph.list')}
                 </button>
               </HStack>
             </HStack>
@@ -175,7 +177,7 @@ export function KnowledgeGraphBoard({
             <VStack gap="md" className="w-64 flex-shrink-0">
               {showLegend && legendItems.length > 0 && (
                 <GraphLegend
-                  title="Node Types"
+                  title={t('graph.nodeTypes')}
                   items={legendItems}
                   interactive
                 />
@@ -185,7 +187,7 @@ export function KnowledgeGraphBoard({
                 <Card>
                   <VStack gap="sm">
                     <span className="font-semibold text-[var(--color-foreground)]">
-                      Selected Concept
+                      {t('graph.selectedConcept')}
                     </span>
                     {(() => {
                       const node = entity.nodes.find(
@@ -219,7 +221,7 @@ export function KnowledgeGraphBoard({
                       }}
                       className="w-full px-3 py-2 text-sm font-medium bg-indigo-600 text-white rounded hover:bg-indigo-700"
                     >
-                      View Details
+                      {t('graph.viewDetails')}
                     </button>
                   </VStack>
                 </Card>
@@ -228,22 +230,22 @@ export function KnowledgeGraphBoard({
               <Card>
                 <VStack gap="xs">
                   <span className="font-semibold text-[var(--color-foreground)]">
-                    Statistics
+                    {t('graph.statistics')}
                   </span>
                   <HStack justify="between">
-                    <span className="text-sm text-[var(--color-muted-foreground)]">Concepts</span>
+                    <span className="text-sm text-[var(--color-muted-foreground)]">{t('graph.concepts')}</span>
                     <span className="text-sm font-medium">
                       {entity.nodes.length}
                     </span>
                   </HStack>
                   <HStack justify="between">
-                    <span className="text-sm text-[var(--color-muted-foreground)]">Connections</span>
+                    <span className="text-sm text-[var(--color-muted-foreground)]">{t('graph.connections')}</span>
                     <span className="text-sm font-medium">
                       {entity.links.length}
                     </span>
                   </HStack>
                   <HStack justify="between">
-                    <span className="text-sm text-[var(--color-muted-foreground)]">Layers</span>
+                    <span className="text-sm text-[var(--color-muted-foreground)]">{t('graph.layers')}</span>
                     <span className="text-sm font-medium">
                       {entity.layers.length}
                     </span>
@@ -260,7 +262,7 @@ export function KnowledgeGraphBoard({
                   key={concept.id}
                   entity={concept}
                   operations={[
-                    { label: "View", action: "view", variant: "primary" },
+                    { label: t('graph.view'), action: "view", variant: "primary" },
                   ]}
                 />
               ))
@@ -269,7 +271,7 @@ export function KnowledgeGraphBoard({
                 <VStack gap="md" align="center" className="py-12">
                   <Grid size={48} className="text-[var(--color-muted-foreground)]" />
                   <span className="text-[var(--color-muted-foreground)]">
-                    No concepts in this layer
+                    {t('graph.noConceptsInLayer')}
                   </span>
                 </VStack>
               </Card>

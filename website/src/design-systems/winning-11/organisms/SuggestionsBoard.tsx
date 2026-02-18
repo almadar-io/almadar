@@ -36,6 +36,7 @@ import {
   Avatar,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 export interface SuggestionData {
@@ -83,11 +84,18 @@ const getScoreColor = (score: number) => {
   return "text-[var(--color-muted-foreground)]";
 };
 
-const getScoreBadge = (score: number) => {
-  if (score >= 80) return { variant: "success" as const, label: "Excellent Match" };
-  if (score >= 60) return { variant: "info" as const, label: "Good Match" };
-  if (score >= 40) return { variant: "warning" as const, label: "Moderate Match" };
-  return { variant: "neutral" as const, label: "Potential Match" };
+const getScoreBadgeVariant = (score: number) => {
+  if (score >= 80) return "success" as const;
+  if (score >= 60) return "info" as const;
+  if (score >= 40) return "warning" as const;
+  return "neutral" as const;
+};
+
+const getScoreBadgeLabelKey = (score: number) => {
+  if (score >= 80) return "suggestions.excellentMatch";
+  if (score >= 60) return "suggestions.goodMatch";
+  if (score >= 40) return "suggestions.moderateMatch";
+  return "suggestions.potentialMatch";
 };
 
 const SuggestionCard: React.FC<{
@@ -97,7 +105,9 @@ const SuggestionCard: React.FC<{
   rejectEvent: string;
   viewEvent: string;
 }> = ({ suggestion, onAction, acceptEvent, rejectEvent, viewEvent }) => {
-  const scoreBadge = getScoreBadge(suggestion.compatibilityScore);
+  const { t } = useTranslate();
+  const scoreBadgeVariant = getScoreBadgeVariant(suggestion.compatibilityScore);
+  const scoreBadgeLabelKey = getScoreBadgeLabelKey(suggestion.compatibilityScore);
 
   return (
     <Card className="p-4 hover:shadow-md transition-shadow">
@@ -106,7 +116,7 @@ const SuggestionCard: React.FC<{
           <HStack gap="sm" align="center">
             <Box className="relative">
               <Avatar
-                name={suggestion.suggestedUserName || "User"}
+                name={suggestion.suggestedUserName || t("suggestions.defaultUser")}
                 size="lg"
               />
               <Box
@@ -118,7 +128,7 @@ const SuggestionCard: React.FC<{
             <VStack gap="none">
               <Typography variant="body" className="font-medium">
                 {suggestion.suggestedUserName ||
-                  `User ${suggestion.suggestedUserId.slice(-4)}`}
+                  t("suggestions.userFallback", { id: suggestion.suggestedUserId.slice(-4) })}
               </Typography>
               {suggestion.suggestedUserCategory && (
                 <Typography variant="small" className="text-[var(--color-muted-foreground)]">
@@ -127,9 +137,9 @@ const SuggestionCard: React.FC<{
               )}
             </VStack>
           </HStack>
-          <Badge variant={scoreBadge.variant} className="gap-1">
+          <Badge variant={scoreBadgeVariant} className="gap-1">
             <Star className="h-3 w-3" />
-            {scoreBadge.label}
+            {t(scoreBadgeLabelKey)}
           </Badge>
         </HStack>
 
@@ -163,7 +173,7 @@ const SuggestionCard: React.FC<{
           <HStack gap="xs" align="center">
             <Zap className="h-3 w-3 text-purple-500" />
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Why we suggest
+              {t("suggestions.whyWeSuggest")}
             </Typography>
           </HStack>
           <Typography variant="small" className="text-[var(--color-foreground)]">
@@ -178,7 +188,7 @@ const SuggestionCard: React.FC<{
               <HStack gap="xs" align="center" className="text-[var(--color-muted-foreground)]">
                 <Users className="h-3 w-3" />
                 <Typography variant="small">
-                  {suggestion.mutualConnections} mutual
+                  {t("suggestions.mutualCount", { count: suggestion.mutualConnections })}
                 </Typography>
               </HStack>
             )}
@@ -201,7 +211,7 @@ const SuggestionCard: React.FC<{
             className="gap-1 flex-1"
           >
             <UserPlus className="h-3 w-3" />
-            Connect
+            {t("suggestions.connect")}
           </Button>
           <Button
             variant="ghost"
@@ -210,7 +220,7 @@ const SuggestionCard: React.FC<{
             className="gap-1"
           >
             <X className="h-3 w-3" />
-            Dismiss
+            {t("suggestions.dismiss")}
           </Button>
           <Button
             variant="ghost"
@@ -229,8 +239,8 @@ export const SuggestionsBoard: React.FC<SuggestionsBoardProps> = ({
   entity,
   isLoading = false,
   error = null,
-  title = "Connection Suggestions",
-  subtitle = "AI-powered recommendations for your network",
+  title,
+  subtitle,
   showHeader = true,
   className,
   viewEvent = "VIEW",
@@ -239,6 +249,9 @@ export const SuggestionsBoard: React.FC<SuggestionsBoardProps> = ({
   createEvent = "REFRESH",
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
+  const resolvedTitle = title || t("suggestions.title");
+  const resolvedSubtitle = subtitle || t("suggestions.subtitle");
 
   const suggestions = (entity || []).filter((s) => s.status === "pending");
 
@@ -271,16 +284,16 @@ export const SuggestionsBoard: React.FC<SuggestionsBoardProps> = ({
               <Box rounded="lg" padding="sm" className="bg-purple-100">
                 <Sparkles className="h-6 w-6 text-purple-600" />
               </Box>
-              <Typography variant="h1">{title}</Typography>
+              <Typography variant="h1">{resolvedTitle}</Typography>
             </HStack>
             <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-              {subtitle}
+              {resolvedSubtitle}
             </Typography>
           </VStack>
 
           <Button variant="secondary" onClick={handleRefresh} className="gap-2">
             <RefreshCw className="h-4 w-4" />
-            Refresh Suggestions
+            {t("suggestions.refreshSuggestions")}
           </Button>
         </HStack>
       )}
@@ -291,7 +304,7 @@ export const SuggestionsBoard: React.FC<SuggestionsBoardProps> = ({
           <VStack gap="none" align="center">
             <Typography variant="h4">{suggestions.length}</Typography>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Suggestions
+              {t("suggestions.suggestionsLabel")}
             </Typography>
           </VStack>
         </Card>
@@ -304,7 +317,7 @@ export const SuggestionsBoard: React.FC<SuggestionsBoardProps> = ({
               </Typography>
             </HStack>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Avg Compatibility
+              {t("suggestions.avgCompatibility")}
             </Typography>
           </VStack>
         </Card>
@@ -315,7 +328,7 @@ export const SuggestionsBoard: React.FC<SuggestionsBoardProps> = ({
         <VStack align="center" justify="center" className="py-12">
           <Spinner size="lg" />
           <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-            Finding your best matches...
+            {t("suggestions.findingMatches")}
           </Typography>
         </VStack>
       )}
@@ -324,7 +337,7 @@ export const SuggestionsBoard: React.FC<SuggestionsBoardProps> = ({
       {error && (
         <VStack align="center" justify="center" className="py-12">
           <Typography variant="body" className="text-red-500">
-            Error: {error.message}
+            {t("suggestions.error", { message: error.message })}
           </Typography>
         </VStack>
       )}
@@ -336,10 +349,10 @@ export const SuggestionsBoard: React.FC<SuggestionsBoardProps> = ({
             <VStack align="center" justify="center" className="py-12">
               <Sparkles className="h-12 w-12 text-[var(--color-muted-foreground)]" />
               <Typography variant="h3" className="text-[var(--color-muted-foreground)]">
-                No suggestions available
+                {t("suggestions.noSuggestions")}
               </Typography>
               <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-                Check back later for new connection recommendations
+                {t("suggestions.checkBackLater")}
               </Typography>
               <Button
                 variant="secondary"
@@ -347,7 +360,7 @@ export const SuggestionsBoard: React.FC<SuggestionsBoardProps> = ({
                 className="gap-2 mt-4"
               >
                 <RefreshCw className="h-4 w-4" />
-                Refresh
+                {t("suggestions.refresh")}
               </Button>
             </VStack>
           ) : (

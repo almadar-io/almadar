@@ -18,6 +18,7 @@ import {
   VStack,
   Typography,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 import { CodeBlock } from "../markdown/CodeBlock";
 import { MarkdownContent } from "../markdown/MarkdownContent";
@@ -60,6 +61,7 @@ export const QuizBlock: React.FC<QuizBlockProps> = ({
   className,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
   const [revealed, setRevealed] = useState(false);
 
   const questionSegments = useMemo(
@@ -105,7 +107,7 @@ export const QuizBlock: React.FC<QuizBlockProps> = ({
 
           {/* Reveal button */}
           <Button variant="primary" size="sm" onClick={handleReveal}>
-            {revealed ? "Hide Answer" : "Reveal Answer"}
+            {revealed ? t('quiz.hideAnswer') : t('quiz.revealAnswer')}
           </Button>
 
           {/* Answer */}

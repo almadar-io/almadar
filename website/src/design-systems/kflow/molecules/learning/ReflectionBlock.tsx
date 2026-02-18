@@ -21,6 +21,7 @@ import {
   HStack,
   VStack,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 export interface ReflectionBlockProps {
@@ -47,6 +48,7 @@ export const ReflectionBlock: React.FC<ReflectionBlockProps> = ({
   className,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
   const [note, setNote] = useState(savedNote || "");
   const [isExpanded, setIsExpanded] = useState(!savedNote);
 
@@ -78,7 +80,7 @@ export const ReflectionBlock: React.FC<ReflectionBlockProps> = ({
               variant="h4"
               className="font-semibold text-amber-900 dark:text-amber-100"
             >
-              Pause & Reflect
+              {t('reflection.title')}
               {index !== undefined && (
                 <span className="text-amber-600 dark:text-amber-400 text-sm font-normal ml-2">
                   #{index + 1}
@@ -95,7 +97,7 @@ export const ReflectionBlock: React.FC<ReflectionBlockProps> = ({
             {isExpanded ? (
               <VStack gap="md" className="w-full mt-2">
                 <Textarea
-                  placeholder="Write your thoughts here..."
+                  placeholder={t('reflection.placeholder')}
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
                   rows={3}
@@ -103,10 +105,10 @@ export const ReflectionBlock: React.FC<ReflectionBlockProps> = ({
                 />
                 <HStack gap="sm">
                   <Button variant="primary" onClick={handleSave}>
-                    Save Reflection
+                    {t('reflection.save')}
                   </Button>
                   <Button variant="ghost" onClick={() => setIsExpanded(false)}>
-                    Skip
+                    {t('reflection.skip')}
                   </Button>
                 </HStack>
               </VStack>
@@ -117,7 +119,7 @@ export const ReflectionBlock: React.FC<ReflectionBlockProps> = ({
                     variant="small"
                     className="text-[var(--color-muted-foreground)]"
                   >
-                    Your reflection:
+                    {t('reflection.yourReflection')}
                   </Typography>
                   <Typography
                     variant="body"
@@ -131,7 +133,7 @@ export const ReflectionBlock: React.FC<ReflectionBlockProps> = ({
                   onClick={() => setIsExpanded(true)}
                   className="text-amber-600 dark:text-amber-400 p-0"
                 >
-                  Edit reflection
+                  {t('reflection.edit')}
                 </Button>
               </VStack>
             ) : (
@@ -141,7 +143,7 @@ export const ReflectionBlock: React.FC<ReflectionBlockProps> = ({
                 onClick={() => setIsExpanded(true)}
                 className="text-amber-600 dark:text-amber-400"
               >
-                Add your thoughts
+                {t('reflection.addThoughts')}
               </Button>
             )}
           </VStack>

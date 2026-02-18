@@ -28,6 +28,7 @@ import {
   Button,
   Card,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 export interface AIAnalysisData {
@@ -66,6 +67,7 @@ export const AIAnalysisPanel: React.FC<AIAnalysisPanelProps> = ({
   className,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
 
   const handleRegenerate = useCallback(() => {
     if (!analysis) return;
@@ -118,10 +120,10 @@ export const AIAnalysisPanel: React.FC<AIAnalysisPanelProps> = ({
               <Sparkles className="h-5 w-5 text-purple-600" />
             </Box>
             <VStack gap="none">
-              <Typography variant="h4">AI Analysis</Typography>
+              <Typography variant="h4">{t('ai.title')}</Typography>
               {analysis.generatedAt && (
                 <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                  Generated{" "}
+                  {t('ai.generated')}{" "}
                   {new Date(analysis.generatedAt).toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
@@ -142,7 +144,7 @@ export const AIAnalysisPanel: React.FC<AIAnalysisPanelProps> = ({
               <RefreshCw
                 className={cn("h-4 w-4 mr-1", isLoading && "animate-spin")}
               />
-              {isLoading ? "Analyzing..." : "Regenerate"}
+              {isLoading ? t('ai.analyzing') : t('ai.regenerate')}
             </Button>
           )}
         </HStack>
@@ -158,7 +160,7 @@ export const AIAnalysisPanel: React.FC<AIAnalysisPanelProps> = ({
             <HStack gap="xs" align="center">
               <Lightbulb className="h-4 w-4 text-amber-500" />
               <Typography variant="label" className="text-[var(--color-foreground)]">
-                Recommendations
+                {t('ai.recommendations')}
               </Typography>
             </HStack>
             <VStack gap="xs">
@@ -184,7 +186,7 @@ export const AIAnalysisPanel: React.FC<AIAnalysisPanelProps> = ({
             <HStack gap="xs" align="center">
               <AlertCircle className="h-4 w-4 text-red-500" />
               <Typography variant="label" className="text-[var(--color-foreground)]">
-                Areas of Concern
+                {t('ai.areasOfConcern')}
               </Typography>
             </HStack>
             <VStack gap="xs">
@@ -210,7 +212,7 @@ export const AIAnalysisPanel: React.FC<AIAnalysisPanelProps> = ({
             <HStack gap="xs" align="center">
               <CheckCircle className="h-4 w-4 text-emerald-500" />
               <Typography variant="label" className="text-[var(--color-foreground)]">
-                Highlights
+                {t('ai.highlights')}
               </Typography>
             </HStack>
             <VStack gap="xs">
@@ -238,7 +240,7 @@ export const AIAnalysisPanel: React.FC<AIAnalysisPanelProps> = ({
             className="pt-2 border-t border-purple-500/20"
           >
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Confidence:
+              {t('ai.confidence')}
             </Typography>
             <Box rounded="full" className="h-1.5 w-24 bg-purple-500/15">
               <Box

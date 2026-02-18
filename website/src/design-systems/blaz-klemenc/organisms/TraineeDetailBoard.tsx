@@ -40,6 +40,7 @@ import {
   Badge,
   Spinner,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 /**
@@ -117,6 +118,7 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
   viewSessionsEvent,
 }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
 
   // Handle back navigation
   const handleBack = () => {
@@ -156,7 +158,7 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
       >
         <Spinner size="lg" />
         <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-          Loading trainee details...
+          {t('trainee.loading')}
         </Typography>
       </VStack>
     );
@@ -187,7 +189,7 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
       >
         <User className="h-12 w-12 text-[var(--color-muted-foreground)]" />
         <Typography variant="h3" className="text-[var(--color-muted-foreground)]">
-          Trainee not found
+          {t('trainee.notFound')}
         </Typography>
       </VStack>
     );
@@ -254,7 +256,7 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
         <HStack gap="sm">
           <Button variant="secondary" onClick={handleEdit}>
             <Edit className="h-4 w-4 mr-1" />
-            Edit
+            {t('trainee.edit')}
           </Button>
           <Button
             variant="ghost"
@@ -262,7 +264,7 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
             className="text-red-500 hover:text-red-600 hover:bg-red-500/10"
           >
             <Trash2 className="h-4 w-4 mr-1" />
-            Delete
+            {t('trainee.delete')}
           </Button>
         </HStack>
       </HStack>
@@ -272,25 +274,25 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
         {/* Profile Info */}
         <Card className="p-4 flex-1 min-w-[300px]">
           <VStack gap="md">
-            <Typography variant="h4">Profile Information</Typography>
+            <Typography variant="h4">{t('trainee.profileInfo')}</Typography>
             <VStack gap="sm">
               <HStack justify="between">
                 <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-                  Email
+                  {t('trainee.email')}
                 </Typography>
                 <Typography variant="body">{entity.email}</Typography>
               </HStack>
               {entity.phone && (
                 <HStack justify="between">
                   <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-                    Phone
+                    {t('trainee.phone')}
                   </Typography>
                   <Typography variant="body">{entity.phone}</Typography>
                 </HStack>
               )}
               <HStack justify="between">
                 <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-                  Role
+                  {t('trainee.role')}
                 </Typography>
                 <Typography variant="body" className="capitalize">
                   {entity.role}
@@ -299,7 +301,7 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
               {entity.createdAt && (
                 <HStack justify="between">
                   <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-                    Joined
+                    {t('trainee.joined')}
                   </Typography>
                   <Typography variant="body">
                     {formatDate(entity.createdAt)}
@@ -321,14 +323,14 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
       {/* Stats (for trainees) */}
       {isTrainee && stats && (
         <VStack gap="md">
-          <Typography variant="h3">Performance Stats</Typography>
+          <Typography variant="h3">{t('trainee.performanceStats')}</Typography>
           <HStack gap="md" wrap>
             <Card className="p-4 flex-1 min-w-[150px]">
               <VStack gap="xs" align="center">
                 <Dumbbell className="h-6 w-6 text-blue-500" />
                 <Typography variant="h2">{stats.totalLifts}</Typography>
                 <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                  Total Lifts
+                  {t('trainee.totalLifts')}
                 </Typography>
               </VStack>
             </Card>
@@ -337,7 +339,7 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
                 <Calendar className="h-6 w-6 text-green-500" />
                 <Typography variant="h2">{stats.totalSessions}</Typography>
                 <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                  Sessions
+                  {t('trainee.sessions')}
                 </Typography>
               </VStack>
             </Card>
@@ -348,7 +350,7 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
                   {stats.avgWellnessScore.toFixed(1)}
                 </Typography>
                 <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                  Avg Wellness
+                  {t('trainee.avgWellness')}
                 </Typography>
               </VStack>
             </Card>
@@ -357,7 +359,7 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
                 <TrendingUp className="h-6 w-6 text-orange-500" />
                 <Typography variant="h2">{stats.currentStreak}</Typography>
                 <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                  Day Streak
+                  {t('trainee.dayStreak')}
                 </Typography>
               </VStack>
             </Card>
@@ -366,7 +368,7 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
                 <Award className="h-6 w-6 text-yellow-500" />
                 <Typography variant="h2">{stats.milestonesAchieved}</Typography>
                 <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                  Milestones
+                  {t('trainee.milestones')}
                 </Typography>
               </VStack>
             </Card>
@@ -391,11 +393,11 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
         <HStack gap="md">
           <Button variant="secondary" onClick={handleViewLifts}>
             <Dumbbell className="h-4 w-4 mr-1" />
-            View Lifts
+            {t('trainee.viewLifts')}
           </Button>
           <Button variant="secondary" onClick={handleViewSessions}>
             <Calendar className="h-4 w-4 mr-1" />
-            View Sessions
+            {t('trainee.viewSessions')}
           </Button>
         </HStack>
       )}

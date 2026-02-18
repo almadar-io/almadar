@@ -32,6 +32,7 @@ import {
   Avatar,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -98,17 +99,17 @@ export interface ProjectDetailBoardProps {
 const getStatusConfig = (status: ProjectDetailData["status"]) => {
   switch (status) {
     case "active":
-      return { color: "success" as const, icon: PlayCircle, label: "Active" };
+      return { color: "success" as const, icon: PlayCircle, labelKey: "projectDetail.statusActive" };
     case "planning":
-      return { color: "info" as const, icon: Clock, label: "Planning" };
+      return { color: "info" as const, icon: Clock, labelKey: "projectDetail.statusPlanning" };
     case "paused":
-      return { color: "warning" as const, icon: PauseCircle, label: "Paused" };
+      return { color: "warning" as const, icon: PauseCircle, labelKey: "projectDetail.statusPaused" };
     case "completed":
-      return { color: "success" as const, icon: CheckCircle, label: "Completed" };
+      return { color: "success" as const, icon: CheckCircle, labelKey: "projectDetail.statusCompleted" };
     case "archived":
-      return { color: "neutral" as const, icon: FolderKanban, label: "Archived" };
+      return { color: "neutral" as const, icon: FolderKanban, labelKey: "projectDetail.statusArchived" };
     default:
-      return { color: "neutral" as const, icon: Clock, label: status };
+      return { color: "neutral" as const, icon: Clock, labelKey: status };
   }
 };
 
@@ -140,6 +141,7 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
   addMemberEvent,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
   const project = entity;
 
   const handleBack = () => {
@@ -163,7 +165,7 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
       <VStack align="center" justify="center" className={cn("py-12", className)}>
         <Spinner size="lg" />
         <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-          Loading project...
+          {t('projectDetail.loading')}
         </Typography>
       </VStack>
     );
@@ -173,7 +175,7 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
     return (
       <VStack align="center" justify="center" className={cn("py-12", className)}>
         <Typography variant="body" className="text-red-500">
-          Error: {error.message}
+          {t('projectDetail.error', { message: error.message })}
         </Typography>
       </VStack>
     );
@@ -183,7 +185,7 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
     return (
       <VStack align="center" justify="center" className={cn("py-12", className)}>
         <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-          Project not found
+          {t('projectDetail.notFound')}
         </Typography>
       </VStack>
     );
@@ -200,7 +202,7 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
           {showBack && (
             <Button variant="ghost" onClick={handleBack} className="gap-2">
               <ArrowLeft className="h-4 w-4" />
-              Back
+              {t('projectDetail.back')}
             </Button>
           )}
           <VStack gap="xs">
@@ -216,11 +218,11 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
         <HStack gap="sm">
           <Button variant="secondary" onClick={handleEdit} className="gap-2">
             <Edit className="h-4 w-4" />
-            Edit
+            {t('projectDetail.edit')}
           </Button>
           <Button variant="secondary" className="gap-2">
             <Settings className="h-4 w-4" />
-            Settings
+            {t('projectDetail.settings')}
           </Button>
         </HStack>
       </HStack>
@@ -229,11 +231,11 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
       <HStack gap="md" wrap>
         <Badge variant={statusConfig.color} size="lg" className="gap-1">
           <StatusIcon className="h-4 w-4" />
-          {statusConfig.label}
+          {t(statusConfig.labelKey)}
         </Badge>
         {project.priority && (
           <Badge variant={getPriorityColor(project.priority)} size="lg">
-            {project.priority} priority
+            {t(`projectDetail.priority${project.priority.charAt(0).toUpperCase()}${project.priority.slice(1)}`)}
           </Badge>
         )}
         {project.tags?.map((tag) => (
@@ -250,9 +252,9 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
           {/* Description */}
           <Card className="p-4">
             <VStack gap="sm">
-              <Typography variant="h4">Description</Typography>
+              <Typography variant="h4">{t('projectDetail.description')}</Typography>
               <Typography variant="body" className="text-[var(--color-foreground)]">
-                {project.description || "No description provided."}
+                {project.description || t('projectDetail.noDescription')}
               </Typography>
             </VStack>
           </Card>
@@ -262,7 +264,7 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
             <Card className="p-4">
               <VStack gap="sm">
                 <HStack justify="between" align="center">
-                  <Typography variant="h4">Progress</Typography>
+                  <Typography variant="h4">{t('projectDetail.progress')}</Typography>
                   <Typography variant="h3" className="text-blue-600">
                     {project.progress}%
                   </Typography>
@@ -289,7 +291,7 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
             <Card className="p-4">
               <VStack gap="md">
                 <HStack justify="between" align="center">
-                  <Typography variant="h4">Milestones</Typography>
+                  <Typography variant="h4">{t('projectDetail.milestones')}</Typography>
                   <Badge variant="info">
                     {project.milestones.filter((m) => m.completed).length}/
                     {project.milestones.length}
@@ -339,7 +341,7 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
           {project.goals && project.goals.length > 0 && (
             <Card className="p-4">
               <VStack gap="md">
-                <Typography variant="h4">Goals</Typography>
+                <Typography variant="h4">{t('projectDetail.goals')}</Typography>
                 <VStack gap="sm">
                   {project.goals.map((goal, idx) => (
                     <HStack key={idx} gap="sm" align="start">
@@ -359,7 +361,7 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
           <Card className="p-4">
             <VStack gap="md">
               <HStack justify="between" align="center">
-                <Typography variant="h4">Team</Typography>
+                <Typography variant="h4">{t('projectDetail.team')}</Typography>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -367,7 +369,7 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
                   className="gap-1"
                 >
                   <UserPlus className="h-3 w-3" />
-                  Add
+                  {t('projectDetail.add')}
                 </Button>
               </HStack>
 
@@ -382,10 +384,10 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
                 <VStack gap="sm">
                   {project.members.slice(0, 5).map((member) => (
                     <HStack key={member.id} gap="sm" align="center">
-                      <Avatar name={member.userName || "User"} size="sm" />
+                      <Avatar name={member.userName || t('projectDetail.user')} size="sm" />
                       <VStack gap="none" className="flex-1">
                         <Typography variant="small" className="font-medium">
-                          {member.userName || `User ${member.userId.slice(-4)}`}
+                          {member.userName || t('projectDetail.userWithId', { id: member.userId.slice(-4) })}
                         </Typography>
                         <Typography variant="small" className="text-[var(--color-muted-foreground)]">
                           {member.role}
@@ -395,13 +397,13 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
                   ))}
                   {project.members.length > 5 && (
                     <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                      +{project.members.length - 5} more
+                      {t('projectDetail.moreMembers', { count: project.members.length - 5 })}
                     </Typography>
                   )}
                 </VStack>
               ) : (
                 <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                  No team members yet
+                  {t('projectDetail.noTeamMembers')}
                 </Typography>
               )}
             </VStack>
@@ -410,22 +412,22 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
           {/* Details Card */}
           <Card className="p-4">
             <VStack gap="md">
-              <Typography variant="h4">Details</Typography>
+              <Typography variant="h4">{t('projectDetail.details')}</Typography>
 
               <VStack gap="sm">
                 <HStack justify="between">
                   <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                    Owner
+                    {t('projectDetail.owner')}
                   </Typography>
                   <Typography variant="small">
-                    {project.ownerName || `User ${project.ownerId.slice(-4)}`}
+                    {project.ownerName || t('projectDetail.userWithId', { id: project.ownerId.slice(-4) })}
                   </Typography>
                 </HStack>
 
                 {project.startDate && (
                   <HStack justify="between">
                     <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                      Start Date
+                      {t('projectDetail.startDate')}
                     </Typography>
                     <Typography variant="small">
                       {new Date(project.startDate).toLocaleDateString()}
@@ -436,7 +438,7 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
                 {project.endDate && (
                   <HStack justify="between">
                     <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                      End Date
+                      {t('projectDetail.endDate')}
                     </Typography>
                     <Typography variant="small">
                       {new Date(project.endDate).toLocaleDateString()}
@@ -446,7 +448,7 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
 
                 <HStack justify="between">
                   <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                    Created
+                    {t('projectDetail.created')}
                   </Typography>
                   <Typography variant="small">
                     {new Date(project.createdAt).toLocaleDateString()}
@@ -456,7 +458,7 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
                 {project.updatedAt && (
                   <HStack justify="between">
                     <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                      Last Updated
+                      {t('projectDetail.lastUpdated')}
                     </Typography>
                     <Typography variant="small">
                       {new Date(project.updatedAt).toLocaleDateString()}
@@ -470,14 +472,14 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
           {/* Quick Actions */}
           <Card className="p-4">
             <VStack gap="sm">
-              <Typography variant="h4">Quick Actions</Typography>
+              <Typography variant="h4">{t('projectDetail.quickActions')}</Typography>
               <Button
                 variant="secondary"
                 className="w-full gap-2 justify-start"
                 onClick={() => eventBus.emit("UI:VIEW_ANALYTICS", { projectId: project.id })}
               >
                 <BarChart3 className="h-4 w-4" />
-                View Analytics
+                {t('projectDetail.viewAnalytics')}
               </Button>
               <Button
                 variant="secondary"
@@ -485,7 +487,7 @@ export const ProjectDetailBoard: React.FC<ProjectDetailBoardProps> = ({
                 onClick={() => eventBus.emit("UI:VIEW_TEAM", { teamId: project.teamId })}
               >
                 <Users className="h-4 w-4" />
-                Manage Team
+                {t('projectDetail.manageTeam')}
               </Button>
             </VStack>
           </Card>

@@ -42,6 +42,7 @@ import {
   Badge,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 export interface ProjectData {
@@ -96,17 +97,17 @@ export interface ProjectsBoardProps {
 const getStatusConfig = (status: ProjectData["status"]) => {
   switch (status) {
     case "active":
-      return { color: "success" as const, icon: PlayCircle, label: "Active" };
+      return { color: "success" as const, icon: PlayCircle, labelKey: "projects.statusActive" };
     case "planning":
-      return { color: "info" as const, icon: Clock, label: "Planning" };
+      return { color: "info" as const, icon: Clock, labelKey: "projects.statusPlanning" };
     case "paused":
-      return { color: "warning" as const, icon: PauseCircle, label: "Paused" };
+      return { color: "warning" as const, icon: PauseCircle, labelKey: "projects.statusPaused" };
     case "completed":
-      return { color: "success" as const, icon: CheckCircle, label: "Completed" };
+      return { color: "success" as const, icon: CheckCircle, labelKey: "projects.statusCompleted" };
     case "archived":
-      return { color: "neutral" as const, icon: FolderKanban, label: "Archived" };
+      return { color: "neutral" as const, icon: FolderKanban, labelKey: "projects.statusArchived" };
     default:
-      return { color: "neutral" as const, icon: Clock, label: status };
+      return { color: "neutral" as const, icon: Clock, labelKey: `projects.status${status}` };
   }
 };
 
@@ -131,6 +132,7 @@ const ProjectCard: React.FC<{
   viewEvent: string;
   editEvent: string;
 }> = ({ project, onAction, viewEvent, editEvent }) => {
+  const { t } = useTranslate();
   const statusConfig = getStatusConfig(project.status);
   const StatusIcon = statusConfig.icon;
 
@@ -156,7 +158,7 @@ const ProjectCard: React.FC<{
           </HStack>
           <Badge variant={statusConfig.color} className="gap-1">
             <StatusIcon className="h-3 w-3" />
-            {statusConfig.label}
+            {t(statusConfig.labelKey)}
           </Badge>
         </HStack>
 
@@ -171,7 +173,7 @@ const ProjectCard: React.FC<{
           <VStack gap="xs">
             <HStack justify="between">
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Progress
+                {t('projects.progress')}
               </Typography>
               <Typography variant="small" className="font-medium">
                 {project.progress}%
@@ -222,11 +224,11 @@ const ProjectCard: React.FC<{
             <Typography variant="small">
               {project.startDate
                 ? new Date(project.startDate).toLocaleDateString()
-                : "TBD"}{" "}
+                : t('projects.tbd')}{" "}
               -{" "}
               {project.endDate
                 ? new Date(project.endDate).toLocaleDateString()
-                : "TBD"}
+                : t('projects.tbd')}
             </Typography>
           </HStack>
         )}
@@ -239,7 +241,7 @@ const ProjectCard: React.FC<{
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
-            View
+            {t('projects.view')}
           </Button>
           <Button
             variant="ghost"
@@ -248,7 +250,7 @@ const ProjectCard: React.FC<{
             className="gap-1"
           >
             <Edit className="h-3 w-3" />
-            Edit
+            {t('projects.edit')}
           </Button>
         </HStack>
       </VStack>
@@ -260,8 +262,8 @@ export const ProjectsBoard: React.FC<ProjectsBoardProps> = ({
   entity,
   isLoading = false,
   error = null,
-  title = "Projects",
-  subtitle = "Manage team projects and collaborations",
+  title,
+  subtitle,
   showHeader = true,
   showSearch = true,
   showFilters = true,
@@ -272,6 +274,7 @@ export const ProjectsBoard: React.FC<ProjectsBoardProps> = ({
   searchEvent = "SEARCH",
   filterEvent = "FILTER",
 }) => {
+  const { t } = useTranslate();
   const eventBus = useEventBus();
   const [searchTerm, setSearchTerm] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState<string>("all");
@@ -328,15 +331,15 @@ export const ProjectsBoard: React.FC<ProjectsBoardProps> = ({
       {showHeader && (
         <HStack justify="between" align="center" wrap>
           <VStack gap="xs">
-            <Typography variant="h1">{title}</Typography>
+            <Typography variant="h1">{title ?? t('projects.title')}</Typography>
             <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-              {subtitle}
+              {subtitle ?? t('projects.subtitle')}
             </Typography>
           </VStack>
 
           <Button variant="primary" onClick={handleCreate} className="gap-2">
             <Plus className="h-4 w-4" />
-            New Project
+            {t('projects.newProject')}
           </Button>
         </HStack>
       )}
@@ -353,7 +356,7 @@ export const ProjectsBoard: React.FC<ProjectsBoardProps> = ({
           <VStack gap="none" align="center">
             <Typography variant="h4">{stats.total}</Typography>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Total
+              {t('projects.total')}
             </Typography>
           </VStack>
         </Card>
@@ -369,7 +372,7 @@ export const ProjectsBoard: React.FC<ProjectsBoardProps> = ({
               {stats.active}
             </Typography>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Active
+              {t('projects.active')}
             </Typography>
           </VStack>
         </Card>
@@ -385,7 +388,7 @@ export const ProjectsBoard: React.FC<ProjectsBoardProps> = ({
               {stats.completed}
             </Typography>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Completed
+              {t('projects.completed')}
             </Typography>
           </VStack>
         </Card>
@@ -397,7 +400,7 @@ export const ProjectsBoard: React.FC<ProjectsBoardProps> = ({
           {showSearch && (
             <Box className="w-full max-w-sm">
               <Input
-                placeholder="Search projects..."
+                placeholder={t('projects.searchPlaceholder')}
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
                 leftIcon={<Search className="h-4 w-4 text-[var(--color-muted-foreground)]" />}
@@ -409,7 +412,7 @@ export const ProjectsBoard: React.FC<ProjectsBoardProps> = ({
             {showFilters && (
               <Button variant="secondary" onClick={handleFilter} className="gap-2">
                 <Filter className="h-4 w-4" />
-                Filter
+                {t('projects.filter')}
               </Button>
             )}
 
@@ -438,7 +441,7 @@ export const ProjectsBoard: React.FC<ProjectsBoardProps> = ({
         <VStack align="center" justify="center" className="py-12">
           <Spinner size="lg" />
           <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-            Loading projects...
+            {t('projects.loading')}
           </Typography>
         </VStack>
       )}
@@ -447,7 +450,7 @@ export const ProjectsBoard: React.FC<ProjectsBoardProps> = ({
       {error && (
         <VStack align="center" justify="center" className="py-12">
           <Typography variant="body" className="text-red-500">
-            Error: {error.message}
+            {t('projects.error', { message: error.message })}
           </Typography>
         </VStack>
       )}
@@ -459,12 +462,12 @@ export const ProjectsBoard: React.FC<ProjectsBoardProps> = ({
             <VStack align="center" justify="center" className="py-12">
               <FolderKanban className="h-12 w-12 text-[var(--color-muted-foreground)]" />
               <Typography variant="h3" className="text-[var(--color-muted-foreground)]">
-                No projects found
+                {t('projects.noProjectsFound')}
               </Typography>
               <Typography variant="body" className="text-[var(--color-muted-foreground)]">
                 {searchTerm || statusFilter !== "all"
-                  ? "Try different filters"
-                  : "Create your first project to get started"}
+                  ? t('projects.tryDifferentFilters')
+                  : t('projects.createFirstProject')}
               </Typography>
             </VStack>
           ) : (

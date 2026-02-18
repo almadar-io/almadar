@@ -13,6 +13,7 @@ import {
   HStack,
   Card,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 import { SegmentRenderer } from '../organisms/SegmentRenderer';
 import type { Segment } from '../utils/parseLessonSegments';
@@ -63,6 +64,7 @@ export function LessonBoard({
   className = '',
 }: LessonBoardProps): JSX.Element {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleComplete = () => {
@@ -114,7 +116,7 @@ export function LessonBoard({
             {entity.isCompleted && (
               <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded flex items-center gap-1">
                 <CheckCircle size={12} />
-                Completed
+                {t('lesson.completed')}
               </span>
             )}
             {entity.courseProgress !== undefined && (
@@ -147,7 +149,7 @@ export function LessonBoard({
           />
           <aside className="fixed top-0 left-0 bottom-0 w-80 bg-white z-50 overflow-y-auto">
             <HStack justify="between" align="center" className="p-4 border-b border-gray-200">
-              <span className="font-semibold text-[var(--color-foreground)]">Course Content</span>
+              <span className="font-semibold text-[var(--color-foreground)]">{t('lesson.courseContent')}</span>
               <button
                 onClick={() => setSidebarOpen(false)}
                 className="p-2 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:bg-gray-100 rounded"
@@ -185,7 +187,7 @@ export function LessonBoard({
             <VStack gap="sm">
               <h1 className="text-3xl font-bold text-[var(--color-foreground)]">{entity.title}</h1>
               {entity.duration && (
-                <span className="text-sm text-[var(--color-muted-foreground)]">{entity.duration} min read</span>
+                <span className="text-sm text-[var(--color-muted-foreground)]">{t('lesson.minRead', { minutes: entity.duration })}</span>
               )}
             </VStack>
 
@@ -207,7 +209,7 @@ export function LessonBoard({
                   className="px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 flex items-center gap-2 mx-auto"
                 >
                   <CheckCircle size={20} />
-                  Mark as Complete
+                  {t('lesson.markAsComplete')}
                 </button>
               </Box>
             )}
@@ -223,11 +225,11 @@ export function LessonBoard({
             className="px-4 py-2 text-sm font-medium text-[var(--color-foreground)] bg-gray-100 rounded hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
           >
             <ChevronLeft size={16} />
-            Previous
+            {t('lesson.previous')}
           </button>
 
           <span className="text-sm text-[var(--color-muted-foreground)]">
-            {entity.isCompleted ? 'Lesson completed!' : 'Keep learning...'}
+            {entity.isCompleted ? t('lesson.lessonCompleted') : t('lesson.keepLearning')}
           </span>
 
           <button
@@ -235,7 +237,7 @@ export function LessonBoard({
             disabled={!hasNext}
             className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
           >
-            Next
+            {t('lesson.next')}
             <ChevronRight size={16} />
           </button>
         </HStack>

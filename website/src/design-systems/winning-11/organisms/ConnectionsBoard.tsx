@@ -32,6 +32,7 @@ import {
   Avatar,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -102,20 +103,20 @@ const getStatusConfig = (status: ConnectionData["status"]) => {
       return {
         color: "success" as const,
         icon: UserCheck,
-        label: "Connected",
+        labelKey: "connections.statusConnected",
       };
     case "pending":
-      return { color: "warning" as const, icon: Clock, label: "Pending" };
+      return { color: "warning" as const, icon: Clock, labelKey: "connections.statusPending" };
     case "rejected":
-      return { color: "error" as const, icon: UserX, label: "Rejected" };
+      return { color: "error" as const, icon: UserX, labelKey: "connections.statusRejected" };
     case "archived":
       return {
         color: "neutral" as const,
         icon: Archive,
-        label: "Archived",
+        labelKey: "connections.statusArchived",
       };
     default:
-      return { color: "neutral" as const, icon: Clock, label: status };
+      return { color: "neutral" as const, icon: Clock, labelKey: status };
   }
 };
 
@@ -143,6 +144,7 @@ const ConnectionCard: React.FC<{
   currentUserId?: string;
   onAction: (action: string, connection: ConnectionData) => void;
 }> = ({ connection, currentUserId, onAction }) => {
+  const { t } = useTranslate();
   const statusConfig = getStatusConfig(connection.status);
   const StatusIcon = statusConfig.icon;
   const isIncoming = connection.recipientId === currentUserId;
@@ -151,9 +153,9 @@ const ConnectionCard: React.FC<{
 
   const displayName = isIncoming
     ? connection.requesterName ||
-      `User ${connection.requesterId.slice(-4)}`
+      t('connections.userFallback', { id: connection.requesterId.slice(-4) })
     : connection.recipientName ||
-      `User ${connection.recipientId.slice(-4)}`;
+      t('connections.userFallback', { id: connection.recipientId.slice(-4) });
 
   return (
     <Card className="p-4 hover:shadow-md transition-shadow">
@@ -169,13 +171,13 @@ const ConnectionCard: React.FC<{
                 variant="small"
                 className="text-[var(--color-muted-foreground)]"
               >
-                {isIncoming ? "Incoming request" : "Outgoing request"}
+                {isIncoming ? t('connections.incomingRequest') : t('connections.outgoingRequest')}
               </Typography>
             </VStack>
           </HStack>
           <Badge variant={statusConfig.color} className="gap-1">
             <StatusIcon className="h-3 w-3" />
-            {statusConfig.label}
+            {t(statusConfig.labelKey)}
           </Badge>
         </HStack>
 
@@ -200,7 +202,7 @@ const ConnectionCard: React.FC<{
               <HStack gap="xs" align="center">
                 <MessageCircle className="h-3 w-3" />
                 <Typography variant="small">
-                  {connection.interactionCount} interactions
+                  {t('connections.interactionCount', { count: connection.interactionCount })}
                 </Typography>
               </HStack>
             )}
@@ -223,7 +225,7 @@ const ConnectionCard: React.FC<{
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
-            View
+            {t('connections.view')}
           </Button>
 
           {isPending && isIncoming && (
@@ -235,7 +237,7 @@ const ConnectionCard: React.FC<{
                 className="gap-1"
               >
                 <UserCheck className="h-3 w-3" />
-                Accept
+                {t('connections.accept')}
               </Button>
               <Button
                 variant="secondary"
@@ -244,7 +246,7 @@ const ConnectionCard: React.FC<{
                 className="gap-1"
               >
                 <UserX className="h-3 w-3" />
-                Reject
+                {t('connections.reject')}
               </Button>
             </>
           )}
@@ -257,7 +259,7 @@ const ConnectionCard: React.FC<{
               className="gap-1 text-[var(--color-muted-foreground)]"
             >
               <Archive className="h-3 w-3" />
-              Archive
+              {t('connections.archive')}
             </Button>
           )}
         </HStack>
@@ -273,8 +275,8 @@ export const ConnectionsBoard: React.FC<ConnectionsBoardProps> = ({
   isLoading = false,
   error = null,
   currentUserId,
-  title = "My Network",
-  subtitle = "Manage your connections",
+  title,
+  subtitle,
   showHeader = true,
   showSearch = true,
   showFilters = true,
@@ -284,6 +286,9 @@ export const ConnectionsBoard: React.FC<ConnectionsBoardProps> = ({
   filterEvent,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
+  const resolvedTitle = title ?? t('connections.title');
+  const resolvedSubtitle = subtitle ?? t('connections.subtitle');
   const [searchTerm, setSearchTerm] = React.useState("");
   const [layout, setLayout] = React.useState<"grid" | "list">("grid");
   const [statusFilter, setStatusFilter] = React.useState<string>("all");
@@ -344,12 +349,12 @@ export const ConnectionsBoard: React.FC<ConnectionsBoardProps> = ({
       {showHeader && (
         <HStack justify="between" align="center" wrap>
           <VStack gap="xs">
-            <Typography variant="h1">{title}</Typography>
+            <Typography variant="h1">{resolvedTitle}</Typography>
             <Typography
               variant="body"
               className="text-[var(--color-muted-foreground)]"
             >
-              {subtitle}
+              {resolvedSubtitle}
             </Typography>
           </VStack>
 
@@ -359,7 +364,7 @@ export const ConnectionsBoard: React.FC<ConnectionsBoardProps> = ({
             className="gap-2"
           >
             <UserPlus className="h-4 w-4" />
-            Send Request
+            {t('connections.sendRequest')}
           </Button>
         </HStack>
       )}
@@ -379,7 +384,7 @@ export const ConnectionsBoard: React.FC<ConnectionsBoardProps> = ({
               variant="small"
               className="text-[var(--color-muted-foreground)]"
             >
-              Total
+              {t('connections.statsTotal')}
             </Typography>
           </VStack>
         </Card>
@@ -398,7 +403,7 @@ export const ConnectionsBoard: React.FC<ConnectionsBoardProps> = ({
               variant="small"
               className="text-[var(--color-muted-foreground)]"
             >
-              Pending
+              {t('connections.statsPending')}
             </Typography>
           </VStack>
         </Card>
@@ -417,7 +422,7 @@ export const ConnectionsBoard: React.FC<ConnectionsBoardProps> = ({
               variant="small"
               className="text-[var(--color-muted-foreground)]"
             >
-              Connected
+              {t('connections.statsConnected')}
             </Typography>
           </VStack>
         </Card>
@@ -429,7 +434,7 @@ export const ConnectionsBoard: React.FC<ConnectionsBoardProps> = ({
           {showSearch && (
             <Box className="w-full max-w-sm">
               <Input
-                placeholder="Search connections..."
+                placeholder={t('connections.searchPlaceholder')}
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
                 leftIcon={
@@ -447,7 +452,7 @@ export const ConnectionsBoard: React.FC<ConnectionsBoardProps> = ({
                 className="gap-2"
               >
                 <Filter className="h-4 w-4" />
-                Filter
+                {t('connections.filter')}
               </Button>
             )}
 
@@ -480,7 +485,7 @@ export const ConnectionsBoard: React.FC<ConnectionsBoardProps> = ({
             variant="body"
             className="text-[var(--color-muted-foreground)]"
           >
-            Loading connections...
+            {t('connections.loading')}
           </Typography>
         </VStack>
       )}
@@ -489,7 +494,7 @@ export const ConnectionsBoard: React.FC<ConnectionsBoardProps> = ({
       {error && (
         <VStack align="center" justify="center" className="py-12">
           <Typography variant="body" className="text-red-500">
-            Error: {error.message}
+            {t('connections.error', { message: error.message })}
           </Typography>
         </VStack>
       )}
@@ -504,15 +509,15 @@ export const ConnectionsBoard: React.FC<ConnectionsBoardProps> = ({
                 variant="h3"
                 className="text-[var(--color-muted-foreground)]"
               >
-                No connections found
+                {t('connections.emptyTitle')}
               </Typography>
               <Typography
                 variant="body"
                 className="text-[var(--color-muted-foreground)]"
               >
                 {searchTerm || statusFilter !== "all"
-                  ? "Try different filters"
-                  : "Send your first connection request to get started"}
+                  ? t('connections.emptyFiltered')
+                  : t('connections.emptyDefault')}
               </Typography>
             </VStack>
           ) : (

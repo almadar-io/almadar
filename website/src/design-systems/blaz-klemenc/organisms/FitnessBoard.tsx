@@ -41,6 +41,7 @@ import {
   Badge,
   Spinner,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 /** Lift entity data for the fitness board */
@@ -98,6 +99,7 @@ const LiftCard: React.FC<{
   deleteEvent?: string;
 }> = ({ lift, viewEvent, editEvent, deleteEvent }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
 
   return (
     <Card className="p-4 hover:shadow-md transition-shadow">
@@ -132,19 +134,19 @@ const LiftCard: React.FC<{
           <VStack gap="none" align="center" className="flex-1">
             <Typography variant="h3">{lift.sets}</Typography>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Sets
+              {t('fitness.sets')}
             </Typography>
           </VStack>
           <VStack gap="none" align="center" className="flex-1">
             <Typography variant="h3">{lift.reps}</Typography>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Reps
+              {t('fitness.reps')}
             </Typography>
           </VStack>
           <VStack gap="none" align="center" className="flex-1">
             <Typography variant="h3">{lift.sets * lift.reps}</Typography>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Total
+              {t('fitness.total')}
             </Typography>
           </VStack>
         </HStack>
@@ -165,7 +167,7 @@ const LiftCard: React.FC<{
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
-            View
+            {t('fitness.view')}
           </Button>
           <Button
             variant="ghost"
@@ -174,7 +176,7 @@ const LiftCard: React.FC<{
             className="gap-1"
           >
             <Edit className="h-3 w-3" />
-            Edit
+            {t('fitness.edit')}
           </Button>
           <Box className="flex-1" />
           <Button
@@ -208,6 +210,7 @@ export const FitnessBoard: React.FC<FitnessBoardProps> = ({
   searchEvent = "SEARCH",
 }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
@@ -276,7 +279,7 @@ export const FitnessBoard: React.FC<FitnessBoardProps> = ({
 
           <Button variant="primary" onClick={handleLogLift} className="gap-2">
             <Plus className="h-4 w-4" />
-            Log Lift
+            {t('fitness.logLift')}
           </Button>
         </HStack>
       )}
@@ -289,7 +292,7 @@ export const FitnessBoard: React.FC<FitnessBoardProps> = ({
             <VStack gap="none">
               <Typography variant="h3">{totalLifts}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Total Lifts
+                {t('fitness.totalLifts')}
               </Typography>
             </VStack>
           </HStack>
@@ -302,7 +305,7 @@ export const FitnessBoard: React.FC<FitnessBoardProps> = ({
                 {(totalVolume / 1000).toFixed(1)}k
               </Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Total Volume (kg)
+                {t('fitness.totalVolume')}
               </Typography>
             </VStack>
           </HStack>
@@ -313,7 +316,7 @@ export const FitnessBoard: React.FC<FitnessBoardProps> = ({
             <VStack gap="none">
               <Typography variant="h3">{uniqueExercises}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Exercises
+                {t('fitness.exercises')}
               </Typography>
             </VStack>
           </HStack>
@@ -329,7 +332,7 @@ export const FitnessBoard: React.FC<FitnessBoardProps> = ({
             {showSearch && (
               <Box className="w-full max-w-sm">
                 <Input
-                  placeholder="Search exercises..."
+                  placeholder={t('fitness.searchPlaceholder')}
                   value={searchTerm}
                   onChange={(e) => handleSearch(e.target.value)}
                   leftIcon={<Search className="h-4 w-4 text-[var(--color-muted-foreground)]" />}
@@ -360,7 +363,7 @@ export const FitnessBoard: React.FC<FitnessBoardProps> = ({
             <VStack align="center" justify="center" className="py-12">
               <Spinner size="lg" />
               <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-                Loading lifts...
+                {t('fitness.loading')}
               </Typography>
             </VStack>
           )}
@@ -381,12 +384,12 @@ export const FitnessBoard: React.FC<FitnessBoardProps> = ({
                 <VStack align="center" justify="center" className="py-12">
                   <Dumbbell className="h-12 w-12 text-[var(--color-muted-foreground)]" />
                   <Typography variant="h3" className="text-[var(--color-muted-foreground)]">
-                    No lifts recorded
+                    {t('fitness.noLiftsRecorded')}
                   </Typography>
                   <Typography variant="body" className="text-[var(--color-muted-foreground)]">
                     {searchTerm
-                      ? "Try a different search term"
-                      : "Log your first lift to get started"}
+                      ? t('fitness.tryDifferentSearch')
+                      : t('fitness.logFirstLift')}
                   </Typography>
                 </VStack>
               ) : (
@@ -432,7 +435,7 @@ export const FitnessBoard: React.FC<FitnessBoardProps> = ({
           {topExercises.length > 0 && (
             <Card className="p-4">
               <VStack gap="md">
-                <Typography variant="h4">Top Exercises</Typography>
+                <Typography variant="h4">{t('fitness.topExercises')}</Typography>
                 <VStack gap="sm">
                   {topExercises.map(([name, stats]) => (
                     <HStack
@@ -447,7 +450,7 @@ export const FitnessBoard: React.FC<FitnessBoardProps> = ({
                           variant="small"
                           className="text-[var(--color-muted-foreground)]"
                         >
-                          {stats.count} times
+                          {t('fitness.times', { count: stats.count })}
                         </Typography>
                       </VStack>
                       <Badge variant="default">{stats.maxWeight} kg max</Badge>

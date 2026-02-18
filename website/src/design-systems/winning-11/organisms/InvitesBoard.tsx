@@ -29,6 +29,7 @@ import {
   Badge,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -77,22 +78,25 @@ export interface InvitesBoardProps {
 
 // ── Helpers ────────────────────────────────────────────────────────
 
-const getStatusConfig = (status: InviteData["status"]) => {
+const getStatusConfig = (
+  status: InviteData["status"],
+  t: (key: string) => string
+) => {
   switch (status) {
     case "pending":
-      return { color: "warning" as const, icon: Clock, label: "Pending" };
+      return { color: "warning" as const, icon: Clock, label: t("invites.statusPending") };
     case "sent":
-      return { color: "info" as const, icon: Send, label: "Sent" };
+      return { color: "info" as const, icon: Send, label: t("invites.statusSent") };
     case "redeemed":
       return {
         color: "success" as const,
         icon: CheckCircle,
-        label: "Redeemed",
+        label: t("invites.statusRedeemed"),
       };
     case "expired":
-      return { color: "neutral" as const, icon: Clock, label: "Expired" };
+      return { color: "neutral" as const, icon: Clock, label: t("invites.statusExpired") };
     case "revoked":
-      return { color: "error" as const, icon: XCircle, label: "Revoked" };
+      return { color: "error" as const, icon: XCircle, label: t("invites.statusRevoked") };
     default:
       return { color: "neutral" as const, icon: Clock, label: status };
   }
@@ -104,7 +108,8 @@ const InviteCard: React.FC<{
   invite: InviteData;
   onAction: (action: string, invite: InviteData) => void;
 }> = ({ invite, onAction }) => {
-  const statusConfig = getStatusConfig(invite.status);
+  const { t } = useTranslate();
+  const statusConfig = getStatusConfig(invite.status, t);
   const StatusIcon = statusConfig.icon;
   const isActive = invite.status === "pending" || invite.status === "sent";
 
@@ -128,7 +133,7 @@ const InviteCard: React.FC<{
                 variant="small"
                 className="text-[var(--color-muted-foreground)]"
               >
-                Invited by {invite.invitedByName || "Unknown"}
+                {t("invites.invitedBy", { name: invite.invitedByName || t("invites.unknown") })}
               </Typography>
             </VStack>
           </HStack>
@@ -155,12 +160,12 @@ const InviteCard: React.FC<{
           <HStack gap="xs" align="center">
             <Clock className="h-3 w-3" />
             <Typography variant="small">
-              Created {new Date(invite.createdAt).toLocaleDateString()}
+              {t("invites.created", { date: new Date(invite.createdAt).toLocaleDateString() })}
             </Typography>
           </HStack>
           {invite.expiresAt && (
             <Typography variant="small">
-              Expires {new Date(invite.expiresAt).toLocaleDateString()}
+              {t("invites.expires", { date: new Date(invite.expiresAt).toLocaleDateString() })}
             </Typography>
           )}
         </HStack>
@@ -175,7 +180,7 @@ const InviteCard: React.FC<{
                 className="gap-1"
               >
                 <Send className="h-3 w-3" />
-                Resend
+                {t("invites.resend")}
               </Button>
               <Button
                 variant="ghost"
@@ -184,16 +189,15 @@ const InviteCard: React.FC<{
                 className="gap-1 text-red-600"
               >
                 <Trash2 className="h-3 w-3" />
-                Revoke
+                {t("invites.revoke")}
               </Button>
             </>
           )}
           {invite.status === "redeemed" && (
             <Typography variant="small" className="text-emerald-600">
-              Redeemed{" "}
               {invite.redeemedAt
-                ? new Date(invite.redeemedAt).toLocaleDateString()
-                : ""}
+                ? t("invites.redeemedOn", { date: new Date(invite.redeemedAt).toLocaleDateString() })
+                : t("invites.statusRedeemed")}
             </Typography>
           )}
         </HStack>
@@ -208,8 +212,8 @@ export const InvitesBoard: React.FC<InvitesBoardProps> = ({
   entity,
   isLoading = false,
   error = null,
-  title = "Invitations",
-  subtitle = "Manage platform invitations",
+  title,
+  subtitle,
   showHeader = true,
   showSearch = true,
   className,
@@ -217,6 +221,7 @@ export const InvitesBoard: React.FC<InvitesBoardProps> = ({
   searchEvent,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
   const [searchTerm, setSearchTerm] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState<string>("all");
 
@@ -264,12 +269,12 @@ export const InvitesBoard: React.FC<InvitesBoardProps> = ({
       {showHeader && (
         <HStack justify="between" align="center" wrap>
           <VStack gap="xs">
-            <Typography variant="h1">{title}</Typography>
+            <Typography variant="h1">{title || t("invites.title")}</Typography>
             <Typography
               variant="body"
               className="text-[var(--color-muted-foreground)]"
             >
-              {subtitle}
+              {subtitle || t("invites.subtitle")}
             </Typography>
           </VStack>
 
@@ -279,7 +284,7 @@ export const InvitesBoard: React.FC<InvitesBoardProps> = ({
             className="gap-2"
           >
             <Plus className="h-4 w-4" />
-            Create Invite
+            {t("invites.createInvite")}
           </Button>
         </HStack>
       )}
@@ -299,7 +304,7 @@ export const InvitesBoard: React.FC<InvitesBoardProps> = ({
               variant="small"
               className="text-[var(--color-muted-foreground)]"
             >
-              Total
+              {t("invites.total")}
             </Typography>
           </VStack>
         </Card>
@@ -318,7 +323,7 @@ export const InvitesBoard: React.FC<InvitesBoardProps> = ({
               variant="small"
               className="text-[var(--color-muted-foreground)]"
             >
-              Pending
+              {t("invites.statusPending")}
             </Typography>
           </VStack>
         </Card>
@@ -337,7 +342,7 @@ export const InvitesBoard: React.FC<InvitesBoardProps> = ({
               variant="small"
               className="text-[var(--color-muted-foreground)]"
             >
-              Redeemed
+              {t("invites.statusRedeemed")}
             </Typography>
           </VStack>
         </Card>
@@ -347,7 +352,7 @@ export const InvitesBoard: React.FC<InvitesBoardProps> = ({
       {showSearch && (
         <Box className="w-full max-w-sm">
           <Input
-            placeholder="Search by email..."
+            placeholder={t("invites.searchPlaceholder")}
             value={searchTerm}
             onChange={(e) => handleSearch(e.target.value)}
             leftIcon={
@@ -365,7 +370,7 @@ export const InvitesBoard: React.FC<InvitesBoardProps> = ({
             variant="body"
             className="text-[var(--color-muted-foreground)]"
           >
-            Loading invitations...
+            {t("invites.loading")}
           </Typography>
         </VStack>
       )}
@@ -374,7 +379,7 @@ export const InvitesBoard: React.FC<InvitesBoardProps> = ({
       {error && (
         <VStack align="center" justify="center" className="py-12">
           <Typography variant="body" className="text-red-500">
-            Error: {error.message}
+            {t("invites.error", { message: error.message })}
           </Typography>
         </VStack>
       )}
@@ -389,15 +394,15 @@ export const InvitesBoard: React.FC<InvitesBoardProps> = ({
                 variant="h3"
                 className="text-[var(--color-muted-foreground)]"
               >
-                No invitations found
+                {t("invites.noInvitationsFound")}
               </Typography>
               <Typography
                 variant="body"
                 className="text-[var(--color-muted-foreground)]"
               >
                 {searchTerm || statusFilter !== "all"
-                  ? "Try different filters"
-                  : "Create your first invitation to get started"}
+                  ? t("invites.tryDifferentFilters")
+                  : t("invites.createFirstInvitation")}
               </Typography>
             </VStack>
           ) : (

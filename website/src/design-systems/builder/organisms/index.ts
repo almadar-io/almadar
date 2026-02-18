@@ -75,5 +75,9 @@ export * from "./preview";
 export { PreviewPanel } from "./PreviewPanel";
 export type { PreviewPanelProps, PreviewPanelEntity } from "./PreviewPanel";
 
+// Orbital summary visualization
+export { OrbitalSummaryVisualization } from "./OrbitalSummaryVisualization";
+export type { OrbitalSummaryVisualizationProps, OrbitalSummaryVisualizationEntity } from "./OrbitalSummaryVisualization";
+
 // Builder organisms (graph editing)
 export * from "./builder";

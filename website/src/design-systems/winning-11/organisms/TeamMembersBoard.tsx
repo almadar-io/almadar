@@ -41,6 +41,7 @@ import {
   Avatar,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 export interface TeamMemberData {
@@ -91,13 +92,13 @@ export interface TeamMembersBoardProps {
 const getRoleConfig = (role: TeamMemberData["role"]) => {
   switch (role) {
     case "leader":
-      return { color: "warning" as const, icon: Crown, label: "Leader" };
+      return { color: "warning" as const, icon: Crown, labelKey: "teamMembers.roleLeader" };
     case "member":
-      return { color: "info" as const, icon: Users, label: "Member" };
+      return { color: "info" as const, icon: Users, labelKey: "teamMembers.roleMember" };
     case "observer":
-      return { color: "neutral" as const, icon: Eye, label: "Observer" };
+      return { color: "neutral" as const, icon: Eye, labelKey: "teamMembers.roleObserver" };
     default:
-      return { color: "neutral" as const, icon: Users, label: role };
+      return { color: "neutral" as const, icon: Users, labelKey: "teamMembers.roleMember" };
   }
 };
 
@@ -120,6 +121,7 @@ const MemberCard: React.FC<{
   viewEvent: string;
   removeEvent: string;
 }> = ({ member, onAction, viewEvent, removeEvent }) => {
+  const { t } = useTranslate();
   const roleConfig = getRoleConfig(member.role);
   const RoleIcon = roleConfig.icon;
   const isLeader = member.role === "leader";
@@ -130,7 +132,7 @@ const MemberCard: React.FC<{
         <HStack justify="between" align="start">
           <HStack gap="sm" align="center">
             <Box className="relative">
-              <Avatar name={member.userName || member.userEmail || "User"} size="lg" />
+              <Avatar name={member.userName || member.userEmail || t('teamMembers.defaultUser')} size="lg" />
               {isLeader && (
                 <Box className="absolute -top-1 -right-1 bg-amber-500 rounded-full p-1">
                   <Crown className="h-3 w-3 text-white" />
@@ -139,7 +141,7 @@ const MemberCard: React.FC<{
             </Box>
             <VStack gap="none">
               <Typography variant="body" className="font-medium">
-                {member.userName || `User ${member.userId.slice(-4)}`}
+                {member.userName || t('teamMembers.userFallback', { id: member.userId.slice(-4) })}
               </Typography>
               {member.userEmail && (
                 <Typography variant="small" className="text-[var(--color-muted-foreground)]">
@@ -148,25 +150,25 @@ const MemberCard: React.FC<{
               )}
             </VStack>
           </HStack>
-          <Badge variant={getStatusColor(member.status)}>{member.status}</Badge>
+          <Badge variant={getStatusColor(member.status)}>{t(`teamMembers.status${member.status.charAt(0).toUpperCase()}${member.status.slice(1)}`)}</Badge>
         </HStack>
 
         <HStack gap="md" wrap>
           <Badge variant={roleConfig.color} className="gap-1">
             <RoleIcon className="h-3 w-3" />
-            {roleConfig.label}
+            {t(roleConfig.labelKey)}
           </Badge>
           {member.trustScore !== undefined && (
             <HStack gap="xs" align="center">
               <Shield className="h-3 w-3 text-blue-500" />
               <Typography variant="small" className="font-medium">
-                Trust: {member.trustScore}
+                {t('teamMembers.trustScore', { score: member.trustScore })}
               </Typography>
             </HStack>
           )}
           {member.contributionScore !== undefined && (
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Contribution: {member.contributionScore}%
+              {t('teamMembers.contributionScore', { score: member.contributionScore })}
             </Typography>
           )}
         </HStack>
@@ -175,12 +177,12 @@ const MemberCard: React.FC<{
           <HStack gap="xs" align="center">
             <Calendar className="h-3 w-3" />
             <Typography variant="small">
-              Joined {new Date(member.joinedAt).toLocaleDateString()}
+              {t('teamMembers.joinedDate', { date: new Date(member.joinedAt).toLocaleDateString() })}
             </Typography>
           </HStack>
           {member.lastActiveAt && (
             <Typography variant="small">
-              Last active {new Date(member.lastActiveAt).toLocaleDateString()}
+              {t('teamMembers.lastActiveDate', { date: new Date(member.lastActiveAt).toLocaleDateString() })}
             </Typography>
           )}
         </HStack>
@@ -193,7 +195,7 @@ const MemberCard: React.FC<{
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
-            View
+            {t('teamMembers.actionView')}
           </Button>
           <Button
             variant="ghost"
@@ -202,7 +204,7 @@ const MemberCard: React.FC<{
             className="gap-1"
           >
             <Edit className="h-3 w-3" />
-            Edit Role
+            {t('teamMembers.actionEditRole')}
           </Button>
           {!isLeader && (
             <Button
@@ -212,7 +214,7 @@ const MemberCard: React.FC<{
               className="gap-1 text-red-500 hover:text-red-600"
             >
               <UserMinus className="h-3 w-3" />
-              Remove
+              {t('teamMembers.actionRemove')}
             </Button>
           )}
         </HStack>
@@ -237,6 +239,7 @@ export const TeamMembersBoard: React.FC<TeamMembersBoardProps> = ({
   searchEvent = "SEARCH",
   filterEvent = "FILTER",
 }) => {
+  const { t } = useTranslate();
   const eventBus = useEventBus();
   const [searchTerm, setSearchTerm] = React.useState("");
   const [roleFilter, setRoleFilter] = React.useState<string>("all");
@@ -287,7 +290,7 @@ export const TeamMembersBoard: React.FC<TeamMembersBoardProps> = ({
     observers: members.filter((m) => m.role === "observer").length,
   };
 
-  const pageTitle = title || (teamName ? `${teamName} Members` : "Team Members");
+  const pageTitle = title || (teamName ? t('teamMembers.titleWithTeam', { teamName }) : t('teamMembers.title'));
 
   return (
     <VStack gap="lg" className={cn("p-6", className)}>
@@ -297,20 +300,20 @@ export const TeamMembersBoard: React.FC<TeamMembersBoardProps> = ({
           {showBack && (
             <Button variant="ghost" onClick={handleBack} className="gap-2">
               <ArrowLeft className="h-4 w-4" />
-              Back
+              {t('teamMembers.back')}
             </Button>
           )}
           <VStack gap="xs">
             <Typography variant="h1">{pageTitle}</Typography>
             <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-              Manage team members and roles
+              {t('teamMembers.subtitle')}
             </Typography>
           </VStack>
         </HStack>
 
         <Button variant="primary" onClick={handleAddMember} className="gap-2">
           <UserPlus className="h-4 w-4" />
-          Add Member
+          {t('teamMembers.addMember')}
         </Button>
       </HStack>
 
@@ -326,7 +329,7 @@ export const TeamMembersBoard: React.FC<TeamMembersBoardProps> = ({
           <VStack gap="none" align="center">
             <Typography variant="h4">{stats.total}</Typography>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Total
+              {t('teamMembers.statTotal')}
             </Typography>
           </VStack>
         </Card>
@@ -345,7 +348,7 @@ export const TeamMembersBoard: React.FC<TeamMembersBoardProps> = ({
               </Typography>
             </HStack>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Leaders
+              {t('teamMembers.statLeaders')}
             </Typography>
           </VStack>
         </Card>
@@ -361,7 +364,7 @@ export const TeamMembersBoard: React.FC<TeamMembersBoardProps> = ({
               {stats.members}
             </Typography>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Members
+              {t('teamMembers.statMembers')}
             </Typography>
           </VStack>
         </Card>
@@ -377,7 +380,7 @@ export const TeamMembersBoard: React.FC<TeamMembersBoardProps> = ({
               {stats.observers}
             </Typography>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Observers
+              {t('teamMembers.statObservers')}
             </Typography>
           </VStack>
         </Card>
@@ -387,7 +390,7 @@ export const TeamMembersBoard: React.FC<TeamMembersBoardProps> = ({
       {showSearch && (
         <Box className="w-full max-w-sm">
           <Input
-            placeholder="Search members..."
+            placeholder={t('teamMembers.searchPlaceholder')}
             value={searchTerm}
             onChange={(e) => handleSearch(e.target.value)}
             leftIcon={<Search className="h-4 w-4 text-[var(--color-muted-foreground)]" />}
@@ -400,7 +403,7 @@ export const TeamMembersBoard: React.FC<TeamMembersBoardProps> = ({
         <VStack align="center" justify="center" className="py-12">
           <Spinner size="lg" />
           <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-            Loading members...
+            {t('teamMembers.loading')}
           </Typography>
         </VStack>
       )}
@@ -409,7 +412,7 @@ export const TeamMembersBoard: React.FC<TeamMembersBoardProps> = ({
       {error && (
         <VStack align="center" justify="center" className="py-12">
           <Typography variant="body" className="text-red-500">
-            Error: {error.message}
+            {t('teamMembers.error', { message: error.message })}
           </Typography>
         </VStack>
       )}
@@ -421,12 +424,12 @@ export const TeamMembersBoard: React.FC<TeamMembersBoardProps> = ({
             <VStack align="center" justify="center" className="py-12">
               <Users className="h-12 w-12 text-[var(--color-muted-foreground)]" />
               <Typography variant="h3" className="text-[var(--color-muted-foreground)]">
-                No members found
+                {t('teamMembers.noMembersFound')}
               </Typography>
               <Typography variant="body" className="text-[var(--color-muted-foreground)]">
                 {searchTerm || roleFilter !== "all"
-                  ? "Try different filters"
-                  : "Add members to this team"}
+                  ? t('teamMembers.tryDifferentFilters')
+                  : t('teamMembers.addMembersPrompt')}
               </Typography>
             </VStack>
           ) : (

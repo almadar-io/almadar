@@ -39,6 +39,7 @@ import {
   Badge,
   Spinner,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 /** Credit entity data for the credits board */
@@ -111,6 +112,7 @@ const CreditCard_: React.FC<{
   deleteEvent?: string;
 }> = ({ credit, adjustEvent, editEvent, deleteEvent }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const expired = isExpired(credit.expiresAt);
   const expiringSoon = isExpiringSoon(credit.expiresAt);
   const usagePercentage =
@@ -156,22 +158,22 @@ const CreditCard_: React.FC<{
             </Box>
             <VStack gap="none">
               <Typography variant="body" className="font-medium">
-                Credit Package
+                {t('credits.creditPackage')}
               </Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Expires: {formatDate(credit.expiresAt)}
+                {t('credits.expires', { date: formatDate(credit.expiresAt) })}
               </Typography>
             </VStack>
           </HStack>
           {expired ? (
-            <Badge variant="danger">Expired</Badge>
+            <Badge variant="danger">{t('credits.expired')}</Badge>
           ) : expiringSoon ? (
             <Badge variant="warning">
               <AlertTriangle className="h-3 w-3 mr-1" />
-              Expiring Soon
+              {t('credits.expiringSoon')}
             </Badge>
           ) : (
-            <Badge variant="success">Active</Badge>
+            <Badge variant="success">{t('credits.active')}</Badge>
           )}
         </HStack>
 
@@ -179,7 +181,7 @@ const CreditCard_: React.FC<{
         <VStack gap="sm">
           <HStack justify="between">
             <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-              Credits Remaining
+              {t('credits.creditsRemaining')}
             </Typography>
             <Typography variant="h3">
               {credit.remainingCredits} / {credit.totalCredits}
@@ -200,8 +202,7 @@ const CreditCard_: React.FC<{
             />
           </Box>
           <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-            {credit.totalCredits - credit.remainingCredits} credits used (
-            {usagePercentage.toFixed(0)}%)
+            {t('credits.creditsUsed', { used: credit.totalCredits - credit.remainingCredits, percentage: usagePercentage.toFixed(0) })}
           </Typography>
         </VStack>
 
@@ -214,7 +215,7 @@ const CreditCard_: React.FC<{
             className="gap-1"
           >
             <PlusCircle className="h-3 w-3" />
-            Adjust
+            {t('credits.adjust')}
           </Button>
           <Button
             variant="ghost"
@@ -223,7 +224,7 @@ const CreditCard_: React.FC<{
             className="gap-1"
           >
             <Edit className="h-3 w-3" />
-            Edit
+            {t('credits.edit')}
           </Button>
           <Box className="flex-1" />
           <Button
@@ -257,6 +258,7 @@ export const CreditsBoard: React.FC<CreditsBoardProps> = ({
   searchEvent = "SEARCH",
 }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<
     "all" | "active" | "expiring" | "expired"
@@ -316,7 +318,7 @@ export const CreditsBoard: React.FC<CreditsBoardProps> = ({
 
           <Button variant="primary" onClick={handleCreate} className="gap-2">
             <Plus className="h-4 w-4" />
-            Add Credits
+            {t('credits.addCredits')}
           </Button>
         </HStack>
       )}
@@ -328,11 +330,10 @@ export const CreditsBoard: React.FC<CreditsBoardProps> = ({
             <AlertTriangle className="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" />
             <VStack gap="xs">
               <Typography variant="body" className="font-medium text-amber-600">
-                {expiringCredits.length} credit package(s) expiring soon
+                {t('credits.expiringAlert', { count: expiringCredits.length })}
               </Typography>
               <Typography variant="small" className="text-amber-600">
-                Review and renew credits before they expire to avoid service
-                interruption.
+                {t('credits.expiringAlertDesc')}
               </Typography>
             </VStack>
           </HStack>
@@ -347,7 +348,7 @@ export const CreditsBoard: React.FC<CreditsBoardProps> = ({
             <VStack gap="none">
               <Typography variant="h3">{totalCredits}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Total Credits
+                {t('credits.totalCredits')}
               </Typography>
             </VStack>
           </HStack>
@@ -358,7 +359,7 @@ export const CreditsBoard: React.FC<CreditsBoardProps> = ({
             <VStack gap="none">
               <Typography variant="h3">{remainingCredits}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Remaining
+                {t('credits.remaining')}
               </Typography>
             </VStack>
           </HStack>
@@ -369,7 +370,7 @@ export const CreditsBoard: React.FC<CreditsBoardProps> = ({
             <VStack gap="none">
               <Typography variant="h3">{activeCount}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Active
+                {t('credits.active')}
               </Typography>
             </VStack>
           </HStack>
@@ -380,7 +381,7 @@ export const CreditsBoard: React.FC<CreditsBoardProps> = ({
             <VStack gap="none">
               <Typography variant="h3">{expiringCount}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Expiring
+                {t('credits.expiring')}
               </Typography>
             </VStack>
           </HStack>
@@ -393,7 +394,7 @@ export const CreditsBoard: React.FC<CreditsBoardProps> = ({
           {showSearch && (
             <Box className="w-full max-w-sm">
               <Input
-                placeholder="Search credits..."
+                placeholder={t('credits.searchPlaceholder')}
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
                 leftIcon={<Search className="h-4 w-4 text-[var(--color-muted-foreground)]" />}
@@ -408,14 +409,14 @@ export const CreditsBoard: React.FC<CreditsBoardProps> = ({
                 size="sm"
                 onClick={() => setStatusFilter("all")}
               >
-                All ({credits.length})
+                {t('credits.filterAll', { count: credits.length })}
               </Button>
               <Button
                 variant={statusFilter === "active" ? "primary" : "secondary"}
                 size="sm"
                 onClick={() => setStatusFilter("active")}
               >
-                Active ({activeCount})
+                {t('credits.filterActive', { count: activeCount })}
               </Button>
               <Button
                 variant={statusFilter === "expiring" ? "primary" : "secondary"}
@@ -423,14 +424,14 @@ export const CreditsBoard: React.FC<CreditsBoardProps> = ({
                 onClick={() => setStatusFilter("expiring")}
               >
                 <AlertTriangle className="h-3 w-3 mr-1" />
-                Expiring ({expiringCount})
+                {t('credits.filterExpiring', { count: expiringCount })}
               </Button>
               <Button
                 variant={statusFilter === "expired" ? "primary" : "secondary"}
                 size="sm"
                 onClick={() => setStatusFilter("expired")}
               >
-                Expired ({expiredCount})
+                {t('credits.filterExpired', { count: expiredCount })}
               </Button>
             </HStack>
           )}
@@ -442,7 +443,7 @@ export const CreditsBoard: React.FC<CreditsBoardProps> = ({
         <VStack align="center" justify="center" className="py-12">
           <Spinner size="lg" />
           <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-            Loading credits...
+            {t('credits.loading')}
           </Typography>
         </VStack>
       )}
@@ -463,12 +464,12 @@ export const CreditsBoard: React.FC<CreditsBoardProps> = ({
             <VStack align="center" justify="center" className="py-12">
               <CreditCard className="h-12 w-12 text-[var(--color-muted-foreground)]" />
               <Typography variant="h3" className="text-[var(--color-muted-foreground)]">
-                No credits found
+                {t('credits.noCreditsFound')}
               </Typography>
               <Typography variant="body" className="text-[var(--color-muted-foreground)]">
                 {statusFilter !== "all"
-                  ? "Try changing the filter"
-                  : "Add credits for your trainees to get started"}
+                  ? t('credits.tryChangingFilter')
+                  : t('credits.addCreditsToStart')}
               </Typography>
             </VStack>
           ) : (

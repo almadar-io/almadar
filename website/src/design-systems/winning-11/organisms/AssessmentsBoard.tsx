@@ -29,6 +29,7 @@ import {
   Badge,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -78,24 +79,24 @@ export interface AssessmentsBoardProps {
 
 // ── Helpers ────────────────────────────────────────────────────────
 
-const getStatusConfig = (status: AssessmentData["status"]) => {
+const getStatusConfig = (status: AssessmentData["status"], t: (key: string) => string) => {
   switch (status) {
     case "completed":
       return {
         color: "success" as const,
         icon: CheckCircle,
-        label: "Completed",
+        label: t("assessments.statusCompleted"),
       };
     case "in_progress":
       return {
         color: "info" as const,
         icon: PlayCircle,
-        label: "In Progress",
+        label: t("assessments.statusInProgress"),
       };
     case "pending":
-      return { color: "warning" as const, icon: Clock, label: "Pending" };
+      return { color: "warning" as const, icon: Clock, label: t("assessments.statusPending") };
     case "expired":
-      return { color: "error" as const, icon: Clock, label: "Expired" };
+      return { color: "error" as const, icon: Clock, label: t("assessments.statusExpired") };
     default:
       return { color: "neutral" as const, icon: Clock, label: status };
   }
@@ -107,7 +108,8 @@ const AssessmentCard: React.FC<{
   assessment: AssessmentData;
   onAction: (action: string, assessment: AssessmentData) => void;
 }> = ({ assessment, onAction }) => {
-  const statusConfig = getStatusConfig(assessment.status);
+  const { t } = useTranslate();
+  const statusConfig = getStatusConfig(assessment.status, t);
   const StatusIcon = statusConfig.icon;
   const progress =
     assessment.questionCount && assessment.answeredCount
@@ -136,7 +138,7 @@ const AssessmentCard: React.FC<{
                 <User className="h-3 w-3" />
                 <Typography variant="small">
                   {assessment.userName ||
-                    `User ${assessment.userId.slice(-4)}`}
+                    t("assessments.userFallback", { id: assessment.userId.slice(-4) })}
                 </Typography>
               </HStack>
             </VStack>
@@ -155,14 +157,13 @@ const AssessmentCard: React.FC<{
                 variant="small"
                 className="text-[var(--color-muted-foreground)]"
               >
-                Progress
+                {t("assessments.progress")}
               </Typography>
               <Typography
                 variant="small"
                 className="text-[var(--color-muted-foreground)]"
               >
-                {assessment.answeredCount || 0}/{assessment.questionCount}{" "}
-                questions
+                {t("assessments.questionsProgress", { answered: assessment.answeredCount || 0, total: assessment.questionCount })}
               </Typography>
             </HStack>
             <Box className="w-full bg-neutral-200 rounded-full h-2">
@@ -183,7 +184,7 @@ const AssessmentCard: React.FC<{
                 variant="body"
                 className="font-medium text-emerald-600"
               >
-                Score: {assessment.score}
+                {t("assessments.score", { score: assessment.score })}
               </Typography>
             </HStack>
           )}
@@ -193,15 +194,13 @@ const AssessmentCard: React.FC<{
             <HStack gap="xs" align="center">
               <Clock className="h-3 w-3" />
               <Typography variant="small">
-                Started{" "}
-                {new Date(assessment.startedAt).toLocaleDateString()}
+                {t("assessments.started", { date: new Date(assessment.startedAt).toLocaleDateString() })}
               </Typography>
             </HStack>
           )}
           {assessment.completedAt && (
             <Typography variant="small">
-              Completed{" "}
-              {new Date(assessment.completedAt).toLocaleDateString()}
+              {t("assessments.completed", { date: new Date(assessment.completedAt).toLocaleDateString() })}
             </Typography>
           )}
         </HStack>
@@ -214,7 +213,7 @@ const AssessmentCard: React.FC<{
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
-            View
+            {t("assessments.view")}
           </Button>
           {assessment.status === "pending" && (
             <Button
@@ -224,7 +223,7 @@ const AssessmentCard: React.FC<{
               className="gap-1"
             >
               <PlayCircle className="h-3 w-3" />
-              Start
+              {t("assessments.start")}
             </Button>
           )}
           {assessment.status === "in_progress" && (
@@ -235,7 +234,7 @@ const AssessmentCard: React.FC<{
               className="gap-1"
             >
               <PlayCircle className="h-3 w-3" />
-              Continue
+              {t("assessments.continue")}
             </Button>
           )}
         </HStack>
@@ -250,8 +249,8 @@ export const AssessmentsBoard: React.FC<AssessmentsBoardProps> = ({
   entity,
   isLoading = false,
   error = null,
-  title = "Assessments",
-  subtitle = "Psychological compatibility assessments",
+  title,
+  subtitle,
   showHeader = true,
   showSearch = true,
   className,
@@ -259,6 +258,7 @@ export const AssessmentsBoard: React.FC<AssessmentsBoardProps> = ({
   viewEvent,
   searchEvent,
 }) => {
+  const { t } = useTranslate();
   const eventBus = useEventBus();
   const [searchTerm, setSearchTerm] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState<string>("all");
@@ -309,12 +309,12 @@ export const AssessmentsBoard: React.FC<AssessmentsBoardProps> = ({
       {showHeader && (
         <HStack justify="between" align="center" wrap>
           <VStack gap="xs">
-            <Typography variant="h1">{title}</Typography>
+            <Typography variant="h1">{title || t("assessments.title")}</Typography>
             <Typography
               variant="body"
               className="text-[var(--color-muted-foreground)]"
             >
-              {subtitle}
+              {subtitle || t("assessments.subtitle")}
             </Typography>
           </VStack>
 
@@ -324,7 +324,7 @@ export const AssessmentsBoard: React.FC<AssessmentsBoardProps> = ({
             className="gap-2"
           >
             <Plus className="h-4 w-4" />
-            New Assessment
+            {t("assessments.newAssessment")}
           </Button>
         </HStack>
       )}
@@ -344,7 +344,7 @@ export const AssessmentsBoard: React.FC<AssessmentsBoardProps> = ({
               variant="small"
               className="text-[var(--color-muted-foreground)]"
             >
-              Total
+              {t("assessments.total")}
             </Typography>
           </VStack>
         </Card>
@@ -363,7 +363,7 @@ export const AssessmentsBoard: React.FC<AssessmentsBoardProps> = ({
               variant="small"
               className="text-[var(--color-muted-foreground)]"
             >
-              Pending
+              {t("assessments.statusPending")}
             </Typography>
           </VStack>
         </Card>
@@ -382,7 +382,7 @@ export const AssessmentsBoard: React.FC<AssessmentsBoardProps> = ({
               variant="small"
               className="text-[var(--color-muted-foreground)]"
             >
-              In Progress
+              {t("assessments.statusInProgress")}
             </Typography>
           </VStack>
         </Card>
@@ -401,7 +401,7 @@ export const AssessmentsBoard: React.FC<AssessmentsBoardProps> = ({
               variant="small"
               className="text-[var(--color-muted-foreground)]"
             >
-              Completed
+              {t("assessments.statusCompleted")}
             </Typography>
           </VStack>
         </Card>
@@ -411,7 +411,7 @@ export const AssessmentsBoard: React.FC<AssessmentsBoardProps> = ({
       {showSearch && (
         <Box className="w-full max-w-sm">
           <Input
-            placeholder="Search assessments..."
+            placeholder={t("assessments.searchPlaceholder")}
             value={searchTerm}
             onChange={(e) => handleSearch(e.target.value)}
             leftIcon={
@@ -429,7 +429,7 @@ export const AssessmentsBoard: React.FC<AssessmentsBoardProps> = ({
             variant="body"
             className="text-[var(--color-muted-foreground)]"
           >
-            Loading assessments...
+            {t("assessments.loading")}
           </Typography>
         </VStack>
       )}
@@ -438,7 +438,7 @@ export const AssessmentsBoard: React.FC<AssessmentsBoardProps> = ({
       {error && (
         <VStack align="center" justify="center" className="py-12">
           <Typography variant="body" className="text-red-500">
-            Error: {error.message}
+            {t("assessments.error", { message: error.message })}
           </Typography>
         </VStack>
       )}
@@ -453,15 +453,15 @@ export const AssessmentsBoard: React.FC<AssessmentsBoardProps> = ({
                 variant="h3"
                 className="text-[var(--color-muted-foreground)]"
               >
-                No assessments found
+                {t("assessments.noAssessmentsFound")}
               </Typography>
               <Typography
                 variant="body"
                 className="text-[var(--color-muted-foreground)]"
               >
                 {searchTerm || statusFilter !== "all"
-                  ? "Try different filters"
-                  : "Create a new assessment to get started"}
+                  ? t("assessments.tryDifferentFilters")
+                  : t("assessments.createToGetStarted")}
               </Typography>
             </VStack>
           ) : (

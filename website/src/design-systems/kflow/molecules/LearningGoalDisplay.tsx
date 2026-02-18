@@ -18,6 +18,7 @@ import {
   HStack,
   VStack,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 export interface LearningGoalDisplayProps {
@@ -41,6 +42,7 @@ export const LearningGoalDisplay: React.FC<LearningGoalDisplayProps> = ({
   className = '',
 }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const [isEditing, setIsEditing] = useState(false);
   const [editedGoal, setEditedGoal] = useState(goal || '');
 
@@ -80,7 +82,7 @@ export const LearningGoalDisplay: React.FC<LearningGoalDisplayProps> = ({
           <HStack justify="between" align="center" className="w-full">
             <HStack gap="xs" align="center">
               <span className="text-sm font-semibold text-[var(--color-foreground)]">
-                Learning Goal
+                {t('learningGoal.title')}
               </span>
               <Info size={14} className="text-indigo-500" />
             </HStack>
@@ -92,7 +94,7 @@ export const LearningGoalDisplay: React.FC<LearningGoalDisplayProps> = ({
                 className="flex items-center gap-1 px-2 py-1 text-xs font-medium text-indigo-600 hover:text-indigo-700 hover:bg-indigo-100 rounded transition-colors"
               >
                 <Edit2 size={12} />
-                <span>Edit</span>
+                <span>{t('learningGoal.edit')}</span>
               </button>
             ) : (
               <HStack gap="sm">
@@ -103,7 +105,7 @@ export const LearningGoalDisplay: React.FC<LearningGoalDisplayProps> = ({
                   className="flex items-center gap-1 px-2 py-1 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 rounded transition-colors"
                 >
                   <Save size={12} />
-                  <span>{isSaving ? 'Saving...' : 'Save'}</span>
+                  <span>{isSaving ? t('learningGoal.saving') : t('learningGoal.save')}</span>
                 </button>
                 <button
                   type="button"
@@ -112,7 +114,7 @@ export const LearningGoalDisplay: React.FC<LearningGoalDisplayProps> = ({
                   className="flex items-center gap-1 px-2 py-1 text-xs font-medium text-[var(--color-foreground)] hover:text-[var(--color-foreground)] hover:bg-gray-100 disabled:opacity-50 rounded transition-colors"
                 >
                   <X size={12} />
-                  <span>Cancel</span>
+                  <span>{t('learningGoal.cancel')}</span>
                 </button>
               </HStack>
             )}
@@ -123,12 +125,12 @@ export const LearningGoalDisplay: React.FC<LearningGoalDisplayProps> = ({
               value={editedGoal}
               onChange={(e) => setEditedGoal(e.target.value)}
               className="w-full px-3 py-2 text-sm text-[var(--color-foreground)] bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-y min-h-[80px]"
-              placeholder="Enter learning goal for this layer..."
+              placeholder={t('learningGoal.placeholder')}
               disabled={isSaving}
             />
           ) : (
             <p className="text-sm text-[var(--color-foreground)] leading-relaxed">
-              {goal || 'No learning goal set'}
+              {goal || t('learningGoal.noGoalSet')}
             </p>
           )}
         </VStack>

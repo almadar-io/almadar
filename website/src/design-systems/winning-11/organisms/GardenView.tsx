@@ -30,6 +30,7 @@ import {
   cn,
   useEventBus,
   useQuerySingleton,
+  useTranslate,
   Button,
   Spinner,
   Box,
@@ -121,14 +122,15 @@ export const GardenView: React.FC<GardenViewProps> = ({
   event,
   onItemClick,
   emptyState,
-  emptyTitle = "Your garden is empty",
-  emptyDescription = "Start building relationships to grow your network",
+  emptyTitle,
+  emptyDescription,
   showCreateAction = true,
   isLoading = false,
   error = null,
   query,
   className,
 }) => {
+  const { t } = useTranslate();
   const eventBus = useEventBus();
   const queryState = useQuerySingleton(query);
 
@@ -218,7 +220,7 @@ export const GardenView: React.FC<GardenViewProps> = ({
       >
         <Spinner size="lg" />
         <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-          Loading your garden...
+          {t('garden.loading')}
         </Typography>
       </VStack>
     );
@@ -234,7 +236,7 @@ export const GardenView: React.FC<GardenViewProps> = ({
         className={cn("py-12", className)}
       >
         <Typography variant="body" className="text-red-500">
-          Error loading garden: {error.message}
+          {t('garden.errorLoading', { message: error.message })}
         </Typography>
       </VStack>
     );
@@ -257,10 +259,10 @@ export const GardenView: React.FC<GardenViewProps> = ({
           <Sprout className="h-12 w-12 text-lime-500" />
         </Box>
         <Typography variant="h4">
-          {emptyTitle}
+          {emptyTitle ?? t('garden.emptyTitle')}
         </Typography>
         <Typography variant="body" className="max-w-sm text-[var(--color-muted-foreground)]">
-          {emptyDescription}
+          {emptyDescription ?? t('garden.emptyDescription')}
         </Typography>
         {showCreateAction && (
           <Button
@@ -269,7 +271,7 @@ export const GardenView: React.FC<GardenViewProps> = ({
             onClick={handleCreate}
           >
             <Plus className="h-4 w-4" />
-            Plant Your First Seed
+            {t('garden.plantFirstSeed')}
           </Button>
         )}
       </VStack>
@@ -316,27 +318,26 @@ export const GardenView: React.FC<GardenViewProps> = ({
       {/* Summary footer */}
       <HStack wrap align="center" gap="md" className="mt-2">
         <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-          {gardenStats.total} relationship{gardenStats.total !== 1 ? "s" : ""}{" "}
-          in your garden
+          {t('garden.relationshipCount', { count: gardenStats.total })}
         </Typography>
         {gardenStats.thriving > 0 && (
           <Typography variant="small" className="text-blue-600">
-            {gardenStats.thriving} thriving
+            {t('garden.thrivingCount', { count: gardenStats.thriving })}
           </Typography>
         )}
         {gardenStats.healthy > 0 && (
           <Typography variant="small" className="text-emerald-600">
-            {gardenStats.healthy} healthy
+            {t('garden.healthyCount', { count: gardenStats.healthy })}
           </Typography>
         )}
         {gardenStats.needsAttention > 0 && (
           <Typography variant="small" className="text-amber-600">
-            {gardenStats.needsAttention} need attention
+            {t('garden.needAttentionCount', { count: gardenStats.needsAttention })}
           </Typography>
         )}
         {searchTerm && (
           <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-            (filtered from {rawItems.length})
+            {t('garden.filteredFrom', { count: rawItems.length })}
           </Typography>
         )}
       </HStack>

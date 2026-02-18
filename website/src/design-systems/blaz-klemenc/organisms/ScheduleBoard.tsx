@@ -23,6 +23,7 @@ import {
   Card,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 /**
@@ -145,6 +146,7 @@ export const ScheduleBoard: React.FC<ScheduleBoardProps> = ({
   weekChangeEvent,
 }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const [currentDate, setCurrentDate] = useState(initialDate);
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
 
@@ -244,7 +246,7 @@ export const ScheduleBoard: React.FC<ScheduleBoardProps> = ({
 
         <HStack gap="sm">
           <Button variant="secondary" size="sm" onClick={handleToday}>
-            Today
+            {t('schedule.today')}
           </Button>
           <HStack gap="xs">
             <Button variant="ghost" size="sm" onClick={handlePrevWeek}>
@@ -264,7 +266,7 @@ export const ScheduleBoard: React.FC<ScheduleBoardProps> = ({
             className="gap-2"
           >
             <Plus className="h-4 w-4" />
-            New Session
+            {t('schedule.newSession')}
           </Button>
         </HStack>
       </HStack>
@@ -277,7 +279,7 @@ export const ScheduleBoard: React.FC<ScheduleBoardProps> = ({
             variant="body"
             className="text-[var(--color-muted-foreground)]"
           >
-            Loading schedule...
+            {t('schedule.loading')}
           </Typography>
         </VStack>
       )}
@@ -428,7 +430,7 @@ export const ScheduleBoard: React.FC<ScheduleBoardProps> = ({
             variant="small"
             className="text-[var(--color-muted-foreground)]"
           >
-            Scheduled
+            {t('schedule.scheduled')}
           </Typography>
         </HStack>
         <HStack gap="xs" align="center">
@@ -437,7 +439,7 @@ export const ScheduleBoard: React.FC<ScheduleBoardProps> = ({
             variant="small"
             className="text-[var(--color-muted-foreground)]"
           >
-            In Progress
+            {t('schedule.inProgress')}
           </Typography>
         </HStack>
         <HStack gap="xs" align="center">
@@ -446,7 +448,7 @@ export const ScheduleBoard: React.FC<ScheduleBoardProps> = ({
             variant="small"
             className="text-[var(--color-muted-foreground)]"
           >
-            Completed
+            {t('schedule.completed')}
           </Typography>
         </HStack>
       </HStack>

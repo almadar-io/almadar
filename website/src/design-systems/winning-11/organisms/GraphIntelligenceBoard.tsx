@@ -29,6 +29,7 @@ import {
   Badge,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -102,6 +103,7 @@ const ClusterCard: React.FC<{
   cluster: ClusterData;
   onAction: (action: string, cluster: ClusterData) => void;
 }> = ({ cluster, onAction }) => {
+  const { t } = useTranslate();
   return (
     <Card className="p-4 hover:shadow-md transition-shadow">
       <VStack gap="md">
@@ -117,19 +119,19 @@ const ClusterCard: React.FC<{
               <HStack gap="xs" align="center" className="text-[var(--color-muted-foreground)]">
                 <Users className="h-3 w-3" />
                 <Typography variant="small">
-                  {cluster.memberCount} members
+                  {t("graph.memberCount", { count: cluster.memberCount })}
                 </Typography>
               </HStack>
             </VStack>
           </HStack>
-          <Badge variant={getTypeColor(cluster.type)}>{cluster.type}</Badge>
+          <Badge variant={getTypeColor(cluster.type)}>{t(`graph.clusterType.${cluster.type}`)}</Badge>
         </HStack>
 
         {/* Metrics */}
         <Box className="grid grid-cols-2 gap-3">
           <VStack gap="xs" className="bg-neutral-50 rounded-lg p-2">
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Trust Score
+              {t("graph.trustScore")}
             </Typography>
             <HStack gap="xs" align="center">
               <Target className="h-3 w-3 text-emerald-500" />
@@ -140,7 +142,7 @@ const ClusterCard: React.FC<{
           </VStack>
           <VStack gap="xs" className="bg-neutral-50 rounded-lg p-2">
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Cohesion
+              {t("graph.cohesion")}
             </Typography>
             <HStack gap="xs" align="center">
               <Zap className="h-3 w-3 text-blue-500" />
@@ -155,7 +157,7 @@ const ClusterCard: React.FC<{
         {cluster.topConnectors && cluster.topConnectors.length > 0 && (
           <VStack gap="xs">
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Top Connectors
+              {t("graph.topConnectors")}
             </Typography>
             <HStack gap="xs" wrap>
               {cluster.topConnectors.slice(0, 3).map((connector) => (
@@ -175,7 +177,7 @@ const ClusterCard: React.FC<{
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
-            Details
+            {t("graph.details")}
           </Button>
           <Button
             variant="ghost"
@@ -184,7 +186,7 @@ const ClusterCard: React.FC<{
             className="gap-1"
           >
             <Share2 className="h-3 w-3" />
-            Explore
+            {t("graph.explore")}
           </Button>
         </HStack>
       </VStack>
@@ -234,6 +236,7 @@ export const GraphIntelligenceBoard: React.FC<GraphIntelligenceBoardProps> = ({
 }) => {
   const { clusters = [], stats } = entity || {};
   const eventBus = useEventBus();
+  const { t } = useTranslate();
 
   const handleRefresh = () => {
     eventBus.emit(`UI:${refreshEvent}`, { entity: "Cluster" });
@@ -252,7 +255,7 @@ export const GraphIntelligenceBoard: React.FC<GraphIntelligenceBoardProps> = ({
       <VStack align="center" justify="center" className={cn("py-12", className)}>
         <Spinner size="lg" />
         <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-          Analyzing network graph...
+          {t("graph.analyzingNetwork")}
         </Typography>
       </VStack>
     );
@@ -262,7 +265,7 @@ export const GraphIntelligenceBoard: React.FC<GraphIntelligenceBoardProps> = ({
     return (
       <VStack align="center" justify="center" className={cn("py-12", className)}>
         <Typography variant="body" className="text-red-500">
-          Error: {error.message}
+          {t("graph.error", { message: error.message })}
         </Typography>
       </VStack>
     );
@@ -280,18 +283,18 @@ export const GraphIntelligenceBoard: React.FC<GraphIntelligenceBoardProps> = ({
             <Typography variant="h1">{title}</Typography>
           </HStack>
           <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-            Network analysis and cluster insights
+            {t("graph.subtitle")}
           </Typography>
         </VStack>
 
         <HStack gap="sm">
           <Button variant="secondary" onClick={handleRefresh} className="gap-2">
             <RefreshCw className="h-4 w-4" />
-            Refresh
+            {t("graph.refresh")}
           </Button>
           <Button variant="primary" onClick={handleAnalyze} className="gap-2">
             <BarChart3 className="h-4 w-4" />
-            Run Analysis
+            {t("graph.runAnalysis")}
           </Button>
         </HStack>
       </HStack>
@@ -301,37 +304,37 @@ export const GraphIntelligenceBoard: React.FC<GraphIntelligenceBoardProps> = ({
         <Box className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           <StatCard
             icon={Users}
-            label="Nodes"
+            label={t("graph.nodes")}
             value={stats.totalNodes}
             iconColor="text-blue-600"
           />
           <StatCard
             icon={Share2}
-            label="Edges"
+            label={t("graph.edges")}
             value={stats.totalEdges}
             iconColor="text-emerald-600"
           />
           <StatCard
             icon={TrendingUp}
-            label="Avg Degree"
+            label={t("graph.avgDegree")}
             value={stats.averageDegree.toFixed(1)}
             iconColor="text-amber-600"
           />
           <StatCard
             icon={Network}
-            label="Clustering"
+            label={t("graph.clustering")}
             value={`${(stats.clusteringCoefficient * 100).toFixed(0)}%`}
             iconColor="text-purple-600"
           />
           <StatCard
             icon={Target}
-            label="Density"
+            label={t("graph.density")}
             value={`${(stats.networkDensity * 100).toFixed(1)}%`}
             iconColor="text-pink-600"
           />
           <StatCard
             icon={Zap}
-            label="Avg Path"
+            label={t("graph.avgPath")}
             value={stats.averagePathLength.toFixed(2)}
             iconColor="text-indigo-600"
           />
@@ -341,8 +344,8 @@ export const GraphIntelligenceBoard: React.FC<GraphIntelligenceBoardProps> = ({
       {/* Clusters Section */}
       <VStack gap="md">
         <HStack justify="between" align="center">
-          <Typography variant="h2">Discovered Clusters</Typography>
-          <Badge variant="info">{clusters.length} clusters</Badge>
+          <Typography variant="h2">{t("graph.discoveredClusters")}</Typography>
+          <Badge variant="info">{t("graph.clusterCount", { count: clusters.length })}</Badge>
         </HStack>
 
         {clusters.length === 0 ? (
@@ -350,10 +353,10 @@ export const GraphIntelligenceBoard: React.FC<GraphIntelligenceBoardProps> = ({
             <VStack align="center" justify="center">
               <Network className="h-12 w-12 text-[var(--color-muted-foreground)]" />
               <Typography variant="h3" className="text-[var(--color-muted-foreground)]">
-                No clusters discovered
+                {t("graph.noClusters")}
               </Typography>
               <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-                Run an analysis to discover network clusters
+                {t("graph.noClustersHint")}
               </Typography>
               <Button
                 variant="primary"
@@ -361,7 +364,7 @@ export const GraphIntelligenceBoard: React.FC<GraphIntelligenceBoardProps> = ({
                 className="gap-2 mt-4"
               >
                 <BarChart3 className="h-4 w-4" />
-                Run Analysis
+                {t("graph.runAnalysis")}
               </Button>
             </VStack>
           </Card>
@@ -383,12 +386,10 @@ export const GraphIntelligenceBoard: React.FC<GraphIntelligenceBoardProps> = ({
         <VStack gap="md" align="center">
           <Network className="h-16 w-16 text-[var(--color-muted-foreground)]" />
           <Typography variant="h3" className="text-[var(--color-muted-foreground)]">
-            Network Visualization
+            {t("graph.networkVisualization")}
           </Typography>
           <Typography variant="body" className="text-[var(--color-muted-foreground)] text-center">
-            Interactive graph visualization will be displayed here.
-            <br />
-            Nodes represent users, edges represent connections.
+            {t("graph.visualizationDescription")}
           </Typography>
           <Button
             variant="secondary"
@@ -396,7 +397,7 @@ export const GraphIntelligenceBoard: React.FC<GraphIntelligenceBoardProps> = ({
             className="gap-2"
           >
             <ChevronRight className="h-4 w-4" />
-            Open Full Visualization
+            {t("graph.openFullVisualization")}
           </Button>
         </VStack>
       </Card>

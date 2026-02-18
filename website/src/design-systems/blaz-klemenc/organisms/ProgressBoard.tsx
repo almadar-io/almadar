@@ -51,6 +51,7 @@ import {
   Badge,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 /**
@@ -163,6 +164,7 @@ const ProgressEntryCard: React.FC<{
   deleteEvent?: string;
 }> = ({ entry, viewEvent, editEvent, deleteEvent }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const typeConfig = entryTypeConfig[entry.entryType];
   const status = statusConfig[entry.status];
   const TypeIcon = typeConfig.icon;
@@ -221,7 +223,7 @@ const ProgressEntryCard: React.FC<{
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
-            View
+            {t('progress.view')}
           </Button>
           <Button
             variant="ghost"
@@ -232,7 +234,7 @@ const ProgressEntryCard: React.FC<{
             className="gap-1"
           >
             <Edit className="h-3 w-3" />
-            Edit
+            {t('progress.edit')}
           </Button>
           <Box className="flex-1" />
           <Button
@@ -268,6 +270,7 @@ export const ProgressBoard: React.FC<ProgressBoardProps> = ({
   searchEvent,
 }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const [searchTerm, setSearchTerm] = useState("");
   const [typeFilter, setTypeFilter] = useState<
     "all" | "kinesiology_exam" | "special_exercise" | "assessment" | "milestone"
@@ -326,7 +329,7 @@ export const ProgressBoard: React.FC<ProgressBoardProps> = ({
 
           <Button variant="primary" onClick={handleCreate} className="gap-2">
             <Plus className="h-4 w-4" />
-            Add Progress
+            {t('progress.addProgress')}
           </Button>
         </HStack>
       )}
@@ -339,7 +342,7 @@ export const ProgressBoard: React.FC<ProgressBoardProps> = ({
             <VStack gap="none">
               <Typography variant="h3">{examCount}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Exams
+                {t('progress.exams')}
               </Typography>
             </VStack>
           </HStack>
@@ -350,7 +353,7 @@ export const ProgressBoard: React.FC<ProgressBoardProps> = ({
             <VStack gap="none">
               <Typography variant="h3">{exerciseCount}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Exercises
+                {t('progress.exercises')}
               </Typography>
             </VStack>
           </HStack>
@@ -361,7 +364,7 @@ export const ProgressBoard: React.FC<ProgressBoardProps> = ({
             <VStack gap="none">
               <Typography variant="h3">{milestoneCount}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Milestones
+                {t('progress.milestones')}
               </Typography>
             </VStack>
           </HStack>
@@ -372,7 +375,7 @@ export const ProgressBoard: React.FC<ProgressBoardProps> = ({
             <VStack gap="none">
               <Typography variant="h3">{completedCount}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                Completed
+                {t('progress.completed')}
               </Typography>
             </VStack>
           </HStack>
@@ -386,7 +389,7 @@ export const ProgressBoard: React.FC<ProgressBoardProps> = ({
             {showSearch && (
               <Box className="w-full max-w-sm">
                 <Input
-                  placeholder="Search progress entries..."
+                  placeholder={t('progress.searchPlaceholder')}
                   value={searchTerm}
                   onChange={(e) => handleSearch(e.target.value)}
                   leftIcon={<Search className="h-4 w-4 text-[var(--color-muted-foreground)]" />}
@@ -399,69 +402,69 @@ export const ProgressBoard: React.FC<ProgressBoardProps> = ({
             <HStack gap="sm" wrap>
               <HStack gap="xs">
                 <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                  Type:
+                  {t('progress.type')}
                 </Typography>
                 <Button
                   variant={typeFilter === "all" ? "primary" : "ghost"}
                   size="sm"
                   onClick={() => setTypeFilter("all")}
                 >
-                  All
+                  {t('progress.all')}
                 </Button>
                 <Button
                   variant={typeFilter === "kinesiology_exam" ? "primary" : "ghost"}
                   size="sm"
                   onClick={() => setTypeFilter("kinesiology_exam")}
                 >
-                  Exams
+                  {t('progress.exams')}
                 </Button>
                 <Button
                   variant={typeFilter === "special_exercise" ? "primary" : "ghost"}
                   size="sm"
                   onClick={() => setTypeFilter("special_exercise")}
                 >
-                  Exercises
+                  {t('progress.exercises')}
                 </Button>
                 <Button
                   variant={typeFilter === "milestone" ? "primary" : "ghost"}
                   size="sm"
                   onClick={() => setTypeFilter("milestone")}
                 >
-                  Milestones
+                  {t('progress.milestones')}
                 </Button>
               </HStack>
               <Box className="border-l border-[var(--color-border)] h-6" />
               <HStack gap="xs">
                 <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                  Status:
+                  {t('progress.status')}
                 </Typography>
                 <Button
                   variant={statusFilter === "all" ? "primary" : "ghost"}
                   size="sm"
                   onClick={() => setStatusFilter("all")}
                 >
-                  All
+                  {t('progress.all')}
                 </Button>
                 <Button
                   variant={statusFilter === "planned" ? "primary" : "ghost"}
                   size="sm"
                   onClick={() => setStatusFilter("planned")}
                 >
-                  Planned
+                  {t('progress.planned')}
                 </Button>
                 <Button
                   variant={statusFilter === "in_progress" ? "primary" : "ghost"}
                   size="sm"
                   onClick={() => setStatusFilter("in_progress")}
                 >
-                  In Progress
+                  {t('progress.inProgress')}
                 </Button>
                 <Button
                   variant={statusFilter === "completed" ? "primary" : "ghost"}
                   size="sm"
                   onClick={() => setStatusFilter("completed")}
                 >
-                  Completed
+                  {t('progress.completed')}
                 </Button>
               </HStack>
             </HStack>
@@ -474,7 +477,7 @@ export const ProgressBoard: React.FC<ProgressBoardProps> = ({
         <VStack align="center" justify="center" className="py-12">
           <Spinner size="lg" />
           <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-            Loading progress entries...
+            {t('progress.loading')}
           </Typography>
         </VStack>
       )}
@@ -495,12 +498,12 @@ export const ProgressBoard: React.FC<ProgressBoardProps> = ({
             <VStack align="center" justify="center" className="py-12">
               <TrendingUp className="h-12 w-12 text-[var(--color-muted-foreground)]" />
               <Typography variant="h3" className="text-[var(--color-muted-foreground)]">
-                No progress entries found
+                {t('progress.noEntriesFound')}
               </Typography>
               <Typography variant="body" className="text-[var(--color-muted-foreground)]">
                 {searchTerm
-                  ? "Try a different search term"
-                  : "Add your first progress entry to get started"}
+                  ? t('progress.tryDifferentSearch')
+                  : t('progress.addFirstEntry')}
               </Typography>
             </VStack>
           ) : (

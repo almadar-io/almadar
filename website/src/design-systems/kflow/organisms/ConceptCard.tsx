@@ -25,6 +25,7 @@ import {
   HStack,
   Card,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 import type { LucideIcon } from "lucide-react";
 
@@ -97,6 +98,7 @@ export const ConceptCard: React.FC<ConceptCardProps> = ({
   className = "",
 }) => {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
   const [internalExpanded, setInternalExpanded] = useState(false);
 
   // Normalize entity - handle string, object, or undefined
@@ -200,12 +202,12 @@ export const ConceptCard: React.FC<ConceptCardProps> = ({
               <span className="font-semibold text-[var(--color-foreground)]">{entity.name}</span>
               {!hideLessonBadge && isHighlighted && !isCompleted && (
                 <span className="px-2 py-0.5 text-xs font-medium bg-emerald-100 text-emerald-700 rounded">
-                  Lesson Ready
+                  {t('concept.lessonReady')}
                 </span>
               )}
               {!hideLessonBadge && !isHighlighted && !isCompleted && (
                 <span className="px-2 py-0.5 text-xs font-medium bg-gray-100 text-[var(--color-foreground)] rounded">
-                  No Lesson
+                  {t('concept.noLesson')}
                 </span>
               )}
             </HStack>
@@ -218,7 +220,7 @@ export const ConceptCard: React.FC<ConceptCardProps> = ({
             {entity.prerequisites && entity.prerequisites.length > 0 && (
               <HStack gap="xs" wrap className="mt-1">
                 <span className="text-xs font-semibold text-indigo-600">
-                  Prerequisites:
+                  {t('concept.prerequisites')}:
                 </span>
                 {entity.prerequisites.map((prereq, idx) => (
                   <span
@@ -234,7 +236,7 @@ export const ConceptCard: React.FC<ConceptCardProps> = ({
             {/* Parents */}
             {entity.parents && entity.parents.length > 0 && (
               <HStack gap="xs" wrap className="mt-1">
-                <span className="text-xs text-[var(--color-muted-foreground)]">Parents:</span>
+                <span className="text-xs text-[var(--color-muted-foreground)]">{t('concept.parents')}:</span>
                 {entity.parents.map((parent, idx) => (
                   <span
                     key={idx}

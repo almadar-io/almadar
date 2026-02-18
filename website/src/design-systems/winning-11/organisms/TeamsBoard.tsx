@@ -40,6 +40,7 @@ import {
   Badge,
   Spinner,
   useEventBus,
+  useTranslate,
 } from "@almadar/ui";
 
 export interface TeamData {
@@ -121,6 +122,7 @@ const TeamCard: React.FC<{
   viewEvent: string;
   editEvent: string;
 }> = ({ team, onAction, viewEvent, editEvent }) => {
+  const { t } = useTranslate();
   const memberCapacity = team.maxMembers
     ? `${team.memberCount}/${team.maxMembers}`
     : team.memberCount.toString();
@@ -140,12 +142,12 @@ const TeamCard: React.FC<{
               <HStack gap="xs" align="center" className="text-[var(--color-muted-foreground)]">
                 <Star className="h-3 w-3" />
                 <Typography variant="small">
-                  Led by {team.leaderName || `User ${team.leaderId.slice(-4)}`}
+                  {t('teams.ledBy', { leader: team.leaderName || `${t('teams.user')} ${team.leaderId.slice(-4)}` })}
                 </Typography>
               </HStack>
             </VStack>
           </HStack>
-          <Badge variant={getStatusColor(team.status)}>{team.status}</Badge>
+          <Badge variant={getStatusColor(team.status)}>{t(`teams.status.${team.status}`)}</Badge>
         </HStack>
 
         {team.description && (
@@ -155,10 +157,10 @@ const TeamCard: React.FC<{
         )}
 
         <HStack gap="md" wrap>
-          <Badge variant={getTypeColor(team.type)}>{team.type}</Badge>
+          <Badge variant={getTypeColor(team.type)}>{t(`teams.type.${team.type}`)}</Badge>
           <HStack gap="xs" align="center" className="text-[var(--color-muted-foreground)]">
             <Users className="h-3 w-3" />
-            <Typography variant="small">{memberCapacity} members</Typography>
+            <Typography variant="small">{t('teams.membersCount', { count: memberCapacity })}</Typography>
           </HStack>
         </HStack>
 
@@ -170,7 +172,7 @@ const TeamCard: React.FC<{
               <HStack gap="xs" align="center">
                 <Shield className="h-3 w-3 text-blue-500" />
                 <Typography variant="small" className="text-[var(--color-foreground)]">
-                  Trust: {team.averageTrustScore}
+                  {t('teams.trustScore', { score: team.averageTrustScore })}
                 </Typography>
               </HStack>
             )}
@@ -178,7 +180,7 @@ const TeamCard: React.FC<{
               <HStack gap="xs" align="center">
                 <Target className="h-3 w-3 text-emerald-500" />
                 <Typography variant="small" className="text-[var(--color-foreground)]">
-                  Cohesion: {team.cohesionScore}%
+                  {t('teams.cohesionScore', { score: team.cohesionScore })}
                 </Typography>
               </HStack>
             )}
@@ -203,7 +205,7 @@ const TeamCard: React.FC<{
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
-            View
+            {t('teams.view')}
           </Button>
           <Button
             variant="ghost"
@@ -212,7 +214,7 @@ const TeamCard: React.FC<{
             className="gap-1"
           >
             <Edit className="h-3 w-3" />
-            Edit
+            {t('teams.edit')}
           </Button>
           <Button
             variant="ghost"
@@ -221,7 +223,7 @@ const TeamCard: React.FC<{
             className="gap-1"
           >
             <UserPlus className="h-3 w-3" />
-            Add Member
+            {t('teams.addMember')}
           </Button>
         </HStack>
       </VStack>
@@ -245,6 +247,7 @@ export const TeamsBoard: React.FC<TeamsBoardProps> = ({
   filterEvent = "FILTER",
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
   const [searchTerm, setSearchTerm] = React.useState("");
   const [typeFilter, setTypeFilter] = React.useState<string>("all");
   const [layout, setLayout] = React.useState<"grid" | "list">("grid");
@@ -303,7 +306,7 @@ export const TeamsBoard: React.FC<TeamsBoardProps> = ({
 
           <Button variant="primary" onClick={handleCreate} className="gap-2">
             <Plus className="h-4 w-4" />
-            Create Team
+            {t('teams.createTeam')}
           </Button>
         </HStack>
       )}
@@ -314,7 +317,7 @@ export const TeamsBoard: React.FC<TeamsBoardProps> = ({
           <VStack gap="none" align="center">
             <Typography variant="h4">{stats.total}</Typography>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Total Teams
+              {t('teams.totalTeams')}
             </Typography>
           </VStack>
         </Card>
@@ -324,7 +327,7 @@ export const TeamsBoard: React.FC<TeamsBoardProps> = ({
               {stats.active}
             </Typography>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Active
+              {t('teams.active')}
             </Typography>
           </VStack>
         </Card>
@@ -334,7 +337,7 @@ export const TeamsBoard: React.FC<TeamsBoardProps> = ({
               {stats.totalMembers}
             </Typography>
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              Total Members
+              {t('teams.totalMembers')}
             </Typography>
           </VStack>
         </Card>
@@ -345,7 +348,7 @@ export const TeamsBoard: React.FC<TeamsBoardProps> = ({
         {showSearch && (
           <Box className="w-full max-w-sm">
             <Input
-              placeholder="Search teams..."
+              placeholder={t('teams.searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => handleSearch(e.target.value)}
               leftIcon={<Search className="h-4 w-4 text-[var(--color-muted-foreground)]" />}
@@ -383,7 +386,7 @@ export const TeamsBoard: React.FC<TeamsBoardProps> = ({
               size="sm"
               onClick={() => setTypeFilter(type)}
             >
-              {type === "all" ? "All" : type}
+              {type === "all" ? t('teams.filterAll') : t(`teams.type.${type}`)}
             </Button>
           )
         )}
@@ -394,7 +397,7 @@ export const TeamsBoard: React.FC<TeamsBoardProps> = ({
         <VStack align="center" justify="center" className="py-12">
           <Spinner size="lg" />
           <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-            Loading teams...
+            {t('teams.loading')}
           </Typography>
         </VStack>
       )}
@@ -403,7 +406,7 @@ export const TeamsBoard: React.FC<TeamsBoardProps> = ({
       {error && (
         <VStack align="center" justify="center" className="py-12">
           <Typography variant="body" className="text-red-500">
-            Error: {error.message}
+            {t('teams.error', { message: error.message })}
           </Typography>
         </VStack>
       )}
@@ -415,12 +418,12 @@ export const TeamsBoard: React.FC<TeamsBoardProps> = ({
             <VStack align="center" justify="center" className="py-12">
               <Users className="h-12 w-12 text-[var(--color-muted-foreground)]" />
               <Typography variant="h3" className="text-[var(--color-muted-foreground)]">
-                No teams found
+                {t('teams.noTeamsFound')}
               </Typography>
               <Typography variant="body" className="text-[var(--color-muted-foreground)]">
                 {searchTerm || typeFilter !== "all"
-                  ? "Try different filters"
-                  : "Create your first team to get started"}
+                  ? t('teams.tryDifferentFilters')
+                  : t('teams.createFirstTeam')}
               </Typography>
             </VStack>
           ) : (
