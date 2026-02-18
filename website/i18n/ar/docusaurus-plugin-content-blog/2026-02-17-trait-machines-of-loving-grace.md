@@ -304,6 +304,8 @@ XI. المساهمات الأساسية
 يمكن فهم المواصفة خارج مجتمع الطرق الرسمية (Formal Methods).
 
 تمثيل قياسي (Canonical Representation)
+
+```json
 {
   "from": "idle",
   "event": "NAVIGATE_TO",
@@ -314,6 +316,7 @@ XI. المساهمات الأساسية
     ["=", "@payload.avoidsRestricted", true]
   ]
 }
+```
 
 XII. التأثير الاستراتيجي
 
