@@ -873,5 +873,45 @@
   "homepage.animation.caption": {
     "message": "الوحدة المدارية = Entity + Traits + Pages",
     "description": "Animation section caption"
+  },
+  "hero.viz.appName": {
+    "message": "تطبيق تنفيذ الطلبات",
+    "description": "Hero visualization app name"
+  },
+  "hero.viz.entityName": {
+    "message": "طلب",
+    "description": "Hero visualization entity name"
+  },
+  "hero.viz.pageName": {
+    "message": "تتبع الطلب",
+    "description": "Hero visualization page name"
+  },
+  "hero.viz.traitName": {
+    "message": "التنفيذ",
+    "description": "Hero visualization trait name"
+  },
+  "hero.viz.defaultApp": {
+    "message": "تطبيق",
+    "description": "Default app name"
+  },
+  "hero.viz.appPrefix": {
+    "message": "تطبيق:",
+    "description": "Prefix for app name"
+  },
+  "hero.viz.entityLabel": {
+    "message": "(كيان)",
+    "description": "Label for entity node"
+  },
+  "hero.viz.traitLabel": {
+    "message": "(سمة)",
+    "description": "Label for trait node"
+  },
+  "hero.viz.pageLabel": {
+    "message": "(صفحة)",
+    "description": "Label for page node"
+  },
+  "hero.viz.orbitalUnit": {
+    "message": "الوحدة المدارية = كيان + سمات + صفحات",
+    "description": "Legend text"
   }
 }

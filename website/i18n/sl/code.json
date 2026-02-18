@@ -873,5 +873,45 @@
   "homepage.animation.caption": {
     "message": "Orbitalna enota = Entiteta + Lastnosti + Strani",
     "description": "Animation section caption"
+  },
+  "hero.viz.appName": {
+    "message": "Aplikacija za izpolnitev naročil",
+    "description": "Hero visualization app name"
+  },
+  "hero.viz.entityName": {
+    "message": "Naročilo",
+    "description": "Hero visualization entity name"
+  },
+  "hero.viz.pageName": {
+    "message": "Sledenje naročilu",
+    "description": "Hero visualization page name"
+  },
+  "hero.viz.traitName": {
+    "message": "Izpolnitev",
+    "description": "Hero visualization trait name"
+  },
+  "hero.viz.defaultApp": {
+    "message": "Aplikacija",
+    "description": "Default app name"
+  },
+  "hero.viz.appPrefix": {
+    "message": "APP:",
+    "description": "Prefix for app name"
+  },
+  "hero.viz.entityLabel": {
+    "message": "(Entiteta)",
+    "description": "Label for entity node"
+  },
+  "hero.viz.traitLabel": {
+    "message": "(Lastnost)",
+    "description": "Label for trait node"
+  },
+  "hero.viz.pageLabel": {
+    "message": "(Stran)",
+    "description": "Label for page node"
+  },
+  "hero.viz.orbitalUnit": {
+    "message": "Orbitalna enota = Entiteta + Lastnosti + Strani",
+    "description": "Legend text"
   }
 }
