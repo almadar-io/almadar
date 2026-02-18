@@ -13,7 +13,7 @@ tags: [sovereignty, ai, infrastructure, vision]
 
 ## The Age of Digital Building
 
-We're living in an exceptional moment. The cost of building software has dropped dramatically. AI has become a genuine partner in the development process. And nations across the region are investing confidently in their digital infrastructure — Arabic language models like **Fanar** and **Jais**, advanced data centers, and ambitious national AI initiatives.
+We're living in an exceptional moment. The cost of building software has dropped dramatically. AI has become a genuine partner in the development process. And nations around the world are investing confidently in their digital infrastructure — homegrown language models, advanced data centers, and ambitious national AI initiatives.
 
 <!-- truncate -->
 
@@ -37,7 +37,7 @@ The beautiful thing is that this has become practically possible — in ways tha
 
 ## The Opportunity: From Language Models to Complete Ecosystems
 
-Investments in Arabic language models are an excellent first step. But a language model alone doesn't build an application. It doesn't manage a service. It doesn't deploy a system.
+Investments in language models are an excellent first step. But a language model alone doesn't build an application. It doesn't manage a service. It doesn't deploy a system.
 
 Between an idea and a working application lie many layers: understanding requirements, designing business logic, building interfaces, connecting systems, deployment, and operations.
 
