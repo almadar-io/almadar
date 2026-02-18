@@ -115,8 +115,9 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
   const centerX = viewBoxW / 2; // 300
   const centerY = viewBoxH / 2; // 300 - Trait Center
   const labelX = centerX + 55;
-  const radiusX = 220;
-  const radiusY = 140;
+
+  // Use a SINGLE uniform radius for a perfect circle
+  const radius = 180;
 
   const { appName, entityName, pageName, traitName, states, transitions } = useMemo(
     () => extractVisualizationData(schema),
@@ -129,15 +130,15 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
     if (count === 0) return {};
 
     const positions: Record<string, { x: number; y: number; angle: number }> = {};
-    // Start top-left (-135 degrees is standard ergonomic start for circles)
-    const startAngle = -135 * (Math.PI / 180);
+    // Start from Left (180 degrees)
+    const startAngle = Math.PI;
 
     states.forEach((state, i) => {
-      // Calculate angle for this state
+      // Calculate angle for this state (Clockwise)
       const angle = startAngle + (i * (2 * Math.PI)) / count;
 
-      const x = centerX + radiusX * Math.cos(angle);
-      const y = centerY + radiusY * Math.sin(angle);
+      const x = centerX + radius * Math.cos(angle);
+      const y = centerY + radius * Math.sin(angle);
       positions[state.name] = { x, y, angle };
     });
 
@@ -162,12 +163,11 @@ export default function HeroSchemaAnimation({ schema }: { schema?: OrbitalSchema
     // For the control point dist, we push OUT significantly to create the arc effect.
     // Use a slightly larger radius for the control point.
     // If diff is large (cross-circle), this ensures it bows "out" correctly.
-    const controlDistX = radiusX * 1.35; // 35% larger than node radius
-    const controlDistY = radiusY * 1.5;  // 50% larger (oval compensation)
+    const controlDist = radius * 1.35; // 35% larger than node radius
 
     return {
-      x: centerX + controlDistX * Math.cos(midAngle),
-      y: centerY + controlDistY * Math.sin(midAngle)
+      x: centerX + controlDist * Math.cos(midAngle),
+      y: centerY + controlDist * Math.sin(midAngle)
     };
   }
 
