@@ -19,6 +19,7 @@ import {
   Card,
   Badge,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 export interface ChecklistRule {
@@ -63,11 +64,13 @@ export const InspectionChecklist: React.FC<InspectionChecklistProps> = ({
   data,
   showRuleCount = true,
   showSeverityBadge = true,
-  emptyTitle = "No items",
+  emptyTitle,
   readOnly = false,
   className,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
+  const resolvedEmptyTitle = emptyTitle ?? t('empty.noItems');
   const rules = items || data || [];
 
   const handleRuleChange = (ruleId: string, data: { isCompliant: boolean | null; notes: string }) => {
@@ -97,7 +100,7 @@ export const InspectionChecklist: React.FC<InspectionChecklistProps> = ({
         <VStack align="center" gap="md">
           <ClipboardList className="h-12 w-12 text-[var(--color-muted-foreground)]" />
           <Typography variant="body" className="text-[var(--color-muted-foreground)]">
-            {emptyTitle}
+            {resolvedEmptyTitle}
           </Typography>
         </VStack>
       </Card>

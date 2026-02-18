@@ -1406,7 +1406,7 @@ export const OrbitalSchemaVisualizer: React.FC<
             })}
           </svg>
 
-          {/* Orbital Nodes (Atomic P-Shell treatment) */}
+          {/* Orbital Nodes */}
           {nodes.map((node) => (
             <Box
               key={node.id}
@@ -1422,71 +1422,27 @@ export const OrbitalSchemaVisualizer: React.FC<
               onMouseEnter={() => setHoveredNode(node.name)}
               onMouseLeave={() => setHoveredNode(null)}
             >
-              {/* P-Shell Upper Lobe */}
-              <Box
-                className="absolute left-1/2 -translate-x-1/2 transition-all duration-300"
-                style={{
-                  top: -20,
-                  width: 40,
-                  height: 50,
-                  background:
-                    hoveredNode === node.name
-                      ? "radial-gradient(ellipse 50% 70% at 50% 80%, rgba(20,184,166,0.5) 0%, rgba(20,184,166,0.2) 50%, transparent 100%)"
-                      : "radial-gradient(ellipse 50% 70% at 50% 80%, rgba(20,184,166,0.3) 0%, rgba(20,184,166,0.1) 50%, transparent 100%)",
-                  borderRadius: "50% 50% 40% 40%",
-                  transform:
-                    hoveredNode === node.name ? "scaleY(1.15)" : "scaleY(1)",
-                }}
-              />
-
-              {/* P-Shell Lower Lobe */}
-              <Box
-                className="absolute left-1/2 -translate-x-1/2 transition-all duration-300"
-                style={{
-                  bottom: -20,
-                  width: 40,
-                  height: 50,
-                  background:
-                    hoveredNode === node.name
-                      ? "radial-gradient(ellipse 50% 70% at 50% 20%, rgba(20,184,166,0.5) 0%, rgba(20,184,166,0.2) 50%, transparent 100%)"
-                      : "radial-gradient(ellipse 50% 70% at 50% 20%, rgba(20,184,166,0.3) 0%, rgba(20,184,166,0.1) 50%, transparent 100%)",
-                  borderRadius: "40% 40% 50% 50%",
-                  transform:
-                    hoveredNode === node.name ? "scaleY(1.15)" : "scaleY(1)",
-                }}
-              />
-
-              {/* Main nucleus orb */}
+              {/* Main node circle */}
               <VStack
-                className="absolute inset-3 rounded-full items-center justify-center transition-all duration-200"
+                className="absolute inset-0 rounded-full items-center justify-center transition-all duration-200"
                 style={{
-                  background:
-                    "linear-gradient(135deg, #0d9488 0%, #0f766e 50%, #115e59 100%)",
+                  backgroundColor: 'var(--color-card)',
                   boxShadow:
                     hoveredNode === node.name
-                      ? "0 0 30px 5px rgba(20,184,166,0.4), inset 0 0 15px rgba(255,255,255,0.08)"
-                      : "0 0 15px 2px rgba(20,184,166,0.2), inset 0 0 10px rgba(255,255,255,0.05)",
-                  border: "2px solid rgba(94,234,212,0.5)",
+                      ? '0 4px 12px color-mix(in srgb, var(--color-primary) 25%, transparent)'
+                      : '0 1px 3px color-mix(in srgb, var(--color-foreground) 8%, transparent)',
+                  border: hoveredNode === node.name
+                    ? '2px solid var(--color-primary)'
+                    : '2px solid var(--color-border)',
                   transform:
                     hoveredNode === node.name ? "scale(1.05)" : "scale(1)",
                 }}
               >
-                {/* Highlight */}
-                <Box
-                  className="absolute inset-1 rounded-full"
-                  style={{
-                    background:
-                      "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2) 0%, transparent 50%)",
-                  }}
-                />
-
-                {/* Content */}
                 <Typography
                   variant="caption"
-                  className="font-bold text-center px-2 z-10"
+                  className="font-bold text-center px-2"
                   style={{
                     fontSize: "13px",
-                    textShadow: "0 1px 3px rgba(0,0,0,0.5)",
                     color: 'var(--color-foreground)',
                   }}
                 >
@@ -1495,8 +1451,8 @@ export const OrbitalSchemaVisualizer: React.FC<
                 {node.entityName && (
                   <Typography
                     variant="caption"
-                    className="text-center z-10 mt-0.5"
-                    style={{ fontSize: "10px", opacity: 0.8, color: 'var(--color-primary)' }}
+                    className="text-center mt-0.5"
+                    style={{ fontSize: "10px", color: 'var(--color-muted-foreground)' }}
                   >
                     {node.entityName}
                   </Typography>

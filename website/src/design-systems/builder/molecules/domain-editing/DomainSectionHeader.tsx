@@ -7,7 +7,7 @@
 import React, { useState } from 'react';
 import { clsx as cn } from 'clsx';
 import { ChevronDown, ChevronRight, Edit2, Trash2, Plus } from 'lucide-react';
-import { Typography, Button, HStack, VStack, Box, Badge } from '@almadar/ui';
+import { Typography, Button, HStack, VStack, Box, Badge, useTranslate } from '@almadar/ui';
 import { DomainKeyword, KeywordCategory } from '../../atoms/domain';
 
 export type SectionType = 'entity' | 'page' | 'behavior' | 'tick';
@@ -107,6 +107,7 @@ export const DomainSectionHeader: React.FC<DomainSectionHeaderProps> = ({
   className,
   children,
 }) => {
+  const { t } = useTranslate();
   const [internalExpanded, setInternalExpanded] = useState(true);
   const expanded = controlledExpanded ?? internalExpanded;
 
@@ -162,7 +163,7 @@ export const DomainSectionHeader: React.FC<DomainSectionHeaderProps> = ({
 
         {hasError && (
           <Badge variant="error" size="sm" className="ml-1">
-            Error
+            {t('error.generic')}
           </Badge>
         )}
 
@@ -177,7 +178,7 @@ export const DomainSectionHeader: React.FC<DomainSectionHeaderProps> = ({
                 variant="ghost"
                 size="sm"
                 onClick={onAdd}
-                title="Add item"
+                title={t('common.add')}
                 className="p-1.5 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
               >
                 <Plus className="w-4 h-4" />
@@ -188,7 +189,7 @@ export const DomainSectionHeader: React.FC<DomainSectionHeaderProps> = ({
                 variant="ghost"
                 size="sm"
                 onClick={onEdit}
-                title="Edit"
+                title={t('common.edit')}
                 className="p-1.5 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
               >
                 <Edit2 className="w-4 h-4" />
@@ -199,7 +200,7 @@ export const DomainSectionHeader: React.FC<DomainSectionHeaderProps> = ({
                 variant="ghost"
                 size="sm"
                 onClick={onDelete}
-                title="Delete"
+                title={t('common.delete')}
                 className="p-1.5 text-[var(--color-muted-foreground)] hover:text-[var(--color-error)] hover:bg-[var(--color-error)]/10"
               >
                 <Trash2 className="w-4 h-4" />

@@ -28,6 +28,7 @@ import {
   debugGroupEnd,
   isDebugEnabled,
 } from "../../lib/debug";
+import { useTranslate } from "../../hooks/useTranslate";
 
 // Helper to check if specific debug category is enabled
 const isRelationsDebugEnabled = () => isDebugEnabled();
@@ -84,9 +85,12 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
   clearable = true,
   name,
   className,
-  searchPlaceholder = "Search...",
-  emptyMessage = "No options found",
+  searchPlaceholder,
+  emptyMessage,
 }) => {
+  const { t } = useTranslate();
+  const resolvedSearchPlaceholder = searchPlaceholder ?? t('common.search');
+  const resolvedEmptyMessage = emptyMessage ?? t('empty.noOptionsFound');
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
@@ -216,7 +220,7 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
           {isLoading ? (
             <HStack gap="xs" align="center">
               <Spinner size="sm" />
-              <span>Loading...</span>
+              <span>{t('common.loading')}</span>
             </HStack>
           ) : selectedOption ? (
             selectedOption.label
@@ -260,7 +264,7 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder={searchPlaceholder}
+              placeholder={resolvedSearchPlaceholder}
               icon={Search}
               className="text-sm"
             />
@@ -279,7 +283,7 @@ export const RelationSelect: React.FC<RelationSelectProps> = ({
                   color="muted"
                   className="text-center"
                 >
-                  {emptyMessage}
+                  {resolvedEmptyMessage}
                 </Typography>
               </Box>
             ) : (

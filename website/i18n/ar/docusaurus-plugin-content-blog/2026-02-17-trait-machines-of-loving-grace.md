@@ -146,6 +146,8 @@ do (set motors "on")
 والأنظمة القابلة للتصحيح أكثر أمانًا.
 
 IV. التركيب على مستوى الكيان (Entity Level Composition)
+
+```orbital
 orbital InspectionUnit
 
 entity InspectionRobot [runtime]
@@ -157,7 +159,7 @@ trait Movement -> InspectionRobot
 trait Rotation -> InspectionRobot
 trait Scanning -> InspectionRobot
 trait ZoneEnforcement -> InspectionRobot
-
+```
 
 التركيب هنا مسطح (Flat Composition).
 
@@ -180,6 +182,8 @@ V. التعلم داخل القيود (Learning Inside Constraints)
 يتم تنفيذ الأفعال المسموح بها فقط
 
 مثال: ملاحة متعلمة لكنها مقيدة
+
+```orbital
 trait LearnedNavigation -> Robot
 
 @interaction
@@ -199,7 +203,7 @@ when (not (and
            (= @payload.speedWithinLimit true)
            (= @payload.avoidsRestricted true)))
 do (emit PATH_REJECTED)
-
+```
 
 هنا:
 
@@ -210,21 +214,24 @@ VI. وضوح التشغيل (Runtime Transparency)
 
 النظام ينتج سجلات تنفيذ واضحة (Structured Execution Logs):
 
+```text
 14:03:22 State: patrolling
 14:03:22 Event: OBSTACLE_DETECTED { distance: 0.3m, type: "person" }
 14:03:22 Guard: (< @entity.distance 0.5) → TRUE
 14:03:22 Transition: patrolling --> stopping
 14:03:22 Effect: (stop motors)
-
+```
 
 كل قرار يمكن تفسيره منطقيًا.
 
 مثال: حارس سلامة في الرعاية الصحية
+
+```orbital
 when (and
       (<= @payload.appliedForce @entity.forceTolerance)
       (= @payload.verbalConfirmation true)
       (= @entity.emergencyStopAccessible true))
-
+```
 
 هذا مثال على هندسة سلامة تشغيلية (Operational Safety Engineering)، وليس فلسفة نظرية.
 

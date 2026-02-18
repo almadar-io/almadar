@@ -46,7 +46,7 @@ async function exportDesignSystem() {
       atoms: ['Avatar', 'Badge', 'Button', 'Card', 'Checkbox', 'Divider', 'Input', 'Radio', 'Select', 'Spinner', 'Typography'],
       molecules: ['Accordion', 'Alert', 'Modal', 'Tabs', 'Toast'],
       organisms: ['ConfirmDialog', 'DataTable', 'Header', 'Sidebar', 'StatCard', 'WizardContainer'],
-      templates: ['AuthLayout', 'CounterTemplate', 'FormTemplate', 'GameTemplate', 'GenericAppTemplate', 'ListTemplate', 'SettingsTemplate'],
+      templates: ['AuthLayout', 'CounterTemplate', 'DashboardLayout', 'GameTemplate', 'GenericAppTemplate'],
     },
   };
 

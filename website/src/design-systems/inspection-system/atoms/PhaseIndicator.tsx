@@ -24,6 +24,7 @@ import {
   HStack,
   Typography,
   Badge,
+  useTranslate,
 } from '@almadar/ui';
 
 export type InspectionPhase =
@@ -111,10 +112,18 @@ export const PhaseIndicator: React.FC<PhaseIndicatorProps> = ({
   size = "md",
   className,
 }) => {
+  const { t } = useTranslate();
   // Guard against undefined or unknown phase values
   const config = phaseConfig[phase] || phaseConfig.preparation;
   const sizes = sizeConfig[size];
   const Icon = config.icon;
+
+  const translatedLabels: Partial<Record<InspectionPhase, string>> = {
+    execution: t('status.inProgress'),
+    completed: t('status.completed'),
+    cancelled: t('status.cancelled'),
+  };
+  const label = translatedLabels[phase] ?? config.label;
 
   // If phase is completely missing, don't render
   if (!phase && phase !== "preparation") {
@@ -140,7 +149,7 @@ export const PhaseIndicator: React.FC<PhaseIndicatorProps> = ({
           variant="small"
           className={cn(sizes.text, "font-medium", config.color)}
         >
-          {config.label}
+          {label}
         </Typography>
       )}
     </Box>

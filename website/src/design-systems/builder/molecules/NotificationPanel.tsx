@@ -7,7 +7,7 @@
 import React, { useEffect } from 'react';
 import { clsx as cn } from 'clsx';
 import { X, Bell, CheckCircle, AlertCircle, AlertTriangle, Info, Trash2 } from 'lucide-react';
-import { Typography, Button, Badge, Box, HStack, VStack, Icon, Overlay } from '@almadar/ui';
+import { Typography, Button, Badge, Box, HStack, VStack, Icon, Overlay, useTranslate } from '@almadar/ui';
 
 export type NotificationType = 'success' | 'error' | 'warning' | 'info';
 
@@ -131,6 +131,7 @@ const NotificationItem: React.FC<{
 export const NotificationPanel: React.FC<NotificationPanelProps> = ({
   notifications, isOpen, onClose, onDismiss, onRead, onClearAll, position = 'right', width = 'w-80', className,
 }) => {
+  const { t } = useTranslate();
   const unreadCount = notifications.filter(n => !n.read).length;
 
   return (
@@ -174,7 +175,7 @@ export const NotificationPanel: React.FC<NotificationPanelProps> = ({
           {notifications.length === 0 ? (
             <VStack align="center" justify="center" className="h-full text-center py-8">
               <Icon icon={Bell} size="xl" className="text-[var(--color-muted-foreground)] mb-3" style={{ width: '3rem', height: '3rem' }} />
-              <Typography variant="body2" className="text-[var(--color-muted-foreground)]">No notifications</Typography>
+              <Typography variant="body2" className="text-[var(--color-muted-foreground)]">{t('empty.noItems')}</Typography>
               <Typography variant="caption" className="text-[var(--color-muted-foreground)] mt-1">You're all caught up!</Typography>
             </VStack>
           ) : (

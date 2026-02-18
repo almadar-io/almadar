@@ -19,6 +19,7 @@ import { LoadingState } from "../molecules/LoadingState";
 import { ErrorState } from "../molecules/ErrorState";
 import { EmptyState } from "../molecules/EmptyState";
 import { useEventBus } from "../../hooks/useEventBus";
+import { useTranslate } from "../../hooks/useTranslate";
 
 export type ChartType = "bar" | "line" | "pie" | "area" | "donut";
 
@@ -306,6 +307,7 @@ export const Chart: React.FC<ChartProps> = ({
     className,
 }) => {
     const eventBus = useEventBus();
+    const { t } = useTranslate();
 
     const handleAction = useCallback(
         (action: ChartAction) => {
@@ -338,7 +340,7 @@ export const Chart: React.FC<ChartProps> = ({
     }
 
     if (normalizedData.length === 0) {
-        return <EmptyState title="No data" description="No chart data available." className={className} />;
+        return <EmptyState title={t('empty.noData')} description={t('empty.noData')} className={className} />;
     }
 
     return (

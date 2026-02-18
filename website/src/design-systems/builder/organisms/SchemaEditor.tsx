@@ -12,7 +12,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import Editor, { OnMount } from "@monaco-editor/react";
 import type { editor } from "monaco-editor";
-import { Box, VStack, HStack, Button, Typography, LoadingState, Icon } from "@almadar/ui";
+import { Box, VStack, HStack, Button, Typography, LoadingState, Icon, useTranslate } from "@almadar/ui";
 import { Save, X } from "lucide-react";
 import type { OrbitalSchema } from "@almadar/core";
 // syntax may not be exported - using stub with required methods
@@ -42,21 +42,32 @@ export interface SchemaEditorModalProps {
   appId: string;
   /** Callback when schema is saved */
   onSave: (schema: OrbitalSchema) => Promise<void>;
+  /** External styling override */
+  className?: string;
+  /** Loading state indicator */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name for schema-driven auto-fetch */
+  entity?: string;
 }
 
 // Loading component
-const EditorLoading: React.FC = () => (
-  <Box
-    display="flex"
-    fullWidth
-    fullHeight
-    className="items-center justify-center bg-[var(--color-background)]"
-  >
-    <VStack className="items-center gap-3">
-      <LoadingState message="Loading editor..." />
-    </VStack>
-  </Box>
-);
+const EditorLoading: React.FC = () => {
+  const { t } = useTranslate();
+  return (
+    <Box
+      display="flex"
+      fullWidth
+      fullHeight
+      className="items-center justify-center bg-[var(--color-background)]"
+    >
+      <VStack className="items-center gap-3">
+        <LoadingState message={t('common.loading')} />
+      </VStack>
+    </Box>
+  );
+};
 
 /**
  * Escape special regex characters
@@ -264,6 +275,7 @@ export const SchemaEditorModal: React.FC<SchemaEditorModalProps> = ({
   appId,
   onSave,
 }) => {
+  const { t } = useTranslate();
   const [editorContent, setEditorContent] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -415,7 +427,7 @@ export const SchemaEditorModal: React.FC<SchemaEditorModalProps> = ({
           onClick={handleClose}
           leftIcon={<Icon icon={X} size="sm" />}
         >
-          Cancel
+          {t('common.cancel')}
         </Button>
         <Button
           variant="primary"

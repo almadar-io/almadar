@@ -12,6 +12,7 @@ import { Plus, X } from "lucide-react";
 import { Button } from "../atoms/Button";
 import { cn } from "../../lib/cn";
 import { useEventBus } from "../../hooks/useEventBus";
+import { useTranslate } from "../../hooks/useTranslate";
 
 export interface FloatingAction {
   /**
@@ -125,6 +126,7 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
   className,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
   // If simplified props are provided, construct action from them
   const resolvedAction =
     action ??
@@ -259,7 +261,7 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
           aria-label={isExpanded ? "Close actions" : "Open actions"}
           aria-expanded={isExpanded}
         >
-          <span className="sr-only">{isExpanded ? "Close" : "Open"}</span>
+          <span className="sr-only">{isExpanded ? t('common.close') : t('common.open')}</span>
         </Button>
       </div>
     );

@@ -1,6 +1,7 @@
 import React from "react";
 import { cn } from "../../lib/cn";
 import { Spinner } from "../atoms";
+import { useTranslate } from "../../hooks/useTranslate";
 
 export interface LoadingStateProps {
   title?: string;
@@ -10,9 +11,11 @@ export interface LoadingStateProps {
 
 export const LoadingState: React.FC<LoadingStateProps> = ({
   title,
-  message = "Loading...",
+  message,
   className,
 }) => {
+  const { t } = useTranslate();
+  const displayMessage = message ?? t('common.loading');
   return (
     <div
       className={cn(
@@ -32,8 +35,10 @@ export const LoadingState: React.FC<LoadingStateProps> = ({
           title ? "mt-2" : "mt-4",
         )}
       >
-        {message}
+        {displayMessage}
       </p>
     </div>
   );
 };
+
+LoadingState.displayName = "LoadingState";

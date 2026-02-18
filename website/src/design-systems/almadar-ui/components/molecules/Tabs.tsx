@@ -12,6 +12,7 @@ import { Badge } from '../atoms/Badge';
 import { Typography } from '../atoms/Typography';
 import { cn } from '../../lib/cn';
 import { useEventBus } from '../../hooks/useEventBus';
+import { useTranslate } from '../../hooks/useTranslate';
 
 export interface TabItem {
   /** Tab ID */
@@ -64,6 +65,7 @@ export const Tabs: React.FC<TabsProps> = ({
   // Guard against undefined or empty items - support both 'items' and 'tabs' props
   const safeItems = items ?? tabs ?? [];
   const eventBus = useEventBus();
+  const { t } = useTranslate();
 
   // Find initially active tab (check for active: true in items)
   const initialActive = safeItems.find(item => item.active)?.id;
@@ -114,7 +116,7 @@ export const Tabs: React.FC<TabsProps> = ({
     return (
       <div className={cn('w-full', className)}>
         <div className="text-[var(--color-muted-foreground)] text-sm py-4">
-          No tabs available
+          {t('empty.noItems')}
         </div>
       </div>
     );

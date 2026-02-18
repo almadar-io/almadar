@@ -60,7 +60,12 @@ import {
   Card,
   Badge,
   useEventBus,
+  useTranslate,
   StatCard,
+  Input,
+  Checkbox,
+  Select,
+  Textarea,
 } from '@almadar/ui';
 
 // =============================================================================
@@ -214,6 +219,10 @@ export interface InspectionFormBoardProps {
   contextActionEvent?: string;
   /** Additional class names */
   className?: string;
+  /** Loading state indicator */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
 }
 
 // =============================================================================
@@ -303,6 +312,10 @@ interface FieldRendererProps {
   isVisible: boolean;
   mockData?: MockEntityData;
   contextActionEvent?: string;
+  className?: string;
+  isLoading?: boolean;
+  error?: Error | null;
+  entity?: string;
 }
 
 const SingleFieldInput: React.FC<{
@@ -313,13 +326,13 @@ const SingleFieldInput: React.FC<{
   instanceId?: string;
   mockData?: MockEntityData;
 }> = ({ field, value, onChange, inputClasses, instanceId, mockData = {} }) => {
+  const { t } = useTranslate();
   const radioName = instanceId ? `${field.id}-${instanceId}` : field.id;
 
   return (
     <>
       {field.type === "text" && (
-        <input
-          type="text"
+        <Input
           className={inputClasses}
           value={String(value || "")}
           onChange={(e) => onChange(e.target.value)}
@@ -327,7 +340,7 @@ const SingleFieldInput: React.FC<{
       )}
 
       {field.type === "textarea" && (
-        <textarea
+        <Textarea
           className={cn(inputClasses, "min-h-[80px]")}
           value={String(value || "")}
           onChange={(e) => onChange(e.target.value)}
@@ -335,8 +348,8 @@ const SingleFieldInput: React.FC<{
       )}
 
       {field.type === "date" && (
-        <input
-          type="date"
+        <Input
+          inputType="date"
           className={inputClasses}
           value={String(value || "")}
           onChange={(e) => onChange(e.target.value)}
@@ -344,26 +357,19 @@ const SingleFieldInput: React.FC<{
       )}
 
       {field.type === "dropdown" && (
-        <select
+        <Select
           className={inputClasses}
           value={String(value || field.defaultValue || "")}
           onChange={(e) => onChange(e.target.value)}
-        >
-          {field.options?.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
+          options={(field.options || []).map((opt) => ({ value: opt.value, label: opt.label }))}
+        />
       )}
 
       {field.type === "radio" && (
-        <div className="flex gap-4">
+        <HStack gap="md">
           {field.options?.map((opt) => (
-            <label
-              key={opt.value}
-              className="flex items-center gap-2 cursor-pointer"
-            >
+            <HStack key={opt.value} gap="xs" className="cursor-pointer">
+              {/* eslint-disable-next-line almadar/no-raw-dom-elements */}
               <input
                 type="radio"
                 name={radioName}
@@ -372,26 +378,27 @@ const SingleFieldInput: React.FC<{
                 onChange={(e) => onChange(e.target.value)}
                 className="w-4 h-4"
               />
-              <span className={opt.isDefault ? "font-semibold" : ""}>
+              <Typography
+                variant="body"
+                weight={opt.isDefault ? "semibold" : "normal"}
+              >
                 {opt.label}
-              </span>
-            </label>
+              </Typography>
+            </HStack>
           ))}
-        </div>
+        </HStack>
       )}
 
       {field.type === "checkbox" && (
-        <input
-          type="checkbox"
-          className="w-4 h-4"
+        <Checkbox
           checked={Boolean(value)}
           onChange={(e) => onChange(e.target.checked)}
         />
       )}
 
       {(field.type === "currency" || field.type === "decimal") && (
-        <input
-          type="number"
+        <Input
+          inputType="number"
           step="0.01"
           className={inputClasses}
           value={String(value || "")}
@@ -400,8 +407,8 @@ const SingleFieldInput: React.FC<{
       )}
 
       {field.type === "integer" && (
-        <input
-          type="number"
+        <Input
+          inputType="number"
           step="1"
           className={inputClasses}
           value={String(value || "")}
@@ -410,10 +417,9 @@ const SingleFieldInput: React.FC<{
       )}
 
       {field.type === "person" && (
-        <input
-          type="text"
+        <Input
           className={inputClasses}
-          placeholder="Search person..."
+          placeholder={t('common.search')}
           value={String(value || "")}
           onChange={(e) => onChange(e.target.value)}
         />
@@ -497,26 +503,21 @@ const SingleFieldInput: React.FC<{
       )}
 
       {field.type === "stats-grid" && (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <HStack gap="md" className="flex-wrap">
           {(field.stats || []).map((stat, idx) => (
             <StatCard key={idx} label={stat.label} value={stat.value} />
           ))}
-        </div>
+        </HStack>
       )}
 
       {field.type === "multi-select" && (
-        <div className="space-y-2 p-3 border rounded bg-neutral-50">
+        <VStack gap="xs" className="p-3 border rounded bg-neutral-50">
           {field.options?.map((opt) => {
             const selectedValues = Array.isArray(value) ? value : [];
             const isChecked = selectedValues.includes(opt.value);
             return (
-              <label
-                key={opt.value}
-                className="flex items-center gap-2 cursor-pointer"
-              >
-                <input
-                  type="checkbox"
-                  className="w-4 h-4"
+              <HStack key={opt.value} gap="xs" className="cursor-pointer">
+                <Checkbox
                   checked={isChecked}
                   onChange={(e) => {
                     if (e.target.checked) {
@@ -528,11 +529,11 @@ const SingleFieldInput: React.FC<{
                     }
                   }}
                 />
-                <span>{opt.label}</span>
-              </label>
+                <Typography variant="body">{opt.label}</Typography>
+              </HStack>
             );
           })}
-        </div>
+        </VStack>
       )}
 
       {field.type === "entity-list" &&
@@ -549,10 +550,14 @@ const SingleFieldInput: React.FC<{
 
           return (
             <Box className="border rounded overflow-hidden">
+              {/* eslint-disable-next-line almadar/no-raw-dom-elements */}
               <table className="w-full text-sm">
+                {/* eslint-disable-next-line almadar/no-raw-dom-elements */}
                 <thead className="bg-neutral-100">
+                  {/* eslint-disable-next-line almadar/no-raw-dom-elements */}
                   <tr>
                     {(field.displayFields || ["name"]).map((fieldName) => (
+                      // eslint-disable-next-line almadar/no-raw-dom-elements
                       <th
                         key={fieldName}
                         className="px-3 py-2 text-left font-medium text-[var(--color-foreground)]"
@@ -562,11 +567,14 @@ const SingleFieldInput: React.FC<{
                     ))}
                   </tr>
                 </thead>
+                {/* eslint-disable-next-line almadar/no-raw-dom-elements */}
                 <tbody>
                   {items.length > 0 ? (
                     items.map((item: Record<string, unknown>, idx: number) => (
+                      // eslint-disable-next-line almadar/no-raw-dom-elements
                       <tr key={idx} className="border-t hover:bg-neutral-50">
                         {(field.displayFields || ["name"]).map((fieldName) => (
+                          // eslint-disable-next-line almadar/no-raw-dom-elements
                           <td
                             key={fieldName}
                             className="px-3 py-2 text-[var(--color-foreground)]"
@@ -577,7 +585,9 @@ const SingleFieldInput: React.FC<{
                       </tr>
                     ))
                   ) : (
+                    // eslint-disable-next-line almadar/no-raw-dom-elements
                     <tr>
+                      {/* eslint-disable-next-line almadar/no-raw-dom-elements */}
                       <td
                         colSpan={(field.displayFields || ["name"]).length}
                         className="px-3 py-4 text-center text-[var(--color-muted-foreground)]"
@@ -605,14 +615,14 @@ const SingleFieldInput: React.FC<{
                 : [];
 
           return (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <HStack gap="md" className="flex-wrap">
               {items.length > 0 ? (
                 items.map((item: Record<string, unknown>, idx: number) => (
                   <Card key={idx} className="p-4">
                     <VStack gap="xs">
                       {(field.displayFields || ["name"]).map((fieldName) => (
                         <Typography key={fieldName} variant="body">
-                          <span className="font-medium">{fieldName}:</span>{" "}
+                          <Typography variant="body" weight="semibold" as="span">{fieldName}:</Typography>{" "}
                           {String(item[fieldName] || "-")}
                         </Typography>
                       ))}
@@ -624,13 +634,13 @@ const SingleFieldInput: React.FC<{
                   No items to display
                 </Box>
               )}
-            </div>
+            </HStack>
           );
         })()}
 
       {field.type === "datetime" && (
-        <input
-          type="datetime-local"
+        <Input
+          inputType="datetime-local"
           className={inputClasses}
           value={String(value || "")}
           onChange={(e) => onChange(e.target.value)}
@@ -638,7 +648,7 @@ const SingleFieldInput: React.FC<{
       )}
 
       {field.type === "checklist" && (
-        <div className="space-y-2 p-3 border rounded bg-neutral-50">
+        <VStack gap="xs" className="p-3 border rounded bg-neutral-50">
           {(field.checklistItems || field.options || []).map(
             (item: { id?: string; value?: string; label: string }) => {
               const itemId = item.id ?? item.value ?? "";
@@ -646,13 +656,13 @@ const SingleFieldInput: React.FC<{
               const checklistValue = (value as Record<string, boolean>) || {};
               const isChecked = Boolean(checklistValue[itemId]);
               return (
-                <label
+                <HStack
                   key={itemId}
-                  className="flex items-start gap-3 cursor-pointer p-2 hover:bg-neutral-100 rounded"
+                  gap="sm"
+                  align="start"
+                  className="cursor-pointer p-2 hover:bg-neutral-100 rounded"
                 >
-                  <input
-                    type="checkbox"
-                    className="w-5 h-5 mt-0.5"
+                  <Checkbox
                     checked={isChecked}
                     onChange={(e) => {
                       onChange({
@@ -661,20 +671,21 @@ const SingleFieldInput: React.FC<{
                       });
                     }}
                   />
-                  <span
+                  <Typography
+                    variant="body"
                     className={cn(isChecked && "line-through text-[var(--color-muted-foreground)]")}
                   >
                     {String(itemLabel)}
                     {"required" in item &&
                       (item as { required?: boolean }).required && (
-                        <span className="text-red-500 ml-1">*</span>
+                        <Typography variant="body" as="span" className="text-red-500 ml-1">*</Typography>
                       )}
-                  </span>
-                </label>
+                  </Typography>
+                </HStack>
               );
             },
           )}
-        </div>
+        </VStack>
       )}
     </>
   );
@@ -770,9 +781,9 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
 
   return (
     <Box className="space-y-1">
-      <label className="flex items-center gap-1 text-sm font-medium text-[var(--color-foreground)]">
-        {field.label}
-        {field.required && <span className="text-red-500">*</span>}
+      <HStack gap="xs" align="center" className="text-sm font-medium text-[var(--color-foreground)]">
+        <Typography variant="body" weight="medium">{field.label}</Typography>
+        {field.required && <Typography variant="body" as="span" className="text-red-500">*</Typography>}
         {field.contextMenu && field.contextMenu.length > 0 && (
           <ContextMenu
             actions={field.contextMenu}
@@ -787,7 +798,7 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
             className="ml-auto"
           />
         )}
-      </label>
+      </HStack>
 
       <SingleFieldInput
         field={field}
@@ -814,6 +825,10 @@ interface SectionRendererProps {
   mockData?: MockEntityData;
   contextActionEvent?: string;
   depth?: number;
+  className?: string;
+  isLoading?: boolean;
+  error?: Error | null;
+  entity?: string;
 }
 
 const SectionRenderer: React.FC<SectionRendererProps> = ({
@@ -889,9 +904,10 @@ const SectionRenderer: React.FC<SectionRendererProps> = ({
 
   return (
     <Card className={cn("p-4", depth > 0 && "ml-4 border-l-4 border-blue-200")}>
-      <button
+      <Button
+        variant="ghost"
         onClick={() => setIsExpanded(!isExpanded)}
-        className="flex items-center gap-2 w-full text-left mb-3"
+        className="flex items-center gap-2 w-full text-left mb-3 p-0 h-auto"
       >
         {isExpanded ? (
           <ChevronDown className="h-4 w-4 text-[var(--color-muted-foreground)]" />
@@ -905,7 +921,7 @@ const SectionRenderer: React.FC<SectionRendererProps> = ({
           {section.id}
         </Badge>
         {section.contextMenu && section.contextMenu.length > 0 && (
-          <div onClick={(e) => e.stopPropagation()}>
+          <Box onClick={(e: React.MouseEvent) => e.stopPropagation()}>
             <ContextMenu
               actions={section.contextMenu}
               onAction={(action) => {
@@ -917,9 +933,9 @@ const SectionRenderer: React.FC<SectionRendererProps> = ({
                 }
               }}
             />
-          </div>
+          </Box>
         )}
-      </button>
+      </Button>
 
       {isExpanded && (
         <VStack gap="md" align="stretch">
@@ -966,6 +982,10 @@ interface DebugPanelProps {
   completedTabs: string[];
   isOpen: boolean;
   onToggle: () => void;
+  className?: string;
+  isLoading?: boolean;
+  error?: Error | null;
+  entity?: string;
 }
 
 const DebugPanel: React.FC<DebugPanelProps> = ({
@@ -978,9 +998,10 @@ const DebugPanel: React.FC<DebugPanelProps> = ({
 }) => {
   return (
     <Card className="bg-neutral-900 text-neutral-100 overflow-hidden">
-      <button
+      <Button
+        variant="ghost"
         onClick={onToggle}
-        className="flex items-center gap-2 w-full p-3 bg-neutral-800 hover:bg-neutral-700"
+        className="flex items-center gap-2 w-full p-3 bg-neutral-800 hover:bg-neutral-700 h-auto rounded-none"
       >
         <Bug className="h-4 w-4" />
         <Typography variant="small" className="font-mono">
@@ -991,46 +1012,46 @@ const DebugPanel: React.FC<DebugPanelProps> = ({
         ) : (
           <ChevronRight className="h-4 w-4 ml-auto" />
         )}
-      </button>
+      </Button>
 
       {isOpen && (
-        <div className="p-3 space-y-4 font-mono text-xs">
-          <div>
+        <VStack gap="md" className="p-3 font-mono text-xs">
+          <Box>
             <Typography variant="small" className="text-green-400 mb-1">
               Global Variables (HG-*)
             </Typography>
             <pre className="bg-neutral-800 p-2 rounded overflow-x-auto">
               {JSON.stringify(globalVariables, null, 2) || "{}"}
             </pre>
-          </div>
+          </Box>
 
-          <div>
+          <Box>
             <Typography variant="small" className="text-blue-400 mb-1">
               Local Variables (H-*)
             </Typography>
             <pre className="bg-neutral-800 p-2 rounded overflow-x-auto">
               {JSON.stringify(localVariables, null, 2) || "{}"}
             </pre>
-          </div>
+          </Box>
 
-          <div>
+          <Box>
             <Typography variant="small" className="text-red-400 mb-1">
               Violations ({violations.length})
             </Typography>
             <pre className="bg-neutral-800 p-2 rounded overflow-x-auto">
               {JSON.stringify(violations, null, 2) || "[]"}
             </pre>
-          </div>
+          </Box>
 
-          <div>
+          <Box>
             <Typography variant="small" className="text-yellow-400 mb-1">
               Completed Tabs
             </Typography>
             <pre className="bg-neutral-800 p-2 rounded">
               {completedTabs.join(", ") || "(none)"}
             </pre>
-          </div>
-        </div>
+          </Box>
+        </VStack>
       )}
     </Card>
   );
@@ -1056,6 +1077,7 @@ export function InspectionFormBoard({
   className,
 }: InspectionFormBoardProps): JSX.Element {
   const { emit } = useEventBus();
+  const { t } = useTranslate();
 
   const { configs, initialState, mockData = {} } = entity;
 
@@ -1262,11 +1284,12 @@ export function InspectionFormBoard({
               const Icon = phase.icon;
 
               return (
-                <button
+                <Button
                   key={phase.id}
+                  variant="ghost"
                   onClick={() => handlePhaseChange(phase.id)}
                   className={cn(
-                    "flex-1 p-4 border-b-3 transition-all flex items-center justify-center gap-2",
+                    "flex-1 p-4 border-b-3 transition-all flex items-center justify-center gap-2 rounded-none h-auto",
                     isActive && "border-blue-500 bg-blue-50",
                     isComplete && !isActive && "border-green-500 bg-green-50",
                     !isActive &&
@@ -1299,7 +1322,7 @@ export function InspectionFormBoard({
                       {phase.labelSl}
                     </Typography>
                   </VStack>
-                </button>
+                </Button>
               );
             })}
           </HStack>
@@ -1316,11 +1339,12 @@ export function InspectionFormBoard({
               const isComplete = formState.completedTabs.includes(tabId);
 
               return (
-                <button
+                <Button
                   key={tabId}
+                  variant="ghost"
                   onClick={() => handleTabChange(tabId)}
                   className={cn(
-                    "px-4 py-2 rounded-lg transition-all flex items-center gap-2 whitespace-nowrap",
+                    "px-4 py-2 rounded-lg transition-all flex items-center gap-2 whitespace-nowrap h-auto",
                     isActive && "bg-blue-100 text-blue-700",
                     !isActive && isComplete && "bg-green-100 text-green-700",
                     !isActive &&
@@ -1329,11 +1353,11 @@ export function InspectionFormBoard({
                   )}
                 >
                   {isComplete && <CheckCircle className="h-4 w-4" />}
-                  <span className="font-medium">{tabId}</span>
+                  <Typography variant="body" weight="semibold">{tabId}</Typography>
                   {tabConfig && (
-                    <span className="text-xs opacity-70">{tabConfig.name}</span>
+                    <Typography variant="small" className="opacity-70">{tabConfig.name}</Typography>
                   )}
-                </button>
+                </Button>
               );
             })}
           </HStack>
@@ -1345,7 +1369,7 @@ export function InspectionFormBoard({
         <Box className="max-w-5xl mx-auto p-4">
           <VStack gap="lg" align="stretch">
             {/* Form Area */}
-            <div>
+            <Box>
               {currentTabConfig ? (
                 <VStack gap="md" align="stretch">
                   <Card className="p-4 bg-blue-50 border-blue-200">
@@ -1394,7 +1418,7 @@ export function InspectionFormBoard({
                   </Typography>
                 </Card>
               )}
-            </div>
+            </Box>
 
             {/* Violations Summary */}
             {formState.violations.length > 0 && (
@@ -1406,7 +1430,7 @@ export function InspectionFormBoard({
                   <AlertTriangle className="h-5 w-5 text-red-500" />
                   Violations ({formState.violations.length})
                 </Typography>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                <HStack gap="sm" className="flex-wrap">
                   {formState.violations.map((violation) => (
                     <Box
                       key={violation.id}
@@ -1433,7 +1457,7 @@ export function InspectionFormBoard({
                       )}
                     </Box>
                   ))}
-                </div>
+                </HStack>
               </Card>
             )}
 
@@ -1443,7 +1467,7 @@ export function InspectionFormBoard({
                 Global Variables
               </Typography>
               {Object.keys(formState.globalVariables).length > 0 ? (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                <HStack gap="sm" className="flex-wrap">
                   {Object.entries(formState.globalVariables).map(
                     ([key, value]) => (
                       <HStack
@@ -1456,7 +1480,7 @@ export function InspectionFormBoard({
                       </HStack>
                     ),
                   )}
-                </div>
+                </HStack>
               ) : (
                 <Typography variant="small" className="text-[var(--color-muted-foreground)]">
                   No global variables set yet
@@ -1490,7 +1514,7 @@ export function InspectionFormBoard({
               className="gap-2"
             >
               <ArrowLeft className="h-4 w-4" />
-              Previous
+              {t('nav.previous')}
             </Button>
 
             <Typography variant="small" className="text-[var(--color-muted-foreground)]">
@@ -1506,11 +1530,11 @@ export function InspectionFormBoard({
               {isLastTab ? (
                 <>
                   <CheckCircle className="h-4 w-4" />
-                  Complete
+                  {t('wizard.complete')}
                 </>
               ) : (
                 <>
-                  Next
+                  {t('nav.next')}
                   <ArrowRight className="h-4 w-4" />
                 </>
               )}

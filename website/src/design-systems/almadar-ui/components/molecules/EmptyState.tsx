@@ -2,6 +2,7 @@ import React from "react";
 import { cn } from "../../lib/cn";
 import { Button } from "../atoms";
 import { useEventBus } from "../../hooks/useEventBus";
+import { useTranslate } from "../../hooks/useTranslate";
 import {
   LucideIcon,
   CheckCircle,
@@ -66,6 +67,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   actionEvent,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
 
   const handleAction = () => {
     if (actionEvent) eventBus.emit(`UI:${actionEvent}`, {});
@@ -80,7 +82,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   const isSuccess = variant === "success";
 
   // Support both title and message (message is alias for title)
-  const displayText = title || message || "No items";
+  const displayText = title || message || t('empty.noItems');
   return (
     <div
       className={cn(
@@ -140,3 +142,5 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
     </div>
   );
 };
+
+EmptyState.displayName = "EmptyState";

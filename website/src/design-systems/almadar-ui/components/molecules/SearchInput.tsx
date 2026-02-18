@@ -14,6 +14,7 @@ import { Spinner } from '../atoms/Spinner';
 import { cn } from '../../lib/cn';
 import { useEventBus } from '../../hooks/useEventBus';
 import { useQuerySingleton } from '../../hooks/useQuerySingleton';
+import { useTranslate } from '../../hooks/useTranslate';
 
 export interface SearchInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
   /**
@@ -80,7 +81,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
   onSearch,
   debounceMs = 300,
   isLoading = false,
-  placeholder = 'Search...',
+  placeholder,
   clearable = true,
   className,
   event,
@@ -89,6 +90,8 @@ export const SearchInput: React.FC<SearchInputProps> = ({
   ...props
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
+  const resolvedPlaceholder = placeholder ?? t('common.search');
   const queryState = useQuerySingleton(query);
 
   // Initialize from query singleton or controlled value
@@ -175,7 +178,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
         type="search"
         value={searchValue}
         onChange={handleChange}
-        placeholder={placeholder}
+        placeholder={resolvedPlaceholder}
         icon={Search}
         clearable={clearable && !isLoading}
         onClear={handleClear}

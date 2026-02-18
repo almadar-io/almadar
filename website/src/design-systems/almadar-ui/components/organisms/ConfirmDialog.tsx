@@ -12,7 +12,10 @@ import { Modal, type ModalSize } from "../molecules/Modal";
 import { Button } from "../atoms/Button";
 import { Icon } from "../atoms/Icon";
 import { Typography } from "../atoms/Typography";
+import { Box } from "../atoms/Box";
+import { HStack } from "../atoms/Stack";
 import { cn } from "../../lib/cn";
+import { useTranslate } from "../../hooks/useTranslate";
 
 export type ConfirmDialogVariant = "danger" | "warning" | "info" | "default";
 
@@ -43,6 +46,10 @@ export interface ConfirmDialogProps {
   size?: ModalSize;
   /** Loading state for confirm button */
   isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
+  /** Entity name for schema-driven auto-fetch */
+  entity?: string;
   /** Additional CSS classes */
   className?: string;
 }
@@ -91,14 +98,17 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   variant = "danger",
   size = "sm",
   isLoading = false,
+  error: _error,
+  entity: _entity,
   className,
 }) => {
   const config = variantConfig[variant];
+  const { t } = useTranslate();
 
   // Resolve aliases
   const resolvedMessage = message ?? description ?? "";
-  const resolvedConfirmText = confirmText ?? confirmLabel ?? "Confirm";
-  const resolvedCancelText = cancelText ?? cancelLabel ?? "Cancel";
+  const resolvedConfirmText = confirmText ?? confirmLabel ?? t('dialog.confirm');
+  const resolvedCancelText = cancelText ?? cancelLabel ?? t('dialog.cancel');
 
   const handleConfirm = () => {
     onConfirm();
@@ -114,7 +124,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
       closeOnEscape={!isLoading}
       className={className}
       footer={
-        <div className="flex justify-end gap-3">
+        <HStack className="justify-end gap-3">
           <Button variant="secondary" onClick={onClose} disabled={isLoading}>
             {resolvedCancelText}
           </Button>
@@ -123,24 +133,24 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
             onClick={handleConfirm}
             disabled={isLoading}
           >
-            {isLoading ? "Loading..." : resolvedConfirmText}
+            {isLoading ? t('common.loading') : resolvedConfirmText}
           </Button>
-        </div>
+        </HStack>
       }
     >
-      <div className="flex gap-4">
+      <HStack className="gap-4">
         {/* Icon */}
-        <div
+        <Box
           className={cn(
             "flex-shrink-0 w-12 h-12 flex items-center justify-center",
             config.iconBg,
           )}
         >
           <Icon icon={config.icon} size="lg" className={config.iconColor} />
-        </div>
+        </Box>
 
         {/* Content */}
-        <div className="flex-1">
+        <Box className="flex-1">
           <Typography variant="h5" className="mb-2">
             {title}
           </Typography>
@@ -154,8 +164,8 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
           ) : (
             resolvedMessage
           )}
-        </div>
-      </div>
+        </Box>
+      </HStack>
     </Modal>
   );
 };

@@ -15,6 +15,7 @@ import { Box } from "../atoms/Box";
 import { Icon } from "../atoms/Icon";
 import { cn } from "../../lib/cn";
 import { useEventBus } from "../../hooks/useEventBus";
+import { useTranslate } from "../../hooks/useTranslate";
 
 /**
  * Safe event bus hook that works outside EventBusProvider context.
@@ -22,7 +23,6 @@ import { useEventBus } from "../../hooks/useEventBus";
  */
 function useSafeEventBus() {
   try {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     return useEventBus();
   } catch {
     // Outside EventBusProvider context - return no-op
@@ -77,9 +77,9 @@ export const WizardNavigation: React.FC<WizardNavigationProps> = ({
   showBack = true,
   showNext = true,
   showComplete = true,
-  backLabel = "Back",
-  nextLabel = "Next",
-  completeLabel = "Complete",
+  backLabel,
+  nextLabel,
+  completeLabel,
   onBack = "WIZARD_BACK",
   onNext = "WIZARD_NEXT",
   onComplete = "WIZARD_COMPLETE",
@@ -90,6 +90,11 @@ export const WizardNavigation: React.FC<WizardNavigationProps> = ({
   className,
 }) => {
   const eventBus = useSafeEventBus();
+  const { t } = useTranslate();
+
+  const resolvedBackLabel = backLabel ?? t('wizard.back');
+  const resolvedNextLabel = nextLabel ?? t('wizard.next');
+  const resolvedCompleteLabel = completeLabel ?? t('wizard.complete');
 
   const isFirstStep = currentStep === 0;
   const isLastStep = currentStep === totalSteps - 1;
@@ -131,7 +136,7 @@ export const WizardNavigation: React.FC<WizardNavigationProps> = ({
       {showBack ? (
         <Button variant="secondary" onClick={handleBack} disabled={isFirstStep}>
           <Icon icon={ChevronLeft} size="sm" />
-          {backLabel}
+          {resolvedBackLabel}
         </Button>
       ) : (
         <div /> // Spacer for flex justify-between
@@ -140,18 +145,18 @@ export const WizardNavigation: React.FC<WizardNavigationProps> = ({
       {/* Step counter */}
       <div className="flex items-center gap-2">
         <Typography variant="caption" className="text-neutral-500">
-          Step {currentStep + 1} of {totalSteps}
+          {t('wizard.stepOf', { current: String(currentStep + 1), total: String(totalSteps) })}
         </Typography>
       </div>
 
       {/* Next/Complete button */}
       {isLastStep && showComplete ? (
         <Button variant="primary" onClick={handleComplete} disabled={!isValid}>
-          {completeLabel}
+          {resolvedCompleteLabel}
         </Button>
       ) : showNext ? (
         <Button variant="primary" onClick={handleNext} disabled={!isValid}>
-          {nextLabel}
+          {resolvedNextLabel}
           <Icon icon={ChevronRight} size="sm" />
         </Button>
       ) : (

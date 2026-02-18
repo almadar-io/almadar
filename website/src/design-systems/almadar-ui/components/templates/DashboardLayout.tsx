@@ -4,9 +4,6 @@ import { cn } from "../../lib/cn";
 import {
   Menu,
   X,
-  Home,
-  Users,
-  Calendar,
   Settings,
   Bell,
   Search,
@@ -14,8 +11,12 @@ import {
   LogOut,
   LucideIcon,
 } from "lucide-react";
-import { Button, Input, Badge, Spinner, ThemeToggle, Avatar } from "../atoms";
+import { Button, Input, Badge, ThemeToggle, Avatar } from "../atoms";
+import { Box } from "../atoms/Box";
+import { HStack, VStack } from "../atoms/Stack";
+import { Typography } from "../atoms/Typography";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { useTranslate } from "../../hooks/useTranslate";
 
 export interface NavItem {
   label: string;
@@ -76,20 +77,23 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
         }
       : null);
 
+  const { t } = useTranslate();
+
   const handleSignOut = onSignOutProp || authSignOut;
 
   return (
-    <div className="min-h-screen bg-[var(--color-background)] dark:bg-[var(--color-background)]">
+    <Box className="min-h-screen bg-[var(--color-background)] dark:bg-[var(--color-background)]">
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
-        <div
+        <Box
           className="fixed inset-0 bg-[var(--color-foreground)]/50 dark:bg-[var(--color-foreground)]/70 z-40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <aside
+      <Box
+        as="aside"
         className={cn(
           "fixed inset-y-0 left-0 z-50 w-64 bg-[var(--color-card)] dark:bg-[var(--color-card)] border-r border-[var(--color-border)] dark:border-[var(--color-border)]",
           "transform transition-transform duration-200 ease-in-out lg:translate-x-0",
@@ -97,29 +101,46 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
         )}
       >
         {/* Sidebar header */}
-        <div className="h-16 flex items-center justify-between px-4 border-b border-[var(--color-border)] dark:border-[var(--color-border)]">
+        <HStack
+          align="center"
+          justify="between"
+          className="h-16 px-4 border-b border-[var(--color-border)] dark:border-[var(--color-border)]"
+        >
           <Link to="/" className="flex items-center gap-2">
             {logo || (
-              <div className="w-8 h-8 bg-primary-600 rounded-[var(--radius-lg)] flex items-center justify-center">
-                <span className="text-white font-bold text-sm">
+              <Box className="w-8 h-8 bg-primary-600 rounded-[var(--radius-lg)] flex items-center justify-center">
+                <Typography
+                  variant="small"
+                  className="text-white font-bold text-sm"
+                  as="span"
+                >
                   {appName.charAt(0).toUpperCase()}
-                </span>
-              </div>
+                </Typography>
+              </Box>
             )}
-            <span className="font-semibold text-[var(--color-foreground)] dark:text-[var(--color-foreground)]">
+            <Typography
+              variant="label"
+              className="font-semibold text-[var(--color-foreground)] dark:text-[var(--color-foreground)]"
+              as="span"
+            >
               {appName}
-            </span>
+            </Typography>
           </Link>
-          <button
+          <Button
+            variant="ghost"
             className="lg:hidden p-2 rounded-[var(--radius-md)] hover:bg-[var(--color-muted)] dark:hover:bg-[var(--color-muted)] text-[var(--color-muted-foreground)] dark:text-[var(--color-muted-foreground)]"
             onClick={() => setSidebarOpen(false)}
           >
             <X className="h-5 w-5" />
-          </button>
-        </div>
+          </Button>
+        </HStack>
 
         {/* Navigation */}
-        <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+        <VStack
+          as="nav"
+          gap="none"
+          className="flex-1 px-3 py-4 space-y-1 overflow-y-auto"
+        >
           {navItems.map((item) => (
             <NavLink
               key={item.href}
@@ -127,67 +148,82 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
               currentPath={location.pathname}
             />
           ))}
-        </nav>
+        </VStack>
 
         {/* Sidebar footer */}
         {sidebarFooter || (
-          <div className="p-4 border-t border-[var(--color-border)] dark:border-[var(--color-border)]">
+          <Box className="p-4 border-t border-[var(--color-border)] dark:border-[var(--color-border)]">
             <Link
               to="/settings"
               className="flex items-center gap-3 px-3 py-2 text-sm text-[var(--color-muted-foreground)] dark:text-[var(--color-muted-foreground)] rounded-[var(--radius-lg)] hover:bg-[var(--color-muted)] dark:hover:bg-[var(--color-muted)]"
             >
               <Settings className="h-5 w-5" />
-              Settings
+              {t('common.settings')}
             </Link>
-          </div>
+          </Box>
         )}
-      </aside>
+      </Box>
 
       {/* Main content */}
-      <div className="lg:pl-64">
+      <Box className="lg:pl-64">
         {/* Header */}
-        <header className="sticky top-0 z-30 h-16 bg-[var(--color-card)] dark:bg-[var(--color-card)] border-b border-[var(--color-border)] dark:border-[var(--color-border)]">
-          <div className="h-full px-4 flex items-center justify-between gap-4">
+        <Box
+          as="header"
+          className="sticky top-0 z-30 h-16 bg-[var(--color-card)] dark:bg-[var(--color-card)] border-b border-[var(--color-border)] dark:border-[var(--color-border)]"
+        >
+          <HStack
+            align="center"
+            justify="between"
+            className="h-full px-4 gap-4"
+          >
             {/* Mobile menu button */}
-            <button
+            <Button
+              variant="ghost"
               className="lg:hidden p-2 rounded-[var(--radius-md)] hover:bg-[var(--color-muted)] dark:hover:bg-[var(--color-muted)] text-[var(--color-muted-foreground)] dark:text-[var(--color-muted-foreground)] touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
               onClick={() => setSidebarOpen(true)}
               aria-label="Open sidebar"
             >
               <Menu className="h-5 w-5" />
-            </button>
+            </Button>
 
             {/* Search */}
             {showSearch && (
-              <div className="hidden sm:block flex-1 max-w-md">
-                <div className="relative">
+              <Box className="hidden sm:block flex-1 max-w-md">
+                <Box className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--color-muted-foreground)] dark:text-[var(--color-muted-foreground)]" />
                   <Input
                     type="search"
-                    placeholder="Search..."
+                    placeholder={t('common.search')}
                     className="pl-10 w-full"
                   />
-                </div>
-              </div>
+                </Box>
+              </Box>
             )}
 
             {/* Right side */}
-            <div className="flex items-center gap-2">
+            <HStack align="center" gap="xs">
               {headerActions}
 
               {/* Theme Toggle */}
               <ThemeToggle />
 
               {/* Notifications */}
-              <button className="relative p-2 rounded-[var(--radius-full)] hover:bg-[var(--color-muted)] dark:hover:bg-[var(--color-muted)]">
+              <Button
+                variant="ghost"
+                className="relative p-2 rounded-[var(--radius-full)] hover:bg-[var(--color-muted)] dark:hover:bg-[var(--color-muted)]"
+              >
                 <Bell className="h-5 w-5 text-[var(--color-muted-foreground)] dark:text-[var(--color-muted-foreground)]" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-[var(--color-error)] rounded-[var(--radius-full)]" />
-              </button>
+                <Box
+                  as="span"
+                  className="absolute top-1 right-1 w-2 h-2 bg-[var(--color-error)] rounded-[var(--radius-full)]"
+                />
+              </Button>
 
               {/* User menu */}
               {user && (
-                <div className="relative">
-                  <button
+                <Box className="relative">
+                  <Button
+                    variant="ghost"
                     className="flex items-center gap-2 p-2 rounded-[var(--radius-lg)] hover:bg-[var(--color-muted)] dark:hover:bg-[var(--color-muted)]"
                     onClick={() => setUserMenuOpen(!userMenuOpen)}
                   >
@@ -201,35 +237,48 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                         .substring(0, 2)}
                       size="sm"
                     />
-                    <span className="hidden sm:block text-sm font-medium text-[var(--color-foreground)] dark:text-[var(--color-foreground)]">
+                    <Typography
+                      variant="small"
+                      className="hidden sm:block text-sm font-medium text-[var(--color-foreground)] dark:text-[var(--color-foreground)]"
+                      as="span"
+                    >
                       {user.name}
-                    </span>
+                    </Typography>
                     <ChevronDown className="hidden sm:block h-4 w-4 text-[var(--color-muted-foreground)] dark:text-[var(--color-muted-foreground)]" />
-                  </button>
+                  </Button>
 
                   {userMenuOpen && (
                     <>
-                      <div
+                      <Box
                         className="fixed inset-0 z-40"
                         onClick={() => setUserMenuOpen(false)}
                       />
-                      <div className="absolute right-0 mt-2 w-48 bg-[var(--color-card)] dark:bg-[var(--color-card)] rounded-[var(--radius-lg)] shadow-[var(--shadow-lg)] border border-[var(--color-border)] dark:border-[var(--color-border)] py-1 z-50">
-                        <div className="px-4 py-2 border-b border-[var(--color-border)] dark:border-[var(--color-border)]">
-                          <p className="text-sm font-medium text-[var(--color-foreground)] dark:text-[var(--color-foreground)]">
+                      <Box className="absolute right-0 mt-2 w-48 bg-[var(--color-card)] dark:bg-[var(--color-card)] rounded-[var(--radius-lg)] shadow-[var(--shadow-lg)] border border-[var(--color-border)] dark:border-[var(--color-border)] py-1 z-50">
+                        <Box className="px-4 py-2 border-b border-[var(--color-border)] dark:border-[var(--color-border)]">
+                          <Typography
+                            variant="small"
+                            className="text-sm font-medium text-[var(--color-foreground)] dark:text-[var(--color-foreground)]"
+                            as="p"
+                          >
                             {user.name}
-                          </p>
-                          <p className="text-xs text-[var(--color-muted-foreground)] dark:text-[var(--color-muted-foreground)]">
+                          </Typography>
+                          <Typography
+                            variant="caption"
+                            className="text-xs text-[var(--color-muted-foreground)] dark:text-[var(--color-muted-foreground)]"
+                            as="p"
+                          >
                             {user.email}
-                          </p>
-                        </div>
+                          </Typography>
+                        </Box>
                         <Link
                           to="/settings"
                           className="flex items-center gap-2 px-4 py-2 text-sm text-[var(--color-foreground)] dark:text-[var(--color-foreground)] hover:bg-[var(--color-muted)] dark:hover:bg-[var(--color-muted)]"
                         >
                           <Settings className="h-4 w-4" />
-                          Settings
+                          {t('common.settings')}
                         </Link>
-                        <button
+                        <Button
+                          variant="ghost"
                           onClick={() => {
                             setUserMenuOpen(false);
                             handleSignOut?.();
@@ -237,25 +286,27 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                           className="w-full flex items-center gap-2 px-4 py-2 text-sm text-[var(--color-error)] dark:text-[var(--color-error)] hover:bg-[var(--color-error)]/10 dark:hover:bg-[var(--color-error)]/20"
                         >
                           <LogOut className="h-4 w-4" />
-                          Sign out
-                        </button>
-                      </div>
+                          {t('auth.signOut')}
+                        </Button>
+                      </Box>
                     </>
                   )}
-                </div>
+                </Box>
               )}
-            </div>
-          </div>
-        </header>
+            </HStack>
+          </HStack>
+        </Box>
 
         {/* Page content */}
-        <main className="p-4 sm:p-6 pb-20 sm:pb-6">
+        <Box as="main" className="p-4 sm:p-6 pb-20 sm:pb-6">
           <Outlet />
-        </main>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };
+
+DashboardLayout.displayName = "DashboardLayout";
 
 // NavLink component
 const NavLink: React.FC<{ item: NavItem; currentPath: string }> = ({
@@ -284,7 +335,13 @@ const NavLink: React.FC<{ item: NavItem; currentPath: string }> = ({
             : "text-[var(--color-muted-foreground)]",
         )}
       />
-      <span className="flex-1">{item.label}</span>
+      <Typography
+        variant="small"
+        className="flex-1"
+        as="span"
+      >
+        {item.label}
+      </Typography>
       {item.badge && (
         <Badge variant={isActive ? "primary" : "default"} size="sm">
           {item.badge}
@@ -293,3 +350,5 @@ const NavLink: React.FC<{ item: NavItem; currentPath: string }> = ({
     </Link>
   );
 };
+
+NavLink.displayName = "NavLink";

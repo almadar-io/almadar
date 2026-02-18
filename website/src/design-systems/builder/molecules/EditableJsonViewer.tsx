@@ -18,6 +18,7 @@ import {
   Button,
   Textarea,
   Alert,
+  useTranslate,
 } from '@almadar/ui';
 
 export interface EditableJsonViewerProps {
@@ -37,6 +38,7 @@ export const EditableJsonViewer: React.FC<EditableJsonViewerProps> = ({
   onSave,
   readOnly = false,
 }) => {
+  const { t } = useTranslate();
   const [isEditing, setIsEditing] = useState(false);
   const [editedJson, setEditedJson] = useState("");
   const [jsonError, setJsonError] = useState<string | null>(null);
@@ -156,7 +158,7 @@ export const EditableJsonViewer: React.FC<EditableJsonViewerProps> = ({
                       onClick={handleEdit}
                       leftIcon={<Edit2 className="w-4 h-4" />}
                     >
-                      Edit
+                      {t('common.edit')}
                     </Button>
                   )}
                   <Button
@@ -171,7 +173,7 @@ export const EditableJsonViewer: React.FC<EditableJsonViewerProps> = ({
                       )
                     }
                   >
-                    {copied ? "Copied" : "Copy"}
+                    {t('common.copy')}
                   </Button>
                 </>
               )}
@@ -184,7 +186,7 @@ export const EditableJsonViewer: React.FC<EditableJsonViewerProps> = ({
                     disabled={isSaving}
                     leftIcon={<X className="w-4 h-4" />}
                   >
-                    Cancel
+                    {t('common.cancel')}
                   </Button>
                   <Button
                     variant="primary"
@@ -194,7 +196,7 @@ export const EditableJsonViewer: React.FC<EditableJsonViewerProps> = ({
                     isLoading={isSaving}
                     leftIcon={<Save className="w-4 h-4" />}
                   >
-                    Save
+                    {t('common.save')}
                   </Button>
                 </>
               )}
@@ -245,5 +247,7 @@ export const EditableJsonViewer: React.FC<EditableJsonViewerProps> = ({
     </Box>
   );
 };
+
+EditableJsonViewer.displayName = 'EditableJsonViewer';
 
 export default EditableJsonViewer;

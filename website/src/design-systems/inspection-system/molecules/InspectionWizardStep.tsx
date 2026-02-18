@@ -28,6 +28,7 @@ import {
   Button,
   Badge,
   useEventBus,
+  useTranslate,
 } from '@almadar/ui';
 
 export type StepStatus = "pending" | "active" | "completed" | "error";
@@ -92,9 +93,9 @@ export const InspectionWizardStep: React.FC<InspectionWizardStepProps> = ({
   totalSteps,
   children,
   showNavigation = true,
-  prevLabel = "Previous",
-  nextLabel = "Next",
-  completeLabel = "Complete",
+  prevLabel,
+  nextLabel,
+  completeLabel,
   disableNext = false,
   className,
   onPrev,
@@ -102,6 +103,10 @@ export const InspectionWizardStep: React.FC<InspectionWizardStepProps> = ({
   onComplete,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
+  const resolvedPrevLabel = prevLabel ?? t('nav.previous');
+  const resolvedNextLabel = nextLabel ?? t('nav.next');
+  const resolvedCompleteLabel = completeLabel ?? t('wizard.complete');
   const statusInfo = statusConfig[isActive ? "active" : status];
   const StatusIcon = statusInfo.icon;
 
@@ -173,7 +178,7 @@ export const InspectionWizardStep: React.FC<InspectionWizardStepProps> = ({
               className="gap-2"
             >
               <ChevronLeft className="h-4 w-4" />
-              {prevLabel}
+              {resolvedPrevLabel}
             </Button>
 
             {isLast ? (
@@ -184,7 +189,7 @@ export const InspectionWizardStep: React.FC<InspectionWizardStepProps> = ({
                 className="gap-2"
               >
                 <Check className="h-4 w-4" />
-                {completeLabel}
+                {resolvedCompleteLabel}
               </Button>
             ) : (
               <Button
@@ -193,7 +198,7 @@ export const InspectionWizardStep: React.FC<InspectionWizardStepProps> = ({
                 disabled={disableNext}
                 className="gap-2"
               >
-                {nextLabel}
+                {resolvedNextLabel}
                 <ChevronRight className="h-4 w-4" />
               </Button>
             )}

@@ -64,6 +64,8 @@ export const Default: Story = {
       currentPageName: 'TasksPage',
       pageNames: ['TasksPage', 'SettingsPage', 'DashboardPage'],
       isExecutingEvent: false,
+      previewTheme: 'wireframe',
+      previewMode: 'light',
     },
     runtimeSlot: <FakeAppContent />,
   },

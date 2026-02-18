@@ -1,9 +1,13 @@
 import React from "react";
 import { cn } from "../../lib/cn";
 import { Card, Typography } from "../atoms";
+import { Box } from "../atoms/Box";
+import { HStack, VStack } from "../atoms/Stack";
+import { Button } from "../atoms/Button";
 import { TrendingUp, TrendingDown, Minus, LucideIcon } from "lucide-react";
 import { useEntityList } from "../../hooks/useEntityData";
 import { useEventBus } from "../../hooks/useEventBus";
+import { useTranslate } from "../../hooks/useTranslate";
 
 /**
  * Schema metric definition
@@ -97,6 +101,7 @@ export const StatCard: React.FC<StatCardProps> = ({
   // Use title as fallback for label
   const labelToUse = propLabel ?? propTitle;
   const eventBus = useEventBus();
+  const { t } = useTranslate();
 
   // Handle action click with event bus integration
   const handleActionClick = React.useCallback(() => {
@@ -198,24 +203,24 @@ export const StatCard: React.FC<StatCardProps> = ({
   if (schemaStats && schemaStats.length > 1) {
     if (isLoading) {
       return (
-        <div
+        <Box
           className={cn("grid gap-4", className)}
           style={{ gridTemplateColumns: `repeat(${schemaStats.length}, 1fr)` }}
         >
           {schemaStats.map((_, idx) => (
             <Card key={idx} className="p-4">
-              <div className="animate-pulse space-y-2">
-                <div className="h-3 bg-[var(--color-muted)] rounded w-16" />
-                <div className="h-6 bg-[var(--color-muted)] rounded w-12" />
-              </div>
+              <VStack gap="xs" className="animate-pulse">
+                <Box className="h-3 bg-[var(--color-muted)] rounded w-16" />
+                <Box className="h-6 bg-[var(--color-muted)] rounded w-12" />
+              </VStack>
             </Card>
           ))}
-        </div>
+        </Box>
       );
     }
 
     return (
-      <div
+      <Box
         className={cn("grid gap-4", className)}
         style={{ gridTemplateColumns: `repeat(${schemaStats.length}, 1fr)` }}
       >
@@ -229,7 +234,7 @@ export const StatCard: React.FC<StatCardProps> = ({
             </Typography>
           </Card>
         ))}
-      </div>
+      </Box>
     );
   }
 
@@ -272,14 +277,14 @@ export const StatCard: React.FC<StatCardProps> = ({
   if (error) {
     return (
       <Card className={cn("p-6", className)}>
-        <div className="space-y-1">
+        <VStack gap="none" className="space-y-1">
           <Typography variant="overline" color="secondary">
             {label}
           </Typography>
           <Typography variant="small" color="error">
-            Error: {error.message}
+            {t('error.generic') + ": " + error.message}
           </Typography>
-        </div>
+        </VStack>
       </Card>
     );
   }
@@ -287,19 +292,19 @@ export const StatCard: React.FC<StatCardProps> = ({
   if (isLoading) {
     return (
       <Card className={cn("p-6", className)}>
-        <div className="animate-pulse space-y-3">
-          <div className="h-4 bg-[var(--color-muted)] rounded w-24" />
-          <div className="h-8 bg-[var(--color-muted)] rounded w-32" />
-          <div className="h-4 bg-[var(--color-muted)] rounded w-20" />
-        </div>
+        <VStack gap="sm" className="animate-pulse">
+          <Box className="h-4 bg-[var(--color-muted)] rounded w-24" />
+          <Box className="h-8 bg-[var(--color-muted)] rounded w-32" />
+          <Box className="h-4 bg-[var(--color-muted)] rounded w-20" />
+        </VStack>
       </Card>
     );
   }
 
   return (
     <Card className={cn("p-6", className)}>
-      <div className="flex items-start justify-between">
-        <div className="space-y-1">
+      <HStack align="start" justify="between">
+        <VStack gap="none" className="space-y-1">
           <Typography variant="overline" color="secondary">
             {label}
           </Typography>
@@ -309,10 +314,12 @@ export const StatCard: React.FC<StatCardProps> = ({
 
           {/* Trend indicator */}
           {calculatedTrend !== undefined && (
-            <div className="flex items-center gap-1">
-              <div
+            <HStack align="center" gap="xs">
+              <HStack
+                align="center"
+                gap="none"
                 className={cn(
-                  "flex items-center gap-0.5 text-sm font-bold",
+                  "gap-0.5 text-sm font-bold",
                   isPositive
                     ? "text-[var(--color-success)]"
                     : trendDirection === "neutral"
@@ -321,12 +328,12 @@ export const StatCard: React.FC<StatCardProps> = ({
                 )}
               >
                 <TrendIcon className="h-4 w-4" />
-                <span>{Math.abs(calculatedTrend).toFixed(1)}%</span>
-              </div>
+                <Typography variant="caption" as="span">{Math.abs(calculatedTrend).toFixed(1)}%</Typography>
+              </HStack>
               <Typography variant="small" color="secondary" as="span">
                 vs last period
               </Typography>
-            </div>
+            </HStack>
           )}
 
           {subtitle && !calculatedTrend && (
@@ -334,26 +341,29 @@ export const StatCard: React.FC<StatCardProps> = ({
               {subtitle}
             </Typography>
           )}
-        </div>
+        </VStack>
 
         {Icon && (
-          <div className={cn("p-3", iconBg)}>
+          <Box className={cn("p-3", iconBg)}>
             <Icon className={cn("h-6 w-6", iconColor)} />
-          </div>
+          </Box>
         )}
-      </div>
+      </HStack>
 
       {action && (
-        <button
+        <Button
+          variant="ghost"
           onClick={handleActionClick}
           className="mt-4 text-sm font-bold text-[var(--color-foreground)] hover:underline"
         >
           {action.label} →
-        </button>
+        </Button>
       )}
     </Card>
   );
 };
+
+StatCard.displayName = "StatCard";
 
 function useMemo<T>(factory: () => T, deps: unknown[]): T {
   return React.useMemo(factory, deps);

@@ -3,6 +3,7 @@ import { cn } from "../../lib/cn";
 import { Button } from "../atoms";
 import { AlertCircle } from "lucide-react";
 import { useEventBus } from "../../hooks/useEventBus";
+import { useTranslate } from "../../hooks/useTranslate";
 
 export interface ErrorStateProps {
   title?: string;
@@ -17,7 +18,7 @@ export interface ErrorStateProps {
 }
 
 export const ErrorState: React.FC<ErrorStateProps> = ({
-  title = "Something went wrong",
+  title,
   message,
   description,
   onRetry,
@@ -25,13 +26,15 @@ export const ErrorState: React.FC<ErrorStateProps> = ({
   retryEvent,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
 
   const handleRetry = () => {
     if (retryEvent) eventBus.emit(`UI:${retryEvent}`, {});
     onRetry?.();
   };
   // Resolve alias: description → message
-  const resolvedMessage = message ?? description ?? "An error occurred";
+  const resolvedTitle = title ?? t('error.generic');
+  const resolvedMessage = message ?? description ?? t('error.occurred');
   return (
     <div
       className={cn(
@@ -43,16 +46,18 @@ export const ErrorState: React.FC<ErrorStateProps> = ({
         <AlertCircle className="h-8 w-8 text-[var(--color-error)]" />
       </div>
       <h3 className="text-lg font-medium text-[var(--color-foreground)]">
-        {title}
+        {resolvedTitle}
       </h3>
       <p className="mt-1 text-sm text-[var(--color-muted-foreground)] max-w-sm">
         {resolvedMessage}
       </p>
       {(onRetry || retryEvent) && (
         <Button variant="secondary" className="mt-4" onClick={handleRetry}>
-          Try again
+          {t('error.retry')}
         </Button>
       )}
     </div>
   );
 };
+
+ErrorState.displayName = "ErrorState";

@@ -142,6 +142,15 @@ export {
   type Entity,
 } from './useEntities';
 
+// i18n — translation hook + provider
+export {
+  useTranslate,
+  I18nProvider,
+  createTranslate,
+  type TranslateFunction,
+  type I18nContextValue,
+} from './useTranslate';
+
 // Auth context stub (applications should provide their own AuthProvider)
 export {
   useAuthContext,

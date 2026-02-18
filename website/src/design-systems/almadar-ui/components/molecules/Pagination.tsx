@@ -12,6 +12,7 @@ import { Typography } from "../atoms/Typography";
 import { Input } from "../atoms/Input";
 import { cn } from "../../lib/cn";
 import { useEventBus } from "../../hooks/useEventBus";
+import { useTranslate } from "../../hooks/useTranslate";
 
 export interface PaginationProps {
   /**
@@ -102,6 +103,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   pageSizeChangeEvent,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
   const [jumpToPage, setJumpToPage] = useState("");
 
   const handlePageChange = (page: number) => {
@@ -168,14 +170,14 @@ export const Pagination: React.FC<PaginationProps> = ({
       <div className="flex items-center gap-2">
         {showTotal && totalItems !== undefined && (
           <Typography variant="small" color="secondary">
-            Total: {totalItems}
+            {t('pagination.total')} {totalItems}
           </Typography>
         )}
 
         {showPageSize && pageSize && onPageSizeChange && (
           <div className="flex items-center gap-2">
             <Typography variant="small" color="secondary">
-              Show:
+              {t('pagination.show')}
             </Typography>
             <select
               value={pageSize}
@@ -200,7 +202,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           disabled={currentPage === 1}
           icon={ChevronLeft}
         >
-          Previous
+          {t('pagination.previous')}
         </Button>
 
         <div className="flex items-center gap-1">
@@ -241,14 +243,14 @@ export const Pagination: React.FC<PaginationProps> = ({
           disabled={currentPage === totalPages}
           iconRight={ChevronRight}
         >
-          Next
+          {t('pagination.next')}
         </Button>
       </div>
 
       {showJumpToPage && (
         <div className="flex items-center gap-2">
           <Typography variant="small" color="secondary">
-            Go to:
+            {t('pagination.goTo')}
           </Typography>
           <Input
             type="number"
@@ -263,7 +265,7 @@ export const Pagination: React.FC<PaginationProps> = ({
             }}
           />
           <Button variant="ghost" size="sm" onClick={handleJumpToPage}>
-            Go
+            {t('pagination.go')}
           </Button>
         </div>
       )}

@@ -29,6 +29,7 @@ import {
 } from "../molecules/RelationSelect";
 import { Alert } from "../molecules/Alert";
 import { useEventBus } from "../../hooks/useEventBus";
+import { useTranslate } from "../../hooks/useTranslate";
 import {
   debug,
   debugGroup,
@@ -382,8 +383,8 @@ export const Form: React.FC<FormProps> = ({
   initialData = {},
   isLoading = false,
   error,
-  submitLabel = "Save",
-  cancelLabel = "Cancel",
+  submitLabel,
+  cancelLabel,
   showCancel,
   title,
   submitEvent = "SAVE",
@@ -400,6 +401,9 @@ export const Form: React.FC<FormProps> = ({
   ...props
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
+  const resolvedSubmitLabel = submitLabel ?? t('common.save');
+  const resolvedCancelLabel = cancelLabel ?? t('common.cancel');
   const normalizedInitialData = (initialData as Record<string, unknown>) ?? {};
 
   // Normalize props that might come as boolean true from generated code
@@ -878,6 +882,7 @@ export const Form: React.FC<FormProps> = ({
   }
 
   return (
+    // eslint-disable-next-line almadar/no-raw-dom-elements -- native <form> needed for onSubmit semantics
     <form
       className={cn(layoutStyles[layout], gapStyles[gap], className)}
       onSubmit={handleSubmit}
@@ -886,7 +891,7 @@ export const Form: React.FC<FormProps> = ({
       {/* Error state */}
       {error && (
         <Alert variant="error" className="mb-4">
-          {error.message || "An error occurred"}
+          {error.message || t('error.occurred')}
         </Alert>
       )}
 
@@ -914,7 +919,7 @@ export const Form: React.FC<FormProps> = ({
             data-event={submitEvent}
             data-testid={`action-${submitEvent}`}
           >
-            {isLoading ? "Saving..." : submitLabel}
+            {isLoading ? t('form.saving') : resolvedSubmitLabel}
           </Button>
           {shouldShowCancel && (
             <Button
@@ -925,7 +930,7 @@ export const Form: React.FC<FormProps> = ({
               data-event={cancelEvent}
               data-testid={`action-${cancelEvent}`}
             >
-              {cancelLabel}
+              {resolvedCancelLabel}
             </Button>
           )}
         </HStack>

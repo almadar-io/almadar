@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { cn } from "../../lib/cn";
 import { getNestedValue } from "../../lib/getNestedValue";
 import { Button, Input, Badge, Checkbox, Spinner } from "../atoms";
+import { Box } from "../atoms/Box";
+import { HStack, VStack } from "../atoms/Stack";
+import { Typography } from "../atoms/Typography";
 import { EmptyState, Pagination } from "../molecules";
 import {
   useEntityList,
@@ -10,6 +13,7 @@ import {
   type PaginationParams,
 } from "../../hooks/useEntityData";
 import { useEventBus, type KFlowEvent } from "../../hooks/useEventBus";
+import { useTranslate } from "../../hooks/useTranslate";
 import { useQuerySingleton } from "../../hooks/useQuerySingleton";
 import {
   ChevronUp,
@@ -169,8 +173,8 @@ export function DataTable<T extends { id: string | number }>({
   isLoading = false,
   error: externalError,
   emptyIcon,
-  emptyTitle = "No items found",
-  emptyDescription = "No items to display.",
+  emptyTitle,
+  emptyDescription,
   emptyAction,
   selectable = false,
   selectedIds = [],
@@ -185,7 +189,7 @@ export function DataTable<T extends { id: string | number }>({
   searchable = false,
   searchValue = "",
   onSearch,
-  searchPlaceholder = "Search...",
+  searchPlaceholder,
   onRowClick,
   rowActions: externalRowActions,
   bulkActions,
@@ -198,6 +202,11 @@ export function DataTable<T extends { id: string | number }>({
   );
   const eventBus = useEventBus();
   const navigate = useNavigate();
+  const { t } = useTranslate();
+
+  const resolvedEmptyTitle = emptyTitle ?? t('table.empty.title');
+  const resolvedEmptyDescription = emptyDescription ?? t('table.empty.description');
+  const resolvedSearchPlaceholder = searchPlaceholder ?? t('common.search');
 
   // Query singleton for filter/sort state
   const queryState = useQuerySingleton(query);
@@ -512,7 +521,7 @@ export function DataTable<T extends { id: string | number }>({
   );
 
   return (
-    <div
+    <Box
       className={cn(
         "bg-[var(--color-card)] border-2 border-[var(--color-border)] rounded-none overflow-hidden",
         className,
@@ -520,10 +529,10 @@ export function DataTable<T extends { id: string | number }>({
     >
       {/* Header */}
       {(searchable || bulkActions || headerActions) && (
-        <div className="px-4 py-3 border-b-2 border-[var(--color-border)] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+        <HStack className="px-4 py-3 border-b-2 border-[var(--color-border)] flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+          <HStack className="flex-col sm:flex-row items-stretch sm:items-center gap-3">
             {searchable && (
-              <div className="relative">
+              <Box className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--color-muted-foreground)]" />
                 <Input
                   type="search"
@@ -535,19 +544,19 @@ export function DataTable<T extends { id: string | number }>({
                     // Also emit UI:SEARCH event for internal filtering (preview mode)
                     eventBus.emit("UI:SEARCH", { searchTerm: value });
                   }}
-                  placeholder={searchPlaceholder}
+                  placeholder={resolvedSearchPlaceholder}
                   className="pl-9 w-full sm:w-64"
                 />
-              </div>
+              </Box>
             )}
 
             {/* Bulk actions */}
             {bulkActions && selectedIds.length > 0 && (
-              <div className="flex items-center gap-2 pl-0 sm:pl-3 border-l-0 sm:border-l border-[var(--color-border)]">
-                <span className="text-sm text-[var(--color-muted-foreground)] whitespace-nowrap">
-                  {selectedIds.length} selected
-                </span>
-                <div className="flex flex-wrap gap-2">
+              <HStack className="items-center gap-2 pl-0 sm:pl-3 border-l-0 sm:border-l border-[var(--color-border)]">
+                <Typography variant="small" className="text-[var(--color-muted-foreground)] whitespace-nowrap">
+                  {t('table.bulk.selected', { count: String(selectedIds.length) })}
+                </Typography>
+                <HStack className="flex-wrap gap-2">
                   {bulkActions.map((action, idx) => (
                     <Button
                       key={idx}
@@ -563,21 +572,25 @@ export function DataTable<T extends { id: string | number }>({
                       {action.label}
                     </Button>
                   ))}
-                </div>
-              </div>
+                </HStack>
+              </HStack>
             )}
-          </div>
+          </HStack>
 
-          <div className="flex sm:ml-auto">{headerActions}</div>
-        </div>
+          <Box className="flex sm:ml-auto">{headerActions}</Box>
+        </HStack>
       )}
 
       {/* Table */}
-      <div className="overflow-x-auto">
+      <Box className="overflow-x-auto">
+        {/* eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable */}
         <table className="w-full">
+          {/* eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable */}
           <thead className="bg-[var(--color-table-header)] border-b-2 border-[var(--color-border)]">
+            {/* eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable */}
             <tr>
               {selectable && (
+                // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable
                 <th className="w-12 px-4 py-3">
                   <Checkbox
                     checked={allSelected}
@@ -588,6 +601,7 @@ export function DataTable<T extends { id: string | number }>({
                 </th>
               )}
               {normalizedColumns.map((col) => (
+                // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable
                 <th
                   key={String(col.key)}
                   className={cn(
@@ -598,7 +612,7 @@ export function DataTable<T extends { id: string | number }>({
                   style={{ width: col.width }}
                   onClick={() => col.sortable && handleSort(String(col.key))}
                 >
-                  <div className="flex items-center gap-1">
+                  <HStack className="items-center gap-1">
                     {col.header}
                     {col.sortable &&
                       sortBy === col.key &&
@@ -607,15 +621,19 @@ export function DataTable<T extends { id: string | number }>({
                       ) : (
                         <ChevronDown className="h-4 w-4" />
                       ))}
-                  </div>
+                  </HStack>
                 </th>
               ))}
+              {/* eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable */}
               {rowActions && <th className="w-12 px-4 py-3" />}
             </tr>
           </thead>
+          {/* eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable */}
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
             {isLoadingCombined ? (
+              // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable
               <tr>
+                {/* eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable */}
                 <td
                   colSpan={
                     normalizedColumns.length +
@@ -624,16 +642,18 @@ export function DataTable<T extends { id: string | number }>({
                   }
                   className="px-4 py-12 text-center"
                 >
-                  <div className="flex flex-col items-center gap-2">
+                  <VStack className="items-center gap-2">
                     <Spinner size="lg" />
-                    <span className="text-[var(--color-muted-foreground)]">
-                      Loading...
-                    </span>
-                  </div>
+                    <Typography variant="small" className="text-[var(--color-muted-foreground)]">
+                      {t('common.loading')}
+                    </Typography>
+                  </VStack>
                 </td>
               </tr>
             ) : error ? (
+              // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable
               <tr>
+                {/* eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable */}
                 <td
                   colSpan={
                     normalizedColumns.length +
@@ -642,11 +662,13 @@ export function DataTable<T extends { id: string | number }>({
                   }
                   className="px-4 py-12 text-center text-[var(--color-error)]"
                 >
-                  Error: {error.message}
+                  {t('error.generic') + ": "}{error.message}
                 </td>
               </tr>
             ) : items.length === 0 ? (
+              // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable
               <tr>
+                {/* eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable */}
                 <td
                   colSpan={
                     normalizedColumns.length +
@@ -657,8 +679,8 @@ export function DataTable<T extends { id: string | number }>({
                 >
                   <EmptyState
                     icon={emptyIcon}
-                    title={emptyTitle}
-                    description={emptyDescription}
+                    title={resolvedEmptyTitle}
+                    description={resolvedEmptyDescription}
                     actionLabel={emptyAction?.label}
                     onAction={emptyAction?.onClick}
                   />
@@ -666,6 +688,7 @@ export function DataTable<T extends { id: string | number }>({
               </tr>
             ) : (
               items.map((row, rowIndex) => (
+                // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable
                 <tr
                   key={row.id}
                   className={cn(
@@ -677,6 +700,7 @@ export function DataTable<T extends { id: string | number }>({
                   onClick={() => isRowClickable && handleRowClick(row)}
                 >
                   {selectable && (
+                    // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable
                     <td className="px-4 py-3">
                       <Checkbox
                         checked={selectedIds.includes(row.id)}
@@ -687,6 +711,7 @@ export function DataTable<T extends { id: string | number }>({
                   {normalizedColumns.map((col) => {
                     const cellValue = getNestedValue(row as Record<string, unknown>, String(col.key));
                     return (
+                      // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable
                       <td
                         key={String(col.key)}
                         className="px-4 py-3 text-sm text-[var(--color-foreground)] whitespace-nowrap sm:whitespace-normal"
@@ -698,8 +723,10 @@ export function DataTable<T extends { id: string | number }>({
                     );
                   })}
                   {rowActions && (
+                    // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable
                     <td className="px-4 py-3 relative">
-                      <button
+                      <Button
+                        variant="ghost"
                         className="p-1 rounded hover:bg-[var(--color-muted)]"
                         onClick={(e) => {
                           e.stopPropagation();
@@ -709,24 +736,25 @@ export function DataTable<T extends { id: string | number }>({
                         }}
                       >
                         <MoreHorizontal className="h-4 w-4 text-[var(--color-muted-foreground)]" />
-                      </button>
+                      </Button>
                       {openActionMenu === row.id && (
                         <>
-                          <div
+                          <Box
                             className="fixed inset-0 z-40"
                             onClick={(e) => {
                               e.stopPropagation();
                               setOpenActionMenu(null);
                             }}
                           />
-                          <div className="absolute right-0 mt-1 w-48 bg-[var(--color-card)] rounded-[var(--radius-lg)] shadow-[var(--shadow-lg)] border border-[var(--color-border)] py-1 z-50">
+                          <VStack className="absolute right-0 mt-1 w-48 bg-[var(--color-card)] rounded-[var(--radius-lg)] shadow-[var(--shadow-lg)] border border-[var(--color-border)] py-1 z-50">
                             {rowActions
                               .filter(
                                 (action) => !action.show || action.show(row),
                               )
                               .map((action, idx) => (
-                                <button
+                                <Button
                                   key={idx}
+                                  variant="ghost"
                                   data-event={action.event}
                                   data-testid={
                                     action.event
@@ -749,9 +777,9 @@ export function DataTable<T extends { id: string | number }>({
                                     <action.icon className="h-4 w-4" />
                                   )}
                                   {action.label}
-                                </button>
+                                </Button>
                               ))}
-                          </div>
+                          </VStack>
                         </>
                       )}
                     </td>
@@ -761,17 +789,19 @@ export function DataTable<T extends { id: string | number }>({
             )}
           </tbody>
         </table>
-      </div>
+      </Box>
 
       {/* Manual Pagination */}
       {pagination && (
-        <div className="px-4 py-3 border-t-2 border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-sm text-[var(--color-muted-foreground)] text-center sm:text-left">
-            Showing {(pagination.page - 1) * pagination.pageSize + 1} to{" "}
-            {Math.min(pagination.page * pagination.pageSize, pagination.total)}{" "}
-            of {pagination.total} results
-          </div>
-          <div className="flex items-center gap-2">
+        <HStack className="px-4 py-3 border-t-2 border-[var(--color-border)] flex-col sm:flex-row items-center justify-between gap-4">
+          <Typography variant="small" className="text-[var(--color-muted-foreground)] text-center sm:text-left">
+            {t('table.pagination.showing', {
+              start: String((pagination.page - 1) * pagination.pageSize + 1),
+              end: String(Math.min(pagination.page * pagination.pageSize, pagination.total)),
+              total: String(pagination.total),
+            })}
+          </Typography>
+          <HStack className="items-center gap-2">
             <Button
               variant="secondary"
               size="sm"
@@ -780,10 +810,12 @@ export function DataTable<T extends { id: string | number }>({
             >
               <ChevronLeft className="h-4 w-4" />
             </Button>
-            <span className="text-sm text-[var(--color-muted-foreground)]">
-              Page {pagination.page} of{" "}
-              {Math.ceil(pagination.total / pagination.pageSize)}
-            </span>
+            <Typography variant="small" className="text-[var(--color-muted-foreground)]">
+              {t('table.pagination.page', {
+                page: String(pagination.page),
+                totalPages: String(Math.ceil(pagination.total / pagination.pageSize)),
+              })}
+            </Typography>
             <Button
               variant="secondary"
               size="sm"
@@ -794,15 +826,15 @@ export function DataTable<T extends { id: string | number }>({
             >
               <ChevronRight className="h-4 w-4" />
             </Button>
-          </div>
-        </div>
+          </HStack>
+        </HStack>
       )}
 
       {/* Server-side Pagination (automatic when enablePagination is true) */}
       {enablePagination &&
         serverPaginationInfo &&
         serverPaginationInfo.totalPages > 1 && (
-          <div className="px-4 py-3 border-t-2 border-[var(--color-border)]">
+          <Box className="px-4 py-3 border-t-2 border-[var(--color-border)]">
             <Pagination
               currentPage={serverPaginationInfo.page}
               totalPages={serverPaginationInfo.totalPages}
@@ -813,8 +845,10 @@ export function DataTable<T extends { id: string | number }>({
               pageSize={paginationParams.pageSize}
               onPageSizeChange={handleServerPageSizeChange}
             />
-          </div>
+          </Box>
         )}
-    </div>
+    </Box>
   );
 }
+
+DataTable.displayName = "DataTable";

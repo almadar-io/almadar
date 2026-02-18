@@ -15,7 +15,10 @@ import { Button } from "../atoms/Button";
 import { Icon } from "../atoms/Icon";
 import { Checkbox } from "../atoms/Checkbox";
 import { Typography } from "../atoms/Typography";
+import { Box } from "../atoms/Box";
+import { HStack } from "../atoms/Stack";
 import { cn } from "../../lib/cn";
+import { useTranslate } from "../../hooks/useTranslate";
 
 export type SortDirection = "asc" | "desc" | null;
 
@@ -149,6 +152,16 @@ export interface TableProps<T = any> {
   loading?: boolean;
 
   /**
+   * Closed circuit: loading indicator
+   */
+  isLoading?: boolean;
+
+  /**
+   * Closed circuit: error state
+   */
+  error?: Error | null;
+
+  /**
    * Additional CSS classes
    */
   className?: string;
@@ -166,16 +179,21 @@ export const Table = <T extends Record<string, any>>({
   sortDirection,
   onSortChange,
   searchable = false,
-  searchPlaceholder = "Search...",
+  searchPlaceholder,
   paginated = false,
   currentPage = 1,
   totalPages = 1,
   onPageChange,
   rowActions,
-  emptyMessage = "No data available",
+  emptyMessage,
   loading = false,
+  isLoading,
+  error,
   className,
 }: TableProps<T>) => {
+  const { t } = useTranslate();
+  const resolvedEmptyMessage = emptyMessage ?? t('empty.noData');
+  const resolvedSearchPlaceholder = searchPlaceholder ?? t('common.search');
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredData =
@@ -227,25 +245,29 @@ export const Table = <T extends Record<string, any>>({
     );
 
   return (
-    <div className={cn("w-full", className)}>
+    <Box className={cn("w-full", className)}>
       {/* Search */}
       {searchable && (
-        <div className="mb-4">
+        <Box className="mb-4">
           <SearchInput
-            placeholder={searchPlaceholder}
+            placeholder={resolvedSearchPlaceholder}
             onSearch={setSearchQuery}
             className="max-w-md"
           />
-        </div>
+        </Box>
       )}
 
       {/* Table */}
       <Card>
-        <div className="overflow-x-auto">
+        <Box className="overflow-x-auto">
+          {/* eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements needed */}
           <table className="w-full">
+            {/* eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements needed */}
             <thead>
+              {/* eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements needed */}
               <tr className="border-b-[length:var(--border-width)] border-[var(--color-table-border)]">
                 {selectable && (
+                  // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements needed
                   <th className="px-4 py-3 text-left bg-[var(--color-table-header)]">
                     <Checkbox
                       checked={allSelected}
@@ -254,6 +276,7 @@ export const Table = <T extends Record<string, any>>({
                   </th>
                 )}
                 {columns.map((column) => (
+                  // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements needed
                   <th
                     key={column.key}
                     className={cn(
@@ -265,7 +288,7 @@ export const Table = <T extends Record<string, any>>({
                     style={{ width: column.width }}
                     onClick={() => column.sortable && handleSort(column.key)}
                   >
-                    <div className="flex items-center gap-2">
+                    <HStack className="flex items-center gap-2">
                       <Typography variant="small" weight="semibold">
                         {column.label}
                       </Typography>
@@ -277,17 +300,21 @@ export const Table = <T extends Record<string, any>>({
                             size="sm"
                           />
                         )}
-                    </div>
+                    </HStack>
                   </th>
                 ))}
                 {rowActions && (
+                  // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements needed
                   <th className="px-4 py-3 text-right">Actions</th>
                 )}
               </tr>
             </thead>
+            {/* eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements needed */}
             <tbody>
-              {loading ? (
+              {loading || isLoading ? (
+                // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements needed
                 <tr>
+                  {/* eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements needed */}
                   <td
                     colSpan={
                       columns.length +
@@ -297,12 +324,14 @@ export const Table = <T extends Record<string, any>>({
                     className="px-4 py-8 text-center"
                   >
                     <Typography variant="body" color="secondary">
-                      Loading...
+                      {t('common.loading')}
                     </Typography>
                   </td>
                 </tr>
               ) : filteredData.length === 0 ? (
+                // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements needed
                 <tr>
+                  {/* eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements needed */}
                   <td
                     colSpan={
                       columns.length +
@@ -312,7 +341,7 @@ export const Table = <T extends Record<string, any>>({
                     className="px-4 py-8 text-center"
                   >
                     <Typography variant="body" color="secondary">
-                      {emptyMessage}
+                      {resolvedEmptyMessage}
                     </Typography>
                   </td>
                 </tr>
@@ -321,6 +350,7 @@ export const Table = <T extends Record<string, any>>({
                   const rowKey = getRowKey(row, index);
                   const isSelected = selectedRows.includes(rowKey);
                   return (
+                    // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements needed
                     <tr
                       key={rowKey}
                       className={cn(
@@ -331,6 +361,7 @@ export const Table = <T extends Record<string, any>>({
                       )}
                     >
                       {selectable && (
+                        // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements needed
                         <td className="px-4 py-3">
                           <Checkbox
                             checked={isSelected}
@@ -341,6 +372,7 @@ export const Table = <T extends Record<string, any>>({
                         </td>
                       )}
                       {columns.map((column) => (
+                        // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements needed
                         <td key={column.key} className="px-4 py-3">
                           {column.render ? (
                             column.render(row[column.key], row, index)
@@ -352,6 +384,7 @@ export const Table = <T extends Record<string, any>>({
                         </td>
                       ))}
                       {rowActions && (
+                        // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements needed
                         <td className="px-4 py-3 text-right">
                           <Menu
                             trigger={
@@ -374,20 +407,20 @@ export const Table = <T extends Record<string, any>>({
               )}
             </tbody>
           </table>
-        </div>
+        </Box>
       </Card>
 
       {/* Pagination */}
       {paginated && totalPages > 1 && (
-        <div className="mt-4">
+        <Box className="mt-4">
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={onPageChange || (() => {})}
           />
-        </div>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };
 

@@ -11,8 +11,10 @@ import { ChevronLeft, ChevronRight, Check } from "lucide-react";
 import { Button } from "../atoms/Button";
 import { Typography } from "../atoms/Typography";
 import { Box } from "../atoms/Box";
+import { HStack } from "../atoms/Stack";
 import { Icon } from "../atoms/Icon";
 import { cn } from "../../lib/cn";
+import { useTranslate } from "../../hooks/useTranslate";
 
 /** Form field definition for wizard sections */
 export interface WizardField {
@@ -155,6 +157,10 @@ export interface WizardContainerProps {
   compact?: boolean;
   /** Additional CSS classes */
   className?: string;
+  /** Loading state indicator */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
   /** Entity type name (schema-driven) */
   entity?: string;
 }
@@ -173,6 +179,7 @@ export const WizardContainer: React.FC<WizardContainerProps> = ({
   className,
   entity: _entity, // Accept but don't use directly yet
 }) => {
+  const { t } = useTranslate();
   const [internalStep, setInternalStep] = useState(0);
 
   // Normalize controlledStep to number (handles string/unknown from generated code)
@@ -236,7 +243,7 @@ export const WizardContainer: React.FC<WizardContainerProps> = ({
             compact ? "px-4 py-2" : "px-6 py-4",
           )}
         >
-          <div className="flex items-center gap-2">
+          <HStack gap="sm" align="center" className="flex-wrap">
             {steps.map((step, index) => {
               const isActive = index === currentStep;
               const isCompleted = index < currentStep;
@@ -247,7 +254,7 @@ export const WizardContainer: React.FC<WizardContainerProps> = ({
               return (
                 <React.Fragment key={stepKey}>
                   {/* Step indicator */}
-                  <button
+                  <Button
                     onClick={() => isCompleted && allowBack && goToStep(index)}
                     disabled={!isCompleted || !allowBack}
                     className={cn(
@@ -263,10 +270,10 @@ export const WizardContainer: React.FC<WizardContainerProps> = ({
                     )}
                   >
                     {isCompleted ? <Icon icon={Check} size="sm" /> : index + 1}
-                  </button>
+                  </Button>
 
                   {/* Step title (on desktop) */}
-                  <div
+                  <Box
                     className={cn(
                       "hidden md:block",
                       isActive
@@ -280,11 +287,11 @@ export const WizardContainer: React.FC<WizardContainerProps> = ({
                     >
                       {stepTitle}
                     </Typography>
-                  </div>
+                  </Box>
 
                   {/* Connector line */}
                   {index < totalSteps - 1 && (
-                    <div
+                    <Box
                       className={cn(
                         "flex-1 h-0.5",
                         index < currentStep
@@ -296,7 +303,7 @@ export const WizardContainer: React.FC<WizardContainerProps> = ({
                 </React.Fragment>
               );
             })}
-          </div>
+          </HStack>
         </Box>
       )}
 
@@ -325,9 +332,9 @@ export const WizardContainer: React.FC<WizardContainerProps> = ({
       )}
 
       {/* Step content */}
-      <div className={cn("flex-1 overflow-auto", compact ? "p-4" : "p-6")}>
+      <Box className={cn("flex-1 overflow-auto", compact ? "p-4" : "p-6")}>
         {currentStepData?.content}
-      </div>
+      </Box>
 
       {/* Navigation buttons */}
       <Box
@@ -343,20 +350,20 @@ export const WizardContainer: React.FC<WizardContainerProps> = ({
           disabled={isFirstStep || !allowBack}
         >
           <Icon icon={ChevronLeft} size="sm" />
-          Back
+          {t('wizard.back')}
         </Button>
 
-        <div className="flex items-center gap-2">
+        <HStack gap="sm" align="center">
           <Typography
             variant="caption"
             className="text-[var(--color-muted-foreground)]"
           >
-            Step {currentStep + 1} of {totalSteps}
+            {t('wizard.stepOf', { current: String(currentStep + 1), total: String(steps.length) })}
           </Typography>
-        </div>
+        </HStack>
 
         <Button variant="primary" onClick={handleNext}>
-          {isLastStep ? "Complete" : "Next"}
+          {isLastStep ? t('wizard.complete') : t('wizard.next')}
           {!isLastStep && <Icon icon={ChevronRight} size="sm" />}
         </Button>
       </Box>

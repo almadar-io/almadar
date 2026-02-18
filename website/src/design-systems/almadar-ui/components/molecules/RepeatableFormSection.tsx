@@ -20,6 +20,7 @@ import { Button } from "../atoms/Button";
 import { Card } from "../atoms/Card";
 import { Icon } from "../atoms/Icon";
 import { useEventBus } from "../../hooks/useEventBus";
+import { useTranslate } from "../../hooks/useTranslate";
 
 export interface RepeatableItem {
   id: string;
@@ -77,8 +78,8 @@ export const RepeatableFormSection: React.FC<RepeatableFormSectionProps> = ({
   minItems = 0,
   maxItems = Infinity,
   allowReorder = false,
-  addLabel = "Add Item",
-  emptyMessage = "No items added yet",
+  addLabel,
+  emptyMessage,
   readOnly = false,
   className,
   onAdd,
@@ -89,6 +90,9 @@ export const RepeatableFormSection: React.FC<RepeatableFormSectionProps> = ({
   showAuditInfo = false,
 }) => {
   const eventBus = useEventBus();
+  const { t } = useTranslate();
+  const resolvedAddLabel = addLabel ?? t('common.add');
+  const resolvedEmptyMessage = emptyMessage ?? t('empty.noItemsAdded');
 
   const canAdd = !readOnly && items.length < maxItems;
   const canRemove = !readOnly && items.length > minItems;
@@ -140,7 +144,7 @@ export const RepeatableFormSection: React.FC<RepeatableFormSectionProps> = ({
         {canAdd && (
           <Button variant="secondary" size="sm" onClick={handleAdd}>
             <Icon name="plus" size="sm" className="mr-1" />
-            {addLabel}
+            {resolvedAddLabel}
           </Button>
         )}
       </HStack>
@@ -150,12 +154,12 @@ export const RepeatableFormSection: React.FC<RepeatableFormSectionProps> = ({
         <Card className="p-6">
           <VStack align="center" gap="sm">
             <Typography variant="body" color="muted">
-              {emptyMessage}
+              {resolvedEmptyMessage}
             </Typography>
             {canAdd && (
               <Button variant="primary" size="sm" onClick={handleAdd}>
                 <Icon name="plus" size="sm" className="mr-1" />
-                {addLabel}
+                {resolvedAddLabel}
               </Button>
             )}
           </VStack>

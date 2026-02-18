@@ -1,6 +1,10 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import { cn } from "../../lib/cn";
+import { useTranslate } from "../../hooks/useTranslate";
+import { Box } from "../atoms/Box";
+import { VStack, HStack } from "../atoms/Stack";
+import { Typography } from "../atoms/Typography";
 
 export interface AuthLayoutProps {
   /** App name */
@@ -22,14 +26,16 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
   showBranding = true,
   brandingContent,
 }) => {
+  const { t } = useTranslate();
+
   return (
-    <div className="min-h-screen flex">
+    <Box className="min-h-screen flex">
       {/* Branding panel (desktop only) */}
       {showBranding && (
-        <div
+        <VStack
           className={cn(
             "hidden lg:flex lg:w-1/2 bg-primary-600 relative overflow-hidden",
-            "flex-col justify-between p-12",
+            "justify-between p-12",
           )}
           style={
             backgroundImage
@@ -39,87 +45,123 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
                 }
               : undefined
           }
+          gap="none"
         >
           {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary-600/90 to-primary-800/90" />
+          <Box className="absolute inset-0 bg-gradient-to-br from-primary-600/90 to-primary-800/90" />
 
           {/* Content */}
-          <div className="relative z-10">
+          <Box className="relative z-10">
             <Link to="/" className="flex items-center gap-3">
               {logo || (
-                <div className="w-10 h-10 bg-white/20 rounded-[var(--radius-xl)] flex items-center justify-center backdrop-blur">
-                  <span className="text-white font-bold text-lg">
+                <Box className="w-10 h-10 bg-white/20 rounded-[var(--radius-xl)] flex items-center justify-center backdrop-blur">
+                  <Typography
+                    variant="body1"
+                    className="text-white font-bold text-lg"
+                  >
                     {appName.charAt(0).toUpperCase()}
-                  </span>
-                </div>
+                  </Typography>
+                </Box>
               )}
-              <span className="text-2xl font-bold text-white">{appName}</span>
+              <Typography
+                variant="body1"
+                className="text-2xl font-bold text-white"
+              >
+                {appName}
+              </Typography>
             </Link>
-          </div>
+          </Box>
 
           {/* Custom branding content or default */}
-          <div className="relative z-10">
+          <Box className="relative z-10">
             {brandingContent || (
-              <div className="space-y-6">
-                <h1 className="text-4xl font-bold text-white leading-tight">
+              <VStack gap="lg">
+                <Typography
+                  variant="h1"
+                  className="text-4xl font-bold text-white leading-tight"
+                >
                   Welcome to {appName}
-                </h1>
-                <p className="text-lg text-white/80 max-w-md">
+                </Typography>
+                <Typography
+                  variant="body1"
+                  className="text-lg text-white/80 max-w-md"
+                >
                   Sign in to access your dashboard and manage your account.
-                </p>
+                </Typography>
 
                 {/* Testimonial or feature list */}
-                <div className="mt-12 p-6 bg-white/10 rounded-[var(--radius-xl)] backdrop-blur">
-                  <p className="text-white/90 italic">
-                    "This platform has transformed how we work. Highly
-                    recommended!"
-                  </p>
-                  <div className="mt-4 flex items-center gap-3">
-                    <div className="w-10 h-10 bg-white/20 rounded-[var(--radius-full)]" />
-                    <div>
-                      <p className="text-white font-medium">Jane Doe</p>
-                      <p className="text-white/60 text-sm">CEO, Example Co.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <Box className="mt-12 p-6 bg-white/10 rounded-[var(--radius-xl)] backdrop-blur">
+                  <Typography
+                    variant="body1"
+                    className="text-white/90 italic"
+                  >
+                    &quot;This platform has transformed how we work. Highly
+                    recommended!&quot;
+                  </Typography>
+                  <HStack className="mt-4" gap="sm" align="center">
+                    <Box className="w-10 h-10 bg-white/20 rounded-[var(--radius-full)]" />
+                    <VStack gap="none">
+                      <Typography
+                        variant="body1"
+                        className="text-white font-medium"
+                      >
+                        Jane Doe
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        className="text-white/60 text-sm"
+                      >
+                        CEO, Example Co.
+                      </Typography>
+                    </VStack>
+                  </HStack>
+                </Box>
+              </VStack>
             )}
-          </div>
+          </Box>
 
           {/* Decorative elements */}
-          <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-white/5 rounded-[var(--radius-full)]" />
-          <div className="absolute -top-16 -right-16 w-64 h-64 bg-white/5 rounded-[var(--radius-full)]" />
-        </div>
+          <Box className="absolute -bottom-32 -right-32 w-96 h-96 bg-white/5 rounded-[var(--radius-full)]" />
+          <Box className="absolute -top-16 -right-16 w-64 h-64 bg-white/5 rounded-[var(--radius-full)]" />
+        </VStack>
       )}
 
       {/* Auth form panel */}
-      <div
+      <Box
         className={cn(
           "flex-1 flex items-center justify-center p-6 sm:p-12",
           "bg-[var(--color-background)]",
         )}
       >
-        <div className="w-full max-w-md">
+        <Box className="w-full max-w-md">
           {/* Mobile logo */}
-          <div className="lg:hidden mb-8 text-center">
+          <Box className="lg:hidden mb-8 text-center">
             <Link to="/" className="inline-flex items-center gap-3">
               {logo || (
-                <div className="w-12 h-12 bg-primary-600 rounded-[var(--radius-xl)] flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">
+                <Box className="w-12 h-12 bg-primary-600 rounded-[var(--radius-xl)] flex items-center justify-center">
+                  <Typography
+                    variant="body1"
+                    className="text-white font-bold text-xl"
+                  >
                     {appName.charAt(0).toUpperCase()}
-                  </span>
-                </div>
+                  </Typography>
+                </Box>
               )}
-              <span className="text-2xl font-bold text-[var(--color-foreground)]">
+              <Typography
+                variant="body1"
+                className="text-2xl font-bold text-[var(--color-foreground)]"
+              >
                 {appName}
-              </span>
+              </Typography>
             </Link>
-          </div>
+          </Box>
 
           {/* Auth form content (from child routes) */}
           <Outlet />
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };
+
+AuthLayout.displayName = "AuthLayout";

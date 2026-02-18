@@ -109,8 +109,6 @@ export interface StudioProjectBoardProps {
   validationView?: React.ReactNode;
   /** Slot: Domain logic view component (rendered in domain-logic tab) */
   domainLogicView?: React.ReactNode;
-  /** Slot: Preview view component (rendered in HQ preview tab) */
-  previewView?: React.ReactNode;
   /** Slot: Embedded preview panel for Build mode preview tab */
   previewPanel?: React.ReactNode;
   /** Slot: App sidebar */
@@ -120,6 +118,10 @@ export interface StudioProjectBoardProps {
 
   /** Additional CSS classes */
   className?: string;
+  /** Loading state */
+  isLoading?: boolean;
+  /** Error state */
+  error?: Error | null;
 
   /** Event name emitted on save */
   saveEvent: string;
@@ -143,6 +145,10 @@ interface StatCardProps {
   title: string;
   value: number;
   icon: React.ComponentType<{ className?: string }>;
+  className?: string;
+  isLoading?: boolean;
+  error?: Error | null;
+  entity?: string;
 }
 
 const StatCard: React.FC<StatCardProps> = ({
@@ -182,7 +188,6 @@ export const StudioProjectBoard: React.FC<StudioProjectBoardProps> = ({
   glossaryView,
   validationView,
   domainLogicView,
-  previewView,
   previewPanel,
   sidebarSlot,
   modalsSlot,
@@ -239,7 +244,9 @@ export const StudioProjectBoard: React.FC<StudioProjectBoardProps> = ({
   };
 
   const handlePreview = () => {
-    emit("UI:PREVIEW", { projectId: project.id });
+    setMode("build");
+    setActiveTab("preview");
+    emit(`UI:${modeChangeEvent}`, { mode: "build" });
   };
 
   const handleToggleAgent = () => {
@@ -315,6 +322,16 @@ export const StudioProjectBoard: React.FC<StudioProjectBoardProps> = ({
             >
               <Icon icon={Hammer} size="md" />
               <Typography variant="caption">Build</Typography>
+            </Button>
+            <Button
+              variant={mode === "build" && activeTab === "preview" ? "default" : "ghost"}
+              size="sm"
+              className="w-full flex-col h-16 gap-1"
+              onClick={handlePreview}
+              title="Preview"
+            >
+              <Icon icon={Play} size="md" />
+              <Typography variant="caption">Preview</Typography>
             </Button>
             <Button
               variant={showAgentPanel ? "default" : "ghost"}
@@ -674,31 +691,10 @@ export const StudioProjectBoard: React.FC<StudioProjectBoardProps> = ({
               </VStack>
             )}
 
+
             {mode === "hq" && activeTab === "preview" && (
-              <Box fullHeight>
-                {previewView || (
-                  <Card padding="lg" className="h-full">
-                    <VStack
-                      gap="md"
-                      align="center"
-                      justify="center"
-                      className="h-full"
-                    >
-                      <Icon
-                        icon={Play}
-                        size="lg"
-                        className="text-[var(--color-muted-foreground)] opacity-50"
-                      />
-                      <Typography
-                        variant="body1"
-                        className="text-[var(--color-muted-foreground)]"
-                      >
-                        App preview will appear here
-                      </Typography>
-                      <Button onClick={handlePreview}>Launch Preview</Button>
-                    </VStack>
-                  </Card>
-                )}
+              <Box className="h-full overflow-hidden">
+                {previewPanel}
               </Box>
             )}
 
@@ -813,29 +809,7 @@ export const StudioProjectBoard: React.FC<StudioProjectBoardProps> = ({
 
             {mode === "build" && activeTab === "preview" && (
               <Box className="h-full overflow-hidden">
-                {previewPanel || (
-                  <Card padding="lg" className="h-full">
-                    <VStack
-                      gap="md"
-                      align="center"
-                      justify="center"
-                      className="h-full"
-                    >
-                      <Icon
-                        icon={Play}
-                        size="lg"
-                        className="text-[var(--color-muted-foreground)] opacity-50"
-                      />
-                      <Typography
-                        variant="body1"
-                        className="text-[var(--color-muted-foreground)]"
-                      >
-                        Compile and preview your app here
-                      </Typography>
-                      <Button onClick={handleCompile}>Compile &amp; Preview</Button>
-                    </VStack>
-                  </Card>
-                )}
+                {previewPanel}
               </Box>
             )}
           </VStack>

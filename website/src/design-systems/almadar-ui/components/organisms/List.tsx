@@ -28,8 +28,8 @@ import {
   Pencil,
   Eye,
 } from "lucide-react";
-import { Typography, Checkbox, Divider } from "../atoms";
-import { HStack } from "../atoms/Stack";
+import { Typography, Checkbox, Divider, Box, Button } from "../atoms";
+import { HStack, VStack } from "../atoms/Stack";
 import { Menu, type MenuItem } from "../molecules/Menu";
 import { EmptyState } from "../molecules/EmptyState";
 import { LoadingState } from "../molecules/LoadingState";
@@ -39,6 +39,7 @@ import { getNestedValue } from "../../lib/getNestedValue";
 import { useEntityList } from "../../hooks/useEntityData";
 import { useEventBus, type KFlowEvent } from "../../hooks/useEventBus";
 import { useQuerySingleton } from "../../hooks/useQuerySingleton";
+import { useTranslate } from "../../hooks/useTranslate";
 
 export interface ListItem {
   id: string;
@@ -245,7 +246,8 @@ const StatusBadge: React.FC<{ value: string; fieldName: string }> = ({
 }) => {
   const style = getStatusStyle(fieldName, value);
   return (
-    <span
+    <Typography
+      as="span"
       className={cn(
         "inline-flex items-center gap-2 px-2.5 py-1 rounded-[var(--radius-full)] text-xs font-semibold tracking-wide",
         "border shadow-[var(--shadow-sm)] backdrop-blur-sm transition-colors",
@@ -254,14 +256,15 @@ const StatusBadge: React.FC<{ value: string; fieldName: string }> = ({
         style.border,
       )}
     >
-      <span
+      <Typography
+        as="span"
         className={cn(
           "w-1.5 h-1.5 rounded-[var(--radius-full)] shadow-[var(--shadow-sm)]",
           style.dot,
         )}
       />
       {value}
-    </span>
+    </Typography>
   );
 };
 
@@ -269,9 +272,9 @@ const StatusBadge: React.FC<{ value: string; fieldName: string }> = ({
 const ProgressIndicator: React.FC<{ value: number }> = ({ value }) => {
   const clampedValue = Math.min(100, Math.max(0, value));
   return (
-    <div className="flex items-center gap-2 min-w-[100px]">
-      <div className="flex-1 h-1.5 bg-[var(--color-muted)] rounded-[var(--radius-full)] overflow-hidden">
-        <div
+    <Box className="flex items-center gap-2 min-w-[100px]">
+      <Box className="flex-1 h-1.5 bg-[var(--color-muted)] rounded-[var(--radius-full)] overflow-hidden">
+        <Box
           className={cn(
             "h-full rounded-[var(--radius-full)] transition-all duration-500",
             clampedValue >= 100
@@ -284,11 +287,14 @@ const ProgressIndicator: React.FC<{ value: number }> = ({ value }) => {
           )}
           style={{ width: `${clampedValue}%` }}
         />
-      </div>
-      <span className="text-xs font-medium text-[var(--color-muted-foreground)] tabular-nums w-8 text-right">
+      </Box>
+      <Typography
+        as="span"
+        className="text-xs font-medium text-[var(--color-muted-foreground)] tabular-nums w-8 text-right"
+      >
         {clampedValue}%
-      </span>
-    </div>
+      </Typography>
+    </Box>
   );
 };
 
@@ -301,7 +307,7 @@ export const List: React.FC<ListProps> = ({
   selectedItems = [],
   onSelectionChange,
   itemActions,
-  emptyMessage = "No items to display",
+  emptyMessage,
   className,
   renderItem: customRenderItem,
   onItemAction,
@@ -313,6 +319,8 @@ export const List: React.FC<ListProps> = ({
 }) => {
   const navigate = useNavigate();
   const eventBus = useEventBus();
+  const { t } = useTranslate();
+  const resolvedEmptyMessage = emptyMessage ?? t('empty.noData');
 
   // Support fields and fieldNames (alias) - normalize to string[]
   const effectiveFieldNames =
@@ -608,8 +616,8 @@ export const List: React.FC<ListProps> = ({
     const hasProgress = typeof progressValue === "number";
 
     return (
-      <div key={item.id}>
-        <div
+      <Box key={item.id}>
+        <Box
           className={cn(
             "group flex items-center gap-5 px-6 py-5",
             "transition-all duration-300 ease-out",
@@ -624,7 +632,7 @@ export const List: React.FC<ListProps> = ({
         >
           {/* Checkbox if selectable */}
           {selectable && (
-            <div className="flex-shrink-0 pt-0.5">
+            <Box className="flex-shrink-0 pt-0.5">
               <Checkbox
                 checked={isSelected}
                 onChange={(e) => handleSelect(item.id, e.target.checked)}
@@ -636,14 +644,15 @@ export const List: React.FC<ListProps> = ({
                     : "border-[var(--color-border)]",
                 )}
               />
-            </div>
+            </Box>
           )}
 
           {/* Main content */}
-          <div className="flex-1 min-w-0 space-y-2.5">
+          <Box className="flex-1 min-w-0 space-y-2.5">
             {/* Primary row: Title + Badges */}
-            <div className="flex items-center gap-4">
-              <h3
+            <HStack className="flex items-center gap-4">
+              <Typography
+                as="h3"
                 className={cn(
                   "text-[15px] font-semibold text-[var(--color-foreground)] truncate flex-1",
                   "tracking-tight leading-snug",
@@ -652,10 +661,10 @@ export const List: React.FC<ListProps> = ({
                 )}
               >
                 {item.title || "Untitled"}
-              </h3>
+              </Typography>
 
               {/* Status & Priority badges */}
-              <div className="flex items-center gap-2 flex-shrink-0">
+              <HStack className="flex items-center gap-2 flex-shrink-0">
                 {!!statusValue && (
                   <StatusBadge
                     value={String(statusValue)}
@@ -668,23 +677,24 @@ export const List: React.FC<ListProps> = ({
                     fieldName={priorityField}
                   />
                 )}
-              </div>
-            </div>
+              </HStack>
+            </HStack>
 
             {/* Secondary row: Metadata */}
-            <div className="flex items-center gap-6 text-[13px] font-medium text-[var(--color-muted-foreground)]">
+            <HStack className="flex items-center gap-6 text-[13px] font-medium text-[var(--color-muted-foreground)]">
               {/* Date fields with icon */}
               {dateFields.slice(0, 1).map((field) => {
                 const value = item._fields?.[field];
                 if (!value) return null;
                 return (
-                  <span
+                  <Typography
+                    as="span"
                     key={field}
                     className="flex items-center gap-2 text-[var(--color-muted-foreground)] group-hover:text-[var(--color-foreground)] transition-colors"
                   >
                     <Calendar className="w-3.5 h-3.5" />
-                    <span>{formatValue(value, field)}</span>
-                  </span>
+                    <Typography as="span">{formatValue(value, field)}</Typography>
+                  </Typography>
                 );
               })}
 
@@ -693,32 +703,33 @@ export const List: React.FC<ListProps> = ({
                 const value = item._fields?.[field];
                 if (value === undefined || value === null) return null;
                 return (
-                  <span
+                  <Typography
+                    as="span"
                     key={field}
                     className="truncate flex items-center gap-1.5 text-[var(--color-muted-foreground)]"
                   >
-                    <span className="opacity-75">
+                    <Typography as="span" className="opacity-75">
                       {formatFieldLabel(field)}:
-                    </span>
-                    <span className="text-[var(--color-foreground)]">
+                    </Typography>
+                    <Typography as="span" className="text-[var(--color-foreground)]">
                       {formatValue(value, field)}
-                    </span>
-                  </span>
+                    </Typography>
+                  </Typography>
                 );
               })}
 
               {/* Progress indicator */}
               {hasProgress && (
-                <div className="ml-auto">
+                <Box className="ml-auto">
                   <ProgressIndicator value={progressValue as number} />
-                </div>
+                </Box>
               )}
-            </div>
-          </div>
+            </HStack>
+          </Box>
 
           {/* Actions - visible on hover */}
           {/* Actions - visible on hover */}
-          <div
+          <HStack
             className={cn(
               "flex items-center gap-1 flex-shrink-0 transition-opacity duration-200",
               "opacity-0 group-hover:opacity-100",
@@ -726,7 +737,8 @@ export const List: React.FC<ListProps> = ({
           >
             {/* Direct Edit Action */}
             {editAction && (
-              <button
+              <Button
+                variant="ghost"
                 onClick={(e) => {
                   e.stopPropagation();
                   editAction.onClick?.();
@@ -740,12 +752,13 @@ export const List: React.FC<ListProps> = ({
                 title={editAction.label}
               >
                 <Pencil className="w-4 h-4" />
-              </button>
+              </Button>
             )}
 
             {/* Direct View Action (Only if explicit button needed - optional if row click handles it, but keeping for clarity/accessibility) */}
             {viewAction && (
-              <button
+              <Button
+                variant="ghost"
                 onClick={(e) => {
                   e.stopPropagation();
                   viewAction.onClick?.();
@@ -759,7 +772,7 @@ export const List: React.FC<ListProps> = ({
                 title={viewAction.label}
               >
                 <Eye className="w-4 h-4" />
-              </button>
+              </Button>
             )}
 
             {/* Overflow Menu for filtered actions */}
@@ -774,7 +787,8 @@ export const List: React.FC<ListProps> = ({
               return filteredActions.length > 0 ? (
                 <Menu
                   trigger={
-                    <button
+                    <Button
+                      variant="ghost"
                       className={cn(
                         "p-2 rounded-[var(--radius-lg)] transition-all duration-200",
                         "hover:bg-[var(--color-muted)] hover:shadow-[var(--shadow-sm)]",
@@ -783,7 +797,7 @@ export const List: React.FC<ListProps> = ({
                       )}
                     >
                       <MoreHorizontal className="w-4 h-4" />
-                    </button>
+                    </Button>
                   }
                   items={filteredActions}
                   position="bottom-right"
@@ -794,14 +808,14 @@ export const List: React.FC<ListProps> = ({
             {handleClick && (
               <ChevronRight className="w-4 h-4 text-[var(--color-muted-foreground)]/50 group-hover:text-[var(--color-muted-foreground)] group-hover:translate-x-0.5 transition-all" />
             )}
-          </div>
-        </div>
+          </HStack>
+        </Box>
 
         {/* Subtle divider - inset */}
         {!isLast && (
-          <div className="ml-[calc(1.5rem)] mr-6 border-b border-[var(--color-border)]/40" />
+          <Box className="ml-[calc(1.5rem)] mr-6 border-b border-[var(--color-border)]/40" />
         )}
-      </div>
+      </Box>
     );
   };
 
@@ -810,14 +824,14 @@ export const List: React.FC<ListProps> = ({
       <EmptyState
         icon={Package}
         title={`No ${entityType || "items"} found`}
-        description={emptyMessage}
+        description={resolvedEmptyMessage}
         className={className}
       />
     );
   }
 
   return (
-    <div
+    <Box
       className={cn(
         // Container with refined styling
         "bg-[var(--color-card)] backdrop-blur-sm",
@@ -833,7 +847,7 @@ export const List: React.FC<ListProps> = ({
           ? customRenderItem(item, index)
           : defaultRenderItem(item, index, index === safeItems.length - 1),
       )}
-    </div>
+    </Box>
   );
 };
 
