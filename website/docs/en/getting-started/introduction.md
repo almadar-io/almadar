@@ -91,25 +91,54 @@ Traits define how your application behaves using state machines:
 ```json
 {
   "name": "TaskLifecycle",
+  "linkedEntity": "Task",
+  "category": "interaction",
   "stateMachine": {
     "states": [
       { "name": "Pending", "isInitial": true },
       { "name": "InProgress" },
-      { "name": "Done" }
+      { "name": "Done", "isTerminal": true }
     ],
     "events": [
+      { "key": "INIT", "name": "Initialize" },
       { "key": "START", "name": "Start Working" },
       { "key": "COMPLETE", "name": "Mark Complete" }
     ],
     "transitions": [
       {
         "from": "Pending",
+        "event": "INIT",
+        "to": "Pending",
+        "effects": [
+          ["fetch", "Task"],
+          ["render-ui", "main", {
+            "type": "entity-table",
+            "entity": "Task",
+            "columns": ["title", "status", "assignee"],
+            "itemActions": [
+              { "event": "START", "label": "Start" },
+              { "event": "COMPLETE", "label": "Complete" }
+            ]
+          }]
+        ]
+      },
+      {
+        "from": "Pending",
         "to": "InProgress",
         "event": "START",
         "guard": ["=", "@entity.assignee", "@currentUser.id"],
         "effects": [
-          ["set", "status", "in_progress"],
+          ["set", "@entity.status", "in_progress"],
           ["persist", "update", "Task", "@entity"]
+        ]
+      },
+      {
+        "from": "InProgress",
+        "to": "Done",
+        "event": "COMPLETE",
+        "effects": [
+          ["persist", "update", "Task", "@entity"],
+          ["notify", "success", "Task completed!"]
         ]
       }
     ]
@@ -117,9 +146,55 @@ Traits define how your application behaves using state machines:
 }
 ```
 
-**Key insight:** A trait combines behavior (state machine) AND UI (render-ui effects).
+**Key insight:** A trait combines behavior (state machine) AND UI (`render-ui` effects).
 
-### 3. S-Expressions
+### 3. Pages
+
+Pages bind traits to URL routes. Every orbital needs at least one page:
+
+```json
+{
+  "name": "TaskListPage",
+  "path": "/tasks",
+  "traits": [
+    { "ref": "TaskLifecycle", "linkedEntity": "Task" }
+  ]
+}
+```
+
+A complete orbital brings all three parts together:
+
+```json
+{
+  "name": "TaskManager",
+  "entity": {
+    "name": "Task",
+    "persistence": "persistent",
+    "fields": [
+      { "name": "title", "type": "string", "required": true },
+      { "name": "status", "type": "enum", "values": ["pending", "in_progress", "done"] },
+      { "name": "assignee", "type": "string" }
+    ]
+  },
+  "traits": [
+    {
+      "name": "TaskLifecycle",
+      "linkedEntity": "Task",
+      "category": "interaction",
+      "stateMachine": { "...": "see above" }
+    }
+  ],
+  "pages": [
+    {
+      "name": "TaskListPage",
+      "path": "/tasks",
+      "traits": [{ "ref": "TaskLifecycle", "linkedEntity": "Task" }]
+    }
+  ]
+}
+```
+
+### 4. S-Expressions
 
 All logic is expressed as arrays:
 
@@ -136,7 +211,7 @@ All logic is expressed as arrays:
 ["navigate", "/tasks"]
 ```
 
-### 4. The Closed Circuit
+### 5. The Closed Circuit
 
 Every user action follows this path:
 
