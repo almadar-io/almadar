@@ -10,6 +10,21 @@ Dobrodošli v dokumentaciji programskega jezika Almadar. Almadar je deklarativni
 
 - [Uvod](getting-started/introduction) - Kaj je Almadar in zakaj bi ga uporabili?
 
+### Vadnice (Tutorials)
+
+#### Začetnik (Beginner)
+- [Anatomija popolnega orbitala](tutorials/beginner/complete-orbital) - Entity, traits, state machine in pages
+- [Zgradi upravljalnik nalog](tutorials/beginner/task-manager) - Popoln CRUD z lifecycle stanji
+
+#### Srednje napredni (Intermediate)
+- [UI Patterns in render-ui](tutorials/intermediate/ui-patterns) - Vsi tipi vzorcev, sloti in povezovanje akcij
+- [Guards in poslovna pravila](tutorials/intermediate/guards) - S-izrazni pogoji na prehodih
+- [Komunikacija med orbitalnimi](tutorials/intermediate/cross-orbital) - Emits, listens in payload pogodbe
+
+#### Napredni (Advanced)
+- [Gradnja celovite večorbitalne aplikacije](tutorials/advanced/full-app) - Trije povezani orbitali iz resnične sheme
+- [Generiranje shem z LLM](tutorials/advanced/ai-generation) - Prompting, validacija in odpravljanje pogostih napak
+
 ### Prenosi
 
 - [CLI](downloads/cli) - Pridobite Almadar CLI za vaš sistem

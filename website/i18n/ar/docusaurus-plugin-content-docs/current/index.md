@@ -16,6 +16,21 @@ slug: /
 ### البدء
 - [مقدمة](getting-started/introduction) - ما هو المدار ولماذا يجب استخدامه؟
 
+### الدروس التعليمية (Tutorials)
+
+#### مبتدئ (Beginner)
+- [تشريح مدار كامل](tutorials/beginner/complete-orbital) - الكيان والسمات وآلة الحالة والصفحات
+- [بناء مدير المهام](tutorials/beginner/task-manager) - CRUD كامل مع حالات دورة الحياة
+
+#### متوسط (Intermediate)
+- [أنماط الواجهة وrender-ui](tutorials/intermediate/ui-patterns) - جميع أنواع الأنماط والفتحات وربط الإجراءات
+- [الحراس وقواعد الأعمال](tutorials/intermediate/guards) - شروط التعابير S على الانتقالات
+- [التواصل بين المدارات](tutorials/intermediate/cross-orbital) - الإصدار والاستماع وعقود البيانات
+
+#### متقدم (Advanced)
+- [بناء تطبيق متعدد المدارات](tutorials/advanced/full-app) - ثلاثة مدارات متصلة من مخطط حقيقي
+- [توليد المخططات بالذكاء الاصطناعي](tutorials/advanced/ai-generation) - الاستفسار والتحقق وإصلاح الأخطاء الشائعة
+
 ### التنزيلات
 - [واجهة سطر الأوامر](downloads/cli) - احصل على CLI المدار
 - [المهارات](downloads/skills) - مهارات الذكاء الاصطناعي لتوليد الكود
