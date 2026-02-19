@@ -83,7 +83,7 @@ Entities definirajo, kaj vaša aplikacija upravlja:
 }
 ```
 
-**Vrste vztrajnosti:**
+**Vrste vztrajnosti (Persistence):**
 - `persistent` - Shranjeno v podatkovni bazi
 - `runtime` - V pomnilniku (sejno specifično)
 - `singleton` - Ena globalna instanca
@@ -95,25 +95,54 @@ Traits definirajo, kako se vaša aplikacija obnaša z uporabo state machines:
 ```json
 {
   "name": "TaskLifecycle",
+  "linkedEntity": "Task",
+  "category": "interaction",
   "stateMachine": {
     "states": [
       { "name": "Pending", "isInitial": true },
       { "name": "InProgress" },
-      { "name": "Done" }
+      { "name": "Done", "isTerminal": true }
     ],
     "events": [
-      { "key": "START", "name": "Start Working" },
-      { "key": "COMPLETE", "name": "Mark Complete" }
+      { "key": "INIT", "name": "Inicializacija" },
+      { "key": "START", "name": "Začni delo" },
+      { "key": "COMPLETE", "name": "Označi kot dokončano" }
     ],
     "transitions": [
+      {
+        "from": "Pending",
+        "event": "INIT",
+        "to": "Pending",
+        "effects": [
+          ["fetch", "Task"],
+          ["render-ui", "main", {
+            "type": "entity-table",
+            "entity": "Task",
+            "columns": ["title", "status", "assignee"],
+            "itemActions": [
+              { "event": "START", "label": "Začni" },
+              { "event": "COMPLETE", "label": "Dokončaj" }
+            ]
+          }]
+        ]
+      },
       {
         "from": "Pending",
         "to": "InProgress",
         "event": "START",
         "guard": ["=", "@entity.assignee", "@currentUser.id"],
         "effects": [
-          ["save", "update", "Task", "@entity"],
-          ["notify", "success", "Task started"]
+          ["set", "@entity.status", "in_progress"],
+          ["persist", "update", "Task", "@entity"]
+        ]
+      },
+      {
+        "from": "InProgress",
+        "to": "Done",
+        "event": "COMPLETE",
+        "effects": [
+          ["persist", "update", "Task", "@entity"],
+          ["notify", "success", "Naloga dokončana!"]
         ]
       }
     ]
@@ -121,9 +150,55 @@ Traits definirajo, kako se vaša aplikacija obnaša z uporabo state machines:
 }
 ```
 
-**Pomembna opomba:** Trait združuje vedênje (state machine) in vmesnik (render-ui effects).
+**Pomembna opomba:** Trait združuje vedênje (state machine) in vmesnik (`render-ui` effects).
 
-### 3. S-izrazi
+### 3. Pages (Strani)
+
+Pages (strani) povezujejo traits z URL potmi. Vsak orbital potrebuje vsaj eno page:
+
+```json
+{
+  "name": "TaskListPage",
+  "path": "/tasks",
+  "traits": [
+    { "ref": "TaskLifecycle", "linkedEntity": "Task" }
+  ]
+}
+```
+
+Popoln orbital združi vse štiri dele skupaj:
+
+```json
+{
+  "name": "TaskManager",
+  "entity": {
+    "name": "Task",
+    "persistence": "persistent",
+    "fields": [
+      { "name": "title", "type": "string", "required": true },
+      { "name": "status", "type": "enum", "values": ["pending", "in_progress", "done"] },
+      { "name": "assignee", "type": "string" }
+    ]
+  },
+  "traits": [
+    {
+      "name": "TaskLifecycle",
+      "linkedEntity": "Task",
+      "category": "interaction",
+      "stateMachine": { "...": "glej zgoraj" }
+    }
+  ],
+  "pages": [
+    {
+      "name": "TaskListPage",
+      "path": "/tasks",
+      "traits": [{ "ref": "TaskLifecycle", "linkedEntity": "Task" }]
+    }
+  ]
+}
+```
+
+### 4. S-izrazi (S-Expressions)
 
 Celotna logika je izražena kot polja:
 
@@ -135,12 +210,12 @@ Celotna logika je izražena kot polja:
 ]
 
 // Effects: Izvedi ukaze
-["save", "update", "Task", "@entity"]
-["notify", "success", "Task saved!"]
+["persist", "update", "Task", "@entity"]
+["notify", "success", "Shranjeno!"]
 ["navigate", "/tasks"]
 ```
 
-### 4. Zaprti krog
+### 5. Zaprti krog (Closed Circuit)
 
 Vsaka uporabniška akcija sledi tej poti:
 
@@ -165,12 +240,12 @@ Almadar (المدار) pomeni "orbita" v arabščini. Tako kot planeti sledijo p
 | Povratne zanke | Effects |
 | Stabilne orbite | Veljavna stanja aplikacije |
 
-Tako kot planeti sledijo predvidljivim potem, ki jih vodijo fizikalni zakoni, aplikacije, zgrajene z Almadarjem, sledijo predvidljivim potem, ki jih vodijo state machines.
-
 ## Naslednji koraki
 
 1. [Namesti CLI](../downloads/cli) - Namesti Almadar v svoj sistem
-2. [Prispevanje](../community/contributing) - Pridruži se skupnosti
+2. [Anatomija popolnega orbitala](../tutorials/beginner/complete-orbital) - Spoznaj vse štiri dele
+3. [Zgradi upravljalnik nalog](../tutorials/beginner/task-manager) - Celoten praktični primer
+4. [Prispevanje](../community/contributing) - Pridruži se skupnosti
 
 ---
 

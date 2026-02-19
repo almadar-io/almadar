@@ -70,9 +70,9 @@ sidebar_label: مقدمة
 
 ## المفاهيم الأساسية
 
-### 1. الكيانات
+### 1. الكيانات (Entities)
 
-الكيانات تعرّف هياكل البيانات:
+الكيانات (Entities) تعرّف هياكل البيانات:
 
 ```json
 {
@@ -88,36 +88,66 @@ sidebar_label: مقدمة
 }
 ```
 
-**أنواع الاستمرار:**
+**أنواع الاستمرار (Persistence):**
 - `persistent` - محفوظة في قاعدة البيانات
 - `runtime` - في الذاكرة (خاصة بالجلسة)
 - `singleton` - نسخة عامة واحدة
 
-### 2. السمات
+### 2. السمات (Traits)
 
-السمات تعرّف السلوك كآلات حالة:
+السمات (Traits) تعرّف كيف يتصرف تطبيقك باستخدام آلات الحالة (State Machines):
 
 ```json
 {
   "name": "TaskLifecycle",
   "linkedEntity": "Task",
+  "category": "interaction",
   "stateMachine": {
     "states": [
       { "name": "Pending", "isInitial": true },
       { "name": "InProgress" },
-      { "name": "Done" }
+      { "name": "Done", "isTerminal": true }
     ],
-    "events": ["START", "COMPLETE"],
+    "events": [
+      { "key": "INIT", "name": "تهيئة" },
+      { "key": "START", "name": "بدء العمل" },
+      { "key": "COMPLETE", "name": "إتمام المهمة" }
+    ],
     "transitions": [
+      {
+        "from": "Pending",
+        "event": "INIT",
+        "to": "Pending",
+        "effects": [
+          ["fetch", "Task"],
+          ["render-ui", "main", {
+            "type": "entity-table",
+            "entity": "Task",
+            "columns": ["title", "status", "assignee"],
+            "itemActions": [
+              { "event": "START", "label": "بدء" },
+              { "event": "COMPLETE", "label": "إتمام" }
+            ]
+          }]
+        ]
+      },
       {
         "from": "Pending",
         "to": "InProgress",
         "event": "START",
-        "guard": ["eq", ["@entity.assignee", "@payload.userId"]],
+        "guard": ["=", "@entity.assignee", "@currentUser.id"],
         "effects": [
-          ["set", "status", "in_progress"],
-          ["persist", "update", "Task", "@entity.id"],
-          ["render-ui", "main", { "type": "task-detail", "entity": "Task" }]
+          ["set", "@entity.status", "in_progress"],
+          ["persist", "update", "Task", "@entity"]
+        ]
+      },
+      {
+        "from": "InProgress",
+        "to": "Done",
+        "event": "COMPLETE",
+        "effects": [
+          ["persist", "update", "Task", "@entity"],
+          ["notify", "success", "تم إنجاز المهمة!"]
         ]
       }
     ]
@@ -125,31 +155,72 @@ sidebar_label: مقدمة
 }
 ```
 
-**الفكرة الأساسية:** السمة تجمع بين السلوك (آلة الحالة) والواجهة (تأثيرات render-ui).
+**الفكرة الأساسية:** السمة تجمع بين السلوك (آلة الحالة) والواجهة (تأثيرات `render-ui`).
 
-### 3. التعابير S
+### 3. الصفحات (Pages)
+
+الصفحات (Pages) تربط السمات بمسارات URL. كل مدار يحتاج إلى صفحة واحدة على الأقل:
+
+```json
+{
+  "name": "TaskListPage",
+  "path": "/tasks",
+  "traits": [
+    { "ref": "TaskLifecycle", "linkedEntity": "Task" }
+  ]
+}
+```
+
+مدار كامل يجمع الأجزاء الأربعة معاً:
+
+```json
+{
+  "name": "TaskManager",
+  "entity": {
+    "name": "Task",
+    "persistence": "persistent",
+    "fields": [
+      { "name": "title", "type": "string", "required": true },
+      { "name": "status", "type": "enum", "values": ["pending", "in_progress", "done"] },
+      { "name": "assignee", "type": "string" }
+    ]
+  },
+  "traits": [
+    {
+      "name": "TaskLifecycle",
+      "linkedEntity": "Task",
+      "category": "interaction",
+      "stateMachine": { "...": "انظر أعلاه" }
+    }
+  ],
+  "pages": [
+    {
+      "name": "TaskListPage",
+      "path": "/tasks",
+      "traits": [{ "ref": "TaskLifecycle", "linkedEntity": "Task" }]
+    }
+  ]
+}
+```
+
+### 4. التعابير S (S-Expressions)
 
 كل المنطق يُعبَّر عنه كمصفوفات:
 
-**الحراس:**
 ```json
+// الحارس: فحص الشروط
 ["and",
-  ["eq", ["@entity.status", "pending"]],
-  ["eq", ["@entity.assignee", "@payload.userId"]]
+  ["=", "@entity.status", "pending"],
+  [">", "@entity.priority", 3]
 ]
+
+// التأثيرات: تنفيذ الإجراءات
+["persist", "update", "Task", "@entity"]
+["notify", "success", "تم الحفظ!"]
+["navigate", "/tasks"]
 ```
 
-**التأثيرات:**
-```json
-[
-  ["set", "status", "completed"],
-  ["persist", "update", "Task", "@entity.id"],
-  ["emit", "TASK_COMPLETED"],
-  ["render-ui", "main", { "type": "success-message" }]
-]
-```
-
-### 4. الدائرة المغلقة
+### 5. الدائرة المغلقة (Closed Circuit)
 
 ```
 1. حدث → المستخدم ينقر "أكمل المهمة"
@@ -191,4 +262,6 @@ sidebar_label: مقدمة
 ## الخطوات التالية
 
 1. [تثبيت CLI](../downloads/cli) - احصل على المدار على نظامك
-2. [المساهمة](../community/contributing) - انضم إلى المجتمع
+2. [تشريح مدار كامل](../tutorials/beginner/complete-orbital) - تعلّم الأجزاء الأربعة
+3. [بناء مدير المهام](../tutorials/beginner/task-manager) - مثال عملي كامل
+4. [المساهمة](../community/contributing) - انضم إلى المجتمع
