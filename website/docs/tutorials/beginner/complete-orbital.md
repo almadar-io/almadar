@@ -2,6 +2,8 @@
 
 > Every feature in Almadar is an orbital. An orbital is not complete without all four parts.
 
+<OrbitalDiagram />
+
 ## The Four Parts of an Orbital
 
 An orbital is the fundamental unit of an Almadar application. It must contain:

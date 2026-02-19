@@ -8,6 +8,8 @@ This tutorial builds a real task manager step by step. By the end you'll have a 
 - A **CRUD trait** (list, create, edit, delete)
 - Two pages wired to the traits
 
+<OrbitalDiagram />
+
 ---
 
 ## What We're Building
