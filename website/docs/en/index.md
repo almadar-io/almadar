@@ -41,18 +41,19 @@ Welcome to the Almadar programming language documentation. Almadar is a declarat
 
 #### Beginner
 
-- [Task Manager](tutorials/beginner/task-manager.md)
-- [Todo App](tutorials/beginner/todo-app.md)
+- [Anatomy of a Complete Orbital](tutorials/beginner/complete-orbital.md) - Entity, traits, state machine, and pages
+- [Build a Task Manager](tutorials/beginner/task-manager.md) - Full CRUD with lifecycle states
 
 #### Intermediate
 
-- [E-Commerce Store](tutorials/intermediate/ecommerce.md)
-- [SaaS Dashboard](tutorials/intermediate/saas-dashboard.md)
+- [UI Patterns & render-ui](tutorials/intermediate/ui-patterns.md) - All pattern types, slots, and action wiring
+- [Guards & Business Rules](tutorials/intermediate/guards.md) - S-expression conditions on transitions
+- [Cross-Orbital Communication](tutorials/intermediate/cross-orbital.md) - Emits, listens, and payload contracts
 
 #### Advanced
 
-- [Game Development](tutorials/advanced/game-development.md)
-- [IoT & Robotics](tutorials/advanced/iot-robotics.md)
+- [Building a Full Multi-Orbital Application](tutorials/advanced/full-app.md) - Three connected orbitals from a real schema
+- [Generating Schemas with an LLM](tutorials/advanced/ai-generation.md) - Prompting, validation, and fixing common mistakes
 
 ### Reference
 
