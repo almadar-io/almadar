@@ -3,7 +3,6 @@ id: introduction
 title: Introduction to Almadar
 sidebar_label: Introduction
 ---
-
 # Introduction to Almadar
 
 > **The Physics of Software**: Natural Language → Schema → Production Application
@@ -17,6 +16,8 @@ Almadar (المدار) is a **declarative programming language** for building fu
 - **Pages** - Routes with UI bindings
 
 The Almadar compiler transforms this schema into a complete, production-ready application.
+
+<OrbitalDiagram />
 
 ## The Problem Almadar Solves
 
@@ -83,6 +84,11 @@ Entities define what your application manages:
 }
 ```
 
+**Persistence types:**
+- `persistent` - Stored in database (Firestore, PostgreSQL)
+- `runtime` - In-memory (session-specific)
+- `singleton` - Single global instance
+
 ### 2. Traits
 
 Traits define how your application behaves using state machines:
@@ -90,21 +96,127 @@ Traits define how your application behaves using state machines:
 ```json
 {
   "name": "TaskLifecycle",
+  "linkedEntity": "Task",
+  "category": "interaction",
   "stateMachine": {
     "states": [
       { "name": "Pending", "isInitial": true },
       { "name": "InProgress" },
-      { "name": "Done" }
+      { "name": "Done", "isTerminal": true }
     ],
     "events": [
+      { "key": "INIT", "name": "Initialize" },
       { "key": "START", "name": "Start Working" },
       { "key": "COMPLETE", "name": "Mark Complete" }
+    ],
+    "transitions": [
+      {
+        "from": "Pending",
+        "event": "INIT",
+        "to": "Pending",
+        "effects": [
+          ["fetch", "Task"],
+          ["render-ui", "main", {
+            "type": "entity-table",
+            "entity": "Task",
+            "columns": ["title", "status", "assignee"],
+            "itemActions": [
+              { "event": "START", "label": "Start" },
+              { "event": "COMPLETE", "label": "Complete" }
+            ]
+          }]
+        ]
+      },
+      {
+        "from": "Pending",
+        "to": "InProgress",
+        "event": "START",
+        "guard": ["=", "@entity.assignee", "@currentUser.id"],
+        "effects": [
+          ["set", "@entity.status", "in_progress"],
+          ["persist", "update", "Task", "@entity"]
+        ]
+      },
+      {
+        "from": "InProgress",
+        "to": "Done",
+        "event": "COMPLETE",
+        "effects": [
+          ["persist", "update", "Task", "@entity"],
+          ["notify", "success", "Task completed!"]
+        ]
+      }
     ]
   }
 }
 ```
 
-### 3. The Closed Circuit
+**Key insight:** A trait combines behavior (state machine) AND UI (`render-ui` effects).
+
+### 3. Pages
+
+Pages bind traits to URL routes. Every orbital needs at least one page:
+
+```json
+{
+  "name": "TaskListPage",
+  "path": "/tasks",
+  "traits": [
+    { "ref": "TaskLifecycle", "linkedEntity": "Task" }
+  ]
+}
+```
+
+A complete orbital brings all three parts together:
+
+```json
+{
+  "name": "TaskManager",
+  "entity": {
+    "name": "Task",
+    "persistence": "persistent",
+    "fields": [
+      { "name": "title", "type": "string", "required": true },
+      { "name": "status", "type": "enum", "values": ["pending", "in_progress", "done"] },
+      { "name": "assignee", "type": "string" }
+    ]
+  },
+  "traits": [
+    {
+      "name": "TaskLifecycle",
+      "linkedEntity": "Task",
+      "category": "interaction",
+      "stateMachine": { "...": "see above" }
+    }
+  ],
+  "pages": [
+    {
+      "name": "TaskListPage",
+      "path": "/tasks",
+      "traits": [{ "ref": "TaskLifecycle", "linkedEntity": "Task" }]
+    }
+  ]
+}
+```
+
+### 4. S-Expressions
+
+All logic is expressed as arrays:
+
+```json
+// Guard: Check conditions
+["and",
+  ["=", "@entity.status", "pending"],
+  [">", "@entity.priority", 3]
+]
+
+// Effects: Perform actions
+["persist", "update", "Task", "@entity"]
+["notify", "success", "Task saved!"]
+["navigate", "/tasks"]
+```
+
+### 5. The Closed Circuit
 
 Every user action follows this path:
 
@@ -119,12 +231,33 @@ Every user action follows this path:
 
 ## Why "Almadar"?
 
-Almadar (المدار) means "orbit" in Arabic. Just as planets follow predictable paths governed by physical laws, applications built with Almadar follow predictable paths governed by state machines.
+Almadar (المدار) means "orbit" in Arabic. The name comes from celestial mechanics:
+
+| Physics | Almadar |
+|---------|---------|
+| Objects in space | Entities (data) |
+| Forces cause motion | Events trigger behavior |
+| Laws govern motion | Guards control transitions |
+| Reactions | Effects |
+| Stable orbits | Valid application states |
+
+Just as planets follow predictable paths governed by physical laws, applications built with Almadar follow predictable paths governed by state machines.
+
+## What You'll Build
+
+By the end of this documentation, you'll be able to:
+
+1. **Design schemas** - Model complex applications as entities and traits
+2. **Write guards** - Implement fine-grained permissions
+3. **Create effects** - Handle server and client-side actions
+4. **Connect orbitals** - Build modular, communicating features
+5. **Deploy applications** - Go from schema to production
 
 ## Next Steps
 
-1. [Install the CLI](../downloads/cli) - Get Almadar on your system
-2. [Contributing](../community/contributing) - Join the community
+1. [Install the CLI](../downloads/cli.md) - Get Almadar on your system
+2. [Your First Schema](first-schema.md) - Build a task manager
+3. [Core Concepts](core-concepts.md) - Deep dive into the fundamentals
 
 ---
 

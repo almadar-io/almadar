@@ -4,6 +4,8 @@
 
 Orbitals are self-contained — but real applications need features to talk to each other. Almadar connects orbitals through a typed event bus: one orbital emits, others listen.
 
+<OrbitalDiagram />
+
 ---
 
 ## The Pattern

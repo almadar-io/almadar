@@ -4,6 +4,8 @@
 
 Almadar UI is driven entirely by `render-ui` effects inside state machine transitions. There is no JSX, no template files, no separate component tree — the state machine *is* the UI logic.
 
+<OrbitalDiagram />
+
 ---
 
 ## How render-ui Works

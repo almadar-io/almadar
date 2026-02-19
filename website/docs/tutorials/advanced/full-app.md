@@ -4,6 +4,8 @@
 
 This tutorial walks through the complete `full-app-test` schema — a real application with three connected orbitals. It combines everything from the previous tutorials: entities, state machines, render-ui, guards, and cross-orbital events.
 
+<OrbitalDiagram />
+
 ---
 
 ## Application Overview

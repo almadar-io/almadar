@@ -4,6 +4,8 @@
 
 Guards are conditions that must be true for a transition to fire. They act as the gatekeepers of your business rules — written once, enforced everywhere, for both the UI and the API.
 
+<OrbitalDiagram />
+
 ---
 
 ## What is a Guard?

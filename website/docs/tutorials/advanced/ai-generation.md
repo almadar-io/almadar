@@ -8,6 +8,8 @@ This tutorial covers:
 - Validating the output
 - Fixing the most common mistakes LLMs make
 
+<OrbitalDiagram />
+
 ---
 
 ## The Almadar Skill
