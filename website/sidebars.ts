@@ -19,6 +19,37 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
+      label: "Tutorials",
+      items: [
+        {
+          type: "category",
+          label: "Beginner",
+          items: [
+            "tutorials/beginner/complete-orbital",
+            "tutorials/beginner/task-manager",
+          ],
+        },
+        {
+          type: "category",
+          label: "Intermediate",
+          items: [
+            "tutorials/intermediate/ui-patterns",
+            "tutorials/intermediate/guards",
+            "tutorials/intermediate/cross-orbital",
+          ],
+        },
+        {
+          type: "category",
+          label: "Advanced",
+          items: [
+            "tutorials/advanced/full-app",
+            "tutorials/advanced/ai-generation",
+          ],
+        },
+      ],
+    },
+    {
+      type: "category",
       label: "Community",
       items: ["community/contributing"],
     },
