@@ -26,16 +26,8 @@ const sidebars: SidebarsConfig = {
       type: "category",
       label: "Reference",
       items: [
-        {
-          type: "link",
-          label: "Standard Library",
-          href: "pathname:///stdlib.html",
-        },
-        {
-          type: "link",
-          label: "Behaviors",
-          href: "pathname:///behaviors.html",
-        },
+        "reference/standard-library",
+        "reference/behaviors",
       ],
     },
   ],
