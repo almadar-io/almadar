@@ -11,13 +11,13 @@
     "test": "almadar test"
   },
   "dependencies": {
-    "@almadar/core": "^1.0.1",
-    "@almadar/patterns": "^1.0.1",
-    "@almadar/std": "^1.0.1",
-    "@almadar/validation": "^1.0.1"
+    "@almadar/core": "^2.0.0",
+    "@almadar/patterns": "^2.0.0",
+    "@almadar/std": "^2.0.0",
+    "@almadar/validation": "^2.0.0"
   },
   "devDependencies": {
-    "@almadar/cli": "^1.0.1"
+    "@almadar/cli": "^1.5.0"
   },
   "engines": {
     "node": ">=20.0.0"
