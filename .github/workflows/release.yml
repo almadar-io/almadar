@@ -55,18 +55,32 @@ jobs:
           mkdir -p dist
           cp "cli/dist/${{ matrix.name }}/almadar" dist/almadar
           chmod +x dist/almadar
+          # Bundle shell template alongside binary
+          if [ -d "cli/shells/almadar-shell" ]; then
+            mkdir -p dist/shells
+            cp -r cli/shells/almadar-shell dist/shells/almadar-shell
+            rm -rf dist/shells/almadar-shell/node_modules
+            rm -rf dist/shells/almadar-shell/.turbo
+          fi
           cd dist
-          tar -czvf "almadar-${{ matrix.name }}.tar.gz" almadar
-          rm almadar
+          tar -czvf "almadar-${{ matrix.name }}.tar.gz" almadar shells/
+          rm -rf almadar shells/
 
       - name: Package binary (Windows)
         if: steps.check.outputs.exists == 'true' && matrix.ext == '.exe'
         run: |
           mkdir -p dist
           cp "cli/dist/${{ matrix.name }}/almadar.exe" dist/almadar.exe
+          # Bundle shell template alongside binary
+          if [ -d "cli/shells/almadar-shell" ]; then
+            mkdir -p dist/shells
+            cp -r cli/shells/almadar-shell dist/shells/almadar-shell
+            rm -rf dist/shells/almadar-shell/node_modules
+            rm -rf dist/shells/almadar-shell/.turbo
+          fi
           cd dist
-          zip "almadar-${{ matrix.name }}.zip" almadar.exe
-          rm almadar.exe
+          zip -r "almadar-${{ matrix.name }}.zip" almadar.exe shells/
+          rm -rf almadar.exe shells/
 
       - name: Upload artifact
         if: steps.check.outputs.exists == 'true'
@@ -248,10 +262,10 @@ jobs:
             cp -r cli/npm/* "$PKG_DIR/"
 
             # Copy shell templates (excluding node_modules, .git, generated)
-            if [ -d "shells" ]; then
+            if [ -d "cli/shells" ]; then
               echo "Copying shell templates..."
               mkdir -p "$PKG_DIR/shells"
-              for shell_dir in shells/*/; do
+              for shell_dir in cli/shells/*/; do
                 shell_name=$(basename "$shell_dir")
                 echo "  Copying $shell_name..."
                 mkdir -p "$PKG_DIR/shells/$shell_name"
@@ -337,6 +351,8 @@ jobs:
 
             def install
               bin.install "almadar"
+              # Install shell templates
+              (lib/"almadar/shells").install Dir["shells/*"] if Dir.exist?("shells")
             end
 
             test do
