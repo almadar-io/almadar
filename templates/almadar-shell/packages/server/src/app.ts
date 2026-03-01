@@ -3,17 +3,20 @@
  */
 
 import express from 'express';
+import cors from 'cors';
 import {
   env,
   logger,
   errorHandler,
   notFoundHandler,
+  debugEventsRouter,
 } from '@almadar/server';
 import { registerRoutes } from './routes.js';
 
 export const app = express();
 
 // Middleware
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -21,6 +24,9 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
+
+// Debug event bus endpoints (dev-only, no-op in production)
+app.use('/api/debug', debugEventsRouter());
 
 // Register generated routes
 registerRoutes(app);
