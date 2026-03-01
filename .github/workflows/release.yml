@@ -55,12 +55,15 @@ jobs:
           mkdir -p dist
           cp "cli/dist/${{ matrix.name }}/almadar" dist/almadar
           chmod +x dist/almadar
-          # Bundle shell template alongside binary
+          # Bundle shell template alongside binary (try repo-level, fallback to platform dist)
           if [ -d "cli/shells/almadar-shell" ]; then
             mkdir -p dist/shells
             cp -r cli/shells/almadar-shell dist/shells/almadar-shell
             rm -rf dist/shells/almadar-shell/node_modules
             rm -rf dist/shells/almadar-shell/.turbo
+          elif [ -d "cli/dist/${{ matrix.name }}/shells/almadar-shell" ]; then
+            mkdir -p dist/shells
+            cp -r "cli/dist/${{ matrix.name }}/shells/almadar-shell" dist/shells/almadar-shell
           fi
           cd dist
           TAR_ARGS="almadar"
@@ -73,12 +76,15 @@ jobs:
         run: |
           mkdir -p dist
           cp "cli/dist/${{ matrix.name }}/almadar.exe" dist/almadar.exe
-          # Bundle shell template alongside binary
+          # Bundle shell template alongside binary (try repo-level, fallback to platform dist)
           if [ -d "cli/shells/almadar-shell" ]; then
             mkdir -p dist/shells
             cp -r cli/shells/almadar-shell dist/shells/almadar-shell
             rm -rf dist/shells/almadar-shell/node_modules
             rm -rf dist/shells/almadar-shell/.turbo
+          elif [ -d "cli/dist/${{ matrix.name }}/shells/almadar-shell" ]; then
+            mkdir -p dist/shells
+            cp -r "cli/dist/${{ matrix.name }}/shells/almadar-shell" dist/shells/almadar-shell
           fi
           cd dist
           ZIP_ARGS="almadar.exe"
