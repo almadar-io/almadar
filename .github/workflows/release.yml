@@ -63,7 +63,9 @@ jobs:
             rm -rf dist/shells/almadar-shell/.turbo
           fi
           cd dist
-          tar -czvf "almadar-${{ matrix.name }}.tar.gz" almadar shells/
+          TAR_ARGS="almadar"
+          if [ -d "shells" ]; then TAR_ARGS="$TAR_ARGS shells/"; fi
+          tar -czvf "almadar-${{ matrix.name }}.tar.gz" $TAR_ARGS
           rm -rf almadar shells/
 
       - name: Package binary (Windows)
@@ -79,7 +81,9 @@ jobs:
             rm -rf dist/shells/almadar-shell/.turbo
           fi
           cd dist
-          zip -r "almadar-${{ matrix.name }}.zip" almadar.exe shells/
+          ZIP_ARGS="almadar.exe"
+          if [ -d "shells" ]; then ZIP_ARGS="$ZIP_ARGS shells/"; fi
+          zip -r "almadar-${{ matrix.name }}.zip" $ZIP_ARGS
           rm -rf almadar.exe shells/
 
       - name: Upload artifact
