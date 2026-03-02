@@ -14,6 +14,18 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
+      label: "Core Concepts",
+      items: [
+        "core-concepts/entities",
+        "core-concepts/traits",
+        "core-concepts/pages",
+        "core-concepts/closed-circuit",
+        "core-concepts/patterns",
+        "core-concepts/standard-library",
+      ],
+    },
+    {
+      type: "category",
       label: "Downloads",
       items: ["downloads/cli", "downloads/skills"],
     },

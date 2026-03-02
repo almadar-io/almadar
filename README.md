@@ -2,7 +2,17 @@
 
 > **فيزياء البرمجيات** - The Physics of Software
 
-Almadar (المدار) is a declarative programming language for building full-stack applications using entities, traits, and state machines.
+Almadar (المدار) is a **declarative application framework** for building full-stack applications. Define your app in `.orb` schema files — either written by hand or generated from natural language — and compile to production-ready code.
+
+```
+Schema (.orb) → Compiler → Generated Full-Stack App
+         ▲
+         │ (optional)
+   Natural Language
+   (LLM-powered or human)
+```
+
+---
 
 ## Quick Start
 
@@ -21,27 +31,175 @@ npm install
 almadar dev
 ```
 
+---
+
+## Core Philosophy
+
+### Schema-First Development
+
+Define your application in `.orb` schema files — written by hand or generated from natural language. The schema describes:
+
+- **Entities** — Data models (User, Order, Task)
+- **Traits** — State machines defining behavior
+- **Pages** — Routes and their trait bindings
+
+### The Orbital Formula
+
+```
+Orbital Unit = Entity + Traits + Pages
+Application  = Σ(Orbital Units)
+```
+
+Each orbital unit is a self-contained, composable building block that can be reused across applications.
+
+### Closed Circuit Pattern
+
+Every user interaction follows a closed loop:
+
+```
+User Action → Event → State Machine → Effects → UI Update → (loop)
+```
+
+No direct state mutations — all changes flow through the state machine.
+
+---
+
+## Architecture Overview
+
+### High-Level System Flow
+
+```
+Natural Language ──┐
+(Human or AI)      │
+                   │
+Human-written ─────┼──► ┌─────────────────┐
+.orb Schema        │    │  Builder IDE    │  Generates/Edits
+                   │    │  (LLM Agent)    │  .orb schema
+                   └──► └────────┬────────┘
+                                  │
+                                  ▼
+                         ┌─────────────────┐
+                         │ Rust Compiler   │  Parse → Validate → Resolve → Generate
+                         │ (orbital-rust)  │
+                         └────────┬────────┘
+                                  │
+                             ┌────┴────┐
+                             ▼         ▼
+                          TypeScript  Python
+                             Shell     Shell
+                          
+                          (Rust shell coming soon)
+```
+
+### Three Execution Models
+
+| Model | Use Case | Technology |
+|-------|----------|------------|
+| **TypeScript Runtime** | Preview, development | `packages/almadar-runtime/` |
+| **Rust Runtime** | Standalone apps, CLI | `orbital-rust/crates/orbital-server/` |
+| **Compiled Code** | Production deployment | Generated TS/Python (Rust coming soon) |
+
+---
+
+## Key Concepts
+
+### 1. Entities
+
+Define your data models:
+
+```json
+{
+  "entity": {
+    "name": "Task",
+    "collection": "tasks",
+    "fields": [
+      { "name": "id", "type": "string", "primaryKey": true },
+      { "name": "title", "type": "string", "required": true },
+      { "name": "status", "type": "enum", "values": ["pending", "done"] }
+    ]
+  }
+}
+```
+
+📚 [Entity Documentation](https://almadar.io/docs/core-concepts/entities)
+
+### 2. Traits (State Machines)
+
+Define behavior with states, events, and transitions:
+
+```json
+{
+  "trait": {
+    "name": "TaskBrowser",
+    "linkedEntity": "Task",
+    "stateMachine": {
+      "states": [
+        { "name": "Browsing", "isInitial": true },
+        { "name": "Creating" }
+      ],
+      "events": ["INIT", "CREATE", "SAVE", "CANCEL"],
+      "transitions": [
+        {
+          "from": "Browsing",
+          "to": "Browsing",
+          "event": "INIT",
+          "effects": [
+            ["render-ui", "main", { "type": "entity-table", "entity": "Task" }]
+          ]
+        }
+      ]
+    }
+  }
+}
+```
+
+📚 [Trait Documentation](https://almadar.io/docs/core-concepts/traits) | [Closed Circuit](https://almadar.io/docs/core-concepts/closed-circuit)
+
+### 3. Patterns & UI
+
+Patterns bridge schemas to UI components:
+
+```json
+["render-ui", "main", {
+  "type": "entity-table",
+  "entity": "Task",
+  "columns": ["title", "status"]
+}]
+```
+
+📚 [Patterns Documentation](https://almadar.io/docs/core-concepts/patterns)
+
+### 4. Standard Library
+
+Reuse pre-built behaviors:
+
+```json
+{
+  "uses": [{ "from": "std/behaviors/crud", "as": "CRUD" }],
+  "traits": [{ "name": "TaskCRUD", "uses": ["CRUD"] }]
+}
+```
+
+📚 [Standard Library](https://almadar.io/docs/core-concepts/standard-library)
+
+---
+
 ## Installation
 
 ### NPM Packages
 
-Install the packages you need:
-
 ```bash
-# Core packages (required)
+# Core packages
 npm install @almadar/core @almadar/validation @almadar/evaluator
 
-# Standard library operators
+# Standard library
 npm install @almadar/std
 
 # UI patterns and components
 npm install @almadar/patterns @almadar/ui
 
-# Runtime (for running compiled apps)
+# Runtime
 npm install @almadar/runtime @almadar/server
-
-# External service integrations (Stripe, Twilio, YouTube, etc.)
-npm install @almadar/integrations
 
 # AI agent infrastructure
 npm install @almadar/agent @almadar/llm @almadar/skills
@@ -57,68 +215,129 @@ npm install -g @almadar/cli
 npx @almadar/cli validate schema.orb
 ```
 
+---
+
 ## Published Packages
 
 All `@almadar` packages are published to [npm](https://www.npmjs.com/org/almadar).
 
 ### Core
 
-| Package | npm | Description |
-|---------|-----|-------------|
-| `@almadar/core` | [![npm](https://img.shields.io/npm/v/@almadar/core)](https://www.npmjs.com/package/@almadar/core) | Core schema types and definitions |
-| `@almadar/validation` | [![npm](https://img.shields.io/npm/v/@almadar/validation)](https://www.npmjs.com/package/@almadar/validation) | Schema validation rules |
-| `@almadar/evaluator` | [![npm](https://img.shields.io/npm/v/@almadar/evaluator)](https://www.npmjs.com/package/@almadar/evaluator) | S-expression evaluator |
-| `@almadar/std` | [![npm](https://img.shields.io/npm/v/@almadar/std)](https://www.npmjs.com/package/@almadar/std) | Standard library (math, string, array operators) |
-| `@almadar/patterns` | [![npm](https://img.shields.io/npm/v/@almadar/patterns)](https://www.npmjs.com/package/@almadar/patterns) | Pattern registry and component mappings |
+| Package | Description |
+|---------|-------------|
+| `@almadar/core` | Core schema types and definitions |
+| `@almadar/validation` | Schema validation rules |
+| `@almadar/evaluator` | S-expression evaluator |
+| `@almadar/std` | Standard library operators |
+| `@almadar/patterns` | Pattern registry and component mappings |
 
 ### Runtime
 
-| Package | npm | Description |
-|---------|-----|-------------|
-| `@almadar/runtime` | [![npm](https://img.shields.io/npm/v/@almadar/runtime)](https://www.npmjs.com/package/@almadar/runtime) | Interpreted runtime for orbital applications |
-| `@almadar/server` | [![npm](https://img.shields.io/npm/v/@almadar/server)](https://www.npmjs.com/package/@almadar/server) | Shared server infrastructure (Express middleware) |
-| `@almadar/ui` | [![npm](https://img.shields.io/npm/v/@almadar/ui)](https://www.npmjs.com/package/@almadar/ui) | React UI components, hooks, and providers |
-| `@almadar/integrations` | [![npm](https://img.shields.io/npm/v/@almadar/integrations)](https://www.npmjs.com/package/@almadar/integrations) | External service integrations (Stripe, Twilio, YouTube, Email, LLM) |
+| Package | Description |
+|---------|-------------|
+| `@almadar/runtime` | Interpreted runtime for orbital applications |
+| `@almadar/server` | Server infrastructure (Express middleware) |
+| `@almadar/ui` | React UI components, hooks, and providers |
+| `@almadar/integrations` | External service integrations |
 
 ### AI & Agent
 
-| Package | npm | Description |
-|---------|-----|-------------|
-| `@almadar/agent` | [![npm](https://img.shields.io/npm/v/@almadar/agent)](https://www.npmjs.com/package/@almadar/agent) | AI agent infrastructure for schema generation |
-| `@almadar/llm` | [![npm](https://img.shields.io/npm/v/@almadar/llm)](https://www.npmjs.com/package/@almadar/llm) | Multi-provider LLM client (rate limiting, token tracking, structured outputs) |
-| `@almadar/skills` | [![npm](https://img.shields.io/npm/v/@almadar/skills)](https://www.npmjs.com/package/@almadar/skills) | AI skill generators and prompts |
+| Package | Description |
+|---------|-------------|
+| `@almadar/agent` | AI agent infrastructure |
+| `@almadar/llm` | Multi-provider LLM client |
+| `@almadar/skills` | AI skill generators and prompts |
 
 ### Tooling
 
-| Package | npm | Description |
-|---------|-----|-------------|
-| `@almadar/cli` | [![npm](https://img.shields.io/npm/v/@almadar/cli)](https://www.npmjs.com/package/@almadar/cli) | Almadar CLI (validate, compile, dev server) |
-| `@almadar/extensions` | [![npm](https://img.shields.io/npm/v/@almadar/extensions)](https://www.npmjs.com/package/@almadar/extensions) | Editor extension utilities for `.orb` files (VSCode, Zed) |
+| Package | Description |
+|---------|-------------|
+| `@almadar/cli` | Almadar CLI (validate, compile, dev) |
+| `@almadar/extensions` | Editor extensions (VSCode, Zed) |
 
-### CLI Platform Binaries
+---
 
-| Package | Platform |
-|---------|----------|
-| `@almadar/cli-darwin-arm64` | macOS Apple Silicon |
-| `@almadar/cli-darwin-x64` | macOS Intel |
-| `@almadar/cli-linux-arm64` | Linux ARM64 |
-| `@almadar/cli-linux-x64` | Linux x64 |
-| `@almadar/cli-windows-x64` | Windows x64 |
+## Development Workflow
+
+### The Fix Priority Rule
+
+When something breaks, follow this order:
+
+1. **Fix schema first** — 99% of issues are schema problems
+2. **Update shell components** — Component bugs
+3. **Modify compiler** — LAST RESORT (ask first!)
+
+### Typical Flow
+
+```
+1. Edit Schema (.orb)
+        ↓
+2. Validate: orbital validate schema.orb
+        ↓
+3. Compile: orbital compile schema.orb --shell typescript
+        ↓
+4. Test generated code
+        ↓
+5. Iterate
+```
+
+📚 [Developer Guide](https://almadar.io/docs) | [Projects Guide](https://almadar.io/docs)
+
+---
 
 ## Documentation
 
-- [Getting Started](https://almadar.io/docs/en/getting-started/introduction)
-- [Language Reference](https://almadar.io/docs/en/language/specification)
-- [API Reference](https://almadar.io/docs/en/reference/cli)
+Full documentation is available at [almadar.io/docs](https://almadar.io/docs):
+
+### Core Concepts
+
+| Document | Purpose |
+|----------|---------|
+| [Entities](https://almadar.io/docs/core-concepts/entities) | Data models, field types, persistence |
+| [Traits](https://almadar.io/docs/core-concepts/traits) | State machines, guards, effects |
+| [Pages](https://almadar.io/docs/core-concepts/pages) | Routes, URL patterns, trait bindings |
+| [Closed Circuit](https://almadar.io/docs/core-concepts/closed-circuit) | Event flow pattern |
+| [Patterns](https://almadar.io/docs/core-concepts/patterns) | UI patterns and components |
+| [Standard Library](https://almadar.io/docs/core-concepts/standard-library) | Reusable behaviors and operators |
+
+### Tutorials
+
+| Level | Topic |
+|-------|-------|
+| Beginner | [Your First Schema](https://almadar.io/docs/tutorials/beginner/complete-orbital) |
+| Intermediate | [UI Patterns](https://almadar.io/docs/tutorials/intermediate/ui-patterns), [Guards](https://almadar.io/docs/tutorials/intermediate/guards) |
+| Advanced | [Full App](https://almadar.io/docs/tutorials/advanced/full-app) |
+
+### Full Documentation
+
+Visit [almadar.io/docs](https://almadar.io/docs) for complete documentation.
+
+---
 
 ## Repository Structure
 
-| Directory | Description |
-|-----------|-------------|
-| [`examples/`](./examples) | Example schemas |
-| [`templates/`](./templates) | Shell templates for compilation |
-| [`website/`](./website) | Documentation website |
-| [`extensions/`](./extensions) | Editor extensions (VSCode, Zed) |
+```
+almadar/
+├── examples/          # Example schemas
+├── templates/         # Shell templates for compilation
+├── website/           # Documentation website
+├── extensions/        # Editor extensions
+├── cli/               # CLI source
+├── skills/            # AI skill definitions
+└── tests/             # Test suites
+```
+
+Monorepo structure:
+
+```
+packages/              # Shared packages (@almadar/*)
+orbital-rust/          # Rust compiler & runtime
+apps/builder/          # Builder IDE
+projects/              # Client projects
+docs/                  # Documentation
+```
+
+---
 
 ## Community
 
@@ -126,9 +345,13 @@ All `@almadar` packages are published to [npm](https://www.npmjs.com/org/almadar
 - [Twitter](https://twitter.com/AlmadarLang)
 - [GitHub Discussions](https://github.com/almadar-io/almadar/discussions)
 
+---
+
 ## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+
+---
 
 ## License
 
