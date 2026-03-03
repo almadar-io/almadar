@@ -327,16 +327,13 @@
     "description": "The title of the tag list page"
   },
   "homepage.title": {
-    "message": "فيزياء البرمجيات",
-    "description": "Homepage main title"
+    "message": "فيزياء البرمجيات"
   },
   "homepage.subtitle": {
-    "message": "ابنِ تطبيقات متكاملة من خلال schemas تصريحية. حدد الـ entities والسلوكيات وواجهة المستخدم كـ state machines تُترجم إلى كود جاهز للإنتاج.",
-    "description": "Homepage subtitle"
+    "message": "ابنِ تطبيقات متكاملة من خلال schemas تصريحية. حدد الـ entities والسلوكيات وواجهة المستخدم كـ state machines تُترجم إلى كود جاهز للإنتاج."
   },
   "homepage.getStarted": {
-    "message": "ابدأ الآن",
-    "description": "Get started button"
+    "message": "ابدأ الآن"
   },
   "homepage.downloadCLI": {
     "message": "تحميل CLI",
@@ -435,12 +432,10 @@
     "description": "Page description"
   },
   "homepage.cta.title": {
-    "message": "جاهز للبناء؟",
-    "description": "CTA title"
+    "message": "جاهز للبناء؟"
   },
   "homepage.cta.description": {
-    "message": "ثبّت الـ CLI وأنشئ أول orbital schema في ثوانٍ.",
-    "description": "CTA description"
+    "message": "ثبّت الـ CLI وأنشئ أول orbital schema في ثوانٍ."
   },
   "homepage.cta.readDocs": {
     "message": "اقرأ التوثيق",
@@ -451,12 +446,10 @@
     "description": "View on GitHub button"
   },
   "homepage.meta.title": {
-    "message": "فيزياء البرمجيات",
-    "description": "Meta title"
+    "message": "فيزياء البرمجيات"
   },
   "homepage.meta.description": {
-    "message": "Almadar - تطبيقات متكاملة تصريحية من خلال state machines",
-    "description": "Meta description"
+    "message": "Almadar - تطبيقات متكاملة تصريحية من خلال state machines"
   },
   "homepage.effect.set": {
     "message": "تحديث حقل الـ entity",
@@ -471,32 +464,25 @@
     "description": "Render-ui effect description"
   },
   "enterprise.tag": {
-    "message": "للمؤسسات",
-    "description": "Enterprise tag"
+    "message": "للمؤسسات"
   },
   "enterprise.title": {
-    "message": "Almadar للفرق والمؤسسات",
-    "description": "Enterprise title"
+    "message": "Almadar للفرق والمؤسسات"
   },
   "enterprise.subtitle": {
-    "message": "وسّع تطويرك مع ميزات مؤسسية، دعم مخصص، وخيارات نشر مرنة.",
-    "description": "Enterprise subtitle"
+    "message": "وسّع تطويرك مع ميزات مؤسسية، دعم مخصص، وخيارات نشر مرنة."
   },
   "enterprise.cta.contact": {
-    "message": "تواصل مع المبيعات",
-    "description": "Contact sales button"
+    "message": "تواصل مع المبيعات"
   },
   "enterprise.cta.docs": {
-    "message": "عرض التوثيق",
-    "description": "View docs button"
+    "message": "عرض التوثيق"
   },
   "enterprise.features.title": {
-    "message": "ميزات المؤسسات",
-    "description": "Enterprise features title"
+    "message": "ميزات المؤسسات"
   },
   "enterprise.features.subtitle": {
-    "message": "كل ما تحتاجه للبناء على نطاق واسع",
-    "description": "Enterprise features subtitle"
+    "message": "كل ما تحتاجه للبناء على نطاق واسع"
   },
   "enterprise.feature.collaboration.title": {
     "message": "التعاون الجماعي",
@@ -547,156 +533,118 @@
     "description": "Customization feature description"
   },
   "enterprise.pricing.title": {
-    "message": "تسعير مرن",
-    "description": "Pricing title"
+    "message": "تسعير مرن"
   },
   "enterprise.pricing.subtitle": {
-    "message": "خطط تنمو مع مؤسستك",
-    "description": "Pricing subtitle"
+    "message": "خطط تنمو مع مؤسستك"
   },
   "enterprise.pricing.team.title": {
-    "message": "فريق",
-    "description": "Team plan title"
+    "message": "فريق"
   },
   "enterprise.pricing.team.description": {
-    "message": "للفرق الصغيرة في البداية",
-    "description": "Team plan description"
+    "message": "للفرق الصغيرة في البداية"
   },
   "enterprise.pricing.team.feature1": {
-    "message": "حتى 10 أعضاء",
-    "description": "Team feature 1"
+    "message": "حتى 10 أعضاء"
   },
   "enterprise.pricing.team.feature2": {
-    "message": "مخططات مشتركة",
-    "description": "Team feature 2"
+    "message": "مخططات مشتركة"
   },
   "enterprise.pricing.team.feature3": {
-    "message": "دعم بالبريد",
-    "description": "Team feature 3"
+    "message": "دعم بالبريد"
   },
   "enterprise.pricing.team.feature4": {
-    "message": "نشر سحابي",
-    "description": "Team feature 4"
+    "message": "نشر سحابي"
   },
   "enterprise.pricing.popular": {
-    "message": "الأكثر شيوعاً",
-    "description": "Most popular badge"
+    "message": "الأكثر شيوعاً"
   },
   "enterprise.pricing.business.title": {
-    "message": "أعمال",
-    "description": "Business plan title"
+    "message": "أعمال"
   },
   "enterprise.pricing.business.description": {
-    "message": "للمؤسسات النامية",
-    "description": "Business plan description"
+    "message": "للمؤسسات النامية"
   },
   "enterprise.pricing.business.feature1": {
-    "message": "أعضاء غير محدودين",
-    "description": "Business feature 1"
+    "message": "أعضاء غير محدودين"
   },
   "enterprise.pricing.business.feature2": {
-    "message": "تكامل SSO/SAML",
-    "description": "Business feature 2"
+    "message": "تكامل SSO/SAML"
   },
   "enterprise.pricing.business.feature3": {
-    "message": "دعم أولوية",
-    "description": "Business feature 3"
+    "message": "دعم أولوية"
   },
   "enterprise.pricing.business.feature4": {
-    "message": "خيار السحابة الخاصة",
-    "description": "Business feature 4"
+    "message": "خيار السحابة الخاصة"
   },
   "enterprise.pricing.business.feature5": {
-    "message": "سجلات التدقيق",
-    "description": "Business feature 5"
+    "message": "سجلات التدقيق"
   },
   "enterprise.pricing.enterprise.title": {
-    "message": "مؤسسات",
-    "description": "Enterprise plan title"
+    "message": "مؤسسات"
   },
   "enterprise.pricing.enterprise.description": {
-    "message": "للمؤسسات الكبيرة",
-    "description": "Enterprise plan description"
+    "message": "للمؤسسات الكبيرة"
   },
   "enterprise.pricing.enterprise.feature1": {
-    "message": "نشر محلي",
-    "description": "Enterprise feature 1"
+    "message": "نشر محلي"
   },
   "enterprise.pricing.enterprise.feature2": {
-    "message": "تكاملات مخصصة",
-    "description": "Enterprise feature 2"
+    "message": "تكاملات مخصصة"
   },
   "enterprise.pricing.enterprise.feature3": {
-    "message": "دعم مخصص",
-    "description": "Enterprise feature 3"
+    "message": "دعم مخصص"
   },
   "enterprise.pricing.enterprise.feature4": {
-    "message": "ضمان SLA",
-    "description": "Enterprise feature 4"
+    "message": "ضمان SLA"
   },
   "enterprise.pricing.enterprise.feature5": {
-    "message": "تدريب مخصص",
-    "description": "Enterprise feature 5"
+    "message": "تدريب مخصص"
   },
   "enterprise.pricing.contact": {
-    "message": "تواصل معنا",
-    "description": "Contact us button"
+    "message": "تواصل معنا"
   },
   "enterprise.contact.title": {
-    "message": "جاهز للبدء؟",
-    "description": "Contact title"
+    "message": "جاهز للبدء؟"
   },
   "enterprise.contact.description": {
-    "message": "تواصل مع فريق المبيعات لمناقشة متطلباتك والحصول على عرض أسعار مخصص.",
-    "description": "Contact description"
+    "message": "تواصل مع فريق المبيعات لمناقشة متطلباتك والحصول على عرض أسعار مخصص."
   },
   "enterprise.meta.title": {
-    "message": "للمؤسسات",
-    "description": "Enterprise meta title"
+    "message": "للمؤسسات"
   },
   "enterprise.meta.description": {
-    "message": "Almadar للمؤسسات - وسّع تطويرك مع ميزات مؤسسية",
-    "description": "Enterprise meta description"
+    "message": "Almadar للمؤسسات - وسّع تطويرك مع ميزات مؤسسية"
   },
   "demos.tag": {
-    "message": "العروض التوضيحية",
-    "description": "Demos tag"
+    "message": "العروض التوضيحية"
   },
   "demos.title": {
-    "message": "عروض تفاعلية",
-    "description": "Demos page title"
+    "message": "عروض تفاعلية"
   },
   "demos.description": {
-    "message": "اختبر قوة المدار من خلال قوالب تفاعلية حية.",
-    "description": "Demos page description"
+    "message": "اختبر قوة المدار من خلال قوالب تفاعلية حية."
   },
   "demos.cta": {
-    "message": "عرض العروض التوضيحية",
-    "description": "View demos button"
+    "message": "عرض العروض التوضيحية"
   },
   "demos.meta.title": {
-    "message": "العروض التفاعلية",
-    "description": "Demos meta title"
+    "message": "العروض التفاعلية"
   },
   "demos.meta.description": {
-    "message": "استكشف نظام تصميم المدار والقوالب",
-    "description": "Demos meta description"
+    "message": "استكشف نظام تصميم المدار والقوالب"
   },
   "carousel.title": {
-    "message": "عروض تفاعلية",
-    "description": "Carousel section title"
+    "message": "عروض تفاعلية"
   },
   "carousel.subtitle": {
-    "message": "استكشف تطبيقات حقيقية مبنية بالمدار.",
-    "description": "Carousel section subtitle"
+    "message": "استكشف تطبيقات حقيقية مبنية بالمدار."
   },
   "carousel.viewAll": {
-    "message": "عرض جميع العروض",
-    "description": "View all demos button"
+    "message": "عرض جميع العروض"
   },
   "carousel.exploreDemo": {
-    "message": "استكشف العرض ←",
-    "description": "Explore demo CTA"
+    "message": "استكشف العرض ←"
   },
   "demo.category.socialNetwork": {
     "message": "شبكة اجتماعية",
@@ -835,28 +783,22 @@
     "description": "Demo description: Interactive Graph"
   },
   "blog.recentPosts.heading": {
-    "message": "أحدث المنشورات",
-    "description": "The heading for the recent posts section on blog post pages"
+    "message": "أحدث المنشورات"
   },
   "blog.recentPosts.readArticle": {
-    "message": "اقرأ المقال ←",
-    "description": "The link text for reading a recent blog post"
+    "message": "اقرأ المقال ←"
   },
   "blog.recentPosts.oneSchemaTitle": {
-    "message": "schema واحد، ستة تطبيقات",
-    "description": "Title for the 'One Schema, Six Apps' blog post"
+    "message": "schema واحد، ستة تطبيقات"
   },
   "blog.recentPosts.jsonThinksTitle": {
-    "message": "JSON يُفكّر: Turing-Complete JSON",
-    "description": "Title for the 'JSON That Thinks' blog post"
+    "message": "JSON يُفكّر: Turing-Complete JSON"
   },
   "blog.recentPosts.threeExecutionModelsTitle": {
-    "message": "ثلاثة نماذج تنفيذ، حقيقة واحدة",
-    "description": "Title for the 'Three Execution Models' blog post"
+    "message": "ثلاثة نماذج تنفيذ، حقيقة واحدة"
   },
   "blog.recentPosts.closedCircuitTitle": {
-    "message": "الـ Closed Circuit Pattern: لماذا يعلق مستخدموك (وكيف تمنع ذلك)",
-    "description": "Title for the 'Closed Circuit Pattern' blog post"
+    "message": "الـ Closed Circuit Pattern: لماذا يعلق مستخدموك (وكيف تمنع ذلك)"
   },
   "homepage.schema.inYourLanguage": {
     "message": "بلغتك",
@@ -875,43 +817,399 @@
     "description": "Animation section caption"
   },
   "hero.viz.appName": {
-    "message": "تطبيق تنفيذ الطلبات",
-    "description": "Hero visualization app name"
+    "message": "تطبيق تنفيذ الطلبات"
   },
   "hero.viz.entityName": {
-    "message": "طلب",
-    "description": "Hero visualization entity name"
+    "message": "طلب"
   },
   "hero.viz.pageName": {
-    "message": "تتبع الطلب",
-    "description": "Hero visualization page name"
+    "message": "تتبع الطلب"
   },
   "hero.viz.traitName": {
-    "message": "التنفيذ",
-    "description": "Hero visualization trait name"
+    "message": "التنفيذ"
   },
   "hero.viz.defaultApp": {
-    "message": "تطبيق",
-    "description": "Default app name"
+    "message": "تطبيق"
   },
   "hero.viz.appPrefix": {
-    "message": "تطبيق:",
-    "description": "Prefix for app name"
+    "message": "تطبيق:"
   },
   "hero.viz.entityLabel": {
-    "message": "(كيان)",
-    "description": "Label for entity node"
+    "message": "(كيان)"
   },
   "hero.viz.traitLabel": {
-    "message": "(سمة)",
-    "description": "Label for trait node"
+    "message": "(سمة)"
   },
   "hero.viz.pageLabel": {
-    "message": "(صفحة)",
-    "description": "Label for page node"
+    "message": "(صفحة)"
   },
   "hero.viz.orbitalUnit": {
-    "message": "الوحدة المدارية = كيان + سمات + صفحات",
-    "description": "Legend text"
+    "message": "الوحدة المدارية = كيان + سمات + صفحات"
+  },
+  "developers.hero.tag": {
+    "message": "لغة برمجة"
+  },
+  "developers.hero.title": {
+    "message": "لغة المدار"
+  },
+  "developers.hero.subtitle": {
+    "message": "المدار هو لغة مخططات تصريحية لتطبيقات متكاملة. عرّف الـ entities والـ state machines وواجهة المستخدم في ملف .orb واحد — المترجم يولد الباقي."
+  },
+  "developers.hero.getStarted": {
+    "message": "ابدأ الآن"
+  },
+  "developers.hero.viewExamples": {
+    "message": "عرض الأمثلة"
+  },
+  "developers.animation.title": {
+    "message": "كيف يعمل"
+  },
+  "developers.animation.subtitle": {
+    "message": "كل تطبيق في المدار يتكون من وحدات مدارية. الـ Entity يحمل بياناتك، والـ Traits تحدد السلوك كـ state machines، والصفحات تربطها بالمسارات. شاهد البنية وهي تتشكل."
+  },
+  "developers.animation.caption": {
+    "message": "الوحدة المدارية = Entity + Traits + Pages"
+  },
+  "developers.concepts.title": {
+    "message": "المفاهيم الأساسية"
+  },
+  "developers.concepts.subtitle": {
+    "message": "ثلاثة عناصر تبني كل تطبيق في المدار"
+  },
+  "developers.quickstart.inYourLanguage": {
+    "message": "بلغتك"
+  },
+  "developers.quickstart.title": {
+    "message": "أول مخطط في 60 ثانية"
+  },
+  "developers.quickstart.desc": {
+    "message": "ثبّت الأداة، أنشئ أول مخطط، وترجمه إلى تطبيق قيد التشغيل."
+  },
+  "developers.quickstart.step1": {
+    "message": "تثبيت الأداة"
+  },
+  "developers.quickstart.step2": {
+    "message": "تحرير مخطط .orb"
+  },
+  "developers.quickstart.step3": {
+    "message": "شغّل almadar dev my-app.orb للمراقبة والترجمة"
+  },
+  "developers.quickstart.fullGuide": {
+    "message": "دليل البدء الكامل"
+  },
+  "developers.modules.title": {
+    "message": "وحدات المكتبة القياسية"
+  },
+  "developers.modules.subtitle": {
+    "message": "213+ مشغلاً مدمجاً في 9 وحدات — كلها متاحة كـ s-expressions في الحراس والتأثيرات"
+  },
+  "developers.modules.operators": {
+    "message": "مشغل"
+  },
+  "developers.modules.viewAll": {
+    "message": "عرض مرجع المشغلات الكامل"
+  },
+  "developers.tutorials.title": {
+    "message": "مسارات الدروس التعليمية"
+  },
+  "developers.tutorials.subtitle": {
+    "message": "مسارات منظمة من الصفر إلى الإنتاج"
+  },
+  "developers.tutorials.start": {
+    "message": "ابدأ المسار"
+  },
+  "developers.playground.title": {
+    "message": "جرّبه في المتصفح"
+  },
+  "developers.playground.subtitle": {
+    "message": "شغّل s-expressions المدار مباشرةً في المتصفح — دون تثبيت"
+  },
+  "playground.loading": {
+    "message": "جاري التحميل..."
+  },
+  "developers.meta.title": {
+    "message": "المطورون — المدار"
+  },
+  "developers.meta.description": {
+    "message": "مركز مطوري المدار — لغة المدار، مرجع المشغلات، الدروس، ودليل البدء السريع."
+  },
+  "enterprise.security.title": {
+    "message": "الأمان والامتثال"
+  },
+  "enterprise.security.subtitle": {
+    "message": "مصمم للصناعات المنظمة من اليوم الأول"
+  },
+  "enterprise.security.auth.title": {
+    "message": "المصادقة والوصول"
+  },
+  "enterprise.security.auth.sso": {
+    "message": "تسجيل الدخول الموحد عبر SAML 2.0 وOIDC"
+  },
+  "enterprise.security.auth.rbac": {
+    "message": "التحكم في الوصول القائم على الأدوار (RBAC)"
+  },
+  "enterprise.security.auth.audit": {
+    "message": "سجلات تدقيق غير قابلة للتغيير لجميع عمليات المخطط"
+  },
+  "enterprise.security.auth.mfa": {
+    "message": "إلزام المصادقة متعددة العوامل"
+  },
+  "enterprise.security.compliance.title": {
+    "message": "الامتثال"
+  },
+  "enterprise.security.compliance.soc2": {
+    "message": "SOC 2 النوع الثاني (قيد التنفيذ)"
+  },
+  "enterprise.security.compliance.gdpr": {
+    "message": "معالجة بيانات متوافقة مع GDPR"
+  },
+  "enterprise.security.compliance.hipaa": {
+    "message": "خيارات نشر جاهزة لـ HIPAA"
+  },
+  "enterprise.security.compliance.gov": {
+    "message": "دعم الحكومة والصناعات المنظمة"
+  },
+  "enterprise.security.ai.title": {
+    "message": "أمان الذكاء الاصطناعي (قريباً)"
+  },
+  "enterprise.security.ai.icagi": {
+    "message": "تكامل IC-AGI للتحقق من المخطط وتطبيق السياسات"
+  },
+  "enterprise.security.ai.sandboxed": {
+    "message": "توليد ذكاء اصطناعي معزول مع بوابات مراجعة المخطط"
+  },
+  "enterprise.security.ai.audit": {
+    "message": "مسار تدقيق قرارات الذكاء الاصطناعي"
+  },
+  "enterprise.security.ai.policy": {
+    "message": "السياسة كرمز للمخططات المُولّدة بالذكاء الاصطناعي"
+  },
+  "enterprise.caseStudies.title": {
+    "message": "مُثبت ميدانياً"
+  },
+  "enterprise.caseStudies.subtitle": {
+    "message": "نشر حقيقي مبني على المدار"
+  },
+  "enterprise.cs.inspection.badge": {
+    "message": "العمليات الميدانية"
+  },
+  "enterprise.cs.inspection.title": {
+    "message": "نظام التفتيش"
+  },
+  "enterprise.cs.inspection.desc": {
+    "message": "500+ تفتيش يومياً، موثوقية مزامنة 99.9%، تخفيض أخطاء الامتثال بنسبة 60%."
+  },
+  "enterprise.cs.readMore": {
+    "message": "اقرأ دراسة الحالة"
+  },
+  "enterprise.cs.trainer.badge": {
+    "message": "الصحة واللياقة"
+  },
+  "enterprise.cs.trainer.title": {
+    "message": "تطبيق المدرب المحترف"
+  },
+  "enterprise.cs.trainer.desc": {
+    "message": "تخفيض وقت الإدارة بنسبة 70%، 3 أضعاف طاقة العملاء لكل مدرب، معدل استبقاء عملاء 95%."
+  },
+  "homepage.talkToSales": {
+    "message": "تحدث مع المبيعات"
+  },
+  "homepage.how.title": {
+    "message": "كيف يعمل المدار"
+  },
+  "homepage.how.subtitle": {
+    "message": "من اللغة الطبيعية إلى تطبيق قيد التشغيل في ثلاث خطوات"
+  },
+  "homepage.proof.title": {
+    "message": "مُثبت في بيئة الإنتاج"
+  },
+  "homepage.proof.subtitle": {
+    "message": "نتائج حقيقية من فرق انتقلت إلى المدار"
+  },
+  "homepage.proof.caseStudies": {
+    "message": "دراسات الحالة:"
+  },
+  "homepage.proof.cs.inspection": {
+    "message": "نظام التفتيش الحكومي"
+  },
+  "homepage.proof.cs.trainer": {
+    "message": "منصة المدرب بالذكاء الاصطناعي"
+  },
+  "homepage.cta.startBuilding": {
+    "message": "ابدأ البناء"
+  },
+  "homepage.cta.enterprise": {
+    "message": "للمؤسسات"
+  },
+  "playground.running": {
+    "message": "جاري التشغيل..."
+  },
+  "playground.empty": {
+    "message": "اكتب s-expression واضغط تشغيل (أو Ctrl+Enter)"
+  },
+  "playground.error": {
+    "message": "خطأ"
+  },
+  "playground.examples": {
+    "message": "أمثلة"
+  },
+  "playground.copied": {
+    "message": "تم النسخ!"
+  },
+  "playground.share": {
+    "message": "مشاركة"
+  },
+  "playground.run": {
+    "message": "تشغيل"
+  },
+  "playground.meta.title": {
+    "message": "الملعب — المدار"
+  },
+  "playground.meta.description": {
+    "message": "ملعب s-expressions التفاعلي لـ المدار. اكتب وشغّل المشغلات مباشرة في المتصفح."
+  },
+  "playground.title": {
+    "message": "الملعب"
+  },
+  "playground.subtitle": {
+    "message": "شغّل s-expressions المدار في المتصفح. لا حاجة للتثبيت."
+  },
+  "cs.inspection.meta.title": {
+    "message": "نظام التفتيش — دراسة حالة المدار"
+  },
+  "cs.inspection.meta.desc": {
+    "message": "كيف رقّمنا آلاف عمليات التفتيش الورقية بموثوقية كاملة دون اتصال باستخدام Orbitals."
+  },
+  "cs.inspection.badge": {
+    "message": "العمليات الميدانية"
+  },
+  "cs.inspection.title": {
+    "message": "نظام التفتيش"
+  },
+  "cs.inspection.subtitle": {
+    "message": "رقمنة آلاف عمليات التفتيش الورقية بموثوقية كاملة دون اتصال."
+  },
+  "cs.inspection.challenge.label": {
+    "message": "التحدي"
+  },
+  "cs.inspection.challenge.desc": {
+    "message": "احتاج العميل إلى رقمنة عملية التفتيش الورقية. يعمل المفتشون الميدانيون في مواقع نائية ذات اتصال غير مستقر. كانوا بحاجة إلى نظام يعمل دون اتصال ويتزامن بشكل موثوق عند الاتصال مجدداً."
+  },
+  "cs.inspection.solution.label": {
+    "message": "الحل"
+  },
+  "cs.inspection.solution.desc": {
+    "message": "عيّنّا التفتيش كـ Entity ثابت، مُغلّف بـ GeoLocation وSync Orbitals. كل تفتيش يلتقط بيانات الموقع تلقائياً ويتزامن في الخلفية عند استعادة الاتصال."
+  },
+  "cs.inspection.orbital1.name": {
+    "message": "Inspection Entity:"
+  },
+  "cs.inspection.orbital1.desc": {
+    "message": "هيكل البيانات الأساسي لجميع أنواع التفتيش"
+  },
+  "cs.inspection.orbital2.name": {
+    "message": "GeoLocation Orbital:"
+  },
+  "cs.inspection.orbital2.desc": {
+    "message": "التقاط الموقع والتحقق منه تلقائياً"
+  },
+  "cs.inspection.orbital3.name": {
+    "message": "Sync Orbital:"
+  },
+  "cs.inspection.orbital3.desc": {
+    "message": "المزامنة في الخلفية مع حل التعارضات"
+  },
+  "cs.inspection.orbital4.name": {
+    "message": "Approval Orbital:"
+  },
+  "cs.inspection.orbital4.desc": {
+    "message": "سير عمل مراجعة المشرف والموافقة"
+  },
+  "cs.inspection.future.label": {
+    "message": "الاستدامة المستقبلية"
+  },
+  "cs.inspection.future.desc": {
+    "message": "تُضاف قواعد الامتثال الجديدة كـ Orbitals فردية تنتشر فوراً إلى جميع الوحدات الميدانية. عند تغيير اللوائح، نربط Orbital تحقق جديداً فحسب — دون الحاجة لإعادة كتابة منطق التفتيش الأساسي."
+  },
+  "cs.inspection.result.label": {
+    "message": "النتيجة:"
+  },
+  "cs.inspection.result.desc": {
+    "message": "500+ تفتيش يومياً، موثوقية مزامنة 99.9%، تخفيض أخطاء الامتثال بنسبة 60%."
+  },
+  "cs.inspection.cta.title": {
+    "message": "لديك تحدٍّ مماثل؟"
+  },
+  "cs.inspection.cta.desc": {
+    "message": "دعنا نناقش كيف يمكن لـ Orbitals حل تحديات عملياتك الميدانية."
+  },
+  "cs.trainer.meta.title": {
+    "message": "تطبيق المدرب المحترف — دراسة حالة المدار"
+  },
+  "cs.trainer.meta.desc": {
+    "message": "كيف بنينا تطبيق إدارة المدربين الذي يفصل منطق التدريب عن الفوترة باستخدام Orbitals."
+  },
+  "cs.trainer.badge": {
+    "message": "الصحة واللياقة"
+  },
+  "cs.trainer.title": {
+    "message": "تطبيق المدرب المحترف"
+  },
+  "cs.trainer.subtitle": {
+    "message": "أتح للمدربين إدارة العملاء عن بُعد دون إرهاق إداري."
+  },
+  "cs.trainer.challenge.label": {
+    "message": "التحدي"
+  },
+  "cs.trainer.challenge.desc": {
+    "message": "كان المدربون الشخصيون يقضون وقتاً أطول في الإدارة من التدريب. كانوا بحاجة إلى نظام لإدارة خطط التمارين وتتبع تقدم العملاء والتعامل مع الفوترة — كل ذلك في مكان واحد، دون تعقيد."
+  },
+  "cs.trainer.solution.label": {
+    "message": "الحل"
+  },
+  "cs.trainer.solution.desc": {
+    "message": "خطط التمارين هي تركيبات من أنماط التمارين. منطق التدريب منفصل عن الفوترة. كل جانب له Orbital خاص يمكنه التطور باستقلالية."
+  },
+  "cs.trainer.orbital1.name": {
+    "message": "Client Entity:"
+  },
+  "cs.trainer.orbital1.desc": {
+    "message": "الملف الشخصي الأساسي وتتبع الأهداف"
+  },
+  "cs.trainer.orbital2.name": {
+    "message": "Workout Plan Orbital:"
+  },
+  "cs.trainer.orbital2.desc": {
+    "message": "قوالب تمارين قابلة للتركيب"
+  },
+  "cs.trainer.orbital3.name": {
+    "message": "Progress Tracking Orbital:"
+  },
+  "cs.trainer.orbital3.desc": {
+    "message": "المقاييس والصور والقياسات"
+  },
+  "cs.trainer.orbital4.name": {
+    "message": "Billing Orbital:"
+  },
+  "cs.trainer.orbital4.desc": {
+    "message": "إدارة الاشتراكات والمدفوعات"
+  },
+  "cs.trainer.future.label": {
+    "message": "الاستدامة المستقبلية"
+  },
+  "cs.trainer.future.desc": {
+    "message": "مع تطور مقاييس اللياقة، تُربط Orbitals بيانات جديدة دون كسر منطق التطبيق الأساسي. حين أراد العميل إضافة تكامل الأجهزة القابلة للارتداء، ربطنا Wearable Sync Orbital جديداً ببساطة."
+  },
+  "cs.trainer.result.label": {
+    "message": "النتيجة:"
+  },
+  "cs.trainer.result.desc": {
+    "message": "تخفيض وقت الإدارة بنسبة 70%، 3 أضعاف طاقة العملاء لكل مدرب، معدل استبقاء عملاء 95%."
+  },
+  "cs.trainer.cta.title": {
+    "message": "تبني شيئاً مماثلاً؟"
+  },
+  "cs.trainer.cta.desc": {
+    "message": "دعنا نناقش كيف يمكن لـ Orbitals تبسيط عمل خدماتك."
   }
 }

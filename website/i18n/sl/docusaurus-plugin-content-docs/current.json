@@ -1,18 +1,54 @@
 {
   "sidebar.docsSidebar.category.Getting Started": {
     "message": "Začetek",
-    "description": "The label for category Getting Started in sidebar docsSidebar"
+    "description": "The label for category 'Getting Started' in sidebar 'docsSidebar'"
   },
   "sidebar.docsSidebar.category.Downloads": {
     "message": "Prenosi",
-    "description": "The label for category Downloads in sidebar docsSidebar"
+    "description": "The label for category 'Downloads' in sidebar 'docsSidebar'"
   },
   "sidebar.docsSidebar.category.Community": {
     "message": "Skupnost",
-    "description": "The label for category Community in sidebar docsSidebar"
+    "description": "The label for category 'Community' in sidebar 'docsSidebar'"
   },
   "sidebar.docsSidebar.category.Enterprise": {
     "message": "Podjetje",
     "description": "The label for category Enterprise in sidebar docsSidebar"
+  },
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.docsSidebar.category.Core Concepts": {
+    "message": "Core Concepts",
+    "description": "The label for category 'Core Concepts' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Operator Reference": {
+    "message": "Operator Reference",
+    "description": "The label for category 'Operator Reference' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Standard Behaviors": {
+    "message": "Standard Behaviors",
+    "description": "The label for category 'Standard Behaviors' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Tutorials": {
+    "message": "Tutorials",
+    "description": "The label for category 'Tutorials' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Beginner": {
+    "message": "Beginner",
+    "description": "The label for category 'Beginner' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Intermediate": {
+    "message": "Intermediate",
+    "description": "The label for category 'Intermediate' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Advanced": {
+    "message": "Advanced",
+    "description": "The label for category 'Advanced' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.doc.Overview": {
+    "message": "Overview",
+    "description": "The label for the doc item 'Overview' in sidebar 'docsSidebar', linking to the doc index"
   }
 }
