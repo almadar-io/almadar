@@ -25,11 +25,11 @@
   },
   "link.item.label.Discord": {
     "message": "Discord",
-    "description": "The label of footer link with label=Discord linking to https://discord.gg/almadar"
+    "description": "The label of footer link with label=Discord linking to https://discord.gg/q83VjPJx"
   },
   "link.item.label.LinkedIn": {
     "message": "LinkedIn",
-    "description": "The label of footer link with label=LinkedIn linking to https://linkedin.com/company/almadar-io"
+    "description": "The label of footer link with label=LinkedIn linking to https://www.linkedin.com/company/almadar-io"
   },
   "link.item.label.Blog": {
     "message": "المدونة",
@@ -42,5 +42,9 @@
   "copyright": {
     "message": "حقوق النشر © 2026 المدار. مبني بواسطة Docusaurus.",
     "description": "The footer copyright"
+  },
+  "link.item.label.Contact": {
+    "message": "Contact",
+    "description": "The label of footer link with label=Contact linking to mailto:hello@almadar.io"
   }
 }

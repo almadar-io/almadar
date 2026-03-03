@@ -876,6 +876,33 @@
   "developers.concepts.subtitle": {
     "message": "ثلاثة عناصر تبني كل تطبيق في المدار"
   },
+  "developers.concepts.entity.label": {
+    "message": "الكيان"
+  },
+  "developers.concepts.entity.tagline": {
+    "message": "شكل البيانات"
+  },
+  "developers.concepts.entity.desc": {
+    "message": "تحدد الكيانات نموذج بياناتك. الحقول مكتوبة الأنواع، يمكن أن يكون لها قيم افتراضية، وتدعم ثلاثة أوضاع للحفظ: runtime (في الذاكرة)، persistent (قاعدة البيانات)، وsingleton."
+  },
+  "developers.concepts.trait.label": {
+    "message": "السمة"
+  },
+  "developers.concepts.trait.tagline": {
+    "message": "آلة الحالة + واجهة المستخدم"
+  },
+  "developers.concepts.trait.desc": {
+    "message": "تُنمذج السمات السلوك كآلات حالة تضم حالات وأحداثاً وحراساً وتأثيرات. يمكن للتأثيرات تعيين حقول الكيان أو إرسال الأحداث أو استدعاء الخدمات أو عرض أنماط واجهة المستخدم."
+  },
+  "developers.concepts.page.label": {
+    "message": "الصفحة"
+  },
+  "developers.concepts.page.tagline": {
+    "message": "ربط المسارات"
+  },
+  "developers.concepts.page.desc": {
+    "message": "تربط الصفحات الوحدات المدارية بالمسارات. تحدد عنوان URL والتخطيط والوحدات المدارية (مجموعات Entity + Traits) المُثبّتة. تُولَّد الصفحات كمكونات مسارات React."
+  },
   "developers.quickstart.inYourLanguage": {
     "message": "بلغتك"
   },
@@ -914,6 +941,24 @@
   },
   "developers.tutorials.subtitle": {
     "message": "مسارات منظمة من الصفر إلى الإنتاج"
+  },
+  "developers.tutorials.beginner.label": {
+    "message": "مبتدئ"
+  },
+  "developers.tutorials.beginner.desc": {
+    "message": "ابنِ أول وحدة مدارية، افهم آلات الحالة، وانشر تطبيقاً يعمل."
+  },
+  "developers.tutorials.intermediate.label": {
+    "message": "متوسط"
+  },
+  "developers.tutorials.intermediate.desc": {
+    "message": "اعمل مع أنماط واجهة المستخدم، اكتب الحراس بـ s-expressions، وربط وحدات مدارية متعددة."
+  },
+  "developers.tutorials.advanced.label": {
+    "message": "متقدم"
+  },
+  "developers.tutorials.advanced.desc": {
+    "message": "ابنِ تطبيقات إنتاجية مع التكاملات وتوليد الذكاء الاصطناعي والمهارات المخصصة."
   },
   "developers.tutorials.start": {
     "message": "ابدأ المسار"

@@ -1,43 +1,43 @@
 {
   "link.item.label.Getting Started": {
     "message": "Začetek",
-    "description": "Footer item with label Getting Started"
+    "description": "The label of footer link with label=Getting Started linking to /docs/getting-started/introduction"
   },
   "link.item.label.Downloads": {
     "message": "Prenosi",
-    "description": "Footer item with label Downloads"
+    "description": "The label of footer link with label=Downloads linking to /docs/downloads/cli"
   },
   "link.item.label.Discord": {
     "message": "Discord",
-    "description": "Footer item with label Discord"
+    "description": "The label of footer link with label=Discord linking to https://discord.gg/q83VjPJx"
   },
   "link.item.label.GitHub": {
     "message": "GitHub",
-    "description": "Footer item with label GitHub"
+    "description": "The label of footer link with label=GitHub linking to https://github.com/almadar-io/almadar"
   },
   "link.item.label.LinkedIn": {
     "message": "LinkedIn",
-    "description": "Footer item with label LinkedIn"
+    "description": "The label of footer link with label=LinkedIn linking to https://www.linkedin.com/company/almadar-io"
   },
   "link.item.label.Blog": {
     "message": "Blog",
-    "description": "Footer item with label Blog"
+    "description": "The label of footer link with label=Blog linking to /blog"
   },
   "link.item.label.Contact": {
     "message": "Kontakt",
-    "description": "Footer item with label Contact"
+    "description": "The label of footer link with label=Contact linking to mailto:hello@almadar.io"
   },
   "link.title.Docs": {
     "message": "Dokumentacija",
-    "description": "Footer title with label Docs"
+    "description": "The title of the footer links column with title=Docs in the footer"
   },
   "link.title.Community": {
     "message": "Skupnost",
-    "description": "Footer title with label Community"
+    "description": "The title of the footer links column with title=Community in the footer"
   },
   "link.title.More": {
     "message": "Več",
-    "description": "Footer title with label More"
+    "description": "The title of the footer links column with title=More in the footer"
   },
   "copyright": {
     "message": "Copyright © 2025 Almadar. Zgrajeno z Docusaurus.",

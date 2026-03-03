@@ -876,6 +876,33 @@
   "developers.concepts.subtitle": {
     "message": "Trije gradniki sestavljajo vsako aplikacijo Almadar"
   },
+  "developers.concepts.entity.label": {
+    "message": "Entiteta"
+  },
+  "developers.concepts.entity.tagline": {
+    "message": "Oblika podatkov"
+  },
+  "developers.concepts.entity.desc": {
+    "message": "Entitete definirajo vaš podatkovni model. Polja so tipizirana, imajo lahko privzete vrednosti in podpirajo tri načine shranjevanja: runtime (v pomnilniku), persistent (baza podatkov) in singleton."
+  },
+  "developers.concepts.trait.label": {
+    "message": "Lastnost"
+  },
+  "developers.concepts.trait.tagline": {
+    "message": "Avtomat stanj + UI"
+  },
+  "developers.concepts.trait.desc": {
+    "message": "Lastnosti modelirajo vedenje kot avtomate stanj s stanji, dogodki, stražarji in učinki. Učinki lahko nastavljajo polja entitet, oddajajo dogodke, kličejo storitve ali prikazujejo vzorce UI."
+  },
+  "developers.concepts.page.label": {
+    "message": "Stran"
+  },
+  "developers.concepts.page.tagline": {
+    "message": "Vezava poti"
+  },
+  "developers.concepts.page.desc": {
+    "message": "Strani vežejo Orbitalne enote na poti. Definirajo URL, postavitev in katere Orbitalne enote (skupine Entity + Traits) so nameščene. Strani se generirajo kot komponente React poti."
+  },
   "developers.quickstart.inYourLanguage": {
     "message": "V vašem jeziku"
   },
@@ -914,6 +941,24 @@
   },
   "developers.tutorials.subtitle": {
     "message": "Strukturirane poti od nič do produkcije"
+  },
+  "developers.tutorials.beginner.label": {
+    "message": "Začetnik"
+  },
+  "developers.tutorials.beginner.desc": {
+    "message": "Zgradite svojo prvo Orbitalno enoto, razumejte avtomate stanj in namestite delujočo aplikacijo."
+  },
+  "developers.tutorials.intermediate.label": {
+    "message": "Srednji nivo"
+  },
+  "developers.tutorials.intermediate.desc": {
+    "message": "Delajte z vzorci UI, pišite stražarje z s-izrazi in povežite več Orbitalnih enot."
+  },
+  "developers.tutorials.advanced.label": {
+    "message": "Napredni"
+  },
+  "developers.tutorials.advanced.desc": {
+    "message": "Gradite produkcijske aplikacije z integracijami, generiranjem z AI in lastnimi veščinami."
   },
   "developers.tutorials.start": {
     "message": "Začni pot"
