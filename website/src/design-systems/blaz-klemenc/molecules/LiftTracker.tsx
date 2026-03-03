@@ -82,8 +82,6 @@ export interface LiftTrackerProps {
   showProgressChart?: boolean;
   /** Group by exercise name */
   groupByExercise?: boolean;
-  /** Entity context for events */
-  entity?: string;
   /** Operations/actions available */
   operations?: LiftOperation[];
   /** Max entries to show before collapse */
@@ -142,7 +140,6 @@ export const LiftTracker: React.FC<LiftTrackerProps> = ({
   traineeId,
   trainerId,
   showSummary = true,
-  entity = "Lift",
   maxVisible = 5,
   className,
 }) => {
@@ -167,32 +164,32 @@ export const LiftTracker: React.FC<LiftTrackerProps> = ({
     eventBus.emit("UI:LOG_LIFT", {
       traineeId,
       trainerId,
-      entity,
+      entity: "Lift",
     });
-  }, [eventBus, traineeId, trainerId, entity]);
+  }, [eventBus, traineeId, trainerId]);
 
   // Emit VIEW event (matches LiftManagement trait)
   const handleView = useCallback(
     (lift: LiftData) => {
-      eventBus.emit("UI:VIEW", { row: lift, entity });
+      eventBus.emit("UI:VIEW", { row: lift, entity: "Lift" });
     },
-    [eventBus, entity],
+    [eventBus],
   );
 
   // Emit EDIT event (matches LiftManagement trait)
   const handleEdit = useCallback(
     (lift: LiftData) => {
-      eventBus.emit("UI:EDIT", { row: lift, entity });
+      eventBus.emit("UI:EDIT", { row: lift, entity: "Lift" });
     },
-    [eventBus, entity],
+    [eventBus],
   );
 
   // Emit DELETE event (matches LiftManagement trait)
   const handleDelete = useCallback(
     (lift: LiftData) => {
-      eventBus.emit("UI:DELETE", { row: lift, entity });
+      eventBus.emit("UI:DELETE", { row: lift, entity: "Lift" });
     },
-    [eventBus, entity],
+    [eventBus],
   );
 
   // Get unique exercises with their latest lifts for summary

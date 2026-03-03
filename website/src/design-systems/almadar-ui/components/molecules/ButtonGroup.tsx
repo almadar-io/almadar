@@ -1,3 +1,4 @@
+'use client';
 /**
  * ButtonGroup Molecule Component
  *
@@ -9,7 +10,6 @@
 import React from 'react';
 import { cn } from '../../lib/cn';
 import { Button } from '../atoms';
-import { useNavigate } from 'react-router-dom';
 import { useEventBus } from '../../hooks/useEventBus';
 
 export type ButtonGroupVariant = 'default' | 'segmented' | 'toggle';
@@ -82,20 +82,6 @@ export interface ButtonGroupProps {
 }
 
 /**
- * Safe navigation hook that works outside Router context.
- * Returns a no-op function if not in Router context.
- */
-function useSafeNavigate(): (to: string) => void {
-  try {
-    const navigate = useNavigate();
-    return navigate;
-  } catch {
-    // Outside Router context - return no-op
-    return () => {};
-  }
-}
-
-/**
  * Safe event bus hook that works outside EventBusProvider context.
  * Returns a no-op emit function if not in EventBusProvider context.
  */
@@ -119,7 +105,6 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   entity: _entity,
   filters,
 }) => {
-  const navigate = useSafeNavigate();
   const eventBus = useSafeEventBus();
   const variantClasses = {
     default: 'gap-0',
@@ -140,7 +125,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
     }
     // Navigate if specified
     if (action.navigatesTo) {
-      navigate(action.navigatesTo);
+      eventBus.emit('UI:NAVIGATE', { url: action.navigatesTo });
     }
   };
 

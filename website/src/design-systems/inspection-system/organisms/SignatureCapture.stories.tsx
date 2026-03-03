@@ -52,12 +52,13 @@ export const Disabled: Story = {
   },
 };
 
-export const WithHandlers: Story = {
+export const WithEvents: Story = {
   args: {
     participantName: "John Smith",
     participantId: "p-123",
-    onCapture: (data) => console.log("Signature captured:", data.substring(0, 50) + "..."),
-    onClear: () => console.log("Signature cleared"),
+    entity: "Signature",
+    captureEvent: "SIGNATURE_SAVE",
+    clearEvent: "SIGNATURE_CLEAR",
   },
 };
 

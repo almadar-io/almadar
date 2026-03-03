@@ -70,6 +70,5 @@ export const WithContext: Story = {
       inspectionId: "insp-123",
       currentStep: "rule-check",
     },
-    onAction: (actionId) => alert(`Action: ${actionId}`),
   },
 };

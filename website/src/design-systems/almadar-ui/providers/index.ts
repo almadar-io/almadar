@@ -30,6 +30,10 @@ export type {
   EntityRecord,
 } from './FetchedDataProvider';
 
+// Verification provider
+export { VerificationProvider } from './VerificationProvider';
+export type { VerificationProviderProps } from './VerificationProvider';
+
 // Offline mode provider
 export {
   OfflineModeProvider,

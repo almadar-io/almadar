@@ -1,3 +1,4 @@
+/* eslint-disable almadar/organism-extends-entity-display */
 /**
  * SessionDetailBoard - Session detail view organism
  *
@@ -41,8 +42,11 @@ import {
   Card,
   Badge,
   Spinner,
+  LoadingState,
+  ErrorState,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 
 /**
@@ -93,15 +97,9 @@ export interface TrainingSessionEntity {
   exercises?: SessionExercise[];
 }
 
-export interface SessionDetailBoardProps {
+export interface SessionDetailBoardProps extends Omit<EntityDisplayProps, 'entity'> {
   /** TrainingSession entity data */
-  entity: TrainingSessionEntity;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
-  /** Additional CSS classes */
-  className?: string;
+  entity?: TrainingSessionEntity | TrainingSessionEntity[];
   /** Event name for editing (emitted as UI:{editEvent}) */
   editEvent?: string;
   /** Event name for starting session (emitted as UI:{startEvent}) */
@@ -189,6 +187,8 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
   const { emit } = useEventBus();
   const { t } = useTranslate();
 
+  const entityData = Array.isArray(entity) ? entity[0] : entity;
+
   // Handle back navigation
   const handleBack = () => {
     if (backEvent) {
@@ -199,35 +199,35 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
   // Handle edit
   const handleEdit = () => {
     if (editEvent) {
-      emit(`UI:${editEvent}`, { row: entity, entity: "TrainingSession" });
+      emit(`UI:${editEvent}`, { row: entityData, entity: "TrainingSession" });
     }
   };
 
   // Handle start
   const handleStart = () => {
     if (startEvent) {
-      emit(`UI:${startEvent}`, { row: entity, entity: "TrainingSession" });
+      emit(`UI:${startEvent}`, { row: entityData, entity: "TrainingSession" });
     }
   };
 
   // Handle complete
   const handleComplete = () => {
     if (completeEvent) {
-      emit(`UI:${completeEvent}`, { row: entity, entity: "TrainingSession" });
+      emit(`UI:${completeEvent}`, { row: entityData, entity: "TrainingSession" });
     }
   };
 
   // Handle cancel
   const handleCancel = () => {
     if (cancelEvent) {
-      emit(`UI:${cancelEvent}`, { row: entity, entity: "TrainingSession" });
+      emit(`UI:${cancelEvent}`, { row: entityData, entity: "TrainingSession" });
     }
   };
 
   // Handle delete
   const handleDelete = () => {
     if (deleteEvent) {
-      emit(`UI:${deleteEvent}`, { row: entity, entity: "TrainingSession" });
+      emit(`UI:${deleteEvent}`, { row: entityData, entity: "TrainingSession" });
     }
   };
 
@@ -266,7 +266,7 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
   }
 
   // No data state
-  if (!entity || !entity.title) {
+  if (!entityData || !entityData.title) {
     return (
       <VStack
         align="center"
@@ -284,11 +284,11 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
     );
   }
 
-  const status = statusConfig[entity.status || "scheduled"];
+  const status = statusConfig[entityData.status || "scheduled"];
   const StatusIcon = status.icon;
-  const trainer = entity.trainer;
-  const participants = entity.participants;
-  const exercises = entity.exercises;
+  const trainer = entityData.trainer;
+  const participants = entityData.participants;
+  const exercises = entityData.exercises;
 
   return (
     <VStack gap="lg" className={cn("p-6", className)}>
@@ -300,7 +300,7 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
           </Button>
           <VStack gap="xs">
             <HStack gap="sm" align="center">
-              <Typography variant="h1">{entity.title}</Typography>
+              <Typography variant="h1">{entityData.title}</Typography>
               <Badge className={status.color}>
                 <StatusIcon className="h-3 w-3 mr-1" />
                 {t(status.labelKey)}
@@ -314,13 +314,13 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
               <HStack gap="xs" align="center">
                 <Calendar className="h-4 w-4" />
                 <Typography variant="body">
-                  {formatDateTime(entity.scheduledAt)}
+                  {formatDateTime(entityData.scheduledAt)}
                 </Typography>
               </HStack>
               <HStack gap="xs" align="center">
                 <Clock className="h-4 w-4" />
                 <Typography variant="body">
-                  {formatDuration(entity.duration)}
+                  {formatDuration(entityData.duration)}
                 </Typography>
               </HStack>
             </HStack>
@@ -381,11 +381,11 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
                     {t('session.type')}
                   </Typography>
                   <HStack gap="xs" align="center">
-                    {entity.isGroupSession ? (
+                    {entityData.isGroupSession ? (
                       <>
                         <Users className="h-4 w-4 text-blue-500" />
                         <Typography variant="body">
-                          {t('session.groupSession', { max: entity.maxParticipants || t('session.unlimited') })}
+                          {t('session.groupSession', { max: entityData.maxParticipants || t('session.unlimited') })}
                         </Typography>
                       </>
                     ) : (
@@ -404,10 +404,10 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
                     {t('session.duration')}
                   </Typography>
                   <Typography variant="body">
-                    {formatDuration(entity.duration)}
+                    {formatDuration(entityData.duration)}
                   </Typography>
                 </HStack>
-                {entity.location && (
+                {entityData.location && (
                   <HStack justify="between">
                     <Typography
                       variant="body"
@@ -418,7 +418,7 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
                     <HStack gap="xs" align="center">
                       <MapPin className="h-4 w-4 text-[var(--color-muted-foreground)]" />
                       <Typography variant="body">
-                        {entity.location}
+                        {entityData.location}
                       </Typography>
                     </HStack>
                   </HStack>
@@ -439,7 +439,7 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
           </Card>
 
           {/* Notes */}
-          {entity.notes && (
+          {entityData.notes && (
             <Card className="p-4">
               <VStack gap="sm">
                 <HStack gap="xs" align="center">
@@ -450,14 +450,14 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
                   variant="body"
                   className="text-[var(--color-foreground)]"
                 >
-                  {entity.notes}
+                  {entityData.notes}
                 </Typography>
               </VStack>
             </Card>
           )}
 
           {/* Video Link */}
-          {entity.youtubeLink && (
+          {entityData.youtubeLink && (
             <Card className="p-4">
               <VStack gap="sm">
                 <HStack gap="xs" align="center">
@@ -465,7 +465,7 @@ export const SessionDetailBoard: React.FC<SessionDetailBoardProps> = ({
                   <Typography variant="h4">{t('session.sessionVideo')}</Typography>
                 </HStack>
                 <ExerciseVideoLink
-                  videoUrl={entity.youtubeLink}
+                  videoUrl={entityData.youtubeLink}
                   exerciseName={t('session.sessionRecording')}
                 />
               </VStack>

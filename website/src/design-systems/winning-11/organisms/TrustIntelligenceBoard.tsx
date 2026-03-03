@@ -26,6 +26,7 @@ import {
   Spinner,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -53,17 +54,11 @@ export interface TrustIntelligenceEntity {
   recentChanges?: readonly { date: string; change: number }[];
 }
 
-export interface TrustIntelligenceBoardProps {
-  /** Entity data */
+export interface TrustIntelligenceBoardProps extends Omit<EntityDisplayProps, 'entity'> {
+  /** Entity (single object) */
   entity?: TrustIntelligenceEntity;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
   /** Page title */
   title?: string;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for refresh action */
   refreshEvent: string;
   /** Event name for calculate action */

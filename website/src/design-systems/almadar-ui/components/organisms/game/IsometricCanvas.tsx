@@ -1,3 +1,4 @@
+'use client';
 /**
  * IsometricCanvas
  *
@@ -13,6 +14,13 @@
  * - Minimap on separate canvas
  * - Sprite sheet animation via resolveUnitFrame
  * - Event bus–friendly handlers (onTileClick, onUnitClick, etc.)
+ *
+ * **State categories (closed-circuit compliant):**
+ * - All game data (tiles, units, features, selection, validMoves) → received via props
+ * - Rendering state (viewportSize, RAF, camera lerp, sprite cache) → local only
+ * - Events → emitted via `useEventBus()` for trait integration
+ *
+ * This component is a **pure renderer** — it holds no game logic state.
  *
  * @packageDocumentation
  */
@@ -192,7 +200,7 @@ export function IsometricCanvas({
     // Remote asset loading
     assetBaseUrl,
     assetManifest,
-}: IsometricCanvasProps): JSX.Element {
+}: IsometricCanvasProps): React.JSX.Element {
     const eventBus = useEventBus();
 
     // -- Refs --

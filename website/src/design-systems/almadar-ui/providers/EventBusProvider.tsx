@@ -1,3 +1,4 @@
+'use client';
 /**
  * EventBusProvider - React context provider for the event bus
  *
@@ -74,6 +75,9 @@ export function EventBusProvider({ children, debug = false }: EventBusProviderPr
   // Store listeners by event type
   const listenersRef = useRef<Map<string, Set<EventListener>>>(new Map());
 
+  // Store wildcard listeners (onAny)
+  const anyListenersRef = useRef<Set<EventListener>>(new Set());
+
   // Track if deprecation warning has been shown
   const deprecationWarningShown = useRef(false);
 
@@ -138,6 +142,16 @@ export function EventBusProvider({ children, debug = false }: EventBusProviderPr
         }
       }
     }
+
+    // Notify wildcard (onAny) listeners
+    const anyListeners = Array.from(anyListenersRef.current);
+    for (const listener of anyListeners) {
+      try {
+        listener(event);
+      } catch (error) {
+        console.error(`[EventBus] Error in onAny listener for '${type}':`, error);
+      }
+    }
   }, [debug]);
 
   /**
@@ -190,6 +204,24 @@ export function EventBusProvider({ children, debug = false }: EventBusProviderPr
     return listeners !== undefined && listeners.size > 0;
   }, []);
 
+  /**
+   * Subscribe to ALL events regardless of type.
+   */
+  const onAny = useCallback((listener: EventListener): Unsubscribe => {
+    anyListenersRef.current.add(listener);
+
+    if (debug) {
+      console.log(`[EventBus] onAny subscribed, total: ${anyListenersRef.current.size}`);
+    }
+
+    return () => {
+      anyListenersRef.current.delete(listener);
+      if (debug) {
+        console.log(`[EventBus] onAny unsubscribed, remaining: ${anyListenersRef.current.size}`);
+      }
+    };
+  }, [debug]);
+
   // Memoize context value
   const contextValue = useMemo(
     () => ({
@@ -197,10 +229,11 @@ export function EventBusProvider({ children, debug = false }: EventBusProviderPr
       on,
       once,
       hasListeners,
+      onAny,
       getSelectedEntity,
       clearSelectedEntity,
     }),
-    [emit, on, once, hasListeners, getSelectedEntity, clearSelectedEntity]
+    [emit, on, once, hasListeners, onAny, getSelectedEntity, clearSelectedEntity]
   );
 
   // Bridge to global event bus system.

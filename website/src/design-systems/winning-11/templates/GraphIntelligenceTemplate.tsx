@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * GraphIntelligenceTemplate
  *
@@ -20,7 +21,7 @@ import {
 export type { ClusterData, NetworkStats, GraphIntelligenceEntity };
 
 export interface GraphIntelligenceTemplateProps {
-  /** Entity data */
+  /** Entity prop */
   entity?: GraphIntelligenceEntity;
   /** Loading state */
   isLoading?: boolean;

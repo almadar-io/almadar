@@ -13,7 +13,7 @@
 
 import React from 'react';
 import { ChevronLeft, ChevronRight, Layers } from 'lucide-react';
-import { Box, HStack, useEventBus, useTranslate } from '@almadar/ui';
+import { Box, HStack, Button, Badge, Typography, useEventBus, useTranslate } from '@almadar/ui';
 
 export interface LayerInfo {
   number: number;
@@ -37,14 +37,14 @@ export interface LayerNavigatorProps {
   className?: string;
 }
 
-export const LayerNavigator: React.FC<LayerNavigatorProps> = ({
+export const LayerNavigator = ({
   layers,
   currentLayer,
   showNames = false,
   showCounts = false,
   compact = false,
   className = '',
-}) => {
+}: LayerNavigatorProps) => {
   const { emit } = useEventBus();
   const { t } = useTranslate();
 
@@ -75,51 +75,61 @@ export const LayerNavigator: React.FC<LayerNavigatorProps> = ({
   if (compact) {
     return (
       <HStack gap="sm" align="center" className={className}>
-        <button
+        <Button
+          variant="ghost"
+          size="sm"
           onClick={handlePrev}
           disabled={!canGoPrev}
-          className="p-2 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:bg-gray-100 rounded disabled:opacity-30 disabled:cursor-not-allowed"
+          className="p-2"
         >
           <ChevronLeft size={20} />
-        </button>
+        </Button>
 
-        <HStack gap="xs" align="center" className="px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded-full">
-          <Layers size={16} />
-          <span className="font-medium">
-            {t('knowledge.layer', { number: currentLayer })}
-            {current?.name && showNames && `: ${current.name}`}
-          </span>
-        </HStack>
+        <Badge variant="info" className="px-3 py-1.5 rounded-full">
+          <HStack gap="xs" align="center">
+            <Layers size={16} />
+            <Typography variant="small" className="font-medium">
+              {t('knowledge.layer', { number: currentLayer })}
+              {current?.name && showNames && `: ${current.name}`}
+            </Typography>
+          </HStack>
+        </Badge>
 
-        <button
+        <Button
+          variant="ghost"
+          size="sm"
           onClick={handleNext}
           disabled={!canGoNext}
-          className="p-2 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:bg-gray-100 rounded disabled:opacity-30 disabled:cursor-not-allowed"
+          className="p-2"
         >
           <ChevronRight size={20} />
-        </button>
+        </Button>
       </HStack>
     );
   }
 
   return (
     <HStack gap="xs" align="center" wrap className={className}>
-      <button
+      <Button
+        variant="ghost"
+        size="sm"
         onClick={handlePrev}
         disabled={!canGoPrev}
-        className="p-1.5 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:bg-gray-100 rounded disabled:opacity-30 disabled:cursor-not-allowed"
+        className="p-1.5"
       >
         <ChevronLeft size={18} />
-      </button>
+      </Button>
 
       {sortedLayers.map((layer) => {
         const isActive = layer.number === currentLayer;
         return (
-          <button
+          <Button
             key={layer.number}
+            variant={isActive ? 'primary' : 'ghost'}
+            size="sm"
             onClick={() => handleSelectLayer(layer.number)}
             className={`
-              px-3 py-1.5 rounded-full text-sm font-medium transition-colors
+              px-3 py-1.5 rounded-full text-sm font-medium
               ${
                 isActive
                   ? 'bg-indigo-600 text-white'
@@ -130,25 +140,27 @@ export const LayerNavigator: React.FC<LayerNavigatorProps> = ({
             `}
           >
             <HStack gap="xs" align="center">
-              <span>{layer.number}</span>
+              <Typography variant="small">{layer.number}</Typography>
               {showNames && layer.name && (
-                <span className="hidden sm:inline">: {layer.name}</span>
+                <Typography variant="small" className="hidden sm:inline">: {layer.name}</Typography>
               )}
               {showCounts && layer.conceptCount !== undefined && (
-                <span className="text-xs opacity-70">({layer.conceptCount})</span>
+                <Typography variant="small" className="text-xs opacity-70">({layer.conceptCount})</Typography>
               )}
             </HStack>
-          </button>
+          </Button>
         );
       })}
 
-      <button
+      <Button
+        variant="ghost"
+        size="sm"
         onClick={handleNext}
         disabled={!canGoNext}
-        className="p-1.5 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:bg-gray-100 rounded disabled:opacity-30 disabled:cursor-not-allowed"
+        className="p-1.5"
       >
         <ChevronRight size={18} />
-      </button>
+      </Button>
     </HStack>
   );
 };

@@ -42,6 +42,7 @@ import {
   Spinner,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 
 export interface TeamMemberData {
@@ -58,25 +59,17 @@ export interface TeamMemberData {
   lastActiveAt?: string;
 }
 
-export interface TeamMembersBoardProps {
-  /** Entity data (team member items) */
-  entity?: readonly TeamMemberData[];
+export interface TeamMembersBoardProps extends EntityDisplayProps<TeamMemberData> {
   /** Team name for header */
   teamName?: string;
   /** Team ID */
   teamId?: string;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
   /** Page title */
   title?: string;
   /** Show back button */
   showBack?: boolean;
   /** Show search */
   showSearch?: boolean;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for adding a member */
   addEvent?: string;
   /** Event name for viewing a member */
@@ -117,11 +110,11 @@ const getStatusColor = (status: TeamMemberData["status"]) => {
 
 const MemberCard: React.FC<{
   member: TeamMemberData;
-  onAction: (action: string, member: TeamMemberData) => void;
   viewEvent: string;
   removeEvent: string;
-}> = ({ member, onAction, viewEvent, removeEvent }) => {
+}> = ({ member, viewEvent, removeEvent }) => {
   const { t } = useTranslate();
+  const eventBus = useEventBus();
   const roleConfig = getRoleConfig(member.role);
   const RoleIcon = roleConfig.icon;
   const isLeader = member.role === "leader";
@@ -191,7 +184,7 @@ const MemberCard: React.FC<{
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onAction(viewEvent, member)}
+            onClick={() => eventBus.emit(`UI:${viewEvent}`, { row: member, entity: "TeamMember" })}
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
@@ -200,7 +193,7 @@ const MemberCard: React.FC<{
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onAction("EDIT_ROLE", member)}
+            onClick={() => eventBus.emit("UI:EDIT_ROLE", { row: member, entity: "TeamMember" })}
             className="gap-1"
           >
             <Edit className="h-3 w-3" />
@@ -210,7 +203,7 @@ const MemberCard: React.FC<{
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => onAction(removeEvent, member)}
+              onClick={() => eventBus.emit(`UI:${removeEvent}`, { row: member, entity: "TeamMember" })}
               className="gap-1 text-red-500 hover:text-red-600"
             >
               <UserMinus className="h-3 w-3" />
@@ -244,7 +237,7 @@ export const TeamMembersBoard: React.FC<TeamMembersBoardProps> = ({
   const [searchTerm, setSearchTerm] = React.useState("");
   const [roleFilter, setRoleFilter] = React.useState<string>("all");
 
-  const members = entity || [];
+  const members: readonly TeamMemberData[] = Array.isArray(entity) ? entity : [];
 
   // Handle back navigation
   const handleBack = () => {
@@ -262,13 +255,8 @@ export const TeamMembersBoard: React.FC<TeamMembersBoardProps> = ({
     eventBus.emit(`UI:${addEvent}`, { teamId });
   };
 
-  // Handle member actions
-  const handleAction = (action: string, member: TeamMemberData) => {
-    eventBus.emit(`UI:${action}`, { row: member, entity: "TeamMember" });
-  };
-
   // Filter members
-  const filteredMembers = members.filter((m) => {
+  const filteredMembers = members.filter((m: TeamMemberData) => {
     if (roleFilter !== "all" && m.role !== roleFilter) {
       return false;
     }
@@ -285,9 +273,9 @@ export const TeamMembersBoard: React.FC<TeamMembersBoardProps> = ({
   // Stats
   const stats = {
     total: members.length,
-    leaders: members.filter((m) => m.role === "leader").length,
-    members: members.filter((m) => m.role === "member").length,
-    observers: members.filter((m) => m.role === "observer").length,
+    leaders: members.filter((m: TeamMemberData) => m.role === "leader").length,
+    members: members.filter((m: TeamMemberData) => m.role === "member").length,
+    observers: members.filter((m: TeamMemberData) => m.role === "observer").length,
   };
 
   const pageTitle = title || (teamName ? t('teamMembers.titleWithTeam', { teamName }) : t('teamMembers.title'));
@@ -434,11 +422,10 @@ export const TeamMembersBoard: React.FC<TeamMembersBoardProps> = ({
             </VStack>
           ) : (
             <Box className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredMembers.map((member) => (
+              {filteredMembers.map((member: TeamMemberData) => (
                 <MemberCard
                   key={member.id}
                   member={member}
-                  onAction={handleAction}
                   viewEvent={viewEvent}
                   removeEvent={removeEvent}
                 />

@@ -1,3 +1,4 @@
+'use client';
 /**
  * useGameCanvas3DEvents
  *

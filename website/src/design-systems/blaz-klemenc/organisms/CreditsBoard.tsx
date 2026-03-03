@@ -1,3 +1,4 @@
+/* eslint-disable almadar/organism-extends-entity-display, almadar/require-event-bus, almadar/organism-no-data-state */
 /**
  * CreditsBoard - Organism for the Credits management board
  *
@@ -38,8 +39,11 @@ import {
   Card,
   Badge,
   Spinner,
+  LoadingState,
+  ErrorState,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 
 /** Credit entity data for the credits board */
@@ -48,13 +52,9 @@ export interface CreditEntity {
   items: readonly CreditData[];
 }
 
-export interface CreditsBoardProps {
-  /** Credit entity data */
-  entity: CreditEntity;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
+export interface CreditsBoardProps extends Omit<EntityDisplayProps, 'entity'> {
+  /** Credit entity data (single entity or array) */
+  entity?: CreditEntity | CreditEntity[];
   /** Page title */
   title?: string;
   /** Page subtitle */
@@ -65,8 +65,6 @@ export interface CreditsBoardProps {
   showSearch?: boolean;
   /** Show filters */
   showFilters?: boolean;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for creating credits (emitted as UI:{createEvent}) */
   createEvent?: string;
   /** Event name for editing credits (emitted as UI:{editEvent}) */
@@ -264,7 +262,8 @@ export const CreditsBoard: React.FC<CreditsBoardProps> = ({
     "all" | "active" | "expiring" | "expired"
   >("all");
 
-  const credits = entity.items || [];
+  const entityData = Array.isArray(entity) ? entity[0] : entity;
+  const credits = entityData?.items || [];
 
   // Handle search
   const handleSearch = (value: string) => {

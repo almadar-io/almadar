@@ -65,6 +65,10 @@ const config: Config = {
               // Allow webpack to resolve packages using the Node.js "import" export condition
               // (used by @almadar/evaluator which only exports "import", not "module")
               conditionNames: ["import", "module", "browser", "require", "default"],
+              // Resolve .js extensions to .ts/.tsx (TypeScript ESM pattern used in almadar-ui)
+              extensionAlias: {
+                ".js": [".ts", ".tsx", ".js"],
+              },
             },
           };
         },

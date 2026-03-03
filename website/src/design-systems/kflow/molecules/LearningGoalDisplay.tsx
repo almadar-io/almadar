@@ -17,6 +17,9 @@ import {
   Box,
   HStack,
   VStack,
+  Button,
+  Typography,
+  Textarea,
   useEventBus,
   useTranslate,
 } from '@almadar/ui';
@@ -34,13 +37,13 @@ export interface LearningGoalDisplayProps {
   className?: string;
 }
 
-export const LearningGoalDisplay: React.FC<LearningGoalDisplayProps> = ({
+export const LearningGoalDisplay = ({
   goal,
   layerNumber,
   graphId,
   isSaving = false,
   className = '',
-}) => {
+}: LearningGoalDisplayProps) => {
   const { emit } = useEventBus();
   const { t } = useTranslate();
   const [isEditing, setIsEditing] = useState(false);
@@ -81,57 +84,68 @@ export const LearningGoalDisplay: React.FC<LearningGoalDisplayProps> = ({
         <VStack gap="sm" className="flex-1 min-w-0">
           <HStack justify="between" align="center" className="w-full">
             <HStack gap="xs" align="center">
-              <span className="text-sm font-semibold text-[var(--color-foreground)]">
+              <Typography variant="small" className="font-semibold">
                 {t('learningGoal.title')}
-              </span>
+              </Typography>
               <Info size={14} className="text-indigo-500" />
             </HStack>
 
             {!isEditing ? (
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={handleEdit}
-                className="flex items-center gap-1 px-2 py-1 text-xs font-medium text-indigo-600 hover:text-indigo-700 hover:bg-indigo-100 rounded transition-colors"
+                className="text-xs text-indigo-600 hover:text-indigo-700 hover:bg-indigo-100"
               >
-                <Edit2 size={12} />
-                <span>{t('learningGoal.edit')}</span>
-              </button>
+                <HStack gap="xs" align="center">
+                  <Edit2 size={12} />
+                  <Typography variant="small">{t('learningGoal.edit')}</Typography>
+                </HStack>
+              </Button>
             ) : (
               <HStack gap="sm">
-                <button
-                  type="button"
+                <Button
+                  variant="primary"
+                  size="sm"
                   onClick={handleSave}
                   disabled={isSaving}
-                  className="flex items-center gap-1 px-2 py-1 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 rounded transition-colors"
+                  className="text-xs"
                 >
-                  <Save size={12} />
-                  <span>{isSaving ? t('learningGoal.saving') : t('learningGoal.save')}</span>
-                </button>
-                <button
-                  type="button"
+                  <HStack gap="xs" align="center">
+                    <Save size={12} />
+                    <Typography variant="small">
+                      {isSaving ? t('learningGoal.saving') : t('learningGoal.save')}
+                    </Typography>
+                  </HStack>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={handleCancel}
                   disabled={isSaving}
-                  className="flex items-center gap-1 px-2 py-1 text-xs font-medium text-[var(--color-foreground)] hover:text-[var(--color-foreground)] hover:bg-gray-100 disabled:opacity-50 rounded transition-colors"
+                  className="text-xs"
                 >
-                  <X size={12} />
-                  <span>{t('learningGoal.cancel')}</span>
-                </button>
+                  <HStack gap="xs" align="center">
+                    <X size={12} />
+                    <Typography variant="small">{t('learningGoal.cancel')}</Typography>
+                  </HStack>
+                </Button>
               </HStack>
             )}
           </HStack>
 
           {isEditing ? (
-            <textarea
+            <Textarea
               value={editedGoal}
               onChange={(e) => setEditedGoal(e.target.value)}
-              className="w-full px-3 py-2 text-sm text-[var(--color-foreground)] bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-y min-h-[80px]"
               placeholder={t('learningGoal.placeholder')}
               disabled={isSaving}
+              className="min-h-[80px]"
             />
           ) : (
-            <p className="text-sm text-[var(--color-foreground)] leading-relaxed">
+            <Typography variant="body" className="text-sm leading-relaxed">
               {goal || t('learningGoal.noGoalSet')}
-            </p>
+            </Typography>
           )}
         </VStack>
       </HStack>

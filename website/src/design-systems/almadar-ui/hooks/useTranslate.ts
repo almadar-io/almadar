@@ -1,3 +1,4 @@
+'use client';
 /**
  * useTranslate — i18n hook for Almadar UI components.
  *

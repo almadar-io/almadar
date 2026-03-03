@@ -31,6 +31,7 @@ import {
   Spinner,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -77,17 +78,11 @@ export interface AdminDashboardEntity {
   alerts?: readonly SystemAlert[];
 }
 
-export interface AdminDashboardBoardProps {
-  /** Entity data */
+export interface AdminDashboardBoardProps extends Omit<EntityDisplayProps, 'entity'> {
+  /** Entity (single object) */
   entity?: AdminDashboardEntity;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
   /** Page title */
   title?: string;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for refresh action */
   refreshEvent: string;
   /** Event name for navigate action */
@@ -105,7 +100,8 @@ const StatCard: React.FC<{
   subtitle?: string;
   trend?: "up" | "down" | "stable";
   iconColor?: string;
-  onClick?: () => void;
+  event?: string;
+  eventBus?: ReturnType<typeof useEventBus>;
 }> = ({
   icon: Icon,
   label,
@@ -113,15 +109,16 @@ const StatCard: React.FC<{
   subtitle,
   trend,
   iconColor = "text-blue-600",
-  onClick,
+  event,
+  eventBus,
 }) => {
   return (
     <Card
       className={cn(
         "p-4",
-        onClick && "cursor-pointer hover:shadow-md transition-shadow"
+        event && "cursor-pointer hover:shadow-md transition-shadow"
       )}
-      onClick={onClick}
+      onClick={event && eventBus ? () => eventBus.emit(`UI:${event}`, {}) : undefined}
     >
       <VStack gap="sm">
         <HStack justify="between" align="start">
@@ -340,7 +337,8 @@ export const AdminDashboardBoard: React.FC<AdminDashboardBoardProps> = ({
             value={stats.totalUsers}
             subtitle={t('admin.activeCount', { count: stats.activeUsers })}
             iconColor="text-blue-600"
-            onClick={() => handleNavigate("/users")}
+            event={navigateEvent}
+            eventBus={eventBus}
           />
           <StatCard
             icon={Link2}
@@ -348,7 +346,8 @@ export const AdminDashboardBoard: React.FC<AdminDashboardBoardProps> = ({
             value={stats.totalConnections}
             subtitle={t('admin.pendingCount', { count: stats.pendingConnections })}
             iconColor="text-emerald-600"
-            onClick={() => handleNavigate("/connections")}
+            event={navigateEvent}
+            eventBus={eventBus}
           />
           <StatCard
             icon={UserPlus}
@@ -356,14 +355,16 @@ export const AdminDashboardBoard: React.FC<AdminDashboardBoardProps> = ({
             value={stats.totalInvites}
             subtitle={t('admin.redeemedCount', { count: stats.redeemedInvites })}
             iconColor="text-purple-600"
-            onClick={() => handleNavigate("/invites")}
+            event={navigateEvent}
+            eventBus={eventBus}
           />
           <StatCard
             icon={Shield}
             label={t('admin.avgTrustScore')}
             value={stats.averageTrustScore}
             iconColor="text-amber-600"
-            onClick={() => handleNavigate("/trust-intelligence")}
+            event={navigateEvent}
+            eventBus={eventBus}
           />
           <StatCard
             icon={Leaf}
@@ -372,7 +373,8 @@ export const AdminDashboardBoard: React.FC<AdminDashboardBoardProps> = ({
             subtitle={t('admin.needAttentionCount', { count: stats.decliningRelationships })}
             trend={stats.decliningRelationships > 0 ? "down" : "up"}
             iconColor="text-green-600"
-            onClick={() => handleNavigate("/garden")}
+            event={navigateEvent}
+            eventBus={eventBus}
           />
         </Box>
       )}

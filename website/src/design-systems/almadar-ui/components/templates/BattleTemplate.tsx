@@ -43,7 +43,7 @@ export function BattleTemplate({
     scale = 0.45,
     unitScale = 1,
     className,
-}: BattleTemplateProps): JSX.Element {
+}: BattleTemplateProps): React.JSX.Element {
     return (
         <BattleBoard
             entity={entity}

@@ -68,8 +68,6 @@ export interface DailyProgressInputProps {
   metrics?: string[];
   /** Compact mode */
   compact?: boolean;
-  /** Entity context for events */
-  entity?: string;
   /** Operations/actions available */
   operations?: DailyProgressOperation[];
   /** Additional CSS classes */
@@ -142,7 +140,6 @@ export const DailyProgressInput: React.FC<DailyProgressInputProps> = ({
   traineeId,
   showDateSelector = false,
   compact = false,
-  entity = "WellnessEntry",
   className,
 }) => {
   const eventBus = useEventBus();
@@ -179,11 +176,11 @@ export const DailyProgressInput: React.FC<DailyProgressInputProps> = ({
 
     eventBus.emit("UI:SAVE", {
       data: entryData,
-      entity,
+      entity: "WellnessEntry",
     });
 
     setHasChanges(false);
-  }, [eventBus, existingEntry, traineeId, selectedDate, values, entity]);
+  }, [eventBus, existingEntry, traineeId, selectedDate, values]);
 
   // Render a single metric slider
   const renderMetricSlider = (config: MetricConfig) => {

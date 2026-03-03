@@ -1,14 +1,14 @@
+'use client';
 /**
  * DetailPanel Organism Component
  *
  * Composes atoms and molecules to create a professional detail view.
  *
- * When `entity` prop is provided without `data`, automatically fetches data
- * using the useEntityDetail hook with ID from URL params.
+ * Data is provided by the runtime via the `entity` prop.
+ * See EntityDisplayProps in ./types.ts for base prop contract.
  */
 
 import React, { useCallback } from "react";
-import { useParams, useNavigate } from "react-router-dom";
 import {
   Calendar,
   Tag,
@@ -41,9 +41,9 @@ import { ErrorState } from "../molecules/ErrorState";
 import { EmptyState } from "../molecules/EmptyState";
 import { cn } from "../../lib/cn";
 import { getNestedValue } from "../../lib/getNestedValue";
-import { useEntityDetail } from "../../hooks/useEntityData";
-import { useSelectedEntity } from "../../hooks/useUIEvents";
 import { useEventBus } from "../../hooks/useEventBus";
+import { useTranslate } from "../../hooks/useTranslate";
+import type { EntityDisplayProps } from "./types";
 
 function getFieldIcon(fieldName: string): LucideIcon {
   const name = fieldName.toLowerCase();
@@ -171,7 +171,7 @@ function normalizeFieldDefs(fields: readonly FieldDef[] | undefined): string[] {
   return fields.map((f) => (typeof f === "string" ? f : f.key));
 }
 
-export interface DetailPanelProps {
+export interface DetailPanelProps extends EntityDisplayProps {
   title?: string;
   subtitle?: string;
   status?: {
@@ -184,26 +184,25 @@ export interface DetailPanelProps {
   actions?: readonly DetailPanelAction[];
   footer?: React.ReactNode;
   slideOver?: boolean;
-  onClose?: () => void;
-  className?: string;
 
-  // Schema-based props
-  entity?: string;
   /** Fields to display - accepts string[], {key, header}[], or DetailField[] */
   fields?: readonly (FieldDef | DetailField)[];
   /** Alias for fields - backwards compatibility */
   fieldNames?: readonly string[];
-  data?: Record<string, unknown> | unknown;
   /** Initial data for edit mode (passed by compiler) */
   initialData?: Record<string, unknown> | unknown;
   /** Display mode (passed by compiler) */
   mode?: string;
-  isLoading?: boolean;
-  error?: Error | null;
   /** Panel position (for drawer/sidebar placement) */
   position?: "left" | "right";
   /** Panel width (CSS value, e.g., '400px', '50%') */
   width?: string;
+  /** Entity ID for fetching specific entity */
+  entityId?: string;
+  /** Display fields (alias for fields) */
+  displayFields?: readonly string[];
+  /** Show actions flag */
+  showActions?: boolean;
 }
 
 export const DetailPanel: React.FC<DetailPanelProps> = ({
@@ -215,19 +214,16 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
   actions,
   footer,
   slideOver = false,
-  onClose,
   className,
   entity,
   fields: propFields,
   fieldNames,
-  data: externalData,
-  isLoading: externalLoading = false,
-  error: externalError,
+  initialData,
+  isLoading = false,
+  error,
 }) => {
-  // Get ID from URL params for auto-fetching on detail pages
-  const { id: urlId } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const eventBus = useEventBus();
+  const { t } = useTranslate();
 
   // Support fields and fieldNames (alias) - normalize to string array
   // Check if propFields contains FieldDef (string or {key}) or DetailField (has label/value)
@@ -246,9 +242,6 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
     ? normalizeFieldDefs(propFields)
     : fieldNames;
 
-  // Get selected entity from event bus (for drawer/sidebar usage when entity is selected via UI:VIEW/UI:SELECT)
-  const [selectedEntity] = useSelectedEntity<Record<string, unknown>>();
-
   // Handle action click with event bus and navigation support
   const handleActionClick = useCallback(
     (action: DetailPanelAction, data?: Record<string, unknown>) => {
@@ -257,35 +250,27 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
         const url = action.navigatesTo.replace(/\{\{(\w+)\}\}/g, (_, key) =>
           String(data?.[key] ?? ""),
         );
-        navigate(url);
+        eventBus.emit('UI:NAVIGATE', { url, row: data });
         return;
       }
       if (action.event) {
-        eventBus.emit(`UI:${action.event}`, { row: data, entity });
+        eventBus.emit(`UI:${action.event}`, { row: data });
       }
       if (action.onClick) {
         action.onClick();
       }
     },
-    [navigate, eventBus, entity],
+    [eventBus],
   );
 
-  // Auto-fetch data when entity is provided but no external data and we have an ID
-  const shouldAutoFetch =
-    !!entity && !externalData && !selectedEntity && !!urlId;
-  const {
-    data: fetchedData,
-    isLoading: fetchLoading,
-    error: fetchError,
-  } = useEntityDetail(
-    shouldAutoFetch ? entity : undefined,
-    shouldAutoFetch ? urlId : undefined,
-  );
+  // Handle close via event bus (closed circuit pattern)
+  const handleClose = useCallback(() => {
+    eventBus.emit('UI:CLOSE', {});
+  }, [eventBus]);
 
-  // Use external data if provided, then selected entity from event bus, then fetched data
-  const data = externalData ?? selectedEntity ?? fetchedData;
-  const isLoading = externalLoading || (shouldAutoFetch && fetchLoading);
-  const error = externalError ?? (shouldAutoFetch ? fetchError : null);
+  // entity is now the data itself (single record or first element of array)
+  const entityRecord = Array.isArray(entity) ? entity[0] : entity;
+  const data = entityRecord ?? initialData;
 
   let title = propTitle;
   // Use a mutable array for building sections, but accept readonly from props
@@ -447,7 +432,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
   if (isLoading) {
     return (
       <LoadingState
-        message={`Loading ${entity || "details"}...`}
+        message="Loading details..."
         className={className}
       />
     );
@@ -456,9 +441,9 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
   if (error) {
     return (
       <ErrorState
-        title="Error loading data"
-        message={error.message || "An error occurred while loading the data."}
-        onRetry={() => window.location.reload()}
+        title={t("error.loadingData")}
+        message={error.message || t("error.genericLoad")}
+        retryEvent="RETRY"
         className={className}
       />
     );
@@ -473,7 +458,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
     return (
       <EmptyState
         title="Not Found"
-        description={`The requested ${entity || "item"} could not be found.`}
+        description="The requested item could not be found."
         className={className}
       />
     );
@@ -489,7 +474,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
               {avatar}
 
               <Typography variant="h2" weight="bold">
-                {title || entity || "Details"}
+                {title || "Details"}
               </Typography>
 
               {subtitle && (
@@ -529,8 +514,8 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
               )}
             </VStack>
 
-            {slideOver && onClose && (
-              <Button variant="ghost" size="sm" onClick={onClose} icon={X} />
+            {slideOver && (
+              <Button variant="ghost" size="sm" onClick={handleClose} icon={X} />
             )}
           </HStack>
 
@@ -575,7 +560,8 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
                   <Button
                     key={idx}
                     variant={action.variant || "secondary"}
-                    onClick={() => handleActionClick(action, normalizedData)}
+                    action={action.event}
+                    actionPayload={{ row: normalizedData }}
                     icon={action.icon}
                   >
                     {action.label}

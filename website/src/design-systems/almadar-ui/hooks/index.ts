@@ -82,6 +82,8 @@ export {
   useEntityList,
   useEntityDetail,
   useEntity,
+  useEntityListSuspense,
+  useEntitySuspense,
   entityDataKeys,
   EntityDataProvider,
   useEntityDataAdapter,
@@ -150,6 +152,12 @@ export {
   type TranslateFunction,
   type I18nContextValue,
 } from './useTranslate';
+
+// Resolved entity hook for normalizing data sources
+export {
+  useResolvedEntity,
+  type ResolvedEntity,
+} from './useResolvedEntity';
 
 // Auth context stub (applications should provide their own AuthProvider)
 export {

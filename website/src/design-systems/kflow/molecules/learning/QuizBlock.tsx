@@ -35,7 +35,7 @@ export interface QuizBlockProps {
   className?: string;
   // Entity-aware props (for schema compatibility)
   /** Entity type */
-  entity?: string;
+  entity?: unknown;
   /** Data to display */
   data?: Record<string, unknown>;
   /** Actions */
@@ -54,12 +54,12 @@ export interface QuizBlockProps {
   displayFields?: string[];
 }
 
-export const QuizBlock: React.FC<QuizBlockProps> = ({
+export const QuizBlock = ({
   question = "",
   answer = "",
   index,
   className,
-}) => {
+}: QuizBlockProps) => {
   const eventBus = useEventBus();
   const { t } = useTranslate();
   const [revealed, setRevealed] = useState(false);

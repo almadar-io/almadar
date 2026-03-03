@@ -12,9 +12,9 @@
  */
 
 import React, { useRef, useState, useCallback, useEffect } from "react";
-import { Box, useEventBus } from '@almadar/ui';
+import { Box, useEventBus, type EntityDisplayProps } from '@almadar/ui';
 
-export interface MindMapCanvasProps {
+export interface MindMapCanvasProps extends EntityDisplayProps {
   /** Width of the canvas */
   width?: number;
   /** Height of the canvas */
@@ -35,17 +35,6 @@ export interface MindMapCanvasProps {
   onZoomChange?: (zoom: number) => void;
   /** Callback when pan changes */
   onPanChange?: (pan: { x: number; y: number }) => void;
-  /** Additional CSS classes */
-  className?: string;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
-  // Entity-aware props (for schema compatibility)
-  /** Entity type */
-  entity?: string;
-  /** Data to display */
-  data?: Record<string, unknown> | unknown;
   /** Actions available */
   actions?: Array<{ label: string; event: string }>;
   /** Fields to display */
@@ -54,7 +43,7 @@ export interface MindMapCanvasProps {
   showLearningGoals?: boolean;
 }
 
-export const MindMapCanvas: React.FC<MindMapCanvasProps> = ({
+export const MindMapCanvas = ({
   width,
   height,
   initialZoom = 1,
@@ -66,7 +55,7 @@ export const MindMapCanvas: React.FC<MindMapCanvasProps> = ({
   onZoomChange,
   onPanChange,
   className,
-}) => {
+}: MindMapCanvasProps) => {
   const eventBus = useEventBus();
   const containerRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({
@@ -156,10 +145,10 @@ export const MindMapCanvas: React.FC<MindMapCanvasProps> = ({
   return (
     <Box
       ref={containerRef}
-      className={`flex-1 bg-gray-50 dark:bg-gray-800 rounded-lg transition-all duration-200 ${
+      className={`flex-1 bg-[var(--color-surface)] rounded-lg transition-all duration-200 ${
         isFocused
-          ? "border-2 border-blue-500 dark:border-blue-400 ring-2 ring-blue-200 dark:ring-blue-800"
-          : "border border-gray-200 dark:border-gray-700"
+          ? "border-2 border-[var(--color-ring)] ring-2 ring-[var(--color-ring)]/20"
+          : "border border-[var(--color-border)]"
       } ${className || ""}`}
       tabIndex={0}
       onFocus={handleFocus}

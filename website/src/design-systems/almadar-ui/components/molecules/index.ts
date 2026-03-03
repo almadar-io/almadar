@@ -1,7 +1,9 @@
+export { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary';
 export { FormField, type FormFieldProps } from './FormField';
 export { EmptyState, type EmptyStateProps } from './EmptyState';
 export { LoadingState, type LoadingStateProps } from './LoadingState';
 export { ErrorState, type ErrorStateProps } from './ErrorState';
+export { Skeleton, type SkeletonProps, type SkeletonVariant } from './Skeleton';
 
 // Migrated molecules
 export { Accordion, type AccordionProps, type AccordionItem } from './Accordion';
@@ -29,6 +31,16 @@ export { Tooltip, type TooltipProps } from './Tooltip';
 export { Drawer, type DrawerProps, type DrawerPosition, type DrawerSize } from './Drawer';
 export { WizardProgress, type WizardProgressProps, type WizardProgressStep } from './WizardProgress';
 export { WizardNavigation, type WizardNavigationProps } from './WizardNavigation';
+
+// Markdown components
+export { MarkdownContent, type MarkdownContentProps } from './markdown/MarkdownContent';
+export { CodeBlock, type CodeBlockProps } from './markdown/CodeBlock';
+
+// Quiz
+export { QuizBlock, type QuizBlockProps } from './QuizBlock';
+
+// Diagram scaling
+export { ScaledDiagram, type ScaledDiagramProps } from './ScaledDiagram';
 
 // Inspection form components
 export { RepeatableFormSection, type RepeatableFormSectionProps, type RepeatableItem } from './RepeatableFormSection';

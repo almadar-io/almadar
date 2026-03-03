@@ -1,3 +1,4 @@
+'use client';
 /**
  * useUIEvents - UI Event to State Machine Bridge
  *

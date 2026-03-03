@@ -1,3 +1,4 @@
+'use client';
 /**
  * EventFlowTab - Displays event flow and debug messages
  * Uses existing component library atoms/molecules.

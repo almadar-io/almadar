@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * InspectorsTemplate - Template for the Inspectors list page
  *

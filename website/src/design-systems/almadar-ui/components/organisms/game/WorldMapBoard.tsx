@@ -1,20 +1,31 @@
+'use client';
 /**
  * WorldMapBoard
  *
- * Organism that contains ALL game logic for the strategic world-map view.
- * Renders an isometric hex/iso map with hero selection, movement animation,
- * and encounter callbacks. Game-specific panels (hero detail, hero lists,
- * resource bars) are injected via render-prop slots.
+ * Organism for the strategic world-map view.  Renders an isometric hex/iso
+ * map with hero selection, movement animation, and encounter callbacks.
+ * Game-specific panels (hero detail, hero lists, resource bars) are injected
+ * via render-prop slots.
  *
- * This component is the logic-heavy core; WorldMapTemplate is a thin layout
- * wrapper that delegates to WorldMapBoard.
+ * **State categories (closed-circuit compliant):**
+ * - Game data (hexes, heroes, selectedHeroId, features) → received via
+ *   `entity` prop; the Orbital trait owns this state.
+ * - Rendering state (hoveredTile, movingPositions animation) → local only.
+ * - Events → emitted via `useEventBus()` for trait integration.
+ *
+ * This component is mostly prop-driven.  The only internal state is hover
+ * tracking and movement animation interpolation, both of which are
+ * rendering-only concerns that cannot (and should not) be externalised.
  *
  * @packageDocumentation
  */
 
+/* eslint-disable almadar/organism-no-callback-props, almadar/organism-extends-entity-display */
 import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { cn } from '../../../lib/cn';
 import { useEventBus } from '../../../hooks/useEventBus';
+import { VStack, HStack, Stack } from '../../atoms/Stack';
+import type { EntityDisplayProps } from '../types';
 import IsometricCanvas from './IsometricCanvas';
 import type {
     IsometricTile,
@@ -36,6 +47,13 @@ export interface MapHero {
     position: { x: number; y: number };
     movement: number;
     sprite?: string;
+    /** Optional sprite sheet for animation (null = use static sprite) */
+    spriteSheet?: {
+        se: string;
+        sw: string;
+        frameWidth: number;
+        frameHeight: number;
+    } | null;
     level?: number;
 }
 
@@ -86,7 +104,7 @@ export interface WorldMapEntity {
     backgroundImage?: string;
 }
 
-export interface WorldMapBoardProps {
+export interface WorldMapBoardProps extends Omit<EntityDisplayProps, 'entity'> {
     /** World map entity data */
     entity: WorldMapEntity;
 
@@ -130,6 +148,10 @@ export interface WorldMapBoardProps {
     onFeatureEnter?: (heroId: string, hex: MapHex) => void;
 
     // -- Canvas pass-through --
+    /** Override for the diamond-top Y offset within tile sprites (default: 374). */
+    diamondTopY?: number;
+    /** Disable pan/zoom camera (default: true). Set false for fixed maps where overlay labels need stable positions. */
+    enableCamera?: boolean;
     effectSpriteUrls?: string[];
     resolveUnitFrame?: (unitId: string) => ResolvedFrame | null;
 
@@ -153,6 +175,7 @@ function defaultIsInRange(
 // Component
 // =============================================================================
 
+// eslint-disable-next-line almadar/require-translate -- renders no text; all content via render-prop slots (header, sidePanel, overlay, footer)
 export function WorldMapBoard({
     entity,
     scale = 0.4,
@@ -172,10 +195,12 @@ export function WorldMapBoard({
     onHeroMove,
     onBattleEncounter,
     onFeatureEnter,
+    diamondTopY,
+    enableCamera,
     effectSpriteUrls = [],
     resolveUnitFrame,
     className,
-}: WorldMapBoardProps): JSX.Element {
+}: WorldMapBoardProps): React.JSX.Element {
     const eventBus = useEventBus();
 
     // Destructure entity for convenience
@@ -384,14 +409,14 @@ export function WorldMapBoard({
     );
 
     return (
-        <div className={cn('world-map-board min-h-screen flex flex-col bg-[var(--color-background)]', className)}>
+        <VStack className={cn('world-map-board min-h-screen bg-[var(--color-background)]', className)} gap="none">
             {/* Header slot */}
             {header && header(ctx)}
 
             {/* Main area */}
-            <div className="flex flex-1 overflow-hidden">
+            <HStack className="flex-1 overflow-hidden" gap="none">
                 {/* Canvas column */}
-                <div className="flex-1 overflow-auto p-4 relative">
+                <Stack className="flex-1 overflow-auto p-4 relative">
                     <IsometricCanvas
                         tiles={tiles}
                         units={isoUnits}
@@ -411,23 +436,25 @@ export function WorldMapBoard({
                         effectSpriteUrls={effectSpriteUrls}
                         resolveUnitFrame={resolveUnitFrame}
                         unitScale={unitScale}
+                        diamondTopY={diamondTopY}
+                        enableCamera={enableCamera}
                     />
 
                     {/* Overlay slot */}
                     {overlay && overlay(ctx)}
-                </div>
+                </Stack>
 
                 {/* Side panel slot */}
                 {sidePanel && (
-                    <div className="w-80 shrink-0 border-l border-[var(--color-border)] bg-[var(--color-surface)] overflow-y-auto p-4">
+                    <Stack className="w-80 shrink-0 border-l border-[var(--color-border)] bg-[var(--color-surface)] overflow-y-auto p-4">
                         {sidePanel(ctx)}
-                    </div>
+                    </Stack>
                 )}
-            </div>
+            </HStack>
 
             {/* Footer slot */}
             {footer && footer(ctx)}
-        </div>
+        </VStack>
     );
 }
 

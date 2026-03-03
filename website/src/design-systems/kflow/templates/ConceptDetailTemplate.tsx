@@ -23,18 +23,19 @@ import type { ConceptEntity } from '../organisms/ConceptDetailBoard';
 export type { ConceptEntity } from '../organisms/ConceptDetailBoard';
 
 export interface ConceptDetailTemplateProps {
-  entity: ConceptEntity;
+  entity?: ConceptEntity;
   graphId?: string;
   showBack?: boolean;
   className?: string;
 }
 
-export const ConceptDetailTemplate: React.FC<ConceptDetailTemplateProps> = ({
+export const ConceptDetailTemplate = ({
   entity,
   graphId,
   showBack,
   className,
-}) => {
+}: ConceptDetailTemplateProps) => {
+  if (!entity) return null;
   return (
     <ConceptDetailBoard
       entity={entity}

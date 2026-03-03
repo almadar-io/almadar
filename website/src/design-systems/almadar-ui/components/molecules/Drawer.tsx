@@ -1,3 +1,4 @@
+'use client';
 /**
  * Drawer Molecule Component
  *

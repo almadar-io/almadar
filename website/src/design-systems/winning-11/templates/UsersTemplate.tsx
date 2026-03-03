@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * UsersTemplate
  *
@@ -16,7 +17,7 @@ import { UsersBoard } from "../organisms/UsersBoard";
 export type { UserData } from "../organisms/UsersBoard";
 
 export interface UsersTemplateProps {
-  /** Entity data (user items) */
+  /** Entity prop (user items) */
   entity?: readonly import("../organisms/UsersBoard").UserData[];
   /** Loading state */
   isLoading?: boolean;

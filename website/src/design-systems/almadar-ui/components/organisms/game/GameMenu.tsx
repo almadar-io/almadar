@@ -1,5 +1,5 @@
+'use client';
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
 import { cn } from "../../../lib/cn";
 import {
   useEventBus,
@@ -53,21 +53,6 @@ const variantMap = {
   ghost: "bg-transparent hover:bg-white/10 text-white border-white/20",
 };
 
-/**
- * Safe navigation hook that works outside Router context.
- * Returns a no-op function if not in Router context.
- */
-function useSafeNavigate(): (to: string) => void {
-  try {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const navigate = useNavigate();
-    return navigate;
-  } catch {
-    // Outside Router context - return no-op
-    return () => {};
-  }
-}
-
 export function GameMenu({
   title,
   subtitle,
@@ -81,7 +66,6 @@ export function GameMenu({
 }: GameMenuProps) {
   // Resolve alias: menuItems → options
   const resolvedOptions = options ?? menuItems ?? [];
-  const navigate = useSafeNavigate();
 
   // Use provided eventBus or get from context (with fallback for outside provider)
   let eventBusFromHook: EventBusContextType | null = null;
@@ -106,11 +90,11 @@ export function GameMenu({
       }
 
       // Handle navigation if navigatesTo is specified
-      if (option.navigatesTo) {
-        navigate(option.navigatesTo);
+      if (option.navigatesTo && eventBus) {
+        eventBus.emit('UI:NAVIGATE', { url: option.navigatesTo, option });
       }
     },
-    [eventBus, onSelect, navigate],
+    [eventBus, onSelect],
   );
 
   return (

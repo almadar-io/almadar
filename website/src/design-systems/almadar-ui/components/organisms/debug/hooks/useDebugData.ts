@@ -1,8 +1,10 @@
+'use client';
 /**
  * useDebugData - Hook that aggregates data from all debug registries
- * 
+ *
  * Polls registries and provides combined data for the RuntimeDebugger.
- * 
+ * Includes verification data (checks, transitions, bridge health).
+ *
  * @packageDocumentation
  */
 
@@ -31,6 +33,17 @@ import {
     subscribeToDebugEvents,
     type DebugEvent
 } from '../../../../lib/debugRegistry';
+import {
+    getAllChecks,
+    getTransitions,
+    getBridgeHealth,
+    getSummary,
+    subscribeToVerification,
+    type VerificationCheck,
+    type TransitionTrace,
+    type BridgeHealth,
+    type VerificationSummary,
+} from '../../../../lib/verificationRegistry';
 
 export interface DebugData {
     traits: TraitDebugInfo[];
@@ -38,6 +51,12 @@ export interface DebugData {
     guards: GuardEvaluation[];
     events: DebugEvent[];
     entitySnapshot: EntitySnapshot | null;
+    verification: {
+        checks: VerificationCheck[];
+        transitions: TransitionTrace[];
+        bridge: BridgeHealth | null;
+        summary: VerificationSummary;
+    };
     lastUpdate: number;
 }
 
@@ -52,6 +71,12 @@ export function useDebugData(): DebugData {
         guards: [],
         events: [],
         entitySnapshot: null,
+        verification: {
+            checks: [],
+            transitions: [],
+            bridge: null,
+            summary: { totalChecks: 0, passed: 0, failed: 0, warnings: 0, pending: 0 },
+        },
         lastUpdate: Date.now(),
     }));
 
@@ -65,6 +90,12 @@ export function useDebugData(): DebugData {
                 guards: getGuardHistory(),
                 events: getDebugEvents(),
                 entitySnapshot: getEntitySnapshot(),
+                verification: {
+                    checks: getAllChecks(),
+                    transitions: getTransitions(),
+                    bridge: getBridgeHealth(),
+                    summary: getSummary(),
+                },
                 lastUpdate: Date.now(),
             });
         };
@@ -77,6 +108,7 @@ export function useDebugData(): DebugData {
         const unsubTicks = subscribeToTickChanges(updateData);
         const unsubGuards = subscribeToGuardChanges(updateData);
         const unsubEvents = subscribeToDebugEvents(updateData);
+        const unsubVerification = subscribeToVerification(updateData);
 
         // Poll entity snapshot (entities don't have a subscription system)
         const pollInterval = setInterval(() => {
@@ -92,6 +124,7 @@ export function useDebugData(): DebugData {
             unsubTicks();
             unsubGuards();
             unsubEvents();
+            unsubVerification();
             clearInterval(pollInterval);
         };
     }, []);

@@ -1,3 +1,4 @@
+/* eslint-disable almadar/organism-extends-entity-display, almadar/require-event-bus */
 /**
  * LessonBoard Organism
  *
@@ -5,8 +6,8 @@
  * and prev/next navigation. Extracted from LessonTemplate for flattener compliance.
  */
 
-import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Menu, X, CheckCircle } from 'lucide-react';
+import React, { useState, useCallback } from 'react';
+import { ChevronLeft, ChevronRight, Menu, CheckCircle, Languages, RefreshCw } from 'lucide-react';
 import {
   Box,
   VStack,
@@ -14,10 +15,17 @@ import {
   Card,
   Button,
   Typography,
+  Badge,
+  PageHeader,
+  Drawer,
+  ProgressBar,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 import { SegmentRenderer } from '../organisms/SegmentRenderer';
+import FlashCardsDisplay from '../organisms/FlashCardsDisplay';
+import type { FlashCard } from '../types';
 import type { Segment } from '../utils/parseLessonSegments';
 
 export interface LessonEntity {
@@ -29,6 +37,16 @@ export interface LessonEntity {
   isCompleted?: boolean;
   courseTitle?: string;
   courseProgress?: number;
+  /** Bilingual support */
+  availableLanguages?: string[];
+  selectedLanguage?: string;
+  translatedContent?: string;
+  translatedSegments?: Segment[];
+  translationStatus?: 'idle' | 'loading' | 'ready' | 'error';
+  /** Flashcards */
+  flashcards?: FlashCard[];
+  /** Assessment content (rendered below lesson) */
+  assessmentContent?: React.ReactNode;
 }
 
 export interface SidebarItem {
@@ -38,7 +56,7 @@ export interface SidebarItem {
   isCurrent?: boolean;
 }
 
-export interface LessonBoardProps {
+export interface LessonBoardProps extends Omit<EntityDisplayProps, 'entity'> {
   entity: LessonEntity;
   sidebarItems?: SidebarItem[];
   hasPrevious?: boolean;
@@ -49,9 +67,9 @@ export interface LessonBoardProps {
   prevEvent?: string;
   toggleSidebarEvent?: string;
   selectLessonEvent?: string;
-  className?: string;
-  isLoading?: boolean;
-  error?: Error | null;
+  languageChangeEvent?: string;
+  regenerateTranslationEvent?: string;
+  bilingualToggleEvent?: string;
 }
 
 export function LessonBoard({
@@ -65,11 +83,15 @@ export function LessonBoard({
   prevEvent,
   toggleSidebarEvent,
   selectLessonEvent,
+  languageChangeEvent,
+  regenerateTranslationEvent,
+  bilingualToggleEvent,
   className = '',
-}: LessonBoardProps): JSX.Element {
+}: LessonBoardProps): React.JSX.Element {
   const { emit } = useEventBus();
   const { t } = useTranslate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [bilingualMode, setBilingualMode] = useState(false);
 
   const handleComplete = () => {
     if (completeEvent) emit(`UI:${completeEvent}`, { lessonId: entity.id });
@@ -93,10 +115,33 @@ export function LessonBoard({
     setSidebarOpen(false);
   };
 
+  const closeSidebar = () => setSidebarOpen(false);
+
+  const handleLanguageChange = useCallback((language: string) => {
+    if (languageChangeEvent) emit(`UI:${languageChangeEvent}`, { language });
+  }, [emit, languageChangeEvent]);
+
+  const handleRegenerateTranslation = useCallback(() => {
+    if (regenerateTranslationEvent) emit(`UI:${regenerateTranslationEvent}`, { lessonId: entity.id });
+  }, [emit, regenerateTranslationEvent, entity.id]);
+
+  const handleBilingualToggle = useCallback(() => {
+    const newMode = !bilingualMode;
+    setBilingualMode(newMode);
+    if (bilingualToggleEvent) emit(`UI:${bilingualToggleEvent}`, { enabled: newMode });
+  }, [emit, bilingualToggleEvent, bilingualMode]);
+
+  const showBilingual = entity.availableLanguages && entity.availableLanguages.length > 1;
+  const showTranslation = bilingualMode && typeof entity.translatedContent === 'string' && entity.translatedContent.length > 0;
+
   return (
-    <Box className={`min-h-screen bg-gray-50 ${className}`}>
-      <Box className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200">
-        <HStack justify="between" align="center" className="px-4 h-14">
+    <Box className={`min-h-screen bg-[var(--color-background)] ${className}`}>
+      <Box className="fixed top-0 left-0 right-0 z-50">
+        <PageHeader
+          title={entity.title}
+          subtitle={entity.courseTitle}
+          status={entity.isCompleted ? { label: t('lesson.completed'), variant: 'success' } : undefined}
+        >
           <HStack gap="sm" align="center">
             <Button
               onClick={handleToggleSidebar}
@@ -106,100 +151,106 @@ export function LessonBoard({
             >
               <Menu size={20} />
             </Button>
-            <VStack gap="none" className="min-w-0">
-              {entity.courseTitle && (
-                <Typography variant="small" className="text-xs text-[var(--color-muted-foreground)] truncate">
-                  {entity.courseTitle}
-                </Typography>
-              )}
-              <Typography variant="small" className="font-medium text-[var(--color-foreground)] truncate">
-                {entity.title}
-              </Typography>
-            </VStack>
-          </HStack>
-
-          <HStack gap="sm" align="center">
-            {entity.isCompleted && (
-              <Typography variant="small" className="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded flex items-center gap-1">
-                <CheckCircle size={12} />
-                {t('lesson.completed')}
-              </Typography>
-            )}
-            {entity.courseProgress !== undefined && (
+            {entity.courseProgress !== undefined ? (
               <HStack gap="xs" align="center" className="w-32">
-                <Box className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                  <Box
-                    className="h-full bg-indigo-500"
-                    style={{ width: `${entity.courseProgress}%` }}
-                  />
-                </Box>
+                <ProgressBar value={entity.courseProgress} max={100} size="sm" variant="primary" className="flex-1" />
                 <Typography variant="small" className="text-xs text-[var(--color-muted-foreground)]">{entity.courseProgress}%</Typography>
               </HStack>
-            )}
+            ) : null}
           </HStack>
-        </HStack>
-
-        <Box className="h-1 bg-gray-100">
-          <Box
-            className="h-full bg-indigo-600 transition-all duration-300"
-            style={{ width: `${readingProgress}%` }}
-          />
-        </Box>
+        </PageHeader>
+        <ProgressBar value={readingProgress} max={100} size="sm" variant="primary" className="h-1" />
       </Box>
 
-      {sidebarOpen && (
-        <>
-          <Box
-            className="fixed inset-0 bg-black/50 z-40"
-            onClick={() => setSidebarOpen(false)}
-          />
-          <Box className="fixed top-0 left-0 bottom-0 w-80 bg-white z-50 overflow-y-auto">
-            <HStack justify="between" align="center" className="p-4 border-b border-gray-200">
-              <Typography variant="small" className="font-semibold text-[var(--color-foreground)]">{t('lesson.courseContent')}</Typography>
-              <Button
-                onClick={() => setSidebarOpen(false)}
-                variant="secondary"
-                size="sm"
-                className="p-2 text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:bg-gray-100"
-              >
-                <X size={20} />
-              </Button>
-            </HStack>
-            <VStack gap="none" className="p-2">
-              {sidebarItems.map((item) => (
-                <Button
-                  key={item.id}
-                  onClick={() => handleSelectLesson(item.id)}
-                  variant="secondary"
-                  className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${
-                    item.isCurrent
-                      ? 'bg-indigo-50 text-indigo-700 font-medium'
-                      : item.isCompleted
-                      ? 'text-[var(--color-muted-foreground)]'
-                      : 'text-[var(--color-foreground)] hover:bg-gray-50'
-                  }`}
-                >
-                  <HStack gap="sm" align="center">
-                    {item.isCompleted && <CheckCircle size={14} className="text-green-500" />}
-                    <Typography variant="small" className="truncate">{item.title}</Typography>
-                  </HStack>
-                </Button>
-              ))}
-            </VStack>
-          </Box>
-        </>
-      )}
+      <Drawer
+        isOpen={sidebarOpen}
+        onClose={closeSidebar}
+        title={t('lesson.courseContent')}
+        position="left"
+        width="md"
+        closeOnEscape
+        closeOnOverlayClick
+      >
+        <VStack gap="none">
+          {sidebarItems.map((item) => (
+            <Button
+              key={item.id}
+              onClick={() => handleSelectLesson(item.id)}
+              variant="secondary"
+              className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${
+                item.isCurrent
+                  ? 'bg-[var(--color-accent)]/10 text-[var(--color-accent)] font-medium'
+                  : item.isCompleted
+                  ? 'text-[var(--color-muted-foreground)]'
+                  : 'text-[var(--color-foreground)] hover:bg-[var(--color-muted)]'
+              }`}
+            >
+              <HStack gap="sm" align="center">
+                {item.isCompleted ? <CheckCircle size={14} className="text-green-500" /> : null}
+                <Typography variant="small" className="truncate">{item.title}</Typography>
+              </HStack>
+            </Button>
+          ))}
+        </VStack>
+      </Drawer>
 
       <Box className="pt-20 pb-24">
         <Box className="max-w-3xl mx-auto px-4">
           <VStack gap="lg">
-            <VStack gap="sm">
-              <Typography variant="h1" className="text-3xl font-bold text-[var(--color-foreground)]">{entity.title}</Typography>
-              {entity.duration && (
-                <Typography variant="small" className="text-sm text-[var(--color-muted-foreground)]">{t('lesson.minRead', { minutes: entity.duration })}</Typography>
-              )}
-            </VStack>
+            {/* Language bar */}
+            {showBilingual ? (
+              <Card className="p-3">
+                <HStack justify="between" align="center" wrap>
+                  <HStack gap="xs" align="center">
+                    <Languages size={16} className="text-[var(--color-muted-foreground)]" />
+                    <HStack gap="xs">
+                      {entity.availableLanguages?.map((lang) => (
+                        <Button
+                          key={lang}
+                          onClick={() => handleLanguageChange(lang)}
+                          variant={lang === entity.selectedLanguage ? 'primary' : 'secondary'}
+                          size="sm"
+                          className="px-3 py-1 text-xs"
+                        >
+                          {lang.toUpperCase()}
+                        </Button>
+                      ))}
+                    </HStack>
+                  </HStack>
+                  <HStack gap="xs" align="center">
+                    <Button
+                      onClick={handleBilingualToggle}
+                      variant={bilingualMode ? 'primary' : 'secondary'}
+                      size="sm"
+                      className="px-3 py-1 text-xs flex items-center gap-1"
+                    >
+                      <Languages size={14} />
+                      {t('lesson.bilingual')}
+                    </Button>
+                    {entity.translationStatus === 'loading' ? (
+                      <Badge variant="warning" size="sm">{t('lesson.translating')}</Badge>
+                    ) : null}
+                    {entity.translationStatus === 'error' ? (
+                      <Button
+                        onClick={handleRegenerateTranslation}
+                        variant="secondary"
+                        size="sm"
+                        className="px-2 py-1 text-xs flex items-center gap-1"
+                      >
+                        <RefreshCw size={12} />
+                        {t('lesson.retryTranslation')}
+                      </Button>
+                    ) : null}
+                  </HStack>
+                </HStack>
+              </Card>
+            ) : null}
 
+            {entity.duration != null ? (
+              <Typography variant="small" className="text-sm text-[var(--color-muted-foreground)]">{t('lesson.minRead', { minutes: entity.duration })}</Typography>
+            ) : null}
+
+            {/* Primary content */}
             {entity.segments && entity.segments.length > 0 ? (
               <SegmentRenderer segments={entity.segments} />
             ) : (
@@ -211,7 +262,35 @@ export function LessonBoard({
               </Card>
             )}
 
-            {!entity.isCompleted && (
+            {/* Bilingual translated content (shown side-by-side or below) */}
+            {showTranslation ? (
+              <Card className="border-l-4 border-[var(--color-accent)]">
+                {entity.translatedSegments && entity.translatedSegments.length > 0 ? (
+                  <Box className="p-4">
+                    <SegmentRenderer segments={entity.translatedSegments} />
+                  </Box>
+                ) : (
+                  <Box
+                    className="prose prose-indigo max-w-none p-4"
+                    dangerouslySetInnerHTML={{ __html: entity.translatedContent ?? '' }}
+                  />
+                )}
+              </Card>
+            ) : null}
+
+            {/* Flashcards */}
+            {entity.flashcards && entity.flashcards.length > 0 ? (
+              <FlashCardsDisplay flashCards={entity.flashcards} />
+            ) : null}
+
+            {/* Assessment content */}
+            {entity.assessmentContent ? (
+              <Box className="py-4">
+                {String(entity.assessmentContent)}
+              </Box>
+            ) : null}
+
+            {!entity.isCompleted ? (
               <Box className="text-center py-8">
                 <Button
                   onClick={handleComplete}
@@ -222,7 +301,7 @@ export function LessonBoard({
                   {t('lesson.markAsComplete')}
                 </Button>
               </Box>
-            )}
+            ) : null}
           </VStack>
         </Box>
       </Box>

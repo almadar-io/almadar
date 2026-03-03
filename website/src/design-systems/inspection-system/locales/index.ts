@@ -1,10 +1,8 @@
-import { coreMessages, localeMeta, mergeMessages, type SupportedLocale } from '../../../packages/almadar-ui/locales';
-import { createTranslate } from '../../../packages/almadar-ui/hooks/useTranslate';
+import { coreMessages, localeMeta, type SupportedLocale } from '@almadar/ui/locales';
 import en from './en.json';
 import ar from './ar.json';
 import sl from './sl.json';
 
-// Strip $meta/$extends
 function stripMeta(obj: Record<string, unknown>): Record<string, string> {
   const result: Record<string, string> = {};
   for (const [key, value] of Object.entries(obj)) {
@@ -26,4 +24,4 @@ export const allMessages: Record<SupportedLocale, Record<string, string>> = {
   sl: { ...coreMessages.sl, ...projectMessages.sl },
 };
 
-export { localeMeta, type SupportedLocale };
+export { coreMessages, localeMeta, type SupportedLocale };

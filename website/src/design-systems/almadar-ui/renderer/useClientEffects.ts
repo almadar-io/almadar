@@ -1,3 +1,4 @@
+'use client';
 /**
  * useClientEffects Hook
  *
@@ -161,7 +162,7 @@ export function useClientEffects(
 
   // Reset executed tracking when effects array reference changes
   // (indicates a new batch of effects from a new event response)
-  const prevEffectsRef = useRef<ClientEffect[] | undefined>();
+  const prevEffectsRef = useRef<ClientEffect[] | undefined>(undefined);
   useEffect(() => {
     if (effects !== prevEffectsRef.current) {
       // New effects array - this is a new batch

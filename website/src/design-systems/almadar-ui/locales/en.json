@@ -99,5 +99,19 @@
   "dialog.cancel": "Cancel",
   "dialog.loading": "Loading...",
   "dialog.delete.title": "Delete {{item}}?",
-  "dialog.delete.message": "This action cannot be undone."
+  "dialog.delete.message": "This action cannot be undone.",
+
+  "trait.availableActions": "Available Actions",
+  "trait.transitions": "Transitions",
+  "trait.availableNow": "Available now",
+
+  "book.startReading": "Start Reading",
+  "book.tableOfContents": "Table of Contents",
+  "book.partNumber": "Part {{number}}",
+  "book.print": "Print",
+  "book.previousPage": "Previous page",
+  "book.nextPage": "Next page",
+
+  "quiz.showAnswer": "Show answer",
+  "quiz.hideAnswer": "Hide answer"
 }

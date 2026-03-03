@@ -1,3 +1,4 @@
+'use client';
 /**
  * FeatureRenderer
  *
@@ -60,7 +61,7 @@ interface FeatureVisualProps {
 /**
  * Tree geometry component
  */
-function TreeFeature({ height, color }: { height: number; color: number }): JSX.Element {
+function TreeFeature({ height, color }: { height: number; color: number }): React.JSX.Element {
     return (
         <>
             {/* Trunk */}
@@ -90,7 +91,7 @@ function TreeFeature({ height, color }: { height: number; color: number }): JSX.
 /**
  * Rock geometry component
  */
-function RockFeature({ height, color }: { height: number; color: number }): JSX.Element {
+function RockFeature({ height, color }: { height: number; color: number }): React.JSX.Element {
     return (
         <mesh position={[0, height * 0.4, 0]}>
             <dodecahedronGeometry args={[height * 0.5, 0]} />
@@ -102,7 +103,7 @@ function RockFeature({ height, color }: { height: number; color: number }): JSX.
 /**
  * Bush geometry component
  */
-function BushFeature({ height, color }: { height: number; color: number }): JSX.Element {
+function BushFeature({ height, color }: { height: number; color: number }): React.JSX.Element {
     return (
         <>
             <mesh position={[0, height * 0.3, 0]}>
@@ -120,7 +121,7 @@ function BushFeature({ height, color }: { height: number; color: number }): JSX.
 /**
  * House geometry component
  */
-function HouseFeature({ height, color }: { height: number; color: number }): JSX.Element {
+function HouseFeature({ height, color }: { height: number; color: number }): React.JSX.Element {
     return (
         <>
             {/* Base */}
@@ -145,7 +146,7 @@ function HouseFeature({ height, color }: { height: number; color: number }): JSX
 /**
  * Tower geometry component
  */
-function TowerFeature({ height, color }: { height: number; color: number }): JSX.Element {
+function TowerFeature({ height, color }: { height: number; color: number }): React.JSX.Element {
     return (
         <>
             {/* Tower base */}
@@ -165,7 +166,7 @@ function TowerFeature({ height, color }: { height: number; color: number }): JSX
 /**
  * Chest geometry component
  */
-function ChestFeature({ height, color }: { height: number; color: number }): JSX.Element {
+function ChestFeature({ height, color }: { height: number; color: number }): React.JSX.Element {
     return (
         <>
             {/* Chest base */}
@@ -185,7 +186,7 @@ function ChestFeature({ height, color }: { height: number; color: number }): JSX
 /**
  * Default geometry for unknown feature types
  */
-function DefaultFeature({ height, color }: { height: number; color: number }): JSX.Element {
+function DefaultFeature({ height, color }: { height: number; color: number }): React.JSX.Element {
     return (
         <mesh position={[0, height * 0.5, 0]}>
             <boxGeometry args={[0.5, height, 0.5]} />
@@ -203,7 +204,7 @@ function FeatureVisual({
     isSelected,
     onClick,
     onHover,
-}: FeatureVisualProps): JSX.Element {
+}: FeatureVisualProps): React.JSX.Element {
     const config = DEFAULT_FEATURE_CONFIGS[feature.type] || {
         color: 0x888888,
         height: 0.5,
@@ -284,7 +285,7 @@ export function FeatureRenderer({
     onFeatureHover,
     selectedFeatureIds = [],
     featureColors,
-}: FeatureRendererProps): JSX.Element {
+}: FeatureRendererProps): React.JSX.Element {
     return (
         <group>
             {features.map((feature) => {

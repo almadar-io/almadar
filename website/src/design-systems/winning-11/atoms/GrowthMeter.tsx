@@ -46,8 +46,6 @@ export interface GrowthMeterProps {
   animated?: boolean;
   /** Size variant */
   size?: "sm" | "md" | "lg";
-  /** Entity context for event payload */
-  entity?: string;
   /** Event to emit on click */
   event?: string;
   /** Click handler callback */
@@ -107,7 +105,6 @@ export const GrowthMeter: React.FC<GrowthMeterProps> = ({
   showStageLabel = true,
   animated = true,
   size = "md",
-  entity,
   event,
   onClick,
   className,
@@ -140,11 +137,11 @@ export const GrowthMeter: React.FC<GrowthMeterProps> = ({
       eventBus.emit(`UI:${event}`, {
         visualMetaphor,
         growthPoints: normalizedProgress,
-        entity,
+        entity: "RelationshipHealth",
       });
     }
     onClick?.();
-  }, [event, eventBus, visualMetaphor, normalizedProgress, entity, onClick]);
+  }, [event, eventBus, visualMetaphor, normalizedProgress, onClick]);
 
   return (
     <VStack

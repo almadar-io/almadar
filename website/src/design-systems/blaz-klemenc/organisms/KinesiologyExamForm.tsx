@@ -1,3 +1,4 @@
+/* eslint-disable almadar/require-event-bus */
 /**
  * KinesiologyExamForm
  *
@@ -24,8 +25,11 @@ import {
   Input,
   Textarea,
   Select,
+  LoadingState,
+  ErrorState,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 
 export interface MuscleAssessment {
@@ -48,23 +52,15 @@ export interface KinesiologyExamData {
   notes?: string;
 }
 
-export interface KinesiologyExamFormProps {
+export interface KinesiologyExamFormProps extends EntityDisplayProps<KinesiologyExamData> {
   /** Trainee ID */
   traineeId: string;
   /** Trainer ID */
   trainerId?: string;
   /** Existing exam to edit */
   existingExam?: KinesiologyExamData;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
-  /** Entity context for events */
-  entity?: string;
-  /** Callback on cancel */
-  onCancel?: () => void;
-  /** Additional CSS classes */
-  className?: string;
+  /** Event name for cancel (emitted as UI:{cancelEvent}) */
+  cancelEvent?: string;
 }
 
 const muscleGroups = [
@@ -104,12 +100,24 @@ export const KinesiologyExamForm: React.FC<KinesiologyExamFormProps> = ({
   traineeId,
   trainerId,
   existingExam,
+  isLoading = false,
+  error = null,
   entity = "ProgressEntry",
-  onCancel,
+  cancelEvent,
   className,
 }) => {
   const eventBus = useEventBus();
   const { t } = useTranslate();
+
+  // Loading state
+  if (isLoading) {
+    return <LoadingState className={className} />;
+  }
+
+  // Error state
+  if (error) {
+    return <ErrorState message={error?.message} className={className} />;
+  }
 
   const [formData, setFormData] = useState<Partial<KinesiologyExamData>>({
     traineeId,
@@ -191,8 +199,10 @@ export const KinesiologyExamForm: React.FC<KinesiologyExamFormProps> = ({
             </Box>
             <Typography variant="h4">{t('kinesiology.title')}</Typography>
           </HStack>
-          {onCancel && (
-            <Button variant="ghost" size="sm" onClick={onCancel}>
+          {cancelEvent && (
+            <Button variant="ghost" size="sm" onClick={() => {
+              eventBus.emit(`UI:${cancelEvent}`, { entity });
+            }}>
               <X className="h-4 w-4" />
             </Button>
           )}
@@ -369,8 +379,10 @@ export const KinesiologyExamForm: React.FC<KinesiologyExamFormProps> = ({
 
         {/* Actions */}
         <HStack gap="sm" justify="end" className="border-t pt-4">
-          {onCancel && (
-            <Button variant="secondary" onClick={onCancel}>
+          {cancelEvent && (
+            <Button variant="secondary" onClick={() => {
+              eventBus.emit(`UI:${cancelEvent}`, { entity });
+            }}>
               {t('kinesiology.cancel')}
             </Button>
           )}

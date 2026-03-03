@@ -1,3 +1,4 @@
+'use client';
 /**
  * UnitRenderer
  *
@@ -43,7 +44,7 @@ interface UnitVisualProps {
 /**
  * Individual unit visual component
  */
-function UnitVisual({ unit, position, isSelected, onClick }: UnitVisualProps): JSX.Element {
+function UnitVisual({ unit, position, isSelected, onClick }: UnitVisualProps): React.JSX.Element {
     const groupRef = useRef<THREE.Group>(null);
     const [animationState, setAnimationState] = useState<UnitAnimationState>('idle');
     const [isHovered, setIsHovered] = useState(false);
@@ -169,7 +170,7 @@ export function UnitRenderer({
     onUnitClick,
     onAnimationStateChange,
     animationSpeed = 1,
-}: UnitRendererProps): JSX.Element {
+}: UnitRendererProps): React.JSX.Element {
     const handleUnitClick = React.useCallback(
         (unit: IsometricUnit) => {
             onUnitClick?.(unit);

@@ -1,3 +1,4 @@
+'use client';
 /**
  * usePhysics2D Hook
  *

@@ -44,7 +44,7 @@ export interface NoteContentProps {
   className?: string;
 }
 
-export const NoteContent: React.FC<NoteContentProps> = ({
+export const NoteContent = ({
   noteId,
   content,
   isEditing: externalIsEditing,
@@ -57,7 +57,7 @@ export const NoteContent: React.FC<NoteContentProps> = ({
   onSave,
   onCancel,
   className,
-}) => {
+}: NoteContentProps) => {
   const eventBus = useEventBus();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [internalEditing, setInternalEditing] = useState(false);

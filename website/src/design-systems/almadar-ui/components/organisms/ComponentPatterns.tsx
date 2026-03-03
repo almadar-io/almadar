@@ -1,3 +1,4 @@
+'use client';
 /**
  * Component Pattern Wrappers
  *

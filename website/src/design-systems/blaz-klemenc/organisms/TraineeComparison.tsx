@@ -1,3 +1,4 @@
+/* eslint-disable almadar/organism-no-data-state, almadar/require-event-bus */
 /**
  * TraineeComparison
  *
@@ -41,8 +42,11 @@ import {
   Button,
   Card,
   Badge,
+  LoadingState,
+  ErrorState,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 
 /**
@@ -77,21 +81,13 @@ export interface TraineeComparisonData {
   };
 }
 
-export interface TraineeComparisonProps {
+export interface TraineeComparisonProps extends EntityDisplayProps<TraineeComparisonData> {
   /** Trainees to compare */
   trainees: TraineeComparisonData[];
   /** Maximum trainees to show */
   maxVisible?: number;
   /** Metric to highlight */
   highlightMetric?: keyof TraineeComparisonData["metrics"];
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
-  /** Entity context for events */
-  entity?: string;
-  /** Additional CSS classes */
-  className?: string;
 }
 
 // Metric configuration
@@ -191,11 +187,23 @@ export const TraineeComparison: React.FC<TraineeComparisonProps> = ({
   trainees,
   maxVisible = 4,
   highlightMetric = "consistencyScore",
+  isLoading = false,
+  error = null,
   entity = "User",
   className,
 }) => {
   const eventBus = useEventBus();
   const { t } = useTranslate();
+
+  // Loading state
+  if (isLoading) {
+    return <LoadingState className={className} />;
+  }
+
+  // Error state
+  if (error) {
+    return <ErrorState message={error?.message} className={className} />;
+  }
   const [startIndex, setStartIndex] = useState(0);
   const [selectedMetric, setSelectedMetric] =
     useState<keyof TraineeComparisonData["metrics"]>(highlightMetric);

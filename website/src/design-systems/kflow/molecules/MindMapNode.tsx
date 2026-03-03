@@ -78,7 +78,7 @@ const getNodeColor = (
   return colors[layerIndex];
 };
 
-export const MindMapNode: React.FC<MindMapNodeProps> = ({
+export const MindMapNode = ({
   node,
   isSelected = false,
   isEditing = false,
@@ -93,7 +93,7 @@ export const MindMapNode: React.FC<MindMapNodeProps> = ({
   onToggleExpand,
   onAIGenerate,
   className,
-}) => {
+}: MindMapNodeProps) => {
   const eventBus = useEventBus();
   const [isHovered, setIsHovered] = useState(false);
 

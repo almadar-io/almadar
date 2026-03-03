@@ -1,3 +1,4 @@
+/* eslint-disable almadar/require-event-bus */
 /**
  * WeeklyCalendar
  *
@@ -22,8 +23,11 @@ import {
   Button,
   Card,
   Badge,
+  LoadingState,
+  ErrorState,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 
 export interface CalendarEvent {
@@ -37,7 +41,7 @@ export interface CalendarEvent {
   color?: string;
 }
 
-export interface WeeklyCalendarProps {
+export interface WeeklyCalendarProps extends EntityDisplayProps<CalendarEvent> {
   /** Start of week to display */
   weekStart?: Date;
   /** Current week data */
@@ -54,14 +58,6 @@ export interface WeeklyCalendarProps {
   slotDuration?: number;
   /** Show trainee info */
   showTraineeInfo?: boolean;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
-  /** Entity context for events */
-  entity?: string;
-  /** Additional CSS classes */
-  className?: string;
 }
 
 // Get start of week (Monday)
@@ -130,11 +126,23 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
   workingHoursStart = 8,
   workingHoursEnd = 20,
   slotDuration = 60,
+  isLoading = false,
+  error = null,
   entity = "TrainingSession",
   className,
 }) => {
   const eventBus = useEventBus();
   const { t } = useTranslate();
+
+  // Loading state
+  if (isLoading) {
+    return <LoadingState className={className} />;
+  }
+
+  // Error state
+  if (error) {
+    return <ErrorState message={error?.message} className={className} />;
+  }
 
   const [currentWeekStart, setCurrentWeekStart] = useState<Date>(
     weekStart ? getStartOfWeek(weekStart) : getStartOfWeek(new Date()),

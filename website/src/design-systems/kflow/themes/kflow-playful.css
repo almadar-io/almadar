@@ -1,0 +1,203 @@
+/**
+ * KFlow Playful Theme
+ *
+ * Duolingo-inspired, bright and cheerful. Bold greens, warm oranges,
+ * punchy purples, generous radii, bouncy transitions. Designed to
+ * make learning feel like a game, not a chore.
+ */
+
+/* ==========================================================================
+ * LIGHT MODE
+ * ========================================================================== */
+[data-theme="kflow-playful-light"] {
+    /* Shadows - Warm, colorful tints */
+    --shadow-main:
+        0 4px 14px rgba(88, 204, 2, 0.12), 0 2px 4px rgba(0, 0, 0, 0.06);
+    --shadow-sm: 0 2px 6px rgba(88, 204, 2, 0.10);
+    --shadow-lg:
+        0 10px 36px rgba(88, 204, 2, 0.18), 0 4px 12px rgba(0, 0, 0, 0.06);
+    --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.04);
+    --shadow-none: none;
+    --shadow-hover:
+        0 14px 44px rgba(88, 204, 2, 0.22), 0 4px 14px rgba(255, 150, 50, 0.10);
+    --shadow-active: 0 2px 8px rgba(88, 204, 2, 0.16);
+
+    /* Border radius - Chunky, pill-shaped, toy-like */
+    --radius-none: 0px;
+    --radius-sm: 12px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+    --radius-full: 9999px;
+
+    /* Border width - Thicker, bolder outlines */
+    --border-width: 2px;
+    --border-width-thin: 1px;
+    --border-width-thick: 3px;
+
+    /* Colors - Duo green primary, warm supporting palette */
+    --color-primary: #58cc02;
+    --color-primary-hover: #46a302;
+    --color-primary-foreground: #ffffff;
+
+    --color-secondary: #fff0db;
+    --color-secondary-hover: #ffe4bf;
+    --color-secondary-foreground: #8b5e00;
+
+    --color-accent: #ce82ff;
+    --color-accent-foreground: #ffffff;
+
+    --color-muted: #f3f4f6;
+    --color-muted-foreground: #6b7280;
+
+    --color-background: #ffffff;
+    --color-foreground: #1f2937;
+    --color-card: #ffffff;
+    --color-card-foreground: #1f2937;
+    --color-surface: #f7faf2;
+    --color-border: #e5e7eb;
+    --color-input: #f3f4f6;
+    --color-ring: #58cc02;
+
+    /* Semantic colors - Bright and unmistakable */
+    --color-error: #ff4b4b;
+    --color-error-foreground: #ffffff;
+    --color-success: #58cc02;
+    --color-success-foreground: #ffffff;
+    --color-warning: #ffc800;
+    --color-warning-foreground: #1f2937;
+    --color-info: #1cb0f6;
+    --color-info-foreground: #ffffff;
+
+    /* Typography - Rounded, friendly */
+    --font-family:
+        "Nunito", "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-weight-normal: 500;
+    --font-weight-medium: 600;
+    --font-weight-bold: 800;
+    --letter-spacing: 0em;
+    --line-height: 1.6;
+
+    /* Icon styling - Thicker, chunkier strokes */
+    --icon-stroke-width: 2.25;
+    --icon-color: #58cc02;
+
+    /* Transitions - Bouncy spring curve */
+    --transition-fast: 180ms;
+    --transition-normal: 300ms;
+    --transition-slow: 450ms;
+    --transition-timing: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* Hover/Active transforms - Exaggerated, playful */
+    --hover-scale: 1.05;
+    --hover-translate-y: -4px;
+    --hover-translate-x: 0;
+    --active-scale: 0.95;
+    --active-translate-y: 2px;
+
+    /* Focus ring - Green glow */
+    --focus-ring-width: 3px;
+    --focus-ring-offset: 2px;
+    --focus-ring-color: #58cc02;
+
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+}
+
+/* ==========================================================================
+ * DARK MODE
+ * ========================================================================== */
+[data-theme="kflow-playful-dark"] {
+    /* Shadows - Colored neon glow */
+    --shadow-main:
+        0 4px 14px rgba(88, 204, 2, 0.18), 0 2px 4px rgba(0, 0, 0, 0.25);
+    --shadow-sm: 0 2px 6px rgba(88, 204, 2, 0.14);
+    --shadow-lg:
+        0 10px 36px rgba(88, 204, 2, 0.28), 0 4px 12px rgba(0, 0, 0, 0.20);
+    --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.20);
+    --shadow-none: none;
+    --shadow-hover:
+        0 14px 44px rgba(88, 204, 2, 0.35), 0 4px 14px rgba(206, 130, 255, 0.15);
+    --shadow-active: 0 2px 8px rgba(88, 204, 2, 0.22);
+
+    /* Border radius - Same chunky radii */
+    --radius-none: 0px;
+    --radius-sm: 12px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+    --radius-full: 9999px;
+
+    /* Border width */
+    --border-width: 2px;
+    --border-width-thin: 1px;
+    --border-width-thick: 3px;
+
+    /* Colors - Bright green on rich charcoal, not pure black */
+    --color-primary: #58cc02;
+    --color-primary-hover: #6ee718;
+    --color-primary-foreground: #131f00;
+
+    --color-secondary: #2b2438;
+    --color-secondary-hover: #382e48;
+    --color-secondary-foreground: #e0ccff;
+
+    --color-accent: #ce82ff;
+    --color-accent-foreground: #1a0a2e;
+
+    --color-muted: #232b35;
+    --color-muted-foreground: #9ca3af;
+
+    --color-background: #131b25;
+    --color-foreground: #f0f2f5;
+    --color-card: #1c2533;
+    --color-card-foreground: #f0f2f5;
+    --color-surface: #1e2a38;
+    --color-border: rgba(88, 204, 2, 0.20);
+    --color-input: rgba(88, 204, 2, 0.12);
+    --color-ring: #58cc02;
+
+    /* Semantic colors - Vivid on dark */
+    --color-error: #ff5757;
+    --color-error-foreground: #1f0000;
+    --color-success: #58cc02;
+    --color-success-foreground: #131f00;
+    --color-warning: #ffd900;
+    --color-warning-foreground: #1f1700;
+    --color-info: #1cb0f6;
+    --color-info-foreground: #001f33;
+
+    /* Typography */
+    --font-family:
+        "Nunito", "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-weight-normal: 500;
+    --font-weight-medium: 600;
+    --font-weight-bold: 800;
+    --letter-spacing: 0em;
+    --line-height: 1.6;
+
+    /* Icon styling */
+    --icon-stroke-width: 2.25;
+    --icon-color: #58cc02;
+
+    /* Transitions - Same bouncy spring */
+    --transition-fast: 180ms;
+    --transition-normal: 300ms;
+    --transition-slow: 450ms;
+    --transition-timing: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* Hover/Active transforms */
+    --hover-scale: 1.05;
+    --hover-translate-y: -4px;
+    --hover-translate-x: 0;
+    --active-scale: 0.95;
+    --active-translate-y: 2px;
+
+    /* Focus ring */
+    --focus-ring-width: 3px;
+    --focus-ring-offset: 2px;
+    --focus-ring-color: #58cc02;
+
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+}

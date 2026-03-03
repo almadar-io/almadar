@@ -32,6 +32,7 @@ import {
   cn,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 
 export type { InspectionPhase } from "../atoms/PhaseIndicator";
@@ -52,10 +53,7 @@ export interface InspectionEntity {
   complianceRate?: number;
 }
 
-export interface InspectionCardGridProps {
-  entity: readonly InspectionEntity[];
-  isLoading?: boolean;
-  error?: Error | null;
+export interface InspectionCardGridProps extends EntityDisplayProps<InspectionEntity> {
   title?: string;
   showHeader?: boolean;
   showSearch?: boolean;
@@ -63,7 +61,6 @@ export interface InspectionCardGridProps {
   searchEvent?: string;
   /** Declarative event for create */
   createEvent?: string;
-  className?: string;
 }
 
 const getComplianceColor = (rate: number | undefined) => {
@@ -180,13 +177,14 @@ export function InspectionCardGrid({
     if (createEvent) emit(`UI:${createEvent}`, { entity: "Inspection" });
   };
 
+  const inspections = Array.isArray(entity) ? entity : [];
   const filteredInspections = searchTerm
-    ? entity.filter(
+    ? inspections.filter(
         (i) =>
           i.companyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
           i.inspectorName.toLowerCase().includes(searchTerm.toLowerCase())
       )
-    : entity;
+    : inspections;
 
   return (
     <VStack gap="lg" className={cn("p-6", className)}>

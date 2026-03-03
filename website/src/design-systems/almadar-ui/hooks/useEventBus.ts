@@ -1,3 +1,4 @@
+'use client';
 /**
  * useEventBus Hook
  *
@@ -35,6 +36,12 @@ declare global {
  *
  * When the EventBusProvider mounts, it sets window.__kflowEventBus.
  * Components in any package can then use this shared event bus.
+ *
+ * SSR Safety: All window access is guarded by `typeof window !== 'undefined'`.
+ * React Compiler Safety: The global bus reference is set once at provider mount
+ * and is stable — no render-path side effects. In practice, the React context
+ * path (priority 1) is used in real apps; the window global (priority 2) is
+ * only reached when no EventBusProvider is in the tree (e.g., Storybook).
  */
 
 /**
@@ -66,6 +73,7 @@ export function getGlobalEventBus(): EventBusContextType | null {
 // ============================================================================
 
 const fallbackListeners = new Map<string, Set<EventListener>>();
+const fallbackAnyListeners = new Set<EventListener>();
 
 const fallbackEventBus: EventBusContextType = {
   emit: (type: string, payload?: Record<string, unknown>) => {
@@ -84,6 +92,14 @@ const fallbackEventBus: EventBusContextType = {
         }
       });
     }
+    // Notify wildcard listeners
+    fallbackAnyListeners.forEach((handler) => {
+      try {
+        handler(event);
+      } catch (error) {
+        console.error(`[EventBus] Error in onAny listener for '${type}':`, error);
+      }
+    });
   },
   on: (type: string, listener: EventListener): Unsubscribe => {
     if (!fallbackListeners.has(type)) {
@@ -110,6 +126,10 @@ const fallbackEventBus: EventBusContextType = {
   hasListeners: (type: string): boolean => {
     const handlers = fallbackListeners.get(type);
     return handlers !== undefined && handlers.size > 0;
+  },
+  onAny: (listener: EventListener): Unsubscribe => {
+    fallbackAnyListeners.add(listener);
+    return () => { fallbackAnyListeners.delete(listener); };
   },
 };
 
@@ -143,6 +163,8 @@ const fallbackEventBus: EventBusContextType = {
 export function useEventBus(): EventBusContextType {
   const context = useContext(EventBusContext);
   // Priority: 1) React context, 2) Window global bridge, 3) Fallback
+  // SSR-safe: getGlobalEventBus() guards with typeof window !== 'undefined'
+  // React Compiler-safe: all three references are stable (no render side effects)
   return context ?? getGlobalEventBus() ?? fallbackEventBus;
 }
 

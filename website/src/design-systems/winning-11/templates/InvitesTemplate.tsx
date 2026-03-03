@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * InvitesTemplate
  *
@@ -24,7 +25,7 @@ import { InvitesBoard } from "../organisms/InvitesBoard";
 export type { InviteData } from "../organisms/InvitesBoard";
 
 export interface InvitesTemplateProps {
-  /** Entity data (invite items) */
+  /** Entity prop (invite items) */
   entity?: readonly import("../organisms/InvitesBoard").InviteData[];
   /** Loading state */
   isLoading?: boolean;

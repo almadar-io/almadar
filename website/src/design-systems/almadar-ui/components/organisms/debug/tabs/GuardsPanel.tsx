@@ -1,3 +1,4 @@
+'use client';
 /**
  * GuardsPanel - Displays guard evaluation history
  * Uses existing component library atoms/molecules.

@@ -21,20 +21,21 @@ import type { KnowledgeGraphEntity } from "../organisms/KnowledgeGraphBoard";
 export type { KnowledgeGraphEntity } from "../organisms/KnowledgeGraphBoard";
 
 export interface KnowledgeGraphTemplateProps {
-  entity: KnowledgeGraphEntity;
+  entity?: KnowledgeGraphEntity;
   defaultView?: "graph" | "list";
   showLayerNav?: boolean;
   showLegend?: boolean;
   className?: string;
 }
 
-export const KnowledgeGraphTemplate: React.FC<KnowledgeGraphTemplateProps> = ({
+export const KnowledgeGraphTemplate = ({
   entity,
   defaultView,
   showLayerNav,
   showLegend,
   className,
-}) => {
+}: KnowledgeGraphTemplateProps) => {
+  if (!entity) return null;
   return (
     <KnowledgeGraphBoard
       entity={entity}

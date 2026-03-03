@@ -79,8 +79,8 @@ export interface MealPlanOperation {
 }
 
 export interface MealPlanCardProps {
-  /** Meal plan data - can be single item or array */
-  data?: MealPlanData | MealPlanData[] | unknown[];
+  /** Meal plan entity - can be single item or array */
+  entity?: MealPlanData | MealPlanData[] | unknown[];
   /** Show macro breakdown */
   showMacros?: boolean;
   /** Show AI analysis badge */
@@ -95,8 +95,6 @@ export interface MealPlanCardProps {
   layout?: "list" | "grid" | "cards";
   /** Show action buttons */
   showActions?: boolean;
-  /** Entity context for events */
-  entity?: string;
   /** Operations/actions available */
   operations?: MealPlanOperation[];
   /** Additional CSS classes */
@@ -128,20 +126,19 @@ const formatDate = (date: string | Date): string => {
 };
 
 export const MealPlanCard: React.FC<MealPlanCardProps> = ({
-  data,
+  entity,
   showMacros = true,
   showAiAnalysis = true,
   compact = false,
   showActions = true,
-  entity = "MealPlan",
   className,
 }) => {
   const eventBus = useEventBus();
 
-  // Normalize data - handle single item, array, or undefined
-  const normalizedData: MealPlanData | undefined = Array.isArray(data)
-    ? (data[0] as MealPlanData | undefined)
-    : (data as MealPlanData | undefined);
+  // Normalize entity - handle single item, array, or undefined
+  const normalizedData: MealPlanData | undefined = Array.isArray(entity)
+    ? (entity[0] as MealPlanData | undefined)
+    : (entity as MealPlanData | undefined);
 
   // Early return if no data
   if (!normalizedData) {
@@ -164,18 +161,18 @@ export const MealPlanCard: React.FC<MealPlanCardProps> = ({
 
   // Emit VIEW event (matches MealPlanManagement trait)
   const handleView = useCallback(() => {
-    eventBus.emit("UI:VIEW", { row: normalizedData, entity });
-  }, [eventBus, normalizedData, entity]);
+    eventBus.emit("UI:VIEW", { row: normalizedData, entity: "MealPlan" });
+  }, [eventBus, normalizedData]);
 
   // Emit EDIT event (matches MealPlanManagement trait)
   const handleEdit = useCallback(() => {
-    eventBus.emit("UI:EDIT", { row: normalizedData, entity });
-  }, [eventBus, normalizedData, entity]);
+    eventBus.emit("UI:EDIT", { row: normalizedData, entity: "MealPlan" });
+  }, [eventBus, normalizedData]);
 
   // Emit DELETE event
   const handleDelete = useCallback(() => {
-    eventBus.emit("UI:DELETE", { row: normalizedData, entity });
-  }, [eventBus, normalizedData, entity]);
+    eventBus.emit("UI:DELETE", { row: normalizedData, entity: "MealPlan" });
+  }, [eventBus, normalizedData]);
 
   // Handle share action
   const handleShare = useCallback(() => {

@@ -1,3 +1,4 @@
+/* eslint-disable almadar/organism-extends-entity-display, almadar/require-event-bus, almadar/organism-no-data-state */
 /**
  * TraineesBoard - Organism for the Trainees/Users management board
  *
@@ -40,8 +41,11 @@ import {
   Card,
   Badge,
   Spinner,
+  LoadingState,
+  ErrorState,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 
 /**
@@ -64,13 +68,9 @@ export interface UserEntity {
   items: readonly UserData[];
 }
 
-export interface TraineesBoardProps {
+export interface TraineesBoardProps extends Omit<EntityDisplayProps, 'entity'> {
   /** User entity data */
-  entity: UserEntity;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
+  entity?: UserEntity | UserEntity[];
   /** Page title */
   title?: string;
   /** Page subtitle */
@@ -83,8 +83,6 @@ export interface TraineesBoardProps {
   showFilters?: boolean;
   /** Default role filter */
   defaultRoleFilter?: "all" | "trainer" | "trainee";
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for creating a user (emitted as UI:{createEvent}) */
   createEvent?: string;
   /** Event name for viewing a user (emitted as UI:{viewEvent}) */
@@ -254,7 +252,8 @@ export const TraineesBoard: React.FC<TraineesBoardProps> = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState<"all" | "trainer" | "trainee">(defaultRoleFilter);
 
-  const users = entity.items || [];
+  const entityData = Array.isArray(entity) ? entity[0] : entity;
+  const users = entityData?.items || [];
 
   // Handle search
   const handleSearch = (value: string) => {

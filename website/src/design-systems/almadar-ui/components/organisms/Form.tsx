@@ -1,3 +1,4 @@
+'use client';
 /**
  * Form Organism Component
  *
@@ -30,6 +31,7 @@ import {
 import { Alert } from "../molecules/Alert";
 import { useEventBus } from "../../hooks/useEventBus";
 import { useTranslate } from "../../hooks/useTranslate";
+import type { OrbitalEntity } from "@almadar/core";
 import {
   debug,
   debugGroup,
@@ -199,21 +201,21 @@ export interface SchemaField {
   disabled?: boolean;
 }
 
+/**
+ * Form is the ONE EXCEPTION to the "no internal state" rule for organisms.
+ * It manages local `formData` state for field input tracking.
+ * See EntityDisplayProps in ./types.ts for documentation.
+ */
 export interface FormProps extends Omit<
   React.FormHTMLAttributes<HTMLFormElement>,
   "onSubmit"
 > {
   /** Form fields (traditional React children) */
   children?: React.ReactNode;
-  /** Submit handler - receives form data, or event name string for trait dispatch */
-  onSubmit?:
-    | ((
-        e: React.FormEvent<HTMLFormElement>,
-        data?: Record<string, unknown>,
-      ) => void)
-    | string;
-  /** Cancel handler - function or event name string for trait dispatch */
-  onCancel?: (() => void) | string;
+  /** Submit event name for trait dispatch (emitted via eventBus as UI:{onSubmit}) */
+  onSubmit?: string;
+  /** Cancel event name for trait dispatch (emitted via eventBus as UI:{onCancel}) */
+  onCancel?: string;
   /** Form layout */
   layout?: "vertical" | "horizontal" | "inline";
   /** Gap between fields */
@@ -222,8 +224,8 @@ export interface FormProps extends Omit<
   className?: string;
 
   // Schema-based props
-  /** Entity type name (schema format) */
-  entity?: string;
+  /** Entity type name or schema object. When OrbitalEntity, fields are auto-derived if not provided. */
+  entity?: string | OrbitalEntity;
   /** Form mode - 'create' for new records, 'edit' for updating existing */
   mode?: "create" | "edit";
   /** Fields definition (schema format) - accepts readonly for generated const arrays */
@@ -406,6 +408,26 @@ export const Form: React.FC<FormProps> = ({
   const resolvedCancelLabel = cancelLabel ?? t('common.cancel');
   const normalizedInitialData = (initialData as Record<string, unknown>) ?? {};
 
+  // Resolve entity: string name or OrbitalEntity schema object
+  const entityName = typeof entity === "string" ? entity : entity?.name;
+  const entityDerivedFields: readonly Readonly<SchemaField>[] | undefined =
+    React.useMemo(() => {
+      if (fields && fields.length > 0) return undefined;
+      if (!entity || typeof entity === "string") return undefined;
+      return entity.fields.map(
+        (f): SchemaField => ({
+          name: f.name,
+          type: f.type,
+          required: f.required,
+          defaultValue: f.default,
+          values: f.values,
+          min: f.min,
+          max: f.max,
+          relation: f.relation ? { entity: f.relation.entity } : undefined,
+        }),
+      );
+    }, [entity, fields]);
+
   // Normalize props that might come as boolean true from generated code
   const conditionalFields =
     typeof conditionalFieldsRaw === "boolean" ? {} : conditionalFieldsRaw;
@@ -582,12 +604,10 @@ export const Form: React.FC<FormProps> = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Dispatch submit event for trait state machine integration
-    eventBus.emit(`UI:${submitEvent}`, { data: formData, entity });
-    // Handle onSubmit - can be a function or event name string
-    if (typeof onSubmit === "function") {
-      onSubmit(e, formData);
-    } else if (typeof onSubmit === "string") {
-      eventBus.emit(`UI:${onSubmit}`, { data: formData, entity });
+    eventBus.emit(`UI:${submitEvent}`, { data: formData });
+    // Handle onSubmit - event name string for additional trait dispatch
+    if (onSubmit) {
+      eventBus.emit(`UI:${onSubmit}`, { data: formData });
     }
   };
 
@@ -595,10 +615,8 @@ export const Form: React.FC<FormProps> = ({
     // Dispatch cancel event for trait state machine integration
     eventBus.emit(`UI:${cancelEvent}`);
     eventBus.emit("UI:CLOSE");
-    // Handle onCancel - can be a function or event name string
-    if (typeof onCancel === "function") {
-      onCancel();
-    } else if (typeof onCancel === "string") {
+    // Handle onCancel - event name string for additional trait dispatch
+    if (onCancel) {
       eventBus.emit(`UI:${onCancel}`);
     }
   };
@@ -642,32 +660,33 @@ export const Form: React.FC<FormProps> = ({
     [formData, isFieldVisible, relationsData, relationsLoading, isLoading],
   );
 
-  // Normalize fields - handle both string[] and SchemaField[]
+  // Normalize fields - handle both string[] and SchemaField[], with entity-derived fallback
+  const effectiveFields = entityDerivedFields ?? fields;
   const normalizedFields = React.useMemo(() => {
-    if (!fields || fields.length === 0) return [];
+    if (!effectiveFields || effectiveFields.length === 0) return [];
 
-    return fields.map((field): SchemaField => {
+    return effectiveFields.map((field): SchemaField => {
       // If field is a string, convert to SchemaField object
       if (typeof field === 'string') {
         return { name: field, type: 'string' };
       }
       return field as SchemaField;
     });
-  }, [fields]);
+  }, [effectiveFields]);
 
   // Generate form fields from schema
   const schemaFields = React.useMemo(() => {
     if (normalizedFields.length === 0) return null;
 
     if (isDebugEnabled()) {
-      debugGroup(`Form: ${entity || "unknown"}`);
+      debugGroup(`Form: ${entityName || "unknown"}`);
       debug(`Fields count: ${normalizedFields.length}`);
       debug("Conditional fields:", Object.keys(conditionalFields));
       debugGroupEnd();
     }
 
     return normalizedFields.map(renderField).filter(Boolean);
-  }, [normalizedFields, renderField, entity, conditionalFields]);
+  }, [normalizedFields, renderField, entityName, conditionalFields]);
 
   // Generate form sections with nested fields
   const sectionElements = React.useMemo(() => {

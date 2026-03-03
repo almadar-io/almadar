@@ -111,8 +111,8 @@ export interface PlantCardData {
 }
 
 export interface PlantCardProps {
-  /** Plant data - RelationshipHealth entity data */
-  data?: PlantCardData;
+  /** Plant entity - RelationshipHealth entity data */
+  entity?: PlantCardData;
   /** Relationship ID */
   id?: string;
   /** Display name */
@@ -133,8 +133,6 @@ export interface PlantCardProps {
   nextOutreachDue?: string | Date;
   /** Missed outreach count */
   missedOutreachCount?: number;
-  /** Entity type for event context */
-  entity?: string;
   /** Actions for this card */
   itemActions?: readonly PlantCardAction[];
   /** Event to emit on card click */
@@ -194,7 +192,7 @@ const formatDate = (date?: string | Date): string => {
 };
 
 export const PlantCard: React.FC<PlantCardProps> = ({
-  data,
+  entity,
   id: propId,
   name: propName,
   category: propCategory,
@@ -205,7 +203,6 @@ export const PlantCard: React.FC<PlantCardProps> = ({
   lastWateredAt: propLastWateredAt,
   nextOutreachDue: propNextOutreachDue,
   missedOutreachCount: propMissedOutreachCount,
-  entity = "RelationshipHealth",
   itemActions = [],
   event,
   onClick,
@@ -213,8 +210,8 @@ export const PlantCard: React.FC<PlantCardProps> = ({
 }) => {
   const eventBus = useEventBus();
 
-  // Normalize data - support both data prop and individual props
-  const plantData: PlantCardData = data ?? {
+  // Normalize entity - support both entity prop and individual props
+  const plantData: PlantCardData = entity ?? {
     id: propId,
     name: propName,
     category: propCategory,
@@ -250,13 +247,13 @@ export const PlantCard: React.FC<PlantCardProps> = ({
   // Handle card click - emit SELECT event
   const handleCardClick = useCallback(() => {
     if (event) {
-      eventBus.emit(`UI:${event}`, { row: plantData, entity });
+      eventBus.emit(`UI:${event}`, { row: plantData, entity: "RelationshipHealth" });
     } else if (onClick) {
       onClick(plantData);
     } else {
-      eventBus.emit("UI:SELECT", { row: plantData, entity });
+      eventBus.emit("UI:SELECT", { row: plantData, entity: "RelationshipHealth" });
     }
-  }, [event, eventBus, plantData, entity, onClick]);
+  }, [event, eventBus, plantData, onClick]);
 
   // Handle action click
   const handleActionClick = useCallback(
@@ -264,22 +261,22 @@ export const PlantCard: React.FC<PlantCardProps> = ({
       e.stopPropagation();
 
       if (action.event) {
-        eventBus.emit(`UI:${action.event}`, { row: plantData, entity });
+        eventBus.emit(`UI:${action.event}`, { row: plantData, entity: "RelationshipHealth" });
       }
       if (action.onClick) {
         action.onClick(plantData);
       }
     },
-    [eventBus, plantData, entity],
+    [eventBus, plantData],
   );
 
   // Handle water action
   const handleWater = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation();
-      eventBus.emit("UI:WATER", { row: plantData, entity });
+      eventBus.emit("UI:WATER", { row: plantData, entity: "RelationshipHealth" });
     },
-    [eventBus, plantData, entity],
+    [eventBus, plantData],
   );
 
   return (

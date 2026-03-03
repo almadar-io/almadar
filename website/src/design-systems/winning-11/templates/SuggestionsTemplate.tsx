@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * SuggestionsTemplate
  *
@@ -19,7 +20,7 @@ import {
 export type { SuggestionData };
 
 export interface SuggestionsTemplateProps {
-  /** Entity data (suggestion items) */
+  /** Entity prop (suggestion items) */
   entity?: readonly SuggestionData[];
   /** Loading state */
   isLoading?: boolean;

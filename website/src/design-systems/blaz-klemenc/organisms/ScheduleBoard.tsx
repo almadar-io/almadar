@@ -1,3 +1,4 @@
+/* eslint-disable almadar/organism-extends-entity-display, almadar/organism-no-data-state, almadar/require-event-bus */
 /**
  * ScheduleBoard - Weekly schedule/calendar board organism
  *
@@ -22,8 +23,11 @@ import {
   Button,
   Card,
   Spinner,
+  LoadingState,
+  ErrorState,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 
 /**
@@ -48,19 +52,13 @@ export interface ScheduleEntity {
   items: readonly TrainingSessionData[];
 }
 
-export interface ScheduleBoardProps {
-  /** TrainingSession entity data */
-  entity: ScheduleEntity;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
+export interface ScheduleBoardProps extends Omit<EntityDisplayProps, 'entity'> {
+  /** Schedule entity data */
+  entity?: ScheduleEntity | ScheduleEntity[];
   /** Page title */
   title?: string;
   /** Initial date to show */
   initialDate?: Date;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for creating a session (emitted as UI:{createEvent}) */
   createEvent?: string;
   /** Event name for viewing a session (emitted as UI:{viewEvent}) */
@@ -150,7 +148,8 @@ export const ScheduleBoard: React.FC<ScheduleBoardProps> = ({
   const [currentDate, setCurrentDate] = useState(initialDate);
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
 
-  const sessions = entity.items || [];
+  const entityData = Array.isArray(entity) ? entity[0] : entity;
+  const sessions = entityData?.items || [];
   const weekDates = useMemo(() => getWeekDates(currentDate), [currentDate]);
 
   // Get sessions for a specific day

@@ -1,3 +1,4 @@
+'use client';
 /**
  * PhysicsObject3D Component
  *
@@ -80,7 +81,7 @@ export function PhysicsObject3D({
     onPhysicsUpdate,
     onGroundHit,
     onCollision,
-}: PhysicsObject3DProps): JSX.Element {
+}: PhysicsObject3DProps): React.JSX.Element {
     const groupRef = useRef<THREE.Group>(null);
     const physicsStateRef = useRef<Physics3DState>({
         id: entityId,

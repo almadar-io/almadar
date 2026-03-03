@@ -9,28 +9,25 @@ import {
   Typography,
   Textarea,
   useTranslate,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 
-interface FlashCardsDisplayProps {
+interface FlashCardsDisplayProps extends EntityDisplayProps<FlashCard> {
   flashCards: FlashCard[];
   isEditing?: boolean;
   onEdit?: () => void;
   onCancelEdit?: () => void;
   onSaveFlashCards?: (flashCards: Array<{ front: string; back: string }>) => void;
-  className?: string;
-  isLoading?: boolean;
-  error?: Error | null;
-  entity?: string;
 }
 
-const FlashCardsDisplay: React.FC<FlashCardsDisplayProps> = ({
+const FlashCardsDisplay = ({
   flashCards,
   isEditing = false,
   onEdit,
   onCancelEdit,
   onSaveFlashCards,
   className,
-}) => {
+}: FlashCardsDisplayProps) => {
   const { t } = useTranslate();
   const [isFlipped, setIsFlipped] = useState<Record<number, boolean>>({});
   const [editCards, setEditCards] = useState<Array<{ front: string; back: string }>>([]);
@@ -108,7 +105,7 @@ const FlashCardsDisplay: React.FC<FlashCardsDisplayProps> = ({
                 onClick={handleCancel}
                 variant="secondary"
                 size="sm"
-                className="inline-flex items-center gap-1 bg-gray-500 text-white hover:bg-gray-600"
+                className="inline-flex items-center gap-1 bg-[var(--color-muted-foreground)] text-[var(--color-background)] hover:opacity-80"
               >
                 <X size={16} />
                 {t('flashcard.cancel')}
@@ -121,7 +118,7 @@ const FlashCardsDisplay: React.FC<FlashCardsDisplayProps> = ({
                   onClick={onEdit}
                   variant="secondary"
                   size="sm"
-                  className="inline-flex items-center gap-1 text-sm text-[var(--color-foreground)] hover:text-[var(--color-foreground)] border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700"
+                  className="inline-flex items-center gap-1 text-sm text-[var(--color-foreground)] hover:text-[var(--color-foreground)] border border-[var(--color-border)] hover:bg-[var(--color-muted)]"
                 >
                   <Edit2 size={14} />
                   {t('flashcard.edit')}

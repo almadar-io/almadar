@@ -11,7 +11,7 @@
 
 import React from 'react';
 import { Layers } from 'lucide-react';
-import { HStack, VStack, useEventBus, useTranslate } from '@almadar/ui';
+import { HStack, VStack, Badge, Button, Typography, useEventBus, useTranslate } from '@almadar/ui';
 
 export interface ConceptMetaTagsProps {
   /** Layer number */
@@ -24,12 +24,12 @@ export interface ConceptMetaTagsProps {
   className?: string;
 }
 
-export const ConceptMetaTags: React.FC<ConceptMetaTagsProps> = ({
+export const ConceptMetaTags = ({
   layer,
   isSeed,
   parents,
   className = '',
-}) => {
+}: ConceptMetaTagsProps) => {
   const { emit } = useEventBus();
   const { t } = useTranslate();
 
@@ -42,30 +42,34 @@ export const ConceptMetaTags: React.FC<ConceptMetaTagsProps> = ({
       {(layer !== undefined || isSeed) && (
         <HStack gap="sm" wrap>
           {layer !== undefined && (
-            <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium bg-blue-100 text-blue-700 rounded">
-              <Layers size={12} />
-              {t('concept.level', { layer })}
-            </span>
+            <Badge variant="info">
+              <HStack gap="xs" align="center">
+                <Layers size={12} />
+                <Typography variant="small">{t('concept.level', { layer })}</Typography>
+              </HStack>
+            </Badge>
           )}
           {isSeed && (
-            <span className="px-2 py-1 text-xs font-medium bg-amber-100 text-amber-700 rounded">
-              {t('concept.seedConcept')}
-            </span>
+            <Badge variant="warning">
+              <Typography variant="small">{t('concept.seedConcept')}</Typography>
+            </Badge>
           )}
         </HStack>
       )}
 
       {parents.length > 0 && (
         <HStack gap="sm" wrap align="center">
-          <span className="text-sm text-[var(--color-foreground)] font-medium">{t('concept.parents')}</span>
+          <Typography variant="small" className="font-medium">{t('concept.parents')}</Typography>
           {parents.map((parent) => (
-            <button
+            <Button
               key={parent}
+              variant="ghost"
+              size="sm"
               onClick={() => handleParentClick(parent)}
-              className="px-2 py-1 text-xs font-medium bg-purple-100 text-purple-700 rounded-full hover:bg-purple-200 transition-colors"
+              className="px-2 py-1 text-xs font-medium bg-purple-100 text-purple-700 rounded-full hover:bg-purple-200"
             >
               ← {parent}
-            </button>
+            </Button>
           ))}
         </HStack>
       )}

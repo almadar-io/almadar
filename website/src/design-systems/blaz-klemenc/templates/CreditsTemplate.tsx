@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * CreditsTemplate - Thin wrapper template for the Credits management page
  *

@@ -1,3 +1,4 @@
+'use client';
 /**
  * Offline Effect Executor
  *

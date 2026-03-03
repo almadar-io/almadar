@@ -37,6 +37,7 @@ import {
   VStack,
   HStack,
   Typography,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 
 /**
@@ -53,13 +54,9 @@ export type GardenLayoutStyle = "grid" | "organic" | "rows";
 /** Re-export for convenience */
 export type { RelationshipHealthEntity } from "../molecules/PlantCard";
 
-export interface GardenViewProps {
-  /** Array of RelationshipHealth items to display */
+export interface GardenViewProps extends EntityDisplayProps<GardenItem> {
+  /** Array of RelationshipHealth items to display (alias for entity) */
   items?: readonly GardenItem[];
-  /** Data prop alias for items (for pattern compatibility) */
-  data?: readonly GardenItem[];
-  /** Entity type for event context */
-  entity?: string;
   /** Layout style */
   layout?: GardenLayoutStyle;
   /** Show weather widget */
@@ -90,14 +87,8 @@ export interface GardenViewProps {
   emptyDescription?: string;
   /** Show create button in empty state */
   showCreateAction?: boolean;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
   /** Query singleton binding for filter/sort state */
   query?: string;
-  /** Additional CSS classes */
-  className?: string;
 }
 
 const layoutStyles: Record<GardenLayoutStyle, string> = {
@@ -108,8 +99,7 @@ const layoutStyles: Record<GardenLayoutStyle, string> = {
 
 export const GardenView: React.FC<GardenViewProps> = ({
   items: propItems,
-  data,
-  entity = "RelationshipHealth",
+  entity,
   layout = "grid",
   showWeather = true,
   weatherCondition = "sunny",
@@ -134,8 +124,9 @@ export const GardenView: React.FC<GardenViewProps> = ({
   const eventBus = useEventBus();
   const queryState = useQuerySingleton(query);
 
-  // Use items or data prop
-  const rawItems = propItems ?? data ?? [];
+  // Use items prop or entity prop
+  const entityItems = Array.isArray(entity) ? entity : entity ? [entity] : [];
+  const rawItems = propItems ?? entityItems;
 
   // Local search state (if not using query singleton)
   const [localSearch, setLocalSearch] = useState("");
@@ -306,8 +297,7 @@ export const GardenView: React.FC<GardenViewProps> = ({
         {filteredItems.map((item) => (
           <PlantCard
             key={item.id}
-            data={item}
-            entity={entity}
+            entity={item}
             itemActions={itemActions}
             onClick={() => handleItemClick(item)}
             className={layout === "organic" ? "w-64" : undefined}

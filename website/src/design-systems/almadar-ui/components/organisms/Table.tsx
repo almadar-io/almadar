@@ -1,11 +1,15 @@
+'use client';
 /**
  * Table Organism Component
  *
- * A table component with header row, data rows, pagination, sorting, and filters.
+ * A dumb table component with header row, data rows, pagination, sorting, and search.
+ * Emits events via useEventBus — never manages internal state for search, sort,
+ * selection, or pagination. All state is owned by the trait state machine.
+ *
  * Uses Pagination, SearchInput, ButtonGroup, Card, Menu molecules and Button, Icon, Checkbox, Typography, Badge, Divider atoms.
  */
 
-import React, { useState } from "react";
+import React from "react";
 import { ArrowUp, ArrowDown, MoreVertical } from "lucide-react";
 import { Pagination } from "../molecules/Pagination";
 import { SearchInput } from "../molecules/SearchInput";
@@ -19,8 +23,10 @@ import { Box } from "../atoms/Box";
 import { HStack } from "../atoms/Stack";
 import { cn } from "../../lib/cn";
 import { useTranslate } from "../../hooks/useTranslate";
+import { useEventBus } from "../../hooks/useEventBus";
+import type { EntityDisplayProps, EntityDisplayEvents } from "./types";
 
-export type SortDirection = "asc" | "desc" | null;
+export type SortDirection = "asc" | "desc";
 
 export interface TableColumn<T = any> {
   /**
@@ -50,21 +56,11 @@ export interface TableColumn<T = any> {
   width?: string;
 }
 
-export interface TableProps<T = any> {
+export interface TableProps<T = Record<string, unknown>> extends EntityDisplayProps<T> {
   /**
    * Table columns
    */
   columns: TableColumn<T>[];
-
-  /**
-   * Table entity data
-   */
-  entity: T[];
-
-  /**
-   * Row key getter
-   */
-  getRowKey: (row: T, index: number) => string;
 
   /**
    * Enable row selection
@@ -73,35 +69,20 @@ export interface TableProps<T = any> {
   selectable?: boolean;
 
   /**
-   * Selected row keys
-   */
-  selectedRows?: string[];
-
-  /**
-   * Callback when selection changes
-   */
-  onSelectionChange?: (selectedKeys: string[]) => void;
-
-  /**
    * Enable sorting
    * @default false
    */
   sortable?: boolean;
 
   /**
-   * Current sort column
+   * Current sort column (display hint, mapped from sortBy)
    */
   sortColumn?: string;
 
   /**
-   * Current sort direction
+   * Current sort direction (display hint)
    */
   sortDirection?: SortDirection;
-
-  /**
-   * Callback when sort changes
-   */
-  onSortChange?: (column: string, direction: SortDirection) => void;
 
   /**
    * Enable search/filter
@@ -121,19 +102,14 @@ export interface TableProps<T = any> {
   paginated?: boolean;
 
   /**
-   * Current page
+   * Current page (display hint)
    */
   currentPage?: number;
 
   /**
-   * Total pages
+   * Total pages (display hint)
    */
   totalPages?: number;
-
-  /**
-   * Callback when page changes
-   */
-  onPageChange?: (page: number) => void;
 
   /**
    * Row actions menu items
@@ -150,98 +126,103 @@ export interface TableProps<T = any> {
    * @default false
    */
   loading?: boolean;
-
-  /**
-   * Closed circuit: loading indicator
-   */
-  isLoading?: boolean;
-
-  /**
-   * Closed circuit: error state
-   */
-  error?: Error | null;
-
-  /**
-   * Additional CSS classes
-   */
-  className?: string;
 }
 
 export const Table = <T extends Record<string, any>>({
   columns,
+  // EntityDisplayProps
   entity,
-  getRowKey,
+  className,
+  isLoading,
+  error,
+  sortBy,
+  sortDirection: entitySortDirection,
+  searchValue,
+  page,
+  pageSize,
+  totalCount,
+  selectedIds,
+  // Table-specific props
   selectable = false,
-  selectedRows = [],
-  onSelectionChange,
   sortable = false,
-  sortColumn,
-  sortDirection,
-  onSortChange,
+  sortColumn: sortColumnProp,
+  sortDirection: sortDirectionProp,
   searchable = false,
   searchPlaceholder,
   paginated = false,
-  currentPage = 1,
-  totalPages = 1,
-  onPageChange,
+  currentPage: currentPageProp,
+  totalPages: totalPagesProp,
   rowActions,
   emptyMessage,
   loading = false,
-  isLoading,
-  error,
-  className,
 }: TableProps<T>) => {
   const { t } = useTranslate();
+  const eventBus = useEventBus();
   const resolvedEmptyMessage = emptyMessage ?? t('empty.noData');
   const resolvedSearchPlaceholder = searchPlaceholder ?? t('common.search');
-  const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredData =
-    searchable && searchQuery
-      ? entity.filter((row) =>
-          columns.some((col) => {
-            const value = row[col.key];
-            return value
-              ?.toString()
-              .toLowerCase()
-              .includes(searchQuery.toLowerCase());
-          }),
-        )
-      : entity;
+  // Resolve data from entity prop
+  const resolvedData: T[] = Array.isArray(entity)
+    ? (entity as T[])
+    : [];
+
+  // Resolve display hints — prefer explicit Table props, fall back to EntityDisplayProps
+  const resolvedSortColumn = sortColumnProp ?? sortBy;
+  const resolvedSortDirection = sortDirectionProp ?? (entitySortDirection as SortDirection) ?? undefined;
+  const resolvedCurrentPage = currentPageProp ?? page ?? 1;
+  const resolvedTotalPages = totalPagesProp ?? (totalCount && pageSize ? Math.ceil(totalCount / pageSize) : 1);
+  const selectedRows: string[] = selectedIds ? selectedIds.map(String) : [];
 
   const handleSort = (column: string) => {
-    if (!sortable || !onSortChange) return;
+    if (!sortable) return;
 
-    const newDirection =
-      sortColumn === column && sortDirection === "asc"
+    const newDirection: SortDirection | undefined =
+      resolvedSortColumn === column && resolvedSortDirection === "asc"
         ? "desc"
-        : sortColumn === column && sortDirection === "desc"
-          ? null
+        : resolvedSortColumn === column && resolvedSortDirection === "desc"
+          ? undefined
           : "asc";
 
-    onSortChange(column, newDirection);
+    if (newDirection) {
+      eventBus.emit('UI:SORT', { field: column, direction: newDirection });
+    } else {
+      // Clear sort — reset to default ascending
+      eventBus.emit('UI:SORT', { field: column, direction: 'asc' });
+    }
   };
 
   const handleSelectAll = (checked: boolean) => {
-    if (!selectable || !onSelectionChange) return;
-    onSelectionChange(
-      checked ? filteredData.map((row, idx) => getRowKey(row, idx)) : [],
-    );
+    if (!selectable) return;
+    if (checked) {
+      const allIds = resolvedData.map((row) => (row as Record<string, any>).id ?? '');
+      eventBus.emit('UI:SELECT', { ids: allIds });
+    } else {
+      eventBus.emit('UI:DESELECT', { ids: selectedRows });
+    }
   };
 
   const handleSelectRow = (rowKey: string, checked: boolean) => {
-    if (!selectable || !onSelectionChange) return;
-    const newSelection = checked
-      ? [...selectedRows, rowKey]
-      : selectedRows.filter((key) => key !== rowKey);
-    onSelectionChange(newSelection);
+    if (!selectable) return;
+    if (checked) {
+      eventBus.emit('UI:SELECT', { ids: [rowKey] });
+    } else {
+      eventBus.emit('UI:DESELECT', { ids: [rowKey] });
+    }
+  };
+
+  const handlePageChange = (newPage: number) => {
+    eventBus.emit('UI:PAGINATE', { page: newPage });
+  };
+
+  const handleSearch = (query: string) => {
+    eventBus.emit('UI:SEARCH', { query });
   };
 
   const allSelected =
     selectable &&
-    filteredData.length > 0 &&
-    filteredData.every((row, idx) =>
-      selectedRows.includes(getRowKey(row, idx)),
+    resolvedData.length > 0 &&
+    resolvedData.every((row) =>
+      selectedRows.includes(String((row as Record<string, any>).id)),
     );
 
   return (
@@ -251,7 +232,7 @@ export const Table = <T extends Record<string, any>>({
         <Box className="mb-4">
           <SearchInput
             placeholder={resolvedSearchPlaceholder}
-            onSearch={setSearchQuery}
+            onSearch={handleSearch}
             className="max-w-md"
           />
         </Box>
@@ -286,6 +267,7 @@ export const Table = <T extends Record<string, any>>({
                         "cursor-pointer hover:bg-[var(--color-table-row-hover)]",
                     )}
                     style={{ width: column.width }}
+                    // eslint-disable-next-line almadar/require-event-bus -- native th element; handleSort already emits UI:SORT via eventBus
                     onClick={() => column.sortable && handleSort(column.key)}
                   >
                     <HStack className="flex items-center gap-2">
@@ -294,9 +276,9 @@ export const Table = <T extends Record<string, any>>({
                       </Typography>
                       {sortable &&
                         column.sortable &&
-                        sortColumn === column.key && (
+                        resolvedSortColumn === column.key && (
                           <Icon
-                            icon={sortDirection === "asc" ? ArrowUp : ArrowDown}
+                            icon={resolvedSortDirection === "asc" ? ArrowUp : ArrowDown}
                             size="sm"
                           />
                         )}
@@ -328,7 +310,7 @@ export const Table = <T extends Record<string, any>>({
                     </Typography>
                   </td>
                 </tr>
-              ) : filteredData.length === 0 ? (
+              ) : resolvedData.length === 0 ? (
                 // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements needed
                 <tr>
                   {/* eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements needed */}
@@ -346,8 +328,8 @@ export const Table = <T extends Record<string, any>>({
                   </td>
                 </tr>
               ) : (
-                filteredData.map((row, index) => {
-                  const rowKey = getRowKey(row, index);
+                resolvedData.map((row, index) => {
+                  const rowKey = String((row as Record<string, any>).id ?? index);
                   const isSelected = selectedRows.includes(rowKey);
                   return (
                     // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements needed
@@ -411,12 +393,12 @@ export const Table = <T extends Record<string, any>>({
       </Card>
 
       {/* Pagination */}
-      {paginated && totalPages > 1 && (
+      {paginated && resolvedTotalPages > 1 && (
         <Box className="mt-4">
           <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={onPageChange || (() => {})}
+            currentPage={resolvedCurrentPage}
+            totalPages={resolvedTotalPages}
+            onPageChange={handlePageChange}
           />
         </Box>
       )}

@@ -1,3 +1,4 @@
+'use client';
 /**
  * useThree
  *
@@ -33,7 +34,7 @@ export interface UseThreeOptions {
 
 export interface UseThreeReturn {
     /** Canvas element reference (for React Three Fiber) */
-    canvasRef: React.RefObject<HTMLCanvasElement>;
+    canvasRef: React.RefObject<HTMLCanvasElement | null>;
     /** Three.js renderer */
     renderer: THREE.WebGLRenderer | null;
     /** Three.js scene */

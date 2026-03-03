@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * AdminDashboardTemplate
  *
@@ -23,7 +24,7 @@ export type {
 } from "../organisms/AdminDashboardBoard";
 
 export interface AdminDashboardTemplateProps {
-  /** Entity data */
+  /** Entity prop */
   entity?: import("../organisms/AdminDashboardBoard").AdminDashboardEntity;
   /** Loading state */
   isLoading?: boolean;

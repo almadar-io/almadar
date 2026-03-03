@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * FitnessTemplate - Thin wrapper template for the Fitness/Lift tracking page
  *

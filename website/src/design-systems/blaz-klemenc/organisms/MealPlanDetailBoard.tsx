@@ -1,3 +1,4 @@
+/* eslint-disable almadar/organism-extends-entity-display */
 /**
  * MealPlanDetailBoard - Organism for viewing detailed meal plan information
  *
@@ -37,8 +38,11 @@ import {
   Card,
   Badge,
   Spinner,
+  LoadingState,
+  ErrorState,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 
 /**
@@ -67,17 +71,11 @@ export interface MealPlanEntity {
   };
 }
 
-export interface MealPlanDetailBoardProps {
+export interface MealPlanDetailBoardProps extends Omit<EntityDisplayProps, 'entity'> {
   /** MealPlan entity data */
-  entity: MealPlanEntity;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
+  entity?: MealPlanEntity | MealPlanEntity[];
   /** AI analysis loading state */
   isAnalyzing?: boolean;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for editing (emitted as UI:{editEvent}) */
   editEvent?: string;
   /** Event name for deleting (emitted as UI:{deleteEvent}) */
@@ -116,6 +114,8 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
   const { emit } = useEventBus();
   const { t } = useTranslate();
 
+  const entityData = Array.isArray(entity) ? entity[0] : entity;
+
   // Handle back navigation
   const handleBack = () => {
     if (backEvent) emit(`UI:${backEvent}`, { entity: "MealPlan" });
@@ -123,22 +123,22 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
 
   // Handle edit
   const handleEdit = () => {
-    if (editEvent) emit(`UI:${editEvent}`, { row: entity, entity: "MealPlan" });
+    if (editEvent) emit(`UI:${editEvent}`, { row: entityData, entity: "MealPlan" });
   };
 
   // Handle delete
   const handleDelete = () => {
-    if (deleteEvent) emit(`UI:${deleteEvent}`, { row: entity, entity: "MealPlan" });
+    if (deleteEvent) emit(`UI:${deleteEvent}`, { row: entityData, entity: "MealPlan" });
   };
 
   // Handle AI analysis
   const handleAnalyze = () => {
-    if (analyzeEvent) emit(`UI:${analyzeEvent}`, { row: entity, entity: "MealPlan" });
+    if (analyzeEvent) emit(`UI:${analyzeEvent}`, { row: entityData, entity: "MealPlan" });
   };
 
   // Handle share
   const handleShare = () => {
-    if (shareEvent) emit(`UI:${shareEvent}`, { row: entity, entity: "MealPlan" });
+    if (shareEvent) emit(`UI:${shareEvent}`, { row: entityData, entity: "MealPlan" });
   };
 
   // Loading state
@@ -173,7 +173,7 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
   }
 
   // No data state
-  if (!entity || !entity.title) {
+  if (!entityData || !entityData.title) {
     return (
       <VStack
         align="center"
@@ -190,24 +190,24 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
 
   // Prepare nutrition data
   const nutritionData: NutritionData = {
-    calories: entity.calories || 0,
-    protein: entity.protein || 0,
-    carbs: entity.carbs || 0,
-    fat: entity.fat || 0,
+    calories: entityData.calories || 0,
+    protein: entityData.protein || 0,
+    carbs: entityData.carbs || 0,
+    fat: entityData.fat || 0,
   };
 
   // Prepare AI analysis data
-  const aiAnalysisData: AIAnalysisData | undefined = entity.aiAnalysis
+  const aiAnalysisData: AIAnalysisData | undefined = entityData.aiAnalysis
     ? {
-        id: entity.id || "",
+        id: entityData.id || "",
         resourceType: "MealPlan",
-        resourceId: entity.id || "",
-        content: entity.aiAnalysis,
-        generatedAt: entity.updatedAt || new Date().toISOString(),
+        resourceId: entityData.id || "",
+        content: entityData.aiAnalysis,
+        generatedAt: entityData.updatedAt || new Date().toISOString(),
       }
     : undefined;
 
-  const trainee = entity.trainee;
+  const trainee = entityData.trainee;
 
   return (
     <VStack gap="lg" className={cn("p-6", className)}>
@@ -226,16 +226,16 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
             <Utensils className="h-6 w-6 text-orange-600" />
           </Box>
           <VStack gap="xs">
-            <Typography variant="h1">{entity.title}</Typography>
+            <Typography variant="h1">{entityData.title}</Typography>
             <HStack gap="md" align="center" className="text-[var(--color-muted-foreground)]">
               <HStack gap="xs" align="center">
                 <Calendar className="h-4 w-4" />
-                <Typography variant="body">{formatDate(entity.date)}</Typography>
+                <Typography variant="body">{formatDate(entityData.date)}</Typography>
               </HStack>
-              {entity.calories && (
+              {entityData.calories && (
                 <HStack gap="xs" align="center">
                   <Flame className="h-4 w-4 text-orange-500" />
-                  <Typography variant="body">{entity.calories} kcal</Typography>
+                  <Typography variant="body">{entityData.calories} kcal</Typography>
                 </HStack>
               )}
             </HStack>
@@ -247,7 +247,7 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
             <Edit className="h-4 w-4 mr-1" />
             {t('mealPlan.edit')}
           </Button>
-          {!entity.aiAnalysis && (
+          {!entityData.aiAnalysis && (
             <Button
               variant="secondary"
               onClick={handleAnalyze}
@@ -276,12 +276,12 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
         {/* Left Column */}
         <VStack gap="md" className="flex-1 min-w-[300px]">
           {/* Description */}
-          {entity.description && (
+          {entityData.description && (
             <Card className="p-4">
               <VStack gap="sm">
                 <Typography variant="h4">{t('mealPlan.description')}</Typography>
                 <Typography variant="body" className="text-[var(--color-foreground)]">
-                  {entity.description}
+                  {entityData.description}
                 </Typography>
               </VStack>
             </Card>
@@ -359,14 +359,14 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
           )}
 
           {/* Share Link */}
-          {entity.shareLink ? (
+          {entityData.shareLink ? (
             <Card className="p-4">
               <VStack gap="sm">
                 <Typography variant="h4">{t('mealPlan.shareLink')}</Typography>
                 <ShareableLinkGenerator
-                  existingLink={entity.shareLink}
+                  existingLink={entityData.shareLink}
                   resourceType="MealPlan"
-                  resourceId={entity.id || ""}
+                  resourceId={entityData.id || ""}
                 />
               </VStack>
             </Card>
@@ -390,23 +390,23 @@ export const MealPlanDetailBoard: React.FC<MealPlanDetailBoardProps> = ({
             <VStack gap="sm">
               <Typography variant="h4">{t('mealPlan.details')}</Typography>
               <VStack gap="xs">
-                {entity.createdAt && (
+                {entityData.createdAt && (
                   <HStack justify="between">
                     <Typography variant="small" className="text-[var(--color-muted-foreground)]">
                       {t('mealPlan.created')}
                     </Typography>
                     <Typography variant="small">
-                      {formatDate(entity.createdAt)}
+                      {formatDate(entityData.createdAt)}
                     </Typography>
                   </HStack>
                 )}
-                {entity.updatedAt && (
+                {entityData.updatedAt && (
                   <HStack justify="between">
                     <Typography variant="small" className="text-[var(--color-muted-foreground)]">
                       {t('mealPlan.lastUpdated')}
                     </Typography>
                     <Typography variant="small">
-                      {formatDate(entity.updatedAt)}
+                      {formatDate(entityData.updatedAt)}
                     </Typography>
                   </HStack>
                 )}

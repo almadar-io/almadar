@@ -28,6 +28,7 @@ import {
   Button,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 
 export interface FloatingAction {
@@ -41,7 +42,7 @@ export interface FloatingAction {
 // Type alias for backwards compatibility
 export type QuickAction = FloatingAction;
 
-export interface FloatingActionMenuProps {
+export interface FloatingActionMenuProps extends EntityDisplayProps<FloatingAction> {
   /** Available actions */
   actions?: FloatingAction[];
   /** Context data for events */
@@ -53,16 +54,6 @@ export interface FloatingActionMenuProps {
     | "bottom-center"
     | string
     | unknown;
-  /** Additional CSS classes */
-  className?: string;
-  /** Loading state indicator */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
-  /** Entity name for schema-driven auto-fetch */
-  entity?: string;
-  /** Action click handler */
-  onAction?: (actionId: string) => void;
 }
 
 function useDefaultActions(): FloatingAction[] {
@@ -117,7 +108,6 @@ export const FloatingActionMenu: React.FC<FloatingActionMenuProps> = ({
   context = {},
   position = "bottom-right",
   className,
-  onAction,
 }) => {
   const eventBus = useEventBus();
   const defaultActions = useDefaultActions();
@@ -141,11 +131,10 @@ export const FloatingActionMenu: React.FC<FloatingActionMenuProps> = ({
 
   const handleAction = useCallback(
     (actionId: string) => {
-      onAction?.(actionId);
       eventBus.emit("UI:QUICK_ACTION", { action: actionId, context });
       setIsOpen(false);
     },
-    [context, onAction, eventBus],
+    [context, eventBus],
   );
 
   const handleToggle = useCallback(() => {

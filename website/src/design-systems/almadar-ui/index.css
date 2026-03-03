@@ -1,14 +1,5 @@
 /**
  * Design System Styles
- *
- * Theme system uses a single data-theme attribute:
- *   data-theme="wireframe-light" | "wireframe-dark" | "ocean-light" | etc.
- *
- * Themes are imported first, then Tailwind, then utility classes.
- */
-
-/* Import all theme definitions */
-@import "./themes/index.css";
 
 @tailwind base;
 @tailwind components;
@@ -16,20 +7,17 @@
 
 /**
  * Default fallback theme (minimalist-light)
- * Applied when no data-theme attribute is set
+ * Applied when no data-theme attribute is set.
  */
 :root:not([data-theme]) {
-    /* Shadows - Soft, layered */
     --shadow-main: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-    --shadow-lg:
-        0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
     --shadow-inner: inset 0 1px 2px rgba(0, 0, 0, 0.05);
     --shadow-none: none;
     --shadow-hover: 0 10px 40px -10px rgba(0, 0, 0, 0.15);
     --shadow-active: 0 1px 2px rgba(0, 0, 0, 0.05);
 
-    /* Border radius - Gentle curves */
     --radius-none: 0px;
     --radius-sm: 4px;
     --radius-md: 8px;
@@ -37,12 +25,10 @@
     --radius-xl: 16px;
     --radius-full: 9999px;
 
-    /* Border width - Thin, delicate */
     --border-width: 1px;
     --border-width-thin: 1px;
     --border-width-thick: 2px;
 
-    /* Colors - Subtle contrast with soft grays */
     --color-primary: #18181b;
     --color-primary-hover: #27272a;
     --color-primary-foreground: #fafafa;
@@ -62,7 +48,6 @@
     --color-input: #d4d4d8;
     --color-ring: #18181b;
 
-    /* Semantic colors */
     --color-error: #dc2626;
     --color-error-foreground: #ffffff;
     --color-success: #16a34a;
@@ -72,39 +57,32 @@
     --color-info: #2563eb;
     --color-info-foreground: #ffffff;
 
-    /* Typography - Light, elegant */
-    --font-family:
-        "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     --font-weight-normal: 400;
     --font-weight-medium: 500;
     --font-weight-bold: 600;
     --letter-spacing: -0.01em;
     --line-height: 1.6;
 
-    /* Icon styling - Thin, refined */
     --icon-stroke-width: 1.5;
     --icon-color: currentColor;
 
-    /* Transitions - Smooth, elegant */
     --transition-fast: 150ms;
     --transition-normal: 250ms;
     --transition-slow: 400ms;
     --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
 
-    /* Hover/Active transforms - Subtle lift */
     --hover-scale: 1.01;
     --hover-translate-y: -1px;
     --hover-translate-x: 0;
     --active-scale: 0.99;
     --active-translate-y: 0;
 
-    /* Focus ring */
     --focus-ring-width: 2px;
     --focus-ring-offset: 2px;
     --focus-ring-color: #18181b;
 }
 
-/* Base styles */
 html {
     font-family: var(--font-family);
     line-height: var(--line-height);
@@ -128,7 +106,6 @@ body {
     min-height: 100vh;
 }
 
-/* Custom scrollbar using theme variables */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -147,74 +124,22 @@ body {
     background: var(--color-foreground);
 }
 
-/* Utility classes that use theme variables */
 @layer utilities {
-    .shadow-theme {
-        box-shadow: var(--shadow-main);
-    }
-
-    .shadow-theme-sm {
-        box-shadow: var(--shadow-sm);
-    }
-
-    .shadow-theme-lg {
-        box-shadow: var(--shadow-lg);
-    }
-
-    .rounded-theme {
-        border-radius: var(--radius-md);
-    }
-
-    .rounded-theme-sm {
-        border-radius: var(--radius-sm);
-    }
-
-    .rounded-theme-lg {
-        border-radius: var(--radius-lg);
-    }
-
-    .border-theme {
-        border-width: var(--border-width);
-        border-color: var(--color-border);
-    }
-
-    .bg-theme-primary {
-        background-color: var(--color-primary);
-    }
-
-    .bg-theme-secondary {
-        background-color: var(--color-secondary);
-    }
-
-    .bg-theme-background {
-        background-color: var(--color-background);
-    }
-
-    .bg-theme-card {
-        background-color: var(--color-card);
-    }
-
-    .text-theme-foreground {
-        color: var(--color-foreground);
-    }
-
-    .text-theme-muted {
-        color: var(--color-muted-foreground);
-    }
-
-    .text-theme-primary {
-        color: var(--color-primary);
-    }
-
-    .font-theme-normal {
-        font-weight: var(--font-weight-normal);
-    }
-
-    .font-theme-medium {
-        font-weight: var(--font-weight-medium);
-    }
-
-    .font-theme-bold {
-        font-weight: var(--font-weight-bold);
-    }
+    .shadow-theme { box-shadow: var(--shadow-main); }
+    .shadow-theme-sm { box-shadow: var(--shadow-sm); }
+    .shadow-theme-lg { box-shadow: var(--shadow-lg); }
+    .rounded-theme { border-radius: var(--radius-md); }
+    .rounded-theme-sm { border-radius: var(--radius-sm); }
+    .rounded-theme-lg { border-radius: var(--radius-lg); }
+    .border-theme { border-width: var(--border-width); border-color: var(--color-border); }
+    .bg-theme-primary { background-color: var(--color-primary); }
+    .bg-theme-secondary { background-color: var(--color-secondary); }
+    .bg-theme-background { background-color: var(--color-background); }
+    .bg-theme-card { background-color: var(--color-card); }
+    .text-theme-foreground { color: var(--color-foreground); }
+    .text-theme-muted { color: var(--color-muted-foreground); }
+    .text-theme-primary { color: var(--color-primary); }
+    .font-theme-normal { font-weight: var(--font-weight-normal); }
+    .font-theme-medium { font-weight: var(--font-weight-medium); }
+    .font-theme-bold { font-weight: var(--font-weight-bold); }
 }

@@ -30,6 +30,7 @@ import {
   Spinner,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -48,13 +49,7 @@ export interface AssessmentData {
   answeredCount?: number;
 }
 
-export interface AssessmentsBoardProps {
-  /** Entity data (assessment items) */
-  entity?: readonly AssessmentData[];
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
+export interface AssessmentsBoardProps extends EntityDisplayProps<AssessmentData> {
   /** Page title */
   title?: string;
   /** Page subtitle */
@@ -63,8 +58,6 @@ export interface AssessmentsBoardProps {
   showHeader?: boolean;
   /** Show search */
   showSearch?: boolean;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for create action */
   createEvent: string;
   /** Event name for view action */
@@ -106,9 +99,9 @@ const getStatusConfig = (status: AssessmentData["status"], t: (key: string) => s
 
 const AssessmentCard: React.FC<{
   assessment: AssessmentData;
-  onAction: (action: string, assessment: AssessmentData) => void;
-}> = ({ assessment, onAction }) => {
+}> = ({ assessment }) => {
   const { t } = useTranslate();
+  const eventBus = useEventBus();
   const statusConfig = getStatusConfig(assessment.status, t);
   const StatusIcon = statusConfig.icon;
   const progress =
@@ -209,7 +202,7 @@ const AssessmentCard: React.FC<{
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onAction("VIEW", assessment)}
+            onClick={() => eventBus.emit("UI:VIEW", { row: assessment, entity: "Assessment" })}
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
@@ -219,7 +212,7 @@ const AssessmentCard: React.FC<{
             <Button
               variant="primary"
               size="sm"
-              onClick={() => onAction("START", assessment)}
+              onClick={() => eventBus.emit("UI:START", { row: assessment, entity: "Assessment" })}
               className="gap-1"
             >
               <PlayCircle className="h-3 w-3" />
@@ -230,7 +223,7 @@ const AssessmentCard: React.FC<{
             <Button
               variant="primary"
               size="sm"
-              onClick={() => onAction("CONTINUE", assessment)}
+              onClick={() => eventBus.emit("UI:CONTINUE", { row: assessment, entity: "Assessment" })}
               className="gap-1"
             >
               <PlayCircle className="h-3 w-3" />
@@ -263,7 +256,7 @@ export const AssessmentsBoard: React.FC<AssessmentsBoardProps> = ({
   const [searchTerm, setSearchTerm] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState<string>("all");
 
-  const assessments = entity || [];
+  const assessments = Array.isArray(entity) ? entity : entity ? [entity] : [];
 
   // Handle search
   const handleSearch = (value: string) => {
@@ -274,11 +267,6 @@ export const AssessmentsBoard: React.FC<AssessmentsBoardProps> = ({
   // Handle create
   const handleCreate = () => {
     eventBus.emit(`UI:${createEvent}`, { entity: "Assessment" });
-  };
-
-  // Handle assessment actions
-  const handleAction = (action: string, assessment: AssessmentData) => {
-    eventBus.emit(`UI:${action}`, { row: assessment, entity: "Assessment" });
   };
 
   // Filter assessments
@@ -470,7 +458,6 @@ export const AssessmentsBoard: React.FC<AssessmentsBoardProps> = ({
                 <AssessmentCard
                   key={assessment.id}
                   assessment={assessment}
-                  onAction={handleAction}
                 />
               ))}
             </Box>

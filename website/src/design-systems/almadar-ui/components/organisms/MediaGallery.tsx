@@ -1,3 +1,4 @@
+'use client';
 /**
  * MediaGallery Organism Component
  *
@@ -18,7 +19,9 @@ import { VStack, HStack } from "../atoms/Stack";
 import { LoadingState } from "../molecules/LoadingState";
 import { ErrorState } from "../molecules/ErrorState";
 import { EmptyState } from "../molecules/EmptyState";
-import { useEventBus } from "../../hooks/useEventBus";
+import { useEventBus, useEventListener } from "../../hooks/useEventBus";
+import { useTranslate } from "../../hooks/useTranslate";
+import type { EntityDisplayProps } from "./types";
 import { X, ZoomIn, Upload, Image as ImageIcon } from "lucide-react";
 
 export interface MediaItem {
@@ -45,35 +48,25 @@ export interface MediaGalleryAction {
     variant?: "primary" | "secondary" | "ghost";
 }
 
-export interface MediaGalleryProps {
+export interface MediaGalleryProps extends EntityDisplayProps<MediaItem> {
     /** Gallery title */
     title?: string;
     /** Media items */
     items?: readonly MediaItem[];
-    /** Schema-driven data */
-    data?: readonly Record<string, unknown>[];
     /** Column count */
     columns?: 2 | 3 | 4 | 5 | 6;
     /** Enable item selection */
     selectable?: boolean;
     /** Selected item IDs */
     selectedItems?: readonly string[];
-    /** Selection change callback */
-    onSelectionChange?: (ids: string[]) => void;
+    /** Event name emitted when selection changes (emitted as UI:{selectionEvent}) */
+    selectionEvent?: string;
     /** Show upload button */
     showUpload?: boolean;
     /** Actions */
     actions?: readonly MediaGalleryAction[];
     /** Aspect ratio for thumbnails */
     aspectRatio?: "square" | "landscape" | "portrait";
-    /** Entity name for schema-driven auto-fetch */
-    entity?: string;
-    /** Loading state */
-    isLoading?: boolean;
-    /** Error state */
-    error?: Error | null;
-    /** Additional CSS classes */
-    className?: string;
 }
 
 const COLUMN_CLASSES: Record<number, string> = {
@@ -93,11 +86,10 @@ const ASPECT_CLASSES: Record<string, string> = {
 export const MediaGallery: React.FC<MediaGalleryProps> = ({
     title,
     items: propItems,
-    data,
     columns = 3,
     selectable = false,
     selectedItems = [],
-    onSelectionChange,
+    selectionEvent = "SELECTION_CHANGE",
     showUpload = false,
     actions,
     aspectRatio = "square",
@@ -107,16 +99,12 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
     className,
 }) => {
     const eventBus = useEventBus();
+    const { t } = useTranslate();
+    void t;
     const [lightboxItem, setLightboxItem] = useState<MediaItem | null>(null);
 
-    const handleAction = useCallback(
-        (action: MediaGalleryAction) => {
-            if (action.event) {
-                eventBus.emit(`UI:${action.event}`, { entity });
-            }
-        },
-        [eventBus, entity],
-    );
+    const closeLightbox = useCallback(() => setLightboxItem(null), []);
+    useEventListener("UI:LIGHTBOX_CLOSE", closeLightbox);
 
     const handleItemClick = useCallback(
         (item: MediaItem) => {
@@ -125,32 +113,29 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
                 const newSelection = isSelected
                     ? selectedItems.filter((id) => id !== item.id)
                     : [...selectedItems, item.id];
-                onSelectionChange?.(newSelection);
+                eventBus.emit(`UI:${selectionEvent}`, { selection: newSelection });
             } else {
                 setLightboxItem(item);
             }
-            eventBus.emit("UI:MEDIA_SELECT", { entity, row: item });
+            eventBus.emit("UI:MEDIA_SELECT", { row: item });
         },
-        [selectable, selectedItems, onSelectionChange, eventBus, entity],
+        [selectable, selectedItems, selectionEvent, eventBus],
     );
 
-    const handleUpload = useCallback(() => {
-        eventBus.emit("UI:MEDIA_UPLOAD", { entity });
-    }, [eventBus, entity]);
-
-    // Normalize data
+    // Normalize entity data
+    const entityData = Array.isArray(entity) ? entity as readonly Record<string, unknown>[] : [];
     const items: readonly MediaItem[] = React.useMemo(() => {
         if (propItems) return propItems;
-        if (!data) return [];
+        if (entityData.length === 0) return [];
 
-        return data.map((record, idx) => ({
+        return entityData.map((record, idx) => ({
             id: String(record.id ?? idx),
             src: String(record.src ?? record.url ?? record.image ?? ""),
             alt: record.alt ? String(record.alt) : undefined,
             thumbnail: record.thumbnail ? String(record.thumbnail) : undefined,
             caption: record.caption ? String(record.caption) : record.title ? String(record.title) : undefined,
         }));
-    }, [propItems, data]);
+    }, [propItems, entityData]);
 
     if (isLoading) {
         return <LoadingState message="Loading media..." className={className} />;
@@ -195,20 +180,21 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
                                         variant="secondary"
                                         size="sm"
                                         icon={Upload}
-                                        onClick={handleUpload}
+                                        action="MEDIA_UPLOAD"
                                     >
                                         Upload
                                     </Button>
                                 )}
                                 {actions?.map((action, idx) => (
-                                    <Badge
+                                    <Box
                                         key={idx}
-                                        variant="default"
+                                        action={action.event}
                                         className="cursor-pointer hover:opacity-80 transition-opacity"
-                                        onClick={() => handleAction(action)}
                                     >
-                                        {action.label}
-                                    </Badge>
+                                        <Badge variant="default">
+                                            {action.label}
+                                        </Badge>
+                                    </Box>
                                 ))}
                             </HStack>
                         </HStack>
@@ -241,6 +227,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
                                             : "border-transparent hover:border-[var(--color-border)]",
                                         ASPECT_CLASSES[aspectRatio],
                                     )}
+                                    // eslint-disable-next-line almadar/require-event-bus -- onClick manages local lightbox/selection state + emits UI:MEDIA_SELECT
                                     onClick={() => handleItemClick(item)}
                                 >
                                     {/* eslint-disable-next-line almadar/no-raw-dom-elements -- semantic img with src/alt */}
@@ -290,12 +277,13 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
             {lightboxItem && (
                 <Box
                     className="fixed inset-0 z-50 bg-[var(--color-background)]/80 backdrop-blur-sm flex items-center justify-center"
-                    onClick={() => setLightboxItem(null)}
+                    action="LIGHTBOX_CLOSE"
                 >
                     <VStack
                         align="center"
                         justify="center"
                         className="w-full h-full p-8"
+                        // eslint-disable-next-line almadar/require-event-bus -- stopPropagation prevents backdrop close when clicking content
                         onClick={(e: React.MouseEvent) => e.stopPropagation()}
                     >
                         <HStack justify="end" className="w-full max-w-4xl mb-2">
@@ -303,7 +291,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
                                 variant="ghost"
                                 size="sm"
                                 icon={X}
-                                onClick={() => setLightboxItem(null)}
+                                action="LIGHTBOX_CLOSE"
                                 className="text-white hover:bg-white/20"
                             />
                         </HStack>

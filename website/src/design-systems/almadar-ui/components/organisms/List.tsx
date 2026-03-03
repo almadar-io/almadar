@@ -1,3 +1,4 @@
+'use client';
 /**
  * List Organism Component
  *
@@ -10,15 +11,14 @@
  * - Delightful hover micro-interactions
  * - Elegant status indicators
  *
- * Orbital Component Interface Compliance:
- * - Entity binding with auto-fetch when entity is a string
- * - Event emission via useEventBus (UI:* events)
- * - Event listening for UI:SEARCH and UI:CLEAR_SEARCH
- * - isLoading and error state props
+ * Closed Circuit Compliance (Dumb Organism):
+ * - Receives ALL data via props (no internal fetch)
+ * - Emits events via useEventBus (UI:SELECT, UI:DESELECT, UI:VIEW)
+ * - Never listens to events — only emits
+ * - No internal search/filter state — trait provides filtered data
  */
 
-import React, { useEffect, useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useMemo } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   Calendar,
@@ -36,10 +36,10 @@ import { LoadingState } from "../molecules/LoadingState";
 import { ErrorState } from "../molecules/ErrorState";
 import { cn } from "../../lib/cn";
 import { getNestedValue } from "../../lib/getNestedValue";
-import { useEntityList } from "../../hooks/useEntityData";
-import { useEventBus, type KFlowEvent } from "../../hooks/useEventBus";
-import { useQuerySingleton } from "../../hooks/useQuerySingleton";
+import { useEventBus } from "../../hooks/useEventBus";
 import { useTranslate } from "../../hooks/useTranslate";
+import type { EntityDisplayProps } from "./types";
+import { EntityDisplayEvents } from "./types";
 
 export interface ListItem {
   id: string;
@@ -86,40 +86,21 @@ function normalizeFields(fields: readonly FieldDef[] | undefined): string[] {
   return fields.map((f) => (typeof f === "string" ? f : f.key));
 }
 
-export interface ListProps {
-  /** Entity name for auto-fetch OR data array (backwards compatible) */
-  entity?: ListItem[] | readonly { id: string }[] | readonly unknown[] | string;
-  /** Data array - primary prop for data */
-  data?: ListItem[] | readonly { id: string }[] | readonly unknown[] | unknown;
+export interface ListProps extends EntityDisplayProps {
   /** Entity type name for display */
   entityType?: string;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
   selectable?: boolean;
-  selectedItems?: readonly string[];
-  onSelectionChange?: (selectedIds: string[]) => void;
   /** Item actions - schema-driven or function-based */
   itemActions?: ((item: ListItem) => MenuItem[]) | readonly SchemaItemAction[];
   showDividers?: boolean;
   variant?: "default" | "card";
   emptyMessage?: string;
-  className?: string;
   renderItem?: (item: ListItem, index: number) => React.ReactNode;
   children?: React.ReactNode;
-  onItemAction?: (action: string, item: ListItem, index: number) => void;
-  onRowClick?: (item: ListItem) => void;
   /** Fields to display - accepts string[] or {key, header}[] for unified interface */
   fields?: readonly FieldDef[];
   /** Alias for fields - backwards compatibility */
   fieldNames?: readonly string[];
-  /**
-   * Query singleton binding for filter/sort state.
-   * When provided, syncs with the query singleton for filtering and sorting.
-   * Example: "@TaskQuery"
-   */
-  query?: string;
 }
 
 // Refined color palette for status indicators using CSS variables
@@ -300,24 +281,18 @@ const ProgressIndicator: React.FC<{ value: number }> = ({ value }) => {
 
 export const List: React.FC<ListProps> = ({
   entity,
-  data,
-  isLoading: externalLoading = false,
-  error: externalError,
+  isLoading = false,
+  error,
   selectable = false,
-  selectedItems = [],
-  onSelectionChange,
+  selectedIds = [],
   itemActions,
   emptyMessage,
   className,
   renderItem: customRenderItem,
-  onItemAction,
-  onRowClick,
   fields,
   fieldNames,
   entityType,
-  query,
 }) => {
-  const navigate = useNavigate();
   const eventBus = useEventBus();
   const { t } = useTranslate();
   const resolvedEmptyMessage = emptyMessage ?? t('empty.noData');
@@ -326,120 +301,12 @@ export const List: React.FC<ListProps> = ({
   const effectiveFieldNames =
     normalizeFields(fields).length > 0 ? normalizeFields(fields) : fieldNames;
 
-  // Query singleton for filter/sort state
-  const queryState = useQuerySingleton(query);
-
-  // Search state for event bus integration - initialize from query singleton if available
-  const [searchTerm, setSearchTerm] = useState(queryState?.search ?? "");
-  const [filters, setFilters] = useState<Record<string, unknown>>(
-    queryState?.filters ?? {},
-  );
-
-  // Determine if entity is a string name (for auto-fetch) or data array (backwards compatible)
-  const isEntityName = typeof entity === "string";
-  const entityName = isEntityName ? entity : undefined;
-
-  // Auto-fetch data when entity is a string name and no external data provided
-  const shouldAutoFetch = isEntityName && !data;
-
-  const {
-    data: fetchedData,
-    isLoading: fetchLoading,
-    error: fetchError,
-  } = useEntityList(shouldAutoFetch ? entityName : undefined, {
-    skip: !shouldAutoFetch,
-  });
-
-  // Sync with query singleton changes (e.g., from FilterGroup or SearchInput)
-  useEffect(() => {
-    if (queryState) {
-      setSearchTerm(queryState.search);
-      setFilters(queryState.filters);
-    }
-  }, [queryState?.search, JSON.stringify(queryState?.filters)]);
-
-  // Listen for UI:SEARCH, UI:FILTER and related events
-  useEffect(() => {
-    const handleSearch = (event: KFlowEvent) => {
-      // Only handle if no query binding (avoid double-handling when query singleton is used)
-      if (query) return;
-      const term = (event.payload?.searchTerm as string) ?? "";
-      setSearchTerm(term);
-    };
-
-    const handleClearSearch = (event: KFlowEvent) => {
-      // Only handle if no query binding
-      if (query) return;
-      setSearchTerm("");
-    };
-
-    const handleFilter = (event: KFlowEvent) => {
-      // Only handle if no query binding
-      if (query) return;
-      const { field, value } = event.payload ?? {};
-      if (field) {
-        setFilters((prev) => ({ ...prev, [field as string]: value }));
-      }
-    };
-
-    const handleClearFilters = (event: KFlowEvent) => {
-      // Only handle if no query binding
-      if (query) return;
-      setFilters({});
-      setSearchTerm("");
-    };
-
-    const unsubSearch = eventBus.on("UI:SEARCH", handleSearch);
-    const unsubClear = eventBus.on("UI:CLEAR_SEARCH", handleClearSearch);
-    const unsubFilter = eventBus.on("UI:FILTER", handleFilter);
-    const unsubClearFilters = eventBus.on(
-      "UI:CLEAR_FILTERS",
-      handleClearFilters,
-    );
-
-    return () => {
-      unsubSearch();
-      unsubClear();
-      unsubFilter();
-      unsubClearFilters();
-    };
-  }, [eventBus, query]);
-
-  // Combine loading and error states
-  const isLoading = externalLoading || (shouldAutoFetch && fetchLoading);
-  const error =
-    externalError ||
-    (fetchError instanceof Error
-      ? fetchError
-      : fetchError
-        ? new Error(String(fetchError))
-        : null);
-
-  // Normalize data: handle arrays, single objects, and entity arrays
-  const normalizeData = (d: typeof data | typeof entity) => {
-    if (Array.isArray(d)) return d;
-    if (d && typeof d === "object" && "id" in d) return [d];
+  // Normalize entity data: handle arrays, single objects
+  const rawItems = useMemo(() => {
+    if (Array.isArray(entity)) return entity;
+    if (entity && typeof entity === "object" && "id" in entity) return [entity];
     return [];
-  };
-
-  // Use external data if provided, otherwise use fetched data or entity data (backwards compat)
-  const rawDataSource = data ?? fetchedData ?? entity;
-  const rawItems = normalizeData(rawDataSource);
-
-  // Apply client-side search filtering if using external data (server handles it for auto-fetch)
-  const filteredItems = useMemo(() => {
-    if (!searchTerm || shouldAutoFetch) {
-      return rawItems;
-    }
-    const lowerSearch = searchTerm.toLowerCase();
-    return rawItems.filter((item) => {
-      const itemData = item as Record<string, unknown>;
-      return Object.values(itemData).some((value) => {
-        if (value === null || value === undefined) return false;
-        return String(value).toLowerCase().includes(lowerSearch);
-      });
-    });
-  }, [rawItems, searchTerm, shouldAutoFetch]);
+  }, [entity]);
 
   const getItemActions = React.useCallback(
     (item: ListItem): MenuItem[] => {
@@ -458,24 +325,19 @@ export const List: React.FC<ListProps> = ({
             const url = action.navigatesTo.replace(/\{\{(\w+)\}\}/g, (_, key) =>
               String(item[key] || item.id || ""),
             );
-            navigate(url);
+            eventBus.emit('UI:NAVIGATE', { url, row: item });
             return;
           }
           // Dispatch event via event bus if defined (for trait state machine integration)
           if (action.event) {
             eventBus.emit(`UI:${action.event}`, {
               row: item,
-              entity: entityName,
             });
-          }
-          // Legacy callback support
-          if (action.action && onItemAction) {
-            onItemAction(action.action, item, idx);
           }
         },
       }));
     },
-    [itemActions, navigate, onItemAction, eventBus, entityName],
+    [itemActions, eventBus],
   );
 
   const normalizedItemActions = itemActions ? getItemActions : undefined;
@@ -483,7 +345,7 @@ export const List: React.FC<ListProps> = ({
   if (isLoading) {
     return (
       <LoadingState
-        message={`Loading ${entityType || "items"}...`}
+        message="Loading items..."
         className={className}
       />
     );
@@ -494,15 +356,15 @@ export const List: React.FC<ListProps> = ({
     return (
       <EmptyState
         icon={Package}
-        title={`Error loading ${entityType || "items"}`}
+        title="Error loading items"
         description={error.message}
         className={className}
       />
     );
   }
 
-  const safeItems: ListItem[] = Array.isArray(filteredItems)
-    ? filteredItems.map((item, index) => {
+  const safeItems: ListItem[] = Array.isArray(rawItems)
+    ? rawItems.map((item, index) => {
       if (typeof item === "object" && item !== null) {
         const normalizedItem = {
           ...item,
@@ -541,11 +403,19 @@ export const List: React.FC<ListProps> = ({
     : [];
 
   const handleSelect = (itemId: string, checked: boolean) => {
-    if (!selectable || !onSelectionChange) return;
-    const newSelection = checked
-      ? [...selectedItems, itemId]
-      : selectedItems.filter((id) => id !== itemId);
-    onSelectionChange(newSelection);
+    if (!selectable) return;
+    const currentIds = [...selectedIds].map(String);
+    if (checked) {
+      const newIds = [...currentIds, itemId];
+      eventBus.emit(`UI:${EntityDisplayEvents.SELECT}`, { ids: newIds });
+    } else {
+      const newIds = currentIds.filter((id) => id !== itemId);
+      eventBus.emit(`UI:${EntityDisplayEvents.DESELECT}`, { ids: newIds });
+    }
+  };
+
+  const handleRowClick = (item: ListItem) => {
+    eventBus.emit('UI:VIEW', { row: item });
   };
 
   const defaultRenderItem = (
@@ -553,7 +423,7 @@ export const List: React.FC<ListProps> = ({
     index: number,
     isLast: boolean,
   ) => {
-    const isSelected = selectedItems.includes(item.id);
+    const isSelected = selectedIds.map(String).includes(item.id);
 
     // Get all actions once
     const actions = normalizedItemActions ? normalizedItemActions(item) : [];
@@ -569,11 +439,12 @@ export const List: React.FC<ListProps> = ({
       a.label.toLowerCase().includes("edit"),
     );
 
-    // Determine row click handler: Explicit item click > Generic row click > View action
+    // Row click: item's own onClick > view action > generic row click via event bus
+    const hasExplicitClick = !!(item.onClick || viewAction?.onClick);
     const handleClick =
       item.onClick ||
-      (onRowClick ? () => onRowClick(item) : undefined) ||
-      viewAction?.onClick;
+      viewAction?.onClick ||
+      (() => handleRowClick(item));
 
     // Categorize fields
     const primaryField = effectiveFieldNames?.[0];
@@ -621,7 +492,7 @@ export const List: React.FC<ListProps> = ({
           className={cn(
             "group flex items-center gap-5 px-6 py-5",
             "transition-all duration-300 ease-out",
-            handleClick && "cursor-pointer",
+            hasExplicitClick && "cursor-pointer",
             // Hover state
             "hover:bg-[var(--color-muted)]/80",
             // Selected state
@@ -805,7 +676,7 @@ export const List: React.FC<ListProps> = ({
               ) : null;
             })()}
 
-            {handleClick && (
+            {hasExplicitClick && (
               <ChevronRight className="w-4 h-4 text-[var(--color-muted-foreground)]/50 group-hover:text-[var(--color-muted-foreground)] group-hover:translate-x-0.5 transition-all" />
             )}
           </HStack>
@@ -823,7 +694,7 @@ export const List: React.FC<ListProps> = ({
     return (
       <EmptyState
         icon={Package}
-        title={`No ${entityType || "items"} found`}
+        title="No items found"
         description={resolvedEmptyMessage}
         className={className}
       />

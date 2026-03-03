@@ -1,3 +1,4 @@
+'use client';
 /**
  * Pagination Molecule Component
  *

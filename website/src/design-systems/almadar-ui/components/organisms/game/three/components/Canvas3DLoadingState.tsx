@@ -51,7 +51,7 @@ export function Canvas3DLoadingState({
     details,
     showSpinner = true,
     className,
-}: Canvas3DLoadingStateProps): JSX.Element {
+}: Canvas3DLoadingStateProps): React.JSX.Element {
     const clampedProgress = Math.max(0, Math.min(100, progress));
     const hasProgress = total > 0;
 

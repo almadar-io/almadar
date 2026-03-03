@@ -79,8 +79,6 @@ export interface BodyMeasurementInputProps {
   showComparison?: boolean;
   /** Trainee ID */
   traineeId?: string;
-  /** Entity context for events */
-  entity?: string;
   /** Additional CSS classes */
   className?: string;
   /** Callback when saved */
@@ -126,7 +124,6 @@ export const BodyMeasurementInput: React.FC<BodyMeasurementInputProps> = ({
   previousData,
   showComparison = true,
   traineeId,
-  entity = "ProgressEntry",
   className,
   onSave,
   onCancel,
@@ -163,15 +160,15 @@ export const BodyMeasurementInput: React.FC<BodyMeasurementInputProps> = ({
       traineeId: measurements.traineeId || traineeId,
     } as BodyMeasurementData;
 
-    eventBus.emit("UI:SAVE", { row: data, entity });
+    eventBus.emit("UI:SAVE", { row: data, entity: "ProgressEntry" });
     onSave?.(data);
-  }, [eventBus, measurements, traineeId, entity, onSave]);
+  }, [eventBus, measurements, traineeId, onSave]);
 
   // Emit CANCEL event
   const handleCancel = useCallback(() => {
-    eventBus.emit("UI:CANCEL", { entity });
+    eventBus.emit("UI:CANCEL", { entity: "ProgressEntry" });
     onCancel?.();
-  }, [eventBus, entity, onCancel]);
+  }, [eventBus, onCancel]);
 
   // Group fields by category
   const fieldGroups = {

@@ -1,3 +1,4 @@
+'use client';
 /**
  * GraphCanvas Organism Component
  *
@@ -132,20 +133,20 @@ export const GraphCanvas: React.FC<GraphCanvasProps> = ({
     const handleAction = useCallback(
         (action: GraphAction) => {
             if (action.event) {
-                eventBus.emit(`UI:${action.event}`, { entity });
+                eventBus.emit(`UI:${action.event}`, {});
             }
         },
-        [eventBus, entity],
+        [eventBus],
     );
 
     const handleNodeClick = useCallback(
         (node: GraphNode) => {
             if (nodeClickEvent) {
-                eventBus.emit(`UI:${nodeClickEvent}`, { entity, row: node });
+                eventBus.emit(`UI:${nodeClickEvent}`, { row: node });
             }
             onNodeClick?.(node);
         },
-        [nodeClickEvent, eventBus, entity, onNodeClick],
+        [nodeClickEvent, eventBus, onNodeClick],
     );
 
     const groups = useMemo(

@@ -14,6 +14,9 @@
  * - UI:LESSON_PREV - When navigating to previous lesson
  * - UI:TOGGLE_SIDEBAR - When sidebar is toggled
  * - UI:SELECT_LESSON - When selecting a lesson from sidebar
+ * - UI:LANGUAGE_CHANGE - When changing language (bilingual)
+ * - UI:REGENERATE_TRANSLATION - When retrying translation
+ * - UI:BILINGUAL_TOGGLE - When toggling bilingual mode
  */
 
 import React from 'react';
@@ -23,7 +26,7 @@ import type { LessonEntity, SidebarItem } from '../organisms/LessonBoard';
 export type { LessonEntity, SidebarItem } from '../organisms/LessonBoard';
 
 export interface LessonTemplateProps {
-  entity: LessonEntity;
+  entity?: LessonEntity;
   sidebarItems?: SidebarItem[];
   hasPrevious?: boolean;
   hasNext?: boolean;
@@ -31,14 +34,15 @@ export interface LessonTemplateProps {
   className?: string;
 }
 
-export const LessonTemplate: React.FC<LessonTemplateProps> = ({
+export const LessonTemplate = ({
   entity,
   sidebarItems,
   hasPrevious,
   hasNext,
   readingProgress,
   className,
-}) => {
+}: LessonTemplateProps) => {
+  if (!entity) return null;
   return (
     <LessonBoard
       entity={entity}
@@ -51,6 +55,9 @@ export const LessonTemplate: React.FC<LessonTemplateProps> = ({
       prevEvent="LESSON_PREV"
       toggleSidebarEvent="TOGGLE_SIDEBAR"
       selectLessonEvent="SELECT_LESSON"
+      languageChangeEvent="LANGUAGE_CHANGE"
+      regenerateTranslationEvent="REGENERATE_TRANSLATION"
+      bilingualToggleEvent="BILINGUAL_TOGGLE"
       className={className}
     />
   );

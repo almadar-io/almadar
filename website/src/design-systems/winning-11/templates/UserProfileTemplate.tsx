@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * UserProfileTemplate
  *
@@ -18,7 +19,7 @@ import {
 export type { UserProfileData };
 
 export interface UserProfileTemplateProps {
-  /** Entity data (user profile) */
+  /** Entity prop (user profile) */
   entity?: UserProfileData;
   /** Loading state */
   isLoading?: boolean;

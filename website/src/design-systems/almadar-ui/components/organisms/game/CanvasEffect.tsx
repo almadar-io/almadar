@@ -1,3 +1,4 @@
+'use client';
 /**
  * CanvasEffect Component
  *
@@ -11,6 +12,15 @@
  * When an EffectAssetManifest is provided (via assetManifest prop),
  * the component uses the full particle engine with tinted sprites.
  * Without a manifest, it falls back to emoji-based rendering.
+ *
+ * **State categories (closed-circuit compliant):**
+ * - Configuration (actionType, position, duration, manifest) → received via props
+ * - Animation state (particles, shake, flash, RAF loop, phase timers) → local only
+ * - Completion event → emitted via `useEventBus()` for trait integration
+ *
+ * This is an **ephemeral fire-and-forget** animation component.  All
+ * internal state is rendering-only (particle physics, screen shake decay,
+ * flash alpha, emoji phase timers).  No game logic lives here.
  *
  * @packageDocumentation
  */
@@ -344,7 +354,7 @@ function EmojiEffect({
 // Main Export — delegates to canvas engine or emoji fallback
 // =============================================================================
 
-export function CanvasEffect(props: CanvasEffectProps): JSX.Element | null {
+export function CanvasEffect(props: CanvasEffectProps): React.JSX.Element | null {
     const eventBus = useEventBus();
     const { completeEvent, onComplete, ...rest } = props;
 

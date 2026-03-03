@@ -11,18 +11,89 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GameCanvas3D } from './GameCanvas3D';
-import { 
-    DEFAULT_3D_ASSET_MANIFEST, 
-    getAll3DAssetUrls,
-    get3DCorridorUrl,
-    get3DRoomUrl,
-    get3DGateUrl,
-    get3DPropUrl,
-    get3DColumnUrl,
-    get3DSiegeWeaponUrl,
-    get3DGraveyardUrl,
-} from '../../../../../projects/trait-wars/design-system/assets-3d';
 import type { IsometricTile, IsometricFeature, IsometricUnit } from './types/isometric';
+
+// ── Inline 3D asset helpers (mirrors projects/trait-wars/design-system/assets-3d) ──
+
+const DEFAULT_3D_ASSET_MANIFEST = {
+    baseUrl: 'https://trait-wars-assets.web.app/3d',
+    terrains: {
+        'dungeon-floor': 'dungeon/floor/template-floor.glb',
+        'dungeon-floor-detail': 'dungeon/floor/template-floor-detail.glb',
+        'dungeon-floor-detail-a': 'dungeon/floor/template-floor-detail-a.glb',
+    },
+    corridors: {
+        'corridor': 'dungeon/corridors/corridor.glb',
+        'corridor-corner': 'dungeon/corridors/corridor-corner.glb',
+        'corridor-junction': 'dungeon/corridors/corridor-junction.glb',
+        'corridor-intersection': 'dungeon/corridors/corridor-intersection.glb',
+        'corridor-end': 'dungeon/corridors/corridor-end.glb',
+    },
+    rooms: {
+        'room-small': 'dungeon/rooms/room-small.glb',
+        'room-large': 'dungeon/rooms/room-large.glb',
+        'room-wide': 'dungeon/rooms/room-wide.glb',
+        'room-corner': 'dungeon/rooms/room-corner.glb',
+    },
+    gates: {
+        'gate': 'dungeon/gates/gate.glb',
+        'gate-door': 'dungeon/gates/gate-door.glb',
+    },
+    stairs: { 'stairs': 'dungeon/stairs.glb' },
+    props: {
+        'barrels': 'medieval/props/barrels.glb',
+        'crate': 'medieval/props/detail-crate.glb',
+        'crate-small': 'medieval/props/detail-crate-small.glb',
+        'ladder': 'medieval/props/ladder.glb',
+    },
+    columns: {
+        'column': 'medieval/columns/column.glb',
+        'column-damaged': 'medieval/columns/column-damaged.glb',
+        'column-wood': 'medieval/columns/column-wood.glb',
+    },
+    siegeWeapons: {
+        'ballista': 'castle/siege/siege-ballista.glb',
+        'catapult': 'castle/siege/siege-catapult.glb',
+        'ram': 'castle/siege/siege-ram.glb',
+    },
+    fortifications: {
+        'gate': 'castle/fortifications/gate.glb',
+        'bridge-straight': 'castle/fortifications/bridge-straight.glb',
+        'bridge-draw': 'castle/fortifications/bridge-draw.glb',
+    },
+    flags: {
+        'flag': 'castle/flags/flag.glb',
+        'flag-banner-long': 'castle/flags/flag-banner-long.glb',
+    },
+    graveyard: {
+        'coffin': 'graveyard/coffin.glb',
+        'coffin-old': 'graveyard/coffin-old.glb',
+        'cross-column': 'graveyard/cross-column.glb',
+        'altar-stone': 'graveyard/altar-stone.glb',
+        'candle': 'graveyard/candle.glb',
+    },
+};
+
+type Manifest = typeof DEFAULT_3D_ASSET_MANIFEST;
+
+function getUrl(category: Partial<Record<string, string>>, key: string): string | undefined {
+    const p = category[key];
+    return p ? `${DEFAULT_3D_ASSET_MANIFEST.baseUrl}/${p}` : undefined;
+}
+function get3DCorridorUrl(m: Manifest, key: string) { return getUrl(m.corridors, key); }
+function get3DRoomUrl(m: Manifest, key: string) { return getUrl(m.rooms, key); }
+function get3DGateUrl(m: Manifest, key: string) { return getUrl(m.gates, key); }
+function get3DPropUrl(m: Manifest, key: string) { return getUrl(m.props, key); }
+function get3DColumnUrl(m: Manifest, key: string) { return getUrl(m.columns, key); }
+function get3DSiegeWeaponUrl(m: Manifest, key: string) { return getUrl(m.siegeWeapons, key); }
+function get3DGraveyardUrl(m: Manifest, key: string) { return getUrl(m.graveyard, key); }
+function getAll3DAssetUrls(m: Manifest): string[] {
+    const cats: Partial<Record<string, string>>[] = [
+        m.terrains, m.corridors, m.rooms, m.gates, m.stairs, m.props,
+        m.columns, m.siegeWeapons, m.fortifications, m.flags, m.graveyard,
+    ];
+    return cats.flatMap(c => Object.values(c).filter(Boolean).map(p => `${m.baseUrl}/${p!}`));
+}
 
 // Extend IsometricFeature for stories to include rotation
 type StoryFeature = IsometricFeature & { rotation?: number };

@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * ConnectionsTemplate
  *
@@ -16,7 +17,7 @@ import { ConnectionsBoard } from "../organisms/ConnectionsBoard";
 export type { ConnectionData } from "../organisms/ConnectionsBoard";
 
 export interface ConnectionsTemplateProps {
-  /** Entity data (connection items) */
+  /** Entity prop (connection items) */
   entity?: readonly import("../organisms/ConnectionsBoard").ConnectionData[];
   /** Loading state */
   isLoading?: boolean;

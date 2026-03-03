@@ -106,7 +106,7 @@ export function GameCanvas3DWorldMapTemplate({
     validMoves,
     attackTargets,
     className,
-}: GameCanvas3DWorldMapTemplateProps): JSX.Element {
+}: GameCanvas3DWorldMapTemplateProps): React.JSX.Element {
     return (
         <GameCanvas3D
             tiles={entity.tiles}

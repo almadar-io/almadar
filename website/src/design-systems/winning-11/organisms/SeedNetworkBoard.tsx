@@ -41,6 +41,7 @@ import {
   Spinner,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 
 export interface SeedNominationData {
@@ -57,13 +58,7 @@ export interface SeedNominationData {
   reviewedBy?: string;
 }
 
-export interface SeedNetworkBoardProps {
-  /** Entity data (seed nomination items) */
-  entity?: readonly SeedNominationData[];
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
+export interface SeedNetworkBoardProps extends EntityDisplayProps<SeedNominationData> {
   /** Page title */
   title?: string;
   /** Page subtitle */
@@ -72,8 +67,6 @@ export interface SeedNetworkBoardProps {
   showHeader?: boolean;
   /** Show search */
   showSearch?: boolean;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for creating a nomination */
   createEvent?: string;
   /** Event name for viewing a nomination */
@@ -103,10 +96,10 @@ const getStatusConfig = (status: SeedNominationData["status"], t: (key: string) 
 
 const NominationCard: React.FC<{
   nomination: SeedNominationData;
-  onAction: (action: string, nomination: SeedNominationData) => void;
   viewEvent: string;
-}> = ({ nomination, onAction, viewEvent }) => {
+}> = ({ nomination, viewEvent }) => {
   const { t } = useTranslate();
+  const eventBus = useEventBus();
   const statusConfig = getStatusConfig(nomination.status, t);
   const StatusIcon = statusConfig.icon;
   const isPending = nomination.status === "pending";
@@ -181,7 +174,7 @@ const NominationCard: React.FC<{
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onAction(viewEvent, nomination)}
+            onClick={() => eventBus.emit(`UI:${viewEvent}`, { row: nomination, entity: "SeedNomination" })}
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
@@ -192,7 +185,7 @@ const NominationCard: React.FC<{
               <Button
                 variant="primary"
                 size="sm"
-                onClick={() => onAction("APPROVE", nomination)}
+                onClick={() => eventBus.emit("UI:APPROVE", { row: nomination, entity: "SeedNomination" })}
                 className="gap-1"
               >
                 <ThumbsUp className="h-3 w-3" />
@@ -201,7 +194,7 @@ const NominationCard: React.FC<{
               <Button
                 variant="secondary"
                 size="sm"
-                onClick={() => onAction("REJECT", nomination)}
+                onClick={() => eventBus.emit("UI:REJECT", { row: nomination, entity: "SeedNomination" })}
                 className="gap-1"
               >
                 <ThumbsDown className="h-3 w-3" />
@@ -238,7 +231,7 @@ export const SeedNetworkBoard: React.FC<SeedNetworkBoardProps> = ({
   const resolvedTitle = title ?? t("seed.title");
   const resolvedSubtitle = subtitle ?? t("seed.subtitle");
 
-  const nominations = entity || [];
+  const nominations: readonly SeedNominationData[] = Array.isArray(entity) ? entity : [];
 
   // Handle search
   const handleSearch = (value: string) => {
@@ -251,13 +244,8 @@ export const SeedNetworkBoard: React.FC<SeedNetworkBoardProps> = ({
     eventBus.emit(`UI:${createEvent}`, { entity: "SeedNomination" });
   };
 
-  // Handle nomination actions
-  const handleAction = (action: string, nomination: SeedNominationData) => {
-    eventBus.emit(`UI:${action}`, { row: nomination, entity: "SeedNomination" });
-  };
-
   // Filter nominations
-  const filteredNominations = nominations.filter((n) => {
+  const filteredNominations = nominations.filter((n: SeedNominationData) => {
     if (statusFilter !== "all" && n.status !== statusFilter) {
       return false;
     }
@@ -275,9 +263,9 @@ export const SeedNetworkBoard: React.FC<SeedNetworkBoardProps> = ({
   // Stats
   const stats = {
     total: nominations.length,
-    pending: nominations.filter((n) => n.status === "pending").length,
-    approved: nominations.filter((n) => n.status === "approved").length,
-    converted: nominations.filter((n) => n.status === "converted").length,
+    pending: nominations.filter((n: SeedNominationData) => n.status === "pending").length,
+    approved: nominations.filter((n: SeedNominationData) => n.status === "approved").length,
+    converted: nominations.filter((n: SeedNominationData) => n.status === "converted").length,
   };
 
   return (
@@ -418,11 +406,10 @@ export const SeedNetworkBoard: React.FC<SeedNetworkBoardProps> = ({
             </VStack>
           ) : (
             <Box className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredNominations.map((nomination) => (
+              {filteredNominations.map((nomination: SeedNominationData) => (
                 <NominationCard
                   key={nomination.id}
                   nomination={nomination}
-                  onAction={handleAction}
                   viewEvent={viewEvent}
                 />
               ))}

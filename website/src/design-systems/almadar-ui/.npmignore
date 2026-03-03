@@ -1,0 +1,26 @@
+# Source code — only dist/ is published
+src/
+__tests__/
+test/
+
+# Service schema and deployment — never published to npm
+service/
+deploy/
+
+# Dev tooling
+.github/
+.vscode/
+.eslintrc*
+.prettierrc*
+vitest.config.*
+tsup.config.*
+tsconfig.json
+
+# Build artifacts
+*.tsbuildinfo
+coverage/
+.turbo/
+
+# Git
+.git/
+.gitignore

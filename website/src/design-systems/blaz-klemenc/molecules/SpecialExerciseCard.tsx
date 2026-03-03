@@ -68,14 +68,12 @@ export interface SpecialExerciseData {
 }
 
 export interface SpecialExerciseCardProps {
-  /** Exercise data */
-  data: SpecialExerciseData;
+  /** Exercise entity */
+  entity: SpecialExerciseData;
   /** Show action buttons */
   showActions?: boolean;
   /** Compact display mode */
   compact?: boolean;
-  /** Entity context for events */
-  entity?: string;
   /** Additional CSS classes */
   className?: string;
 }
@@ -110,45 +108,44 @@ const formatDate = (date: string | Date): string => {
 };
 
 export const SpecialExerciseCard: React.FC<SpecialExerciseCardProps> = ({
-  data,
+  entity,
   showActions = true,
   compact = false,
-  entity = "ProgressEntry",
   className,
 }) => {
   const eventBus = useEventBus();
-  const status = statusConfig[data.status];
+  const status = statusConfig[entity.status];
   const StatusIcon = status.icon;
 
   // Emit VIEW event (matches ProgressManagement trait)
   const handleView = useCallback(() => {
-    eventBus.emit("UI:VIEW", { row: data, entity });
-  }, [eventBus, data, entity]);
+    eventBus.emit("UI:VIEW", { row: entity, entity: "ProgressEntry" });
+  }, [eventBus, entity]);
 
   // Emit EDIT event (matches ProgressManagement trait)
   const handleEdit = useCallback(() => {
-    eventBus.emit("UI:EDIT", { row: data, entity });
-  }, [eventBus, data, entity]);
+    eventBus.emit("UI:EDIT", { row: entity, entity: "ProgressEntry" });
+  }, [eventBus, entity]);
 
   // Emit DELETE event (matches ProgressManagement trait)
   const handleDelete = useCallback(() => {
-    eventBus.emit("UI:DELETE", { row: data, entity });
-  }, [eventBus, data, entity]);
+    eventBus.emit("UI:DELETE", { row: entity, entity: "ProgressEntry" });
+  }, [eventBus, entity]);
 
   // Emit status update
   const handleMarkComplete = useCallback(() => {
     eventBus.emit("UI:SAVE", {
-      row: { ...data, status: "completed" },
-      entity,
+      row: { ...entity, status: "completed" },
+      entity: "ProgressEntry",
     });
-  }, [eventBus, data, entity]);
+  }, [eventBus, entity]);
 
   const handleStartExercise = useCallback(() => {
     eventBus.emit("UI:SAVE", {
-      row: { ...data, status: "in_progress" },
-      entity,
+      row: { ...entity, status: "in_progress" },
+      entity: "ProgressEntry",
     });
-  }, [eventBus, data, entity]);
+  }, [eventBus, entity]);
 
   if (compact) {
     return (
@@ -167,9 +164,9 @@ export const SpecialExerciseCard: React.FC<SpecialExerciseCardProps> = ({
               <Dumbbell className="h-4 w-4 text-purple-600" />
             </Box>
             <VStack gap="none">
-              <Typography variant="label">{data.title}</Typography>
+              <Typography variant="label">{entity.title}</Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                {formatDate(data.date)}
+                {formatDate(entity.date)}
               </Typography>
             </VStack>
           </HStack>
@@ -197,11 +194,11 @@ export const SpecialExerciseCard: React.FC<SpecialExerciseCardProps> = ({
               <Dumbbell className="h-5 w-5 text-purple-600" />
             </Box>
             <VStack gap="none">
-              <Typography variant="h4">{data.title}</Typography>
+              <Typography variant="h4">{entity.title}</Typography>
               <HStack gap="sm" align="center">
                 <Calendar className="h-3 w-3 text-[var(--color-muted-foreground)]" />
                 <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                  {formatDate(data.date)}
+                  {formatDate(entity.date)}
                 </Typography>
               </HStack>
             </VStack>
@@ -213,43 +210,43 @@ export const SpecialExerciseCard: React.FC<SpecialExerciseCardProps> = ({
         </HStack>
 
         {/* Description */}
-        {data.description && (
+        {entity.description && (
           <Typography variant="body" className="text-[var(--color-foreground)]">
-            {data.description}
+            {entity.description}
           </Typography>
         )}
 
         {/* Sets/Reps info */}
-        {(data.sets || data.reps) && (
+        {(entity.sets || entity.reps) && (
           <HStack gap="md">
-            {data.sets && (
+            {entity.sets && (
               <VStack gap="none" align="center">
                 <Typography variant="small" className="text-[var(--color-muted-foreground)]">
                   Sets
                 </Typography>
-                <Typography variant="h4">{data.sets}</Typography>
+                <Typography variant="h4">{entity.sets}</Typography>
               </VStack>
             )}
-            {data.reps && (
+            {entity.reps && (
               <VStack gap="none" align="center">
                 <Typography variant="small" className="text-[var(--color-muted-foreground)]">
                   Reps
                 </Typography>
-                <Typography variant="h4">{data.reps}</Typography>
+                <Typography variant="h4">{entity.reps}</Typography>
               </VStack>
             )}
           </HStack>
         )}
 
         {/* Instructions */}
-        {data.instructions && (
+        {entity.instructions && (
           <Box padding="sm" rounded="lg" className="bg-[var(--color-muted)]">
             <VStack gap="xs">
               <Typography variant="small" className="font-medium text-[var(--color-foreground)]">
                 Trainer Instructions
               </Typography>
               <Typography variant="body" className="text-[var(--color-foreground)]">
-                {data.instructions}
+                {entity.instructions}
               </Typography>
             </VStack>
           </Box>
@@ -266,13 +263,13 @@ export const SpecialExerciseCard: React.FC<SpecialExerciseCardProps> = ({
               <Edit2 className="h-4 w-4 mr-1" />
               Edit
             </Button>
-            {data.status === "planned" && (
+            {entity.status === "planned" && (
               <Button variant="primary" size="sm" onClick={handleStartExercise}>
                 <PlayCircle className="h-4 w-4 mr-1" />
                 Start
               </Button>
             )}
-            {data.status === "in_progress" && (
+            {entity.status === "in_progress" && (
               <Button variant="primary" size="sm" onClick={handleMarkComplete}>
                 <CheckCircle2 className="h-4 w-4 mr-1" />
                 Complete

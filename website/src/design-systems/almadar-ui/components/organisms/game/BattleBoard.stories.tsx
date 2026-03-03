@@ -1,8 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { BattleBoard } from './BattleBoard';
-import type { BattleEntity, BattleUnit, BattleTile, BattleSlotContext } from './BattleBoard';
-import type { IsometricTile, IsometricUnit, IsometricFeature } from './types/isometric';
+import { UncontrolledBattleBoard } from './UncontrolledBattleBoard';
+import type { UncontrolledBattleBoardProps } from './UncontrolledBattleBoard';
+import type { BattleEntity, BattleUnit, BattleSlotContext } from './BattleBoard';
+import type { IsometricTile } from './types/isometric';
 import { Box } from '../../atoms/Box';
 import { VStack, HStack } from '../../atoms/Stack';
 import { Typography } from '../../atoms/Typography';
@@ -125,9 +127,24 @@ const MOCK_UNITS: BattleUnit[] = [
     },
 ];
 
-const MOCK_ENTITY: BattleEntity = {
+/** Mock entity for uncontrolled stories (uses initialUnits). */
+const MOCK_UNCONTROLLED_ENTITY: UncontrolledBattleBoardProps['entity'] = {
     id: 'battle-001',
     initialUnits: MOCK_UNITS,
+    tiles: generateBattleTiles(8, 8, 'grass'),
+    features: [],
+    boardWidth: 8,
+    boardHeight: 8,
+};
+
+/** Mock entity for controlled stories (uses required game-state fields). */
+const MOCK_CONTROLLED_ENTITY: BattleEntity = {
+    id: 'battle-001',
+    units: MOCK_UNITS,
+    phase: 'observation',
+    turn: 1,
+    gameResult: null,
+    selectedUnitId: null,
     tiles: generateBattleTiles(8, 8, 'grass'),
     features: [],
     boardWidth: 8,
@@ -138,9 +155,9 @@ const MOCK_ENTITY: BattleEntity = {
 // Meta
 // =============================================================================
 
-const meta: Meta<typeof BattleBoard> = {
+const meta: Meta<typeof UncontrolledBattleBoard> = {
     title: 'Game/BattleBoard',
-    component: BattleBoard,
+    component: UncontrolledBattleBoard,
     parameters: {
         layout: 'fullscreen',
         backgrounds: { default: 'dark' },
@@ -159,13 +176,13 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // =============================================================================
-// 1. Default
+// 1. Default (Uncontrolled — self-managing state via useBattleState hook)
 // =============================================================================
 
-/** Simple render of BattleBoard with mock entity and default scale. */
+/** Interactive BattleBoard with self-managed game state. */
 export const Default: Story = {
     args: {
-        entity: MOCK_ENTITY,
+        entity: MOCK_UNCONTROLLED_ENTITY,
     },
 };
 
@@ -304,10 +321,10 @@ function ActionsSlot(ctx: BattleSlotContext) {
     );
 }
 
-/** BattleBoard with render-prop slots: header, sidebar, overlay, and actions. */
+/** UncontrolledBattleBoard with render-prop slots: header, sidebar, overlay, and actions. */
 export const WithSlots: Story = {
     args: {
-        entity: MOCK_ENTITY,
+        entity: MOCK_UNCONTROLLED_ENTITY,
         header: HeaderSlot,
         sidebar: SidebarSlot,
         overlay: OverlaySlot,
@@ -365,8 +382,8 @@ function EditorStory() {
     // Hovered tile for status bar
     const [hoveredTile, setHoveredTile] = useState<{ x: number; y: number } | null>(null);
 
-    // Build BattleEntity from editor state
-    const entity: BattleEntity = {
+    // Build entity from editor state (uncontrolled — uses initialUnits)
+    const entity: UncontrolledBattleBoardProps['entity'] = {
         id: 'editor-battle',
         initialUnits: placedUnits,
         tiles,
@@ -657,7 +674,7 @@ function EditorStory() {
 
             {/* Board */}
             <Box className="flex-1 h-full overflow-hidden">
-                <BattleBoard
+                <UncontrolledBattleBoard
                     entity={entity}
                     scale={scale}
                     tileClickEvent={undefined}
@@ -699,5 +716,21 @@ export const Editor: Story = {
     parameters: {
         layout: 'fullscreen',
         backgrounds: { default: 'dark' },
+    },
+};
+
+// =============================================================================
+// 4. Controlled (state passed directly to BattleBoard)
+// =============================================================================
+
+/**
+ * Controlled BattleBoard — all game state is passed via entity props.
+ * No internal state management; parent is responsible for state transitions.
+ * This story renders a static snapshot (no interactions mutate state).
+ */
+export const Controlled: StoryObj<typeof BattleBoard> = {
+    render: (args) => <BattleBoard {...args} />,
+    args: {
+        entity: MOCK_CONTROLLED_ENTITY,
     },
 };

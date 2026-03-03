@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * MealPlanDetailTemplate - Thin wrapper template for MealPlanDetailBoard
  *

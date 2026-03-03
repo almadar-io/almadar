@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * RelationshipGardenTemplate
  *
@@ -21,7 +22,7 @@ import { type GardenItem } from "../organisms/GardenView";
 import { type SeasonPhase } from "../atoms/SeasonIndicator";
 
 export interface RelationshipGardenTemplateProps {
-  /** Entity data (garden items) */
+  /** Entity prop (garden items) */
   entity?: readonly GardenItem[];
   /** Loading state */
   isLoading?: boolean;

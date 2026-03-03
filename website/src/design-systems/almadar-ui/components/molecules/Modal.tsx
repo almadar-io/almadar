@@ -1,3 +1,4 @@
+'use client';
 /**
  * Modal Molecule Component
  *

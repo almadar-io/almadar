@@ -66,7 +66,7 @@ function CounterMinimal({
   onDecrement,
   onIncrement,
   className,
-}: CounterTemplateProps): JSX.Element {
+}: CounterTemplateProps): React.JSX.Element {
   return (
     <HStack gap="lg" align="center" justify="center" className={className}>
       <Button
@@ -110,7 +110,7 @@ function CounterStandard({
   onIncrement,
   onReset,
   className,
-}: CounterTemplateProps): JSX.Element {
+}: CounterTemplateProps): React.JSX.Element {
   return (
     <Container size="sm" padding="lg" className={className}>
       <VStack gap="lg" align="center">
@@ -170,7 +170,7 @@ function CounterFull({
   onIncrement,
   onReset,
   className,
-}: CounterTemplateProps): JSX.Element {
+}: CounterTemplateProps): React.JSX.Element {
   return (
     <Container size="sm" padding="lg" className={className}>
       <VStack gap="xl" align="center">

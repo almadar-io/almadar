@@ -1,3 +1,14 @@
+// Shared organism types — base props contract for all entity-display organisms
+export {
+  type EntityDisplayProps,
+  EntityDisplayEvents,
+  type SortPayload,
+  type PaginatePayload,
+  type SearchPayload,
+  type FilterPayload,
+  type SelectPayload,
+} from "./types";
+
 // Shell organisms - common UI patterns
 export {
   DataTable,
@@ -64,6 +75,30 @@ export {
   OrbitalVisualization,
   type OrbitalVisualizationProps,
 } from "./OrbitalVisualization";
+
+// State machine visualization
+export {
+  StateMachineView,
+  DomStateMachineVisualizer,
+  OrbitalStateMachineView,
+  type StateMachineViewProps,
+  type TransitionBundle,
+} from "./StateMachineView";
+
+// Jazari state machine visualization
+export {
+  JazariStateMachine,
+  type JazariStateMachineProps,
+} from "./JazariStateMachine";
+
+// Content rendering
+export {
+  ContentRenderer,
+  type ContentRendererProps,
+} from "./ContentRenderer";
+
+// Book viewer
+export * from "./book";
 
 // Layout organisms
 export * from "./layout";

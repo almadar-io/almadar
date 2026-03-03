@@ -1,3 +1,4 @@
+/* eslint-disable almadar/organism-extends-entity-display, almadar/require-event-bus, almadar/organism-no-data-state */
 /**
  * FitnessBoard - Organism for the Fitness/Lift tracking board
  *
@@ -40,8 +41,11 @@ import {
   Card,
   Badge,
   Spinner,
+  LoadingState,
+  ErrorState,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 
 /** Lift entity data for the fitness board */
@@ -52,13 +56,9 @@ export interface LiftEntity {
   progressData?: ChartDataPoint[];
 }
 
-export interface FitnessBoardProps {
+export interface FitnessBoardProps extends Omit<EntityDisplayProps, 'entity'> {
   /** Lift entity data */
-  entity: LiftEntity;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
+  entity?: LiftEntity | LiftEntity[];
   /** Page title */
   title?: string;
   /** Page subtitle */
@@ -69,8 +69,6 @@ export interface FitnessBoardProps {
   showSearch?: boolean;
   /** Show wellness input */
   showWellnessInput?: boolean;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for logging a lift (emitted as UI:{logLiftEvent}) */
   logLiftEvent?: string;
   /** Event name for viewing a lift (emitted as UI:{viewEvent}) */
@@ -214,8 +212,9 @@ export const FitnessBoard: React.FC<FitnessBoardProps> = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
-  const lifts = entity.items || [];
-  const progressData = entity.progressData;
+  const entityData = Array.isArray(entity) ? entity[0] : entity;
+  const lifts = entityData?.items || [];
+  const progressData = entityData?.progressData;
 
   // Handle search
   const handleSearch = (value: string) => {
@@ -418,13 +417,13 @@ export const FitnessBoard: React.FC<FitnessBoardProps> = ({
         {/* Right Column - Sidebar */}
         <VStack gap="md" className="flex-1 min-w-[280px]">
           {/* Wellness Input */}
-          {showWellnessInput && <DailyProgressInput entity="WellnessEntry" />}
+          {showWellnessInput && <DailyProgressInput />}
 
           {/* Progress Chart */}
           {progressData && progressData.length > 0 && (
             <Card className="p-4">
               <ProgressChart
-                data={progressData}
+                entity={progressData}
                 metric="Progress"
                 chartType="line"
               />

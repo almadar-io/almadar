@@ -1,9 +1,10 @@
+'use client';
 /**
  * RuntimeDebugger - Main debug panel for KFlow applications
- * 
- * Press backtick (`) to toggle. Displays traits, ticks, entities, events, and guards.
- * Uses existing component library atoms/molecules.
- * 
+ *
+ * Press backtick (`) to toggle. Displays traits, ticks, entities, events,
+ * guards, verification checks, transition timeline, and server bridge health.
+ *
  * @packageDocumentation
  */
 
@@ -21,6 +22,9 @@ import { TicksTab } from './tabs/TicksTab';
 import { EntitiesTab } from './tabs/EntitiesTab';
 import { EventFlowTab } from './tabs/EventFlowTab';
 import { GuardsPanel } from './tabs/GuardsPanel';
+import { VerificationTab } from './tabs/VerificationTab';
+import { TransitionTimeline } from './tabs/TransitionTimeline';
+import { ServerBridgeTab } from './tabs/ServerBridgeTab';
 import './RuntimeDebugger.css';
 
 export interface RuntimeDebuggerProps {
@@ -78,8 +82,29 @@ export function RuntimeDebugger({
         'top-left': 'top-4 left-4',
     };
 
+    const { verification } = debugData;
+    const failedChecks = verification.summary.failed;
+
     // Build tab items using existing Tabs molecule
     const tabItems: TabItem[] = [
+        {
+            id: 'verify',
+            label: failedChecks > 0 ? 'Verify (!)' : 'Verify',
+            badge: verification.summary.totalChecks || undefined,
+            content: <VerificationTab checks={verification.checks} summary={verification.summary} />,
+        },
+        {
+            id: 'timeline',
+            label: 'Timeline',
+            badge: verification.transitions.length || undefined,
+            content: <TransitionTimeline transitions={verification.transitions} />,
+        },
+        {
+            id: 'bridge',
+            label: 'Bridge',
+            badge: verification.bridge?.connected ? undefined : 1,
+            content: <ServerBridgeTab bridge={verification.bridge} />,
+        },
         {
             id: 'traits',
             label: 'Traits',
@@ -131,16 +156,29 @@ export function RuntimeDebugger({
                     className="runtime-debugger__toggle"
                     title="Open Debugger (`)"
                 >
-                    🔍
+                    {failedChecks > 0 ? (
+                        <span className="relative">
+                            <span>V</span>
+                            <span className="absolute -top-1 -right-2 w-2 h-2 bg-red-500 rounded-full" />
+                        </span>
+                    ) : (
+                        <span>V</span>
+                    )}
                 </Button>
             ) : (
                 <Card className="runtime-debugger__panel">
                     {/* Header */}
                     <div className="runtime-debugger__header">
                         <div className="flex items-center gap-2">
-                            <span className="text-lg">🔍</span>
-                            <Typography variant="h6">KFlow Debugger</Typography>
-                            <Badge variant="info" size="sm">Runtime</Badge>
+                            <span className="text-lg">V</span>
+                            <Typography variant="h6">KFlow Verifier</Typography>
+                            {failedChecks > 0 ? (
+                                <Badge variant="danger" size="sm">{failedChecks} failed</Badge>
+                            ) : verification.summary.totalChecks > 0 ? (
+                                <Badge variant="success" size="sm">All passing</Badge>
+                            ) : (
+                                <Badge variant="info" size="sm">Runtime</Badge>
+                            )}
                         </div>
                         <Button
                             onClick={() => setIsCollapsed(true)}
@@ -148,7 +186,7 @@ export function RuntimeDebugger({
                             size="sm"
                             title="Close (`)"
                         >
-                            ✕
+                            x
                         </Button>
                     </div>
 
@@ -164,7 +202,7 @@ export function RuntimeDebugger({
                     {/* Footer */}
                     <div className="runtime-debugger__footer">
                         <Typography variant="small" className="text-gray-500">
-                            Press ` to toggle
+                            Press ` to toggle | window.__orbitalVerification for automation
                         </Typography>
                     </div>
                 </Card>

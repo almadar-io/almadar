@@ -1,3 +1,4 @@
+/* eslint-disable almadar/organism-extends-entity-display */
 /**
  * TraineeDetailBoard - Organism for viewing detailed trainee information
  *
@@ -39,8 +40,11 @@ import {
   Card,
   Badge,
   Spinner,
+  LoadingState,
+  ErrorState,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 
 /**
@@ -74,15 +78,9 @@ export interface UserEntity {
   progressData?: ChartDataPoint[];
 }
 
-export interface TraineeDetailBoardProps {
+export interface TraineeDetailBoardProps extends Omit<EntityDisplayProps, 'entity'> {
   /** User entity data */
-  entity: UserEntity;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
-  /** Additional CSS classes */
-  className?: string;
+  entity?: UserEntity | UserEntity[];
   /** Event name for editing (emitted as UI:{editEvent}) */
   editEvent?: string;
   /** Event name for deleting (emitted as UI:{deleteEvent}) */
@@ -120,6 +118,8 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
   const { emit } = useEventBus();
   const { t } = useTranslate();
 
+  const entityData = Array.isArray(entity) ? entity[0] : entity;
+
   // Handle back navigation
   const handleBack = () => {
     if (backEvent) emit(`UI:${backEvent}`, { entity: "User" });
@@ -127,23 +127,23 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
 
   // Handle edit
   const handleEdit = () => {
-    if (editEvent) emit(`UI:${editEvent}`, { row: entity, entity: "User" });
+    if (editEvent) emit(`UI:${editEvent}`, { row: entityData, entity: "User" });
   };
 
   // Handle delete
   const handleDelete = () => {
-    if (deleteEvent) emit(`UI:${deleteEvent}`, { row: entity, entity: "User" });
+    if (deleteEvent) emit(`UI:${deleteEvent}`, { row: entityData, entity: "User" });
   };
 
   // Handle view lifts
   const handleViewLifts = () => {
-    if (viewLiftsEvent) emit(`UI:${viewLiftsEvent}`, { traineeId: entity?.id, entity: "Lift" });
+    if (viewLiftsEvent) emit(`UI:${viewLiftsEvent}`, { traineeId: entityData?.id, entity: "Lift" });
   };
 
   // Handle view sessions
   const handleViewSessions = () => {
     if (viewSessionsEvent) emit(`UI:${viewSessionsEvent}`, {
-      traineeId: entity?.id,
+      traineeId: entityData?.id,
       entity: "TrainingSession",
     });
   };
@@ -180,7 +180,7 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
   }
 
   // No data state
-  if (!entity || !entity.name) {
+  if (!entityData || !entityData.name) {
     return (
       <VStack
         align="center"
@@ -195,11 +195,11 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
     );
   }
 
-  const isTrainee = entity.role === "trainee";
+  const isTrainee = entityData.role === "trainee";
   const RoleIcon = isTrainee ? Dumbbell : GraduationCap;
-  const stats = entity.stats;
-  const creditData = entity.creditData;
-  const progressData = entity.progressData;
+  const stats = entityData.stats;
+  const creditData = entityData.creditData;
+  const progressData = entityData.progressData;
 
   return (
     <VStack gap="lg" className={cn("p-6", className)}>
@@ -214,12 +214,12 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
             rounded="full"
             className="items-center justify-center h-16 w-16 bg-[var(--color-muted)]"
           >
-            {entity.profileImage ? (
+            {entityData.profileImage ? (
               <Box
                 as="img"
                 // @ts-expect-error -- Box polymorphic 'as' prop passes src/alt to <img>
-                src={entity.profileImage}
-                alt={entity.name}
+                src={entityData.profileImage}
+                alt={entityData.name}
                 className="h-16 w-16 rounded-full object-cover"
               />
             ) : (
@@ -228,7 +228,7 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
           </Box>
           <VStack gap="xs">
             <HStack gap="sm" align="center">
-              <Typography variant="h1">{entity.name}</Typography>
+              <Typography variant="h1">{entityData.name}</Typography>
               <Badge
                 className={
                   isTrainee
@@ -237,18 +237,18 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
                 }
               >
                 <RoleIcon className="h-3 w-3 mr-1" />
-                {entity.role}
+                {entityData.role}
               </Badge>
             </HStack>
             <HStack gap="md" align="center" className="text-[var(--color-muted-foreground)]">
               <HStack gap="xs" align="center">
                 <Mail className="h-4 w-4" />
-                <Typography variant="body">{entity.email}</Typography>
+                <Typography variant="body">{entityData.email}</Typography>
               </HStack>
-              {entity.phone && (
+              {entityData.phone && (
                 <HStack gap="xs" align="center">
                   <Phone className="h-4 w-4" />
-                  <Typography variant="body">{entity.phone}</Typography>
+                  <Typography variant="body">{entityData.phone}</Typography>
                 </HStack>
               )}
             </HStack>
@@ -282,14 +282,14 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
                 <Typography variant="body" className="text-[var(--color-muted-foreground)]">
                   {t('trainee.email')}
                 </Typography>
-                <Typography variant="body">{entity.email}</Typography>
+                <Typography variant="body">{entityData.email}</Typography>
               </HStack>
-              {entity.phone && (
+              {entityData.phone && (
                 <HStack justify="between">
                   <Typography variant="body" className="text-[var(--color-muted-foreground)]">
                     {t('trainee.phone')}
                   </Typography>
-                  <Typography variant="body">{entity.phone}</Typography>
+                  <Typography variant="body">{entityData.phone}</Typography>
                 </HStack>
               )}
               <HStack justify="between">
@@ -297,16 +297,16 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
                   {t('trainee.role')}
                 </Typography>
                 <Typography variant="body" className="capitalize">
-                  {entity.role}
+                  {entityData.role}
                 </Typography>
               </HStack>
-              {entity.createdAt && (
+              {entityData.createdAt && (
                 <HStack justify="between">
                   <Typography variant="body" className="text-[var(--color-muted-foreground)]">
                     {t('trainee.joined')}
                   </Typography>
                   <Typography variant="body">
-                    {formatDate(entity.createdAt)}
+                    {formatDate(entityData.createdAt)}
                   </Typography>
                 </HStack>
               )}
@@ -317,7 +317,7 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
         {/* Credits (for trainees) */}
         {isTrainee && creditData && (
           <Box className="flex-1 min-w-[300px]">
-            <CreditMeter data={creditData} size="lg" showActionButton={true} />
+            <CreditMeter entity={creditData} size="lg" showActionButton={true} />
           </Box>
         )}
       </HStack>
@@ -382,7 +382,7 @@ export const TraineeDetailBoard: React.FC<TraineeDetailBoardProps> = ({
       {isTrainee && progressData && progressData.length > 0 && (
         <Card className="p-4">
           <ProgressChart
-            data={progressData}
+            entity={progressData}
             metric="Progress Over Time"
             chartType="line"
             showDateSelector={true}

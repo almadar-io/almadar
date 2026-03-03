@@ -41,6 +41,28 @@ export type {
 } from './types/spriteAnimation';
 
 // ---------------------------------------------------------------------------
+// Audio System
+// ---------------------------------------------------------------------------
+export {
+    GameAudioProvider,
+    GameAudioContext,
+    useGameAudioContext,
+    type GameAudioProviderProps,
+    type GameAudioContextValue,
+} from './GameAudioProvider';
+export {
+    GameAudioToggle,
+    type GameAudioToggleProps,
+} from './GameAudioToggle';
+export {
+    useGameAudio,
+    type AudioManifest,
+    type SoundEntry,
+    type GameAudioControls,
+    type UseGameAudioOptions,
+} from './hooks/useGameAudio';
+
+// ---------------------------------------------------------------------------
 // Hooks
 // ---------------------------------------------------------------------------
 export { useImageCache } from './hooks/useImageCache';
@@ -113,6 +135,16 @@ export {
     type BattleSlotContext,
 } from './BattleBoard';
 export {
+    UncontrolledBattleBoard,
+    type UncontrolledBattleBoardProps,
+} from './UncontrolledBattleBoard';
+export {
+    useBattleState,
+    type BattleStateEventConfig,
+    type BattleStateCallbacks,
+    type BattleStateResult,
+} from './hooks/useBattleState';
+export {
     WorldMapBoard,
     type WorldMapBoardProps,
     type WorldMapEntity,
@@ -126,6 +158,21 @@ export {
     type CastleEntity,
     type CastleSlotContext,
 } from './CastleBoard';
+
+// ---------------------------------------------------------------------------
+// Trait / State Machine Visualization
+// ---------------------------------------------------------------------------
+export {
+    TraitStateViewer,
+    type TraitStateViewerProps,
+    type TraitStateMachineDefinition,
+    type TraitTransition,
+} from './TraitStateViewer';
+export {
+    TraitSlot,
+    type TraitSlotProps,
+    type SlotItemData,
+} from './TraitSlot';
 
 // ---------------------------------------------------------------------------
 // Editor Utilities (Storybook map editor components)
@@ -151,3 +198,78 @@ export {
     type TerrainPaletteProps,
     type EditorToolbarProps,
 } from './editor';
+
+// ---------------------------------------------------------------------------
+// Puzzle Board Organisms (educational game boards, merged from @almadar/game-engine)
+// ---------------------------------------------------------------------------
+
+// Sequencer (ages 5-8)
+export * from './puzzles/sequencer';
+
+// Event Handler (ages 9-12)
+export * from './puzzles/event-handler';
+
+// State Architect (ages 13+)
+export * from './puzzles/state-architect';
+
+// Simulator (parameter slider puzzles)
+export * from './puzzles/simulator';
+
+// Classifier (categorization puzzles)
+export * from './puzzles/classifier';
+
+// Builder (component assembly puzzles)
+export * from './puzzles/builder';
+
+// Debugger (code debugging puzzles)
+export * from './puzzles/debugger';
+
+// Negotiator (game theory / payoff puzzles)
+export * from './puzzles/negotiator';
+
+// ---------------------------------------------------------------------------
+// Physics Simulation (educational presets)
+// ---------------------------------------------------------------------------
+export * from './physics-sim';
+
+// ---------------------------------------------------------------------------
+// Combat Log
+// ---------------------------------------------------------------------------
+export { CombatLog } from './CombatLog';
+export type { CombatLogProps, CombatEvent, CombatLogEventType } from './CombatLog';
+
+// ---------------------------------------------------------------------------
+// Game Types (tactical game state)
+// ---------------------------------------------------------------------------
+export {
+    createInitialGameState,
+    calculateValidMoves,
+    calculateAttackTargets,
+} from './types/game';
+export type {
+    Position,
+    GameUnit,
+    UnitTrait,
+    BoardTile,
+    GamePhase,
+    GameState,
+    GameAction,
+} from './types/game';
+
+// ---------------------------------------------------------------------------
+// Combat Effects (CSS animations)
+// ---------------------------------------------------------------------------
+export {
+    combatAnimations,
+    combatClasses,
+    combatEffects,
+    applyTemporaryEffect,
+    calculateDamage,
+    generateCombatMessage,
+} from './utils/combatEffects';
+export type {
+    CombatEffect,
+    DamageResult,
+    CombatEventType,
+    CombatEventData,
+} from './utils/combatEffects';

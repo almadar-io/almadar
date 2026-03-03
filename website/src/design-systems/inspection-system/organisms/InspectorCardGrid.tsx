@@ -34,6 +34,7 @@ import {
   cn,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 
 export interface InspectorEntity {
@@ -52,17 +53,13 @@ export interface InspectorEntity {
   lastInspectionDate?: string;
 }
 
-export interface InspectorCardGridProps {
-  entity: readonly InspectorEntity[];
-  isLoading?: boolean;
-  error?: Error | null;
+export interface InspectorCardGridProps extends EntityDisplayProps<InspectorEntity> {
   title?: string;
   showHeader?: boolean;
   /** Declarative event for search */
   searchEvent?: string;
   /** Declarative event for create */
   createEvent?: string;
-  className?: string;
 }
 
 const InspectorCard: React.FC<{
@@ -172,15 +169,16 @@ export function InspectorCardGrid({
     if (createEvent) emit(`UI:${createEvent}`, { entity: "Inspector" });
   };
 
+  const inspectors = Array.isArray(entity) ? entity : entity && typeof entity !== 'string' ? [entity] : [];
   const filteredInspectors = searchTerm
-    ? entity.filter(
-      (i) =>
+    ? inspectors.filter(
+      (i: InspectorEntity) =>
         i.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         i.surname.toLowerCase().includes(searchTerm.toLowerCase()) ||
         i.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
         i.department.toLowerCase().includes(searchTerm.toLowerCase())
     )
-    : entity;
+    : inspectors;
 
   return (
     <VStack gap="lg" className={cn("p-6", className)}>
@@ -232,7 +230,7 @@ export function InspectorCardGrid({
             </VStack>
           ) : (
             <Box className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredInspectors.map((inspector) => (
+              {filteredInspectors.map((inspector: InspectorEntity) => (
                 <InspectorCard key={inspector.id} inspector={inspector} />
               ))}
             </Box>

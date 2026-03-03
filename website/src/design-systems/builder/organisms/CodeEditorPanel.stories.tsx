@@ -73,7 +73,7 @@ export const TaskList: React.FC<TaskListProps> = ({
   };
 
   if (isLoading) return <LoadingState message="Loading tasks..." />;
-  if (error) return <ErrorState error={error} />;
+  if (error) return <ErrorState message={error?.message} />;
 
   return (
     <div className={className}>

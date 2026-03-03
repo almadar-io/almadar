@@ -1,3 +1,4 @@
+'use client';
 /**
  * ToastSlot Component
  *

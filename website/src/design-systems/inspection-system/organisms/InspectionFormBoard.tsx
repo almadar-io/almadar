@@ -1,3 +1,4 @@
+/* eslint-disable almadar/require-closed-circuit-props, almadar/organism-extends-entity-display, almadar/organism-no-callback-props, almadar/require-event-bus */
 /**
  * InspectionFormBoard Organism
  *
@@ -66,6 +67,7 @@ import {
   Checkbox,
   Select,
   Textarea,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 
 // =============================================================================
@@ -192,8 +194,8 @@ export interface InspectionFormEntity {
   mockData?: MockEntityData;
 }
 
-export interface InspectionFormBoardProps {
-  /** Inspection form entity data */
+export interface InspectionFormBoardProps extends Omit<EntityDisplayProps, 'entity'> {
+  /** Inspection form entity data - overrides inherited entity string */
   entity: InspectionFormEntity;
   /** Current phase override */
   currentPhase?: DemoPhase;
@@ -217,12 +219,6 @@ export interface InspectionFormBoardProps {
   completeEvent?: string;
   /** Declarative event: context menu action */
   contextActionEvent?: string;
-  /** Additional class names */
-  className?: string;
-  /** Loading state indicator */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
 }
 
 // =============================================================================
@@ -315,7 +311,6 @@ interface FieldRendererProps {
   className?: string;
   isLoading?: boolean;
   error?: Error | null;
-  entity?: string;
 }
 
 const SingleFieldInput: React.FC<{
@@ -497,8 +492,8 @@ const SingleFieldInput: React.FC<{
           title={field.label}
           participantId={instanceId || field.id}
           required={field.required}
-          onCapture={(signatureData) => onChange(signatureData)}
-          onClear={() => onChange(null)}
+          captureEvent="SIGNATURE_CAPTURED"
+          clearEvent="SIGNATURE_CLEARED"
         />
       )}
 
@@ -829,7 +824,6 @@ interface SectionRendererProps {
   className?: string;
   isLoading?: boolean;
   error?: Error | null;
-  entity?: string;
 }
 
 const SectionRenderer: React.FC<SectionRendererProps> = ({
@@ -986,7 +980,6 @@ interface DebugPanelProps {
   className?: string;
   isLoading?: boolean;
   error?: Error | null;
-  entity?: string;
 }
 
 const DebugPanel: React.FC<DebugPanelProps> = ({

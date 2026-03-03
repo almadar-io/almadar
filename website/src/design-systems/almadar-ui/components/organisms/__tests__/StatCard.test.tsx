@@ -63,7 +63,7 @@ describe('StatCard', () => {
       renderWithProviders(
         <StatCard
           metrics={[{ field: 'count', label: 'Total' }]}
-          data={data}
+          entity={data}
         />
       );
 
@@ -81,7 +81,7 @@ describe('StatCard', () => {
       renderWithProviders(
         <StatCard
           metrics={[{ field: 'amount', label: 'Total Amount' }]}
-          data={data}
+          entity={data}
         />
       );
 
@@ -101,7 +101,7 @@ describe('StatCard', () => {
       renderWithProviders(
         <StatCard
           metrics={[{ field: 'status:active', label: 'Active' }]}
-          data={data}
+          entity={data}
         />
       );
 
@@ -122,7 +122,7 @@ describe('StatCard', () => {
       renderWithProviders(
         <StatCard
           metrics={[{ field: 'pending', label: 'Pending Orders' }]}
-          data={data}
+          entity={data}
         />
       );
 
@@ -140,7 +140,7 @@ describe('StatCard', () => {
       renderWithProviders(
         <StatCard
           metrics={[{ field: 'open', label: 'Open Items' }]}
-          data={data}
+          entity={data}
         />
       );
 
@@ -158,7 +158,7 @@ describe('StatCard', () => {
       renderWithProviders(
         <StatCard
           metrics={[{ field: 'planning', label: 'Planning Phase' }]}
-          data={data}
+          entity={data}
         />
       );
 
@@ -175,7 +175,7 @@ describe('StatCard', () => {
       renderWithProviders(
         <StatCard
           metrics={[{ field: 'shipped', label: 'Shipped' }]}
-          data={data}
+          entity={data}
         />
       );
 
@@ -200,7 +200,7 @@ describe('StatCard', () => {
             { field: 'processing', label: 'Processing' },
             { field: 'shipped', label: 'Shipped' },
           ]}
-          data={data}
+          entity={data}
         />
       );
 
@@ -228,7 +228,7 @@ describe('StatCard', () => {
             { field: 'active', label: 'Active' },
             { field: 'inactive', label: 'Inactive' },
           ]}
-          data={data}
+          entity={data}
         />
       );
 
@@ -246,7 +246,7 @@ describe('StatCard', () => {
             { field: 'pending', label: 'Pending' },
             { field: 'processing', label: 'Processing' },
           ]}
-          data={[]}
+          entity={[]}
         />
       );
 
@@ -277,7 +277,7 @@ describe('StatCard', () => {
             { field: 'pending', label: 'Pending' },
             { field: 'processing', label: 'Processing' },
           ]}
-          data={[]}
+          entity={[]}
           isLoading={true}
         />
       );
@@ -303,13 +303,12 @@ describe('StatCard', () => {
 
       renderWithProviders(
         <StatCard
-          entity="Order"
+          entity={orderData}
           metrics={[
             { field: 'pending', label: 'Pending', format: 'number' },
             { field: 'processing', label: 'Processing', format: 'number' },
             { field: 'shipped', label: 'Shipped', format: 'number' },
           ]}
-          data={orderData}
         />
       );
 

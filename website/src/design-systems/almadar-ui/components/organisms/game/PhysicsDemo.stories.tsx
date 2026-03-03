@@ -23,7 +23,7 @@ import type { IsometricTile, IsometricUnit, IsometricFeature } from './types/iso
  */
 function Physics2DDemo() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const animationRef = useRef<number>();
+    const animationRef = useRef<number | undefined>(undefined);
     
     // Store unit positions in refs to avoid re-renders
     const unitsRef = useRef<Array<{

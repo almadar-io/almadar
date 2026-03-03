@@ -38,13 +38,13 @@ export interface ActivationBlockProps {
   className?: string;
 }
 
-export const ActivationBlock: React.FC<ActivationBlockProps> = ({
+export const ActivationBlock = ({
   question,
   savedResponse,
   conceptId,
   onSave,
   className,
-}) => {
+}: ActivationBlockProps) => {
   const eventBus = useEventBus();
   const { t } = useTranslate();
   const [response, setResponse] = useState(savedResponse || "");

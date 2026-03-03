@@ -31,14 +31,14 @@ export interface MindMapConnectionsProps {
   className?: string;
 }
 
-export const MindMapConnections: React.FC<MindMapConnectionsProps> = ({
+export const MindMapConnections = ({
   connections,
   zoom = 1,
   pan = { x: 0, y: 0 },
   strokeColor = "#94a3b8",
   strokeWidth = 2,
   className,
-}) => {
+}: MindMapConnectionsProps) => {
   return (
     <g className={className}>
       {connections.map((conn, index) => {

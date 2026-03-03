@@ -1,3 +1,4 @@
+'use client';
 /**
  * OrbitalProvider
  *
@@ -19,6 +20,8 @@ import { EventBusProvider } from './EventBusProvider';
 import { SelectionProvider } from './SelectionProvider';
 import { FetchedDataProvider, useFetchedData } from './FetchedDataProvider';
 import { EntityDataProvider, type EntityDataAdapter } from '../hooks/useEntityData';
+import { SuspenseConfigProvider, type SuspenseConfig } from '../components/organisms/UISlotRenderer';
+import { VerificationProvider } from './VerificationProvider';
 
 // ============================================================================
 // Types
@@ -46,6 +49,23 @@ export interface OrbitalProviderProps {
   // Data options
   /** Initial fetched data */
   initialData?: Record<string, unknown[]>;
+
+  // Suspense options
+  /**
+   * Enable Suspense mode. When true, UISlotRenderer wraps each slot in
+   * `<ErrorBoundary><Suspense>` with Skeleton fallbacks.
+   * Opt-in — existing isLoading prop pattern still works when false/absent.
+   */
+  suspense?: boolean;
+
+  // Verification options
+  /**
+   * Enable verification wiring for visual testing.
+   * When true, lifecycle events are recorded and exposed via
+   * `window.__orbitalVerification` for Playwright/automation.
+   * Default: true in development, false in production.
+   */
+  verification?: boolean;
 }
 
 // ============================================================================
@@ -133,14 +153,25 @@ export function OrbitalProvider({
   skipTheme = false,
   debug = false,
   initialData,
+  suspense = false,
+  verification,
 }: OrbitalProviderProps): React.ReactElement {
+  const suspenseConfig: SuspenseConfig = useMemo(
+    () => ({ enabled: suspense }),
+    [suspense],
+  );
+
   const inner = (
     <FetchedDataProvider initialData={initialData}>
       <FetchedDataBridge>
         <EventBusProvider debug={debug}>
-          <SelectionProvider debug={debug}>
-            {children}
-          </SelectionProvider>
+          <VerificationProvider enabled={verification}>
+            <SelectionProvider debug={debug}>
+              <SuspenseConfigProvider config={suspenseConfig}>
+                {children}
+              </SuspenseConfigProvider>
+            </SelectionProvider>
+          </VerificationProvider>
         </EventBusProvider>
       </FetchedDataBridge>
     </FetchedDataProvider>

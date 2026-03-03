@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * ScheduleTemplate - Thin wrapper over ScheduleBoard organism
  *

@@ -37,10 +37,8 @@ export interface ChecklistRule {
 export interface InspectionChecklistProps {
   /** Checklist items */
   items?: ChecklistRule[];
-  /** Data alias */
-  data?: ChecklistRule[];
-  /** Entity name */
-  entity?: string;
+  /** Entity alias */
+  entity?: ChecklistRule[];
   /** Display fields */
   displayFields?: string[];
   /** Show rule count */
@@ -61,7 +59,7 @@ export interface InspectionChecklistProps {
 
 export const InspectionChecklist: React.FC<InspectionChecklistProps> = ({
   items,
-  data,
+  entity,
   showRuleCount = true,
   showSeverityBadge = true,
   emptyTitle,
@@ -71,7 +69,7 @@ export const InspectionChecklist: React.FC<InspectionChecklistProps> = ({
   const eventBus = useEventBus();
   const { t } = useTranslate();
   const resolvedEmptyTitle = emptyTitle ?? t('empty.noItems');
-  const rules = items || data || [];
+  const rules = items || entity || [];
 
   const handleRuleChange = (ruleId: string, data: { isCompliant: boolean | null; notes: string }) => {
     eventBus.emit("UI:RULE_CHECKED", { ruleId, ...data });

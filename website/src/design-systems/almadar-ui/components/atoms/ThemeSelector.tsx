@@ -1,3 +1,4 @@
+'use client';
 /**
  * ThemeSelector - Design theme selector component
  *

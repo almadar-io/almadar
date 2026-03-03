@@ -1,3 +1,4 @@
+'use client';
 /**
  * Timeline Organism Component
  *
@@ -11,14 +12,15 @@
  * - className for external styling
  */
 
-import React, { useCallback } from "react";
+import React from "react";
 import { cn } from "../../lib/cn";
 import { Card, Typography, Badge, Icon, Box } from "../atoms";
 import { VStack, HStack } from "../atoms/Stack";
 import { LoadingState } from "../molecules/LoadingState";
 import { ErrorState } from "../molecules/ErrorState";
 import { EmptyState } from "../molecules/EmptyState";
-import { useEventBus } from "../../hooks/useEventBus";
+import { useTranslate } from "../../hooks/useTranslate";
+import type { EntityDisplayProps } from "./types";
 import type { LucideIcon } from "lucide-react";
 import { Circle, CheckCircle2, Clock, AlertCircle } from "lucide-react";
 
@@ -48,25 +50,15 @@ export interface TimelineAction {
     variant?: "primary" | "secondary" | "ghost";
 }
 
-export interface TimelineProps {
+export interface TimelineProps extends EntityDisplayProps<TimelineItem> {
     /** Timeline title */
     title?: string;
     /** Timeline items */
     items?: readonly TimelineItem[];
-    /** Schema-driven data */
-    data?: readonly Record<string, unknown>[];
     /** Fields to display */
     fields?: readonly string[];
     /** Actions per item */
     itemActions?: readonly TimelineAction[];
-    /** Entity name for schema-driven auto-fetch */
-    entity?: string;
-    /** Loading state */
-    isLoading?: boolean;
-    /** Error state */
-    error?: Error | null;
-    /** Additional CSS classes */
-    className?: string;
 }
 
 const STATUS_STYLES: Record<
@@ -98,7 +90,6 @@ const STATUS_STYLES: Record<
 export const Timeline: React.FC<TimelineProps> = ({
     title,
     items: propItems,
-    data,
     fields,
     itemActions,
     entity,
@@ -106,23 +97,16 @@ export const Timeline: React.FC<TimelineProps> = ({
     error,
     className,
 }) => {
-    const eventBus = useEventBus();
+    const { t } = useTranslate();
+    void t;
 
-    const handleAction = useCallback(
-        (action: TimelineAction, item: TimelineItem) => {
-            if (action.event) {
-                eventBus.emit(`UI:${action.event}`, { entity, row: item });
-            }
-        },
-        [eventBus, entity],
-    );
-
-    // Normalize data to TimelineItem[] if schema data is provided
+    // Normalize entity data to TimelineItem[] if schema data is provided
+    const entityData = Array.isArray(entity) ? entity as readonly Record<string, unknown>[] : [];
     const items: readonly TimelineItem[] = React.useMemo(() => {
         if (propItems) return propItems;
-        if (!data) return [];
+        if (entityData.length === 0) return [];
 
-        return data.map((record, idx) => {
+        return entityData.map((record, idx) => {
             const titleField = fields?.[0] || "title";
             const descField = fields?.[1] || "description";
             const dateField = fields?.find((f) =>
@@ -140,7 +124,7 @@ export const Timeline: React.FC<TimelineProps> = ({
                 status: (record[statusField] as TimelineItemStatus) || "pending",
             };
         });
-    }, [propItems, data, fields]);
+    }, [propItems, entityData, fields]);
 
     if (isLoading) {
         return <LoadingState message="Loading timeline..." className={className} />;
@@ -234,14 +218,16 @@ export const Timeline: React.FC<TimelineProps> = ({
                                     {itemActions && itemActions.length > 0 && (
                                         <HStack gap="xs" className="mt-1">
                                             {itemActions.map((action, actionIdx) => (
-                                                <Badge
+                                                <Box
                                                     key={actionIdx}
-                                                    variant="default"
+                                                    action={action.event}
+                                                    actionPayload={{ row: item }}
                                                     className="cursor-pointer hover:opacity-80 transition-opacity"
-                                                    onClick={() => handleAction(action, item)}
                                                 >
-                                                    {action.label}
-                                                </Badge>
+                                                    <Badge variant="default">
+                                                        {action.label}
+                                                    </Badge>
+                                                </Box>
                                             ))}
                                         </HStack>
                                     )}

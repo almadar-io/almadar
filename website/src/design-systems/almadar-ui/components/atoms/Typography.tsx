@@ -50,7 +50,7 @@ export interface TypographyProps {
   /** Overflow handling mode */
   overflow?: "visible" | "hidden" | "wrap" | "clamp-2" | "clamp-3";
   /** Custom HTML element */
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof React.JSX.IntrinsicElements;
   /** HTML id attribute */
   id?: string;
   /** Additional class names */
@@ -100,7 +100,7 @@ const weightStyles = {
   bold: "font-bold",
 };
 
-const defaultElements: Record<TypographyVariant, keyof JSX.IntrinsicElements> =
+const defaultElements: Record<TypographyVariant, keyof React.JSX.IntrinsicElements> =
 {
   h1: "h1",
   h2: "h2",

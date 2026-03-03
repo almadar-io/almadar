@@ -7,10 +7,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { CounterTemplate } from '../CounterTemplate';
 import type { CounterEntity } from '../CounterTemplate';
 
-// Mock react-router-dom for PageHeader
-vi.mock('react-router-dom', () => ({
-  useNavigate: () => vi.fn(),
-}));
 
 function makeEntity(overrides: Partial<CounterEntity> = {}): CounterEntity {
   return {

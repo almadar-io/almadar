@@ -1,3 +1,4 @@
+'use client';
 /**
  * ModelLoader Component
  *
@@ -135,7 +136,7 @@ export function ModelLoader({
     castShadow = true,
     receiveShadow = true,
     resourceBasePath,
-}: ModelLoaderProps): JSX.Element {
+}: ModelLoaderProps): React.JSX.Element {
     const { model: loadedModel, isLoading, error } = useGLTFModel(url, resourceBasePath);
 
     // Clone and prepare the model

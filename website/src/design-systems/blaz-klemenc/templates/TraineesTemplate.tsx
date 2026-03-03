@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * TraineesTemplate - Thin wrapper template for the Trainees/Users list page
  *

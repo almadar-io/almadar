@@ -29,6 +29,7 @@ import {
   Spinner,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -49,17 +50,11 @@ export interface UserProfileData {
   trustScoreId?: string;
 }
 
-export interface UserProfileBoardProps {
-  /** Entity data (user profile) */
+export interface UserProfileBoardProps extends Omit<EntityDisplayProps, 'entity'> {
+  /** Entity (single object) */
   entity?: UserProfileData;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
   /** Show back button */
   showBack?: boolean;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for edit action */
   editEvent: string;
   /** Event name for back navigation */

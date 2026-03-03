@@ -1,3 +1,4 @@
+'use client';
 /**
  * DocumentViewer Organism Component
  *
@@ -101,39 +102,39 @@ export const DocumentViewer: React.FC<DocumentViewerProps> = ({
     const handleAction = useCallback(
         (action: DocumentAction) => {
             if (action.event) {
-                eventBus.emit(`UI:${action.event}`, { entity, page: currentPage });
+                eventBus.emit(`UI:${action.event}`, { page: currentPage });
             }
         },
-        [eventBus, entity, currentPage],
+        [eventBus, currentPage],
     );
 
     const handleDownload = useCallback(() => {
         const downloadSrc = documents?.[activeDocIndex]?.src ?? src;
         if (downloadSrc) {
-            eventBus.emit("UI:DOCUMENT_DOWNLOAD", { entity, src: downloadSrc });
+            eventBus.emit("UI:DOCUMENT_DOWNLOAD", { src: downloadSrc });
             window.open(downloadSrc, "_blank");
         }
-    }, [documents, activeDocIndex, src, eventBus, entity]);
+    }, [documents, activeDocIndex, src, eventBus]);
 
     const handlePrint = useCallback(() => {
-        eventBus.emit("UI:DOCUMENT_PRINT", { entity });
+        eventBus.emit("UI:DOCUMENT_PRINT", {});
         window.print();
-    }, [eventBus, entity]);
+    }, [eventBus]);
 
     const handleZoomIn = useCallback(() => setZoom((z) => Math.min(z + 25, 200)), []);
     const handleZoomOut = useCallback(() => setZoom((z) => Math.max(z - 25, 50)), []);
 
     const handlePagePrev = useCallback(() => {
         setCurrentPage((p) => Math.max(p - 1, 1));
-        eventBus.emit("UI:DOCUMENT_PAGE_CHANGE", { entity, page: currentPage - 1 });
-    }, [eventBus, entity, currentPage]);
+        eventBus.emit("UI:DOCUMENT_PAGE_CHANGE", { page: currentPage - 1 });
+    }, [eventBus, currentPage]);
 
     const handlePageNext = useCallback(() => {
         if (totalPages) {
             setCurrentPage((p) => Math.min(p + 1, totalPages));
-            eventBus.emit("UI:DOCUMENT_PAGE_CHANGE", { entity, page: currentPage + 1 });
+            eventBus.emit("UI:DOCUMENT_PAGE_CHANGE", { page: currentPage + 1 });
         }
-    }, [totalPages, eventBus, entity, currentPage]);
+    }, [totalPages, eventBus, currentPage]);
 
     if (isLoading) {
         return <LoadingState message="Loading document..." className={className} />;

@@ -1169,7 +1169,7 @@ export function renderStateMachineToDomData(
 
         domOutputs = {
             outputs,
-            x: maxX + config.nodeRadius + 300, // Increased further to avoid overlap with curved transitions
+            x: maxX + config.nodeRadius + 300,
             y: height / 2 - boxHeight / 2,
             width: boxWidth,
             height: boxHeight,

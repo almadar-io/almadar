@@ -1,3 +1,4 @@
+'use client';
 /**
  * CastleBoard
  *
@@ -114,7 +115,7 @@ export function CastleBoard({
     unitClickEvent,
     tileClickEvent,
     className,
-}: CastleBoardProps): JSX.Element {
+}: CastleBoardProps): React.JSX.Element {
     const eventBus = useEventBus();
 
     // Destructure entity with defaults

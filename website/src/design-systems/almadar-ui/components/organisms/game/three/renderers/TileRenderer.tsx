@@ -1,3 +1,4 @@
+'use client';
 /**
  * TileRenderer
  *
@@ -77,7 +78,7 @@ export function TileRenderer({
     selectedTileIds = [],
     validMoves = [],
     attackTargets = [],
-}: TileRendererProps): JSX.Element {
+}: TileRendererProps): React.JSX.Element {
     const meshRef = useRef<THREE.InstancedMesh>(null)
 
     // Create geometry and material

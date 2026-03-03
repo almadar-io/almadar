@@ -11,7 +11,7 @@
  */
 
 import React from "react";
-import { Box, VStack } from '@almadar/ui';
+import { Box, VStack, type EntityDisplayProps } from '@almadar/ui';
 import { CodeBlock } from "../molecules/markdown/CodeBlock";
 import { MarkdownContent } from "../molecules/markdown/MarkdownContent";
 import { ActivationBlock } from "../molecules/learning/ActivationBlock";
@@ -30,7 +30,7 @@ export interface UserProgress {
   bloomAnswered?: Record<number, boolean>;
 }
 
-export interface SegmentRendererProps {
+export interface SegmentRendererProps extends EntityDisplayProps {
   /** Array of segments to render */
   segments?: Segment[];
   /** Concept ID for event payloads */
@@ -43,26 +43,14 @@ export interface SegmentRendererProps {
   onSaveReflection?: (index: number, note: string) => void;
   /** Callback when bloom question is answered */
   onAnswerBloom?: (index: number, level: BloomLevel) => void;
-  /** Additional CSS classes for container */
-  className?: string;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
   /** Additional CSS classes for inner wrapper */
   containerClassName?: string;
-  // Entity-aware props (for schema compatibility)
-  /** Entity type */
-  entity?: string;
-  /** Data array */
-  data?: unknown[];
   /** Display variant */
   variant?: string;
   /** Item actions */
   itemActions?: Array<{
     label: string;
     event: string;
-    onClick?: (row: Record<string, unknown>) => void;
   }>;
   /** Fields to display */
   displayFields?: string[];
@@ -78,7 +66,7 @@ export interface SegmentRendererProps {
   showModules?: boolean;
 }
 
-export const SegmentRenderer: React.FC<SegmentRendererProps> = ({
+export const SegmentRenderer = ({
   segments = [],
   conceptId,
   userProgress,
@@ -87,7 +75,7 @@ export const SegmentRenderer: React.FC<SegmentRendererProps> = ({
   onAnswerBloom,
   className,
   containerClassName = "border border-gray-200 dark:border-gray-700 rounded-lg p-4 md:p-6 overflow-x-auto",
-}) => {
+}: SegmentRendererProps) => {
   if (!segments || segments.length === 0) {
     return null;
   }

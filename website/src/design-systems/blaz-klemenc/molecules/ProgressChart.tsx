@@ -38,8 +38,8 @@ export interface ProgressOperation {
 }
 
 export interface ProgressChartProps {
-  /** Data points to plot */
-  data?: ChartDataPoint[] | unknown;
+  /** Entity data points to plot */
+  entity?: ChartDataPoint[] | unknown;
   /** Metric being tracked */
   metric?: string;
   /** Multiple metrics to track */
@@ -58,8 +58,6 @@ export interface ProgressChartProps {
   showMilestones?: boolean;
   /** Show trends */
   showTrends?: boolean;
-  /** Entity context for events */
-  entity?: string;
   /** Operations/actions available */
   operations?: ProgressOperation[];
   /** Additional CSS classes */
@@ -76,13 +74,12 @@ const dateRangeOptions: { value: DateRange; label: string }[] = [
 ];
 
 export const ProgressChart: React.FC<ProgressChartProps> = ({
-  data,
+  entity,
   metric,
   unit = "",
   chartType = "line",
   dateRange = "month",
   showDateSelector = true,
-  entity = "ProgressEntry",
   className,
 }) => {
   const eventBus = useEventBus();
@@ -90,9 +87,9 @@ export const ProgressChart: React.FC<ProgressChartProps> = ({
     (dateRange as DateRange) || "month",
   );
 
-  // Normalize data to array
-  const chartData: ChartDataPoint[] = Array.isArray(data)
-    ? (data as ChartDataPoint[])
+  // Normalize entity to array
+  const chartData: ChartDataPoint[] = Array.isArray(entity)
+    ? (entity as ChartDataPoint[])
     : [];
 
   // Filter data based on selected range
@@ -153,10 +150,10 @@ export const ProgressChart: React.FC<ProgressChartProps> = ({
       eventBus.emit("UI:DATE_RANGE_CHANGE", {
         metric,
         dateRange: range,
-        entity,
+        entity: "ProgressEntry",
       });
     },
-    [eventBus, metric, entity],
+    [eventBus, metric],
   );
 
   // Calculate chart dimensions

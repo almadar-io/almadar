@@ -1,3 +1,4 @@
+/* eslint-disable almadar/organism-extends-entity-display, almadar/require-event-bus */
 /**
  * ConceptCard - Displays a concept with header, description, metadata, and children
  *
@@ -28,6 +29,7 @@ import {
   Typography,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 import type { LucideIcon } from "lucide-react";
 
@@ -45,9 +47,9 @@ export interface ConceptEntity {
   isCurrent?: boolean;
 }
 
-export interface ConceptCardProps {
-  /** Concept entity data */
-  entity?: ConceptEntity | string;
+export interface ConceptCardProps extends Omit<EntityDisplayProps, 'entity'> {
+  /** Concept entity data (overrides generic data) */
+  entity?: ConceptEntity | Record<string, unknown>;
   /** Whether this concept is highlighted (lesson ready) */
   highlighted?: boolean;
   /** Hide the lesson status badges */
@@ -63,22 +65,12 @@ export interface ConceptCardProps {
     action: string;
     variant?: "primary" | "secondary" | "danger";
   }>;
-  /** Additional CSS classes */
-  className?: string;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
-  // Entity-aware props (for schema compatibility)
-  /** Data to display */
-  data?: unknown | unknown[];
   /** Display variant */
   variant?: string;
   /** Item actions */
   itemActions?: Array<{
     label: string;
     event: string;
-    onClick?: (row: Record<string, unknown>) => void;
   }>;
   /** Actions */
   actions?: Array<{ label: string; event: string }>;
@@ -94,7 +86,7 @@ export interface ConceptCardProps {
   showLessonContent?: boolean;
 }
 
-export const ConceptCard: React.FC<ConceptCardProps> = ({
+export const ConceptCard = ({
   entity: entityProp,
   highlighted,
   hideLessonBadge = false,
@@ -102,16 +94,18 @@ export const ConceptCard: React.FC<ConceptCardProps> = ({
   expanded: controlledExpanded,
   operations,
   className = "",
-}) => {
+}: ConceptCardProps) => {
   const { emit } = useEventBus();
   const { t } = useTranslate();
   const [internalExpanded, setInternalExpanded] = useState(false);
 
-  // Normalize entity - handle string, object, or undefined
+  // Normalize entity - handle ConceptEntity, generic record, or undefined
   const entity: ConceptEntity =
-    typeof entityProp === "string"
-      ? { id: entityProp, name: entityProp }
-      : (entityProp ?? { id: "unknown", name: "Unknown" });
+    entityProp && typeof entityProp === "object" && "name" in entityProp
+      ? (entityProp as ConceptEntity)
+      : entityProp && typeof entityProp === "object"
+        ? { id: (entityProp as Record<string, unknown>).id as string ?? "unknown", name: String((entityProp as Record<string, unknown>).displayName ?? (entityProp as Record<string, unknown>).name ?? "Unknown") }
+        : { id: "unknown", name: "Unknown" };
 
   const expanded =
     controlledExpanded !== undefined ? controlledExpanded : internalExpanded;

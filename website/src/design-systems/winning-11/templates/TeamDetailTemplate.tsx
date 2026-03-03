@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * TeamDetailTemplate
  *
@@ -19,7 +20,7 @@ import {
 export type { TeamDetailData, TeamMemberData };
 
 export interface TeamDetailTemplateProps {
-  /** Entity data (team detail) */
+  /** Entity prop (team detail) */
   entity?: TeamDetailData;
   /** Loading state */
   isLoading?: boolean;

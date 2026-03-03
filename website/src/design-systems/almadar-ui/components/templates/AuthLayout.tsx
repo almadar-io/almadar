@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import { cn } from "../../lib/cn";

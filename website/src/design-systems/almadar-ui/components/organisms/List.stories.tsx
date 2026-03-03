@@ -54,7 +54,7 @@ const sampleItems = [
 
 export const Default: Story = {
     args: {
-        data: sampleItems,
+        entity: sampleItems,
         fields: ['title', 'status', 'priority', 'dueDate'],
         entityType: 'Tasks',
     },
@@ -62,7 +62,7 @@ export const Default: Story = {
 
 export const WithItemActions: Story = {
     args: {
-        data: sampleItems,
+        entity: sampleItems,
         fields: ['title', 'status', 'priority'],
         entityType: 'Tasks',
         itemActions: [
@@ -75,18 +75,17 @@ export const WithItemActions: Story = {
 
 export const Selectable: Story = {
     args: {
-        data: sampleItems,
+        entity: sampleItems,
         fields: ['title', 'status', 'priority'],
         entityType: 'Tasks',
         selectable: true,
-        selectedItems: ['1', '3'],
-        onSelectionChange: (ids: string[]) => console.log('Selected:', ids),
+        selectedIds: ['1', '3'],
     },
 };
 
 export const Loading: Story = {
     args: {
-        data: [],
+        entity: [],
         fields: ['title', 'status'],
         entityType: 'Tasks',
         isLoading: true,
@@ -95,7 +94,7 @@ export const Loading: Story = {
 
 export const Empty: Story = {
     args: {
-        data: [],
+        entity: [],
         fields: ['title', 'status'],
         entityType: 'Tasks',
         emptyMessage: 'No tasks found. Create your first task to get started.',
@@ -104,7 +103,7 @@ export const Empty: Story = {
 
 export const WithProgress: Story = {
     args: {
-        data: [
+        entity: [
             { id: '1', title: 'Website Redesign', status: 'active', progress: 65, dueDate: '2026-03-15' },
             { id: '2', title: 'Mobile App', status: 'active', progress: 30, dueDate: '2026-04-01' },
             { id: '3', title: 'API Integration', status: 'complete', progress: 100, dueDate: '2026-02-10' },

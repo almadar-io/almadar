@@ -11,7 +11,7 @@
  */
 
 import React, { useState, useCallback, useRef, useEffect } from "react";
-import { Search, Plus, Building2, User, FileText, X } from "lucide-react";
+import { Search, Plus, FileText, X } from "lucide-react";
 import {
   cn,
   Box,
@@ -40,8 +40,6 @@ export interface EntitySearchItem {
 export type SearchResult = EntitySearchItem;
 
 export interface EntitySearchProps {
-  /** Entity type being searched */
-  entity?: string;
   /** Label for the field */
   label?: string;
   /** Placeholder text */
@@ -76,14 +74,7 @@ export interface EntitySearchProps {
   onCreateNew?: () => void;
 }
 
-const entityIcons: Record<string, typeof Building2 | undefined> = {
-  Company: Building2,
-  Inspector: User,
-  Document: FileText,
-};
-
 export const EntitySearch: React.FC<EntitySearchProps> = ({
-  entity,
   label,
   placeholder = "Search...",
   selectedItem,
@@ -108,7 +99,7 @@ export const EntitySearch: React.FC<EntitySearchProps> = ({
   // Use items or results (alias)
   const searchItems = items.length > 0 ? items : (results ?? []);
 
-  const EntityIcon = (entity ? entityIcons[entity] : undefined) || FileText;
+  const EntityIcon = FileText;
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -130,19 +121,19 @@ export const EntitySearch: React.FC<EntitySearchProps> = ({
       setSearchTerm(value);
       setIsOpen(true);
       onSearch?.(value);
-      eventBus.emit("UI:SEARCH", { entity, searchTerm: value });
+      eventBus.emit("UI:SEARCH", { entity: "Entity", searchTerm: value });
     },
-    [entity, onSearch, eventBus],
+    [onSearch, eventBus],
   );
 
   const handleSelect = useCallback(
     (item: EntitySearchItem) => {
       onSelect?.(item);
-      eventBus.emit("UI:ENTITY_SELECTED", { entity, item });
+      eventBus.emit("UI:ENTITY_SELECTED", { entity: "Entity", item });
       setSearchTerm("");
       setIsOpen(false);
     },
-    [entity, onSelect, eventBus],
+    [onSelect, eventBus],
   );
 
   const handleClear = useCallback(() => {
@@ -153,9 +144,9 @@ export const EntitySearch: React.FC<EntitySearchProps> = ({
   const handleCreate = useCallback(() => {
     onCreate?.();
     onCreateNew?.();
-    eventBus.emit("UI:CREATE_NEW", { entity });
+    eventBus.emit("UI:CREATE_NEW", { entity: "Entity" });
     setIsOpen(false);
-  }, [entity, onCreate, onCreateNew, eventBus]);
+  }, [onCreate, onCreateNew, eventBus]);
 
   // Show selected item
   if (selectedItem) {
@@ -277,7 +268,7 @@ export const EntitySearch: React.FC<EntitySearchProps> = ({
                   <HStack gap="sm" align="center" className="text-blue-600">
                     <Plus className="h-4 w-4" />
                     <Typography variant="body" className="font-medium">
-                      {createLabel} {entity}
+                      {createLabel}
                     </Typography>
                   </HStack>
                 </button>

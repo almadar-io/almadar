@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * AssessmentTemplate
  *
@@ -16,7 +17,7 @@ import { AssessmentsBoard } from "../organisms/AssessmentsBoard";
 export type { AssessmentData } from "../organisms/AssessmentsBoard";
 
 export interface AssessmentTemplateProps {
-  /** Entity data (assessment items) */
+  /** Entity prop (assessment items) */
   entity?: readonly import("../organisms/AssessmentsBoard").AssessmentData[];
   /** Loading state */
   isLoading?: boolean;

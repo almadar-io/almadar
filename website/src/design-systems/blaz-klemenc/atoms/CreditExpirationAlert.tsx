@@ -6,7 +6,7 @@
  *
  * Event Contract:
  * - Emits: UI:RENEW_CREDITS - when renew button is clicked
- * - Payload: { expiresAt, credits, entity }
+ * - Payload: { expiresAt, credits, entity: "Credit" }
  */
 
 import React, { useCallback, useMemo } from "react";
@@ -31,8 +31,6 @@ export interface CreditExpirationAlertProps {
   dismissible?: boolean;
   /** Callback when dismissed */
   onDismiss?: () => void;
-  /** Entity context for events */
-  entity?: string;
   /** Additional CSS classes */
   className?: string;
 }
@@ -51,7 +49,6 @@ export const CreditExpirationAlert: React.FC<CreditExpirationAlertProps> = ({
   traineeId,
   dismissible = true,
   onDismiss,
-  entity = "Credit",
   className,
 }) => {
   const eventBus = useEventBus();
@@ -99,9 +96,9 @@ export const CreditExpirationAlert: React.FC<CreditExpirationAlertProps> = ({
   const handleRenew = useCallback(() => {
     eventBus.emit("UI:CREATE", {
       traineeId,
-      entity,
+      entity: "Credit",
     });
-  }, [eventBus, traineeId, entity]);
+  }, [eventBus, traineeId]);
 
   // Don't show if already expired for more than 30 days
   if (daysUntilExpiration < -30) return null;

@@ -108,7 +108,7 @@ export function GameCanvas3DBattleTemplate({
     validMoves,
     attackTargets,
     className,
-}: GameCanvas3DBattleTemplateProps): JSX.Element {
+}: GameCanvas3DBattleTemplateProps): React.JSX.Element {
     return (
         <Box className={cn('game-canvas-3d-battle-template', className)}>
             <GameCanvas3D

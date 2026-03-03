@@ -44,8 +44,6 @@ export interface TrustMeterProps {
   size?: "sm" | "md" | "lg";
   /** Additional CSS classes */
   className?: string;
-  /** Entity context for event payload */
-  entity?: string;
   /** Event to emit on click (enables clickable mode) */
   event?: string;
   /** Click handler callback */
@@ -125,7 +123,6 @@ export const TrustMeter: React.FC<TrustMeterProps> = ({
   showLabel = true,
   size = "md",
   className,
-  entity,
   event,
   onClick,
 }) => {
@@ -150,11 +147,11 @@ export const TrustMeter: React.FC<TrustMeterProps> = ({
       eventBus.emit(`UI:${event}`, {
         healthStatus: normalizedStatus,
         growthPoints: displayScore,
-        entity,
+        entity: "RelationshipHealth",
       });
     }
     onClick?.();
-  }, [event, eventBus, normalizedStatus, displayScore, entity, onClick]);
+  }, [event, eventBus, normalizedStatus, displayScore, onClick]);
 
   return (
     <HStack

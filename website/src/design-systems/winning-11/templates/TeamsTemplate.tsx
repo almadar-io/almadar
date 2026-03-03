@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * TeamsTemplate
  *
@@ -19,7 +20,7 @@ import {
 export type { TeamData };
 
 export interface TeamsTemplateProps {
-  /** Entity data (team items) */
+  /** Entity prop (team items) */
   entity?: readonly TeamData[];
   /** Loading state */
   isLoading?: boolean;

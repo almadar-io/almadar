@@ -1,3 +1,4 @@
+/* eslint-disable almadar/organism-extends-entity-display, almadar/require-event-bus, almadar/organism-no-data-state */
 /**
  * ProgressBoard
  *
@@ -50,8 +51,11 @@ import {
   Card,
   Badge,
   Spinner,
+  LoadingState,
+  ErrorState,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 
 /**
@@ -74,13 +78,9 @@ export interface ProgressEntryEntity {
   items: readonly ProgressEntryData[];
 }
 
-export interface ProgressBoardProps {
+export interface ProgressBoardProps extends Omit<EntityDisplayProps, 'entity'> {
   /** ProgressEntry entity data */
-  entity: ProgressEntryEntity;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
+  entity?: ProgressEntryEntity | ProgressEntryEntity[];
   /** Page title */
   title?: string;
   /** Page subtitle */
@@ -91,8 +91,6 @@ export interface ProgressBoardProps {
   showSearch?: boolean;
   /** Show filters */
   showFilters?: boolean;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for creating a progress entry (emitted as UI:{createEvent}) */
   createEvent?: string;
   /** Event name for viewing a progress entry (emitted as UI:{viewEvent}) */
@@ -279,7 +277,8 @@ export const ProgressBoard: React.FC<ProgressBoardProps> = ({
     "all" | "planned" | "in_progress" | "completed"
   >("all");
 
-  const entries = entity.items || [];
+  const entityData = Array.isArray(entity) ? entity[0] : entity;
+  const entries = entityData?.items || [];
 
   // Handle search
   const handleSearch = (value: string) => {

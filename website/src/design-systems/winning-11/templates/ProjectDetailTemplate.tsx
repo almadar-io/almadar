@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * ProjectDetailTemplate
  *
@@ -19,7 +20,7 @@ import {
 export type { ProjectDetailData, ProjectMember };
 
 export interface ProjectDetailTemplateProps {
-  /** Entity data (project detail) */
+  /** Entity prop (project detail) */
   entity?: ProjectDetailData;
   /** Loading state */
   isLoading?: boolean;

@@ -1,3 +1,4 @@
+'use client';
 /**
  * useEntityData Hook
  *
@@ -304,6 +305,199 @@ export function usePaginatedEntityList<T = Record<string, unknown>>(
     hasPreviousPage: params.page > 1,
     refetch: () => {},
   };
+}
+
+// ============================================================================
+// Suspense Hooks
+// ============================================================================
+
+/**
+ * Cache for pending promises used by Suspense hooks.
+ * When a component calls useEntityListSuspense and data isn't ready,
+ * it throws a Promise that React Suspense catches.
+ */
+const suspenseCache = new Map<string, {
+  promise: Promise<void>;
+  status: 'pending' | 'resolved' | 'rejected';
+  error?: Error;
+}>();
+
+function getSuspenseCacheKey(entity: string, type: 'list' | 'detail', id?: string): string {
+  return id ? `${type}:${entity}:${id}` : `${type}:${entity}`;
+}
+
+/**
+ * Suspense-compatible hook for fetching entity list data.
+ *
+ * Instead of returning `isLoading`/`error`, this hook **suspends** (throws a Promise)
+ * when data is not ready. Use inside a `<Suspense>` boundary.
+ *
+ * Falls back to the adapter when available; otherwise suspends briefly for stub data.
+ *
+ * @example
+ * ```tsx
+ * <Suspense fallback={<Skeleton variant="table" />}>
+ *   <ErrorBoundary>
+ *     <TaskList entity="Task" />
+ *   </ErrorBoundary>
+ * </Suspense>
+ *
+ * function TaskList({ entity }: { entity: string }) {
+ *   const { data } = useEntityListSuspense<Task>(entity);
+ *   // No loading check needed — Suspense handles it
+ *   return <DataTable data={data} ... />;
+ * }
+ * ```
+ */
+export function useEntityListSuspense<T = Record<string, unknown>>(
+  entity: string,
+): { data: T[]; refetch: () => void } {
+  const adapter = useContext(EntityDataContext);
+
+  // Adapter path: resolve synchronously if data is available
+  if (adapter) {
+    if (adapter.isLoading) {
+      const cacheKey = getSuspenseCacheKey(entity, 'list');
+      let entry = suspenseCache.get(cacheKey);
+
+      if (!entry || entry.status === 'resolved') {
+        let resolve: () => void;
+        const promise = new Promise<void>((r) => { resolve = r; });
+        entry = { promise, status: 'pending' };
+        suspenseCache.set(cacheKey, entry);
+
+        // Poll adapter until loading completes
+        const check = setInterval(() => {
+          if (!adapter.isLoading) {
+            clearInterval(check);
+            entry!.status = 'resolved';
+            resolve!();
+          }
+        }, 50);
+      }
+
+      if (entry.status === 'pending') {
+        throw entry.promise;
+      }
+    }
+
+    if (adapter.error) {
+      throw new Error(adapter.error);
+    }
+
+    return {
+      data: adapter.getData(entity) as T[],
+      refetch: () => {},
+    };
+  }
+
+  // Stub path: brief suspension then empty data
+  const cacheKey = getSuspenseCacheKey(entity, 'list');
+  let entry = suspenseCache.get(cacheKey);
+
+  if (!entry) {
+    let resolve: () => void;
+    const promise = new Promise<void>((r) => {
+      resolve = r;
+      setTimeout(() => {
+        entry!.status = 'resolved';
+        resolve();
+      }, 100);
+    });
+    entry = { promise, status: 'pending' };
+    suspenseCache.set(cacheKey, entry);
+  }
+
+  if (entry.status === 'pending') {
+    throw entry.promise;
+  }
+
+  return { data: [] as T[], refetch: () => {} };
+}
+
+/**
+ * Suspense-compatible hook for fetching a single entity by ID.
+ *
+ * Suspends when data is not ready. Use inside a `<Suspense>` boundary.
+ *
+ * @example
+ * ```tsx
+ * <Suspense fallback={<Skeleton variant="form" />}>
+ *   <ErrorBoundary>
+ *     <TaskDetail entity="Task" id={taskId} />
+ *   </ErrorBoundary>
+ * </Suspense>
+ *
+ * function TaskDetail({ entity, id }: { entity: string; id: string }) {
+ *   const { data } = useEntitySuspense<Task>(entity, id);
+ *   return <DetailPanel data={data} ... />;
+ * }
+ * ```
+ */
+export function useEntitySuspense<T = Record<string, unknown>>(
+  entity: string,
+  id: string,
+): { data: T | null; refetch: () => void } {
+  const adapter = useContext(EntityDataContext);
+
+  // Adapter path
+  if (adapter) {
+    if (adapter.isLoading) {
+      const cacheKey = getSuspenseCacheKey(entity, 'detail', id);
+      let entry = suspenseCache.get(cacheKey);
+
+      if (!entry || entry.status === 'resolved') {
+        let resolve: () => void;
+        const promise = new Promise<void>((r) => { resolve = r; });
+        entry = { promise, status: 'pending' };
+        suspenseCache.set(cacheKey, entry);
+
+        const check = setInterval(() => {
+          if (!adapter.isLoading) {
+            clearInterval(check);
+            entry!.status = 'resolved';
+            resolve!();
+          }
+        }, 50);
+      }
+
+      if (entry.status === 'pending') {
+        throw entry.promise;
+      }
+    }
+
+    if (adapter.error) {
+      throw new Error(adapter.error);
+    }
+
+    return {
+      data: (adapter.getById(entity, id) as T) ?? null,
+      refetch: () => {},
+    };
+  }
+
+  // Stub path
+  const cacheKey = getSuspenseCacheKey(entity, 'detail', id);
+  let entry = suspenseCache.get(cacheKey);
+
+  if (!entry) {
+    let resolve: () => void;
+    const promise = new Promise<void>((r) => {
+      resolve = r;
+      setTimeout(() => {
+        entry!.status = 'resolved';
+        resolve();
+      }, 100);
+    });
+    entry = { promise, status: 'pending' };
+    suspenseCache.set(cacheKey, entry);
+  }
+
+  if (entry.status === 'pending') {
+    throw entry.promise;
+  }
+
+  return { data: null, refetch: () => {} };
 }
 
 export default useEntityList;

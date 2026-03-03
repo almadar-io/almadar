@@ -99,5 +99,19 @@
   "dialog.cancel": "Prekliči",
   "dialog.loading": "Nalagam...",
   "dialog.delete.title": "Izbrisati {{item}}?",
-  "dialog.delete.message": "Tega dejanja ni mogoče razveljaviti."
+  "dialog.delete.message": "Tega dejanja ni mogoče razveljaviti.",
+
+  "trait.availableActions": "Razpoložljive akcije",
+  "trait.transitions": "Prehodi",
+  "trait.availableNow": "Trenutno na voljo",
+
+  "book.startReading": "Začni brati",
+  "book.tableOfContents": "Kazalo vsebine",
+  "book.partNumber": "Del {{number}}",
+  "book.print": "Natisni",
+  "book.previousPage": "Prejšnja stran",
+  "book.nextPage": "Naslednja stran",
+
+  "quiz.showAnswer": "Prikaži odgovor",
+  "quiz.hideAnswer": "Skrij odgovor"
 }

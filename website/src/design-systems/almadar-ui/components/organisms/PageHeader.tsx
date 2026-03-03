@@ -1,10 +1,10 @@
+'use client';
 import React from "react";
 import { cn } from "../../lib/cn";
 import { Button } from "../atoms";
 import { Box } from "../atoms/Box";
 import { Typography } from "../atoms/Typography";
 import { ArrowLeft, LucideIcon } from "lucide-react";
-import { useNavigate, useParams } from "react-router-dom";
 import { useEventBus } from "../../hooks/useEventBus";
 
 export interface PageBreadcrumb {
@@ -81,24 +81,12 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   children,
   className,
 }) => {
-  const navigate = useNavigate();
-  const params = useParams();
   const eventBus = useEventBus();
 
   const handleBack = () => {
     // Emit event for trait state machine to handle
     // The trait can transition state and/or trigger navigate effect
     eventBus.emit(`UI:${backEvent}`);
-  };
-
-  /**
-   * Replace template placeholders like {{id}} with actual URL params.
-   * E.g., "/tasks/{{id}}/edit" with params {id: "123"} becomes "/tasks/123/edit"
-   */
-  const replacePlaceholders = (url: string): string => {
-    return url.replace(/\{\{(\w+)\}\}/g, (_, key) => {
-      return String(params[key] || "");
-    });
   };
 
   // Create click handler for schema actions
@@ -108,8 +96,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
       eventBus.emit(`UI:${action.event}`);
     }
     if (action.navigatesTo) {
-      const resolvedUrl = replacePlaceholders(action.navigatesTo);
-      navigate(resolvedUrl);
+      eventBus.emit('UI:NAVIGATE', { url: action.navigatesTo });
     }
     if (action.onClick) {
       action.onClick();

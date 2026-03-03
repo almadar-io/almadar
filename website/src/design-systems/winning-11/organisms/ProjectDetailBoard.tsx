@@ -33,6 +33,7 @@ import {
   Spinner,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -67,17 +68,11 @@ export interface ProjectDetailData {
   milestones?: { name: string; completed: boolean; dueDate?: string }[];
 }
 
-export interface ProjectDetailBoardProps {
-  /** Entity data (project detail) */
+export interface ProjectDetailBoardProps extends Omit<EntityDisplayProps, 'entity'> {
+  /** Entity data (single object) */
   entity?: ProjectDetailData;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
   /** Show back button */
   showBack?: boolean;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for edit action */
   editEvent: string;
   /** Event name for delete action */

@@ -57,7 +57,7 @@ export interface CreditOperation {
 
 export interface CreditMeterProps {
   /** Credit entity data */
-  data?: CreditData | Record<string, unknown>;
+  entity?: CreditData | Record<string, unknown>;
   /** Current remaining credits (can also pass directly) */
   remainingCredits?: number;
   /** Total credits purchased (can also pass directly) */
@@ -72,8 +72,6 @@ export interface CreditMeterProps {
   showActionButton?: boolean;
   /** Show expiration info */
   showExpiration?: boolean;
-  /** Entity context for events */
-  entity?: string;
   /** Operations/actions available */
   operations?: CreditOperation[];
   /** Additional CSS classes */
@@ -171,21 +169,20 @@ const sizeConfig = {
 };
 
 export const CreditMeter: React.FC<CreditMeterProps> = ({
-  data,
+  entity,
   remainingCredits: propRemainingCredits,
   totalCredits: propTotalCredits,
   expiresAt: propExpiresAt,
   size = "md",
   compact = false,
   showActionButton = true,
-  entity = "Credit",
   className,
 }) => {
   const eventBus = useEventBus();
   const sizes = sizeConfig[size];
 
-  // Normalize data - support both data prop and individual props
-  const normalizedData = data as CreditData | undefined;
+  // Normalize entity - support both entity prop and individual props
+  const normalizedData = entity as CreditData | undefined;
   const remainingCredits =
     normalizedData?.remainingCredits ?? propRemainingCredits ?? 0;
   const totalCredits = normalizedData?.totalCredits ?? propTotalCredits ?? 10;
@@ -214,17 +211,17 @@ export const CreditMeter: React.FC<CreditMeterProps> = ({
   const handleAddCredits = useCallback(() => {
     eventBus.emit("UI:CREATE", {
       row: creditData,
-      entity,
+      entity: "Credit",
     });
-  }, [eventBus, creditData, entity]);
+  }, [eventBus, creditData]);
 
   // Emit ADJUST event to adjust credits (matches CreditManagement trait)
   const handleAdjustCredits = useCallback(() => {
     eventBus.emit("UI:ADJUST", {
       row: creditData,
-      entity,
+      entity: "Credit",
     });
-  }, [eventBus, creditData, entity]);
+  }, [eventBus, creditData]);
 
   // Compact mode - inline display
   if (compact) {

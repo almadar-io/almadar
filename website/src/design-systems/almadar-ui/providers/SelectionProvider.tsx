@@ -1,3 +1,4 @@
+'use client';
 /**
  * SelectionProvider - Manages selected entity state
  *

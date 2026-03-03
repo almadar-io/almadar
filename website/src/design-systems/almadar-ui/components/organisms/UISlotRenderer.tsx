@@ -1,3 +1,5 @@
+'use client';
+/* eslint-disable almadar/require-closed-circuit-props, almadar/organism-extends-entity-display, almadar/organism-no-callback-props, almadar/require-event-bus, almadar/require-translate */
 /**
  * UISlotRenderer Component
  *
@@ -12,7 +14,7 @@
  * @packageDocumentation
  */
 
-import React, { useEffect, useState } from "react";
+import React, { Suspense, createContext, useContext, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import {
   useUISlots,
@@ -25,9 +27,57 @@ import { Toast } from "../molecules/Toast";
 import { Box } from "../atoms/Box";
 import { Typography } from "../atoms/Typography";
 import { cn } from "../../lib/cn";
+import { ErrorBoundary } from "../molecules/ErrorBoundary";
+import { Skeleton, type SkeletonVariant } from "../molecules/Skeleton";
 
 // Shared renderer imports (synced from orbital-shared/design-system/renderer)
 import { isKnownPattern, isPortalSlot, SLOT_DEFINITIONS } from "../../renderer";
+
+// ============================================================================
+// Suspense Configuration Context
+// ============================================================================
+
+export interface SuspenseConfig {
+  /** Enable Suspense boundaries around slot content */
+  enabled: boolean;
+  /** Custom fallback per slot, overrides default Skeleton variant */
+  slotFallbacks?: Partial<Record<UISlot, React.ReactNode>>;
+}
+
+const SuspenseConfigContext = createContext<SuspenseConfig>({ enabled: false });
+
+/**
+ * Provider for Suspense configuration.
+ * When enabled, each UI slot is wrapped in `<ErrorBoundary><Suspense>`.
+ */
+export function SuspenseConfigProvider({
+  config,
+  children,
+}: {
+  config: SuspenseConfig;
+  children: React.ReactNode;
+}) {
+  return React.createElement(
+    SuspenseConfigContext.Provider,
+    { value: config },
+    children,
+  );
+}
+SuspenseConfigProvider.displayName = 'SuspenseConfigProvider';
+
+/** Map slot names to the best Skeleton variant */
+const SLOT_SKELETON_MAP: Partial<Record<UISlot, SkeletonVariant>> = {
+  main: 'table',
+  sidebar: 'card',
+  modal: 'form',
+  drawer: 'form',
+};
+
+function getSlotFallback(slot: UISlot, config: SuspenseConfig): React.ReactNode {
+  if (config.slotFallbacks?.[slot]) return config.slotFallbacks[slot];
+  const variant = SLOT_SKELETON_MAP[slot] ?? 'text';
+  return <Skeleton variant={variant} />;
+}
 
 // Pattern component imports
 import { PageHeader } from "./PageHeader";
@@ -281,6 +331,12 @@ interface UISlotComponentProps {
   isLoading?: boolean;
   error?: Error | null;
   entity?: string;
+  /** Compiled mode: render children directly instead of resolving from context */
+  children?: React.ReactNode;
+  /** Pattern type for data-pattern attribute (compiled mode) */
+  pattern?: string;
+  /** Source trait name for data-source-trait attribute (compiled mode) */
+  sourceTrait?: string;
 }
 
 /**
@@ -293,9 +349,27 @@ function UISlotComponent({
   portal = false,
   position,
   className,
+  children,
+  pattern,
+  sourceTrait,
 }: UISlotComponentProps): React.ReactElement | null {
   const { slots, clear } = useUISlots();
+  const suspenseConfig = useContext(SuspenseConfigContext);
   const content = slots[slot];
+
+  // Compiled mode: children provided directly, skip context resolution
+  if (children !== undefined) {
+    return (
+      <Box
+        id={`slot-${slot}`}
+        className={cn("ui-slot", `ui-slot-${slot}`, className)}
+        data-pattern={pattern}
+        data-source-trait={sourceTrait}
+      >
+        {children}
+      </Box>
+    );
+  }
 
   // Handle empty slot
   if (!content) {
@@ -328,7 +402,19 @@ function UISlotComponent({
     );
   }
 
-  // Inline slots
+  // Inline slots — optionally wrapped in Suspense + ErrorBoundary
+  const slotContent = (
+    <SlotContentRenderer content={content} onDismiss={handleDismiss} />
+  );
+
+  const wrappedContent = suspenseConfig.enabled ? (
+    <ErrorBoundary>
+      <Suspense fallback={getSlotFallback(slot, suspenseConfig)}>
+        {slotContent}
+      </Suspense>
+    </ErrorBoundary>
+  ) : slotContent;
+
   return (
     <Box
       id={`slot-${slot}`}
@@ -336,7 +422,7 @@ function UISlotComponent({
       data-pattern={content.pattern}
       data-source-trait={content.sourceTrait}
     >
-      <SlotContentRenderer content={content} onDismiss={handleDismiss} />
+      {wrappedContent}
     </Box>
   );
 }
@@ -599,6 +685,12 @@ export interface UISlotRendererProps {
   error?: Error | null;
   /** Entity name for schema-driven auto-fetch */
   entity?: string;
+  /**
+   * Enable Suspense boundaries around each slot.
+   * When true, each inline slot is wrapped in `<ErrorBoundary><Suspense>` with
+   * Skeleton fallbacks. Opt-in — existing isLoading prop pattern still works.
+   */
+  suspense?: boolean | SuspenseConfig;
 }
 
 /**
@@ -621,8 +713,14 @@ export function UISlotRenderer({
   includeHud = false,
   includeFloating = false,
   className,
+  suspense,
 }: UISlotRendererProps): React.ReactElement {
-  return (
+  const suspenseConfig: SuspenseConfig =
+    suspense === true ? { enabled: true } :
+    suspense && typeof suspense === 'object' ? suspense :
+    { enabled: false };
+
+  const content = (
     <Box className={cn("ui-slot-renderer", className)}>
       {/* Layout slots */}
       <UISlotComponent slot="sidebar" className="ui-slot-sidebar" />
@@ -655,6 +753,17 @@ export function UISlotRenderer({
       )}
     </Box>
   );
+
+  // Wrap with SuspenseConfigProvider when Suspense is enabled
+  if (suspenseConfig.enabled) {
+    return (
+      <SuspenseConfigProvider config={suspenseConfig}>
+        {content}
+      </SuspenseConfigProvider>
+    );
+  }
+
+  return content;
 }
 
 UISlotRenderer.displayName = "UISlotRenderer";

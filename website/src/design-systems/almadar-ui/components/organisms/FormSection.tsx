@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import { cn } from "../../lib/cn";
 import { Card } from "../atoms";
@@ -7,8 +8,11 @@ import { Button } from "../atoms/Button";
 import { VStack, HStack } from "../atoms/Stack";
 import { Icon } from "../atoms/Icon";
 import { ChevronDown } from "lucide-react";
+import { useTranslate } from "../../hooks/useTranslate";
+import { useEventBus } from "../../hooks/useEventBus";
+import type { EntityDisplayProps } from "./types";
 
-export interface FormSectionProps {
+export interface FormSectionProps extends EntityDisplayProps {
   /** Section title */
   title?: string;
   /** Section description */
@@ -23,13 +27,8 @@ export interface FormSectionProps {
   card?: boolean;
   /** Grid columns for fields */
   columns?: 1 | 2 | 3;
-  className?: string;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
-  /** Entity name */
-  entity?: string;
+  /** Entity ID for fetching specific entity */
+  entityId?: string;
 }
 
 export const FormSection: React.FC<FormSectionProps> = ({
@@ -43,12 +42,21 @@ export const FormSection: React.FC<FormSectionProps> = ({
   className,
 }) => {
   const [collapsed, setCollapsed] = React.useState(defaultCollapsed);
+  const { t } = useTranslate();
+  const eventBus = useEventBus();
 
   const gridClass = {
     1: "grid-cols-1",
     2: "grid-cols-1 md:grid-cols-2",
     3: "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
   }[columns];
+
+  const handleToggleCollapse = React.useCallback(() => {
+    if (collapsible) {
+      setCollapsed((prev) => !prev);
+      eventBus.emit("UI:TOGGLE_COLLAPSE", { collapsed: !collapsed });
+    }
+  }, [collapsible, collapsed, eventBus]);
 
   const content = (
     <>
@@ -59,7 +67,7 @@ export const FormSection: React.FC<FormSectionProps> = ({
               justify="between"
               align="center"
               className={cn(collapsible && "cursor-pointer")}
-              onClick={() => collapsible && setCollapsed(!collapsed)}
+              action={collapsible ? "TOGGLE_COLLAPSE" : undefined}
             >
               <Typography variant="h3" weight="semibold">
                 {title}
@@ -68,7 +76,7 @@ export const FormSection: React.FC<FormSectionProps> = ({
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => setCollapsed(!collapsed)}
+                  action="TOGGLE_COLLAPSE"
                 >
                   <Icon
                     icon={ChevronDown}
@@ -107,17 +115,10 @@ FormSection.displayName = "FormSection";
 /**
  * Form layout with multiple sections
  */
-export interface FormLayoutProps {
+export interface FormLayoutProps extends EntityDisplayProps {
   children: React.ReactNode;
   /** Show section dividers */
   dividers?: boolean;
-  className?: string;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
-  /** Entity name */
-  entity?: string;
 }
 
 export const FormLayout: React.FC<FormLayoutProps> = ({
@@ -144,19 +145,12 @@ FormLayout.displayName = "FormLayout";
 /**
  * Form actions bar (submit/cancel buttons)
  */
-export interface FormActionsProps {
+export interface FormActionsProps extends EntityDisplayProps {
   children: React.ReactNode;
   /** Sticky at bottom */
   sticky?: boolean;
   /** Alignment */
   align?: "left" | "right" | "between" | "center";
-  className?: string;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
-  /** Entity name */
-  entity?: string;
 }
 
 export const FormActions: React.FC<FormActionsProps> = ({

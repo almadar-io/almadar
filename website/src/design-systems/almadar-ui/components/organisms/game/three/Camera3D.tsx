@@ -1,3 +1,4 @@
+'use client';
 /**
  * Camera3D
  *
@@ -76,7 +77,7 @@ export const Camera3D = forwardRef<Camera3DHandle, Camera3DProps>(
             onChange,
         },
         ref
-    ): JSX.Element => {
+    ): React.JSX.Element => {
         const { camera, set, viewport } = useThree();
         const controlsRef = useRef<any>(null);
         const initialPosition = useRef(new THREE.Vector3(...position));

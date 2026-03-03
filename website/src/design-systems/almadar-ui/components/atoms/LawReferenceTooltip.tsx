@@ -1,3 +1,4 @@
+'use client';
 /**
  * LawReferenceTooltip Atom Component
  *

@@ -39,13 +39,13 @@ export interface GraphLegendProps {
   className?: string;
 }
 
-export const GraphLegend: React.FC<GraphLegendProps> = ({
+export const GraphLegend = ({
   items,
   title,
   interactive = false,
   direction = "vertical",
   className = "",
-}) => {
+}: GraphLegendProps) => {
   const { emit } = useEventBus();
 
   const handleItemClick = (item: LegendItem) => {
@@ -73,7 +73,7 @@ export const GraphLegend: React.FC<GraphLegendProps> = ({
             key={item.id}
             onClick={() => handleItemClick(item)}
             className={`
-              ${interactive ? "cursor-pointer hover:bg-gray-50 rounded px-2 py-1 -mx-2" : ""}
+              ${interactive ? "cursor-pointer hover:bg-[var(--color-muted)] rounded px-2 py-1 -mx-2" : ""}
               ${item.visible === false ? "opacity-50" : ""}
             `}
           >

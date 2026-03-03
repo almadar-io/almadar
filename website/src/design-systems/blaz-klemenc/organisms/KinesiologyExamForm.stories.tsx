@@ -135,7 +135,7 @@ export const WithCancelButton: Story = {
   args: {
     traineeId: "trainee-1",
     trainerId: "trainer-1",
-    onCancel: () => console.log("Cancel clicked"),
+    cancelEvent: "CANCEL",
   },
 };
 
@@ -144,7 +144,7 @@ export const EditMode: Story = {
     traineeId: "trainee-1",
     trainerId: "trainer-1",
     existingExam: existingExam,
-    onCancel: () => console.log("Cancel clicked"),
+    cancelEvent: "CANCEL",
   },
 };
 
@@ -152,6 +152,6 @@ export const NewAssessment: Story = {
   args: {
     traineeId: "trainee-3",
     trainerId: "trainer-1",
-    onCancel: () => console.log("Cancel clicked"),
+    cancelEvent: "CANCEL",
   },
 };

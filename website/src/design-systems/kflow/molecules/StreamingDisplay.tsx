@@ -14,6 +14,12 @@ import {
   VStack,
   HStack,
   Card,
+  Typography,
+  SimpleGrid,
+  Spinner,
+  Accordion,
+  CodeBlock,
+  useTranslate,
 } from '@almadar/ui';
 
 interface Milestone {
@@ -104,13 +110,14 @@ export interface StreamingDisplayProps {
   className?: string;
 }
 
-export const StreamingDisplay: React.FC<StreamingDisplayProps> = ({
+export const StreamingDisplay = ({
   content,
   loadingTitle = "Generating...",
   showRawToggle = false,
   className = "",
-}) => {
+}: StreamingDisplayProps) => {
   const [parsedData, setParsedData] = useState<ParsedGoal>({});
+  const { t } = useTranslate();
 
   useEffect(() => {
     if (content) {
@@ -134,72 +141,80 @@ export const StreamingDisplay: React.FC<StreamingDisplayProps> = ({
         <Card className="border border-gray-200">
           <VStack gap="sm">
             {parsedData.title && (
-              <h3 className="text-xl font-semibold text-[var(--color-foreground)]">
+              <Typography variant="h3">
                 {parsedData.title}
-              </h3>
+              </Typography>
             )}
             {parsedData.description && (
-              <p className="text-[var(--color-foreground)]">{parsedData.description}</p>
+              <Typography variant="body">{parsedData.description}</Typography>
             )}
 
-            <div className="grid grid-cols-2 gap-4 text-sm">
+            <SimpleGrid cols={2} gap="md" className="text-sm">
               {parsedData.type && (
-                <div>
-                  <span className="text-[var(--color-muted-foreground)]">Type:</span>
-                  <span className="ml-2 text-[var(--color-foreground)] font-medium">
+                <HStack gap="xs">
+                  <Typography variant="small" className="text-[var(--color-muted-foreground)]">
+                    {t('streaming.type')}
+                  </Typography>
+                  <Typography variant="small" className="font-medium">
                     {parsedData.type}
-                  </span>
-                </div>
+                  </Typography>
+                </HStack>
               )}
               {parsedData.target && (
-                <div>
-                  <span className="text-[var(--color-muted-foreground)]">Target:</span>
-                  <span className="ml-2 text-[var(--color-foreground)] font-medium">
+                <HStack gap="xs">
+                  <Typography variant="small" className="text-[var(--color-muted-foreground)]">
+                    {t('streaming.target')}
+                  </Typography>
+                  <Typography variant="small" className="font-medium">
                     {parsedData.target}
-                  </span>
-                </div>
+                  </Typography>
+                </HStack>
               )}
               {parsedData.estimatedTime && (
-                <div>
-                  <span className="text-[var(--color-muted-foreground)]">Estimated Time:</span>
-                  <span className="ml-2 text-[var(--color-foreground)] font-medium">
-                    {parsedData.estimatedTime} hours
-                  </span>
-                </div>
+                <HStack gap="xs">
+                  <Typography variant="small" className="text-[var(--color-muted-foreground)]">
+                    {t('streaming.estimatedTime')}
+                  </Typography>
+                  <Typography variant="small" className="font-medium">
+                    {parsedData.estimatedTime} {t('streaming.hours')}
+                  </Typography>
+                </HStack>
               )}
-            </div>
+            </SimpleGrid>
 
             {/* Milestones */}
             {milestones.length > 0 && (
               <VStack gap="sm" className="mt-4">
-                <h4 className="text-lg font-semibold text-[var(--color-foreground)]">
-                  Milestones
-                </h4>
-                <ul className="space-y-2">
+                <Typography variant="h4">
+                  {t('streaming.milestones')}
+                </Typography>
+                <VStack gap="xs">
                   {milestones.map((milestone, index) => {
                     if (!milestone.title?.trim()) return null;
                     return (
-                      <li
+                      <HStack
                         key={milestone.id || `milestone-${index}`}
-                        className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg"
+                        gap="sm"
+                        align="start"
+                        className="p-3 bg-[var(--color-surface)] rounded-lg"
                       >
-                        <Box className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <Box className="w-2 h-2 rounded-full bg-indigo-600" />
+                        <Box className="w-6 h-6 rounded-full bg-[var(--color-accent)]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <Box className="w-2 h-2 rounded-full bg-[var(--color-accent)]" />
                         </Box>
                         <VStack gap="xs" className="flex-1">
-                          <span className="font-medium text-[var(--color-foreground)]">
+                          <Typography variant="small" className="font-medium">
                             {milestone.title}
-                          </span>
+                          </Typography>
                           {milestone.description && (
-                            <span className="text-sm text-[var(--color-foreground)]">
+                            <Typography variant="small">
                               {milestone.description}
-                            </span>
+                            </Typography>
                           )}
                         </VStack>
-                      </li>
+                      </HStack>
                     );
                   })}
-                </ul>
+                </VStack>
               </VStack>
             )}
           </VStack>
@@ -210,22 +225,23 @@ export const StreamingDisplay: React.FC<StreamingDisplayProps> = ({
       {!hasData && (
         <Card className="border border-gray-200">
           <VStack gap="sm" align="center" className="py-8 text-[var(--color-muted-foreground)]">
-            <Box className="w-8 h-8 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin" />
-            <span className="text-sm">{loadingTitle}</span>
+            <Spinner size="md" />
+            <Typography variant="small">{loadingTitle}</Typography>
           </VStack>
         </Card>
       )}
 
       {/* Raw Content Toggle */}
       {showRawToggle && content && (
-        <details className="mt-4">
-          <summary className="cursor-pointer text-sm text-[var(--color-foreground)] hover:text-[var(--color-foreground)]">
-            Show raw JSON content
-          </summary>
-          <pre className="mt-2 p-3 bg-gray-50 rounded text-xs overflow-x-auto">
-            {content}
-          </pre>
-        </details>
+        <Accordion
+          items={[{
+            id: 'raw-json',
+            header: t('streaming.showRawJson'),
+            content: (
+              <CodeBlock code={content} language="json" />
+            ),
+          }]}
+        />
       )}
     </VStack>
   );

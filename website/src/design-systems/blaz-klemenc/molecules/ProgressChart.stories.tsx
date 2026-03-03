@@ -46,7 +46,7 @@ const wellnessData: ChartDataPoint[] = [
 
 export const Default: Story = {
   args: {
-    data: weightProgressData,
+    entity: weightProgressData,
     metric: "Weight Progress",
     unit: "kg",
   },
@@ -54,7 +54,7 @@ export const Default: Story = {
 
 export const LiftProgress: Story = {
   args: {
-    data: liftProgressData,
+    entity: liftProgressData,
     metric: "Squat Progress",
     unit: "kg",
     chartType: "line",
@@ -63,7 +63,7 @@ export const LiftProgress: Story = {
 
 export const BarChart: Story = {
   args: {
-    data: wellnessData,
+    entity: wellnessData,
     metric: "Weekly Wellness",
     chartType: "bar",
   },
@@ -71,7 +71,7 @@ export const BarChart: Story = {
 
 export const WithUnit: Story = {
   args: {
-    data: weightProgressData,
+    entity: weightProgressData,
     metric: "Body Weight",
     unit: "kg",
   },
@@ -79,7 +79,7 @@ export const WithUnit: Story = {
 
 export const WeekDateRange: Story = {
   args: {
-    data: wellnessData,
+    entity: wellnessData,
     metric: "Wellness Score",
     dateRange: "week",
   },
@@ -87,7 +87,7 @@ export const WeekDateRange: Story = {
 
 export const MonthDateRange: Story = {
   args: {
-    data: liftProgressData,
+    entity: liftProgressData,
     metric: "Lift Tracking",
     unit: "kg",
     dateRange: "month",
@@ -96,7 +96,7 @@ export const MonthDateRange: Story = {
 
 export const WithDateSelector: Story = {
   args: {
-    data: weightProgressData,
+    entity: weightProgressData,
     metric: "Weight Over Time",
     unit: "kg",
     showDateSelector: true,
@@ -105,14 +105,14 @@ export const WithDateSelector: Story = {
 
 export const EmptyData: Story = {
   args: {
-    data: [],
+    entity: [],
     metric: "No Data Yet",
   },
 };
 
 export const SingleDataPoint: Story = {
   args: {
-    data: [{ date: "2024-01-15", value: 85, label: "Starting Weight" }],
+    entity: [{ date: "2024-01-15", value: 85, label: "Starting Weight" }],
     metric: "Initial Measurement",
     unit: "kg",
   },

@@ -30,6 +30,7 @@ import {
   Spinner,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -47,13 +48,7 @@ export interface InviteData {
   redeemedByUserId?: string;
 }
 
-export interface InvitesBoardProps {
-  /** Entity data (invite items) */
-  entity?: readonly InviteData[];
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
+export interface InvitesBoardProps extends EntityDisplayProps<InviteData> {
   /** Page title */
   title?: string;
   /** Page subtitle */
@@ -62,8 +57,6 @@ export interface InvitesBoardProps {
   showHeader?: boolean;
   /** Show search */
   showSearch?: boolean;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for create action */
   createEvent: string;
   /** Event name for view action */
@@ -106,15 +99,15 @@ const getStatusConfig = (
 
 const InviteCard: React.FC<{
   invite: InviteData;
-  onAction: (action: string, invite: InviteData) => void;
-}> = ({ invite, onAction }) => {
+}> = ({ invite }) => {
   const { t } = useTranslate();
+  const eventBus = useEventBus();
   const statusConfig = getStatusConfig(invite.status, t);
   const StatusIcon = statusConfig.icon;
   const isActive = invite.status === "pending" || invite.status === "sent";
 
   const handleCopyCode = () => {
-    onAction("COPY_CODE", invite);
+    eventBus.emit("UI:COPY_CODE", { row: invite, entity: "Invite" });
   };
 
   return (
@@ -176,7 +169,7 @@ const InviteCard: React.FC<{
               <Button
                 variant="secondary"
                 size="sm"
-                onClick={() => onAction("RESEND", invite)}
+                onClick={() => eventBus.emit("UI:RESEND", { row: invite, entity: "Invite" })}
                 className="gap-1"
               >
                 <Send className="h-3 w-3" />
@@ -185,7 +178,7 @@ const InviteCard: React.FC<{
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => onAction("REVOKE", invite)}
+                onClick={() => eventBus.emit("UI:REVOKE", { row: invite, entity: "Invite" })}
                 className="gap-1 text-red-600"
               >
                 <Trash2 className="h-3 w-3" />
@@ -225,7 +218,7 @@ export const InvitesBoard: React.FC<InvitesBoardProps> = ({
   const [searchTerm, setSearchTerm] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState<string>("all");
 
-  const invites = entity || [];
+  const invites: readonly InviteData[] = Array.isArray(entity) ? entity : [];
 
   // Handle search
   const handleSearch = (value: string) => {
@@ -238,13 +231,8 @@ export const InvitesBoard: React.FC<InvitesBoardProps> = ({
     eventBus.emit(`UI:${createEvent}`, { entity: "Invite" });
   };
 
-  // Handle invite actions
-  const handleAction = (action: string, invite: InviteData) => {
-    eventBus.emit(`UI:${action}`, { row: invite, entity: "Invite" });
-  };
-
   // Filter invites
-  const filteredInvites = invites.filter((inv) => {
+  const filteredInvites = invites.filter((inv: InviteData) => {
     if (statusFilter !== "all" && inv.status !== statusFilter) {
       return false;
     }
@@ -258,9 +246,9 @@ export const InvitesBoard: React.FC<InvitesBoardProps> = ({
   const stats = {
     total: invites.length,
     pending: invites.filter(
-      (i) => i.status === "pending" || i.status === "sent"
+      (i: InviteData) => i.status === "pending" || i.status === "sent"
     ).length,
-    redeemed: invites.filter((i) => i.status === "redeemed").length,
+    redeemed: invites.filter((i: InviteData) => i.status === "redeemed").length,
   };
 
   return (
@@ -407,11 +395,10 @@ export const InvitesBoard: React.FC<InvitesBoardProps> = ({
             </VStack>
           ) : (
             <Box className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredInvites.map((invite) => (
+              {filteredInvites.map((invite: InviteData) => (
                 <InviteCard
                   key={invite.id}
                   invite={invite}
-                  onAction={handleAction}
                 />
               ))}
             </Box>

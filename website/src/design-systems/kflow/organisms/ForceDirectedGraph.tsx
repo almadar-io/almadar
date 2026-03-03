@@ -19,6 +19,7 @@ import {
   Card,
   Spinner,
   useEventBus,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 import ForceGraph2D from "react-force-graph-2d";
 
@@ -188,7 +189,7 @@ function getLinkColor(link: D3Link): string {
   }
 }
 
-export interface ForceDirectedGraphProps {
+export interface ForceDirectedGraphProps extends EntityDisplayProps {
   /** The knowledge graph data */
   graph?: KnowledgeGraph | null;
   /** Width of the graph container */
@@ -199,23 +200,12 @@ export interface ForceDirectedGraphProps {
   showLabels?: boolean;
   /** Show the legend */
   showLegend?: boolean;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
   /** Custom node color function */
   nodeColorFn?: (node: D3Node) => string;
   /** Custom link color function */
   linkColorFn?: (link: D3Link) => string;
   /** Callback when node is clicked */
   onNodeClick?: (node: D3Node) => void;
-  /** Additional CSS classes */
-  className?: string;
-  // Entity-aware props (for schema compatibility)
-  /** Entity type */
-  entity?: string;
-  /** Data array */
-  data?: unknown[];
   /** Show layer navigator */
   showLayerNavigator?: boolean;
   /** Fields to display */
@@ -224,11 +214,10 @@ export interface ForceDirectedGraphProps {
   itemActions?: Array<{
     label: string;
     event: string;
-    onClick?: (row: Record<string, unknown>) => void;
   }>;
 }
 
-export const ForceDirectedGraph: React.FC<ForceDirectedGraphProps> = ({
+export const ForceDirectedGraph = ({
   graph,
   width,
   height,
@@ -239,7 +228,7 @@ export const ForceDirectedGraph: React.FC<ForceDirectedGraphProps> = ({
   linkColorFn,
   onNodeClick,
   className,
-}) => {
+}: ForceDirectedGraphProps) => {
   const eventBus = useEventBus();
   const graphRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -338,7 +327,7 @@ export const ForceDirectedGraph: React.FC<ForceDirectedGraphProps> = ({
   if (!graph || nodes.length === 0) {
     return (
       <Box
-        className={`w-full h-full flex items-center justify-center bg-gray-50 dark:bg-gray-900 rounded-lg ${className || ""}`}
+        className={`w-full h-full flex items-center justify-center bg-[var(--color-background)] rounded-lg ${className || ""}`}
       >
         <Typography variant="body" className="text-[var(--color-muted-foreground)]">
           No graph data available
@@ -350,7 +339,7 @@ export const ForceDirectedGraph: React.FC<ForceDirectedGraphProps> = ({
   return (
     <Box
       ref={containerRef}
-      className={`w-full h-full bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 relative ${className || ""}`}
+      className={`w-full h-full bg-[var(--color-card)] rounded-lg border border-[var(--color-border)] relative ${className || ""}`}
     >
       {/* Legend */}
       {showLegend && (
@@ -386,7 +375,7 @@ export const ForceDirectedGraph: React.FC<ForceDirectedGraphProps> = ({
                   </HStack>
                 ))}
             </VStack>
-            <Box className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
+            <Box className="mt-3 pt-3 border-t border-[var(--color-border)]">
               <Typography
                 variant="small"
                 className="text-[var(--color-muted-foreground)]"

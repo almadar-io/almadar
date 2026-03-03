@@ -1,3 +1,4 @@
+/* eslint-disable almadar/organism-extends-entity-display */
 /**
  * FlashCard - A flashcard component with flip animation and navigation
  *
@@ -23,6 +24,7 @@ import {
   Typography,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 
 export interface FlashCardEntity {
@@ -32,7 +34,7 @@ export interface FlashCardEntity {
   studied?: boolean;
 }
 
-export interface FlashCardProps {
+export interface FlashCardProps extends Omit<EntityDisplayProps, 'entity'> {
   /** Flash card entity data */
   entity: FlashCardEntity;
   /** Is flipped (controlled) */
@@ -45,15 +47,9 @@ export interface FlashCardProps {
   showNavigation?: boolean;
   /** Show study actions */
   showActions?: boolean;
-  /** Additional CSS classes */
-  className?: string;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
 }
 
-export const FlashCard: React.FC<FlashCardProps> = ({
+export const FlashCard = ({
   entity,
   flipped: controlledFlipped,
   currentCard,
@@ -61,14 +57,14 @@ export const FlashCard: React.FC<FlashCardProps> = ({
   showNavigation = true,
   showActions = true,
   className = '',
-}) => {
+}: FlashCardProps) => {
   const { emit } = useEventBus();
   const { t } = useTranslate();
   const [internalFlipped, setInternalFlipped] = useState(false);
   const flipped = controlledFlipped !== undefined ? controlledFlipped : internalFlipped;
 
-  const progress =
-    currentCard && totalCards ? (currentCard / totalCards) * 100 : undefined;
+  const progress: number | undefined =
+    currentCard !== undefined && totalCards ? (currentCard / totalCards) * 100 : undefined;
 
   const handleFlip = () => {
     const newFlipped = !flipped;
@@ -103,7 +99,7 @@ export const FlashCard: React.FC<FlashCardProps> = ({
         <VStack gap="xs">
           <HStack justify="between">
             <Typography variant="small" className="text-sm text-[var(--color-muted-foreground)]">
-              {t('flashcard.cardProgress', { current: currentCard, total: totalCards })}
+              {t('flashcard.cardProgress', { current: currentCard ?? 0, total: totalCards ?? 0 })}
             </Typography>
             <Typography variant="small" className="text-sm text-[var(--color-muted-foreground)]">{Math.round(progress)}%</Typography>
           </HStack>

@@ -3,6 +3,10 @@ import { GenericAppTemplate } from './GenericAppTemplate';
 import { Button } from '../atoms/Button';
 import { Card } from '../atoms/Card';
 import { Typography } from '../atoms/Typography';
+import { Badge } from '../atoms/Badge';
+import { Box } from '../atoms/Box';
+import { VStack } from '../atoms/Stack';
+import { HStack } from '../atoms/Stack';
 import { Plus, Settings, Download } from 'lucide-react';
 
 const meta: Meta<typeof GenericAppTemplate> = {
@@ -22,7 +26,7 @@ export const Default: Story = {
     args: {
         title: 'My Application',
         children: (
-            <div className="space-y-4">
+            <VStack gap="md">
                 <Typography variant="body1">
                     This is the main content area of your application.
                 </Typography>
@@ -32,7 +36,7 @@ export const Default: Story = {
                         Start building your application from this template.
                     </Typography>
                 </Card>
-            </div>
+            </VStack>
         ),
     },
 };
@@ -42,20 +46,20 @@ export const WithSubtitle: Story = {
         title: 'Dashboard',
         subtitle: 'Overview of your system metrics and activities',
         children: (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <Card className="p-4">
+            <HStack gap="md" className="flex-wrap">
+                <Card className="p-4 flex-1 min-w-[200px]">
                     <Typography variant="h6">Metric 1</Typography>
                     <Typography variant="h3">2,543</Typography>
                 </Card>
-                <Card className="p-4">
+                <Card className="p-4 flex-1 min-w-[200px]">
                     <Typography variant="h6">Metric 2</Typography>
                     <Typography variant="h3">$45,231</Typography>
                 </Card>
-                <Card className="p-4">
+                <Card className="p-4 flex-1 min-w-[200px]">
                     <Typography variant="h6">Metric 3</Typography>
                     <Typography variant="h3">156</Typography>
                 </Card>
-            </div>
+            </HStack>
         ),
     },
 };
@@ -75,7 +79,7 @@ export const WithHeaderActions: Story = {
             </>
         ),
         children: (
-            <div className="space-y-4">
+            <VStack gap="md">
                 <Card className="p-4">
                     <Typography variant="h6">Project Alpha</Typography>
                     <Typography variant="body2" color="secondary">Last updated 2 hours ago</Typography>
@@ -84,7 +88,7 @@ export const WithHeaderActions: Story = {
                     <Typography variant="h6">Project Beta</Typography>
                     <Typography variant="body2" color="secondary">Last updated 1 day ago</Typography>
                 </Card>
-            </div>
+            </VStack>
         ),
     },
 };
@@ -93,22 +97,22 @@ export const WithFooter: Story = {
     args: {
         title: 'Document Editor',
         children: (
-            <div className="h-[300px] border-2 border-dashed border-neutral-300 flex items-center justify-center">
+            <Box className="h-[300px] border-2 border-dashed border-neutral-300 flex items-center justify-center">
                 <Typography color="secondary">Editor content goes here</Typography>
-            </div>
+            </Box>
         ),
         footer: (
-            <div className="flex justify-between items-center">
+            <HStack justify="between" align="center">
                 <Typography variant="body2" color="secondary">
                     Last saved: 5 minutes ago
                 </Typography>
-                <div className="flex gap-2">
+                <HStack gap="sm">
                     <Button variant="ghost" size="sm">Cancel</Button>
                     <Button variant="primary" size="sm" leftIcon={<Download className="h-4 w-4" />}>
                         Save Document
                     </Button>
-                </div>
-            </div>
+                </HStack>
+            </HStack>
         ),
     },
 };
@@ -126,37 +130,37 @@ export const FullFeatured: Story = {
             </>
         ),
         children: (
-            <div className="space-y-4">
+            <VStack gap="md">
                 <Card className="p-4">
-                    <div className="flex justify-between items-center">
-                        <div>
+                    <HStack justify="between" align="center">
+                        <Box>
                             <Typography variant="body1" className="font-bold">John Doe</Typography>
                             <Typography variant="body2" color="secondary">john@example.com</Typography>
-                        </div>
-                        <span className="px-2 py-1 border-2 border-emerald-600 text-emerald-600 text-xs font-bold">Active</span>
-                    </div>
+                        </Box>
+                        <Badge variant="success" size="sm">Active</Badge>
+                    </HStack>
                 </Card>
                 <Card className="p-4">
-                    <div className="flex justify-between items-center">
-                        <div>
+                    <HStack justify="between" align="center">
+                        <Box>
                             <Typography variant="body1" className="font-bold">Jane Smith</Typography>
                             <Typography variant="body2" color="secondary">jane@example.com</Typography>
-                        </div>
-                        <span className="px-2 py-1 border-2 border-amber-500 text-amber-500 text-xs font-bold">Pending</span>
-                    </div>
+                        </Box>
+                        <Badge variant="warning" size="sm">Pending</Badge>
+                    </HStack>
                 </Card>
-            </div>
+            </VStack>
         ),
         footer: (
-            <div className="flex justify-between items-center">
+            <HStack justify="between" align="center">
                 <Typography variant="body2" color="secondary">
                     Showing 2 of 156 users
                 </Typography>
-                <div className="flex gap-2">
+                <HStack gap="sm">
                     <Button variant="ghost" size="sm">Previous</Button>
                     <Button variant="ghost" size="sm">Next</Button>
-                </div>
-            </div>
+                </HStack>
+            </HStack>
         ),
     },
 };

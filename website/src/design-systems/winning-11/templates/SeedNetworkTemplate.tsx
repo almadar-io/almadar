@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * SeedNetworkTemplate
  *
@@ -19,7 +20,7 @@ import {
 export type { SeedNominationData };
 
 export interface SeedNetworkTemplateProps {
-  /** Entity data (seed nomination items) */
+  /** Entity prop (seed nomination items) */
   entity?: readonly SeedNominationData[];
   /** Loading state */
   isLoading?: boolean;

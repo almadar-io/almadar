@@ -29,10 +29,10 @@ export interface ConnectionBlockProps {
   className?: string;
 }
 
-export const ConnectionBlock: React.FC<ConnectionBlockProps> = ({
+export const ConnectionBlock = ({
   content,
   className,
-}) => {
+}: ConnectionBlockProps) => {
   const { t } = useTranslate();
 
   return (

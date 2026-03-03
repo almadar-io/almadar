@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Sidebar } from './Sidebar';
 import { Home, Users, Settings, FileText, BarChart, Mail, Calendar } from 'lucide-react';
+import { Box } from '../atoms/Box';
 
 const meta: Meta<typeof Sidebar> = {
     title: 'Organisms/Sidebar',
@@ -29,12 +30,14 @@ export const Default: Story = {
     args: {
         items: sidebarItems.map(item => ({ ...item, active: item.id === 'dashboard' })),
         brandName: 'MyApp',
+        collapseChangeEvent: 'UI:SIDEBAR_COLLAPSE',
+        logoClickEvent: 'UI:SIDEBAR_LOGO',
     },
     decorators: [
         (Story) => (
-            <div className="h-screen">
+            <Box className="h-screen">
                 <Story />
-            </div>
+            </Box>
         ),
     ],
 };
@@ -44,12 +47,14 @@ export const Collapsed: Story = {
         items: sidebarItems.map(item => ({ ...item, active: item.id === 'dashboard' })),
         brandName: 'MA',
         defaultCollapsed: true,
+        collapseChangeEvent: 'UI:SIDEBAR_COLLAPSE',
+        logoClickEvent: 'UI:SIDEBAR_LOGO',
     },
     decorators: [
         (Story) => (
-            <div className="h-screen">
+            <Box className="h-screen">
                 <Story />
-            </div>
+            </Box>
         ),
     ],
 };
@@ -64,12 +69,14 @@ export const WithManyItems: Story = {
             { id: 'messages', label: 'Messages', icon: Mail, href: '#', badge: 3 },
         ],
         brandName: 'MyApp',
+        collapseChangeEvent: 'UI:SIDEBAR_COLLAPSE',
+        logoClickEvent: 'UI:SIDEBAR_LOGO',
     },
     decorators: [
         (Story) => (
-            <div className="h-screen">
+            <Box className="h-screen">
                 <Story />
-            </div>
+            </Box>
         ),
     ],
 };
@@ -78,17 +85,19 @@ export const WithFooter: Story = {
     args: {
         items: sidebarItems.map(item => ({ ...item, active: item.id === 'dashboard' })),
         brandName: 'MyApp',
+        collapseChangeEvent: 'UI:SIDEBAR_COLLAPSE',
+        logoClickEvent: 'UI:SIDEBAR_LOGO',
         footerContent: (
-            <div className="p-4 border-t-2 border-black">
-                <p className="text-sm text-neutral-600">v1.0.0</p>
-            </div>
+            <Box className="p-4 border-t-2 border-[var(--color-border)]">
+                <Box className="text-sm text-[var(--color-muted-foreground)]">v1.0.0</Box>
+            </Box>
         ),
     },
     decorators: [
         (Story) => (
-            <div className="h-screen">
+            <Box className="h-screen">
                 <Story />
-            </div>
+            </Box>
         ),
     ],
 };

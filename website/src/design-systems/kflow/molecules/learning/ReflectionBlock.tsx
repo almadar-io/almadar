@@ -39,14 +39,14 @@ export interface ReflectionBlockProps {
   className?: string;
 }
 
-export const ReflectionBlock: React.FC<ReflectionBlockProps> = ({
+export const ReflectionBlock = ({
   prompt,
   index,
   savedNote,
   conceptId,
   onSave,
   className,
-}) => {
+}: ReflectionBlockProps) => {
   const eventBus = useEventBus();
   const { t } = useTranslate();
   const [note, setNote] = useState(savedNote || "");

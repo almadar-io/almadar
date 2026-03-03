@@ -1,3 +1,4 @@
+'use client';
 /**
  * Overlay Atom Component
  *

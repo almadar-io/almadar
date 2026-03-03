@@ -1,13 +1,21 @@
+/* eslint-disable almadar/organism-no-callback-props, almadar/organism-extends-entity-display */
+'use client';
 /**
  * BattleBoard
  *
- * Core game-logic organism extracted from BattleTemplate.
- * Handles turn-based phase management, movement animation, valid-move/attack-target
- * calculation, screen shake/flash, and game-over detection.
+ * Core rendering organism for turn-based battles.
  *
- * Accepts a single `entity` prop (BattleEntity) containing all board data,
- * plus optional render-prop slots, callback overrides, and declarative event props
- * that emit via `useEventBus()`.
+ * This is a **controlled-only** component: all game state (units, phase,
+ * turn, gameResult, selectedUnitId) must be provided via the `entity` prop.
+ * User interactions are communicated via event bus emissions so the parent
+ * (typically an Orbital trait or the `useBattleState` hook) can manage
+ * state transitions.
+ *
+ * For a self-managing version, use `UncontrolledBattleBoard` which
+ * composes this component with the `useBattleState` hook.
+ *
+ * Animation-only state (movement interpolation, screen shake, hover) is
+ * always managed locally.
  *
  * @packageDocumentation
  */
@@ -15,6 +23,12 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { cn } from '../../../lib/cn';
 import { useEventBus } from '../../../hooks/useEventBus';
+import { useTranslate } from '../../../hooks/useTranslate';
+import { Box } from '../../atoms/Box';
+import { Button } from '../../atoms/Button';
+import { Typography } from '../../atoms/Typography';
+import { VStack, HStack } from '../../atoms/Stack';
+import type { EntityDisplayProps } from '../types';
 import IsometricCanvas from './IsometricCanvas';
 import type {
     IsometricTile,
@@ -44,6 +58,13 @@ export interface BattleUnit {
     unitType?: string;
     heroId?: string;
     sprite?: string;
+    /** Optional sprite sheet for animation (null = use static sprite) */
+    spriteSheet?: {
+        se: string;
+        sw: string;
+        frameWidth: number;
+        frameHeight: number;
+    } | null;
     team: 'player' | 'enemy';
     position: { x: number; y: number };
     health: number;
@@ -67,10 +88,20 @@ export interface BattleTile {
     terrainSprite?: string;
 }
 
-/** Entity prop containing all board data */
+/** Entity prop containing all board data.
+ *
+ * BattleBoard is **controlled-only**: all game-state fields (`units`, `phase`,
+ * `turn`, `gameResult`, `selectedUnitId`) must be provided.  Mutations are
+ * communicated via event bus emissions — the component never calls `setState`
+ * for game-logic values.
+ *
+ * For a self-managing variant, use `UncontrolledBattleBoard`.
+ *
+ * Animation-only state (`movingPositions`, `isShaking`, `hoveredTile`) is
+ * always managed locally.
+ */
 export interface BattleEntity {
     id: string;
-    initialUnits: BattleUnit[];
     tiles: IsometricTile[];
     features?: IsometricFeature[];
     boardWidth?: number;
@@ -83,6 +114,18 @@ export interface BattleEntity {
         effects?: Record<string, string>;
     };
     backgroundImage?: string;
+
+    // ── Game-state fields (required — controlled by parent) ──────────────
+    /** Current unit state. */
+    units: BattleUnit[];
+    /** Current battle phase. */
+    phase: BattlePhase;
+    /** Current turn number. */
+    turn: number;
+    /** Game result. `null` = still in progress. */
+    gameResult: 'victory' | 'defeat' | null;
+    /** Currently selected unit ID. */
+    selectedUnitId: string | null;
 }
 
 /** Context exposed to render-prop slots */
@@ -102,7 +145,7 @@ export interface BattleSlotContext {
     tileToScreen: (x: number, y: number) => { x: number; y: number };
 }
 
-export interface BattleBoardProps {
+export interface BattleBoardProps extends Omit<EntityDisplayProps, 'entity'> {
     /** Entity containing all board data */
     entity: BattleEntity;
 
@@ -187,9 +230,8 @@ export function BattleBoard({
     playAgainEvent,
     attackEvent,
     className,
-}: BattleBoardProps): JSX.Element {
+}: BattleBoardProps): React.JSX.Element {
     // -- Unpack entity --
-    const initialUnits = entity.initialUnits;
     const tiles = entity.tiles;
     const features = entity.features ?? [];
     const boardWidth = entity.boardWidth ?? 8;
@@ -197,16 +239,19 @@ export function BattleBoard({
     const assetManifest = entity.assetManifest;
     const backgroundImage = entity.backgroundImage;
 
+    // ── Game state (read from entity — controlled by parent) ─────────────
+    const units = entity.units;
+    const selectedUnitId = entity.selectedUnitId;
+    const currentPhase = entity.phase;
+    const currentTurn = entity.turn;
+    const gameResult = entity.gameResult;
+
     // -- Event bus --
     const eventBus = useEventBus();
+    const { t } = useTranslate();
 
-    // ── Game state ──────────────────────────────────────────────────────────
-    const [units, setUnits] = useState<BattleUnit[]>(initialUnits);
-    const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
+    // ── Rendering-only state (always local) ──────────────────────────────
     const [hoveredTile, setHoveredTile] = useState<{ x: number; y: number } | null>(null);
-    const [currentPhase, setCurrentPhase] = useState<BattlePhase>('observation');
-    const [currentTurn, setCurrentTurn] = useState(1);
-    const [gameResult, setGameResult] = useState<'victory' | 'defeat' | null>(null);
     const [isShaking, setIsShaking] = useState(false);
 
     // ── Derived state ───────────────────────────────────────────────────────
@@ -354,20 +399,16 @@ export function BattleBoard({
         [scale, baseOffsetX],
     );
 
-    // ── Check game end ──────────────────────────────────────────────────────
+    // ── Check game end (emit only — state managed by parent) ───────────────
     const checkGameEnd = useCallback(() => {
         const pa = units.filter(u => u.team === 'player' && u.health > 0);
         const ea = units.filter(u => u.team === 'enemy' && u.health > 0);
         if (pa.length === 0) {
-            setGameResult('defeat');
-            setCurrentPhase('game_over');
             onGameEnd?.('defeat');
             if (gameEndEvent) {
                 eventBus.emit(`UI:${gameEndEvent}`, { result: 'defeat' });
             }
         } else if (ea.length === 0) {
-            setGameResult('victory');
-            setCurrentPhase('game_over');
             onGameEnd?.('victory');
             if (gameEndEvent) {
                 eventBus.emit(`UI:${gameEndEvent}`, { result: 'victory' });
@@ -375,7 +416,7 @@ export function BattleBoard({
         }
     }, [units, onGameEnd, gameEndEvent, eventBus]);
 
-    // ── Handle unit click ───────────────────────────────────────────────────
+    // ── Handle unit click (emit only — state managed by parent) ────────────
     const handleUnitClick = useCallback((unitId: string) => {
         const unit = units.find(u => u.id === unitId);
         if (!unit) return;
@@ -384,12 +425,8 @@ export function BattleBoard({
             eventBus.emit(`UI:${unitClickEvent}`, { unitId });
         }
 
-        if (currentPhase === 'observation' || currentPhase === 'selection') {
-            if (unit.team === 'player') {
-                setSelectedUnitId(unitId);
-                setCurrentPhase('movement');
-            }
-        } else if (currentPhase === 'action' && selectedUnit) {
+        // Screen shake on attack hit (rendering-only state)
+        if (currentPhase === 'action' && selectedUnit) {
             if (
                 unit.team === 'enemy' &&
                 attackTargets.some(t => t.x === unit.position.x && t.y === unit.position.y)
@@ -398,10 +435,6 @@ export function BattleBoard({
                     ? calculateDamage(selectedUnit, unit)
                     : Math.max(1, selectedUnit.attack - unit.defense);
 
-                const newHealth = Math.max(0, unit.health - damage);
-                setUnits(prev => prev.map(u => (u.id === unit.id ? { ...u, health: newHealth } : u)));
-
-                // Screen shake on hit
                 setIsShaking(true);
                 setTimeout(() => setIsShaking(false), 300);
 
@@ -414,16 +447,12 @@ export function BattleBoard({
                     });
                 }
 
-                setSelectedUnitId(null);
-                setCurrentPhase('observation');
-                setCurrentTurn(t => t + 1);
-
                 setTimeout(checkGameEnd, 100);
             }
         }
     }, [currentPhase, selectedUnit, attackTargets, units, checkGameEnd, onAttack, calculateDamage, unitClickEvent, attackEvent, eventBus]);
 
-    // ── Handle tile click (movement) ────────────────────────────────────────
+    // ── Handle tile click (emit + animation — no state mutation) ───────────
     const handleTileClick = useCallback((x: number, y: number) => {
         if (tileClickEvent) {
             eventBus.emit(`UI:${tileClickEvent}`, { x, y });
@@ -435,44 +464,30 @@ export function BattleBoard({
                 const from = { ...selectedUnit.position };
                 const to = { x, y };
                 startMoveAnimation(selectedUnit.id, from, to, () => {
-                    setUnits(prev =>
-                        prev.map(u => (u.id === selectedUnitId ? { ...u, position: { x, y } } : u)),
-                    );
                     onUnitMove?.(selectedUnit, to);
-                    setCurrentPhase('action');
                 });
             }
         }
-    }, [currentPhase, selectedUnit, selectedUnitId, validMoves, startMoveAnimation, onUnitMove, tileClickEvent, eventBus]);
+    }, [currentPhase, selectedUnit, validMoves, startMoveAnimation, onUnitMove, tileClickEvent, eventBus]);
 
-    // ── Phase controls ──────────────────────────────────────────────────────
+    // ── Phase controls (emit only — state managed by parent) ───────────────
     const handleEndTurn = useCallback(() => {
-        setSelectedUnitId(null);
-        setCurrentPhase('observation');
-        setCurrentTurn(t => t + 1);
         if (endTurnEvent) {
             eventBus.emit(`UI:${endTurnEvent}`, {});
         }
     }, [endTurnEvent, eventBus]);
 
     const handleCancel = useCallback(() => {
-        setSelectedUnitId(null);
-        setCurrentPhase('observation');
         if (cancelEvent) {
             eventBus.emit(`UI:${cancelEvent}`, {});
         }
     }, [cancelEvent, eventBus]);
 
     const handleReset = useCallback(() => {
-        setUnits(initialUnits);
-        setSelectedUnitId(null);
-        setCurrentPhase('observation');
-        setCurrentTurn(1);
-        setGameResult(null);
         if (playAgainEvent) {
             eventBus.emit(`UI:${playAgainEvent}`, {});
         }
-    }, [initialUnits, playAgainEvent, eventBus]);
+    }, [playAgainEvent, eventBus]);
 
     // ── Slot context ────────────────────────────────────────────────────────
     const ctx: BattleSlotContext = useMemo(
@@ -503,7 +518,7 @@ export function BattleBoard({
         : {};
 
     return (
-        <div className={cn('battle-board relative flex flex-col min-h-[600px] bg-[var(--color-background)]', className)}>
+        <VStack className={cn('battle-board relative min-h-[600px] bg-[var(--color-background)]', className)} gap="none">
             {/* Shake keyframes */}
             <style>{`
                 @keyframes battle-shake {
@@ -521,12 +536,12 @@ export function BattleBoard({
             `}</style>
 
             {/* Header slot */}
-            {header && <div className="p-4">{header(ctx)}</div>}
+            {header && <Box className="p-4">{header(ctx)}</Box>}
 
             {/* Main area */}
-            <div className="flex flex-1 gap-4 p-4 pt-0">
+            <HStack className="flex-1 gap-4 p-4 pt-0" gap="none">
                 {/* Canvas column */}
-                <div className="relative flex-1" style={shakeStyle}>
+                <Box className="relative flex-1" style={shakeStyle}>
                     <IsometricCanvas
                         tiles={tiles}
                         units={isoUnits}
@@ -552,36 +567,38 @@ export function BattleBoard({
 
                     {/* Overlay slot (damage popups, tooltips, etc.) */}
                     {overlay && overlay(ctx)}
-                </div>
+                </Box>
 
                 {/* Sidebar slot */}
                 {sidebar && (
-                    <div className="w-80 shrink-0">
+                    <Box className="w-80 shrink-0">
                         {sidebar(ctx)}
-                    </div>
+                    </Box>
                 )}
-            </div>
+            </HStack>
 
             {/* Floating actions slot */}
             {actions
                 ? actions(ctx)
                 : currentPhase !== 'game_over' && (
-                    <div className="fixed bottom-6 right-6 z-50 flex gap-2">
+                    <HStack className="fixed bottom-6 right-6 z-50" gap="sm">
                         {(currentPhase === 'movement' || currentPhase === 'action') && (
-                            <button
-                                className="px-4 py-2 rounded-lg bg-[var(--color-surface)] text-[var(--color-foreground)] border border-[var(--color-border)] shadow-xl hover:opacity-90"
+                            <Button
+                                variant="secondary"
+                                className="shadow-xl"
                                 onClick={handleCancel}
                             >
-                                Cancel
-                            </button>
+                                {t('battle.cancel')}
+                            </Button>
                         )}
-                        <button
-                            className="px-4 py-2 rounded-lg bg-[var(--color-primary)] text-white shadow-xl hover:opacity-90"
+                        <Button
+                            variant="primary"
+                            className="shadow-xl"
                             onClick={handleEndTurn}
                         >
-                            End Turn
-                        </button>
-                    </div>
+                            {t('battle.endTurn')}
+                        </Button>
+                    </HStack>
                 )}
 
             {/* Game Over overlay */}
@@ -589,30 +606,32 @@ export function BattleBoard({
                 gameOverOverlay
                     ? gameOverOverlay(ctx)
                     : (
-                        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm rounded-xl">
-                            <div className="text-center space-y-6 p-8">
-                                <h2
+                        <Box className="absolute inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm rounded-xl">
+                            <VStack className="text-center p-8" gap="lg">
+                                <Typography
+                                    variant="h2"
                                     className={cn(
                                         'text-4xl font-black tracking-widest uppercase',
                                         gameResult === 'victory' ? 'text-yellow-400' : 'text-red-500',
                                     )}
                                 >
-                                    {gameResult === 'victory' ? 'Victory!' : 'Defeat'}
-                                </h2>
-                                <p className="text-gray-300">
-                                    Turns played: {currentTurn}
-                                </p>
-                                <button
-                                    className="px-8 py-3 rounded-lg bg-[var(--color-primary)] text-white font-semibold hover:opacity-90"
+                                    {gameResult === 'victory' ? t('battle.victory') : t('battle.defeat')}
+                                </Typography>
+                                <Typography variant="body1" className="text-gray-300">
+                                    {t('battle.turnsPlayed')}: {currentTurn}
+                                </Typography>
+                                <Button
+                                    variant="primary"
+                                    className="px-8 py-3 font-semibold"
                                     onClick={handleReset}
                                 >
-                                    Play Again
-                                </button>
-                            </div>
-                        </div>
+                                    {t('battle.playAgain')}
+                                </Button>
+                            </VStack>
+                        </Box>
                     )
             )}
-        </div>
+        </VStack>
     );
 }
 

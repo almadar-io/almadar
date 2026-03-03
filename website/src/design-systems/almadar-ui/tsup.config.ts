@@ -10,6 +10,7 @@ export default defineConfig({
     'stores/index.ts',
     'lib/index.ts',
     'components/organisms/game/three/index.ts',
+    'locales/index.ts',
   ],
   format: ['esm'],
   dts: true,

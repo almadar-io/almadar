@@ -37,7 +37,7 @@ export function CastleTemplate({
     entity,
     scale = 0.45,
     className,
-}: CastleTemplateProps): JSX.Element {
+}: CastleTemplateProps): React.JSX.Element {
     return (
         <CastleBoard
             entity={entity}

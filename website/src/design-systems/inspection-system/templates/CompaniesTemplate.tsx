@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * CompaniesTemplate - Template for the Companies list page
  *

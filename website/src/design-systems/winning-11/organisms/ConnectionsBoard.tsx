@@ -33,6 +33,7 @@ import {
   Spinner,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -60,13 +61,7 @@ export interface ConnectionData {
   recipientName?: string;
 }
 
-export interface ConnectionsBoardProps {
-  /** Entity data (connection items) */
-  entity?: readonly ConnectionData[];
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
+export interface ConnectionsBoardProps extends EntityDisplayProps<ConnectionData> {
   /** Current user ID (to determine incoming vs outgoing) */
   currentUserId?: string;
   /** Page title */
@@ -79,8 +74,6 @@ export interface ConnectionsBoardProps {
   showSearch?: boolean;
   /** Show filters */
   showFilters?: boolean;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for create action */
   createEvent: string;
   /** Event name for view action */
@@ -142,9 +135,9 @@ const getCategoryColor = (category?: ConnectionData["category"]) => {
 const ConnectionCard: React.FC<{
   connection: ConnectionData;
   currentUserId?: string;
-  onAction: (action: string, connection: ConnectionData) => void;
-}> = ({ connection, currentUserId, onAction }) => {
+}> = ({ connection, currentUserId }) => {
   const { t } = useTranslate();
+  const eventBus = useEventBus();
   const statusConfig = getStatusConfig(connection.status);
   const StatusIcon = statusConfig.icon;
   const isIncoming = connection.recipientId === currentUserId;
@@ -221,7 +214,7 @@ const ConnectionCard: React.FC<{
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onAction("VIEW", connection)}
+            onClick={() => eventBus.emit("UI:VIEW", { row: connection, entity: "Connection" })}
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
@@ -233,7 +226,7 @@ const ConnectionCard: React.FC<{
               <Button
                 variant="primary"
                 size="sm"
-                onClick={() => onAction("ACCEPT", connection)}
+                onClick={() => eventBus.emit("UI:ACCEPT", { row: connection, entity: "Connection" })}
                 className="gap-1"
               >
                 <UserCheck className="h-3 w-3" />
@@ -242,7 +235,7 @@ const ConnectionCard: React.FC<{
               <Button
                 variant="secondary"
                 size="sm"
-                onClick={() => onAction("REJECT", connection)}
+                onClick={() => eventBus.emit("UI:REJECT", { row: connection, entity: "Connection" })}
                 className="gap-1"
               >
                 <UserX className="h-3 w-3" />
@@ -255,7 +248,7 @@ const ConnectionCard: React.FC<{
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => onAction("ARCHIVE", connection)}
+              onClick={() => eventBus.emit("UI:ARCHIVE", { row: connection, entity: "Connection" })}
               className="gap-1 text-[var(--color-muted-foreground)]"
             >
               <Archive className="h-3 w-3" />
@@ -293,7 +286,7 @@ export const ConnectionsBoard: React.FC<ConnectionsBoardProps> = ({
   const [layout, setLayout] = React.useState<"grid" | "list">("grid");
   const [statusFilter, setStatusFilter] = React.useState<string>("all");
 
-  const connections = entity || [];
+  const connections = Array.isArray(entity) ? entity : entity ? [entity] : [];
 
   // Handle search
   const handleSearch = (value: string) => {
@@ -309,14 +302,6 @@ export const ConnectionsBoard: React.FC<ConnectionsBoardProps> = ({
   // Handle filter
   const handleFilter = () => {
     eventBus.emit(`UI:${filterEvent}`, { entity: "Connection" });
-  };
-
-  // Handle connection actions
-  const handleAction = (action: string, connection: ConnectionData) => {
-    eventBus.emit(`UI:${action}`, {
-      row: connection,
-      entity: "Connection",
-    });
   };
 
   // Filter connections
@@ -533,7 +518,6 @@ export const ConnectionsBoard: React.FC<ConnectionsBoardProps> = ({
                   key={connection.id}
                   connection={connection}
                   currentUserId={currentUserId}
-                  onAction={handleAction}
                 />
               ))}
             </Box>

@@ -35,13 +35,13 @@ const baseCreditData: CreditData = {
 
 export const Default: Story = {
   args: {
-    data: baseCreditData,
+    entity: baseCreditData,
   },
 };
 
 export const FullCredits: Story = {
   args: {
-    data: {
+    entity: {
       ...baseCreditData,
       remainingCredits: 10,
     },
@@ -50,7 +50,7 @@ export const FullCredits: Story = {
 
 export const MediumCredits: Story = {
   args: {
-    data: {
+    entity: {
       ...baseCreditData,
       remainingCredits: 4,
     },
@@ -59,7 +59,7 @@ export const MediumCredits: Story = {
 
 export const LowCredits: Story = {
   args: {
-    data: {
+    entity: {
       ...baseCreditData,
       remainingCredits: 2,
     },
@@ -68,7 +68,7 @@ export const LowCredits: Story = {
 
 export const NoCredits: Story = {
   args: {
-    data: {
+    entity: {
       ...baseCreditData,
       remainingCredits: 0,
     },
@@ -77,7 +77,7 @@ export const NoCredits: Story = {
 
 export const ExpiringCredits: Story = {
   args: {
-    data: {
+    entity: {
       ...baseCreditData,
       remainingCredits: 5,
       expiresAt: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
@@ -87,7 +87,7 @@ export const ExpiringCredits: Story = {
 
 export const ExpiresTomorrow: Story = {
   args: {
-    data: {
+    entity: {
       ...baseCreditData,
       remainingCredits: 3,
       expiresAt: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // 1 day from now
@@ -97,7 +97,7 @@ export const ExpiresTomorrow: Story = {
 
 export const Compact: Story = {
   args: {
-    data: {
+    entity: {
       ...baseCreditData,
       remainingCredits: 5,
     },
@@ -107,7 +107,7 @@ export const Compact: Story = {
 
 export const CompactExpiring: Story = {
   args: {
-    data: {
+    entity: {
       ...baseCreditData,
       remainingCredits: 5,
       expiresAt: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
@@ -118,7 +118,7 @@ export const CompactExpiring: Story = {
 
 export const Small: Story = {
   args: {
-    data: {
+    entity: {
       ...baseCreditData,
       remainingCredits: 6,
     },
@@ -128,7 +128,7 @@ export const Small: Story = {
 
 export const Large: Story = {
   args: {
-    data: {
+    entity: {
       ...baseCreditData,
       remainingCredits: 8,
     },
@@ -138,7 +138,7 @@ export const Large: Story = {
 
 export const WithoutActionButton: Story = {
   args: {
-    data: {
+    entity: {
       ...baseCreditData,
       remainingCredits: 2,
     },

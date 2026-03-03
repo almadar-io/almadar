@@ -1,11 +1,17 @@
+'use client';
 /**
  * Sidebar Organism Component
- * 
+ *
  * A sidebar component with logo, navigation items, user section, and collapse/expand.
  * Styled to match the main Layout component with theme-aware CSS variables.
+ *
+ * Events:
+ * - collapseChangeEvent — emitted when sidebar collapse state changes, payload: { collapsed: boolean }
+ * - closeEvent — emitted when close button clicked (mobile)
+ * - logoClickEvent — emitted when logo/brand area clicked
  */
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { Badge } from '../atoms/Badge';
@@ -13,6 +19,9 @@ import { Button } from '../atoms/Button';
 import { Box } from '../atoms/Box';
 import { Typography } from '../atoms/Typography';
 import { cn } from '../../lib/cn';
+import { useEventBus } from '../../hooks/useEventBus';
+import { useTranslate } from '../../hooks/useTranslate';
+import type { EntityDisplayProps } from './types';
 
 export interface SidebarItem {
   /** Item ID */
@@ -35,7 +44,7 @@ export interface SidebarItem {
   subItems?: SidebarItem[];
 }
 
-export interface SidebarProps {
+export interface SidebarProps extends EntityDisplayProps<SidebarItem> {
   /** Logo/Brand content - can be a ReactNode or logo config */
   logo?: React.ReactNode;
   /** Logo image source */
@@ -52,24 +61,16 @@ export interface SidebarProps {
   collapsed?: boolean;
   /** Default collapsed state */
   defaultCollapsed?: boolean;
-  /** Callback when collapse state changes */
-  onCollapseChange?: (collapsed: boolean) => void;
+  /** Event emitted when collapse state changes, payload: { collapsed: boolean } */
+  collapseChangeEvent?: string;
   /** Hide the collapse/expand button */
   hideCollapseButton?: boolean;
   /** Show a close button (for mobile) */
   showCloseButton?: boolean;
-  /** Callback when close button is clicked */
-  onClose?: () => void;
-  /** Callback when logo/brand is clicked */
-  onLogoClick?: () => void;
-  /** Additional CSS classes */
-  className?: string;
-  /** Loading state indicator */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
-  /** Entity name for schema-driven auto-fetch */
-  entity?: string;
+  /** Event emitted when close button is clicked */
+  closeEvent?: string;
+  /** Event emitted when logo/brand is clicked */
+  logoClickEvent?: string;
 }
 
 /**
@@ -91,14 +92,14 @@ const SidebarNavItem: React.FC<{
         'rounded-[var(--radius-sm)] border-[length:var(--border-width-thin)] border-transparent',
         isActive
           ? [
-            'bg-[var(--color-foreground)] text-[var(--color-background)]',
+            'bg-[var(--color-primary)] text-[var(--color-primary-foreground)]',
             'font-medium shadow-[var(--shadow-sm)]',
-            'border-[var(--color-border)] translate-x-1 -translate-y-0.5',
+            'border-[var(--color-primary)] translate-x-1 -translate-y-0.5',
           ].join(' ')
           : [
             'text-[var(--color-foreground)]',
             'hover:bg-[var(--color-muted)] hover:border-[var(--color-border)]',
-            'active:bg-[var(--color-foreground)] active:text-[var(--color-background)]',
+            'active:bg-[var(--color-primary)] active:text-[var(--color-primary-foreground)]',
           ].join(' ')
       )}
       title={collapsed ? item.label : undefined}
@@ -108,7 +109,7 @@ const SidebarNavItem: React.FC<{
           size={20}
           className={cn(
             'min-w-[20px] flex-shrink-0',
-            isActive && 'text-[var(--color-background)]'
+            isActive && 'text-[var(--color-primary-foreground)]'
           )}
         />
       )}
@@ -146,23 +147,39 @@ export const Sidebar: React.FC<SidebarProps> = ({
   footerContent,
   collapsed: controlledCollapsed,
   defaultCollapsed = false,
-  onCollapseChange,
+  collapseChangeEvent,
   hideCollapseButton = false,
   showCloseButton = false,
-  onClose,
-  onLogoClick,
+  closeEvent,
+  logoClickEvent,
   className,
 }) => {
+  const { emit } = useEventBus();
+  const { t } = useTranslate();
   const [internalCollapsed, setInternalCollapsed] = useState(defaultCollapsed);
   const collapsed = controlledCollapsed !== undefined ? controlledCollapsed : internalCollapsed;
 
-  const handleToggle = () => {
+  const handleToggle = useCallback(() => {
     const newCollapsed = !collapsed;
     if (controlledCollapsed === undefined) {
       setInternalCollapsed(newCollapsed);
     }
-    onCollapseChange?.(newCollapsed);
-  };
+    if (collapseChangeEvent) {
+      emit(collapseChangeEvent, { collapsed: newCollapsed });
+    }
+  }, [collapsed, controlledCollapsed, collapseChangeEvent, emit]);
+
+  const handleClose = useCallback(() => {
+    if (closeEvent) {
+      emit(closeEvent, {});
+    }
+  }, [closeEvent, emit]);
+
+  const handleLogoClick = useCallback(() => {
+    if (logoClickEvent) {
+      emit(logoClickEvent, {});
+    }
+  }, [logoClickEvent, emit]);
 
   return (
     <Box
@@ -182,7 +199,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             'flex items-center gap-3 cursor-pointer',
             collapsed && 'justify-center w-full'
           )}
-          onClick={onLogoClick}
+          onClick={handleLogoClick}
         >
           {/* Logo image or custom logo */}
           {logo ? (
@@ -219,7 +236,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               'rounded-[var(--radius-sm)]',
               collapsed && 'mx-auto'
             )}
-            title={collapsed ? "Expand Sidebar" : "Collapse Sidebar"}
+            title={collapsed ? t('sidebar.expand') : t('sidebar.collapse')}
           >
             {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
           </Button>
@@ -229,9 +246,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {showCloseButton && (
           <Button
             variant="ghost"
-            onClick={onClose}
+            onClick={handleClose}
             className="p-1.5 hover:bg-[var(--color-muted)] text-[var(--color-foreground)] lg:hidden rounded-[var(--radius-sm)]"
-            aria-label="Close sidebar"
+            aria-label={t('sidebar.close')}
           >
             <X size={18} />
           </Button>

@@ -1,4 +1,4 @@
-import { coreMessages, localeMeta, type SupportedLocale } from '../../../packages/almadar-ui/locales';
+import { coreMessages, localeMeta, type SupportedLocale } from '@almadar/ui/locales';
 import en from './en.json';
 import ar from './ar.json';
 import sl from './sl.json';
@@ -13,7 +13,9 @@ function stripMeta(obj: Record<string, unknown>): Record<string, string> {
 }
 
 export const projectMessages: Record<SupportedLocale, Record<string, string>> = {
-  en: stripMeta(en), ar: stripMeta(ar), sl: stripMeta(sl),
+  en: stripMeta(en),
+  ar: stripMeta(ar),
+  sl: stripMeta(sl),
 };
 
 export const allMessages: Record<SupportedLocale, Record<string, string>> = {
@@ -22,4 +24,4 @@ export const allMessages: Record<SupportedLocale, Record<string, string>> = {
   sl: { ...coreMessages.sl, ...projectMessages.sl },
 };
 
-export { localeMeta, type SupportedLocale };
+export { coreMessages, localeMeta, type SupportedLocale };

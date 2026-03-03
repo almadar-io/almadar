@@ -1,3 +1,4 @@
+'use client';
 /**
  * CodeViewer Organism Component
  *
@@ -146,10 +147,10 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({
     const handleAction = useCallback(
         (action: CodeViewerAction) => {
             if (action.event) {
-                eventBus.emit(`UI:${action.event}`, { entity });
+                eventBus.emit(`UI:${action.event}`, {});
             }
         },
-        [eventBus, entity],
+        [eventBus],
     );
 
     const activeFile = files?.[activeFileIndex];
@@ -170,12 +171,12 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({
         try {
             await navigator.clipboard.writeText(activeCode);
             setCopied(true);
-            eventBus.emit("UI:CODE_COPY", { entity, language: activeLanguage });
+            eventBus.emit("UI:CODE_COPY", { language: activeLanguage });
             setTimeout(() => setCopied(false), 2000);
         } catch {
             // Fallback
         }
-    }, [activeCode, eventBus, entity, activeLanguage]);
+    }, [activeCode, eventBus, activeLanguage]);
 
     // Tab items for multiple files
     const tabItems: TabItem[] | undefined = files?.map((file, idx) => ({

@@ -1,3 +1,4 @@
+'use client';
 /**
  * Unified ThemeContext - Single provider for theme and color mode
  *

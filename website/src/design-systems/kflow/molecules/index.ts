@@ -22,3 +22,24 @@ export * from './LearningGoalDisplay';
 
 // Layer navigation
 export * from './LayerNavigator';
+
+// Knowledge molecules
+export * from './KnowledgeNodeCard';
+export * from './DomainSummaryCard';
+export * from './SubjectListItem';
+export * from './ResourceLink';
+export * from './BreadcrumbTrail';
+export * from './CrossDomainLink';
+export * from './DepthLegend';
+export * from './LearningStateSelector';
+
+// Session molecules
+export * from './NextSuggestionCard';
+export * from './ReviewCard';
+export * from './SessionOverlay';
+
+// Navigation molecules
+export * from './StoriesNavHeader';
+
+// Story molecules
+export * from './story';

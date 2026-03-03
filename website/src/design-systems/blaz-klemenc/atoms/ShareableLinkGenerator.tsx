@@ -7,7 +7,7 @@
  * Event Contract:
  * - Emits: UI:LINK_GENERATED - when a new link is generated
  * - Emits: UI:LINK_COPIED - when link is copied to clipboard
- * - Payload: { resourceType, resourceId, link, entity }
+ * - Payload: { resourceType, resourceId, link }
  */
 
 import React, { useCallback, useState } from "react";
@@ -32,8 +32,6 @@ export interface ShareableLinkGeneratorProps {
   expiresInDays?: number;
   /** Compact mode */
   compact?: boolean;
-  /** Entity context for events */
-  entity?: string;
   /** Additional CSS classes */
   className?: string;
 }
@@ -44,7 +42,6 @@ export const ShareableLinkGenerator: React.FC<ShareableLinkGeneratorProps> = ({
   existingLink,
   expiresInDays,
   compact = false,
-  entity,
   className,
 }) => {
   const eventBus = useEventBus();
@@ -61,7 +58,6 @@ export const ShareableLinkGenerator: React.FC<ShareableLinkGeneratorProps> = ({
       resourceType,
       resourceId,
       expiresInDays,
-      entity,
     });
 
     // Simulate link generation (in real app, this would come from backend)
@@ -70,7 +66,7 @@ export const ShareableLinkGenerator: React.FC<ShareableLinkGeneratorProps> = ({
       setLink(generatedLink);
       setGenerating(false);
     }, 500);
-  }, [eventBus, resourceType, resourceId, expiresInDays, entity]);
+  }, [eventBus, resourceType, resourceId, expiresInDays]);
 
   // Copy link to clipboard
   const handleCopy = useCallback(async () => {
@@ -84,7 +80,6 @@ export const ShareableLinkGenerator: React.FC<ShareableLinkGeneratorProps> = ({
         resourceType,
         resourceId,
         link,
-        entity,
       });
 
       // Reset copied state after 2 seconds
@@ -92,7 +87,7 @@ export const ShareableLinkGenerator: React.FC<ShareableLinkGeneratorProps> = ({
     } catch (err) {
       console.error("Failed to copy link:", err);
     }
-  }, [eventBus, link, resourceType, resourceId, entity]);
+  }, [eventBus, link, resourceType, resourceId]);
 
   if (compact) {
     return (

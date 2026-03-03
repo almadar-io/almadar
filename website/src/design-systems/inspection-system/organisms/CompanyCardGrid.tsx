@@ -30,6 +30,7 @@ import {
   cn,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 
 export interface CompanyEntity {
@@ -48,10 +49,7 @@ export interface CompanyEntity {
   units?: Array<{ id: string; name: string }>;
 }
 
-export interface CompanyCardGridProps {
-  entity: readonly CompanyEntity[];
-  isLoading?: boolean;
-  error?: Error | null;
+export interface CompanyCardGridProps extends EntityDisplayProps<CompanyEntity> {
   title?: string;
   showHeader?: boolean;
   /** Declarative event for search */
@@ -60,7 +58,6 @@ export interface CompanyCardGridProps {
   createEvent?: string;
   /** Declarative event for card actions (VIEW, EDIT, NEW_INSPECTION) */
   actionEvent?: string;
-  className?: string;
 }
 
 const getComplianceColor = (status: CompanyEntity["complianceStatus"]) => {
@@ -183,14 +180,15 @@ export function CompanyCardGrid({
     if (createEvent) emit(`UI:${createEvent}`, { entity: "Company" });
   };
 
+  const companies = Array.isArray(entity) ? entity : entity ? [entity] : [];
   const filteredCompanies = searchTerm
-    ? entity.filter(
+    ? companies.filter(
       (c) =>
         c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         c.registrationNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
         c.city.toLowerCase().includes(searchTerm.toLowerCase()),
     )
-    : entity;
+    : companies;
 
   return (
     <VStack gap="lg" className={cn("p-6", className)}>

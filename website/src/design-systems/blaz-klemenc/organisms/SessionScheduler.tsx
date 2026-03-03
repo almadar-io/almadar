@@ -1,3 +1,4 @@
+/* eslint-disable almadar/require-event-bus */
 /**
  * SessionScheduler
  *
@@ -53,8 +54,11 @@ import {
   Button,
   Card,
   Badge,
+  LoadingState,
+  ErrorState,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 
 /**
@@ -91,9 +95,9 @@ export interface SessionOperation {
   hidden?: (string | number | undefined)[];
 }
 
-export interface SessionSchedulerProps {
+export interface SessionSchedulerProps extends EntityDisplayProps<TrainingSessionData> {
   /** Already booked sessions to display */
-  sessions?: TrainingSessionData[] | unknown;
+  sessions?: TrainingSessionData[];
   /** Available time slots (optional - for booking mode) */
   availableSlots?: TimeSlot[];
   /** Trainees list */
@@ -110,16 +114,8 @@ export interface SessionSchedulerProps {
   defaultView?: "week" | "month" | "day" | string;
   /** Show trainee info */
   showTraineeInfo?: boolean;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
-  /** Entity context for events */
-  entity?: string;
   /** Operations/actions available */
   operations?: SessionOperation[];
-  /** Additional CSS classes */
-  className?: string;
 }
 
 // Status configuration
@@ -216,11 +212,23 @@ export const SessionScheduler: React.FC<SessionSchedulerProps> = ({
   trainerId,
   weekStartDate,
   bookingMode = false,
+  isLoading = false,
+  error = null,
   entity = "TrainingSession",
   className,
 }) => {
   const eventBus = useEventBus();
   const { t } = useTranslate();
+
+  // Loading state
+  if (isLoading) {
+    return <LoadingState className={className} />;
+  }
+
+  // Error state
+  if (error) {
+    return <ErrorState message={error?.message} className={className} />;
+  }
 
   // Week navigation state
   const [currentWeekStart, setCurrentWeekStart] = useState<Date>(

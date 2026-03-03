@@ -19,9 +19,10 @@ import {
   Button,
   Card,
   useEventBus,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 
-export interface SignatureCaptureProps {
+export interface SignatureCaptureProps extends EntityDisplayProps<unknown> {
   /** Participant ID */
   participantId?: string;
   /** Participant name for display */
@@ -44,14 +45,10 @@ export interface SignatureCaptureProps {
   required?: boolean;
   /** Disabled state */
   disabled?: boolean;
-  /** Entity name (passed by compiler) */
-  entity?: string;
-  /** Additional CSS classes */
-  className?: string;
-  /** Signature captured handler */
-  onCapture?: (signatureData: string) => void;
-  /** Clear handler */
-  onClear?: () => void;
+  /** Declarative event for signature capture */
+  captureEvent?: string;
+  /** Declarative event for signature clear */
+  clearEvent?: string;
 }
 
 export const SignatureCapture: React.FC<SignatureCaptureProps> = ({
@@ -66,8 +63,9 @@ export const SignatureCapture: React.FC<SignatureCaptureProps> = ({
   required = false,
   disabled = false,
   className,
-  onCapture,
-  onClear,
+  entity,
+  captureEvent,
+  clearEvent,
 }) => {
   const eventBus = useEventBus();
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -176,21 +174,25 @@ export const SignatureCapture: React.FC<SignatureCaptureProps> = ({
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, width, height);
     setHasSignature(false);
-    onClear?.();
-  }, [width, height, onClear]);
+    if (clearEvent) {
+      eventBus.emit(`UI:${clearEvent}`, { entity, participantId });
+    }
+  }, [width, height, clearEvent, eventBus, entity, participantId]);
 
   const handleCapture = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas || !hasSignature) return;
 
     const signatureData = canvas.toDataURL("image/png");
-    onCapture?.(signatureData);
+    if (captureEvent) {
+      eventBus.emit(`UI:${captureEvent}`, { signatureData, entity, participantId });
+    }
     eventBus.emit("UI:SIGNATURE_CAPTURED", {
       signatureData,
       participantId,
       context: { participantName },
     });
-  }, [hasSignature, participantId, participantName, onCapture, eventBus]);
+  }, [hasSignature, participantId, participantName, captureEvent, entity, eventBus]);
 
   return (
     <Card className={cn("p-4", className)}>

@@ -118,7 +118,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     items: mockItems,
-    entity: "RelationshipHealth",
   },
 };
 
@@ -126,7 +125,6 @@ export const GridLayout: Story = {
   args: {
     items: mockItems,
     layout: "grid",
-    entity: "RelationshipHealth",
   },
 };
 
@@ -134,7 +132,6 @@ export const OrganicLayout: Story = {
   args: {
     items: mockItems,
     layout: "organic",
-    entity: "RelationshipHealth",
   },
 };
 
@@ -142,7 +139,6 @@ export const RowsLayout: Story = {
   args: {
     items: mockItems,
     layout: "rows",
-    entity: "RelationshipHealth",
   },
 };
 
@@ -221,9 +217,8 @@ export const NoHeaderWidgets: Story = {
   },
 };
 
-export const UsingDataProp: Story = {
+export const UsingEntityProp: Story = {
   args: {
-    data: mockItems,
-    entity: "RelationshipHealth",
+    entity: mockItems,
   },
 };

@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * ProgressTemplate - Thin declarative wrapper for ProgressBoard organism
  *

@@ -1,5 +1,6 @@
-import React, { useState, useMemo, useCallback, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+/* eslint-disable almadar/require-event-bus -- DataTable is a foundational UI component; onClick handlers are internal interaction mechanics (sort, row click, action menus), not closed-circuit violations */
+'use client';
+import React, { useState, useMemo, useCallback } from "react";
 import { cn } from "../../lib/cn";
 import { getNestedValue } from "../../lib/getNestedValue";
 import { Button, Input, Badge, Checkbox, Spinner } from "../atoms";
@@ -7,28 +8,18 @@ import { Box } from "../atoms/Box";
 import { HStack, VStack } from "../atoms/Stack";
 import { Typography } from "../atoms/Typography";
 import { EmptyState, Pagination } from "../molecules";
-import {
-  useEntityList,
-  usePaginatedEntityList,
-  type PaginationParams,
-} from "../../hooks/useEntityData";
-import { useEventBus, type KFlowEvent } from "../../hooks/useEventBus";
+import { useEventBus } from "../../hooks/useEventBus";
 import { useTranslate } from "../../hooks/useTranslate";
-import { useQuerySingleton } from "../../hooks/useQuerySingleton";
 import {
   ChevronUp,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
   Search,
-  Filter,
   MoreHorizontal,
-  Download,
-  Trash2,
-  Edit,
-  Eye,
   LucideIcon,
 } from "lucide-react";
+import { EntityDisplayProps, EntityDisplayEvents } from "./types";
 
 export interface Column<T> {
   key: keyof T | string;
@@ -48,12 +39,10 @@ function normalizeColumns<T>(
 ): Column<T>[] {
   return columns.map((col) => {
     if (typeof col === "string") {
-      // Convert string field name to Column object
-      // Generate header by converting camelCase/snake_case to Title Case
       const header = col
-        .replace(/([A-Z])/g, " $1") // camelCase to spaces
-        .replace(/_/g, " ") // snake_case to spaces
-        .replace(/^\w/, (c) => c.toUpperCase()) // capitalize first letter
+        .replace(/([A-Z])/g, " $1")
+        .replace(/_/g, " ")
+        .replace(/^\w/, (c) => c.toUpperCase())
         .trim();
       return { key: col, header } as Column<T>;
     }
@@ -67,78 +56,37 @@ export interface RowAction<T> {
   onClick: (row: T) => void;
   variant?: "default" | "danger";
   show?: (row: T) => boolean;
-  /** Event name for testability (data-event attribute) */
   event?: string;
 }
 
-export interface DataTableProps<T extends { id: string | number }> {
+export interface DataTableProps<T extends { id: string | number }>
+  extends EntityDisplayProps<T> {
   /** Fields to display - accepts string[] or Column[] for unified interface. Alias for columns */
   fields?: readonly Column<T>[] | readonly string[];
-  /** Columns can be Column objects or simple string field names - accepts readonly for generated const arrays */
+  /** Columns can be Column objects or simple string field names */
   columns?: readonly Column<T>[] | readonly string[];
-  /** Data array - primary prop for data. Accepts readonly or mutable arrays, and unknown for generated components */
-  data?: readonly T[] | T[] | readonly unknown[] | unknown[] | unknown;
-  /** Entity name for auto-fetch OR data array (backwards compatible) */
-  entity?: string | readonly T[] | T[];
   /** Item actions from generated code - maps to rowActions */
   itemActions?: readonly {
     label: string;
     event?: string;
-    /** Navigation URL - supports template interpolation like "/products/{{id}}" or "/products/:id" */
     navigatesTo?: string;
-    /** Action used by generated code - alternative to event */
     action?: string;
-    /** Placement accepts string for compatibility with generated code */
     placement?: "row" | "bulk" | string;
     icon?: LucideIcon;
-    /** Variant accepts all button variants for compatibility */
     variant?: "default" | "primary" | "secondary" | "ghost" | "danger" | string;
-    /** Click handler from generated code */
     onClick?: (row: T) => void;
   }[];
-  /** Loading state indicator */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
   emptyIcon?: LucideIcon;
   emptyTitle?: string;
   emptyDescription?: string;
-  emptyAction?: { label: string; onClick: () => void };
+  emptyAction?: { label: string; event?: string };
 
   // Selection
   selectable?: boolean;
-  selectedIds?: readonly (string | number)[];
-  onSelectionChange?: (ids: (string | number)[]) => void;
-
-  // Sorting
-  sortBy?: string;
-  sortDirection?: "asc" | "desc";
-  onSort?: (key: string, direction: "asc" | "desc") => void;
-
-  // Pagination (manual control)
-  pagination?: {
-    page: number;
-    pageSize: number;
-    total: number;
-    onPageChange: (page: number) => void;
-    onPageSizeChange?: (size: number) => void;
-  };
-
-  // Server-side pagination (automatic when enabled)
-  enablePagination?: boolean;
-  /** Items per page for automatic pagination (default: 20) */
-  defaultPageSize?: number;
-  /** Show total count in pagination */
-  showTotal?: boolean;
 
   // Search
   searchable?: boolean;
-  searchValue?: string;
-  onSearch?: (value: string) => void;
   searchPlaceholder?: string;
-
-  // Row click navigation
-  onRowClick?: (row: T) => void;
 
   // Row actions
   rowActions?: readonly RowAction<T>[];
@@ -154,259 +102,60 @@ export interface DataTableProps<T extends { id: string | number }> {
   // Header actions
   headerActions?: React.ReactNode;
 
-  /**
-   * Query singleton binding for filter/sort state.
-   * When provided, syncs with the query singleton for filtering and sorting.
-   * Example: "@TaskQuery"
-   */
-  query?: string;
-
-  className?: string;
+  /** Show total count in pagination */
+  showTotal?: boolean;
 }
 
 export function DataTable<T extends { id: string | number }>({
   fields,
   columns,
-  data,
   entity,
   itemActions,
   isLoading = false,
-  error: externalError,
+  error,
   emptyIcon,
   emptyTitle,
   emptyDescription,
   emptyAction,
   selectable = false,
   selectedIds = [],
-  onSelectionChange,
-  sortBy: externalSortBy,
-  sortDirection: externalSortDirection = "asc",
-  onSort,
-  pagination,
-  enablePagination = false,
-  defaultPageSize = 20,
-  showTotal = true,
+  sortBy,
+  sortDirection = "asc",
   searchable = false,
   searchValue = "",
-  onSearch,
   searchPlaceholder,
-  onRowClick,
+  page,
+  pageSize,
+  totalCount,
   rowActions: externalRowActions,
   bulkActions,
   headerActions,
-  query,
+  showTotal = true,
   className,
 }: DataTableProps<T>) {
   const [openActionMenu, setOpenActionMenu] = useState<string | number | null>(
     null,
   );
   const eventBus = useEventBus();
-  const navigate = useNavigate();
   const { t } = useTranslate();
 
-  const resolvedEmptyTitle = emptyTitle ?? t('table.empty.title');
-  const resolvedEmptyDescription = emptyDescription ?? t('table.empty.description');
-  const resolvedSearchPlaceholder = searchPlaceholder ?? t('common.search');
+  const resolvedEmptyTitle = emptyTitle ?? t("table.empty.title");
+  const resolvedEmptyDescription =
+    emptyDescription ?? t("table.empty.description");
+  const resolvedSearchPlaceholder =
+    searchPlaceholder ?? t("common.search");
 
-  // Query singleton for filter/sort state
-  const queryState = useQuerySingleton(query);
-
-  // Server-side pagination state - initialize from query singleton if available
-  const [paginationParams, setPaginationParams] = useState<PaginationParams>(
-    () => ({
-      page: 1,
-      pageSize: defaultPageSize,
-      search: queryState?.search ?? searchValue,
-      sortBy: queryState?.sortField ?? externalSortBy,
-      sortDirection: queryState?.sortDirection ?? externalSortDirection,
-      filters: queryState?.filters,
-    }),
+  // Normalize entity data to array
+  const items = useMemo(
+    () => (Array.isArray(entity) ? entity : []) as readonly T[],
+    [entity],
   );
 
-  // Sync with query singleton changes (e.g., from FilterGroup or SearchInput)
-  useEffect(() => {
-    if (queryState) {
-      setPaginationParams((prev) => ({
-        ...prev,
-        search: queryState.search,
-        sortBy: queryState.sortField ?? undefined,
-        sortDirection: queryState.sortDirection ?? "asc",
-        filters: queryState.filters,
-        page: 1, // Reset to page 1 when filters change
-      }));
-    }
-  }, [
-    queryState?.search,
-    queryState?.sortField,
-    queryState?.sortDirection,
-    JSON.stringify(queryState?.filters),
-  ]);
-
-  // Listen for UI:SEARCH events from event bus
-  useEffect(() => {
-    const handleSearch = (event: KFlowEvent) => {
-      // Only handle if no query binding (avoid double-handling when query singleton is used)
-      if (query) return;
-      const term = (event.payload?.searchTerm as string) ?? "";
-      setPaginationParams((prev) => ({ ...prev, search: term, page: 1 }));
-    };
-
-    const handleClearSearch = (event: KFlowEvent) => {
-      // Only handle if no query binding
-      if (query) return;
-      setPaginationParams((prev) => ({ ...prev, search: "", page: 1 }));
-    };
-
-    const handleFilter = (event: KFlowEvent) => {
-      // Only handle if no query binding
-      if (query) return;
-      const { field, value } = event.payload ?? {};
-      if (field) {
-        setPaginationParams((prev) => ({
-          ...prev,
-          filters: { ...prev.filters, [field as string]: value },
-          page: 1,
-        }));
-      }
-    };
-
-    const handleClearFilters = (event: KFlowEvent) => {
-      // Only handle if no query binding
-      if (query) return;
-      setPaginationParams((prev) => ({
-        ...prev,
-        filters: {},
-        search: "",
-        page: 1,
-      }));
-    };
-
-    const unsubSearch = eventBus.on("UI:SEARCH", handleSearch);
-    const unsubClear = eventBus.on("UI:CLEAR_SEARCH", handleClearSearch);
-    const unsubFilter = eventBus.on("UI:FILTER", handleFilter);
-    const unsubClearFilters = eventBus.on(
-      "UI:CLEAR_FILTERS",
-      handleClearFilters,
-    );
-
-    return () => {
-      unsubSearch();
-      unsubClear();
-      unsubFilter();
-      unsubClearFilters();
-    };
-  }, [eventBus, query]);
-
-  // Sync external search value with pagination params
-  useEffect(() => {
-    if (searchValue !== paginationParams.search) {
-      setPaginationParams((prev) => ({
-        ...prev,
-        search: searchValue,
-        page: 1,
-      }));
-    }
-  }, [searchValue]);
-
-  // Determine if entity is a string name (for auto-fetch) or data array (backwards compatible)
-  const isEntityName = typeof entity === "string";
-  const entityName = isEntityName ? entity : undefined;
-
-  // Auto-fetch data when entity is a string name and no external data provided
-  const shouldAutoFetch = isEntityName && !data;
-
-  // Use paginated or unpaginated hook based on enablePagination
-  const paginatedResult = usePaginatedEntityList(
-    shouldAutoFetch && enablePagination ? entityName : undefined,
-    paginationParams,
-    { skip: !shouldAutoFetch || !enablePagination },
-  );
-
-  const unpaginatedResult = useEntityList(
-    shouldAutoFetch && !enablePagination ? entityName : undefined,
-    {
-      skip: !shouldAutoFetch || enablePagination,
-    },
-  );
-
-  // Choose which result to use
-  const queryResult = enablePagination ? paginatedResult : unpaginatedResult;
-
-  // Use external data if provided, otherwise use fetched data or entity data (backwards compat)
-  const rawData =
-    data ??
-    (enablePagination ? paginatedResult.data : unpaginatedResult.data) ??
-    entity ??
-    [];
-
-  // Apply client-side filtering when data is passed via props (not auto-fetched)
-  // This enables search filtering in preview mode (OrbitalRuntime)
-  const filteredData = useMemo(() => {
-    const dataArray = (Array.isArray(rawData) ? rawData : []) as T[];
-
-    // Only apply client-side filtering if:
-    // 1. We're NOT auto-fetching (data comes from props)
-    // 2. There's a search term
-    if (!shouldAutoFetch && paginationParams.search?.trim()) {
-      const searchLower = paginationParams.search.toLowerCase();
-      return dataArray.filter((item) => {
-        // Search all string/number fields
-        return Object.values(item as Record<string, unknown>).some((value) => {
-          if (value === null || value === undefined) return false;
-          return String(value).toLowerCase().includes(searchLower);
-        });
-      });
-    }
-
-    return dataArray;
-  }, [rawData, shouldAutoFetch, paginationParams.search]);
-
-  const items = filteredData as readonly T[];
-
-  // Pagination info for server-side pagination
-  const serverPaginationInfo = enablePagination
-    ? {
-        page: paginationParams.page,
-        totalPages: paginatedResult.totalPages,
-        total: paginatedResult.totalCount,
-      }
-    : null;
-
-  // Combine loading and error states
-  const fetchLoading = queryResult.isLoading;
-  const fetchError = queryResult.error;
-  const isLoadingCombined = isLoading || fetchLoading;
-  const error =
-    externalError ||
-    (fetchError instanceof Error
-      ? fetchError
-      : fetchError
-        ? new Error(String(fetchError))
-        : null);
-
-  // Handler for server-side pagination
-  const handleServerPageChange = useCallback((newPage: number) => {
-    setPaginationParams((prev) => ({ ...prev, page: newPage }));
-  }, []);
-
-  const handleServerPageSizeChange = useCallback((newPageSize: number) => {
-    setPaginationParams((prev) => ({
-      ...prev,
-      pageSize: newPageSize,
-      page: 1,
-    }));
-  }, []);
-
-  // Handle server-side sort
-  const handleServerSort = useCallback((key: string) => {
-    setPaginationParams((prev) => ({
-      ...prev,
-      sortBy: key,
-      sortDirection:
-        prev.sortBy === key && prev.sortDirection === "asc" ? "desc" : "asc",
-      page: 1,
-    }));
-  }, []);
+  // Pagination display info
+  const currentPage = page ?? 1;
+  const currentPageSize = pageSize ?? 20;
+  const total = totalCount ?? items.length;
+  const totalPages = Math.ceil(total / currentPageSize);
 
   // Convert itemActions to rowActions format if provided
   const rowActions =
@@ -417,23 +166,22 @@ export function DataTable<T extends { id: string | number }>({
         label: action.label,
         icon: action.icon,
         variant: action.variant,
-        event: action.event, // Preserve event name for testability
+        event: action.event,
         onClick: (row: T) => {
-          // Handle navigation if navigatesTo is defined
           if (action.navigatesTo) {
-            // Replace :id or {{id}} with actual row id
             const url = action.navigatesTo
               .replace(/:id\b/g, String((row as { id: string | number }).id))
               .replace(
                 /\{\{id\}\}/g,
                 String((row as { id: string | number }).id),
               );
-            navigate(url);
+            eventBus.emit('UI:NAVIGATE', { url, row });
             return;
           }
-          // Dispatch event via event bus if defined (for trait state machine integration)
           if (action.event) {
-            eventBus.emit(`UI:${action.event}`, { row, entity: entityName });
+            eventBus.emit(`UI:${action.event}`, {
+              row,
+            });
           }
         },
       })) as RowAction<T>[] | undefined);
@@ -443,26 +191,26 @@ export function DataTable<T extends { id: string | number }>({
     (a) => a.event === "VIEW" || a.navigatesTo,
   );
 
-  // Handle row click - trigger VIEW event if available, or use custom onRowClick
-  const handleRowClick = (row: T) => {
-    if (onRowClick) {
-      onRowClick(row);
-    } else if (viewAction) {
-      // Handle navigation if navigatesTo is defined
-      if (viewAction.navigatesTo) {
-        const url = viewAction.navigatesTo
-          .replace(/:id\b/g, String((row as { id: string | number }).id))
-          .replace(/\{\{id\}\}/g, String((row as { id: string | number }).id));
-        navigate(url);
-        return;
+  const handleRowClick = useCallback(
+    (row: T) => {
+      if (viewAction) {
+        if (viewAction.navigatesTo) {
+          const url = viewAction.navigatesTo
+            .replace(/:id\b/g, String((row as { id: string | number }).id))
+            .replace(
+              /\{\{id\}\}/g,
+              String((row as { id: string | number }).id),
+            );
+          eventBus.emit('UI:NAVIGATE', { url, row, entity });
+          return;
+        }
+        eventBus.emit("UI:VIEW", { row });
       }
-      // Auto-trigger VIEW event when row is clicked
-      eventBus.emit("UI:VIEW", { row, entity: entityName });
-    }
-  };
+    },
+    [viewAction, eventBus],
+  );
 
-  // Determine if rows are clickable
-  const isRowClickable = !!onRowClick || !!viewAction;
+  const isRowClickable = !!viewAction;
 
   // Support fields and columns (alias) - normalize to Column objects
   const effectiveColumns = fields ?? columns ?? [];
@@ -474,46 +222,63 @@ export function DataTable<T extends { id: string | number }>({
   const allSelected = items.length > 0 && selectedIds.length === items.length;
   const someSelected = selectedIds.length > 0 && !allSelected;
 
-  const handleSelectAll = () => {
+  const handleSelectAll = useCallback(() => {
     if (allSelected) {
-      onSelectionChange?.([]);
+      eventBus.emit(`UI:${EntityDisplayEvents.DESELECT}`, {
+        ids: [],
+      });
     } else {
-      onSelectionChange?.(items.map((row) => row.id));
+      eventBus.emit(`UI:${EntityDisplayEvents.SELECT}`, {
+        ids: items.map((row) => row.id),
+      });
     }
-  };
+  }, [allSelected, items, eventBus]);
 
-  const handleSelectRow = (id: string | number) => {
-    if (selectedIds.includes(id)) {
-      onSelectionChange?.(selectedIds.filter((i) => i !== id));
-    } else {
-      onSelectionChange?.([...selectedIds, id]);
-    }
-  };
+  const handleSelectRow = useCallback(
+    (id: string | number) => {
+      if (selectedIds.includes(id)) {
+        eventBus.emit(`UI:${EntityDisplayEvents.DESELECT}`, {
+          ids: selectedIds.filter((i) => i !== id),
+        });
+      } else {
+        eventBus.emit(`UI:${EntityDisplayEvents.SELECT}`, {
+          ids: [...selectedIds, id],
+        });
+      }
+    },
+    [selectedIds, eventBus],
+  );
 
-  const handleSort = (key: string) => {
-    // Use server-side sort when enablePagination is true
-    if (enablePagination && shouldAutoFetch) {
-      handleServerSort(key);
-      return;
-    }
-    // Otherwise use external sort handler
-    if (!onSort) return;
-    const currentSortBy = externalSortBy;
-    const currentSortDirection = externalSortDirection;
-    const newDirection =
-      currentSortBy === key && currentSortDirection === "asc" ? "desc" : "asc";
-    onSort(key, newDirection);
-  };
+  const handleSort = useCallback(
+    (key: string) => {
+      const newDirection =
+        sortBy === key && sortDirection === "asc" ? "desc" : "asc";
+      eventBus.emit(`UI:${EntityDisplayEvents.SORT}`, {
+        field: key,
+        direction: newDirection,
+      });
+    },
+    [sortBy, sortDirection, eventBus],
+  );
 
-  // Determine current sort state for UI
-  const sortBy =
-    enablePagination && shouldAutoFetch
-      ? paginationParams.sortBy
-      : externalSortBy;
-  const sortDirection =
-    enablePagination && shouldAutoFetch
-      ? paginationParams.sortDirection
-      : externalSortDirection;
+  const handleSearch = useCallback(
+    (value: string) => {
+      eventBus.emit(`UI:${EntityDisplayEvents.SEARCH}`, {
+        query: value,
+      });
+    },
+    [eventBus],
+  );
+
+  const handlePageChange = useCallback(
+    (newPage: number) => {
+      eventBus.emit(`UI:${EntityDisplayEvents.PAGINATE}`, {
+        page: newPage,
+        pageSize: currentPageSize,
+      });
+    },
+    [eventBus, currentPageSize],
+  );
 
   const selectedRows = useMemo(
     () => items.filter((row) => selectedIds.includes(row.id)),
@@ -537,13 +302,7 @@ export function DataTable<T extends { id: string | number }>({
                 <Input
                   type="search"
                   value={searchValue}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    // Call external handler if provided
-                    onSearch?.(value);
-                    // Also emit UI:SEARCH event for internal filtering (preview mode)
-                    eventBus.emit("UI:SEARCH", { searchTerm: value });
-                  }}
+                  onChange={(e) => handleSearch(e.target.value)}
                   placeholder={resolvedSearchPlaceholder}
                   className="pl-9 w-full sm:w-64"
                 />
@@ -553,8 +312,13 @@ export function DataTable<T extends { id: string | number }>({
             {/* Bulk actions */}
             {bulkActions && selectedIds.length > 0 && (
               <HStack className="items-center gap-2 pl-0 sm:pl-3 border-l-0 sm:border-l border-[var(--color-border)]">
-                <Typography variant="small" className="text-[var(--color-muted-foreground)] whitespace-nowrap">
-                  {t('table.bulk.selected', { count: String(selectedIds.length) })}
+                <Typography
+                  variant="small"
+                  className="text-[var(--color-muted-foreground)] whitespace-nowrap"
+                >
+                  {t("table.bulk.selected", {
+                    count: String(selectedIds.length),
+                  })}
                 </Typography>
                 <HStack className="flex-wrap gap-2">
                   {bulkActions.map((action, idx) => (
@@ -630,7 +394,7 @@ export function DataTable<T extends { id: string | number }>({
           </thead>
           {/* eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable */}
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-            {isLoadingCombined ? (
+            {isLoading ? (
               // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable
               <tr>
                 {/* eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable */}
@@ -644,8 +408,11 @@ export function DataTable<T extends { id: string | number }>({
                 >
                   <VStack className="items-center gap-2">
                     <Spinner size="lg" />
-                    <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-                      {t('common.loading')}
+                    <Typography
+                      variant="small"
+                      className="text-[var(--color-muted-foreground)]"
+                    >
+                      {t("common.loading")}
                     </Typography>
                   </VStack>
                 </td>
@@ -662,7 +429,8 @@ export function DataTable<T extends { id: string | number }>({
                   }
                   className="px-4 py-12 text-center text-[var(--color-error)]"
                 >
-                  {t('error.generic') + ": "}{error.message}
+                  {t("error.generic") + ": "}
+                  {error.message}
                 </td>
               </tr>
             ) : items.length === 0 ? (
@@ -682,7 +450,7 @@ export function DataTable<T extends { id: string | number }>({
                     title={resolvedEmptyTitle}
                     description={resolvedEmptyDescription}
                     actionLabel={emptyAction?.label}
-                    onAction={emptyAction?.onClick}
+                    actionEvent={emptyAction?.event}
                   />
                 </td>
               </tr>
@@ -709,7 +477,10 @@ export function DataTable<T extends { id: string | number }>({
                     </td>
                   )}
                   {normalizedColumns.map((col) => {
-                    const cellValue = getNestedValue(row as Record<string, unknown>, String(col.key));
+                    const cellValue = getNestedValue(
+                      row as Record<string, unknown>,
+                      String(col.key),
+                    );
                     return (
                       // eslint-disable-next-line almadar/no-raw-dom-elements -- native table elements in DataTable
                       <td
@@ -791,62 +562,18 @@ export function DataTable<T extends { id: string | number }>({
         </table>
       </Box>
 
-      {/* Manual Pagination */}
-      {pagination && (
-        <HStack className="px-4 py-3 border-t-2 border-[var(--color-border)] flex-col sm:flex-row items-center justify-between gap-4">
-          <Typography variant="small" className="text-[var(--color-muted-foreground)] text-center sm:text-left">
-            {t('table.pagination.showing', {
-              start: String((pagination.page - 1) * pagination.pageSize + 1),
-              end: String(Math.min(pagination.page * pagination.pageSize, pagination.total)),
-              total: String(pagination.total),
-            })}
-          </Typography>
-          <HStack className="items-center gap-2">
-            <Button
-              variant="secondary"
-              size="sm"
-              disabled={pagination.page === 1}
-              onClick={() => pagination.onPageChange(pagination.page - 1)}
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <Typography variant="small" className="text-[var(--color-muted-foreground)]">
-              {t('table.pagination.page', {
-                page: String(pagination.page),
-                totalPages: String(Math.ceil(pagination.total / pagination.pageSize)),
-              })}
-            </Typography>
-            <Button
-              variant="secondary"
-              size="sm"
-              disabled={
-                pagination.page * pagination.pageSize >= pagination.total
-              }
-              onClick={() => pagination.onPageChange(pagination.page + 1)}
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </HStack>
-        </HStack>
+      {/* Pagination (display-only — trait controls the state) */}
+      {totalCount !== undefined && totalPages > 1 && (
+        <Box className="px-4 py-3 border-t-2 border-[var(--color-border)]">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+            showTotal={showTotal}
+            totalItems={total}
+          />
+        </Box>
       )}
-
-      {/* Server-side Pagination (automatic when enablePagination is true) */}
-      {enablePagination &&
-        serverPaginationInfo &&
-        serverPaginationInfo.totalPages > 1 && (
-          <Box className="px-4 py-3 border-t-2 border-[var(--color-border)]">
-            <Pagination
-              currentPage={serverPaginationInfo.page}
-              totalPages={serverPaginationInfo.totalPages}
-              onPageChange={handleServerPageChange}
-              showTotal={showTotal}
-              totalItems={serverPaginationInfo.total}
-              showPageSize
-              pageSize={paginationParams.pageSize}
-              onPageSizeChange={handleServerPageSizeChange}
-            />
-          </Box>
-        )}
     </Box>
   );
 }

@@ -1,8 +1,16 @@
+'use client';
 /**
  * GameCanvas3D
  *
  * 3D game canvas component using Three.js.
  * Mirrors the IsometricCanvas API for easy migration.
+ *
+ * **State categories (closed-circuit compliant):**
+ * - All game data (tiles, units, features, selection, validMoves) → received via props
+ * - Rendering state (hoveredTile, internalError, asset loading, camera) → local only
+ * - Events → emitted via `useGameCanvas3DEvents()` hook for trait integration
+ *
+ * This component is a **pure 3D renderer** — it holds no game logic state.
  *
  * @packageDocumentation
  */

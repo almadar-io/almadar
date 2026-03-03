@@ -57,7 +57,7 @@ export function Lighting3D({
     shadowMapSize = 2048,
     shadowCameraSize = 20,
     showHelpers = false,
-}: Lighting3DProps): JSX.Element {
+}: Lighting3DProps): React.JSX.Element {
     return (
         <>
             {/* Ambient Light */}

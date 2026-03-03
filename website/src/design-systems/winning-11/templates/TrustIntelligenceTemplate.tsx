@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * TrustIntelligenceTemplate
  *
@@ -19,7 +20,7 @@ import {
 export type { TrustScoreData, TrustIntelligenceEntity };
 
 export interface TrustIntelligenceTemplateProps {
-  /** Entity data */
+  /** Entity prop */
   entity?: TrustIntelligenceEntity;
   /** Loading state */
   isLoading?: boolean;

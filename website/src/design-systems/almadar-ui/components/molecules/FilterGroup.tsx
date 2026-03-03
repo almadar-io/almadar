@@ -1,3 +1,4 @@
+'use client';
 /**
  * FilterGroup Molecule Component
  *

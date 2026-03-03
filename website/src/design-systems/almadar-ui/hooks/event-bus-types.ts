@@ -67,4 +67,13 @@ export interface EventBusContextType {
    * @returns True if there are listeners
    */
   hasListeners: (type: string) => boolean;
+
+  /**
+   * Subscribe to ALL events regardless of type.
+   * Useful for verification, debugging, and analytics.
+   *
+   * @param listener - Callback function invoked for every emitted event
+   * @returns Unsubscribe function
+   */
+  onAny?: (listener: EventListener) => Unsubscribe;
 }

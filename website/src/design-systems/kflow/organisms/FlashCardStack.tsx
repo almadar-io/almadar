@@ -23,10 +23,11 @@ import {
   Typography,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 import { FlashCard, FlashCardEntity } from "./FlashCard";
 
-export interface FlashCardStackProps {
+export interface FlashCardStackProps extends EntityDisplayProps<FlashCardEntity> {
   /** Array of flashcard entities */
   cards: FlashCardEntity[];
   /** Current card index (controlled) */
@@ -35,23 +36,15 @@ export interface FlashCardStackProps {
   showShuffle?: boolean;
   /** Show completion summary */
   showSummary?: boolean;
-  /** Additional CSS classes */
-  className?: string;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
-  /** Entity name */
-  entity?: string;
 }
 
-export const FlashCardStack: React.FC<FlashCardStackProps> = ({
+export const FlashCardStack = ({
   cards,
   currentIndex: controlledIndex,
   showShuffle = true,
   showSummary = true,
   className = "",
-}) => {
+}: FlashCardStackProps) => {
   const { emit } = useEventBus();
   const { t } = useTranslate();
   const [internalIndex, setInternalIndex] = useState(0);

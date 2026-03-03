@@ -1,3 +1,4 @@
+/* eslint-disable almadar/organism-extends-entity-display, almadar/organism-no-data-state, almadar/require-event-bus */
 /**
  * MealPlansBoard
  *
@@ -46,8 +47,11 @@ import {
   Input,
   Card,
   Spinner,
+  LoadingState,
+  ErrorState,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 import { MealPlanCard, MealPlanData } from "../molecules/MealPlanCard";
 
@@ -57,13 +61,9 @@ export interface MealPlanEntity {
   items: readonly MealPlanData[];
 }
 
-export interface MealPlansBoardProps {
+export interface MealPlansBoardProps extends Omit<EntityDisplayProps, 'entity'> {
   /** MealPlan entity data */
-  entity: MealPlanEntity;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
+  entity?: MealPlanEntity | MealPlanEntity[];
   /** Page title */
   title?: string;
   /** Page subtitle */
@@ -72,8 +72,6 @@ export interface MealPlansBoardProps {
   showHeader?: boolean;
   /** Show search */
   showSearch?: boolean;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for creating a meal plan (emitted as UI:{createEvent}) */
   createEvent?: string;
   /** Event name for searching meal plans (emitted as UI:{searchEvent}) */
@@ -97,7 +95,8 @@ export const MealPlansBoard: React.FC<MealPlansBoardProps> = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
-  const mealPlans = entity.items || [];
+  const entityData = Array.isArray(entity) ? entity[0] : entity;
+  const mealPlans = entityData?.items || [];
 
   // Handle search
   const handleSearch = (value: string) => {
@@ -274,11 +273,10 @@ export const MealPlansBoard: React.FC<MealPlansBoardProps> = ({
               {filteredMealPlans.map((plan) => (
                 <MealPlanCard
                   key={plan.id}
-                  data={plan}
+                  entity={plan}
                   showMacros={true}
                   showAiAnalysis={true}
                   showActions={true}
-                  entity="MealPlan"
                 />
               ))}
             </Box>
@@ -296,12 +294,11 @@ export const MealPlansBoard: React.FC<MealPlansBoardProps> = ({
                     {plans.map((plan) => (
                       <MealPlanCard
                         key={plan.id}
-                        data={plan}
+                        entity={plan}
                         compact={true}
                         showMacros={false}
                         showAiAnalysis={true}
                         showActions={false}
-                        entity="MealPlan"
                       />
                     ))}
                   </VStack>

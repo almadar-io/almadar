@@ -107,7 +107,7 @@ export interface BloomQuizBlockProps {
   className?: string;
 }
 
-export const BloomQuizBlock: React.FC<BloomQuizBlockProps> = ({
+export const BloomQuizBlock = ({
   level,
   question,
   answer,
@@ -116,7 +116,7 @@ export const BloomQuizBlock: React.FC<BloomQuizBlockProps> = ({
   conceptId,
   onAnswer,
   className,
-}) => {
+}: BloomQuizBlockProps) => {
   const eventBus = useEventBus();
   const { t } = useTranslate();
   const [revealed, setRevealed] = useState(false);

@@ -27,8 +27,11 @@ import {
   Typography,
   Button,
   Card,
+  LoadingState,
+  ErrorState,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from '@almadar/ui';
 
 export interface AIAnalysisData {
@@ -43,27 +46,20 @@ export interface AIAnalysisData {
   confidence?: number;
 }
 
-export interface AIAnalysisPanelProps {
+export interface AIAnalysisPanelProps extends EntityDisplayProps<AIAnalysisData> {
   /** Analysis data */
   analysis: AIAnalysisData;
   /** Show regenerate button */
   showRegenerate?: boolean;
-  /** Is regenerating */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
   /** Compact mode */
   compact?: boolean;
-  /** Entity context for events */
-  entity?: string;
-  /** Additional CSS classes */
-  className?: string;
 }
 
 export const AIAnalysisPanel: React.FC<AIAnalysisPanelProps> = ({
   analysis,
   showRegenerate = true,
   isLoading = false,
+  error = null,
   compact = false,
   entity,
   className,
@@ -79,6 +75,16 @@ export const AIAnalysisPanel: React.FC<AIAnalysisPanelProps> = ({
       entity,
     });
   }, [eventBus, analysis, entity]);
+
+  // Loading state
+  if (isLoading) {
+    return <LoadingState className={className} />;
+  }
+
+  // Error state
+  if (error) {
+    return <ErrorState message={error?.message} className={className} />;
+  }
 
   // Guard against undefined analysis
   if (!analysis) {

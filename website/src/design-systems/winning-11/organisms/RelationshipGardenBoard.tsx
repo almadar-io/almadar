@@ -28,15 +28,10 @@ import {
   Spinner,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 
-export interface RelationshipGardenBoardProps {
-  /** Entity data (garden items) */
-  entity?: readonly GardenItem[];
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
+export interface RelationshipGardenBoardProps extends EntityDisplayProps<GardenItem> {
   /** Current season */
   season?: SeasonPhase;
   /** Season progress */
@@ -55,8 +50,6 @@ export interface RelationshipGardenBoardProps {
   showSearch?: boolean;
   /** Show filters */
   showFilters?: boolean;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for creating a relationship */
   createEvent?: string;
   /** Event name for viewing a relationship */
@@ -93,6 +86,8 @@ export const RelationshipGardenBoard: React.FC<RelationshipGardenBoardProps> = (
   const { t } = useTranslate();
   const [searchTerm, setSearchTerm] = React.useState("");
   const [layout, setLayout] = React.useState<"grid" | "rows">("grid");
+
+  const gardenItems: readonly GardenItem[] = Array.isArray(entity) ? entity : [];
 
   // Handle search
   const handleSearch = (value: string) => {
@@ -196,7 +191,7 @@ export const RelationshipGardenBoard: React.FC<RelationshipGardenBoardProps> = (
       {/* Garden View */}
       {!isLoading && !error && (
         <GardenView
-          items={entity}
+          items={gardenItems}
           layout={layout}
           season={season}
           seasonProgress={seasonProgress}

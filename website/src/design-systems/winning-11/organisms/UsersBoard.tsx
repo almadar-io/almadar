@@ -31,6 +31,7 @@ import {
   Spinner,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -48,13 +49,7 @@ export interface UserData {
   lastActiveAt?: string;
 }
 
-export interface UsersBoardProps {
-  /** Entity data (user items) */
-  entity?: readonly UserData[];
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
+export interface UsersBoardProps extends EntityDisplayProps<UserData> {
   /** Page title */
   title?: string;
   /** Page subtitle */
@@ -65,8 +60,6 @@ export interface UsersBoardProps {
   showSearch?: boolean;
   /** Show filters */
   showFilters?: boolean;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for create action */
   createEvent: string;
   /** Event name for view action */
@@ -96,9 +89,9 @@ const getStatusColor = (status: UserData["status"]) => {
 
 const UserCard: React.FC<{
   user: UserData;
-  onAction: (action: string, user: UserData) => void;
-}> = ({ user, onAction }) => {
+}> = ({ user }) => {
   const { t } = useTranslate();
+  const eventBus = useEventBus();
   return (
     <Card className="p-4 hover:shadow-md transition-shadow">
       <VStack gap="md">
@@ -162,7 +155,7 @@ const UserCard: React.FC<{
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onAction("VIEW", user)}
+            onClick={() => eventBus.emit("UI:VIEW", { row: user, entity: "User" })}
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
@@ -171,7 +164,7 @@ const UserCard: React.FC<{
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onAction("EDIT", user)}
+            onClick={() => eventBus.emit("UI:EDIT", { row: user, entity: "User" })}
             className="gap-1"
           >
             <Edit className="h-3 w-3" />
@@ -181,7 +174,7 @@ const UserCard: React.FC<{
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => onAction("SUSPEND", user)}
+              onClick={() => eventBus.emit("UI:SUSPEND", { row: user, entity: "User" })}
               className="gap-1 text-red-600 hover:text-red-700"
             >
               <UserX className="h-3 w-3" />
@@ -213,7 +206,7 @@ export const UsersBoard: React.FC<UsersBoardProps> = ({
   const { t } = useTranslate();
   const [searchTerm, setSearchTerm] = React.useState("");
 
-  const users = entity || [];
+  const users: readonly UserData[] = Array.isArray(entity) ? entity : [];
 
   // Handle search
   const handleSearch = (value: string) => {
@@ -231,15 +224,10 @@ export const UsersBoard: React.FC<UsersBoardProps> = ({
     eventBus.emit("UI:FILTER", { entity: "User" });
   };
 
-  // Handle user actions
-  const handleAction = (action: string, user: UserData) => {
-    eventBus.emit(`UI:${action}`, { row: user, entity: "User" });
-  };
-
   // Filter users by search term
   const filteredUsers = searchTerm
     ? users.filter(
-        (user) =>
+        (user: UserData) =>
           user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
           user.email.toLowerCase().includes(searchTerm.toLowerCase())
       )
@@ -345,11 +333,10 @@ export const UsersBoard: React.FC<UsersBoardProps> = ({
             </VStack>
           ) : (
             <Box className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredUsers.map((user) => (
+              {filteredUsers.map((user: UserData) => (
                 <UserCard
                   key={user.id}
                   user={user}
-                  onAction={handleAction}
                 />
               ))}
             </Box>

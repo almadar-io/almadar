@@ -29,8 +29,14 @@ export * from './guardRegistry';
 export * from './tickRegistry';
 export * from './traitRegistry';
 
+// Verification
+export * from './verificationRegistry';
+
 // Data utilities
 export * from './getNestedValue';
 
 // Visualizer
 export * from './visualizer';
+
+// Content parsing
+export * from './parseContentSegments';

@@ -95,8 +95,12 @@ export const Default: Story = {
     args: {
         entity: {
             id: 'battle-default',
-            initialUnits: MOCK_UNITS,
+            units: MOCK_UNITS,
             tiles: generateMockTiles(),
+            phase: 'selection',
+            turn: 1,
+            gameResult: null,
+            selectedUnitId: null,
         },
         scale: 0.45,
     },
@@ -106,8 +110,12 @@ export const MinimalNoSlots: Story = {
     args: {
         entity: {
             id: 'battle-minimal',
-            initialUnits: MOCK_UNITS,
+            units: MOCK_UNITS,
             tiles: generateMockTiles(),
+            phase: 'selection',
+            turn: 1,
+            gameResult: null,
+            selectedUnitId: null,
         },
         scale: 0.45,
     },
@@ -117,7 +125,7 @@ export const LargeMap: Story = {
     args: {
         entity: {
             id: 'battle-large',
-            initialUnits: [
+            units: [
                 ...MOCK_UNITS,
                 {
                     id: 'hero-3',
@@ -145,6 +153,10 @@ export const LargeMap: Story = {
             tiles: generateMockTiles(12, 8),
             boardWidth: 12,
             boardHeight: 8,
+            phase: 'selection',
+            turn: 1,
+            gameResult: null,
+            selectedUnitId: null,
         },
         scale: 0.35,
     },

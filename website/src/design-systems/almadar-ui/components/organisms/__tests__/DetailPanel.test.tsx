@@ -59,9 +59,8 @@ describe('DetailPanel', () => {
     render(
       <TestWrapper>
         <DetailPanel
-          entity="Product"
+          entity={mockProduct}
           fieldNames={['name', 'price', 'category']}
-          data={mockProduct}
         />
       </TestWrapper>
     );
@@ -87,7 +86,6 @@ describe('DetailPanel', () => {
       <TestWrapper>
         <EventController />
         <DetailPanel
-          entity="Product"
           fieldNames={['name', 'price', 'category']}
         />
       </TestWrapper>
@@ -123,7 +121,6 @@ describe('DetailPanel', () => {
       <TestWrapper>
         <EventController />
         <DetailPanel
-          entity="Product"
           fieldNames={['name', 'price', 'category']}
         />
       </TestWrapper>
@@ -162,7 +159,6 @@ describe('DetailPanel', () => {
       <TestWrapper>
         <EventController />
         <DetailPanel
-          entity="Product"
           fieldNames={['name', 'price', 'category']}
         />
       </TestWrapper>
@@ -207,9 +203,8 @@ describe('DetailPanel', () => {
       <TestWrapper>
         <EventController />
         <DetailPanel
-          entity="Product"
+          entity={explicitData}
           fieldNames={['name', 'price']}
-          data={explicitData}
         />
       </TestWrapper>
     );

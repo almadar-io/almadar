@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import { cn } from "../../lib/cn";
 import { Card, Typography } from "../atoms";
@@ -5,9 +6,9 @@ import { Box } from "../atoms/Box";
 import { HStack, VStack } from "../atoms/Stack";
 import { Button } from "../atoms/Button";
 import { TrendingUp, TrendingDown, Minus, LucideIcon } from "lucide-react";
-import { useEntityList } from "../../hooks/useEntityData";
 import { useEventBus } from "../../hooks/useEventBus";
 import { useTranslate } from "../../hooks/useTranslate";
+import type { EntityDisplayProps } from "./types";
 
 /**
  * Schema metric definition
@@ -26,7 +27,7 @@ export interface MetricDefinition {
   format?: "currency" | "percent" | "number" | string;
 }
 
-export interface StatCardProps {
+export interface StatCardProps extends EntityDisplayProps {
   /** Main label */
   label?: string;
   /** Title (alias for label) */
@@ -61,19 +62,8 @@ export interface StatCardProps {
     /** Legacy onClick callback */
     onClick?: () => void;
   };
-  className?: string;
-
-  // Schema-based props
-  /** Entity name for schema-driven stats */
-  entity?: string;
   /** Metrics to display (schema format) - accepts readonly for compatibility with generated const arrays */
   metrics?: readonly MetricDefinition[];
-  /** Data to calculate stats from - accepts readonly for compatibility with generated const arrays */
-  data?: readonly Record<string, unknown>[];
-  /** Loading state indicator */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
 }
 
 export const StatCard: React.FC<StatCardProps> = ({
@@ -94,7 +84,6 @@ export const StatCard: React.FC<StatCardProps> = ({
   // Schema-based props
   entity,
   metrics,
-  data: externalData,
   isLoading: externalLoading,
   error: externalError,
 }) => {
@@ -106,27 +95,21 @@ export const StatCard: React.FC<StatCardProps> = ({
   // Handle action click with event bus integration
   const handleActionClick = React.useCallback(() => {
     if (action?.event) {
-      eventBus.emit(`UI:${action.event}`, { entity });
+      eventBus.emit(`UI:${action.event}`, {});
     }
     if (action?.onClick) {
       action.onClick();
     }
-  }, [action, eventBus, entity]);
-  // Auto-fetch data when entity is provided but no external data
-  const shouldAutoFetch = !!entity && !externalData && !!metrics;
-  const { data: fetchedData, isLoading: fetchLoading } = useEntityList(
-    shouldAutoFetch ? entity : undefined,
-    { skip: !shouldAutoFetch },
-  );
+  }, [action, eventBus]);
 
-  // Use external data if provided, otherwise use fetched data
-  const data = (externalData ?? fetchedData ?? []) as readonly Record<
+  // Normalize entity data to array
+  const data = (Array.isArray(entity) ? entity : entity ? [entity] : []) as readonly Record<
     string,
     unknown
   >[];
 
   // Determine loading and error state
-  const isLoading = externalLoading ?? (shouldAutoFetch ? fetchLoading : false);
+  const isLoading = externalLoading ?? false;
   const error = externalError;
 
   // Helper to compute a single metric value
@@ -199,6 +182,15 @@ export const StatCard: React.FC<StatCardProps> = ({
     }));
   }, [metrics, data, computeMetricValue]);
 
+  // Calculate trend (must be before early returns per Rules of Hooks)
+  const calculatedTrend = React.useMemo(() => {
+    if (manualTrend !== undefined) return manualTrend;
+    if (previousValue === undefined || currentValue === undefined)
+      return undefined;
+    if (previousValue === 0) return currentValue > 0 ? 100 : 0;
+    return ((currentValue - previousValue) / previousValue) * 100;
+  }, [manualTrend, previousValue, currentValue]);
+
   // If multiple metrics, render them as a row of stats
   if (schemaStats && schemaStats.length > 1) {
     if (isLoading) {
@@ -239,20 +231,12 @@ export const StatCard: React.FC<StatCardProps> = ({
   }
 
   // Use schema stats if available (single metric), otherwise use props
-  const label = schemaStats?.[0]?.label || labelToUse || entity || "Stat";
+  const label = schemaStats?.[0]?.label || labelToUse || "Stat";
   // Handle array values (use first element or array length)
   const normalizedPropValue = Array.isArray(propValue)
     ? (propValue[0] ?? propValue.length)
     : propValue;
   const value = schemaStats?.[0]?.value ?? normalizedPropValue ?? 0;
-  // Calculate trend if not provided manually
-  const calculatedTrend = useMemo(() => {
-    if (manualTrend !== undefined) return manualTrend;
-    if (previousValue === undefined || currentValue === undefined)
-      return undefined;
-    if (previousValue === 0) return currentValue > 0 ? 100 : 0;
-    return ((currentValue - previousValue) / previousValue) * 100;
-  }, [manualTrend, previousValue, currentValue]);
 
   const trendDirection =
     manualDirection ||
@@ -364,7 +348,3 @@ export const StatCard: React.FC<StatCardProps> = ({
 };
 
 StatCard.displayName = "StatCard";
-
-function useMemo<T>(factory: () => T, deps: unknown[]): T {
-  return React.useMemo(factory, deps);
-}

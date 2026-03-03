@@ -1,3 +1,4 @@
+'use client';
 /**
  * FeatureRenderer3D
  *
@@ -100,7 +101,7 @@ function FeatureModel({
     isSelected,
     onClick,
     onHover,
-}: FeatureModelProps): JSX.Element | null {
+}: FeatureModelProps): React.JSX.Element | null {
     const groupRef = useRef<THREE.Group>(null);
     
     // Load GLB model if assetUrl is provided (without Suspense)
@@ -230,7 +231,7 @@ export function FeatureRenderer3D({
     onFeatureClick,
     onFeatureHover,
     selectedFeatureIds = [],
-}: FeatureRenderer3DProps): JSX.Element {
+}: FeatureRenderer3DProps): React.JSX.Element {
     return (
         <group>
             {features.map((feature) => {

@@ -1,3 +1,4 @@
+'use client';
 /**
  * TextHighlight Atom Component
  *

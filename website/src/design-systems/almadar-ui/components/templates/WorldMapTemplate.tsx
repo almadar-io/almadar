@@ -31,6 +31,8 @@ export interface WorldMapTemplateProps extends TemplateProps<WorldMapEntity> {
     scale?: number;
     /** Unit draw-size multiplier */
     unitScale?: number;
+    /** Override for the diamond-top Y offset within tile sprites (default: 374). */
+    diamondTopY?: number;
     /** Allow selecting / moving ALL heroes (including enemy). For testing. */
     allowMoveAllHeroes?: boolean;
 }
@@ -43,14 +45,16 @@ export function WorldMapTemplate({
     entity,
     scale = 0.4,
     unitScale = 2.5,
+    diamondTopY,
     allowMoveAllHeroes = false,
     className,
-}: WorldMapTemplateProps): JSX.Element {
+}: WorldMapTemplateProps): React.JSX.Element {
     return (
         <WorldMapBoard
             entity={entity}
             scale={scale}
             unitScale={unitScale}
+            diamondTopY={diamondTopY}
             allowMoveAllHeroes={allowMoveAllHeroes}
             heroSelectEvent="HERO_SELECT"
             heroMoveEvent="HERO_MOVE"

@@ -6,7 +6,7 @@
  *
  * Event Contract:
  * - Emits: UI:PLAY_VIDEO - when video link is clicked
- * - Payload: { videoUrl, exerciseName, entity }
+ * - Payload: { videoUrl, exerciseName, entity: "Exercise" }
  */
 
 import React, { useCallback } from "react";
@@ -26,8 +26,6 @@ export interface ExerciseVideoLinkProps {
   videoUrl: string;
   /** Compact mode */
   compact?: boolean;
-  /** Entity context for events */
-  entity?: string;
   /** Additional CSS classes */
   className?: string;
 }
@@ -57,7 +55,6 @@ export const ExerciseVideoLink: React.FC<ExerciseVideoLinkProps> = ({
   exerciseName,
   videoUrl,
   compact = false,
-  entity = "Exercise",
   className,
 }) => {
   const eventBus = useEventBus();
@@ -68,9 +65,9 @@ export const ExerciseVideoLink: React.FC<ExerciseVideoLinkProps> = ({
     eventBus.emit("UI:PLAY_VIDEO", {
       videoUrl,
       exerciseName,
-      entity,
+      entity: "Exercise",
     });
-  }, [eventBus, videoUrl, exerciseName, entity]);
+  }, [eventBus, videoUrl, exerciseName]);
 
   if (compact) {
     return (

@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * TraineeDetailTemplate - Thin wrapper template for TraineeDetailBoard
  *

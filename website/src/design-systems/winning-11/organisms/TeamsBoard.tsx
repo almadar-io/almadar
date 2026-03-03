@@ -41,6 +41,7 @@ import {
   Spinner,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 
 export interface TeamData {
@@ -59,13 +60,7 @@ export interface TeamData {
   tags?: string[];
 }
 
-export interface TeamsBoardProps {
-  /** Entity data (team items) */
-  entity?: readonly TeamData[];
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
+export interface TeamsBoardProps extends EntityDisplayProps<TeamData> {
   /** Page title */
   title?: string;
   /** Page subtitle */
@@ -74,8 +69,6 @@ export interface TeamsBoardProps {
   showHeader?: boolean;
   /** Show search */
   showSearch?: boolean;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for creating a team */
   createEvent?: string;
   /** Event name for viewing a team */
@@ -118,11 +111,11 @@ const getStatusColor = (status: TeamData["status"]) => {
 
 const TeamCard: React.FC<{
   team: TeamData;
-  onAction: (action: string, team: TeamData) => void;
   viewEvent: string;
   editEvent: string;
-}> = ({ team, onAction, viewEvent, editEvent }) => {
+}> = ({ team, viewEvent, editEvent }) => {
   const { t } = useTranslate();
+  const eventBus = useEventBus();
   const memberCapacity = team.maxMembers
     ? `${team.memberCount}/${team.maxMembers}`
     : team.memberCount.toString();
@@ -201,7 +194,7 @@ const TeamCard: React.FC<{
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onAction(viewEvent, team)}
+            onClick={() => eventBus.emit(`UI:${viewEvent}`, { row: team, entity: "Team" })}
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
@@ -210,7 +203,7 @@ const TeamCard: React.FC<{
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onAction(editEvent, team)}
+            onClick={() => eventBus.emit(`UI:${editEvent}`, { row: team, entity: "Team" })}
             className="gap-1"
           >
             <Edit className="h-3 w-3" />
@@ -219,7 +212,7 @@ const TeamCard: React.FC<{
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onAction("ADD_MEMBER", team)}
+            onClick={() => eventBus.emit("UI:ADD_MEMBER", { row: team, entity: "Team" })}
             className="gap-1"
           >
             <UserPlus className="h-3 w-3" />
@@ -252,7 +245,7 @@ export const TeamsBoard: React.FC<TeamsBoardProps> = ({
   const [typeFilter, setTypeFilter] = React.useState<string>("all");
   const [layout, setLayout] = React.useState<"grid" | "list">("grid");
 
-  const teams = entity || [];
+  const teams: readonly TeamData[] = Array.isArray(entity) ? entity : [];
 
   // Handle search
   const handleSearch = (value: string) => {
@@ -265,13 +258,8 @@ export const TeamsBoard: React.FC<TeamsBoardProps> = ({
     eventBus.emit(`UI:${createEvent}`, { entity: "Team" });
   };
 
-  // Handle team actions
-  const handleAction = (action: string, team: TeamData) => {
-    eventBus.emit(`UI:${action}`, { row: team, entity: "Team" });
-  };
-
   // Filter teams
-  const filteredTeams = teams.filter((t) => {
+  const filteredTeams = teams.filter((t: TeamData) => {
     if (typeFilter !== "all" && t.type !== typeFilter) {
       return false;
     }
@@ -288,8 +276,8 @@ export const TeamsBoard: React.FC<TeamsBoardProps> = ({
   // Stats
   const stats = {
     total: teams.length,
-    active: teams.filter((t) => t.status === "active").length,
-    totalMembers: teams.reduce((sum, t) => sum + t.memberCount, 0),
+    active: teams.filter((t: TeamData) => t.status === "active").length,
+    totalMembers: teams.reduce((sum: number, t: TeamData) => sum + t.memberCount, 0),
   };
 
   return (
@@ -434,11 +422,10 @@ export const TeamsBoard: React.FC<TeamsBoardProps> = ({
                   : "flex flex-col gap-4"
               )}
             >
-              {filteredTeams.map((team) => (
+              {filteredTeams.map((team: TeamData) => (
                 <TeamCard
                   key={team.id}
                   team={team}
-                  onAction={handleAction}
                   viewEvent={viewEvent}
                   editEvent={editEvent}
                 />

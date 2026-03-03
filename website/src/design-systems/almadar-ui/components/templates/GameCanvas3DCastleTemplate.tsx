@@ -105,7 +105,7 @@ export function GameCanvas3DCastleTemplate({
     availableBuildSites,
     showHeader = true,
     className,
-}: GameCanvas3DCastleTemplateProps): JSX.Element {
+}: GameCanvas3DCastleTemplateProps): React.JSX.Element {
     return (
         <VStack className={cn('game-canvas-3d-castle-template', className)}>
             {/* Castle header */}

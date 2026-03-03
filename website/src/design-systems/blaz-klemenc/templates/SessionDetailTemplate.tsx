@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * SessionDetailTemplate - Thin wrapper over SessionDetailBoard organism
  *

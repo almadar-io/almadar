@@ -1,3 +1,4 @@
+'use client';
 /**
  * NavigationContext - Schema-Driven Navigation for Orbital Runtime
  *

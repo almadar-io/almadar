@@ -30,6 +30,7 @@ import {
   Spinner,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -61,17 +62,11 @@ export interface GraphIntelligenceEntity {
   stats?: NetworkStats;
 }
 
-export interface GraphIntelligenceBoardProps {
-  /** Entity data */
+export interface GraphIntelligenceBoardProps extends Omit<EntityDisplayProps, 'entity'> {
+  /** Entity (single object) */
   entity?: GraphIntelligenceEntity;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
   /** Page title */
   title?: string;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for refresh action */
   refreshEvent: string;
   /** Event name for viewing a cluster */
@@ -101,9 +96,9 @@ const getTypeColor = (type: ClusterData["type"]) => {
 
 const ClusterCard: React.FC<{
   cluster: ClusterData;
-  onAction: (action: string, cluster: ClusterData) => void;
-}> = ({ cluster, onAction }) => {
+}> = ({ cluster }) => {
   const { t } = useTranslate();
+  const eventBus = useEventBus();
   return (
     <Card className="p-4 hover:shadow-md transition-shadow">
       <VStack gap="md">
@@ -173,7 +168,7 @@ const ClusterCard: React.FC<{
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onAction("VIEW", cluster)}
+            onClick={() => eventBus.emit("UI:VIEW", { row: cluster, entity: "Cluster" })}
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
@@ -182,7 +177,7 @@ const ClusterCard: React.FC<{
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onAction("EXPLORE", cluster)}
+            onClick={() => eventBus.emit("UI:EXPLORE", { row: cluster, entity: "Cluster" })}
             className="gap-1"
           >
             <Share2 className="h-3 w-3" />
@@ -244,10 +239,6 @@ export const GraphIntelligenceBoard: React.FC<GraphIntelligenceBoardProps> = ({
 
   const handleAnalyze = () => {
     eventBus.emit(`UI:${analyzeEvent}`, {});
-  };
-
-  const handleAction = (action: string, cluster: ClusterData) => {
-    eventBus.emit(`UI:${action}`, { row: cluster, entity: "Cluster" });
   };
 
   if (isLoading) {
@@ -374,7 +365,6 @@ export const GraphIntelligenceBoard: React.FC<GraphIntelligenceBoardProps> = ({
               <ClusterCard
                 key={cluster.id}
                 cluster={cluster}
-                onAction={handleAction}
               />
             ))}
           </Box>

@@ -49,8 +49,8 @@ export interface InspectionSummaryData {
 }
 
 export interface InspectionSummaryProps {
-  /** Summary data */
-  data?: InspectionSummaryData;
+  /** Summary entity */
+  entity?: InspectionSummaryData;
   /** Display variant */
   variant?: "default" | "compact" | "card";
   /** Show actions */
@@ -67,32 +67,32 @@ const statusConfig = {
 };
 
 export const InspectionSummary: React.FC<InspectionSummaryProps> = ({
-  data,
+  entity,
   variant = "default",
   showActions = true,
   className,
 }) => {
   const eventBus = useEventBus();
 
-  if (!data) return null;
+  if (!entity) return null;
 
-  const status = data.status || "pending";
+  const status = entity.status || "pending";
   const statusInfo = statusConfig[status];
   const StatusIcon = statusInfo.icon;
 
-  const total = data.totalRules || 0;
-  const compliant = data.compliantCount || 0;
-  const nonCompliant = data.nonCompliantCount || 0;
-  const pending = data.pendingCount || (total - compliant - nonCompliant);
+  const total = entity.totalRules || 0;
+  const compliant = entity.compliantCount || 0;
+  const nonCompliant = entity.nonCompliantCount || 0;
+  const pending = entity.pendingCount || (total - compliant - nonCompliant);
 
   const complianceRate = total > 0 ? Math.round((compliant / total) * 100) : 0;
 
   const handleViewDetails = () => {
-    eventBus.emit("UI:VIEW_DETAILS", { item: data });
+    eventBus.emit("UI:VIEW_DETAILS", { item: entity });
   };
 
   const handleDownload = () => {
-    eventBus.emit("UI:DOWNLOAD_REPORT", { item: data });
+    eventBus.emit("UI:DOWNLOAD_REPORT", { item: entity });
   };
 
   if (variant === "compact") {
@@ -103,7 +103,7 @@ export const InspectionSummary: React.FC<InspectionSummaryProps> = ({
             <StatusIcon className={cn("h-5 w-5", statusInfo.color)} />
             <VStack gap="xs">
               <Typography variant="body" className="font-medium">
-                {data.companyName || "Inspection Summary"}
+                {entity.companyName || "Inspection Summary"}
               </Typography>
               <Typography variant="small" className="text-[var(--color-muted-foreground)]">
                 {complianceRate}% Compliant
@@ -125,10 +125,10 @@ export const InspectionSummary: React.FC<InspectionSummaryProps> = ({
             <Typography variant="h3">
               Inspection Summary
             </Typography>
-            {data.companyName && (
+            {entity.companyName && (
               <HStack gap="xs" align="center" className="text-[var(--color-muted-foreground)]">
                 <Building2 className="h-4 w-4" />
-                <Typography variant="body">{data.companyName}</Typography>
+                <Typography variant="body">{entity.companyName}</Typography>
               </HStack>
             )}
           </VStack>
@@ -140,16 +140,16 @@ export const InspectionSummary: React.FC<InspectionSummaryProps> = ({
 
         {/* Meta info */}
         <HStack gap="lg" wrap className="text-[var(--color-muted-foreground)]">
-          {data.inspectorName && (
+          {entity.inspectorName && (
             <HStack gap="xs" align="center">
               <User className="h-4 w-4" />
-              <Typography variant="small">{data.inspectorName}</Typography>
+              <Typography variant="small">{entity.inspectorName}</Typography>
             </HStack>
           )}
-          {data.date && (
+          {entity.date && (
             <HStack gap="xs" align="center">
               <Calendar className="h-4 w-4" />
-              <Typography variant="small">{data.date}</Typography>
+              <Typography variant="small">{entity.date}</Typography>
             </HStack>
           )}
         </HStack>
@@ -220,28 +220,28 @@ export const InspectionSummary: React.FC<InspectionSummaryProps> = ({
         </VStack>
 
         {/* Violations breakdown */}
-        {(data.criticalViolations || data.majorViolations || data.minorViolations) && (
+        {(entity.criticalViolations || entity.majorViolations || entity.minorViolations) && (
           <VStack gap="sm">
             <Typography variant="small" className="font-medium text-[var(--color-foreground)]">
               Violations by Severity
             </Typography>
             <HStack gap="md" wrap>
-              {data.criticalViolations !== undefined && data.criticalViolations > 0 && (
+              {entity.criticalViolations !== undefined && entity.criticalViolations > 0 && (
                 <Badge variant="danger" className="gap-1">
                   <AlertTriangle className="h-3 w-3" />
-                  {data.criticalViolations} Critical
+                  {entity.criticalViolations} Critical
                 </Badge>
               )}
-              {data.majorViolations !== undefined && data.majorViolations > 0 && (
+              {entity.majorViolations !== undefined && entity.majorViolations > 0 && (
                 <Badge variant="warning" className="gap-1">
                   <AlertTriangle className="h-3 w-3" />
-                  {data.majorViolations} Major
+                  {entity.majorViolations} Major
                 </Badge>
               )}
-              {data.minorViolations !== undefined && data.minorViolations > 0 && (
+              {entity.minorViolations !== undefined && entity.minorViolations > 0 && (
                 <Badge variant="neutral" className="gap-1">
                   <AlertTriangle className="h-3 w-3" />
-                  {data.minorViolations} Minor
+                  {entity.minorViolations} Minor
                 </Badge>
               )}
             </HStack>
@@ -249,13 +249,13 @@ export const InspectionSummary: React.FC<InspectionSummaryProps> = ({
         )}
 
         {/* Notes */}
-        {data.notes && (
+        {entity.notes && (
           <VStack gap="sm">
             <Typography variant="small" className="font-medium text-[var(--color-foreground)]">
               Notes
             </Typography>
             <Typography variant="body" className="text-[var(--color-foreground)]">
-              {data.notes}
+              {entity.notes}
             </Typography>
           </VStack>
         )}

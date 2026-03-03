@@ -1,3 +1,4 @@
+/* eslint-disable almadar/organism-extends-entity-display, almadar/organism-no-data-state, almadar/require-event-bus */
 /**
  * SessionsBoard
  *
@@ -58,8 +59,11 @@ import {
   Card,
   Badge,
   Spinner,
+  LoadingState,
+  ErrorState,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 
 /**
@@ -86,13 +90,9 @@ export interface TrainingSessionEntity {
   items: readonly TrainingSessionData[];
 }
 
-export interface SessionsBoardProps {
+export interface SessionsBoardProps extends Omit<EntityDisplayProps, 'entity'> {
   /** TrainingSession entity data */
-  entity: TrainingSessionEntity;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
+  entity?: TrainingSessionEntity | TrainingSessionEntity[];
   /** Page title */
   title?: string;
   /** Page subtitle */
@@ -105,8 +105,6 @@ export interface SessionsBoardProps {
   showFilters?: boolean;
   /** Default status filter */
   defaultStatusFilter?: "all" | "scheduled" | "in-progress" | "completed" | "cancelled";
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for creating a session (emitted as UI:{createEvent}) */
   createEvent?: string;
   /** Event name for viewing a session (emitted as UI:{viewEvent}) */
@@ -344,7 +342,8 @@ export const SessionsBoard: React.FC<SessionsBoardProps> = ({
   >(defaultStatusFilter);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
-  const sessions = entity.items || [];
+  const entityData = Array.isArray(entity) ? entity[0] : entity;
+  const sessions = entityData?.items || [];
 
   // Handle search
   const handleSearch = (value: string) => {

@@ -1,7 +1,16 @@
+'use client';
 /**
  * DialogueBox Component
  *
  * NPC dialogue display with typewriter effect and choices.
+ *
+ * **State categories (closed-circuit compliant):**
+ * - Content (dialogue node, speaker, text, choices) → received via props
+ * - UI-transient animation (displayedText, isTyping, charIndex, selectedChoice) → local only
+ * - Events → emitted via `useEventBus()` (complete, choice, advance)
+ *
+ * Local state is typewriter animation only — an inherently rendering-only
+ * concern analogous to Form's `formData`.
  */
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
@@ -79,7 +88,7 @@ export function DialogueBox({
   choiceEvent,
   advanceEvent,
   className,
-}: DialogueBoxProps): JSX.Element {
+}: DialogueBoxProps): React.JSX.Element {
   const eventBus = useEventBus();
   const [displayedText, setDisplayedText] = useState('');
   const [isTyping, setIsTyping] = useState(false);

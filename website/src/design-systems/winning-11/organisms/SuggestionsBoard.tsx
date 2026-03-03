@@ -37,6 +37,7 @@ import {
   Spinner,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 
 export interface SuggestionData {
@@ -52,21 +53,13 @@ export interface SuggestionData {
   createdAt: string;
 }
 
-export interface SuggestionsBoardProps {
-  /** Entity data (suggestion items) */
-  entity?: readonly SuggestionData[];
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
+export interface SuggestionsBoardProps extends EntityDisplayProps<SuggestionData> {
   /** Page title */
   title?: string;
   /** Page subtitle */
   subtitle?: string;
   /** Show header */
   showHeader?: boolean;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for viewing a suggestion */
   viewEvent?: string;
   /** Event name for accepting/connecting */
@@ -100,12 +93,12 @@ const getScoreBadgeLabelKey = (score: number) => {
 
 const SuggestionCard: React.FC<{
   suggestion: SuggestionData;
-  onAction: (action: string, suggestion: SuggestionData) => void;
   acceptEvent: string;
   rejectEvent: string;
   viewEvent: string;
-}> = ({ suggestion, onAction, acceptEvent, rejectEvent, viewEvent }) => {
+}> = ({ suggestion, acceptEvent, rejectEvent, viewEvent }) => {
   const { t } = useTranslate();
+  const eventBus = useEventBus();
   const scoreBadgeVariant = getScoreBadgeVariant(suggestion.compatibilityScore);
   const scoreBadgeLabelKey = getScoreBadgeLabelKey(suggestion.compatibilityScore);
 
@@ -207,7 +200,7 @@ const SuggestionCard: React.FC<{
           <Button
             variant="primary"
             size="sm"
-            onClick={() => onAction(acceptEvent, suggestion)}
+            onClick={() => eventBus.emit(`UI:${acceptEvent}`, { row: suggestion, entity: "ConnectionSuggestion" })}
             className="gap-1 flex-1"
           >
             <UserPlus className="h-3 w-3" />
@@ -216,7 +209,7 @@ const SuggestionCard: React.FC<{
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onAction(rejectEvent, suggestion)}
+            onClick={() => eventBus.emit(`UI:${rejectEvent}`, { row: suggestion, entity: "ConnectionSuggestion" })}
             className="gap-1"
           >
             <X className="h-3 w-3" />
@@ -225,7 +218,7 @@ const SuggestionCard: React.FC<{
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onAction(viewEvent, suggestion)}
+            onClick={() => eventBus.emit(`UI:${viewEvent}`, { row: suggestion, entity: "ConnectionSuggestion" })}
           >
             <ChevronRight className="h-3 w-3" />
           </Button>
@@ -253,16 +246,11 @@ export const SuggestionsBoard: React.FC<SuggestionsBoardProps> = ({
   const resolvedTitle = title || t("suggestions.title");
   const resolvedSubtitle = subtitle || t("suggestions.subtitle");
 
-  const suggestions = (entity || []).filter((s) => s.status === "pending");
+  const suggestions: readonly SuggestionData[] = (Array.isArray(entity) ? entity : []).filter((s: SuggestionData) => s.status === "pending");
 
   // Handle refresh
   const handleRefresh = () => {
     eventBus.emit(`UI:${createEvent}`, { entity: "ConnectionSuggestion" });
-  };
-
-  // Handle suggestion actions
-  const handleAction = (action: string, suggestion: SuggestionData) => {
-    eventBus.emit(`UI:${action}`, { row: suggestion, entity: "ConnectionSuggestion" });
   };
 
   // Stats
@@ -369,7 +357,6 @@ export const SuggestionsBoard: React.FC<SuggestionsBoardProps> = ({
                 <SuggestionCard
                   key={suggestion.id}
                   suggestion={suggestion}
-                  onAction={handleAction}
                   acceptEvent={acceptEvent}
                   rejectEvent={rejectEvent}
                   viewEvent={viewEvent}

@@ -1,28 +1,24 @@
+'use client';
 /**
  * CardGrid Component
  *
- * A responsive grid specifically designed for card layouts.
+ * A dumb, responsive grid specifically designed for card layouts.
  * Uses CSS Grid auto-fit for automatic responsive columns.
  *
- * When `entity` prop is provided without `data`, automatically fetches data
- * using the useEntityList hook. Supports server-side pagination and search.
+ * Data comes exclusively from the `entity` prop (injected by the runtime).
+ * All user interactions emit events via useEventBus — never manages internal state
+ * for pagination, filtering, or search. All state is owned by the trait state machine.
  */
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import { cn } from '../../lib/cn';
 import { getNestedValue } from '../../lib/getNestedValue';
-import {
-  useEntityList,
-  usePaginatedEntityList,
-  type PaginationParams,
-} from '../../hooks/useEntityData';
-import { useEventBus, type KFlowEvent } from '../../hooks/useEventBus';
-import { useQuerySingleton } from '../../hooks/useQuerySingleton';
+import { useEventBus } from '../../hooks/useEventBus';
 import { Button } from '../atoms';
 import { Box } from '../atoms/Box';
 import { Typography } from '../atoms/Typography';
 import { VStack, HStack } from '../atoms/Stack';
 import { Pagination } from '../molecules/Pagination';
+import type { EntityDisplayProps } from './types';
 
 export type CardGridGap = 'none' | 'sm' | 'md' | 'lg' | 'xl';
 
@@ -59,7 +55,7 @@ function normalizeFields(fields: readonly FieldDef[] | undefined): string[] {
   return fields.map((f) => (typeof f === 'string' ? f : f.key));
 }
 
-export interface CardGridProps {
+export interface CardGridProps extends EntityDisplayProps {
   /** Minimum width of each card (default: 280px) */
   minCardWidth?: number;
   /** Maximum number of columns */
@@ -68,42 +64,18 @@ export interface CardGridProps {
   gap?: CardGridGap;
   /** Align cards vertically in their cells */
   alignItems?: 'start' | 'center' | 'end' | 'stretch';
-  /** Custom class name */
-  className?: string;
-  /** Children elements (cards) - optional when using entity/data props */
+  /** Children elements (cards) - optional when using entity prop */
   children?: React.ReactNode;
-  /** Entity type for data-bound usage */
-  entity?: string;
   /** Fields to display - accepts string[] or {key, header}[] for unified interface */
   fields?: readonly FieldDef[];
   /** Alias for fields - backwards compatibility */
   fieldNames?: readonly string[];
   /** Alias for fields - backwards compatibility */
   columns?: readonly FieldDef[];
-  /** Data array for data-bound usage - accepts readonly for generated const arrays */
-  data?: readonly unknown[] | unknown;
-  /** Loading state indicator */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
   /** Actions for each card item (schema-driven) */
   itemActions?: readonly CardItemAction[];
-  /** Callback when a card is clicked */
-  onCardClick?: (item: unknown) => void;
-  /** Enable server-side pagination */
-  enablePagination?: boolean;
-  /** Items per page (default: 20) */
-  pageSize?: number;
   /** Show total count in pagination */
   showTotal?: boolean;
-  /** Filter configuration for entity data */
-  filter?: { field: string; value?: string };
-  /**
-   * Query singleton binding for filter/sort state.
-   * When provided, syncs with the query singleton for filtering and sorting.
-   * Example: "@TaskQuery"
-   */
-  query?: string;
 }
 
 const gapStyles: Record<CardGridGap, string> = {
@@ -126,9 +98,10 @@ const alignStyles = {
  *
  * Can be used in two ways:
  * 1. With children: <CardGrid><Card>...</Card></CardGrid>
- * 2. With data: <CardGrid entity="Task" fieldNames={['title']} data={tasks} />
+ * 2. With entity data: <CardGrid entity={tasks} fieldNames={['title']} />
  *
- * Supports server-side pagination when enablePagination is true.
+ * All data comes from the `entity` prop. Pagination display hints come from
+ * `page`, `pageSize`, and `totalCount` props (set by the trait via render-ui).
  */
 export const CardGrid: React.FC<CardGridProps> = ({
   minCardWidth = 280,
@@ -137,26 +110,21 @@ export const CardGrid: React.FC<CardGridProps> = ({
   alignItems = 'stretch',
   className,
   children,
+  // EntityDisplayProps
   entity,
+  isLoading = false,
+  error = null,
+  page,
+  pageSize,
+  totalCount,
+  // CardGrid-specific
   fields,
   fieldNames,
   columns,
-  data: externalData,
-  isLoading: externalLoading,
-  error: externalError,
   itemActions,
-  onCardClick,
-  enablePagination = false,
-  pageSize: defaultPageSize = 20,
   showTotal = true,
-  filter,
-  query,
 }) => {
   const eventBus = useEventBus();
-  const navigate = useNavigate();
-
-  // Query singleton for filter/sort state
-  const queryState = useQuerySingleton(query);
 
   // Support fields, fieldNames, and columns (aliases) - normalize to string[]
   const effectiveFieldNames =
@@ -164,174 +132,25 @@ export const CardGrid: React.FC<CardGridProps> = ({
       ? normalizeFields(fields)
       : (fieldNames ?? normalizeFields(columns));
 
-  // Pagination state - initialize from query singleton if available
-  const [paginationParams, setPaginationParams] = useState<PaginationParams>(() => ({
-    page: 1,
-    pageSize: defaultPageSize,
-    search: queryState?.search ?? '',
-    sortBy: queryState?.sortField ?? undefined,
-    sortDirection: queryState?.sortDirection ?? 'asc',
-    filters: queryState?.filters,
-  }));
-
-  // Sync with query singleton changes (e.g., from FilterGroup or SearchInput)
-  useEffect(() => {
-    if (queryState) {
-      setPaginationParams((prev) => ({
-        ...prev,
-        search: queryState.search,
-        sortBy: queryState.sortField ?? undefined,
-        sortDirection: queryState.sortDirection ?? 'asc',
-        filters: queryState.filters,
-        page: 1, // Reset to page 1 when filters change
-      }));
-    }
-  }, [
-    queryState?.search,
-    queryState?.sortField,
-    queryState?.sortDirection,
-    JSON.stringify(queryState?.filters),
-  ]);
-
-  // Listen for search and filter events from the event bus
-  useEffect(() => {
-    const handleSearch = (event: KFlowEvent) => {
-      // Only handle if no query binding (avoid double-handling when query singleton is used)
-      if (query) return;
-      const term = (event.payload?.searchTerm as string) ?? '';
-      setPaginationParams((prev) => ({ ...prev, search: term, page: 1 }));
-    };
-
-    const handleClearSearch = (event: KFlowEvent) => {
-      // Only handle if no query binding
-      if (query) return;
-      setPaginationParams((prev) => ({ ...prev, search: '', page: 1 }));
-    };
-
-    const handleFilter = (event: KFlowEvent) => {
-      // Only handle if no query binding
-      if (query) return;
-      const { field, value } = event.payload ?? {};
-      if (field) {
-        setPaginationParams((prev) => ({
-          ...prev,
-          filters: { ...prev.filters, [field as string]: value },
-          page: 1,
-        }));
-      }
-    };
-
-    const handleClearFilters = (event: KFlowEvent) => {
-      // Only handle if no query binding
-      if (query) return;
-      setPaginationParams((prev) => ({
-        ...prev,
-        filters: {},
-        search: '',
-        page: 1,
-      }));
-    };
-
-    const unsubSearch = eventBus.on('UI:SEARCH', handleSearch);
-    const unsubClear = eventBus.on('UI:CLEAR_SEARCH', handleClearSearch);
-    const unsubFilter = eventBus.on('UI:FILTER', handleFilter);
-    const unsubClearFilters = eventBus.on('UI:CLEAR_FILTERS', handleClearFilters);
-
-    return () => {
-      unsubSearch();
-      unsubClear();
-      unsubFilter();
-      unsubClearFilters();
-    };
-  }, [eventBus, query]);
-
   // Build the grid-template-columns value
   const gridTemplateColumns = `repeat(auto-fit, minmax(min(${minCardWidth}px, 100%), 1fr))`;
 
-  // Auto-fetch data when entity is provided but no external data
-  const shouldAutoFetch = !!entity && !externalData && !children;
+  // Normalize entity data to array
+  const normalizedData = Array.isArray(entity) ? entity : entity ? [entity] : [];
 
-  // Use paginated or unpaginated hook based on enablePagination
-  const paginatedResult = usePaginatedEntityList(
-    shouldAutoFetch && enablePagination ? entity : undefined,
-    paginationParams,
-    { skip: !shouldAutoFetch || !enablePagination }
-  );
+  // Compute pagination display hints from EntityDisplayProps
+  const resolvedPage = page ?? 1;
+  const resolvedTotalPages = totalCount && pageSize ? Math.ceil(totalCount / pageSize) : 1;
 
-  const unpaginatedResult = useEntityList(
-    shouldAutoFetch && !enablePagination ? entity : undefined,
-    {
-      skip: !shouldAutoFetch || enablePagination,
-    }
-  );
+  // Handle page change — emit event, trait owns the state
+  const handlePageChange = (newPage: number) => {
+    eventBus.emit('UI:PAGINATE', { page: newPage, pageSize });
+  };
 
-  // Choose which result to use
-  const queryResult = enablePagination ? paginatedResult : unpaginatedResult;
-
-  // Use external data if provided, otherwise use fetched data
-  const data = externalData ?? (enablePagination ? paginatedResult.data : unpaginatedResult.data);
-  const isLoading = externalLoading ?? (shouldAutoFetch ? queryResult.isLoading : false);
-  const error = externalError ?? (shouldAutoFetch ? queryResult.error : null);
-
-  // Debug logging to trace data flow
-  console.log(`%c[CardGrid] entity: ${entity}`, 'color: orange;');
-  console.log('[CardGrid] shouldAutoFetch:', shouldAutoFetch);
-  console.log('[CardGrid] externalData:', externalData);
-  console.log('[CardGrid] data:', data);
-  if (Array.isArray(data) && data.length > 0) {
-    console.log('[CardGrid] First record:', JSON.stringify(data[0]));
-    console.log(
-      '[CardGrid] All statuses:',
-      data.map((d: Record<string, unknown>) => d.status)
-    );
-  }
-
-  // Pagination info (only available when using paginated hook)
-  const paginationInfo = enablePagination
-    ? {
-        page: paginationParams.page,
-        totalPages: paginatedResult.totalPages,
-        total: paginatedResult.totalCount,
-      }
-    : null;
-
-  // Normalize data to array
-  const rawData = Array.isArray(data) ? data : data ? [data] : [];
-
-  // For non-paginated mode with external data, apply client-side filtering
-  const normalizedData = useMemo(() => {
-    // When using server-side pagination/search, data is already filtered
-    if (enablePagination || shouldAutoFetch) {
-      return rawData;
-    }
-
-    // Client-side filtering for external data
-    if (!paginationParams.search?.trim()) {
-      return rawData;
-    }
-    const lowerSearch = paginationParams.search.toLowerCase();
-    return rawData.filter((item) => {
-      const itemData = item as Record<string, unknown>;
-      return Object.values(itemData).some((value) => {
-        if (value === null || value === undefined) return false;
-        return String(value).toLowerCase().includes(lowerSearch);
-      });
-    });
-  }, [rawData, paginationParams.search, enablePagination, shouldAutoFetch]);
-
-  // Handle page change
-  const handlePageChange = useCallback((newPage: number) => {
-    setPaginationParams((prev) => ({ ...prev, page: newPage }));
-  }, []);
-
-  // Handle page size change
-  const handlePageSizeChange = useCallback((newPageSize: number) => {
-    setPaginationParams((prev) => ({
-      ...prev,
-      pageSize: newPageSize,
-      page: 1,
-    }));
-  }, []);
+  // Handle card click — emit UI:VIEW event
+  const handleCardClick = (itemData: Record<string, unknown>) => {
+    eventBus.emit('UI:VIEW', { row: itemData });
+  };
 
   // Render data-bound cards if data is provided
   const renderContent = () => {
@@ -343,7 +162,7 @@ export const CardGrid: React.FC<CardGridProps> = ({
     if (isLoading) {
       return (
         <Box className="col-span-full text-center py-8 text-[var(--color-muted-foreground)]">
-          <Typography variant="body" color="secondary">Loading {entity || 'items'}...</Typography>
+          <Typography variant="body" color="secondary">Loading items...</Typography>
         </Box>
       );
     }
@@ -352,7 +171,7 @@ export const CardGrid: React.FC<CardGridProps> = ({
     if (error) {
       return (
         <Box className="col-span-full text-center py-8 text-[var(--color-error)]">
-          <Typography variant="body" color="error">Error loading {entity || 'items'}: {error.message}</Typography>
+          <Typography variant="body" color="error">Error loading items: {error.message}</Typography>
         </Box>
       );
     }
@@ -360,7 +179,7 @@ export const CardGrid: React.FC<CardGridProps> = ({
     if (normalizedData.length === 0) {
       return (
         <Box className="col-span-full text-center py-8 text-[var(--color-muted-foreground)]">
-          <Typography variant="body" color="secondary">No {entity || 'items'} found</Typography>
+          <Typography variant="body" color="secondary">No items found</Typography>
         </Box>
       );
     }
@@ -368,7 +187,7 @@ export const CardGrid: React.FC<CardGridProps> = ({
     return normalizedData.map((item, index) => {
       const itemData = item as Record<string, unknown>;
       const id = (itemData.id as string) || String(index);
-      const fields = effectiveFieldNames || Object.keys(itemData).slice(0, 3);
+      const cardFields = effectiveFieldNames || Object.keys(itemData).slice(0, 3);
 
       // Handle action click - navigate, dispatch event, or call callback
       const handleActionClick = (action: CardItemAction) => (e: React.MouseEvent) => {
@@ -380,12 +199,12 @@ export const CardGrid: React.FC<CardGridProps> = ({
             const value = getNestedValue(itemData, field);
             return value !== undefined && value !== null ? String(value) : '';
           });
-          navigate(url);
+          eventBus.emit('UI:NAVIGATE', { url, row: itemData });
           return;
         }
 
         if (action.event) {
-          eventBus.emit(`UI:${action.event}`, { row: itemData, entity });
+          eventBus.emit(`UI:${action.event}`, { row: itemData });
         }
         if (action.onClick) {
           action.onClick(itemData);
@@ -397,11 +216,11 @@ export const CardGrid: React.FC<CardGridProps> = ({
           key={id}
           className={cn(
             'bg-[var(--color-card)] rounded-[var(--radius-lg)] border border-[var(--color-border)] p-4 shadow-[var(--shadow-sm)]',
-            onCardClick && 'cursor-pointer hover:border-[var(--color-primary)] transition-colors'
+            'cursor-pointer hover:border-[var(--color-primary)] transition-colors'
           )}
-          onClick={() => onCardClick?.(itemData)}
+          onClick={() => handleCardClick(itemData)}
         >
-          {fields.map((field) => {
+          {cardFields.map((field) => {
             const value = getNestedValue(itemData, field);
             if (value === undefined || value === null) return null;
             return (
@@ -463,17 +282,14 @@ export const CardGrid: React.FC<CardGridProps> = ({
         {renderContent()}
       </Box>
 
-      {/* Pagination controls */}
-      {enablePagination && paginationInfo && paginationInfo.totalPages > 1 && (
+      {/* Pagination controls — displayed when trait provides pagination hints */}
+      {totalCount !== undefined && pageSize !== undefined && resolvedTotalPages > 1 && (
         <Pagination
-          currentPage={paginationInfo.page}
-          totalPages={paginationInfo.totalPages}
+          currentPage={resolvedPage}
+          totalPages={resolvedTotalPages}
           onPageChange={handlePageChange}
           showTotal={showTotal}
-          totalItems={paginationInfo.total}
-          showPageSize
-          pageSize={paginationParams.pageSize}
-          onPageSizeChange={handlePageSizeChange}
+          totalItems={totalCount}
         />
       )}
     </VStack>

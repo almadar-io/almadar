@@ -1,3 +1,4 @@
+'use client';
 /**
  * SignaturePad Organism Component
  *
@@ -160,16 +161,16 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
         setHasSignature(false);
         onChange?.(null);
         if (clearEvent) {
-            eventBus.emit(`UI:${clearEvent}`, { entity });
+            eventBus.emit(`UI:${clearEvent}`, {});
         }
-    }, [onChange, clearEvent, eventBus, entity]);
+    }, [onChange, clearEvent, eventBus]);
 
     const confirmSignature = useCallback(() => {
         const dataUrl = canvasRef.current?.toDataURL("image/png") ?? null;
         if (signEvent) {
-            eventBus.emit(`UI:${signEvent}`, { entity, signature: dataUrl });
+            eventBus.emit(`UI:${signEvent}`, { signature: dataUrl });
         }
-    }, [signEvent, eventBus, entity]);
+    }, [signEvent, eventBus]);
 
     if (isLoading) {
         return <LoadingState message="Loading signature pad..." className={className} />;

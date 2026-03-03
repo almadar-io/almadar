@@ -1,3 +1,4 @@
+/* eslint-disable almadar/template-extends-base */
 /**
  * MealPlansTemplate - Thin declarative wrapper for MealPlansBoard organism
  *

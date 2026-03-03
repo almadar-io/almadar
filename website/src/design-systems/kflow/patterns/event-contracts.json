@@ -140,6 +140,58 @@
         { "event": "UI:TOGGLE_VIEW", "trigger": "click", "payload": { "mode": "string", "graphId": "string" } },
         { "event": "UI:VIEW_CONCEPT", "trigger": "click", "payload": { "conceptId": "string" } }
       ]
+    },
+    "daily-menu-template": {
+      "emits": [
+        { "event": "UI:CONTINUE_LEARNING", "trigger": "click", "payload": { "nodeId": "string", "subjectId": "string", "type": "string" } },
+        { "event": "UI:START_REVIEW", "trigger": "click", "payload": { "count": "number" } },
+        { "event": "UI:OPEN_EXPLORER", "trigger": "click", "payload": {} },
+        { "event": "UI:OPEN_GRAPH", "trigger": "click", "payload": {} },
+        { "event": "UI:OPEN_WORLD_MAP", "trigger": "click", "payload": {} },
+        { "event": "UI:END_SESSION", "trigger": "click", "payload": { "timeSpent": "number", "nodesVisited": "number", "xpEarned": "number" } },
+        { "event": "UI:SELECT_NODE", "trigger": "click", "payload": { "nodeId": "string" } }
+      ]
+    },
+    "spaced-review-template": {
+      "emits": [
+        { "event": "UI:REVIEW_ANSWER", "trigger": "click", "payload": { "nodeId": "string", "quality": "number" } },
+        { "event": "UI:SKIP_REVIEW", "trigger": "click", "payload": { "nodeId": "string" } },
+        { "event": "UI:REVIEW_SESSION_COMPLETE", "trigger": "complete", "payload": { "reviewed": "number", "skipped": "number" } }
+      ]
+    },
+    "cross-domain-discovery-template": {
+      "emits": [
+        { "event": "UI:SELECT_NODE", "trigger": "click", "payload": { "nodeId": "string" } }
+      ]
+    },
+    "knowledge-challenge-template": {
+      "emits": [
+        { "event": "UI:CHALLENGE_COMPLETE", "trigger": "complete", "payload": { "challengeId": "string", "correct": "boolean", "timeUsed": "number", "hintsUsed": "number" } },
+        { "event": "UI:CHALLENGE_FAIL", "trigger": "complete", "payload": { "challengeId": "string" } },
+        { "event": "UI:USE_HINT", "trigger": "click", "payload": { "challengeId": "string", "hintIndex": "number" } }
+      ]
+    },
+    "knowledge-battle-template": {
+      "emits": [
+        { "event": "UI:BATTLE_COMPLETE", "trigger": "complete", "payload": { "won": "boolean", "xpEarned": "number" } },
+        { "event": "UI:BATTLE_DEFEAT", "trigger": "complete", "payload": {} }
+      ]
+    },
+    "knowledge-world-map-template": {
+      "emits": [
+        { "event": "UI:SELECT_REGION", "trigger": "click", "payload": { "regionId": "string" } },
+        { "event": "UI:START_CHALLENGE", "trigger": "click", "payload": { "challengeId": "string" } },
+        { "event": "UI:NAVIGATE_MAP", "trigger": "click", "payload": { "fromRegion": "string", "toRegion": "string" } }
+      ]
+    },
+    "physics-lab-template": {
+      "emits": [
+        { "event": "UI:SIMULATION_START", "trigger": "click", "payload": { "simulationId": "string" } },
+        { "event": "UI:SIMULATION_PAUSE", "trigger": "click", "payload": { "simulationId": "string" } },
+        { "event": "UI:SIMULATION_RESET", "trigger": "click", "payload": { "simulationId": "string" } },
+        { "event": "UI:SELECT_PRESET", "trigger": "click", "payload": { "presetId": "string" } },
+        { "event": "UI:SIMULATION_COMPLETE", "trigger": "complete", "payload": { "simulationId": "string" } }
+      ]
     }
   }
 }

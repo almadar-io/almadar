@@ -1,3 +1,4 @@
+'use client';
 /**
  * SearchInput Molecule Component
  *

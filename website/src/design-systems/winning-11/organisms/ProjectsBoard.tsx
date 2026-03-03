@@ -43,6 +43,7 @@ import {
   Spinner,
   useEventBus,
   useTranslate,
+  type EntityDisplayProps,
 } from "@almadar/ui";
 
 export interface ProjectData {
@@ -63,13 +64,7 @@ export interface ProjectData {
   tags?: string[];
 }
 
-export interface ProjectsBoardProps {
-  /** Entity data (project items) */
-  entity?: readonly ProjectData[];
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error state */
-  error?: Error | null;
+export interface ProjectsBoardProps extends EntityDisplayProps<ProjectData> {
   /** Page title */
   title?: string;
   /** Page subtitle */
@@ -80,8 +75,6 @@ export interface ProjectsBoardProps {
   showSearch?: boolean;
   /** Show filters */
   showFilters?: boolean;
-  /** Additional CSS classes */
-  className?: string;
   /** Event name for creating a project */
   createEvent?: string;
   /** Event name for viewing a project */
@@ -128,11 +121,11 @@ const getPriorityColor = (priority?: ProjectData["priority"]) => {
 
 const ProjectCard: React.FC<{
   project: ProjectData;
-  onAction: (action: string, project: ProjectData) => void;
   viewEvent: string;
   editEvent: string;
-}> = ({ project, onAction, viewEvent, editEvent }) => {
+}> = ({ project, viewEvent, editEvent }) => {
   const { t } = useTranslate();
+  const eventBus = useEventBus();
   const statusConfig = getStatusConfig(project.status);
   const StatusIcon = statusConfig.icon;
 
@@ -237,7 +230,7 @@ const ProjectCard: React.FC<{
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onAction(viewEvent, project)}
+            onClick={() => eventBus.emit(`UI:${viewEvent}`, { row: project, entity: "Project" })}
             className="gap-1"
           >
             <Eye className="h-3 w-3" />
@@ -246,7 +239,7 @@ const ProjectCard: React.FC<{
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onAction(editEvent, project)}
+            onClick={() => eventBus.emit(`UI:${editEvent}`, { row: project, entity: "Project" })}
             className="gap-1"
           >
             <Edit className="h-3 w-3" />
@@ -280,7 +273,7 @@ export const ProjectsBoard: React.FC<ProjectsBoardProps> = ({
   const [statusFilter, setStatusFilter] = React.useState<string>("all");
   const [layout, setLayout] = React.useState<"grid" | "list">("grid");
 
-  const projects = entity || [];
+  const projects: readonly ProjectData[] = Array.isArray(entity) ? entity : [];
 
   // Handle search
   const handleSearch = (value: string) => {
@@ -298,13 +291,8 @@ export const ProjectsBoard: React.FC<ProjectsBoardProps> = ({
     eventBus.emit(`UI:${filterEvent}`, { entity: "Project" });
   };
 
-  // Handle project actions
-  const handleAction = (action: string, project: ProjectData) => {
-    eventBus.emit(`UI:${action}`, { row: project, entity: "Project" });
-  };
-
   // Filter projects
-  const filteredProjects = projects.filter((p) => {
+  const filteredProjects = projects.filter((p: ProjectData) => {
     if (statusFilter !== "all" && p.status !== statusFilter) {
       return false;
     }
@@ -321,8 +309,8 @@ export const ProjectsBoard: React.FC<ProjectsBoardProps> = ({
   // Stats
   const stats = {
     total: projects.length,
-    active: projects.filter((p) => p.status === "active").length,
-    completed: projects.filter((p) => p.status === "completed").length,
+    active: projects.filter((p: ProjectData) => p.status === "active").length,
+    completed: projects.filter((p: ProjectData) => p.status === "completed").length,
   };
 
   return (
@@ -478,11 +466,10 @@ export const ProjectsBoard: React.FC<ProjectsBoardProps> = ({
                   : "flex flex-col gap-4"
               )}
             >
-              {filteredProjects.map((project) => (
+              {filteredProjects.map((project: ProjectData) => (
                 <ProjectCard
                   key={project.id}
                   project={project}
-                  onAction={handleAction}
                   viewEvent={viewEvent}
                   editEvent={editEvent}
                 />
