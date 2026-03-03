@@ -1,16 +1,20 @@
 # Almadar
 
-> **فيزياء البرمجيات** - The Physics of Software
+> **فيزياء البرمجيات** — The Physics of Software
 
-Almadar (المدار) is a **declarative application framework** for building full-stack applications. Define your app in `.orb` schema files — either written by hand or generated from natural language — and compile to production-ready code.
+Just as physics lets us predict how the physical world behaves, Almadar lets us predict how software systems behave.
+
+Almadar (المدار) is a **world modeling language** — a semantic layer above programming languages that describes *how systems work*, not just *what they do*. Write a formal world model once, and AI agents generate valid implementations, the compiler validates correctness deterministically, and you can observe every possible state before a single line of code runs.
 
 ```
-Schema (.orb) → Compiler → Generated Full-Stack App
-         ▲
-         │ (optional)
-   Natural Language
-   (LLM-powered or human)
+World Model (.orb) → Compiler → Valid System
+        ▲                              │
+        │                              ▼
+   Natural Language              Observable
+   (Human or AI)                 Behavior
 ```
+
+**Built for the AI age:** Token-efficient representations that agents can generate and reason about. Deterministic validation that catches errors before runtime. Observable state spaces that let you prove correctness.
 
 ---
 
@@ -35,32 +39,42 @@ almadar dev
 
 ## Core Philosophy
 
-### Schema-First Development
+### Model the World, Not Just the Code
 
-Define your application in `.orb` schema files — written by hand or generated from natural language. The schema describes:
+Traditional programming languages tell computers *what to do*. Almadar describes *how things work*:
 
-- **Entities** — Data models (User, Order, Task)
-- **Traits** — State machines defining behavior
-- **Pages** — Routes and their trait bindings
+- **Entities** — What exists in your system (User, Order, Task)
+- **Traits** — How those things behave and change over time
+- **Pages** — How the world is observed and interacted with
+
+This world model is a formal specification that both humans and AI can reason about.
 
 ### The Orbital Formula
 
 ```
-Orbital Unit = Entity + Traits + Pages
-Application  = Σ(Orbital Units)
+World Unit = Entity + Traits + Pages
+System     = Σ(World Units)
 ```
 
-Each orbital unit is a self-contained, composable building block that can be reused across applications.
+Each orbital is a self-contained world model describing a domain of your system. Compose them to build complex, observable applications.
+
+### Observable by Design
+
+Because Almadar models behavior formally, you can:
+- **Validate deterministically** — The compiler proves your model is valid before runtime
+- **Exhaustively test** — Examine all possible states to ensure correctness
+- **Generate efficiently** — AI agents produce valid systems from natural language
+- **Reason precisely** — Both humans and machines understand the same model
 
 ### Closed Circuit Pattern
 
-Every user interaction follows a closed loop:
+Every interaction flows through a predictable path:
 
 ```
-User Action → Event → State Machine → Effects → UI Update → (loop)
+User Action → Event → State Machine → Effects → World Update → (loop)
 ```
 
-No direct state mutations — all changes flow through the state machine.
+No hidden state mutations. No side effects you can't trace. Observable causality throughout.
 
 ---
 
@@ -98,6 +112,22 @@ Human-written ─────┼──► ┌───────────�
 | **TypeScript Runtime** | Preview, development | `packages/almadar-runtime/` |
 | **Rust Runtime** | Standalone apps, CLI | `orbital-rust/crates/orbital-server/` |
 | **Compiled Code** | Production deployment | Generated TS/Python (Rust coming soon) |
+
+---
+
+## Why Almadar?
+
+### For AI-Generated Systems
+Traditional code generation produces brittle outputs that break when requirements change. Almadar's world models are **token-efficient** and **structurally valid** — AI agents can generate, modify, and reason about them reliably.
+
+### For Guaranteed Correctness
+Deterministic validation catches errors at compile time, not runtime. Exhaustive state space analysis lets you prove your system behaves correctly before deploying.
+
+### For Observable Behavior
+State machines make causality explicit. Every effect traces back to an event. Every guard is visible. The system's behavior is inspectable and predictable.
+
+### For Complex Rules
+Encode business logic, compliance requirements, or game mechanics in a formal model that can be validated, tested, and reasoned about — not buried in imperative code.
 
 ---
 
