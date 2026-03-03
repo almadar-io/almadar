@@ -34,6 +34,239 @@
     color: #94a3b8;
 }
 
+/* ─── Why Almadar ───────────────────────────────────────────────────────── */
+
+.whySection {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, var(--almadar-parchment) 0%, #ece8e1 100%);
+    border-top: 1px solid rgba(201, 162, 39, 0.15);
+}
+
+[data-theme="dark"] .whySection {
+    background: linear-gradient(180deg, var(--almadar-midnight) 0%, #020617 100%);
+    border-top-color: rgba(20, 184, 166, 0.15);
+}
+
+.comparisonTable {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    border: 1px solid #e8e4de;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+[data-theme="dark"] .comparisonTable {
+    border-color: #1e293b;
+}
+
+.comparisonHeader {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #f5f2ed;
+}
+
+[data-theme="dark"] .comparisonHeader {
+    background: #0f172a;
+}
+
+.comparisonHeaderCell {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+}
+
+.agencyHeader {
+    color: #94a3b8;
+}
+
+.almadarHeader {
+    color: var(--almadar-sand-gold);
+    background: rgba(201, 162, 39, 0.06);
+}
+
+.comparisonRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid #e8e4de;
+}
+
+[data-theme="dark"] .comparisonRow {
+    border-top-color: #1e293b;
+}
+
+.comparisonAgency {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.85rem 1.5rem;
+    font-size: 0.95rem;
+    color: #94a3b8;
+}
+
+.comparisonAlmadar {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.85rem 1.5rem;
+    font-size: 0.95rem;
+    color: #1e293b;
+    background: rgba(201, 162, 39, 0.03);
+    font-weight: 500;
+}
+
+[data-theme="dark"] .comparisonAlmadar {
+    color: #f8fafc;
+    background: rgba(20, 184, 166, 0.04);
+}
+
+.xMark {
+    color: #e2e8f0;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    margin-top: 0.15em;
+}
+
+.checkMark {
+    color: var(--almadar-sand-gold);
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    margin-top: 0.1em;
+    font-weight: 900;
+}
+
+[data-theme="dark"] .checkMark {
+    color: var(--almadar-teal);
+}
+
+.deliverables {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.deliverablesTitle {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1.25rem;
+}
+
+[data-theme="dark"] .deliverablesTitle {
+    color: #f8fafc;
+}
+
+.deliverablesList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.deliverableItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.97rem;
+    color: #475569;
+    text-align: left;
+}
+
+[data-theme="dark"] .deliverableItem {
+    color: #94a3b8;
+}
+
+/* ─── Team ───────────────────────────────────────────────────────────────── */
+
+.teamSection {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, #ece8e1 0%, #f5f2ed 100%);
+}
+
+[data-theme="dark"] .teamSection {
+    background: linear-gradient(180deg, #020617 0%, #0f172a 100%);
+}
+
+.teamGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto 2rem;
+}
+
+.teamCard {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(201, 162, 39, 0.2);
+    border-radius: 20px;
+    padding: 2rem;
+}
+
+[data-theme="dark"] .teamCard {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(20, 184, 166, 0.15);
+}
+
+.teamAvatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--almadar-sand-gold), var(--almadar-teal));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: white;
+    flex-shrink: 0;
+}
+
+.teamName {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.2rem;
+}
+
+[data-theme="dark"] .teamName {
+    color: #f8fafc;
+}
+
+.teamRole {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--almadar-sand-gold);
+    margin-bottom: 0.75rem;
+}
+
+[data-theme="dark"] .teamRole {
+    color: var(--almadar-teal);
+}
+
+.teamBio {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.6;
+    margin: 0;
+}
+
+[data-theme="dark"] .teamBio {
+    color: #94a3b8;
+}
+
+.teamFootnote {
+    text-align: center;
+    font-size: 0.95rem;
+    color: #64748b;
+}
+
 /* ─── How It Works ──────────────────────────────────────────────────────── */
 
 .howSection {
@@ -258,6 +491,27 @@
     .statsGrid {
         grid-template-columns: 1fr;
     }
+
+    .teamGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .comparisonHeader {
+        display: none;
+    }
+
+    .comparisonRow {
+        grid-template-columns: 1fr;
+    }
+
+    .comparisonAgency {
+        border-bottom: 1px solid #e8e4de;
+        padding-bottom: 0.5rem;
+    }
+
+    [data-theme="dark"] .comparisonAgency {
+        border-bottom-color: #1e293b;
+    }
 }
 
 @media (max-width: 768px) {
@@ -280,6 +534,10 @@
 
     .statValue {
         font-size: 2.5rem;
+    }
+
+    .teamCard {
+        flex-direction: column;
     }
 }
 

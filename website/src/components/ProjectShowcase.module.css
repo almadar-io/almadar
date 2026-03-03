@@ -1,0 +1,267 @@
+/* ─── Section ────────────────────────────────────────────────────────────── */
+
+.section {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, #f5f2ed 0%, #ece8e1 100%);
+    border-top: 1px solid rgba(201, 162, 39, 0.15);
+}
+
+[data-theme="dark"] .section {
+    background: linear-gradient(180deg, #0f172a 0%, #020617 100%);
+    border-top-color: rgba(20, 184, 166, 0.1);
+}
+
+.sectionHeader {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.sectionTitle {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+[data-theme="dark"] .sectionTitle {
+    color: #f8fafc;
+}
+
+.sectionSubtitle {
+    font-size: 1.15rem;
+    color: #475569;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.65;
+}
+
+[data-theme="dark"] .sectionSubtitle {
+    color: #94a3b8;
+}
+
+/* ─── Grid ───────────────────────────────────────────────────────────────── */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+/* ─── Card ───────────────────────────────────────────────────────────────── */
+
+.card {
+    position: relative;
+    background: #fffefa;
+    border: 1px solid #e8e4de;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+[data-theme="dark"] .card {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: #1e293b;
+}
+
+[data-theme="dark"] .card:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Accent bar at top */
+.cardAccent {
+    height: 4px;
+    background: var(--accent, #c9a227);
+}
+
+.cardInner {
+    padding: 2rem;
+}
+
+/* ─── Card Header ────────────────────────────────────────────────────────── */
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    background: rgba(100, 116, 139, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 99px;
+}
+
+[data-theme="dark"] .category {
+    color: #94a3b8;
+    background: rgba(148, 163, 184, 0.1);
+}
+
+.appLink {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748b;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.appLink:hover {
+    color: var(--accent, #c9a227);
+    text-decoration: none;
+}
+
+/* ─── Card Title ─────────────────────────────────────────────────────────── */
+
+.projectName {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 0.4rem;
+}
+
+[data-theme="dark"] .projectName {
+    color: #f8fafc;
+}
+
+.tagline {
+    font-size: 0.95rem;
+    color: #64748b;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+[data-theme="dark"] .tagline {
+    color: #64748b;
+}
+
+/* ─── Two-column body ────────────────────────────────────────────────────── */
+
+.body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.column {}
+
+.sectionLabel {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent, #c9a227);
+    margin-bottom: 0.5rem;
+}
+
+.text {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.65;
+    margin: 0;
+}
+
+[data-theme="dark"] .text {
+    color: #94a3b8;
+}
+
+/* ─── Pills ──────────────────────────────────────────────────────────────── */
+
+.pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.pill {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.2rem 0.65rem;
+    border-radius: 99px;
+    border: 1px solid currentColor;
+    opacity: 0.8;
+    font-family: "IBM Plex Mono", monospace;
+}
+
+/* ─── Key Capability ─────────────────────────────────────────────────────── */
+
+.keyCapability {
+    font-size: 0.88rem;
+    color: #475569;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    padding-left: 0.75rem;
+    border-left: 2px solid var(--accent, #c9a227);
+}
+
+[data-theme="dark"] .keyCapability {
+    color: #94a3b8;
+}
+
+/* ─── Actions ────────────────────────────────────────────────────────────── */
+
+.actions {
+    display: flex;
+    gap: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e8e4de;
+}
+
+[data-theme="dark"] .actions {
+    border-top-color: #1e293b;
+}
+
+.actionLink {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+}
+
+.actionLink:hover {
+    opacity: 0.75;
+    text-decoration: none;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 1100px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 4rem 0;
+    }
+
+    .sectionTitle {
+        font-size: 2rem;
+    }
+
+    .body {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .cardInner {
+        padding: 1.5rem;
+    }
+
+    .actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+}

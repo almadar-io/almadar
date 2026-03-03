@@ -1292,5 +1292,176 @@
   },
   "cs.trainer.cta.desc": {
     "message": "دعنا نناقش كيف يمكن لـ Orbitals تبسيط عمل خدماتك."
+  },
+  "homepage.why.title": {
+    "message": "لماذا المدار"
+  },
+  "homepage.why.subtitle": {
+    "message": "ما تحصل عليه من الوكالة التقليدية لا يمكنها تقديمه"
+  },
+  "homepage.why.agencyCol": {
+    "message": "الوكالة التقليدية"
+  },
+  "homepage.why.almadarCol": {
+    "message": "المدار"
+  },
+  "homepage.why.agency.team": {
+    "message": "فرق كبيرة (5–10 أشخاص)"
+  },
+  "homepage.why.almadar.team": {
+    "message": "فريق مدمج — خبيران متخصصان"
+  },
+  "homepage.why.agency.timeline": {
+    "message": "أشهر من التطوير"
+  },
+  "homepage.why.almadar.timeline": {
+    "message": "أسابيع حتى الإنتاج"
+  },
+  "homepage.why.agency.cost": {
+    "message": "تكلفة عالية ونطاق غير متوقع"
+  },
+  "homepage.why.almadar.cost": {
+    "message": "سعر ثابت وتسليمات واضحة"
+  },
+  "homepage.why.agency.changes": {
+    "message": "طلبات تغيير مكلفة"
+  },
+  "homepage.why.almadar.changes": {
+    "message": "تغييرات مرنة وفعّالة من حيث التكلفة"
+  },
+  "homepage.why.agency.docs": {
+    "message": "التوثيق كفكرة لاحقة"
+  },
+  "homepage.why.almadar.docs": {
+    "message": "توثيق كامل متضمَّن"
+  },
+  "homepage.why.deliverables.title": {
+    "message": "ما الذي ستحصل عليه"
+  },
+  "homepage.why.deliverables.app": {
+    "message": "تطبيق يعمل ومنشور في الإنتاج"
+  },
+  "homepage.why.deliverables.source": {
+    "message": "كود المصدر الكامل — تقنيات قياسية بدون قيود ملكية"
+  },
+  "homepage.why.deliverables.docs": {
+    "message": "توثيق كامل لفريقك"
+  },
+  "homepage.why.deliverables.support": {
+    "message": "دعم 60 يومًا بعد الإطلاق مدمج"
+  },
+  "homepage.why.deliverables.transfer": {
+    "message": "نقل المعرفة حتى تتمكن من صيانة النظام وتطويره"
+  },
+  "homepage.team.title": {
+    "message": "خبيران. مسؤولية كاملة."
+  },
+  "homepage.team.subtitle": {
+    "message": "بلا تسليمات، بلا مطورين مبتدئين، بلا مديري مشاريع بينك وبيننا. ستعمل مباشرة مع من يبنون تطبيقك."
+  },
+  "homepage.team.osama.name": {
+    "message": "أسامة الغنمي"
+  },
+  "homepage.team.osama.role": {
+    "message": "المؤسس المشارك والمدير التقني"
+  },
+  "homepage.team.osama.bio": {
+    "message": "بنى منصة الفوترة الإلكترونية الوطنية في المملكة العربية السعودية. أكثر من 15 عامًا في أنظمة المؤسسات وتصميم المترجمات والتطوير الشامل."
+  },
+  "homepage.team.maja.name": {
+    "message": "مايا غولوب"
+  },
+  "homepage.team.maja.role": {
+    "message": "المؤسسة المشاركة ومديرة البرامج"
+  },
+  "homepage.team.maja.bio": {
+    "message": "أكثر من 10 سنوات في تسليم مشاريع برمجيات المؤسسات. خبيرة في إدارة أصحاب المصلحة وتخطيط التسليم والفرق متعددة الثقافات."
+  },
+  "homepage.team.experience": {
+    "message": "أكثر من 25 عامًا من الخبرة المشتركة في بناء البرمجيات على نطاق واسع. مقيمان في ليوبليانا، سلوفينيا. نعمل عالميًا."
+  },
+  "homepage.cta.startProject": {
+    "message": "ابدأ مشروعًا"
+  },
+  "homepage.cta.developers": {
+    "message": "وثائق المطورين"
+  },
+  "homepage.startProject": {
+    "message": "ابدأ مشروعًا"
+  },
+  "homepage.enterprise": {
+    "message": "الشركات"
+  },
+  "homepage.work.title": {
+    "message": "أعمالنا"
+  },
+  "homepage.work.subtitle": {
+    "message": "كل مشروع في المدار يُشحن مع نظام تصميم منشور بالكامل."
+  },
+  "homepage.work.viewDesignSystem": {
+    "message": "نظام التصميم"
+  },
+  "homepage.work.openApp": {
+    "message": "فتح التطبيق"
+  },
+  "homepage.work.sectionLabel.clientContext": {
+    "message": "السياق"
+  },
+  "homepage.work.sectionLabel.whatWeBuilt": {
+    "message": "ما بنيناه"
+  },
+  "homepage.work.keyCapability": {
+    "message": "القدرة الأساسية"
+  },
+  "demos.backToPortfolio": {
+    "message": "العودة إلى الأعمال"
+  },
+  "demos.openStorybook": {
+    "message": "فتح Storybook كاملًا"
+  },
+  "demos.openApp": {
+    "message": "فتح التطبيق المباشر"
+  },
+  "demos.openDesignSystem": {
+    "message": "فتح نظام التصميم ↗"
+  },
+  "demos.mobileNote": {
+    "message": "افتح على شاشة أكبر لتصفح نظام التصميم التفاعلي."
+  },
+  "developers.renderUIDemo.tag": {
+    "message": "render-ui"
+  },
+  "developers.renderUIDemo.title": {
+    "message": "معاينة المكونات مباشرة"
+  },
+  "developers.renderUIDemo.subtitle": {
+    "message": "يحوّل render-ui التعبيرَ البرمجي إلى مكوّن حقيقي — بلا JSX ولا ملفات قوالب. عدّل التعبير وشاهد المعاينة تتحدث تلقائيًا."
+  },
+  "developers.renderUIDemo.previewEmpty": {
+    "message": "شغّل التعبير لرؤية الناتج"
+  },
+  "developers.renderUIDemo.noSlots": {
+    "message": "لا توجد استدعاءات render-ui في هذا التعبير"
+  },
+  "showcase.title": {
+    "message": "أعمالنا"
+  },
+  "showcase.subtitle": {
+    "message": "كل مشروع في المدار يُشحن مع نظام تصميم منشور بالكامل. تصفّح القوالب والمكونات والتفاعلات — بدون تثبيت."
+  },
+  "showcase.clientProblem": {
+    "message": "المشكلة"
+  },
+  "showcase.whatWeBuilt": {
+    "message": "ما بنيناه"
+  },
+  "showcase.openApp": {
+    "message": "فتح التطبيق"
+  },
+  "showcase.viewDesignSystem": {
+    "message": "نظام التصميم"
+  },
+  "showcase.openLiveApp": {
+    "message": "فتح التطبيق المباشر"
   }
 }

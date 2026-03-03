@@ -10,6 +10,7 @@ import Translate, { translate } from "@docusaurus/Translate";
 import HeroSection from "../components/HeroSection";
 import HeroSchemaAnimation from "../components/HeroSchemaAnimation";
 import JsonHighlight from "../components/JsonHighlight";
+import RenderUIDemo from "../components/RenderUIDemo";
 import styles from "./developers.module.css";
 import playgroundStyles from "./playground.module.css";
 import { PlaygroundCore } from "./playground";
@@ -585,6 +586,7 @@ export default function Developers(): ReactNode {
         <CoreConcepts />
         <QuickStart />
         <OperatorModules />
+        <RenderUIDemo />
         <DevelopersPlayground />
         <Tutorials />
       </main>

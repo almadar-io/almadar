@@ -1292,5 +1292,176 @@
   },
   "cs.trainer.cta.desc": {
     "message": "Pogovorimo se, kako lahko Orbitali poenostavijo vaše storitveno podjetje."
+  },
+  "homepage.why.title": {
+    "message": "Zakaj Almadar"
+  },
+  "homepage.why.subtitle": {
+    "message": "Kaj dobite, česar tradicionalna agencija ne more ponuditi"
+  },
+  "homepage.why.agencyCol": {
+    "message": "Tradicionalna agencija"
+  },
+  "homepage.why.almadarCol": {
+    "message": "Almadar"
+  },
+  "homepage.why.agency.team": {
+    "message": "Velike ekipe (5–10 ljudi)"
+  },
+  "homepage.why.almadar.team": {
+    "message": "Vitka ekipa — 2 vrhunska strokovnjaka"
+  },
+  "homepage.why.agency.timeline": {
+    "message": "Meseci razvoja"
+  },
+  "homepage.why.almadar.timeline": {
+    "message": "Tedni do produkcije"
+  },
+  "homepage.why.agency.cost": {
+    "message": "Visoki stroški, nepredvidljiv obseg"
+  },
+  "homepage.why.almadar.cost": {
+    "message": "Fiksna cena, jasne obveznosti"
+  },
+  "homepage.why.agency.changes": {
+    "message": "Dragi zahtevki za spremembe"
+  },
+  "homepage.why.almadar.changes": {
+    "message": "Prilagodljive, stroškovno učinkovite spremembe"
+  },
+  "homepage.why.agency.docs": {
+    "message": "Dokumentacija kot poznejša misel"
+  },
+  "homepage.why.almadar.docs": {
+    "message": "Celotna dokumentacija vključena"
+  },
+  "homepage.why.deliverables.title": {
+    "message": "Kaj dobite"
+  },
+  "homepage.why.deliverables.app": {
+    "message": "Delujoča aplikacija, nameščena v produkciji"
+  },
+  "homepage.why.deliverables.source": {
+    "message": "Celotna izvorna koda — standardne tehnologije, brez lastniških omejitev"
+  },
+  "homepage.why.deliverables.docs": {
+    "message": "Popolna dokumentacija za vašo ekipo"
+  },
+  "homepage.why.deliverables.support": {
+    "message": "60-dnevna podpora po zagonu vključena"
+  },
+  "homepage.why.deliverables.transfer": {
+    "message": "Prenos znanja, da lahko sistem vzdržujete in razširjate"
+  },
+  "homepage.team.title": {
+    "message": "Dva strokovnjaka. Popolna odgovornost."
+  },
+  "homepage.team.subtitle": {
+    "message": "Brez posrednikov, brez začetnikov, brez vodij projektov med nami. Delate neposredno z ljudmi, ki gradijo vašo aplikacijo."
+  },
+  "homepage.team.osama.name": {
+    "message": "Osama Alghanmi"
+  },
+  "homepage.team.osama.role": {
+    "message": "Soustanovitelj in tehnični vodja"
+  },
+  "homepage.team.osama.bio": {
+    "message": "Zgradil Saudi arabsko nacionalno platformo za e-fakturiranje. 15+ let izkušenj z enterprise sistemi, zasnovo prevajalnikov in full-stack razvojem."
+  },
+  "homepage.team.maja.name": {
+    "message": "Maja Golob"
+  },
+  "homepage.team.maja.role": {
+    "message": "Soustanoviteljica in programska vodja"
+  },
+  "homepage.team.maja.bio": {
+    "message": "10+ let pri dostavljanju enterprise programskih projektov. Strokovnjakinja za upravljanje deležnikov, načrtovanje dostave in večkulturne ekipe."
+  },
+  "homepage.team.experience": {
+    "message": "25+ let skupnih izkušenj z gradnjo programske opreme v velikem obsegu. Locirani v Ljubljani, Slovenija. Delamo globalno."
+  },
+  "homepage.cta.startProject": {
+    "message": "Začni projekt"
+  },
+  "homepage.cta.developers": {
+    "message": "Dokumentacija za razvijalce"
+  },
+  "homepage.startProject": {
+    "message": "Začni projekt"
+  },
+  "homepage.enterprise": {
+    "message": "Enterprise"
+  },
+  "homepage.work.title": {
+    "message": "Naše delo"
+  },
+  "homepage.work.subtitle": {
+    "message": "Vsak Almadar projekt je opremljen z v celoti nameščenim sistemom za oblikovanje."
+  },
+  "homepage.work.viewDesignSystem": {
+    "message": "Sistem za oblikovanje"
+  },
+  "homepage.work.openApp": {
+    "message": "Odpri aplikacijo"
+  },
+  "homepage.work.sectionLabel.clientContext": {
+    "message": "Kontekst"
+  },
+  "homepage.work.sectionLabel.whatWeBuilt": {
+    "message": "Kar smo zgradili"
+  },
+  "homepage.work.keyCapability": {
+    "message": "Ključna zmogljivost"
+  },
+  "demos.backToPortfolio": {
+    "message": "Nazaj na portfolio"
+  },
+  "demos.openStorybook": {
+    "message": "Odpri celoten Storybook"
+  },
+  "demos.openApp": {
+    "message": "Odpri aplikacijo"
+  },
+  "demos.openDesignSystem": {
+    "message": "Odpri sistem za oblikovanje ↗"
+  },
+  "demos.mobileNote": {
+    "message": "Odprite na večjem zaslonu za ogled interaktivnega sistema za oblikovanje."
+  },
+  "developers.renderUIDemo.tag": {
+    "message": "render-ui"
+  },
+  "developers.renderUIDemo.title": {
+    "message": "Predogled komponent v živo"
+  },
+  "developers.renderUIDemo.subtitle": {
+    "message": "render-ui pretvori s-izraz v pravo komponento — brez JSX, brez datotek predlog. Uredite izraz in opazujte, kako se predogled samodejno posodablja."
+  },
+  "developers.renderUIDemo.previewEmpty": {
+    "message": "Zaženite izraz, da vidite izhod"
+  },
+  "developers.renderUIDemo.noSlots": {
+    "message": "V tem izrazu ni klicev render-ui"
+  },
+  "showcase.title": {
+    "message": "Naše delo"
+  },
+  "showcase.subtitle": {
+    "message": "Vsak Almadar projekt je opremljen z v celoti nameščenim sistemom za oblikovanje. Preglejte predloge, komponente in interakcije — brez namestitve."
+  },
+  "showcase.clientProblem": {
+    "message": "Problem naročnika"
+  },
+  "showcase.whatWeBuilt": {
+    "message": "Kar smo zgradili"
+  },
+  "showcase.openApp": {
+    "message": "Odpri aplikacijo"
+  },
+  "showcase.viewDesignSystem": {
+    "message": "Sistem za oblikovanje"
+  },
+  "showcase.openLiveApp": {
+    "message": "Odpri aplikacijo v živo"
   }
 }
