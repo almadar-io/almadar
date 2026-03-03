@@ -151,7 +151,7 @@ Define your data models:
 }
 ```
 
-📚 [Entity Documentation](https://almadar.io/docs/core-concepts/entities)
+📚 [Entity Documentation](https://almadar.io/docs/en/core-concepts/entities)
 
 ### 2. Traits (State Machines)
 
@@ -183,7 +183,7 @@ Define behavior with states, events, and transitions:
 }
 ```
 
-📚 [Trait Documentation](https://almadar.io/docs/core-concepts/traits) | [Closed Circuit](https://almadar.io/docs/core-concepts/closed-circuit)
+📚 [Trait Documentation](https://almadar.io/docs/en/core-concepts/traits) | [Closed Circuit](https://almadar.io/docs/en/core-concepts/closed-circuit)
 
 ### 3. Patterns & UI
 
@@ -197,7 +197,7 @@ Patterns bridge schemas to UI components:
 }]
 ```
 
-📚 [Patterns Documentation](https://almadar.io/docs/core-concepts/patterns)
+📚 [Patterns Documentation](https://almadar.io/docs/en/core-concepts/patterns)
 
 ### 4. Standard Library
 
@@ -210,7 +210,7 @@ Reuse pre-built behaviors:
 }
 ```
 
-📚 [Standard Library](https://almadar.io/docs/core-concepts/standard-library)
+📚 [Standard Library](https://almadar.io/docs/en/core-concepts/standard-library)
 
 ---
 
@@ -311,36 +311,36 @@ When something breaks, follow this order:
 5. Iterate
 ```
 
-📚 [Developer Guide](https://almadar.io/docs) | [Projects Guide](https://almadar.io/docs)
+📚 [Developer Guide](https://almadar.io/docs/en) | [Projects Guide](https://almadar.io/docs/en)
 
 ---
 
 ## Documentation
 
-Full documentation is available at [almadar.io/docs](https://almadar.io/docs):
+Full documentation is available at [almadar.io/docs](https://almadar.io/docs/en):
 
 ### Core Concepts
 
 | Document | Purpose |
 |----------|---------|
-| [Entities](https://almadar.io/docs/core-concepts/entities) | Data models, field types, persistence |
-| [Traits](https://almadar.io/docs/core-concepts/traits) | State machines, guards, effects |
-| [Pages](https://almadar.io/docs/core-concepts/pages) | Routes, URL patterns, trait bindings |
-| [Closed Circuit](https://almadar.io/docs/core-concepts/closed-circuit) | Event flow pattern |
-| [Patterns](https://almadar.io/docs/core-concepts/patterns) | UI patterns and components |
-| [Standard Library](https://almadar.io/docs/core-concepts/standard-library) | Reusable behaviors and operators |
+| [Entities](https://almadar.io/docs/en/core-concepts/entities) | Data models, field types, persistence |
+| [Traits](https://almadar.io/docs/en/core-concepts/traits) | State machines, guards, effects |
+| [Pages](https://almadar.io/docs/en/core-concepts/pages) | Routes, URL patterns, trait bindings |
+| [Closed Circuit](https://almadar.io/docs/en/core-concepts/closed-circuit) | Event flow pattern |
+| [Patterns](https://almadar.io/docs/en/core-concepts/patterns) | UI patterns and components |
+| [Standard Library](https://almadar.io/docs/en/core-concepts/standard-library) | Reusable behaviors and operators |
 
 ### Tutorials
 
 | Level | Topic |
 |-------|-------|
-| Beginner | [Your First Schema](https://almadar.io/docs/tutorials/beginner/complete-orbital) |
-| Intermediate | [UI Patterns](https://almadar.io/docs/tutorials/intermediate/ui-patterns), [Guards](https://almadar.io/docs/tutorials/intermediate/guards) |
-| Advanced | [Full App](https://almadar.io/docs/tutorials/advanced/full-app) |
+| Beginner | [Your First Schema](https://almadar.io/docs/en/tutorials/beginner/complete-orbital) |
+| Intermediate | [UI Patterns](https://almadar.io/docs/en/tutorials/intermediate/ui-patterns), [Guards](https://almadar.io/docs/en/tutorials/intermediate/guards) |
+| Advanced | [Full App](https://almadar.io/docs/en/tutorials/advanced/full-app) |
 
 ### Full Documentation
 
-Visit [almadar.io/docs](https://almadar.io/docs) for complete documentation.
+Visit [almadar.io/docs](https://almadar.io/docs/en) for complete documentation.
 
 ---
 
