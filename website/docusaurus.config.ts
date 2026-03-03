@@ -19,7 +19,13 @@ const config: Config = {
   projectName: "almadar",
 
   onBrokenLinks: "warn",
-  onBrokenMarkdownLinks: "warn",
+  
+  // Markdown configuration (Docusaurus v4 format)
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: "warn",
+    },
+  },
 
   // i18n configuration for English, Arabic, and Slovenian
   i18n: {

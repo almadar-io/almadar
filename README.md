@@ -327,15 +327,7 @@ almadar/
 └── tests/             # Test suites
 ```
 
-Monorepo structure:
 
-```
-packages/              # Shared packages (@almadar/*)
-orbital-rust/          # Rust compiler & runtime
-apps/builder/          # Builder IDE
-projects/              # Client projects
-docs/                  # Documentation
-```
 
 ---
 

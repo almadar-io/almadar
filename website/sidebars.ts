@@ -16,12 +16,12 @@ const sidebars: SidebarsConfig = {
       type: "category",
       label: "Core Concepts",
       items: [
-        "core-concepts/entities",
-        "core-concepts/traits",
-        "core-concepts/pages",
-        "core-concepts/closed-circuit",
-        "core-concepts/patterns",
-        "core-concepts/standard-library",
+        "en/core-concepts/entities",
+        "en/core-concepts/traits",
+        "en/core-concepts/pages",
+        "en/core-concepts/closed-circuit",
+        "en/core-concepts/patterns",
+        "en/core-concepts/standard-library",
       ],
     },
     {
