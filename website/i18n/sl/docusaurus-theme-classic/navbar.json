@@ -15,10 +15,6 @@
     "message": "Razvijalci",
     "description": "Navbar item with label Developers"
   },
-  "item.label.Playground": {
-    "message": "Igrišče",
-    "description": "Navbar item with label Playground"
-  },
   "item.label.Enterprise": {
     "message": "Podjetje",
     "description": "Navbar item with label Enterprise"

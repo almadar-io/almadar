@@ -168,11 +168,6 @@ const config: Config = {
           position: "left",
         },
         {
-          to: "/playground",
-          label: "Playground",
-          position: "left",
-        },
-        {
           to: "/developers",
           label: "Developers",
           position: "left",

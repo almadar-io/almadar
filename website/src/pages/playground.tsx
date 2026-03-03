@@ -278,7 +278,7 @@ function PlaygroundEditor({
 
 // ─── Main Playground ──────────────────────────────────────────────────────
 
-function PlaygroundCore() {
+export function PlaygroundCore() {
   const defaultCode = PLAYGROUND_EXAMPLES[0].code;
   const [code, setCode] = useState<string>(() => {
     if (typeof window !== "undefined" && window.location.hash) {

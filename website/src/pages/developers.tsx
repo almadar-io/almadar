@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { ReactNode } from "react";
 import clsx from "clsx";
+import BrowserOnly from "@docusaurus/BrowserOnly";
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
@@ -10,6 +11,8 @@ import HeroSection from "../components/HeroSection";
 import HeroSchemaAnimation from "../components/HeroSchemaAnimation";
 import JsonHighlight from "../components/JsonHighlight";
 import styles from "./developers.module.css";
+import playgroundStyles from "./playground.module.css";
+import { PlaygroundCore } from "./playground";
 
 // @ts-ignore
 import helloWorldEn from "!!raw-loader!../examples/hello-world.en.orb";
@@ -527,6 +530,40 @@ function Tutorials() {
   );
 }
 
+// ─── Playground Section ────────────────────────────────────────────────────
+
+function DevelopersPlayground() {
+  return (
+    <section className={styles.playgroundSection}>
+      <div className="container">
+        <div className={styles.sectionHeader}>
+          <Heading as="h2" className={styles.sectionTitle}>
+            <Translate id="developers.playground.title">
+              Try It in the Browser
+            </Translate>
+          </Heading>
+          <p className={styles.sectionSubtitle}>
+            <Translate id="developers.playground.subtitle">
+              Run Almadar s-expressions live — no installation needed
+            </Translate>
+          </p>
+        </div>
+      </div>
+      <div className={styles.playgroundEmbed}>
+        <BrowserOnly
+          fallback={
+            <div className={playgroundStyles.loadingFallback}>
+              <Translate id="playground.loading">Loading playground...</Translate>
+            </div>
+          }
+        >
+          {() => <PlaygroundCore />}
+        </BrowserOnly>
+      </div>
+    </section>
+  );
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────
 
 export default function Developers(): ReactNode {
@@ -548,6 +585,7 @@ export default function Developers(): ReactNode {
         <CoreConcepts />
         <QuickStart />
         <OperatorModules />
+        <DevelopersPlayground />
         <Tutorials />
       </main>
     </Layout>

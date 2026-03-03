@@ -19,10 +19,6 @@
     "message": "المطورون",
     "description": "Navbar item with label Developers"
   },
-  "item.label.Playground": {
-    "message": "الملعب",
-    "description": "Navbar item with label Playground"
-  },
   "item.label.Enterprise": {
     "message": "للمؤسسات",
     "description": "Navbar item with label Enterprise"

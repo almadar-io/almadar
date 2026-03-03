@@ -508,3 +508,26 @@
     /* rtl:ignore */
     direction: ltr !important;
 }
+
+/* ─── Playground Section ─────────────────────────────────────────────────── */
+
+.playgroundSection {
+    padding: 5rem 0 0;
+    background: linear-gradient(180deg, #faf8f5 0%, #0f172a 60%);
+}
+
+[data-theme="dark"] .playgroundSection {
+    background: linear-gradient(180deg, #020617 0%, #0f172a 40%);
+}
+
+.playgroundSection .sectionHeader {
+    margin-bottom: 2.5rem;
+}
+
+.playgroundEmbed {
+    height: 520px;
+    /* rtl:ignore */
+    direction: ltr;
+    border-top: 1px solid rgba(20, 184, 166, 0.15);
+    overflow: hidden;
+}
