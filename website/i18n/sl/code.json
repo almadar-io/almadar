@@ -1065,6 +1065,42 @@
   "homepage.how.subtitle": {
     "message": "Od naravnega jezika do delujoče aplikacije v treh korakih"
   },
+  "homepage.how.step1.title": {
+    "message": "Opišite v naravnem jeziku"
+  },
+  "homepage.how.step1.desc": {
+    "message": "Povejte Almadar, kaj želite zgraditi. Brez kode, brez sintakse shem — samo opišite vedenje, podatke in UI v preprostem jeziku."
+  },
+  "homepage.how.step2.title": {
+    "message": "UI generira shemo"
+  },
+  "homepage.how.step2.desc": {
+    "message": "DeepAgent prevede vaš opis v strukturirano OrbitalSchema — entitete, avtomate stanj, vzorce UI in točke integracije."
+  },
+  "homepage.how.step3.title": {
+    "message": "Sistem generira aplikacijo"
+  },
+  "homepage.how.step3.desc": {
+    "message": "Prevajalnik Almadar ustvari produkcijsko pripravljeno celovito aplikacijo: React frontend, Express backend, modele baze podatkov in API-je."
+  },
+  "homepage.stats.cost.value": {
+    "message": "87%"
+  },
+  "homepage.stats.cost.label": {
+    "message": "Zmanjšanje stroškov razvoja"
+  },
+  "homepage.stats.speed.value": {
+    "message": "60%"
+  },
+  "homepage.stats.speed.label": {
+    "message": "Hitrejša dostava"
+  },
+  "homepage.stats.auto.value": {
+    "message": "70%"
+  },
+  "homepage.stats.auto.label": {
+    "message": "Kode aplikacije se generira samodejno"
+  },
   "homepage.proof.title": {
     "message": "Preizkušeno v produkciji"
   },

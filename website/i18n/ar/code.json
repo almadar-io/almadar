@@ -1065,6 +1065,42 @@
   "homepage.how.subtitle": {
     "message": "من اللغة الطبيعية إلى تطبيق قيد التشغيل في ثلاث خطوات"
   },
+  "homepage.how.step1.title": {
+    "message": "صِف بلغتك الطبيعية"
+  },
+  "homepage.how.step1.desc": {
+    "message": "أخبر المدار بما تريد بناؤه. لا كود، لا صياغة مخطط — فقط صِف السلوك والبيانات وواجهة المستخدم بلغة بسيطة."
+  },
+  "homepage.how.step2.title": {
+    "message": "الذكاء الاصطناعي يولّد المخطط"
+  },
+  "homepage.how.step2.desc": {
+    "message": "يترجم DeepAgent وصفك إلى OrbitalSchema منظّم — كيانات وآلات حالة وأنماط واجهة المستخدم ونقاط التكامل."
+  },
+  "homepage.how.step3.title": {
+    "message": "النظام يولّد التطبيق"
+  },
+  "homepage.how.step3.desc": {
+    "message": "يُنتج مُترجم المدار تطبيقاً متكاملاً جاهزاً للإنتاج: واجهة React، وخادم Express، ونماذج قاعدة بيانات، وواجهات برمجية."
+  },
+  "homepage.stats.cost.value": {
+    "message": "87%"
+  },
+  "homepage.stats.cost.label": {
+    "message": "تخفيض في تكاليف التطوير"
+  },
+  "homepage.stats.speed.value": {
+    "message": "60%"
+  },
+  "homepage.stats.speed.label": {
+    "message": "أسرع في وقت التسليم"
+  },
+  "homepage.stats.auto.value": {
+    "message": "70%"
+  },
+  "homepage.stats.auto.label": {
+    "message": "من كود التطبيق يُولَّد تلقائياً"
+  },
   "homepage.proof.title": {
     "message": "مُثبت في بيئة الإنتاج"
   },
