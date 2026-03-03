@@ -62,6 +62,9 @@ const config: Config = {
                 "@almadar/ui": path.join(__dirname, "src/design-systems/almadar-ui/components/index.ts"),
                 "react-force-graph-2d": path.join(__dirname, ".storybook/stubs/react-force-graph-2d.ts"),
               },
+              // Allow webpack to resolve packages using the Node.js "import" export condition
+              // (used by @almadar/evaluator which only exports "import", not "module")
+              conditionNames: ["import", "module", "browser", "require", "default"],
             },
           };
         },
@@ -165,10 +168,14 @@ const config: Config = {
           position: "left",
         },
         {
-          type: "docSidebar",
-          sidebarId: "docsSidebar",
+          to: "/playground",
+          label: "Playground",
           position: "left",
-          label: "Docs",
+        },
+        {
+          to: "/developers",
+          label: "Developers",
+          position: "left",
         },
         {
           to: "/enterprise",

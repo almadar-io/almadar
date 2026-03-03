@@ -15,9 +15,13 @@
     "message": "العروض التوضيحية",
     "description": "Navbar item with label Demos"
   },
-  "item.label.Docs": {
-    "message": "التوثيق",
-    "description": "Navbar item with label Docs"
+  "item.label.Developers": {
+    "message": "المطورون",
+    "description": "Navbar item with label Developers"
+  },
+  "item.label.Playground": {
+    "message": "الملعب",
+    "description": "Navbar item with label Playground"
   },
   "item.label.Enterprise": {
     "message": "للمؤسسات",

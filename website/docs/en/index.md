@@ -9,33 +9,29 @@ Welcome to the Almadar programming language documentation. Almadar is a declarat
 ### Getting Started
 
 - [Introduction](getting-started/introduction.md) - What is Almadar and why should you use it?
-- [Installation](getting-started/installation.md) - Get the Almadar CLI on your system
-- [Your First Schema](getting-started/first-schema.md) - Build a task manager in 10 minutes
-- [Core Concepts](getting-started/core-concepts.md) - Entities, traits, and state machines
+- [Install the CLI](downloads/cli.md) - Get the Almadar CLI on your system
+- [Build a Task Manager](tutorials/beginner/task-manager.md) - Build a task manager in 10 minutes
+- [Core Concepts: Entities](core-concepts/entities.md) - Entities, traits, and state machines
 
 ### Language Reference
 
-- [Specification](language/specification.md) - Complete language specification
-- [Entities](language/entities.md) - Data structures and persistence
-- [Traits](language/traits.md) - Behavior as state machines
-- [S-Expressions](language/s-expressions.md) - Guards and effects syntax
-- [Effects](language/effects.md) - Server and client effects
-- [Patterns](language/patterns.md) - UI pattern library
+- [Entities](core-concepts/entities.md) - Data structures and persistence
+- [Traits](core-concepts/traits.md) - Behavior as state machines
+- [S-Expressions](core-concepts/standard-library.md) - Guards and effects syntax
+- [Effects & Standard Library](core-concepts/standard-library.md) - Server and client effects
+- [Patterns](core-concepts/patterns.md) - UI pattern library
 
 ### Guides
 
 #### Technical
 
-- [State Machine Design](guides/technical/state-machines.md)
-- [Guards and Permissions](guides/technical/guards-and-permissions.md)
-- [Cross-Orbital Events](guides/technical/cross-orbital-events.md)
-- [Testing](guides/technical/testing.md)
+- [Guards & Business Rules](tutorials/intermediate/guards.md) - S-expression conditions on transitions
+- [Cross-Orbital Events](tutorials/intermediate/cross-orbital.md) - Emits, listens, and payload contracts
 
 #### Business
 
-- [Why Almadar?](guides/business/why-orbital.md)
-- [Cost Comparison](guides/business/cost-comparison.md)
-- [Case Studies](guides/business/case-studies.md)
+- [Why Almadar?](/enterprise) - Enterprise use cases and ROI
+- [Case Studies](/enterprise) - Inspection and Trainer case studies
 
 ### Tutorials
 
@@ -57,11 +53,11 @@ Welcome to the Almadar programming language documentation. Almadar is a declarat
 
 ### Reference
 
-- [CLI Reference](reference/cli.md)
-- [Standard Library](reference/std-library.md)
-- [Traits Library](reference/traits-library.md)
-- [Patterns Library](reference/patterns-library.md)
-- [Error Codes](reference/error-codes.md)
+- [CLI Reference](downloads/cli.md)
+- [Standard Library](../reference/standard-library)
+- [Behaviors Library](../reference/behaviors)
+- [Operator Reference](/docs/reference/operators/)
+- [Core Concepts: Patterns](core-concepts/patterns.md)
 
 ---
 

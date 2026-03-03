@@ -32,7 +32,7 @@ Dobrodošli v dokumentaciji programskega jezika Almadar. Almadar je deklarativni
 
 ### Podjetniške storitve
 
-- [Almadar Enterprise](enterprise/) — Razvoj po meri, usposabljanje, svetovanje
+- [Almadar Enterprise](/enterprise) — Razvoj po meri, usposabljanje, svetovanje
 
 ### Skupnost
 

@@ -152,7 +152,7 @@ almadar skill install almadar-fixing --pro
 
 ## Creating Custom Skills
 
-Want to create your own Almadar skills? See the [Skill Development Guide](../guides/technical/skill-development.md).
+Want to create your own Almadar skills? Contact the team at support@almadar.io or visit the [community discussions](https://github.com/almadar-io/almadar/discussions) for guidance.
 
 ---
 

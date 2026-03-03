@@ -176,9 +176,9 @@ almadar validate schema.orb --locale ar
 
 ## الخطوات التالية
 
-- [أول مخطط](../getting-started/first-schema.md) - ابنِ شيئاً!
-- [مرجع الأوامر](../reference/cli.md) - مرجع كامل للأوامر
-- [إضافات المحررات](extensions.md) - دعم VSCode و Zed
+- [بناء مدير المهام](/docs/tutorials/beginner/task-manager) - ابنِ شيئاً!
+- [مرجع المشغلات](/docs/reference/operators/) - مرجع كامل للمشغلات
+- [الحراس والقواعد](/docs/tutorials/intermediate/guards) - S-expressions عملياً
 
 ---
 

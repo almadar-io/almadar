@@ -1,85 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import type { ReactNode } from "react";
-import clsx from "clsx";
 import Link from "@docusaurus/Link";
-import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
 import styles from "./index.module.css";
-import JsonHighlight from "../components/JsonHighlight";
-
-// @ts-ignore
-import helloWorldEn from "!!raw-loader!../examples/hello-world.en.orb";
-// @ts-ignore
-import helloWorldAr from "!!raw-loader!../examples/hello-world.ar.orb";
-// @ts-ignore
-import helloWorldSl from "!!raw-loader!../examples/hello-world.sl.orb";
-
-function resolveRaw(content: any): string {
-  return typeof content === "object" && content.default ? content.default : content;
-}
-
-const LocalizedSchemaDisplay = () => {
-  const context = useDocusaurusContext();
-  const currentLocale = context.i18n?.currentLocale ?? "en";
-  const [activeTab, setActiveTab] = useState<"en" | "local">("en");
-
-  const enCode = resolveRaw(helloWorldEn);
-
-  if (currentLocale === "en") {
-    return <JsonHighlight code={enCode} title="hello-world.orb" />;
-  }
-
-  let localContent = helloWorldEn;
-  if (currentLocale === "ar") {
-    localContent = helloWorldAr;
-  } else if (currentLocale === "sl") {
-    localContent = helloWorldSl;
-  }
-  const localCode = resolveRaw(localContent);
-
-  const localLabel = translate({
-    id: "homepage.schema.inYourLanguage",
-    message: "In Your Language",
-  });
-
-  return (
-    <div>
-      <div className={styles.schemaTabs}>
-        <button
-          className={clsx(styles.schemaTab, activeTab === "en" && styles.schemaTabActive)}
-          onClick={() => setActiveTab("en")}
-        >
-          English
-        </button>
-        <button
-          className={clsx(styles.schemaTab, activeTab === "local" && styles.schemaTabActive)}
-          onClick={() => setActiveTab("local")}
-        >
-          {localLabel}
-        </button>
-      </div>
-      <JsonHighlight
-        code={activeTab === "en" ? enCode : localCode}
-        title="hello-world.orb"
-        className={styles.schemaCodeBlock}
-      />
-    </div>
-  );
-};
 
 import DemoCarousel from "../components/DemoCarousel";
 import HeroSection from "../components/HeroSection";
-import HeroSchemaAnimation from "../components/HeroSchemaAnimation";
-import {
-  SchemaIcon,
-  StateMachineIcon,
-  FullStackIcon,
-  IntegrationsIcon,
-  RealtimeIcon,
-  AIIcon,
-} from "../components/FeatureIcons";
+
+// ─── Hero ──────────────────────────────────────────────────────────────────
 
 function HomepageHeader() {
   return (
@@ -90,20 +20,20 @@ function HomepageHeader() {
       subtitle={
         <Translate id="homepage.subtitle">
           Build full-stack applications through declarative schemas. Define
-          entities, behaviors, and UI as state machines that compile to
-          production-ready code.
+          entities, behaviors, and UI as state machines — describe it in natural
+          language, Almadar generates the rest.
         </Translate>
       }
       buttons={
         <>
-          <Link className="button button--primary button--lg" to="/docs">
+          <Link className="button button--primary button--lg" to="/developers">
             <Translate id="homepage.getStarted">Get Started</Translate>
           </Link>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/downloads/cli"
+            to="/enterprise"
           >
-            <Translate id="homepage.downloadCLI">Download CLI</Translate>
+            <Translate id="homepage.talkToSales">Talk to Sales</Translate>
           </Link>
         </>
       }
@@ -111,133 +41,60 @@ function HomepageHeader() {
   );
 }
 
-function HomepageAnimation() {
-  return (
-    <section className={styles.animationSection}>
-      <div className="container">
-        <div className={styles.animationHeader}>
-          <Heading as="h2" className={styles.animationTitle}>
-            <Translate id="homepage.animation.title">
-              How It Works
-            </Translate>
-          </Heading>
-          <p className={styles.animationSubtitle}>
-            <Translate id="homepage.animation.subtitle">
-              Every Almadar application is composed of Orbital Units. An Entity
-              holds your data, Traits define behavior as state machines, and
-              Pages bind them to routes. Watch the architecture assemble itself.
-            </Translate>
-          </p>
-        </div>
-        <HeroSchemaAnimation />
-        <p className={styles.animationCaption}>
-          <Translate id="homepage.animation.caption">
-            Orbital Unit = Entity + Traits + Pages
-          </Translate>
-        </p>
-      </div>
-    </section>
-  );
-}
+// ─── What Almadar Does ─────────────────────────────────────────────────────
 
-const FeatureList = [
+const HOW_IT_WORKS = [
   {
-    IconComponent: SchemaIcon,
-    titleId: "homepage.feature.declarative.title",
-    titleDefault: "Declarative Schemas",
-    descriptionId: "homepage.feature.declarative.description",
-    descriptionDefault:
-      "Define your entire application as a schema. Entities, traits, pages, and integrations - all in one place.",
+    step: "01",
+    titleId: "homepage.how.step1.title",
+    titleDefault: "Describe in Natural Language",
+    descId: "homepage.how.step1.desc",
+    descDefault:
+      "Tell Almadar what you want to build. No code, no schema syntax — just describe the behavior, data, and UI in plain language.",
   },
   {
-    IconComponent: StateMachineIcon,
-    titleId: "homepage.feature.stateMachines.title",
-    titleDefault: "State Machines",
-    descriptionId: "homepage.feature.stateMachines.description",
-    descriptionDefault:
-      "Model behavior as state machines with guards and effects. Predictable, testable, and secure by design.",
+    step: "02",
+    titleId: "homepage.how.step2.title",
+    titleDefault: "AI Generates the Schema",
+    descId: "homepage.how.step2.desc",
+    descDefault:
+      "DeepAgent translates your description into a structured OrbitalSchema — entities, state machines, UI patterns, and integration points.",
   },
   {
-    IconComponent: FullStackIcon,
-    titleId: "homepage.feature.fullStack.title",
-    titleDefault: "Full-Stack Generation",
-    descriptionId: "homepage.feature.fullStack.description",
-    descriptionDefault:
-      "Compile to React frontend, Express/FastAPI backend, and database models. One schema, complete app.",
-  },
-  {
-    IconComponent: IntegrationsIcon,
-    titleId: "homepage.feature.integrations.title",
-    titleDefault: "Built-in Integrations",
-    descriptionId: "homepage.feature.integrations.description",
-    descriptionDefault:
-      "Connect to external services with pre-built integrators. Stripe, Twilio, OpenAI, and more.",
-  },
-  {
-    IconComponent: RealtimeIcon,
-    titleId: "homepage.feature.realtime.title",
-    titleDefault: "Real-time & Games",
-    descriptionId: "homepage.feature.realtime.description",
-    descriptionDefault:
-      "Build real-time applications and games with the same declarative approach. WebSocket support included.",
-  },
-  {
-    IconComponent: AIIcon,
-    titleId: "homepage.feature.aiPowered.title",
-    titleDefault: "AI-Powered",
-    descriptionId: "homepage.feature.aiPowered.description",
-    descriptionDefault:
-      "Generate schemas from natural language. Let AI handle the boilerplate while you focus on logic.",
+    step: "03",
+    titleId: "homepage.how.step3.title",
+    titleDefault: "System Generates the App",
+    descId: "homepage.how.step3.desc",
+    descDefault:
+      "The Almadar compiler produces a production-ready full-stack application: React frontend, Express backend, database models, and APIs.",
   },
 ];
 
-function Feature({
-  IconComponent,
-  titleId,
-  titleDefault,
-  descriptionId,
-  descriptionDefault,
-}: {
-  IconComponent: React.FC<{ size?: number; className?: string }>;
-  titleId: string;
-  titleDefault: string;
-  descriptionId: string;
-  descriptionDefault: string;
-}) {
+function HomepageWhatWeDo() {
   return (
-    <div className={styles.featureCard}>
-      <div className={styles.featureIcon}>
-        <IconComponent size={48} />
-      </div>
-      <Heading as="h3">
-        <Translate id={titleId}>{titleDefault}</Translate>
-      </Heading>
-      <p>
-        <Translate id={descriptionId}>{descriptionDefault}</Translate>
-      </p>
-    </div>
-  );
-}
-
-function HomepageFeatures() {
-  return (
-    <section className={styles.features}>
+    <section className={styles.howSection}>
       <div className="container">
         <div className={styles.sectionHeader}>
           <Heading as="h2" className={styles.sectionTitle}>
-            <Translate id="homepage.features.title">
-              Build Faster, Ship Confidently
-            </Translate>
+            <Translate id="homepage.how.title">How Almadar Works</Translate>
           </Heading>
           <p className={styles.sectionSubtitle}>
-            <Translate id="homepage.features.subtitle">
-              Everything you need to go from idea to production
+            <Translate id="homepage.how.subtitle">
+              From natural language to a running application in three steps
             </Translate>
           </p>
         </div>
-        <div className={styles.featureGrid}>
-          {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
+        <div className={styles.howGrid}>
+          {HOW_IT_WORKS.map(({ step, titleId, titleDefault, descId, descDefault }) => (
+            <div key={step} className={styles.howCard}>
+              <span className={styles.howStep}>{step}</span>
+              <Heading as="h3" className={styles.howCardTitle}>
+                <Translate id={titleId}>{titleDefault}</Translate>
+              </Heading>
+              <p className={styles.howCardDesc}>
+                <Translate id={descId}>{descDefault}</Translate>
+              </p>
+            </div>
           ))}
         </div>
       </div>
@@ -245,95 +102,76 @@ function HomepageFeatures() {
   );
 }
 
-import OrbitalVisualization from "../components/OrbitalVisualization";
+// ─── Proof / Stats ─────────────────────────────────────────────────────────
 
-function HomepagePhilosophy() {
+const STATS = [
+  {
+    valueId: "homepage.stats.cost.value",
+    valueDefault: "87%",
+    labelId: "homepage.stats.cost.label",
+    labelDefault: "Reduction in development cost",
+  },
+  {
+    valueId: "homepage.stats.speed.value",
+    valueDefault: "60%",
+    labelId: "homepage.stats.speed.label",
+    labelDefault: "Faster time to delivery",
+  },
+  {
+    valueId: "homepage.stats.auto.value",
+    valueDefault: "70%",
+    labelId: "homepage.stats.auto.label",
+    labelDefault: "Of application code auto-generated",
+  },
+];
+
+function HomepageProof() {
   return (
-    <section className={styles.philosophy}>
+    <section className={styles.proofSection}>
       <div className="container">
-        <div className={styles.philosophyContent}>
-          <div className={styles.philosophyText}>
-            <span className={styles.tag}>
-              <Translate id="homepage.philosophy.tag">Philosophy</Translate>
-            </span>
-            <Heading as="h2">
-              <Translate id="homepage.philosophy.title">
-                The Anatomy of an Orbital
-              </Translate>
-            </Heading>
-            <p>
-              <Translate id="homepage.philosophy.description">
-                Most software is built like a house of cards. Almadar is built like a planetary system.
-                We separate your application into three atomic units:
-              </Translate>
-            </p>
-
-            <div className={styles.philosophyFeatures}>
-              <div className={styles.philosophyFeature}>
-                <strong>
-                  <Translate id="homepage.philosophy.entity">Entity (Matter)</Translate>
-                </strong>
-                <span>
-                  <Translate id="homepage.philosophy.entity.description">
-                    The immutable Core. It defines the gravity and shape of your data.
-                  </Translate>
-                </span>
-              </div>
-              <div className={styles.philosophyFeature}>
-                <strong>
-                  <Translate id="homepage.philosophy.trait">Trait (Energy)</Translate>
-                </strong>
-                <span>
-                  <Translate id="homepage.philosophy.trait.description">
-                    The dynamic Orbit. A state machine that defines behavior and logic.
-                  </Translate>
-                </span>
-              </div>
-              <div className={styles.philosophyFeature}>
-                <strong>
-                  <Translate id="homepage.philosophy.page">Page (Space)</Translate>
-                </strong>
-                <span>
-                  <Translate id="homepage.philosophy.page.description">
-                    The Frame. A route container where users interact with Orbitals.
-                  </Translate>
-                </span>
-              </div>
+        <div className={styles.sectionHeader}>
+          <Heading as="h2" className={styles.sectionTitle}>
+            <Translate id="homepage.proof.title">Proven in Production</Translate>
+          </Heading>
+          <p className={styles.sectionSubtitle}>
+            <Translate id="homepage.proof.subtitle">
+              Real results from teams that switched to Almadar
+            </Translate>
+          </p>
+        </div>
+        <div className={styles.statsGrid}>
+          {STATS.map(({ valueId, valueDefault, labelId, labelDefault }) => (
+            <div key={valueId} className={styles.statCard}>
+              <span className={styles.statValue}>
+                <Translate id={valueId}>{valueDefault}</Translate>
+              </span>
+              <span className={styles.statLabel}>
+                <Translate id={labelId}>{labelDefault}</Translate>
+              </span>
             </div>
-
-
-          </div>
-          <div className={styles.codePreview}>
-            <LocalizedSchemaDisplay />
-            <div className={styles.effectsLegend}>
-              <div className={styles.effectItem}>
-                <span className={styles.effectIcon}>📝</span>
-                <code>set</code> —{" "}
-                <Translate id="homepage.effect.set">
-                  Update entity field
-                </Translate>
-              </div>
-              <div className={styles.effectItem}>
-                <span className={styles.effectIcon}>➕</span>
-                <code>["+", ...]</code> —{" "}
-                <Translate id="homepage.effect.increment">
-                  S-expression math
-                </Translate>
-              </div>
-              <div className={styles.effectItem}>
-                <span className={styles.effectIcon}>🎨</span>
-                <code>render-ui</code> —{" "}
-                <Translate id="homepage.effect.renderui">
-                  Render pattern to slot
-                </Translate>
-              </div>
-            </div>
-          </div>
+          ))}
+        </div>
+        <div className={styles.caseStudyLinks}>
+          <span className={styles.caseStudyLabel}>
+            <Translate id="homepage.proof.caseStudies">Case Studies:</Translate>
+          </span>
+          <Link to="/case-studies/inspection" className={styles.caseStudyLink}>
+            <Translate id="homepage.proof.cs.inspection">
+              Government Inspection System
+            </Translate>
+          </Link>
+          <Link to="/case-studies/trainer" className={styles.caseStudyLink}>
+            <Translate id="homepage.proof.cs.trainer">
+              AI Trainer Platform
+            </Translate>
+          </Link>
         </div>
       </div>
     </section>
   );
 }
+
+// ─── CTA ──────────────────────────────────────────────────────────────────
 
 function HomepageCTA() {
   return (
@@ -345,24 +183,22 @@ function HomepageCTA() {
           </Heading>
           <p>
             <Translate id="homepage.cta.description">
-              Install the CLI and create your first Almadar schema in seconds.
+              Two paths forward: start building today with the Almadar developer
+              tools, or talk to us about an enterprise deployment for your team.
             </Translate>
           </p>
-          <div className={styles.ctaCode}>
-            <code>npx @almadar/cli new my-app</code>
-          </div>
           <div className={styles.buttons}>
             <Link
               className="button button--primary button--lg"
-              to="/docs/getting-started/introduction"
+              to="/developers"
             >
-              <Translate id="homepage.cta.readDocs">Read the Docs</Translate>
+              <Translate id="homepage.cta.startBuilding">Start Building</Translate>
             </Link>
             <Link
               className="button button--secondary button--lg"
-              href="https://github.com/almadar-io/almadar"
+              to="/enterprise"
             >
-              <Translate id="homepage.cta.viewGithub">View on GitHub</Translate>
+              <Translate id="homepage.cta.enterprise">Enterprise</Translate>
             </Link>
           </div>
         </div>
@@ -370,6 +206,8 @@ function HomepageCTA() {
     </section>
   );
 }
+
+// ─── Page ─────────────────────────────────────────────────────────────────
 
 export default function Home(): ReactNode {
   return (
@@ -381,15 +219,14 @@ export default function Home(): ReactNode {
       description={translate({
         id: "homepage.meta.description",
         message:
-          "Almadar - Declarative full-stack applications through state machines",
+          "Almadar — build full-stack applications through declarative schemas. Natural language to production code.",
       })}
     >
       <HomepageHeader />
-      <HomepageAnimation />
       <main>
+        <HomepageWhatWeDo />
+        <HomepageProof />
         <DemoCarousel />
-        <HomepagePhilosophy />
-        <HomepageFeatures />
         <HomepageCTA />
       </main>
     </Layout>

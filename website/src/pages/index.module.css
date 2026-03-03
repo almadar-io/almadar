@@ -5,68 +5,7 @@
     flex-wrap: wrap;
 }
 
-/* Animation Section — standalone below hero */
-.animationSection {
-    padding: 4rem 0 5rem;
-    background: linear-gradient(180deg, var(--almadar-parchment) 0%, #ece8e1 100%);
-    border-top: 1px solid rgba(201, 162, 39, 0.15);
-}
-
-[data-theme="dark"] .animationSection {
-    background: linear-gradient(180deg, var(--almadar-midnight) 0%, #020617 100%);
-    border-top-color: rgba(20, 184, 166, 0.15);
-}
-
-.animationSection :global(.container) {
-    max-width: 600px;
-}
-
-.animationHeader {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.animationTitle {
-    font-size: 2rem;
-    font-weight: 800;
-    color: #1e293b;
-    margin-bottom: 1rem;
-}
-
-[data-theme="dark"] .animationTitle {
-    color: #f8fafc;
-}
-
-.animationSubtitle {
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: #475569;
-    max-width: 520px;
-    margin: 0 auto;
-}
-
-[data-theme="dark"] .animationSubtitle {
-    color: #94a3b8;
-}
-
-.animationCaption {
-    text-align: center;
-    margin-top: 1rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-    font-style: italic;
-    color: var(--almadar-sand-gold);
-}
-
-/* Features Section — warm parchment gradient */
-.features {
-    padding: 6rem 0;
-    background: linear-gradient(180deg, #faf8f5 0%, #f5f2ed 100%);
-}
-
-[data-theme="dark"] .features {
-    background: linear-gradient(180deg, #0f172a 0%, #020617 100%);
-}
+/* ─── Section shared ────────────────────────────────────────────────────── */
 
 .sectionHeader {
     text-align: center;
@@ -95,256 +34,176 @@
     color: #94a3b8;
 }
 
-.featureGrid {
+/* ─── How It Works ──────────────────────────────────────────────────────── */
+
+.howSection {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, var(--almadar-parchment) 0%, #ece8e1 100%);
+    border-top: 1px solid rgba(201, 162, 39, 0.15);
+}
+
+[data-theme="dark"] .howSection {
+    background: linear-gradient(180deg, var(--almadar-midnight) 0%, #020617 100%);
+    border-top-color: rgba(20, 184, 166, 0.15);
+}
+
+.howGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
-/* Gentle Humanist Feature Cards — gold border grows on hover, no lift */
-.featureCard {
-    background: #fffefa;
-    border: 1px solid #e8e4de;
+.howCard {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(201, 162, 39, 0.2);
     border-radius: 24px;
-    padding: 2rem;
-    transition: all var(--transition-normal);
-    border-bottom: 3px solid #e8e4de;
+    padding: 2.5rem 2rem;
     position: relative;
+    transition: box-shadow 0.2s ease;
 }
 
-[data-theme="dark"] .featureCard {
+[data-theme="dark"] .howCard {
     background: rgba(255, 255, 255, 0.02);
-    border-color: #1e293b;
-    border-bottom-color: #1e293b;
+    border-color: rgba(20, 184, 166, 0.15);
 }
 
-.featureCard:hover {
-    border-color: var(--almadar-sand-gold);
-    border-bottom-color: var(--almadar-sand-gold);
-    transform: none;
-    box-shadow: 0 4px 20px rgba(201, 162, 39, 0.1);
+.howCard:hover {
+    box-shadow: 0 4px 24px rgba(201, 162, 39, 0.12);
 }
 
-[data-theme="dark"] .featureCard:hover {
-    box-shadow: 0 4px 20px rgba(201, 162, 39, 0.08);
-}
-
-.featureCard h3 {
-    color: #1e293b;
-    font-size: 1.2rem;
-    margin-bottom: 0.75rem;
-    font-weight: 600;
-}
-
-[data-theme="dark"] .featureCard h3 {
-    color: #f8fafc;
-}
-
-.featureCard p {
-    color: #475569;
-    line-height: 1.6;
-    margin: 0;
-    font-size: 0.95rem;
-}
-
-[data-theme="dark"] .featureCard p {
-    color: #94a3b8;
-}
-
-.featureIcon {
-    margin-bottom: 1rem;
+.howStep {
     display: block;
+    font-size: 3rem;
+    font-weight: 900;
     line-height: 1;
-}
-
-.featureIcon svg {
-    transition: transform var(--transition-slow);
-}
-
-.featureCard:hover .featureIcon svg {
-    transform: scale(1.05);
-}
-
-/* Philosophy Section — warm stone gray */
-.philosophy {
-    padding: 6rem 0;
-    background: #ece8e1;
-}
-
-[data-theme="dark"] .philosophy {
-    background: #020617;
-}
-
-.philosophyContent {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-}
-
-.philosophyText h2 {
-    font-size: 2.25rem;
-    font-weight: 800;
-    color: #1e293b;
-    margin-bottom: 1.5rem;
-}
-
-[data-theme="dark"] .philosophyText h2 {
-    color: #f8fafc;
-}
-
-.philosophyText p {
-    color: #475569;
-    font-size: 1.1rem;
-    line-height: 1.7;
-    margin-bottom: 2rem;
-}
-
-[data-theme="dark"] .philosophyText p {
-    color: #94a3b8;
-}
-
-.tag {
-    background: rgba(20, 184, 166, 0.1);
-    color: #14b8a6;
-    padding: 0.35rem 1rem;
-    border-radius: 99px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    display: inline-block;
+    color: rgba(201, 162, 39, 0.25);
+    font-family: "IBM Plex Mono", monospace;
     margin-bottom: 1rem;
 }
 
-.philosophyFeatures {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+[data-theme="dark"] .howStep {
+    color: rgba(20, 184, 166, 0.25);
 }
 
-.philosophyFeature {
-    display: flex;
-    gap: 1rem;
-    align-items: baseline;
+.howCardTitle {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.75rem;
 }
 
-.philosophyFeature strong {
-    color: #14b8a6;
-    min-width: 60px;
+[data-theme="dark"] .howCardTitle {
+    color: #f8fafc;
 }
 
-.philosophyFeature span {
+.howCardDesc {
     color: #475569;
+    font-size: 0.97rem;
+    line-height: 1.65;
+    margin: 0;
 }
 
-[data-theme="dark"] .philosophyFeature span {
+[data-theme="dark"] .howCardDesc {
     color: #94a3b8;
 }
 
-.codePreview {
-    border-radius: 16px;
-    overflow: hidden;
-}
+/* ─── Proof / Stats ─────────────────────────────────────────────────────── */
 
-/* Schema language tabs */
-.schemaTabs {
-    display: flex;
-    gap: 0;
-    background: #0f172a;
-    border-radius: 16px 16px 0 0;
-    border-bottom: 1px solid #1e293b;
-    overflow: hidden;
-}
-
-.schemaTab {
-    flex: 1;
-    padding: 0.6rem 1rem;
-    border: none;
-    background: transparent;
-    color: #64748b;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: inherit;
-}
-
-.schemaTab:hover {
-    color: #94a3b8;
-    background: rgba(255, 255, 255, 0.03);
-}
-
-.schemaTabActive {
-    color: #14b8a6;
-    background: rgba(20, 184, 166, 0.08);
-    border-bottom: 2px solid #14b8a6;
-}
-
-.schemaCodeBlock {
-    border-radius: 0 0 16px 16px !important;
-    border-top: none !important;
-}
-
-.effectsLegend {
-    padding: 1rem 1.25rem;
-    background: rgba(20, 184, 166, 0.05);
-    border-top: 1px solid #1e293b;
-    /* Force Dark Border */
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-[data-theme="dark"] .effectsLegend {
-    border-top-color: #1e293b;
-}
-
-.effectItem {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.85rem;
-    color: #94a3b8;
-    /* Force Dark Text Color */
-}
-
-[data-theme="dark"] .effectItem {
-    color: #94a3b8;
-}
-
-.effectIcon {
-    font-size: 1rem;
-}
-
-.effectItem code {
-    background: rgba(20, 184, 166, 0.15);
-    color: #14b8a6;
-    padding: 0.15rem 0.5rem;
-    border-radius: 4px;
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.8rem;
-    font-weight: 500;
-}
-
-/* Visualization Container */
-.vizContainer {
-    width: 100%;
-    margin-top: 2rem;
-    border-top: 1px solid var(--ifm-color-emphasis-200);
-    padding-top: 3rem;
-}
-
-[data-theme='dark'] .vizContainer {
-    border-top-color: var(--ifm-color-emphasis-100);
-}
-
-/* CTA Section — warm gradient */
-.cta {
+.proofSection {
     padding: 6rem 0;
     background: linear-gradient(180deg, #f5f2ed 0%, #ece8e1 100%);
 }
 
-[data-theme="dark"] .cta {
+[data-theme="dark"] .proofSection {
     background: linear-gradient(180deg, #020617 0%, #0f172a 100%);
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.statCard {
+    background: linear-gradient(135deg,
+        rgba(201, 162, 39, 0.06) 0%,
+        rgba(20, 184, 166, 0.04) 100%);
+    border: 1px solid rgba(201, 162, 39, 0.2);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+[data-theme="dark"] .statCard {
+    border-color: rgba(20, 184, 166, 0.15);
+}
+
+.statValue {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--almadar-sand-gold);
+    line-height: 1;
+    font-family: "Plus Jakarta Sans", "Inter", sans-serif;
+}
+
+.statLabel {
+    font-size: 1rem;
+    color: #475569;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+[data-theme="dark"] .statLabel {
+    color: #94a3b8;
+}
+
+.caseStudyLinks {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.caseStudyLabel {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+[data-theme="dark"] .caseStudyLabel {
+    color: #64748b;
+}
+
+.caseStudyLink {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--almadar-teal);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+.caseStudyLink:hover {
+    border-bottom-color: var(--almadar-teal);
+    text-decoration: none;
+}
+
+/* ─── CTA ───────────────────────────────────────────────────────────────── */
+
+.cta {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, #ece8e1 0%, #f5f2ed 100%);
+}
+
+[data-theme="dark"] .cta {
+    background: linear-gradient(180deg, #0f172a 0%, #020617 100%);
 }
 
 .ctaCard {
@@ -384,59 +243,24 @@
     color: #94a3b8;
 }
 
-.ctaCode {
-    background: #f5f2ed;
-    border: 1px solid #e8e4de;
-    border-radius: 12px;
-    padding: 1rem 2rem;
-    display: inline-block;
-    margin-bottom: 2rem;
-}
-
-[data-theme="dark"] .ctaCode {
-    background: #0f172a;
-    border-color: #1e293b;
-}
-
-.ctaCode code {
-    font-family: "IBM Plex Mono", "Fira Code", monospace;
-    color: #14b8a6;
-    font-size: 1rem;
-}
-
 .cta .buttons {
     justify-content: center;
 }
 
-/* Responsive */
+/* ─── Responsive ────────────────────────────────────────────────────────── */
+
 @media (max-width: 996px) {
     .buttons {
         justify-content: center;
     }
 
-    .featureGrid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .philosophyContent {
+    .howGrid,
+    .statsGrid {
         grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .philosophyText {
-        text-align: center;
-    }
-
-    .philosophyFeatures {
-        align-items: center;
     }
 }
 
 @media (max-width: 768px) {
-    .featureGrid {
-        grid-template-columns: 1fr;
-    }
-
     .sectionTitle {
         font-size: 2rem;
     }
@@ -453,16 +277,15 @@
         flex-direction: column;
         align-items: stretch;
     }
+
+    .statValue {
+        font-size: 2.5rem;
+    }
 }
 
-/* === RTL Support === */
-/* RTLcss auto-handles most directional flipping.
-   Only mask-image gradient positions need manual override
-   since RTLcss doesn't flip radial-gradient positions. */
+/* ─── RTL Support ───────────────────────────────────────────────────────── */
 
-/* Code preview stays LTR — handled by JsonHighlight component. */
-
-.effectItem code {
+.howStep {
     /* rtl:ignore */
     direction: ltr !important;
 }

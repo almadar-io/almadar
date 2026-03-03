@@ -26,8 +26,30 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "Downloads",
-      items: ["downloads/cli", "downloads/skills"],
+      label: "Operator Reference",
+      link: {
+        type: "doc",
+        id: "reference/operators/index",
+      },
+      items: [
+        "reference/operators/math",
+        "reference/operators/str",
+        "reference/operators/array",
+        "reference/operators/object",
+        "reference/operators/time",
+        "reference/operators/validate",
+        "reference/operators/format",
+        "reference/operators/async",
+        "reference/operators/prob",
+      ],
+    },
+    {
+      type: "category",
+      label: "Standard Behaviors",
+      items: [
+        "reference/behaviors",
+        "reference/standard-library",
+      ],
     },
     {
       type: "category",
@@ -62,16 +84,13 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "Community",
-      items: ["community/contributing"],
+      label: "Downloads",
+      items: ["downloads/cli", "downloads/skills"],
     },
     {
       type: "category",
-      label: "Reference",
-      items: [
-        "reference/standard-library",
-        "reference/behaviors",
-      ],
+      label: "Community",
+      items: ["community/contributing"],
     },
   ],
 };

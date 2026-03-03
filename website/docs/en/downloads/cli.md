@@ -199,9 +199,9 @@ almadar validate schema.orb --locale ar
 
 ## Next Steps
 
-- [Your First Schema](../getting-started/first-schema.md) - Build something!
-- [CLI Reference](../reference/cli.md) - Complete command reference
-- [Editor Extensions](extensions.md) - VSCode and Zed support
+- [Build a Task Manager](/docs/tutorials/beginner/task-manager) - Build something!
+- [Operator Reference](/docs/reference/operators/) - Complete operator reference
+- [Guards & Business Rules](/docs/tutorials/intermediate/guards) - S-expressions in practice
 
 ---
 

@@ -1,0 +1,387 @@
+/* ─── Page Header ────────────────────────────────────────────────────────── */
+
+.pageHeader {
+    padding: 3rem 0 2rem;
+    background: var(--almadar-midnight);
+    border-bottom: 1px solid rgba(20, 184, 166, 0.15);
+}
+
+.pageTitle {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #f8fafc;
+    margin-bottom: 0.5rem;
+}
+
+.pageSubtitle {
+    font-size: 1.05rem;
+    color: #94a3b8;
+    margin: 0;
+}
+
+/* ─── Main Layout ────────────────────────────────────────────────────────── */
+
+.playgroundMain {
+    background: #0f172a;
+    min-height: calc(100vh - 200px);
+    display: flex;
+    flex-direction: column;
+}
+
+.playgroundLayout {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: calc(100vh - 200px);
+    min-height: 500px;
+}
+
+.loadingFallback {
+    padding: 4rem;
+    text-align: center;
+    color: #94a3b8;
+}
+
+/* ─── Toolbar ────────────────────────────────────────────────────────────── */
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 1rem;
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+    gap: 1rem;
+    flex-shrink: 0;
+}
+
+.toolbarRight {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* ─── Run Button ─────────────────────────────────────────────────────────── */
+
+.runBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 1.25rem;
+    background: var(--almadar-teal);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    font-family: inherit;
+}
+
+.runBtn:hover {
+    background: #0d9488;
+}
+
+.runBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.shortcut {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    font-family: "IBM Plex Mono", monospace;
+}
+
+.shareBtn {
+    padding: 0.45rem 1rem;
+    background: transparent;
+    color: #94a3b8;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+    font-family: inherit;
+}
+
+.shareBtn:hover {
+    color: #f8fafc;
+    border-color: #64748b;
+}
+
+/* ─── Examples Dropdown ──────────────────────────────────────────────────── */
+
+.dropdown {
+    position: relative;
+}
+
+.dropdownTrigger {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 1rem;
+    background: transparent;
+    color: #94a3b8;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    transition: color 0.15s ease;
+}
+
+.dropdownTrigger:hover {
+    color: #f8fafc;
+}
+
+.dropdownArrow {
+    font-size: 0.6rem;
+    opacity: 0.6;
+}
+
+.dropdownPanel {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 50;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    width: 420px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    display: flex;
+}
+
+.dropdownCategories {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #334155;
+    min-width: 130px;
+    padding: 0.5rem 0;
+}
+
+.dropdownCategory,
+.dropdownCategoryActive {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: transparent;
+    color: #64748b;
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+    transition: color 0.15s ease, background 0.15s ease;
+}
+
+.dropdownCategory:hover {
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.dropdownCategoryActive {
+    color: var(--almadar-teal);
+    background: rgba(20, 184, 166, 0.08);
+}
+
+.dropdownItems {
+    flex: 1;
+    padding: 0.5rem 0;
+    overflow-y: auto;
+    max-height: 280px;
+}
+
+.dropdownItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.6rem 1rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
+    transition: background 0.1s ease;
+}
+
+.dropdownItem:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.dropdownItemLabel {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    font-family: "IBM Plex Mono", monospace;
+}
+
+.dropdownItemDesc {
+    font-size: 0.78rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+/* ─── Split Pane ─────────────────────────────────────────────────────────── */
+
+.splitPane {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex: 1;
+    min-height: 0;
+}
+
+.editorPane {
+    border-right: 1px solid #334155;
+    overflow: hidden;
+    position: relative;
+}
+
+.fallbackEditor {
+    width: 100%;
+    height: 100%;
+    background: #1e1e1e;
+    color: #d4d4d4;
+    border: none;
+    outline: none;
+    padding: 1rem;
+    font-family: "IBM Plex Mono", "Fira Code", monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    resize: none;
+}
+
+.outputPane {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ─── Output Panel ───────────────────────────────────────────────────────── */
+
+.outputPanel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #0f172a;
+}
+
+.outputHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 1rem;
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+    flex-shrink: 0;
+}
+
+.outputLabel {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+}
+
+.outputMeta {
+    font-size: 0.78rem;
+    color: #475569;
+    font-family: "IBM Plex Mono", monospace;
+}
+
+.outputError {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #f87171;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.outputEmpty {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #475569;
+    font-size: 0.9rem;
+    padding: 2rem;
+    text-align: center;
+}
+
+.outputSpinner {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #334155;
+    border-top-color: var(--almadar-teal);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.outputValue {
+    flex: 1;
+    margin: 0;
+    padding: 1rem;
+    font-family: "IBM Plex Mono", "Fira Code", monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #a5f3fc;
+    overflow: auto;
+    background: #0f172a;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.outputErrorText {
+    flex: 1;
+    margin: 0;
+    padding: 1rem;
+    font-family: "IBM Plex Mono", "Fira Code", monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #fca5a5;
+    overflow: auto;
+    background: #0f172a;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .splitPane {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+
+    .editorPane {
+        border-right: none;
+        border-bottom: 1px solid #334155;
+    }
+
+    .dropdownPanel {
+        width: 320px;
+    }
+}

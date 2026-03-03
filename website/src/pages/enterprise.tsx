@@ -35,7 +35,7 @@ function EnterpriseHero() {
           <Link className="button button--primary button--lg" to="#contact">
             <Translate id="enterprise.cta.contact">Contact Sales</Translate>
           </Link>
-          <Link className="button button--secondary button--lg" to="/docs">
+          <Link className="button button--secondary button--lg" to="/developers">
             <Translate id="enterprise.cta.docs">View Documentation</Translate>
           </Link>
         </>
@@ -133,6 +133,119 @@ function EnterpriseFeatures() {
   );
 }
 
+function EnterpriseSecurityCompliance() {
+  return (
+    <section className={styles.securitySection}>
+      <div className="container">
+        <div className={styles.sectionHeader}>
+          <Heading as="h2">
+            <Translate id="enterprise.security.title">
+              Security & Compliance
+            </Translate>
+          </Heading>
+          <p>
+            <Translate id="enterprise.security.subtitle">
+              Built for regulated industries from day one
+            </Translate>
+          </p>
+        </div>
+        <div className={styles.securityGrid}>
+          <div className={styles.securityCard}>
+            <span className={styles.securityIcon}>🔐</span>
+            <Heading as="h3">
+              <Translate id="enterprise.security.auth.title">
+                Authentication & Access
+              </Translate>
+            </Heading>
+            <ul className={styles.securityList}>
+              <li>
+                <Translate id="enterprise.security.auth.sso">
+                  SSO via SAML 2.0 and OIDC
+                </Translate>
+              </li>
+              <li>
+                <Translate id="enterprise.security.auth.rbac">
+                  Role-based access control (RBAC)
+                </Translate>
+              </li>
+              <li>
+                <Translate id="enterprise.security.auth.audit">
+                  Immutable audit logs for all schema operations
+                </Translate>
+              </li>
+              <li>
+                <Translate id="enterprise.security.auth.mfa">
+                  Multi-factor authentication enforcement
+                </Translate>
+              </li>
+            </ul>
+          </div>
+          <div className={styles.securityCard}>
+            <span className={styles.securityIcon}>🏛️</span>
+            <Heading as="h3">
+              <Translate id="enterprise.security.compliance.title">
+                Compliance
+              </Translate>
+            </Heading>
+            <ul className={styles.securityList}>
+              <li>
+                <Translate id="enterprise.security.compliance.soc2">
+                  SOC 2 Type II (in progress)
+                </Translate>
+              </li>
+              <li>
+                <Translate id="enterprise.security.compliance.gdpr">
+                  GDPR-compliant data handling
+                </Translate>
+              </li>
+              <li>
+                <Translate id="enterprise.security.compliance.hipaa">
+                  HIPAA-ready deployment options
+                </Translate>
+              </li>
+              <li>
+                <Translate id="enterprise.security.compliance.gov">
+                  Government and regulated industry support
+                </Translate>
+              </li>
+            </ul>
+          </div>
+          <div className={styles.securityCard}>
+            <span className={styles.securityIcon}>🤖</span>
+            <Heading as="h3">
+              <Translate id="enterprise.security.ai.title">
+                AI Security (Upcoming)
+              </Translate>
+            </Heading>
+            <ul className={styles.securityList}>
+              <li>
+                <Translate id="enterprise.security.ai.icagi">
+                  IC-AGI integration for schema validation and policy enforcement
+                </Translate>
+              </li>
+              <li>
+                <Translate id="enterprise.security.ai.sandboxed">
+                  Sandboxed AI generation with schema review gates
+                </Translate>
+              </li>
+              <li>
+                <Translate id="enterprise.security.ai.audit">
+                  AI decision audit trail
+                </Translate>
+              </li>
+              <li>
+                <Translate id="enterprise.security.ai.policy">
+                  Policy-as-code for AI-generated schemas
+                </Translate>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function EnterprisePricing() {
   return (
     <section className={styles.pricing}>
@@ -224,6 +337,77 @@ function EnterprisePricing() {
   );
 }
 
+function EnterpriseCaseStudies() {
+  return (
+    <section className={styles.caseStudies}>
+      <div className="container">
+        <div className={styles.caseStudiesHeader}>
+          <Heading as="h2" className={styles.caseStudiesTitle}>
+            <Translate id="enterprise.caseStudies.title">
+              Proven in the Field
+            </Translate>
+          </Heading>
+          <p className={styles.caseStudiesSubtitle}>
+            <Translate id="enterprise.caseStudies.subtitle">
+              Real deployments built on Almadar
+            </Translate>
+          </p>
+        </div>
+        <div className={styles.caseStudiesGrid}>
+          <Link to="/case-studies/inspection" className={styles.caseStudyCard}>
+            <span
+              className={styles.caseStudyBadge}
+              style={{ background: "rgba(249,115,22,0.1)", color: "#fb923c" }}
+            >
+              <Translate id="enterprise.cs.inspection.badge">Field Ops</Translate>
+            </span>
+            <Heading as="h3">
+              <Translate id="enterprise.cs.inspection.title">
+                Inspection System
+              </Translate>
+            </Heading>
+            <p>
+              <Translate id="enterprise.cs.inspection.desc">
+                500+ inspections per day, 99.9% sync reliability, 60% reduction
+                in compliance errors.
+              </Translate>
+            </p>
+            <span className={styles.caseStudyLink}>
+              <Translate id="enterprise.cs.readMore">Read case study</Translate>{" "}
+              →
+            </span>
+          </Link>
+          <Link to="/case-studies/trainer" className={styles.caseStudyCard}>
+            <span
+              className={styles.caseStudyBadge}
+              style={{ background: "rgba(16,185,129,0.1)", color: "#34d399" }}
+            >
+              <Translate id="enterprise.cs.trainer.badge">
+                Health & Fitness
+              </Translate>
+            </span>
+            <Heading as="h3">
+              <Translate id="enterprise.cs.trainer.title">
+                Pro Trainer App
+              </Translate>
+            </Heading>
+            <p>
+              <Translate id="enterprise.cs.trainer.desc">
+                70% reduction in admin time, 3x client capacity per trainer,
+                95% client retention rate.
+              </Translate>
+            </p>
+            <span className={styles.caseStudyLink}>
+              <Translate id="enterprise.cs.readMore">Read case study</Translate>{" "}
+              →
+            </span>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function EnterpriseContact() {
   return (
     <section id="contact" className={styles.contact}>
@@ -260,7 +444,9 @@ export default function Enterprise(): ReactNode {
       <EnterpriseHero />
       <main>
         <EnterpriseFeatures />
+        <EnterpriseSecurityCompliance />
         <EnterprisePricing />
+        <EnterpriseCaseStudies />
         <EnterpriseContact />
       </main>
     </Layout>

@@ -1,0 +1,210 @@
+/* ─── Case Study Page Layout ─────────────────────────────────────────────── */
+
+.hero {
+    padding: 6rem 0 4rem;
+    text-align: center;
+    background: linear-gradient(180deg, var(--almadar-parchment) 0%, #ece8e1 100%);
+    border-bottom: 1px solid rgba(201, 162, 39, 0.15);
+}
+
+[data-theme="dark"] .hero {
+    background: linear-gradient(180deg, var(--almadar-midnight) 0%, #020617 100%);
+    border-bottom-color: rgba(20, 184, 166, 0.12);
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    border-radius: 99px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #1e293b;
+    margin-bottom: 1.25rem;
+}
+
+[data-theme="dark"] .hero h1 {
+    color: #f8fafc;
+}
+
+.heroSubtitle {
+    font-size: 1.25rem;
+    color: #475569;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.65;
+}
+
+[data-theme="dark"] .heroSubtitle {
+    color: #94a3b8;
+}
+
+/* ─── Content ────────────────────────────────────────────────────────────── */
+
+.content {
+    padding: 4rem 0;
+}
+
+.contentInner {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.card {
+    background: #fffefa;
+    border: 1px solid #e8e4de;
+    border-radius: 20px;
+    padding: 2rem 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+[data-theme="dark"] .card {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: #1e293b;
+}
+
+.card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+[data-theme="dark"] .card h3 {
+    color: #f8fafc;
+}
+
+.highlight {
+    color: var(--almadar-teal);
+}
+
+.card p {
+    color: #475569;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 0 0 0.5rem;
+}
+
+[data-theme="dark"] .card p {
+    color: #94a3b8;
+}
+
+.orbitalList {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.orbitalList li {
+    color: #475569;
+    font-size: 0.97rem;
+    line-height: 1.5;
+    padding-left: 0.25rem;
+}
+
+[data-theme="dark"] .orbitalList li {
+    color: #94a3b8;
+}
+
+.orbitalList li strong {
+    color: var(--almadar-teal);
+}
+
+/* ─── Result Box ──────────────────────────────────────────────────────────── */
+
+.resultBox {
+    background: linear-gradient(135deg,
+        rgba(20, 184, 166, 0.08) 0%,
+        rgba(201, 162, 39, 0.05) 100%);
+    border: 1px solid rgba(20, 184, 166, 0.25);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    margin-top: 2rem;
+    font-size: 1.05rem;
+    color: #1e293b;
+    line-height: 1.6;
+}
+
+[data-theme="dark"] .resultBox {
+    color: #f8fafc;
+    border-color: rgba(20, 184, 166, 0.2);
+}
+
+.resultBox strong {
+    color: var(--almadar-teal);
+    font-weight: 700;
+}
+
+/* ─── CTA ───────────────────────────────────────────────────────────────── */
+
+.ctaSection {
+    padding: 4rem 0 6rem;
+    background: linear-gradient(180deg, #f5f2ed 0%, #ece8e1 100%);
+}
+
+[data-theme="dark"] .ctaSection {
+    background: linear-gradient(180deg, #020617 0%, #0f172a 100%);
+}
+
+.ctaCard {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 3rem;
+    text-align: center;
+    background: linear-gradient(135deg,
+        rgba(201, 162, 39, 0.06) 0%,
+        rgba(20, 184, 166, 0.04) 100%);
+    border: 1px solid rgba(201, 162, 39, 0.25);
+    border-radius: 24px;
+}
+
+[data-theme="dark"] .ctaCard {
+    border-color: rgba(20, 184, 166, 0.2);
+}
+
+.ctaCard h2 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 0.75rem;
+}
+
+[data-theme="dark"] .ctaCard h2 {
+    color: #f8fafc;
+}
+
+.ctaCard p {
+    color: #475569;
+    font-size: 1.05rem;
+    margin-bottom: 1.75rem;
+    line-height: 1.6;
+}
+
+[data-theme="dark"] .ctaCard p {
+    color: #94a3b8;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.25rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+
+    .ctaCard {
+        padding: 2rem 1.5rem;
+    }
+}

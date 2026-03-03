@@ -11,9 +11,13 @@
     "message": "Predstavitve",
     "description": "Navbar item with label Demos"
   },
-  "item.label.Docs": {
-    "message": "Dokumentacija",
-    "description": "Navbar item with label Docs"
+  "item.label.Developers": {
+    "message": "Razvijalci",
+    "description": "Navbar item with label Developers"
+  },
+  "item.label.Playground": {
+    "message": "Igrišče",
+    "description": "Navbar item with label Playground"
   },
   "item.label.Enterprise": {
     "message": "Podjetje",

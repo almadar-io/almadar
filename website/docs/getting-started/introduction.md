@@ -256,8 +256,8 @@ By the end of this documentation, you'll be able to:
 ## Next Steps
 
 1. [Install the CLI](../downloads/cli.md) - Get Almadar on your system
-2. [Your First Schema](first-schema.md) - Build a task manager
-3. [Core Concepts](core-concepts.md) - Deep dive into the fundamentals
+2. [Build a Task Manager](/docs/tutorials/beginner/task-manager) - Your first schema
+3. [Core Concepts: Entities](/docs/en/core-concepts/entities) - Deep dive into the fundamentals
 
 ---
 

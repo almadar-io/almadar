@@ -1,0 +1,510 @@
+/* ─── Shared ─────────────────────────────────────────────────────────────── */
+
+.sectionHeader {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+
+.sectionTitle {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 0.75rem;
+}
+
+[data-theme="dark"] .sectionTitle {
+    color: #f8fafc;
+}
+
+.sectionSubtitle {
+    font-size: 1.1rem;
+    color: #475569;
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.65;
+}
+
+[data-theme="dark"] .sectionSubtitle {
+    color: #94a3b8;
+}
+
+/* ─── Animation ──────────────────────────────────────────────────────────── */
+
+.animationSection {
+    padding: 4rem 0 5rem;
+    background: linear-gradient(180deg, var(--almadar-parchment) 0%, #ece8e1 100%);
+    border-top: 1px solid rgba(201, 162, 39, 0.15);
+}
+
+[data-theme="dark"] .animationSection {
+    background: linear-gradient(180deg, var(--almadar-midnight) 0%, #020617 100%);
+    border-top-color: rgba(20, 184, 166, 0.15);
+}
+
+.animationSection :global(.container) {
+    max-width: 620px;
+}
+
+.animationHeader {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.animationCaption {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--almadar-sand-gold);
+}
+
+/* ─── Core Concepts ──────────────────────────────────────────────────────── */
+
+.conceptsSection {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, #f5f2ed 0%, #ece8e1 100%);
+}
+
+[data-theme="dark"] .conceptsSection {
+    background: linear-gradient(180deg, #020617 0%, #0f172a 100%);
+}
+
+.conceptsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.conceptCard {
+    background: #fffefa;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    padding: 2rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+}
+
+[data-theme="dark"] .conceptCard {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.conceptCard:hover,
+.conceptCardActive {
+    border-color: var(--concept-color, var(--almadar-sand-gold));
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.conceptCardHeader {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.conceptLabel {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--concept-color, #1e293b);
+}
+
+.conceptTagline {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+[data-theme="dark"] .conceptTagline {
+    color: #64748b;
+}
+
+.conceptDesc {
+    font-size: 0.95rem;
+    color: #475569;
+    line-height: 1.65;
+    margin: 0 0 0.75rem;
+}
+
+[data-theme="dark"] .conceptDesc {
+    color: #94a3b8;
+}
+
+.conceptSnippet {
+    margin-top: 1rem;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* ─── Quick Start ────────────────────────────────────────────────────────── */
+
+.quickstartSection {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, #ece8e1 0%, #faf8f5 100%);
+}
+
+[data-theme="dark"] .quickstartSection {
+    background: linear-gradient(180deg, #0f172a 0%, #020617 100%);
+}
+
+.quickstartLayout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.quickstartDesc {
+    font-size: 1.05rem;
+    color: #475569;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+[data-theme="dark"] .quickstartDesc {
+    color: #94a3b8;
+}
+
+.installBlock {
+    background: #0f172a;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    display: inline-flex;
+    margin-bottom: 1.5rem;
+}
+
+.installCmd {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 1rem;
+    color: #14b8a6;
+}
+
+.quickstartSteps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.97rem;
+    color: #475569;
+}
+
+[data-theme="dark"] .step {
+    color: #94a3b8;
+}
+
+.step code {
+    background: rgba(20, 184, 166, 0.1);
+    color: #14b8a6;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.85rem;
+}
+
+.stepNum {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--almadar-sand-gold);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Schema tabs */
+.schemaTabs {
+    display: flex;
+    gap: 0;
+    background: #0f172a;
+    border-radius: 16px 16px 0 0;
+    border-bottom: 1px solid #1e293b;
+    overflow: hidden;
+}
+
+.schemaTab {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    border: none;
+    background: transparent;
+    color: #64748b;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.schemaTab:hover {
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.schemaTabActive {
+    color: #14b8a6;
+    background: rgba(20, 184, 166, 0.08);
+    border-bottom: 2px solid #14b8a6;
+}
+
+.schemaCodeBlock {
+    border-radius: 0 0 16px 16px !important;
+    border-top: none !important;
+}
+
+/* ─── Operator Modules ───────────────────────────────────────────────────── */
+
+.modulesSection {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, #faf8f5 0%, #f5f2ed 100%);
+}
+
+[data-theme="dark"] .modulesSection {
+    background: linear-gradient(180deg, #020617 0%, #0f172a 100%);
+}
+
+.modulesTable {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid #e8e4de;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+[data-theme="dark"] .modulesTable {
+    border-color: #1e293b;
+}
+
+.moduleRow {
+    display: grid;
+    grid-template-columns: 2.5rem 8rem 8rem 1fr;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.1rem 1.75rem;
+    border-bottom: 1px solid #e8e4de;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.15s ease;
+}
+
+[data-theme="dark"] .moduleRow {
+    border-bottom-color: #1e293b;
+}
+
+.moduleRow:last-child {
+    border-bottom: none;
+}
+
+.moduleRow:hover {
+    background: rgba(201, 162, 39, 0.04);
+    text-decoration: none;
+}
+
+[data-theme="dark"] .moduleRow:hover {
+    background: rgba(20, 184, 166, 0.04);
+}
+
+.moduleIcon {
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+.moduleName {
+    font-weight: 700;
+    color: #1e293b;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.95rem;
+}
+
+[data-theme="dark"] .moduleName {
+    color: #f8fafc;
+}
+
+.moduleCount {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--almadar-teal);
+    white-space: nowrap;
+}
+
+.moduleDesc {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.5;
+}
+
+[data-theme="dark"] .moduleDesc {
+    color: #94a3b8;
+}
+
+.modulesFooter {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.allOperatorsLink {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--almadar-teal);
+}
+
+/* ─── Tutorials ──────────────────────────────────────────────────────────── */
+
+.tutorialsSection {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, #ece8e1 0%, #faf8f5 100%);
+}
+
+[data-theme="dark"] .tutorialsSection {
+    background: linear-gradient(180deg, #0f172a 0%, #020617 100%);
+}
+
+.tutorialsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.tutorialCard {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: #fffefa;
+    border: 1px solid #e8e4de;
+    border-radius: 20px;
+    padding: 2rem;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+[data-theme="dark"] .tutorialCard {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: #1e293b;
+}
+
+.tutorialCard:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-color: var(--track-color, var(--almadar-teal));
+    text-decoration: none;
+}
+
+.tutorialBadge {
+    display: inline-block;
+    padding: 0.3rem 0.9rem;
+    border-radius: 99px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: white;
+    background: var(--track-color, var(--almadar-teal));
+    width: fit-content;
+}
+
+.tutorialDesc {
+    font-size: 0.95rem;
+    color: #475569;
+    line-height: 1.6;
+    margin: 0;
+}
+
+[data-theme="dark"] .tutorialDesc {
+    color: #94a3b8;
+}
+
+.tutorialItems {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+}
+
+.tutorialItems li {
+    font-size: 0.9rem;
+    color: #64748b;
+    padding-left: 1rem;
+    position: relative;
+}
+
+.tutorialItems li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--track-color, var(--almadar-teal));
+    font-size: 0.75rem;
+    top: 0.05em;
+}
+
+.tutorialCta {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--track-color, var(--almadar-teal));
+    margin-top: auto;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 996px) {
+    .conceptsGrid,
+    .tutorialsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .quickstartLayout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .moduleRow {
+        grid-template-columns: 2rem 6rem 6rem 1fr;
+        gap: 1rem;
+        padding: 1rem 1.25rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .sectionTitle {
+        font-size: 1.75rem;
+    }
+
+    .moduleRow {
+        grid-template-columns: 2rem 1fr;
+        grid-template-rows: auto auto;
+    }
+
+    .moduleIcon {
+        grid-row: 1;
+    }
+
+    .moduleName {
+        grid-row: 1;
+    }
+
+    .moduleCount {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .moduleDesc {
+        display: none;
+    }
+}
+
+/* ─── RTL Support ────────────────────────────────────────────────────────── */
+
+.installCmd,
+.step code {
+    /* rtl:ignore */
+    direction: ltr !important;
+}

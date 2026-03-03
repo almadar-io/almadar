@@ -115,8 +115,8 @@ export const taskSchema = {
 
 Looking for a development partner? **Almadar** is both the creator of the Almadar language and a full-service software agency.
 
-- [Almadar Enterprise](en/enterprise/index.md) — Custom development, training, consulting
-- [المدار للأعمال](ar/enterprise/index.md) — التطوير المخصص، التدريب، الاستشارات
+- [Almadar Enterprise](/enterprise) — Custom development, training, consulting
+- [المدار للأعمال](/enterprise) — التطوير المخصص، التدريب، الاستشارات
 
 ---
 
