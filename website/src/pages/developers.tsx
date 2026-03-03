@@ -340,7 +340,7 @@ function QuickStart() {
               <div className={styles.step}>
                 <span className={styles.stepNum}>3</span>
                 <span>
-                  {translate({ id: "developers.quickstart.step3", message: "Run orbital dev to watch and compile" })}
+                  {translate({ id: "developers.quickstart.step3", message: "Run almadar dev my-app.orb to watch and compile" })}
                 </span>
               </div>
             </div>
