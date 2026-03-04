@@ -41,7 +41,7 @@ export const RENDER_UI_EXAMPLES: RenderUIExample[] = [
           'main',
           'badge',
           {
-            label: ['str/concat', 'Score: ', ['to-string', '@entity.score']],
+            label: ['str/concat', 'Score: ', '@entity.score'],
             variant: ['if', ['>', '@entity.score', 80], 'success', 'warning'],
           },
         ],

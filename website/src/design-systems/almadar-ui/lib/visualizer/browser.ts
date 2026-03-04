@@ -1255,7 +1255,7 @@ declare global {
   }
 }
 
-if (typeof window !== 'undefined') {
+if (typeof window !== 'undefined' && typeof document !== 'undefined') {
   window.OrbitalVisualizer = OrbitalVisualizer;
   window._pinnedTooltip = pinnedTooltip;
 

@@ -6,19 +6,12 @@
  *
  * Event Contract:
  * - Emits: UI:COPY_CODE { language, success }
+ *
+ * NOTE: Uses dynamic import for react-syntax-highlighter to avoid SSR issues
+ * with decode-named-character-reference which accesses document at module level.
  */
 
 import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus as dark } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import { Copy, Check } from "lucide-react";
-import {
-  Box,
-  Button,
-  Badge,
-  HStack,
-  useEventBus,
-} from '@almadar/ui';
 
 export interface CodeBlockProps {
   /** The code content to display */
@@ -35,6 +28,10 @@ export interface CodeBlockProps {
   className?: string;
 }
 
+// Dynamically imported types
+type SyntaxHighlighterType = typeof import('react-syntax-highlighter').Prism;
+type StyleType = Record<string, React.CSSProperties>;
+
 export const CodeBlock = React.memo<CodeBlockProps>(
   ({
     code,
@@ -44,10 +41,22 @@ export const CodeBlock = React.memo<CodeBlockProps>(
     maxHeight = "60vh",
     className,
   }) => {
-    const eventBus = useEventBus();
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const savedScrollLeftRef = useRef<number>(0);
     const [copied, setCopied] = useState(false);
+    const [SyntaxHighlighter, setSyntaxHighlighter] = useState<SyntaxHighlighterType | null>(null);
+    const [style, setStyle] = useState<StyleType | null>(null);
+
+    // Dynamically import react-syntax-highlighter (client-only)
+    useEffect(() => {
+      Promise.all([
+        import('react-syntax-highlighter'),
+        import('react-syntax-highlighter/dist/cjs/styles/prism'),
+      ]).then(([syntaxHighlighterMod, stylesMod]) => {
+        setSyntaxHighlighter(() => syntaxHighlighterMod.Prism);
+        setStyle(stylesMod.vscDarkPlus);
+      });
+    }, []);
 
     // Save scrollLeft before updates
     useLayoutEffect(() => {
@@ -79,44 +88,61 @@ export const CodeBlock = React.memo<CodeBlockProps>(
       try {
         await navigator.clipboard.writeText(code);
         setCopied(true);
-        eventBus.emit("UI:COPY_CODE", { language, success: true });
         setTimeout(() => setCopied(false), 2000);
       } catch (err) {
         console.error("Failed to copy code:", err);
-        eventBus.emit("UI:COPY_CODE", { language, success: false });
       }
     };
 
+    // Show placeholder while loading
+    if (!SyntaxHighlighter || !style) {
+      return (
+        <div className={`relative group ${className || ""}`}>
+          {(showLanguageBadge || showCopyButton) && (
+            <div className="flex justify-between items-center px-3 py-2 bg-gray-800 rounded-t-lg border-b border-gray-700">
+              {showLanguageBadge && (
+                <span className="text-xs font-medium text-gray-300">{language}</span>
+              )}
+            </div>
+          )}
+          <div
+            className="animate-pulse"
+            style={{
+              backgroundColor: "#1e1e1e",
+              borderRadius: showLanguageBadge || showCopyButton ? "0 0 0.5rem 0.5rem" : "0.5rem",
+              padding: "1rem",
+              maxHeight,
+            }}
+          >
+            <div className="h-4 bg-gray-700 rounded w-3/4 mb-2"></div>
+            <div className="h-4 bg-gray-700 rounded w-1/2"></div>
+          </div>
+        </div>
+      );
+    }
+
     return (
-      <Box className={`relative group ${className || ""}`}>
+      <div className={`relative group ${className || ""}`}>
         {/* Header with language badge and copy button */}
         {(showLanguageBadge || showCopyButton) && (
-          <HStack
-            justify="between"
-            align="center"
-            className="px-3 py-2 bg-gray-800 rounded-t-lg border-b border-gray-700"
-          >
+          <div className="flex justify-between items-center px-3 py-2 bg-gray-800 rounded-t-lg border-b border-gray-700">
             {showLanguageBadge && (
-              <Badge variant="default" size="sm">
-                {language}
-              </Badge>
+              <span className="text-xs font-medium text-gray-300">{language}</span>
             )}
             {showCopyButton && (
-              <Button
-                variant="ghost"
-                size="sm"
+              <button
                 onClick={handleCopy}
-                className="opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity text-[var(--color-muted-foreground)] hover:text-white"
+                className="opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity text-gray-400 hover:text-white"
                 aria-label="Copy code"
               >
                 {copied ? (
-                  <Check size={16} className="text-green-400" />
+                  <span className="text-green-400 text-xs">Copied!</span>
                 ) : (
-                  <Copy size={16} />
+                  <span className="text-xs">Copy</span>
                 )}
-              </Button>
+              </button>
             )}
-          </HStack>
+          </div>
         )}
 
         {/* Code content */}
@@ -141,7 +167,7 @@ export const CodeBlock = React.memo<CodeBlockProps>(
           <SyntaxHighlighter
             PreTag="div"
             language={language}
-            style={dark}
+            style={style}
             customStyle={{
               backgroundColor: "transparent",
               borderRadius: 0,
@@ -154,7 +180,7 @@ export const CodeBlock = React.memo<CodeBlockProps>(
             {code}
           </SyntaxHighlighter>
         </div>
-      </Box>
+      </div>
     );
   },
   (prev, next) =>

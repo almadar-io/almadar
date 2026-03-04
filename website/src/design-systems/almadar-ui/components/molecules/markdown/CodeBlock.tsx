@@ -6,11 +6,12 @@
  *
  * Event Contract:
  * - Emits: UI:COPY_CODE { language, success }
+ *
+ * NOTE: Uses dynamic import for react-syntax-highlighter to avoid SSR issues
+ * with decode-named-character-reference which accesses document at module level.
  */
 
 import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus as dark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import { Copy, Check } from 'lucide-react';
 import { Box } from '../../atoms/Box';
 import { Button } from '../../atoms/Button';
@@ -34,6 +35,10 @@ export interface CodeBlockProps {
   className?: string;
 }
 
+// Dynamically imported types
+type SyntaxHighlighterType = typeof import('react-syntax-highlighter').Prism;
+type StyleType = Record<string, React.CSSProperties>;
+
 export const CodeBlock = React.memo<CodeBlockProps>(
   ({
     code,
@@ -48,6 +53,19 @@ export const CodeBlock = React.memo<CodeBlockProps>(
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const savedScrollLeftRef = useRef<number>(0);
     const [copied, setCopied] = useState(false);
+    const [SyntaxHighlighter, setSyntaxHighlighter] = useState<SyntaxHighlighterType | null>(null);
+    const [style, setStyle] = useState<StyleType | null>(null);
+
+    // Dynamically import react-syntax-highlighter (client-only)
+    useEffect(() => {
+      Promise.all([
+        import('react-syntax-highlighter'),
+        import('react-syntax-highlighter/dist/cjs/styles/prism'),
+      ]).then(([syntaxHighlighterMod, stylesMod]) => {
+        setSyntaxHighlighter(() => syntaxHighlighterMod.Prism);
+        setStyle(stylesMod.vscDarkPlus);
+      });
+    }, []);
 
     // Save scrollLeft before updates
     useLayoutEffect(() => {
@@ -86,6 +104,39 @@ export const CodeBlock = React.memo<CodeBlockProps>(
         eventBus.emit('UI:COPY_CODE', { language, success: false });
       }
     };
+
+    // Show placeholder while loading
+    if (!SyntaxHighlighter || !style) {
+      return (
+        <Box className={`relative group ${className || ''}`}>
+          {(showLanguageBadge || showCopyButton) && (
+            <HStack
+              justify="between"
+              align="center"
+              className="px-3 py-2 bg-gray-800 rounded-t-lg border-b border-gray-700"
+            >
+              {showLanguageBadge && (
+                <Badge variant="default" size="sm">
+                  {language}
+                </Badge>
+              )}
+            </HStack>
+          )}
+          <div
+            className="animate-pulse"
+            style={{
+              backgroundColor: '#1e1e1e',
+              borderRadius: showLanguageBadge || showCopyButton ? '0 0 0.5rem 0.5rem' : '0.5rem',
+              padding: '1rem',
+              maxHeight,
+            }}
+          >
+            <div className="h-4 bg-gray-700 rounded w-3/4 mb-2"></div>
+            <div className="h-4 bg-gray-700 rounded w-1/2"></div>
+          </div>
+        </Box>
+      );
+    }
 
     return (
       <Box className={`relative group ${className || ''}`}>
@@ -141,7 +192,7 @@ export const CodeBlock = React.memo<CodeBlockProps>(
           <SyntaxHighlighter
             PreTag="div"
             language={language}
-            style={dark}
+            style={style}
             customStyle={{
               backgroundColor: 'transparent',
               borderRadius: 0,
