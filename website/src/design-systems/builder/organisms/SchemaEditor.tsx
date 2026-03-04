@@ -10,9 +10,13 @@
  */
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import Editor, { OnMount } from "@monaco-editor/react";
 import type { editor } from "monaco-editor";
 import { Box, VStack, HStack, Button, Typography, LoadingState, Icon, useTranslate } from "@almadar/ui";
+
+// Dynamic import of Monaco Editor to avoid SSR issues
+const EditorPromise = import('@monaco-editor/react').then((mod) => mod.default);
+type EditorType = typeof import('@monaco-editor/react').default;
+type OnMount = typeof import('@monaco-editor/react').OnMount;
 import { Save, X } from "lucide-react";
 import type { OrbitalSchema } from "@almadar/core";
 // syntax may not be exported - using stub with required methods
@@ -276,6 +280,7 @@ export const SchemaEditorModal: React.FC<SchemaEditorModalProps> = ({
   onSave,
 }) => {
   const { t } = useTranslate();
+  const [EditorComponent, setEditorComponent] = useState<EditorType | null>(null);
   const [editorContent, setEditorContent] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -283,6 +288,13 @@ export const SchemaEditorModal: React.FC<SchemaEditorModalProps> = ({
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   // Store original schema to restore internal fields on save
   const originalSchemaRef = useRef<OrbitalSchema | null>(null);
+
+  // Load Monaco Editor dynamically to avoid SSR issues
+  useEffect(() => {
+    if (isOpen) {
+      EditorPromise.then(setEditorComponent);
+    }
+  }, [isOpen]);
 
   // Initialize editor content when schema changes
   useEffect(() => {
@@ -483,18 +495,22 @@ export const SchemaEditorModal: React.FC<SchemaEditorModalProps> = ({
 
             {/* Monaco Editor */}
             <Box className="flex-1 overflow-hidden rounded-lg border border-[var(--color-border)]">
-              <Editor
-                height="100%"
-                width="100%"
-                language="orbital-json"
-                value={editorContent}
-                theme="orbital-dark"
-                onChange={handleContentChange}
-                beforeMount={handleBeforeMount}
-                onMount={handleEditorMount}
-                options={editorOptions}
-                loading={<EditorLoading />}
-              />
+              {EditorComponent ? (
+                <EditorComponent
+                  height="100%"
+                  width="100%"
+                  language="orbital-json"
+                  value={editorContent}
+                  theme="orbital-dark"
+                  onChange={handleContentChange}
+                  beforeMount={handleBeforeMount}
+                  onMount={handleEditorMount}
+                  options={editorOptions}
+                  loading={<EditorLoading />}
+                />
+              ) : (
+                <EditorLoading />
+              )}
             </Box>
 
             {/* Status Bar */}

@@ -5,10 +5,15 @@
  * Provides syntax highlighting, IntelliSense, and other IDE features.
  */
 
-import React, { useCallback, useRef } from 'react';
-import Editor, { OnMount, OnChange } from '@monaco-editor/react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import type { editor } from 'monaco-editor';
 import { Box, VStack, LoadingState } from '@almadar/ui';
+
+// Dynamic import of Monaco Editor to avoid SSR issues
+const EditorPromise = import('@monaco-editor/react').then((mod) => mod.default);
+type EditorType = typeof import('@monaco-editor/react').default;
+type OnMount = typeof import('@monaco-editor/react').OnMount;
+type OnChange = typeof import('@monaco-editor/react').OnChange;
 
 // =============================================================================
 // Language Mapping
@@ -69,8 +74,14 @@ export const CodeEditorPanel: React.FC<CodeEditorPanelProps> = ({
   onMount,
   showLineNumbers = true,
 }) => {
+  const [EditorComponent, setEditorComponent] = useState<EditorType | null>(null);
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const detectedLanguage = language || getLanguageFromPath(path);
+
+  // Load Monaco Editor dynamically to avoid SSR issues
+  useEffect(() => {
+    EditorPromise.then(setEditorComponent);
+  }, []);
 
   const handleEditorMount: OnMount = useCallback(
     (editor, monaco) => {
@@ -133,9 +144,25 @@ export const CodeEditorPanel: React.FC<CodeEditorPanelProps> = ({
     autoIndent: 'full',
   };
 
+  // Show loading state while Editor is loading
+  if (!EditorComponent) {
+    return (
+      <Box className={`h-full w-full ${className}`}>
+        <VStack
+          align="center"
+          justify="center"
+          className="w-full h-full"
+          style={{ backgroundColor: 'var(--color-card)' }}
+        >
+          <LoadingState message="Loading editor..." />
+        </VStack>
+      </Box>
+    );
+  }
+
   return (
     <Box className={`h-full w-full ${className}`}>
-      <Editor
+      <EditorComponent
         height="100%"
         width="100%"
         language={detectedLanguage}
