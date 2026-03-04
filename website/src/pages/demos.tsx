@@ -143,6 +143,7 @@ function ProjectStorybookFrame({ project }: { project: ProjectEntry }) {
           onLoad={() => setLoaded(true)}
           onError={() => setError(true)}
           allow="fullscreen"
+          scrolling="no"
         />
       </div>
 
@@ -170,7 +171,13 @@ function ProjectStorybookFrame({ project }: { project: ProjectEntry }) {
 
 // ─── Sticky Navigation ─────────────────────────────────────────────────────
 
-function ProjectNav({ activeProject }: { activeProject: string }) {
+function ProjectNav({ 
+  activeProject, 
+  onProjectChange 
+}: { 
+  activeProject: string;
+  onProjectChange: (key: string) => void;
+}) {
   const navRef = useRef<HTMLDivElement>(null);
   const [isSticky, setIsSticky] = useState(false);
 
@@ -188,6 +195,7 @@ function ProjectNav({ activeProject }: { activeProject: string }) {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, key: string) => {
     e.preventDefault();
+    onProjectChange(key);
     const element = document.getElementById(key);
     if (element) {
       const navHeight = 140;
@@ -198,6 +206,7 @@ function ProjectNav({ activeProject }: { activeProject: string }) {
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const key = e.target.value;
+    onProjectChange(key);
     const element = document.getElementById(key);
     if (element) {
       const navHeight = 140;
@@ -258,16 +267,20 @@ function ProjectNav({ activeProject }: { activeProject: string }) {
 
 export default function Demos(): React.JSX.Element {
   const [activeProject, setActiveProject] = useState(PROJECTS[0].key);
+  const userInitiatedScroll = useRef(false);
 
-  // Track which project is in view
+  // Track which project is in view (only updates state, doesn't auto-scroll)
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveProject(entry.target.id);
-          }
-        });
+        // Only update active state if user hasn't manually clicked
+        if (!userInitiatedScroll.current) {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveProject(entry.target.id);
+            }
+          });
+        }
       },
       { 
         rootMargin: '-10% 0px -40% 0px',
@@ -282,6 +295,21 @@ export default function Demos(): React.JSX.Element {
 
     return () => observer.disconnect();
   }, []);
+
+  // Reset user initiated scroll flag after scroll completes
+  useEffect(() => {
+    const handleScrollEnd = () => {
+      userInitiatedScroll.current = false;
+    };
+
+    window.addEventListener('scroll', handleScrollEnd, { passive: true });
+    return () => window.removeEventListener('scroll', handleScrollEnd);
+  }, []);
+
+  const handleProjectChange = (key: string) => {
+    userInitiatedScroll.current = true;
+    setActiveProject(key);
+  };
 
   return (
     <Layout
@@ -309,7 +337,10 @@ export default function Demos(): React.JSX.Element {
         />
 
         {/* Sticky Navigation */}
-        <ProjectNav activeProject={activeProject} />
+        <ProjectNav 
+          activeProject={activeProject} 
+          onProjectChange={handleProjectChange}
+        />
 
         {/* One section per project */}
         {PROJECTS.map((project) => (
