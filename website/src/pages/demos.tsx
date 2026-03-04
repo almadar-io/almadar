@@ -9,17 +9,40 @@ import { PROJECTS, type ProjectEntry } from '../data/projects';
 
 // ─── URL Builders ──────────────────────────────────────────────────────────
 
+interface ParsedStoryId {
+  storyPath: string;
+  existingParams: string;
+}
+
+/**
+ * Parse featuredStoryId which may contain existing URL parameters
+ * e.g., "story-id--name&globals=theme:light" -> { storyPath: "story-id--name", existingParams: "globals=theme:light" }
+ */
+function parseStoryId(storyId: string): ParsedStoryId {
+  const ampIndex = storyId.indexOf('&');
+  if (ampIndex === -1) {
+    return { storyPath: storyId, existingParams: '' };
+  }
+  return {
+    storyPath: storyId.substring(0, ampIndex),
+    existingParams: storyId.substring(ampIndex + 1),
+  };
+}
+
 /**
  * Build iframe URL for embedded Storybook (fullscreen mode)
  * Uses the specific featured story with all UI hidden
  */
 function buildIframeUrl(project: ProjectEntry): string {
   const baseUrl = project.storybookUrl;
-  const storyPath = project.featuredStoryId;
+  const { storyPath, existingParams } = parseStoryId(project.featuredStoryId);
   
-  // Build the story URL with fullscreen mode
-  // full=true hides sidebar, toolbar, and addon panels
-  return `${baseUrl}/?path=/story/${storyPath}&full=true`;
+  // Build URL: base/?path=/story/STORY_PATH&full=true&existingParams
+  const params = existingParams 
+    ? `full=true&${existingParams}` 
+    : 'full=true';
+  
+  return `${baseUrl}/?path=/story/${storyPath}&${params}`;
 }
 
 /**
@@ -28,28 +51,25 @@ function buildIframeUrl(project: ProjectEntry): string {
  */
 function buildExternalStorybookUrl(project: ProjectEntry): string {
   const baseUrl = project.storybookUrl;
-  const storyPath = project.featuredStoryId;
+  const { storyPath, existingParams } = parseStoryId(project.featuredStoryId);
   
   // panel=false hides addon panel but keeps sidebar visible
-  return `${baseUrl}/?path=/story/${storyPath}&panel=false`;
-}
-
-/**
- * Build mobile fallback URL (opens in new tab with panel hidden)
- */
-function buildMobileUrl(project: ProjectEntry): string {
-  return buildExternalStorybookUrl(project);
+  const params = existingParams 
+    ? `panel=false&${existingParams}` 
+    : 'panel=false';
+  
+  return `${baseUrl}/?path=/story/${storyPath}&${params}`;
 }
 
 // ─── Storybook iframe per project ──────────────────────────────────────────
 
 function ProjectStorybookFrame({ project }: { project: ProjectEntry }) {
   const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
   
   // Use specific story URL with fullscreen mode for iframe
   const iframeSrc = buildIframeUrl(project);
   const externalUrl = buildExternalStorybookUrl(project);
-  const mobileUrl = buildMobileUrl(project);
 
   return (
     <div
@@ -91,23 +111,37 @@ function ProjectStorybookFrame({ project }: { project: ProjectEntry }) {
 
       {/* iframe — desktop only (fullscreen Storybook) */}
       <div className={styles.iframeContainer}>
-        {!loaded && (
+        {!loaded && !error && (
           <div
             className={styles.iframeSkeleton}
             style={{ background: project.accentColor + '18' }}
           >
             <span className={styles.skeletonLabel}>
-              {project.name}
+              Loading {project.name}...
             </span>
+          </div>
+        )}
+        {error && (
+          <div className={styles.iframeError}>
+            <p>Failed to load design system preview.</p>
+            <Link
+              href={externalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="button button--primary button--sm"
+            >
+              Open in New Tab ↗
+            </Link>
           </div>
         )}
         <iframe
           src={iframeSrc}
-          title={project.name}
+          title={`${project.name} Design System`}
           className={styles.iframe}
           style={{ opacity: loaded ? 1 : 0 }}
           loading="lazy"
           onLoad={() => setLoaded(true)}
+          onError={() => setError(true)}
           allow="fullscreen"
         />
       </div>
@@ -121,7 +155,7 @@ function ProjectStorybookFrame({ project }: { project: ProjectEntry }) {
             </Translate>
           </p>
           <Link
-            href={mobileUrl}
+            href={externalUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="button button--primary button--md"

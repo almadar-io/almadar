@@ -231,6 +231,20 @@
   color: var(--ifm-font-color-secondary);
 }
 
+.iframeError {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-secondary);
+  text-align: center;
+  padding: 2rem;
+}
+
 /* Responsive iframe */
 @media (max-width: 768px) {
   .iframeContainer {

@@ -5,15 +5,40 @@ import Translate from '@docusaurus/Translate';
 import { PROJECTS, type ProjectEntry } from '../data/projects';
 import styles from './ProjectShowcase.module.css';
 
+// ─── URL Builder ───────────────────────────────────────────────────────────
+
+interface ParsedStoryId {
+  storyPath: string;
+  existingParams: string;
+}
+
+/**
+ * Parse featuredStoryId which may contain existing URL parameters
+ */
+function parseStoryId(storyId: string): ParsedStoryId {
+  const ampIndex = storyId.indexOf('&');
+  if (ampIndex === -1) {
+    return { storyPath: storyId, existingParams: '' };
+  }
+  return {
+    storyPath: storyId.substring(0, ampIndex),
+    existingParams: storyId.substring(ampIndex + 1),
+  };
+}
+
 /**
  * Build Storybook URL for external viewing (panel hidden, sidebar visible)
  */
 function buildStorybookUrl(project: ProjectEntry): string {
   const baseUrl = project.storybookUrl;
-  const storyPath = project.featuredStoryId;
+  const { storyPath, existingParams } = parseStoryId(project.featuredStoryId);
   
   // panel=false hides addon panel but keeps sidebar visible
-  return `${baseUrl}/?path=/story/${storyPath}&panel=false`;
+  const params = existingParams 
+    ? `panel=false&${existingParams}` 
+    : 'panel=false';
+  
+  return `${baseUrl}/?path=/story/${storyPath}&${params}`;
 }
 
 function TechPills({ pills, accentColor }: { pills: ProjectEntry['techPills']; accentColor: string }) {
