@@ -5,7 +5,7 @@ import Link from '@docusaurus/Link';
 import Translate, { translate } from '@docusaurus/Translate';
 import HeroSection from '../components/HeroSection';
 import styles from './demos.module.css';
-import { PROJECTS, type ProjectEntry } from '../data/projects';
+import { useProjects, PROJECTS, type ProjectEntry } from '../data/projects';
 
 // ─── URL Builders ──────────────────────────────────────────────────────────
 
@@ -63,13 +63,31 @@ function buildExternalStorybookUrl(project: ProjectEntry): string {
 
 // ─── Storybook iframe per project ──────────────────────────────────────────
 
-function ProjectStorybookFrame({ project }: { project: ProjectEntry }) {
+interface ProjectStorybookFrameProps {
+  project: ProjectEntry;
+  onLoadStart?: () => void;
+  onLoadEnd?: () => void;
+}
+
+function ProjectStorybookFrame({ project, onLoadStart, onLoadEnd }: ProjectStorybookFrameProps) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   
   // Use specific story URL with fullscreen mode for iframe
   const iframeSrc = buildIframeUrl(project);
   const externalUrl = buildExternalStorybookUrl(project);
+
+  // Notify parent when load starts (on mount or src change)
+  useEffect(() => {
+    onLoadStart?.();
+    setLoaded(false);
+    setError(false);
+  }, [iframeSrc, onLoadStart]);
+
+  const handleLoad = () => {
+    setLoaded(true);
+    onLoadEnd?.();
+  };
 
   return (
     <div
@@ -140,8 +158,11 @@ function ProjectStorybookFrame({ project }: { project: ProjectEntry }) {
           className={styles.iframe}
           style={{ opacity: loaded ? 1 : 0 }}
           loading="lazy"
-          onLoad={() => setLoaded(true)}
-          onError={() => setError(true)}
+          onLoad={handleLoad}
+          onError={() => {
+            setError(true);
+            onLoadEnd?.();
+          }}
           allow="fullscreen"
           scrolling="no"
         />
@@ -172,9 +193,11 @@ function ProjectStorybookFrame({ project }: { project: ProjectEntry }) {
 // ─── Sticky Navigation ─────────────────────────────────────────────────────
 
 function ProjectNav({ 
+  projects,
   activeProject, 
   onProjectChange 
 }: { 
+  projects: ProjectEntry[];
   activeProject: string;
   onProjectChange: (key: string) => void;
 }) {
@@ -229,7 +252,7 @@ function ProjectNav({
         
         {/* Desktop: Pills */}
         <div className={styles.projectNavInner}>
-          {PROJECTS.map((project) => (
+          {projects.map((project) => (
             <a
               key={project.key}
               href={`#${project.key}`}
@@ -249,9 +272,9 @@ function ProjectNav({
             value={activeProject}
             onChange={handleSelectChange}
             className={styles.mobileSelect}
-            style={{ borderColor: PROJECTS.find(p => p.key === activeProject)?.accentColor }}
+            style={{ borderColor: projects.find(p => p.key === activeProject)?.accentColor }}
           >
-            {PROJECTS.map((project) => (
+            {projects.map((project) => (
               <option key={project.key} value={project.key}>
                 {project.name}
               </option>
@@ -266,13 +289,18 @@ function ProjectNav({
 // ─── Page ───────────────────────────────────────────────────────────────────
 
 export default function Demos(): React.JSX.Element {
-  const [activeProject, setActiveProject] = useState(PROJECTS[0].key);
+  const projects = useProjects();
+  const [activeProject, setActiveProject] = useState(projects[0]?.key || PROJECTS[0].key);
   const userInitiatedScroll = useRef(false);
+  const loadingCountRef = useRef(0);
+  const [, forceUpdate] = useState({});
 
   // Track which project is in view (only updates state, doesn't auto-scroll)
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
+        // Skip updates during iframe loads to prevent scroll jumps
+        if (loadingCountRef.current > 0) return;
         // Only update active state if user hasn't manually clicked
         if (!userInitiatedScroll.current) {
           entries.forEach((entry) => {
@@ -288,7 +316,7 @@ export default function Demos(): React.JSX.Element {
       }
     );
 
-    PROJECTS.forEach((project) => {
+    projects.forEach((project) => {
       const element = document.getElementById(project.key);
       if (element) observer.observe(element);
     });
@@ -309,6 +337,16 @@ export default function Demos(): React.JSX.Element {
   const handleProjectChange = (key: string) => {
     userInitiatedScroll.current = true;
     setActiveProject(key);
+  };
+
+  const handleIframeLoadStart = () => {
+    loadingCountRef.current += 1;
+    forceUpdate({}); // Trigger re-render to disable observer
+  };
+
+  const handleIframeLoadEnd = () => {
+    loadingCountRef.current = Math.max(0, loadingCountRef.current - 1);
+    forceUpdate({}); // Trigger re-render to re-enable observer
   };
 
   return (
@@ -338,13 +376,19 @@ export default function Demos(): React.JSX.Element {
 
         {/* Sticky Navigation */}
         <ProjectNav 
+          projects={projects}
           activeProject={activeProject} 
           onProjectChange={handleProjectChange}
         />
 
         {/* One section per project */}
-        {PROJECTS.map((project) => (
-          <ProjectStorybookFrame key={project.key} project={project} />
+        {projects.map((project) => (
+          <ProjectStorybookFrame 
+            key={project.key} 
+            project={project} 
+            onLoadStart={handleIframeLoadStart}
+            onLoadEnd={handleIframeLoadEnd}
+          />
         ))}
       </main>
     </Layout>

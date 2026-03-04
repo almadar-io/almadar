@@ -1463,5 +1463,285 @@
   },
   "showcase.openLiveApp": {
     "message": "Odpri aplikacijo v živo"
+  },
+  "projects.builder.name": {
+    "message": "Almadar Builder",
+    "description": "Almadar Builder project name"
+  },
+  "projects.builder.tagline": {
+    "message": "IDE na osnovi shem, ki ustvari vsak projekt v tem portfelju",
+    "description": "Almadar Builder tagline"
+  },
+  "projects.builder.clientContext": {
+    "message": "Vsak projekt stranke v tem portfelju je bil zgrajen z istim orodjem: IDE v brskalniku, kjer razvijalci opisujejo vedenje aplikacije kot Orbital sheme (.orb datoteke) in prevajalnik ustvari aplikacijo TypeScript polnega sklada. Builder je moral biti samo-gostujoč — sam IDE je Almadar aplikacija, zgrajena z lastnim sistemom za oblikovanje in prevedena s svojo cevovodom.",
+    "description": "Almadar Builder client context"
+  },
+  "projects.builder.whatWeBuilt": {
+    "message": "Polno razvojno okolje v brskalniku za pisanje Orbital shem. Platno razvijalcem omogoča vizualno sestavljanje entitet, lastnosti, strani in dogodkov. Živi ovrednotitelj potrdi s-izraze med tipkanjem. Prevodnik se izvaja v procesu in pretočno oddaja ustvarjeno kodo v podokno za predogled. DeepAgent — AI asistent, vgrajen v builder — prevaja zahteve naravnega jezika v veljavne .orb sheme z uporabo istega ovrednotitelja.",
+    "description": "Almadar Builder what we built"
+  },
+  "projects.builder.keyCapability": {
+    "message": "Samopisna platforma: sam uporabniški vmesnik builderja je ustvarjen iz Orbital sheme. Stroji stanj, izrazi varovanja in učinki render-ui, ki poganjo plošče builderja, so avtorizirani v isti .obliki .orb, ki jo uporabljajo projekti strank.",
+    "description": "Almadar Builder key capability"
+  },
+  "projects.builder.tech.canvas": {
+    "message": "Urejevalnik platna shem"
+  },
+  "projects.builder.tech.evaluator": {
+    "message": "Živi ovrednotitelj s-izrazov"
+  },
+  "projects.builder.tech.compiler": {
+    "message": "Prevajalnik v brskalniku"
+  },
+  "projects.builder.tech.ai": {
+    "message": "DeepAgent AI asistent"
+  },
+  "projects.builder.tech.operators": {
+    "message": "213+ std operatorjev"
+  },
+  "projects.kflow.name": {
+    "message": "KFlow",
+    "description": "KFlow project name"
+  },
+  "projects.kflow.tagline": {
+    "message": "Plattforma za znanje med domenami, ki uči skozi resnične inženirske dogodke",
+    "description": "KFlow tagline"
+  },
+  "projects.kflow.clientContext": {
+    "message": "Večina učnih platform razmeji znanje po predmetih: fizika tu, kriptografija tam, ekologija nekje drugje. Stranka je želela platformo, ki prikazuje strukturne vzorce, ki povezujejo inženirske discipline — poučuje skozi resnične dogodke, kjer so se napake v eni domeni razširile v druge.",
+    "description": "KFlow client context"
+  },
+  "projects.kflow.whatWeBuilt": {
+    "message": "Platforma za raziskovanje znanja, kjer se učenci premikajo med koncepti, zgodbami in tečaji skozi graf med domenami. Vsaka zgodba je resnični inženirski dogodek (\"Napaka v vrednosti 125 milijonov dolarjev\", \"Most, ki je nihalo\") kontekstualiziran čez discipline. Graf znanja prikazuje, kako se koncepti povezujejo med domenami. Nadzorna plošča sledi zaporedjem, obvladanju in širini čez učenčev zemljevid konceptov.",
+    "description": "KFlow what we built"
+  },
+  "projects.kflow.keyCapability": {
+    "message": "Vsebinski model kot shema: vsak koncept, zgodba in tečaj so Orbital entitete z lastnostmi, ki upravljajo stanje napredka, varovanja predpogojev in logiko priporočil. Dodajanje nove domene pomeni avtorizacijo sheme, ne pisanje priporočilnih algoritmov.",
+    "description": "KFlow key capability"
+  },
+  "projects.kflow.tech.graph": {
+    "message": "Graf znanja med domenami"
+  },
+  "projects.kflow.tech.stories": {
+    "message": "Pogon zgodb resničnih dogodkov"
+  },
+  "projects.kflow.tech.mastery": {
+    "message": "Sledenje obvladanju konceptov"
+  },
+  "projects.kflow.tech.achievements": {
+    "message": "Sistem zaporedij in dosežkov"
+  },
+  "projects.kflow.tech.curriculum": {
+    "message": "Učni načrt med domenami"
+  },
+  "projects.inspection-system.name": {
+    "message": "Inšpekcijski Sistem",
+    "description": "Inspection System project name"
+  },
+  "projects.inspection-system.tagline": {
+    "message": "Upravljanje inšpekcij na terenu za vladne inšpektorje v Sloveniji",
+    "description": "Inspection System tagline"
+  },
+  "projects.inspection-system.clientContext": {
+    "message": "Vladni inšpektorji v Sloveniji izvajajo zapletene, zakonsko določene inšpekcije na terenu s 50–60 pogojnimi pravili na vrsto inšpekcije, pravnimi sklici na uradni list (Uradni list RS), večstransko udeležbo in formalnim generiranjem dokumentov z elektronskimi podpisi. Obstoječa orodja so bila papirnata ali generični graditelji obrazcev brez razumevanja strukture življenjskega cikla inšpekcije.",
+    "description": "Inspection System client context"
+  },
+  "projects.inspection-system.whatWeBuilt": {
+    "message": "Sistem za upravljanje inšpekcij na terenu, ki temelji na shemah. Celoten 5-fazni življenjski cikel (Uvod → Vsebina → Priprava → Zapis → Zaključek) je kodiran kot stroj stanj v .orb shemi. Varovanja uveljavljajo pravne predpogoje ob vsaki fazni tranziciji. Učinki sprožijo sestavljanje dokumentov, upravljanje udeležencev in preverjanje pravil v pravem trenutku — samodejno.",
+    "description": "Inspection System what we built"
+  },
+  "projects.inspection-system.keyCapability": {
+    "message": "Pogojna zapletenost na osnovi shem: ista shema obravnava več vrst inšpekcij. Pravila se pojavljajo in izginjajo glede na stanje entitete, ne razvejitvenih poti kode. Dodajanje nove vrste inšpekcije pomeni avtorizacijo sheme, ne refaktoring logike.",
+    "description": "Inspection System key capability"
+  },
+  "projects.inspection-system.tech.entities": {
+    "message": "14 entitet"
+  },
+  "projects.inspection-system.tech.statemachine": {
+    "message": "5-fazni stroj stanj"
+  },
+  "projects.inspection-system.tech.rules": {
+    "message": "50–60 pogojnih pravil"
+  },
+  "projects.inspection-system.tech.documents": {
+    "message": "Generiranje dokumentov"
+  },
+  "projects.inspection-system.tech.offline": {
+    "message": "Deluje brez povezave"
+  },
+  "projects.winning-11.name": {
+    "message": "Winning 11",
+    "description": "Winning 11 project name"
+  },
+  "projects.winning-11.tagline": {
+    "message": "Inteligenca odnosov na osnovi zaupanja, zgrajena na Dunbarjevem številu",
+    "description": "Winning 11 tagline"
+  },
+  "projects.winning-11.clientContext": {
+    "message": "Profesionalne mrežne platforme optimizirajo za količino povezav, ne kakovosti odnosov. Stranka je želela platformo, utemeljeno na Dunbarjevem številu (največ 150 pomembnih odnosov), kjer so povezave namerne, ocenjene z zaupanjem in aktivno vzdrževane — ne samo nabirani kontakti.",
+    "description": "Winning 11 client context"
+  },
+  "projects.winning-11.whatWeBuilt": {
+    "message": "Platforma za upravljanje odnosov s psihološko globino. Uporabniki opravijo oceno združljivosti ob registraciji. Vsaka povezava ima dinamično oceno zaupanja, izračunano iz psihologije, zgodovine interakcij in potrditev vrstnikov. Mesta so omejena (največ 150) z čakalnico za presežek. Odnosi imajo zdravstvena stanja (Mirovno, Potrebuje pozornost, Zdravo, Cvetoče), ki propadejo brez interakcije.",
+    "description": "Winning 11 what we built"
+  },
+  "projects.winning-11.keyCapability": {
+    "message": "Koordinacija strojev stanj z več entitetami: stroj stanj zdravja na entiteti Povezava teče neodvisno od stroja stanj Uporabnik, oddaja dogodke, ki se prikažejo na nadzorni plošči. Zapleteno obnašanje med entitetami brez kode za usklajevanje.",
+    "description": "Winning 11 key capability"
+  },
+  "projects.winning-11.tech.entities": {
+    "message": "14 entitet"
+  },
+  "projects.winning-11.tech.statemachines": {
+    "message": "5 strojev stanj"
+  },
+  "projects.winning-11.tech.ai": {
+    "message": "Ocenjevanje zaupanja z AI"
+  },
+  "projects.winning-11.tech.pages": {
+    "message": "18 strani"
+  },
+  "projects.winning-11.tech.ui": {
+    "message": "Uporabniški vmesnik z metaforo vrta"
+  },
+  "projects.blaz-klemenc.name": {
+    "message": "Blaz Klemenc",
+    "description": "Blaz Klemenc project name"
+  },
+  "projects.blaz-klemenc.tagline": {
+    "message": "Platforma za fitnes trenerja z AI analizo obrokov",
+    "description": "Blaz Klemenc tagline"
+  },
+  "projects.blaz-klemenc.clientContext": {
+    "message": "Osebni trenerji, ki upravljajo več vajencev, morajo slediti dodeljevanju sej na osnovi kreditov, napredku glavnih dvigov, načrtov obrokov, dnevnih metrik dobrega počutja, kinezioloških pregledov in skupinskih razporedov — čez razdrobljen nabor preglednic, WhatsApp sporočil in generičnih fitnes aplikacij.",
+    "description": "Blaz Klemenc client context"
+  },
+  "projects.blaz-klemenc.whatWeBuilt": {
+    "message": "Enotna platforma za upravljanje trener-vajenec. Krediti se kupujejo v blokih in potečejo po datumu — sistem samodejno sledi dodelitvi in poteku. Načrte obrokov vnašajo vajenci in analizira AI storitev, ki oceni razčlenitev makro in mikro hranil. Sledenje dvigom prikazuje krivulje zgodovinskega napredka.",
+    "description": "Blaz Klemenc what we built"
+  },
+  "projects.blaz-klemenc.keyCapability": {
+    "message": "Integracija storitev iz sheme: AI analiza obrokov je deklarirana kot učinek klic-storitve v lastnosti. Ovrednotitelj obravnava klic, stanja napak in vezavo rezultatov — brez kode za asinhrono lepljenje v aplikacijski plasti.",
+    "description": "Blaz Klemenc key capability"
+  },
+  "projects.blaz-klemenc.tech.entities": {
+    "message": "15+ entitet"
+  },
+  "projects.blaz-klemenc.tech.credits": {
+    "message": "Stroj stanj poteka kreditov"
+  },
+  "projects.blaz-klemenc.tech.ai": {
+    "message": "AI analiza obrokov"
+  },
+  "projects.blaz-klemenc.tech.progress": {
+    "message": "Vizualizacija napredka"
+  },
+  "projects.blaz-klemenc.tech.links": {
+    "message": "Povezave za deljenje"
+  },
+  "projects.kekec.name": {
+    "message": "Kekec Koda",
+    "description": "Kekec Koda project name"
+  },
+  "projects.kekec.tagline": {
+    "message": "Učenje otrok programiranja skozi ljubljenega slovenskega gorskega junaka",
+    "description": "Kekec Koda tagline"
+  },
+  "projects.kekec.clientContext": {
+    "message": "Stranka je želela izobraževalno igro za programiranje, postavljeno v svet Kekeca — slovenskega nacionalnega lika, gorskega pastirskega fanta — ki uči koncepte programiranja postopoma od preprostih zaporedij do celotnega načrtovanja stroja stanj, brez uporabe abstraktne programske sintakse.",
+    "description": "Kekec Koda client context"
+  },
+  "projects.kekec.whatWeBuilt": {
+    "message": "Tristopenjska izobraževalna igra, kjer vsaka stopnja uči drugačen programski abstrakciji skozi fizične metafore: Sekvencer (5–8 let) uporablja bloke akcij povleci-in-spusti; Obdelovalec Dogodkov (9–12 let) uporablja KO/POVEDI urejevalnik pravil; Arhitekt Stanj (13+ let) uporablja urejevalnik vozliščnega grafa za načrtovanje in testiranje polnih strojev stanj. Vse stopnje delijo alpski zemljevid sveta z 12 živalskimi varuhi.",
+    "description": "Kekec Koda what we built"
+  },
+  "projects.kekec.keyCapability": {
+    "message": "Almadar gradi orodja, ki učijo Almadarjeve lastne koncepte: stroj stanj, ki ga otrok zasnuje v stopnji Arhitekt Stanj, je strukturno identičen Orbitalnim lastnostim, ki poganjajo samo igro.",
+    "description": "Kekec Koda key capability"
+  },
+  "projects.kekec.tech.tiers": {
+    "message": "3 učne stopnje"
+  },
+  "projects.kekec.tech.guardians": {
+    "message": "12 živalskih varuhov"
+  },
+  "projects.kekec.tech.puzzles": {
+    "message": "9 sestavljank"
+  },
+  "projects.kekec.tech.dragdrop": {
+    "message": "Urejevalnik povleci-in-spusti"
+  },
+  "projects.kekec.tech.nodes": {
+    "message": "Urejevalnik vozliščnega grafa"
+  },
+  "projects.iram.name": {
+    "message": "Iram",
+    "description": "Iram project name"
+  },
+  "projects.iram.tagline": {
+    "message": "3D RPG raziskovanje podzemlj, poganjen z Orbitalnim sistemom lastnosti",
+    "description": "Iram tagline"
+  },
+  "projects.iram.clientContext": {
+    "message": "Zgradi RPG za raziskovanje podzemlj v produkcijski kakovosti, kjer so napredovanje likov, boj in pripoved pogonjeni z istim sistemom lastnosti-stroj-stanj, ki poganja podjetniške Almadar aplikacije — dokazuje, da je izvajalni čas splošno namenjen čez domene.",
+    "description": "Iram client context"
+  },
+  "projects.iram.whatWeBuilt": {
+    "message": "Akcijski RPG za raziskovanje podzemlj, postavljen v Dominion Iram. Likovi imajo napredovanje na osnovi lastnosti — sposobnosti so modelirane kot stroji stanj, ki prehajajo na bojne dogodke. Izometrični izrisovalnik obravnava 31+ likovnih in enotnih sprite-ov s smerno animacijo. Sistem rezij prikazuje lokalizirano pripoved čez 22+ zgodbenih sekvenc v arabščini, angleščini in slovenščini.",
+    "description": "Iram what we built"
+  },
+  "projects.iram.keyCapability": {
+    "message": "Isti Orbitalni izvajalni čas, ki obravnava vladni inšpekcijski potek dela, poganja tudi boj v igri v realnem času. Stroji stanj, varovanja in učinki so domen-agnostični — jezik deluje pri kakršni koli ločljivosti.",
+    "description": "Iram key capability"
+  },
+  "projects.iram.tech.sprites": {
+    "message": "31 sprite-ov"
+  },
+  "projects.iram.tech.renderer": {
+    "message": "Izometrični canvas izrisovalnik"
+  },
+  "projects.iram.tech.combat": {
+    "message": "Bojni stroji stanj"
+  },
+  "projects.iram.tech.cutscenes": {
+    "message": "22+ rezijski zaporedja"
+  },
+  "projects.iram.tech.i18n": {
+    "message": "Pripoved v EN/AR/SL"
+  },
+  "projects.trait-wars.name": {
+    "message": "Trait Wars",
+    "description": "Trait Wars project name"
+  },
+  "projects.trait-wars.tagline": {
+    "message": "Strateška igra na poteze, kjer enote opremijo in zamenjajo lastnosti med bitkami",
+    "description": "Trait Wars tagline"
+  },
+  "projects.trait-wars.clientContext": {
+    "message": "Dokaz koncepta, ki prikazuje, da lahko Almadarjev sistem lastnosti modelira polno strateško igro na poteze, kjer imajo enote trajno stanje lastnosti čez bojne kroge in je igralna deska sama Orbital entiteta.",
+    "description": "Trait Wars client context"
+  },
+  "projects.trait-wars.whatWeBuilt": {
+    "message": "Strateška igra na poteze, kjer imajo enote modularne opremljive lastnosti, ki določajo njihove bojne sposobnosti. Lastnosti so zamenljive med bitkami. Arena šefov, srečanja v podzemlju, središčni svet in zaslon za izbiro cone so vsi poganjeni z istim izvajalnikom shem, uporabljajoč hibridni izrisovalnik canvas + DOM.",
+    "description": "Trait Wars what we built"
+  },
+  "projects.trait-wars.keyCapability": {
+    "message": "Modularnost lastnosti v izvajalnem času: enote pridobivajo in izgubljajo lastnosti med igranjem — isti mehanizem, ki upravlja prehode stanja entitet v podjetniških aplikacijah, upravlja obnašanje bojnih enot v strateški igri.",
+    "description": "Trait Wars key capability"
+  },
+  "projects.trait-wars.tech.traits": {
+    "message": "Opremjive reže lastnosti"
+  },
+  "projects.trait-wars.tech.hybrid": {
+    "message": "Hibrid canvas + DOM"
+  },
+  "projects.trait-wars.tech.rendering": {
+    "message": "Izometrično izrisovanje enot"
+  },
+  "projects.trait-wars.tech.screens": {
+    "message": "4 različni zasloni"
+  },
+  "projects.trait-wars.tech.boss": {
+    "message": "Boj v areni šefov"
   }
 }

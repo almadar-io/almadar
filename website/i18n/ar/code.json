@@ -1360,7 +1360,7 @@
     "message": "بلا تسليمات، بلا مطورين مبتدئين، بلا مديري مشاريع بينك وبيننا. ستعمل مباشرة مع من يبنون تطبيقك."
   },
   "homepage.team.osama.name": {
-    "message": "أسامة الغنمي"
+    "message": "أسامة الغانمي"
   },
   "homepage.team.osama.role": {
     "message": "المؤسس المشارك والمدير التقني"
@@ -1463,5 +1463,285 @@
   },
   "showcase.openLiveApp": {
     "message": "فتح التطبيق المباشر"
+  },
+  "projects.builder.name": {
+    "message": "بناء المدار",
+    "description": "Almadar Builder project name"
+  },
+  "projects.builder.tagline": {
+    "message": "بيئة التطوير المعتمدة على المخططات والتي تنشئ كل مشروع في هذا المحفظة",
+    "description": "Almadar Builder tagline"
+  },
+  "projects.builder.clientContext": {
+    "message": "تم بناء كل مشروع عميل في هذا المحفظة باستخدام نفس الأداة: بيئة تطوير تعمل في المتصفح حيث يصف المطورون سلوك التطبيق كمخططات مدارية (ملفات .orb) ويقوم المترجم بتوليد تطبيق TypeScript كامل. احتاج البناء إلى أن يكون ذاتي الاستضافة — بيئة التطوير نفسها هي تطبيق المدار، مبنية بنظام تصميمها الخاص ومترجمة بواسطة خط أنابيبها الخاص.",
+    "description": "Almadar Builder client context"
+  },
+  "projects.builder.whatWeBuilt": {
+    "message": "بيئة تطوير كاملة تعمل في المتصفح لكتابة المخططات المدارية. اللوحة تتيح للمطورين تكوين الكيانات والسمات والصفحات والأحداث بصرياً. المُقَيّم الحي يتحقق من تعبيرات-s أثناء الكتابة. يعمل المترجم في العملية ويبث الكود المولد إلى لوحة المعاينة. العميق الوكيل — مساعد الذكاء الاصطناعي المدمج في البناء — يترجم متطلبات اللغة الطبيعية إلى مخطط .orb صالح باستخدام نفس المُقَيّم تحت الغطاء.",
+    "description": "Almadar Builder what we built"
+  },
+  "projects.builder.keyCapability": {
+    "message": "منصة ذاتية الوصف: واجهة البناء نفسها يتم توليدها من مخطط مداري. آلات الحالة وتعبيرات الحماية وتأثيرات رسم الواجهة التي تشغل لوحات البناء مؤلفة بنفس صيغة .orb التي تستخدمها مشاريع العملاء.",
+    "description": "Almadar Builder key capability"
+  },
+  "projects.builder.tech.canvas": {
+    "message": "محرر لوحة المخططات"
+  },
+  "projects.builder.tech.evaluator": {
+    "message": "مُقَيّم التعبيرات الحي"
+  },
+  "projects.builder.tech.compiler": {
+    "message": "مترجم داخل المتصفح"
+  },
+  "projects.builder.tech.ai": {
+    "message": "مساعد العميق الذكي"
+  },
+  "projects.builder.tech.operators": {
+    "message": "213+ مشغل قياسي"
+  },
+  "projects.kflow.name": {
+    "message": "كيف لو",
+    "description": "KFlow project name"
+  },
+  "projects.kflow.tagline": {
+    "message": "منصة المعرفة عبر المجالات التي تُعلّم من خلال الأحداث الهندسية الحقيقية",
+    "description": "KFlow tagline"
+  },
+  "projects.kflow.clientContext": {
+    "message": "معظم منصات التعلم تعزل المعرفة حسب الموضوع: الفيزياء هنا، التشفير هناك، علم البيئة في مكان آخر. أراد العميل منصة تُظهر الأنماط الهيكلية التي تربط التخصصات الهندسية — يُدرّس من خلال أحداث حقيقية حيث انتقلت الإخفاقات من مجال إلى آخر.",
+    "description": "KFlow client context"
+  },
+  "projects.kflow.whatWeBuilt": {
+    "message": "منصة استكشاف المعرفة حيث يتنقل المتعلمون عبر المفاهيم والقصص والدورات من خلال رسم بياني عبر المجالات. كل قصة هي حدث هندسي حقيقي (\"خلل الـ 125 مليون دولار\"، \"الجسر الذي تمايل\") موضح عبر التخصصات. رسم المعرفة البياني يُظهر كيف ترتبط المفاهيم عبر المجالات. لوحة المعلومات تتتبع الاستمرارية والإتقان والاتساع عبر خريطة مفاهيم المتعلم.",
+    "description": "KFlow what we built"
+  },
+  "projects.kflow.keyCapability": {
+    "message": "نموذج المحتوى كمخطط: كل مفهوم وقصة ودورة هي كيان مداري بسمات تحكم حالة التقدم وحمايات المتطلبات السابقة ومنطق التوصيات. إضافة مجال جديد تعني تأليف مخطط، وليس كتابة خوارزميات التوصية.",
+    "description": "KFlow key capability"
+  },
+  "projects.kflow.tech.graph": {
+    "message": "رسم المعرفة البياني عبر المجالات"
+  },
+  "projects.kflow.tech.stories": {
+    "message": "محرك قصص الأحداث الحقيقية"
+  },
+  "projects.kflow.tech.mastery": {
+    "message": "تتبع إتقان المفاهيم"
+  },
+  "projects.kflow.tech.achievements": {
+    "message": "نظام الاستمرارية والإنجازات"
+  },
+  "projects.kflow.tech.curriculum": {
+    "message": "منهجية متعددة المجالات"
+  },
+  "projects.inspection-system.name": {
+    "message": "نظام التفتيش",
+    "description": "Inspection System project name"
+  },
+  "projects.inspection-system.tagline": {
+    "message": "إدارة التفتيش الميداني للمفتشين الحكوميين في سلوفينيا",
+    "description": "Inspection System tagline"
+  },
+  "projects.inspection-system.clientContext": {
+    "message": "يقوم المفتشون الحكوميون في سلوفينيا بتنفيذ عمليات تفتيش ميدانية معقدة ومرسومة قانونياً مع 50-60 قاعدة شرطية لكل نوع تفتيش، ومراجع قانونية إلى الجريدة الرسمية (Uradni list RS)، ومشاركة متعددة الأطراف، وتوليد مستندات رسمية مع تواقيع إلكترونية. الأدوات الحالية كانت قائمة على الورق أو منشئي نماذج عامة بدون فهم لبنية دورة حياة التفتيش.",
+    "description": "Inspection System client context"
+  },
+  "projects.inspection-system.whatWeBuilt": {
+    "message": "نظام إدارة تفتيش ميداني معتمد على المخططات. دورة الحياة الكاملة المكونة من 5 مراحل (مقدمة ← محتوى ← تحضير ← سجل ← إغلاق) مُرمّزة كآلة حالة في مخطط .orb. الحمايات تفرض شروطاً قانونية مسبقة عند كل انتقال للمرحلة. التأثيرات تطلق تجميع المستندات وإدارة المشاركين وفحص القواعد في اللحظة المناسبة — تلقائياً.",
+    "description": "Inspection System what we built"
+  },
+  "projects.inspection-system.keyCapability": {
+    "message": "التعقيد الشرطي المعتمد على المخططات أولاً: نفس المخطط يتعامل مع أنواع تفتيش متعددة. القواعد تظهر وتختفي بناءً على حالة الكيان، وليس مسارات تفرع الكود. إضافة نوع تفتيش جديد يعني تأليف مخطط، لا إعادة بناء المنطق.",
+    "description": "Inspection System key capability"
+  },
+  "projects.inspection-system.tech.entities": {
+    "message": "14 كيان"
+  },
+  "projects.inspection-system.tech.statemachine": {
+    "message": "آلة حالة من 5 مراحل"
+  },
+  "projects.inspection-system.tech.rules": {
+    "message": "50-60 قاعدة شرطية"
+  },
+  "projects.inspection-system.tech.documents": {
+    "message": "توليد المستندات"
+  },
+  "projects.inspection-system.tech.offline": {
+    "message": "يعمل بدون اتصال"
+  },
+  "projects.winning-11.name": {
+    "message": "الفوز 11",
+    "description": "Winning 11 project name"
+  },
+  "projects.winning-11.tagline": {
+    "message": "ذكاء العلاقات المعتمد على الثقة مبني على رقم دنبار",
+    "description": "Winning 11 tagline"
+  },
+  "projects.winning-11.clientContext": {
+    "message": "منصات التواصل المهني تحسّن لحجم الاتصالات، ليس جودة العلاقات. أراد العميل منصة مبنية على رقم دنبار (150 علاقة ذات معنى كحد أقصى) حيث تكون الاتصالات مقصودة ومقيمة بالثقة ومحافظ عليها بنشاط — ليس مجرد جهات اتصال متراكمة.",
+    "description": "Winning 11 client context"
+  },
+  "projects.winning-11.whatWeBuilt": {
+    "message": "منصة إدارة علاقات ذات عمق نفسي. يكمل المستخدمون تقييم التوافق عند التسجيل. كل اتصال لديه درجة ثقة ديناميكية محسوبة من علم النفس وتاريخ التفاعل والتحقق من الأقران. الفتحات محدودة (150 كحد أقصى) مع غرفة انتظار للزيادة. العلاقات لها حالات صحية (خاملة، تحتاج انتباه، صحية، مزدهرة) تضعف بدون تفاعل.",
+    "description": "Winning 11 what we built"
+  },
+  "projects.winning-11.keyCapability": {
+    "message": "تنسيق آلات حالة متعددة الكيانات: آلة حالة الصحة على كيان الاتصال تدق بشكل مستقل عن آلة حالة المستخدم، مُطلقة أحداثاً تظهر في لوحة المعلومات. سلوك عبر كيانات معقد بدون كود تنسيق مخصص.",
+    "description": "Winning 11 key capability"
+  },
+  "projects.winning-11.tech.entities": {
+    "message": "14 كيان"
+  },
+  "projects.winning-11.tech.statemachines": {
+    "message": "5 آلات حالة"
+  },
+  "projects.winning-11.tech.ai": {
+    "message": "تقييم الثقة بالذكاء الاصطناعي"
+  },
+  "projects.winning-11.tech.pages": {
+    "message": "18 صفحة"
+  },
+  "projects.winning-11.tech.ui": {
+    "message": "واجهة مستخدم باستعارة الحديقة"
+  },
+  "projects.blaz-klemenc.name": {
+    "message": "بلاز كليمنس",
+    "description": "Blaz Klemenc project name"
+  },
+  "projects.blaz-klemenc.tagline": {
+    "message": "منصة مدرب لياقة بدنية مع تحليل وجبات بالذكاء الاصطناعي",
+    "description": "Blaz Klemenc tagline"
+  },
+  "projects.blaz-klemenc.clientContext": {
+    "message": "يحتاج المدربون الشخصيون الذين يديرون متدربين متعددين إلى تتبع تخصيص الجلسات المعتمد على الرصيد وتقدم الرفع الرئيسي وخطط الوجبات ومقاييس العافية اليومية وفحوصات حركة الجسم وجدولة المجموعات — عبر مجموعة مجزأة من جداول البيانات ورسائل واتساب وتطبيقات لياقة عامة.",
+    "description": "Blaz Klemenc client context"
+  },
+  "projects.blaz-klemenc.whatWeBuilt": {
+    "message": "منصة موحدة لإدارة المدرب-المتدرب. يتم شراء الرصيد على شكل كتل وينتهي حسب التاريخ — يتتبع النظام التخصيص والانتهاء تلقائياً. يُدخل المتدربون خطط الوجبات ويحللها خدمة الذكاء الاصطناعي التي تقدر تفصيل المغذيات الكبرى والصغرى. تتبع الرفع يُظهر منحنيات التقدم التاريخية.",
+    "description": "Blaz Klemenc what we built"
+  },
+  "projects.blaz-klemenc.keyCapability": {
+    "message": "تكامل الخدمة من المخطط: تحليل الوجبات بالذكاء الاصطناعي مُعلن كتأثير استدعاء خدمة في السمة. يتعامل المُقَيّم مع الاستدعاء وحالات الخطأ وربط النتيجة — بدون كود غراء غير متزامن مخصص في طبقة التطبيق.",
+    "description": "Blaz Klemenc key capability"
+  },
+  "projects.blaz-klemenc.tech.entities": {
+    "message": "15+ كيان"
+  },
+  "projects.blaz-klemenc.tech.credits": {
+    "message": "آلة حالة انتهاء الرصيد"
+  },
+  "projects.blaz-klemenc.tech.ai": {
+    "message": "تحليل الوجبات بالذكاء الاصطناعي"
+  },
+  "projects.blaz-klemenc.tech.progress": {
+    "message": "تصور التقدم"
+  },
+  "projects.blaz-klemenc.tech.links": {
+    "message": "روابط قابلة للمشاركة"
+  },
+  "projects.kekec.name": {
+    "message": "كيكيك كودا",
+    "description": "Kekec Koda project name"
+  },
+  "projects.kekec.tagline": {
+    "message": "تعليم الأطفال البرمجة من خلال بطل الجبل المحبوب في سلوفينيا",
+    "description": "Kekec Koda tagline"
+  },
+  "projects.kekec.clientContext": {
+    "message": "أراد العميل لعبة تعليم برمجة تدور في عالم كيكيك — شخصية سلوفينيا الوطنية، صبي راعي الجبال — تُعلم مفاهيم البرمجة تدريجياً من التسلسلات البسيطة إلى تصميم آلة الحالة الكاملة، بدون استخدام صيغة برمجة مجردة.",
+    "description": "Kekec Koda client context"
+  },
+  "projects.kekec.whatWeBuilt": {
+    "message": "لعبة تعليمية من ثلاث مستويات حيث يعلّم كل مستوى تجريد برمجة مختلف من خلال استعارات مادية: المُسلسل (5-8 سنوات) يستخدم كتل الإجراءات السحب والإفلات؛ معالج الأحداث (9-12 سنة) يستخدم محرر قواعد عندما/عندئذ؛ مهندس الحالة (13+ سنة) يستخدم محرر رسم عقدي لتصميم واختبار آلات الحالة الكاملة. جميع المستويات تشترك خريطة عالم ألبينية مع 12 حارس حيواني.",
+    "description": "Kekec Koda what we built"
+  },
+  "projects.kekec.keyCapability": {
+    "message": "المدار يبني أدوات تعلّم مفاهيم المدار نفسها: آلة الحالة التي يصممها الطفل في مستوى مهندس الحالة متطابقة هيكلياً مع السمات المدارية التي تشغّل اللعبة نفسها.",
+    "description": "Kekec Koda key capability"
+  },
+  "projects.kekec.tech.tiers": {
+    "message": "3 مستويات تعلم"
+  },
+  "projects.kekec.tech.guardians": {
+    "message": "12 حارس حيواني"
+  },
+  "projects.kekec.tech.puzzles": {
+    "message": "9 ألغاز"
+  },
+  "projects.kekec.tech.dragdrop": {
+    "message": "محرر السحب والإفلات"
+  },
+  "projects.kekec.tech.nodes": {
+    "message": "محرر الرسم العقدي"
+  },
+  "projects.iram.name": {
+    "message": "إرام",
+    "description": "Iram project name"
+  },
+  "projects.iram.tagline": {
+    "message": "لعبة تقمص أدوار استكشاف الزنزانات ثلاثية الأبعاد مدفوعة بنظام سمات المدار",
+    "description": "Iram tagline"
+  },
+  "projects.iram.clientContext": {
+    "message": "ابن لعبة تقمص أدوار استكشاف زنزانات إنتاجية عالية الجودة حيث يكون تطور الشخصية والقتال والسرد مدفوعاً بنفس نظام آلة حالة السمات الذي يشغل تطبيقات المدار المؤسسية — مُثبتاً أن وقت التشغيل عام الأغراض عبر المجالات.",
+    "description": "Iram client context"
+  },
+  "projects.iram.whatWeBuilt": {
+    "message": "لعبة تقمص أدوار استكشاف زنزانات تدور في دominion إرام. الشخصيات لها تقدم معتمد على السمات — القدرات مُنمذجة كآلات حالة تنتقل على أحداث القتال. المُصيّر متساوي القياس يتعامل مع 31+ صورة شخصية ووحدة مع رسوم متحركة اتجاهية. نظام مشاهد سينمائية يُسلّم سرداً مُترجماً عبر 22+ تسلسل لوحي بالعربية والإنجليزية والسلوفينية.",
+    "description": "Iram what we built"
+  },
+  "projects.iram.keyCapability": {
+    "message": "نفس وقت تشغيل المدار الذي يتعامل مع سير عمل تفتيش حكومي يُشغل أيضاً قتال اللعبة في الوقت الفعلي. آلات الحالة والحمايات والتأثيرات غير مخصصة للمجال — اللغة تعمل بأي دقة.",
+    "description": "Iram key capability"
+  },
+  "projects.iram.tech.sprites": {
+    "message": "31 صورة متحركة"
+  },
+  "projects.iram.tech.renderer": {
+    "message": "مُصيّر كانفاس متساوي القياس"
+  },
+  "projects.iram.tech.combat": {
+    "message": "آلات حالة قتالية"
+  },
+  "projects.iram.tech.cutscenes": {
+    "message": "22+ تسلسل مشهد سينمائي"
+  },
+  "projects.iram.tech.i18n": {
+    "message": "سرد بالإنجليزية/العربية/السلوفينية"
+  },
+  "projects.trait-wars.name": {
+    "message": "حروب السمات",
+    "description": "Trait Wars project name"
+  },
+  "projects.trait-wars.tagline": {
+    "message": "استراتيجية بدور حيث تجهّز الوحدات وتبدّل السمات بين المعارك",
+    "description": "Trait Wars tagline"
+  },
+  "projects.trait-wars.clientContext": {
+    "message": "إثبات مفهوم يُظهر أن نظام سمات المدار يمكنه نمذجة لعبة استراتيجية بدور كاملة، حيث تكون للوحدات حالة سمة مستمرة عبر جولات القتال ولوحة اللعبة نفسها كيان مداري.",
+    "description": "Trait Wars client context"
+  },
+  "projects.trait-wars.whatWeBuilt": {
+    "message": "لعبة استراتيجية بدور حيث للوحدات سمات معيارية قابلة للتجهيز تحدد قدراتها القتالية. السمات قابلة للتبديل بين المعارك. ساحة الزعيم ولقاءات الزنزانة والعالم المركزي وشاشة اختيار المنطقة كلها مدفوعة بنفس وقت تشغيل المخطط، باستخدام مُصيّر هجين كانفاس + DOM.",
+    "description": "Trait Wars what we built"
+  },
+  "projects.trait-wars.keyCapability": {
+    "message": "معيارية السمات في وقت التشغيل: تكتسب الوحدات وتفقد سمات أثناء اللعب — نفس الآلية التي تحكم انتقالات حالة الكيان في التطبيقات المؤسسية تحكم سلوك الوحدات القتالية في لعبة استراتيجية.",
+    "description": "Trait Wars key capability"
+  },
+  "projects.trait-wars.tech.traits": {
+    "message": "فتحات سمات قابلة للتجهيز"
+  },
+  "projects.trait-wars.tech.hybrid": {
+    "message": "هجين كانفاس + DOM"
+  },
+  "projects.trait-wars.tech.rendering": {
+    "message": "تصيير الوحدات متساوي القياس"
+  },
+  "projects.trait-wars.tech.screens": {
+    "message": "4 شاشات مميزة"
+  },
+  "projects.trait-wars.tech.boss": {
+    "message": "قتال ساحة الزعيم"
   }
 }

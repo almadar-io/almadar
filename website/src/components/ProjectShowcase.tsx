@@ -2,7 +2,7 @@ import React from 'react';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
 import Translate from '@docusaurus/Translate';
-import { PROJECTS, type ProjectEntry } from '../data/projects';
+import { useProjects, type ProjectEntry } from '../data/projects';
 import styles from './ProjectShowcase.module.css';
 
 // ─── URL Builder ───────────────────────────────────────────────────────────
@@ -131,6 +131,8 @@ function ProjectCard({ project }: { project: ProjectEntry }) {
 }
 
 export default function ProjectShowcase() {
+  const projects = useProjects();
+  
   return (
     <section className={styles.section} id="our-work">
       <div className="container">
@@ -146,7 +148,7 @@ export default function ProjectShowcase() {
           </p>
         </div>
         <div className={styles.grid}>
-          {PROJECTS.map((project) => (
+          {projects.map((project) => (
             <ProjectCard key={project.key} project={project} />
           ))}
         </div>
