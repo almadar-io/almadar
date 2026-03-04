@@ -87,7 +87,7 @@ export const PROJECTS: ProjectEntry[] = [
     ],
     storybookUrl: "https://almadar-inspection-system-design-system.web.app",
     featuredStoryId:
-      "clients-inspection-system-templates-inspectionstemplate--default",
+      "/story/kflow-templates-appshelltemplate--series-detail&globals=theme:trait-wars-light",
     appUrl: "https://almadar-inspection-system.web.app",
     accentColor: "#0ea5e9",
   },
