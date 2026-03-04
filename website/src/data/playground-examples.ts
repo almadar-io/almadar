@@ -81,9 +81,9 @@ export const PLAYGROUND_EXAMPLES: PlaygroundExample[] = [
     code: `["array/map",
   ["array/filter",
     [1, 2, 3, 4, 5, 6],
-    ["fn", ["x"], ["=", ["%", "x", 2], 0]]
+    ["fn", ["x"], ["=", ["%", "@x", 2], 0]]
   ],
-  ["fn", ["x"], ["*", "x", "x"]]
+  ["fn", ["x"], ["*", "@x", "@x"]]
 ]`,
   },
   {
@@ -93,7 +93,7 @@ export const PLAYGROUND_EXAMPLES: PlaygroundExample[] = [
     description: "Sum an array using reduce",
     code: `["array/reduce",
   [1, 2, 3, 4, 5],
-  ["fn", ["acc", "x"], ["+", "acc", "x"]],
+  ["fn", ["acc", "x"], ["+", "@acc", "@x"]],
   0
 ]`,
   },

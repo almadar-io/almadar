@@ -158,13 +158,10 @@ function RenderUIDemoController() {
     slotManager.clearAll();
     try {
       const parsed = JSON.parse(src.trim()) as unknown;
-      const { SExpressionEvaluator } = await import('@almadar/evaluator');
+      const { SExpressionEvaluator, createMinimalContext, createEffectContext } = await import('@almadar/evaluator');
       const evaluator = new SExpressionEvaluator();
-      const ctx = {
-        entity: {} as Record<string, unknown>,
-        mutateEntity: (changes: Record<string, unknown>) => {
-          Object.assign(ctx.entity, changes);
-        },
+      const ctx = createMinimalContext({}, {}, 'initial');
+      const effectCtx = createEffectContext(ctx, {
         renderUI: (slot: string, pattern: unknown, props?: Record<string, unknown>) => {
           slotManager.render({
             target: slot as UISlot,
@@ -172,8 +169,8 @@ function RenderUIDemoController() {
             props: props ?? {},
           });
         },
-      };
-      evaluator.evaluate(parsed, ctx);
+      });
+      evaluator.evaluate(parsed, effectCtx);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : String(err));
     } finally {

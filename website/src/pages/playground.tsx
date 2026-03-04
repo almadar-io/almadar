@@ -41,14 +41,9 @@ async function evaluateExpression(code: string): Promise<EvalResult> {
     }
 
     // Dynamic import of evaluator (browser-only)
-    const { SExpressionEvaluator } = await import("@almadar/evaluator");
+    const { SExpressionEvaluator, createMinimalContext } = await import("@almadar/evaluator");
     const evaluator = new SExpressionEvaluator();
-    const ctx = {
-      entity: {},
-      mutateEntity: (changes: Record<string, unknown>) => {
-        Object.assign(ctx.entity, changes);
-      },
-    };
+    const ctx = createMinimalContext({}, {}, 'initial');
 
     const result = evaluator.evaluate(parsed, ctx);
     const duration = performance.now() - start;
