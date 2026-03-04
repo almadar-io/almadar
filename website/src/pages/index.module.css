@@ -63,10 +63,12 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     background: #f5f2ed;
+    border-bottom: 1px solid #e8e4de;
 }
 
 [data-theme="dark"] .comparisonHeader {
     background: #0f172a;
+    border-bottom-color: #1e293b;
 }
 
 .comparisonHeaderCell {
@@ -76,15 +78,21 @@
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: #64748b;
+    text-align: left;
 }
 
 .agencyHeader {
     color: #94a3b8;
+    background: transparent;
 }
 
 .almadarHeader {
     color: var(--almadar-sand-gold);
     background: rgba(201, 162, 39, 0.06);
+}
+
+[data-theme="dark"] .almadarHeader {
+    background: rgba(20, 184, 166, 0.06);
 }
 
 .comparisonRow {
@@ -502,15 +510,54 @@
 
     .comparisonRow {
         grid-template-columns: 1fr;
+        gap: 0.5rem;
+        padding: 1rem;
+        border-top: 1px solid #e8e4de;
+    }
+
+    [data-theme="dark"] .comparisonRow {
+        border-top-color: #1e293b;
     }
 
     .comparisonAgency {
         border-bottom: 1px solid #e8e4de;
-        padding-bottom: 0.5rem;
+        padding: 0.75rem 0;
+        position: relative;
+    }
+
+    .comparisonAgency::before {
+        content: "Traditional Agency";
+        display: block;
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #94a3b8;
+        margin-bottom: 0.25rem;
     }
 
     [data-theme="dark"] .comparisonAgency {
         border-bottom-color: #1e293b;
+    }
+
+    .comparisonAlmadar {
+        padding: 0.75rem 0;
+        position: relative;
+    }
+
+    .comparisonAlmadar::before {
+        content: "Almadar";
+        display: block;
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--almadar-sand-gold);
+        margin-bottom: 0.25rem;
+    }
+
+    [data-theme="dark"] .comparisonAlmadar::before {
+        color: var(--almadar-teal);
     }
 }
 

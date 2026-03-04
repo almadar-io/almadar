@@ -96,7 +96,6 @@ function WhyAlmadar() {
         </div>
         <div className={styles.comparisonTable}>
           <div className={styles.comparisonHeader}>
-            <div className={styles.comparisonHeaderCell} />
             <div className={`${styles.comparisonHeaderCell} ${styles.agencyHeader}`}>
               <Translate id="homepage.why.agencyCol">Traditional Agency</Translate>
             </div>
