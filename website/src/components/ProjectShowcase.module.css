@@ -47,6 +47,19 @@
     gap: 2rem;
 }
 
+/* ─── Card Link Wrapper ──────────────────────────────────────────────────── */
+
+.cardLink {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.cardLink:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
 /* ─── Card ───────────────────────────────────────────────────────────────── */
 
 .card {
@@ -56,6 +69,7 @@
     border-radius: 20px;
     overflow: hidden;
     transition: box-shadow 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
 }
 
 .card:hover {
@@ -113,6 +127,9 @@
     color: #64748b;
     text-decoration: none;
     transition: color 0.15s ease;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
 }
 
 .appLink:hover {

@@ -11,8 +11,8 @@ import { PROJECTS, type ProjectEntry } from '../data/projects';
 
 function ProjectStorybookFrame({ project }: { project: ProjectEntry }) {
   const [loaded, setLoaded] = useState(false);
-  // Use the root storybook URL instead of a specific story
-  const src = project.storybookUrl;
+  // Use the root storybook URL with panels hidden for cleaner embed
+  const src = `${project.storybookUrl}?panel=false&nav=false`;
 
   return (
     <div
@@ -124,6 +124,16 @@ function ProjectNav({ activeProject }: { activeProject: string }) {
     }
   };
 
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const key = e.target.value;
+    const element = document.getElementById(key);
+    if (element) {
+      const navHeight = 140;
+      const top = element.getBoundingClientRect().top + window.scrollY - navHeight;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  };
+
   return (
     <nav 
       ref={navRef}
@@ -135,6 +145,8 @@ function ProjectNav({ activeProject }: { activeProject: string }) {
             <Translate id="demos.jumpTo">Jump to project</Translate>
           </span>
         </div>
+        
+        {/* Desktop: Pills */}
         <div className={styles.projectNavInner}>
           {PROJECTS.map((project) => (
             <a
@@ -148,6 +160,22 @@ function ProjectNav({ activeProject }: { activeProject: string }) {
               {project.name}
             </a>
           ))}
+        </div>
+
+        {/* Mobile: Select dropdown */}
+        <div className={styles.mobileNav}>
+          <select 
+            value={activeProject}
+            onChange={handleSelectChange}
+            className={styles.mobileSelect}
+            style={{ borderColor: PROJECTS.find(p => p.key === activeProject)?.accentColor }}
+          >
+            {PROJECTS.map((project) => (
+              <option key={project.key} value={project.key}>
+                {project.name}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
     </nav>
