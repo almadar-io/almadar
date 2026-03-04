@@ -5,6 +5,17 @@ import Translate from '@docusaurus/Translate';
 import { PROJECTS, type ProjectEntry } from '../data/projects';
 import styles from './ProjectShowcase.module.css';
 
+/**
+ * Build Storybook URL for external viewing (panel hidden, sidebar visible)
+ */
+function buildStorybookUrl(project: ProjectEntry): string {
+  const baseUrl = project.storybookUrl;
+  const storyPath = project.featuredStoryId;
+  
+  // panel=false hides addon panel but keeps sidebar visible
+  return `${baseUrl}/?path=/story/${storyPath}&panel=false`;
+}
+
 function TechPills({ pills, accentColor }: { pills: ProjectEntry['techPills']; accentColor: string }) {
   return (
     <div className={styles.pills}>
@@ -24,7 +35,7 @@ function TechPills({ pills, accentColor }: { pills: ProjectEntry['techPills']; a
 function ProjectCard({ project }: { project: ProjectEntry }) {
   // Link to demos page with anchor for this specific project
   const demoUrl = `/demos#${project.key}`;
-  const storyUrl = `${project.storybookUrl}?panel=false&nav=false`;
+  const storyUrl = buildStorybookUrl(project);
   
   return (
     <Link

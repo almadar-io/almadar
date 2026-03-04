@@ -7,12 +7,49 @@ import HeroSection from '../components/HeroSection';
 import styles from './demos.module.css';
 import { PROJECTS, type ProjectEntry } from '../data/projects';
 
+// ─── URL Builders ──────────────────────────────────────────────────────────
+
+/**
+ * Build iframe URL for embedded Storybook (fullscreen mode)
+ * Uses the specific featured story with all UI hidden
+ */
+function buildIframeUrl(project: ProjectEntry): string {
+  const baseUrl = project.storybookUrl;
+  const storyPath = project.featuredStoryId;
+  
+  // Build the story URL with fullscreen mode
+  // full=true hides sidebar, toolbar, and addon panels
+  return `${baseUrl}/?path=/story/${storyPath}&full=true`;
+}
+
+/**
+ * Build external Storybook URL (opens in new tab)
+ * Shows sidebar but hides addon panel for cleaner viewing
+ */
+function buildExternalStorybookUrl(project: ProjectEntry): string {
+  const baseUrl = project.storybookUrl;
+  const storyPath = project.featuredStoryId;
+  
+  // panel=false hides addon panel but keeps sidebar visible
+  return `${baseUrl}/?path=/story/${storyPath}&panel=false`;
+}
+
+/**
+ * Build mobile fallback URL (opens in new tab with panel hidden)
+ */
+function buildMobileUrl(project: ProjectEntry): string {
+  return buildExternalStorybookUrl(project);
+}
+
 // ─── Storybook iframe per project ──────────────────────────────────────────
 
 function ProjectStorybookFrame({ project }: { project: ProjectEntry }) {
   const [loaded, setLoaded] = useState(false);
-  // Use the root storybook URL with panels hidden for cleaner embed
-  const src = `${project.storybookUrl}?panel=false&nav=false`;
+  
+  // Use specific story URL with fullscreen mode for iframe
+  const iframeSrc = buildIframeUrl(project);
+  const externalUrl = buildExternalStorybookUrl(project);
+  const mobileUrl = buildMobileUrl(project);
 
   return (
     <div
@@ -31,7 +68,7 @@ function ProjectStorybookFrame({ project }: { project: ProjectEntry }) {
           </div>
           <div className={styles.projectLinks}>
             <Link
-              href={project.storybookUrl}
+              href={externalUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="button button--secondary button--sm"
@@ -52,7 +89,7 @@ function ProjectStorybookFrame({ project }: { project: ProjectEntry }) {
         </div>
       </div>
 
-      {/* iframe — desktop only */}
+      {/* iframe — desktop only (fullscreen Storybook) */}
       <div className={styles.iframeContainer}>
         {!loaded && (
           <div
@@ -65,12 +102,13 @@ function ProjectStorybookFrame({ project }: { project: ProjectEntry }) {
           </div>
         )}
         <iframe
-          src={src}
+          src={iframeSrc}
           title={project.name}
           className={styles.iframe}
           style={{ opacity: loaded ? 1 : 0 }}
           loading="lazy"
           onLoad={() => setLoaded(true)}
+          allow="fullscreen"
         />
       </div>
 
@@ -83,7 +121,7 @@ function ProjectStorybookFrame({ project }: { project: ProjectEntry }) {
             </Translate>
           </p>
           <Link
-            href={src}
+            href={mobileUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="button button--primary button--md"
