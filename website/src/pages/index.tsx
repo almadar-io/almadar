@@ -230,8 +230,8 @@ function HomepageTeam() {
           </Heading>
           <p className={styles.sectionSubtitle}>
             <Translate id="homepage.team.subtitle">
-              No handoffs, no junior developers, no project managers in between.
-              You work directly with the people who build your application.
+              Work directly with senior builders who craft your application.
+              No unnecessary layers between you and your product.
             </Translate>
           </p>
         </div>
