@@ -92,7 +92,7 @@ export function ScreenshotGallery({
           onClick={() => setIsFullscreen(true)}
         >
           {/* Image Display */}
-          <div className="relative aspect-[16/10] w-full bg-[var(--color-background)]">
+          <div className="relative w-full bg-[var(--color-background)]">
             {hasImageError ? (
               <Box className="flex flex-col items-center justify-center w-full h-full bg-[var(--color-muted)]">
                 <Icon icon={ImageOff} size="xl" color="text-[var(--color-muted-foreground)]" />
@@ -104,7 +104,7 @@ export function ScreenshotGallery({
               <img
                 src={imageSrc}
                 alt={selectedScreenshot?.storyName}
-                className="w-full h-full object-cover object-top"
+                className="w-full h-auto max-h-[70vh] object-contain object-top"
                 onError={() => imageFilename && handleImageError(imageFilename)}
               />
             )}
