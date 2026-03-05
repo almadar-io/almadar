@@ -129,7 +129,6 @@
   border-bottom: 1px solid var(--ifm-color-emphasis-200);
   width: 100%;
   max-width: 100vw;
-  overflow-x: hidden;
 }
 
 .projectSection:last-child {

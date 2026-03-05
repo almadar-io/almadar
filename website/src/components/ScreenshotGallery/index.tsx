@@ -90,7 +90,7 @@ export function ScreenshotGallery({
       <VStack gap="lg" className="screenshot-gallery">
         {/* Main Image Container - Click to open fullscreen */}
         <Box 
-          className="relative border border-[var(--color-border)] rounded-[var(--radius-lg)] overflow-hidden bg-[var(--color-muted)] cursor-pointer"
+          className="relative border border-[var(--color-border)] rounded-[var(--radius-lg)] bg-[var(--color-muted)] cursor-pointer"
           onClick={() => setIsFullscreen(true)}
         >
           {/* Image Display */}
@@ -240,7 +240,7 @@ export function ScreenshotGallery({
       {/* Fullscreen Modal - Using a custom overlay instead of Modal component */}
       {isFullscreen && (
         <div 
-          className="fixed inset-0 z-[100] bg-black flex flex-col"
+          className="fixed inset-0 z-[2147483647] bg-black flex flex-col"
           onClick={() => setIsFullscreen(false)}
         >
           {/* Fullscreen Toolbar */}
