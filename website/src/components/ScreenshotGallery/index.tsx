@@ -11,11 +11,10 @@ import {
 import { 
   ChevronLeft, 
   ChevronRight, 
-  Maximize2, 
-  Minimize2,
   ExternalLink,
   ImageOff,
   Grid3X3,
+  X,
 } from 'lucide-react';
 
 interface Screenshot {
@@ -61,14 +60,13 @@ export function ScreenshotGallery({
     setSelectedIndex(index);
   }, []);
 
-  // Keyboard navigation
+  // Keyboard navigation for fullscreen
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (isFullscreen) {
-        if (e.key === 'ArrowRight') goToNext();
-        if (e.key === 'ArrowLeft') goToPrevious();
-        if (e.key === 'Escape') setIsFullscreen(false);
-      }
+      if (!isFullscreen) return;
+      if (e.key === 'ArrowRight') goToNext();
+      if (e.key === 'ArrowLeft') goToPrevious();
+      if (e.key === 'Escape') setIsFullscreen(false);
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
@@ -90,9 +88,12 @@ export function ScreenshotGallery({
   return (
     <>
       <VStack gap="lg" className="screenshot-gallery">
-        {/* Main Image Container */}
-        <Box className="relative border border-[var(--color-border)] rounded-[var(--radius-lg)] overflow-hidden bg-[var(--color-muted)]">
-          {/* Image Display - Fixed height for better visibility */}
+        {/* Main Image Container - Click to open fullscreen */}
+        <Box 
+          className="relative border border-[var(--color-border)] rounded-[var(--radius-lg)] overflow-hidden bg-[var(--color-muted)] cursor-pointer group"
+          onClick={() => setIsFullscreen(true)}
+        >
+          {/* Image Display */}
           <div className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--color-background)]">
             {hasImageError ? (
               <Box className="flex flex-col items-center justify-center w-full h-full bg-[var(--color-muted)]">
@@ -105,10 +106,13 @@ export function ScreenshotGallery({
               <img
                 src={imageSrc}
                 alt={selectedScreenshot?.storyName}
-                className="w-full h-full object-cover object-top transition-transform duration-300"
+                className="w-full h-full object-cover object-top"
                 onError={() => imageFilename && handleImageError(imageFilename)}
               />
             )}
+            
+            {/* Hover overlay hint */}
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
           </div>
           
           {/* Overlay Controls */}
@@ -120,7 +124,10 @@ export function ScreenshotGallery({
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={goToPrevious}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      goToPrevious();
+                    }}
                     className="bg-[var(--color-background)]/80 backdrop-blur-sm hover:bg-[var(--color-background)] shadow-md"
                     leftIcon={<Icon icon={ChevronLeft} size="md" />}
                     aria-label="Previous screenshot"
@@ -130,7 +137,10 @@ export function ScreenshotGallery({
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={goToNext}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      goToNext();
+                    }}
                     className="bg-[var(--color-background)]/80 backdrop-blur-sm hover:bg-[var(--color-background)] shadow-md"
                     leftIcon={<Icon icon={ChevronRight} size="md" />}
                     aria-label="Next screenshot"
@@ -139,46 +149,42 @@ export function ScreenshotGallery({
               </>
             )}
 
-            {/* Top Right Controls */}
-            <div className="absolute top-4 right-4 pointer-events-auto flex gap-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsFullscreen(true)}
-                className="bg-[var(--color-background)]/80 backdrop-blur-sm hover:bg-[var(--color-background)] shadow-md"
-                leftIcon={<Icon icon={Maximize2} size="sm" />}
-                aria-label="Enter fullscreen"
-              />
+            {/* Counter Badge */}
+            <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium">
+              {selectedIndex + 1} / {totalScreenshots}
             </div>
 
-            {/* Bottom Info Bar */}
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent pointer-events-auto">
-              <div className="p-4 pt-12">
-                <HStack justify="between" align="center">
-                  <VStack gap="xs">
-                    <Typography className="text-white font-medium text-base">
-                      {selectedScreenshot?.storyName}
-                    </Typography>
-                    <Typography size="sm" className="text-white/70">
-                      {selectedScreenshot?.title}
-                    </Typography>
-                  </VStack>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => window.open(storybookStoryUrl, '_blank', 'noopener,noreferrer')}
-                    rightIcon={<Icon icon={ExternalLink} size="sm" />}
-                  >
-                    Open in Storybook
-                  </Button>
-                </HStack>
-              </div>
+            {/* Click hint */}
+            <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+              Click to expand
             </div>
           </div>
 
-          {/* Counter Badge */}
-          <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium">
-            {selectedIndex + 1} / {totalScreenshots}
+          {/* Bottom Info Bar */}
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent pointer-events-auto">
+            <div className="p-4 pt-12">
+              <HStack justify="between" align="center">
+                <VStack gap="xs">
+                  <Typography className="text-white font-medium text-base">
+                    {selectedScreenshot?.storyName}
+                  </Typography>
+                  <Typography size="sm" className="text-white/70">
+                    {selectedScreenshot?.title}
+                  </Typography>
+                </VStack>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.open(storybookStoryUrl, '_blank', 'noopener,noreferrer');
+                  }}
+                  rightIcon={<Icon icon={ExternalLink} size="sm" />}
+                >
+                  Open in Storybook
+                </Button>
+              </HStack>
+            </div>
           </div>
         </Box>
 
@@ -227,22 +233,22 @@ export function ScreenshotGallery({
         <HStack justify="center" gap="sm">
           <Typography size="sm" color="muted">
             <Icon icon={Grid3X3} size="xs" className="inline mr-1" />
-            Click thumbnails to navigate
+            Click thumbnails to navigate • Click image to expand
           </Typography>
         </HStack>
       </VStack>
 
-      {/* Fullscreen Modal */}
-      <Modal
-        isOpen={isFullscreen}
-        onClose={() => setIsFullscreen(false)}
-        size="full"
-        showCloseButton={false}
-        className="bg-black/95"
-      >
-        <div className="fixed inset-0 flex flex-col">
+      {/* Fullscreen Modal - Using a custom overlay instead of Modal component */}
+      {isFullscreen && (
+        <div 
+          className="fixed inset-0 z-[100] bg-black flex flex-col"
+          onClick={() => setIsFullscreen(false)}
+        >
           {/* Fullscreen Toolbar */}
-          <div className="flex items-center justify-between p-4 bg-black/50 backdrop-blur-sm">
+          <div 
+            className="flex items-center justify-between p-4 bg-black/80 backdrop-blur-sm z-10"
+            onClick={e => e.stopPropagation()}
+          >
             <VStack gap="xs">
               <Typography className="text-white font-medium">
                 {selectedScreenshot?.storyName}
@@ -266,15 +272,18 @@ export function ScreenshotGallery({
                 size="sm"
                 onClick={() => setIsFullscreen(false)}
                 className="text-white hover:bg-white/20"
-                leftIcon={<Icon icon={Minimize2} size="sm" />}
+                leftIcon={<Icon icon={X} size="sm" />}
               >
-                Exit
+                Close
               </Button>
             </HStack>
           </div>
 
           {/* Fullscreen Image */}
-          <div className="flex-1 relative flex items-center justify-center p-4">
+          <div 
+            className="flex-1 relative flex items-center justify-center p-4"
+            onClick={e => e.stopPropagation()}
+          >
             {hasImageError ? (
               <Box className="flex flex-col items-center justify-center">
                 <Icon icon={ImageOff} size="xl" color="text-[var(--color-muted-foreground)]" />
@@ -319,7 +328,10 @@ export function ScreenshotGallery({
           </div>
 
           {/* Fullscreen Thumbnail Strip */}
-          <div className="bg-black/50 backdrop-blur-sm p-4">
+          <div 
+            className="bg-black/80 backdrop-blur-sm p-4"
+            onClick={e => e.stopPropagation()}
+          >
             <div className="overflow-x-auto">
               <HStack gap="sm" className="min-w-full justify-center">
                 {screenshots.map((screenshot, index) => {
@@ -364,7 +376,7 @@ export function ScreenshotGallery({
             </Typography>
           </div>
         </div>
-      </Modal>
+      )}
     </>
   );
 }
