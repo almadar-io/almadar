@@ -1,0 +1,126 @@
+{
+  "storybookUrl": "https://almadar-winning-11-design-system.web.app",
+  "capturedAt": "2026-03-05T03:46:53.474Z",
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "total": 16,
+  "passed": 16,
+  "skipped": 0,
+  "failed": 0,
+  "screenshots": [
+    {
+      "storyId": "clients-winning-11-templates-admindashboardtemplate--default",
+      "storyName": "Default",
+      "title": "Clients/Winning-11/Templates/AdminDashboardTemplate",
+      "filename": "clients-winning-11-templates-admindashboardtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "clients-winning-11-templates-assessmenttemplate--default",
+      "storyName": "Default",
+      "title": "Clients/Winning-11/Templates/AssessmentTemplate",
+      "filename": "clients-winning-11-templates-assessmenttemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "clients-winning-11-templates-connectionstemplate--default",
+      "storyName": "Default",
+      "title": "Clients/Winning-11/Templates/ConnectionsTemplate",
+      "filename": "clients-winning-11-templates-connectionstemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "clients-winning-11-templates-graphintelligencetemplate--default",
+      "storyName": "Default",
+      "title": "Clients/Winning-11/Templates/GraphIntelligenceTemplate",
+      "filename": "clients-winning-11-templates-graphintelligencetemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "clients-winning-11-templates-invitestemplate--default",
+      "storyName": "Default",
+      "title": "Clients/Winning-11/Templates/InvitesTemplate",
+      "filename": "clients-winning-11-templates-invitestemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "clients-winning-11-templates-projectdetailtemplate--default",
+      "storyName": "Default",
+      "title": "Clients/Winning-11/Templates/ProjectDetailTemplate",
+      "filename": "clients-winning-11-templates-projectdetailtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "clients-winning-11-templates-projectstemplate--default",
+      "storyName": "Default",
+      "title": "Clients/Winning-11/Templates/ProjectsTemplate",
+      "filename": "clients-winning-11-templates-projectstemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "clients-winning-11-templates-relationshipgardentemplate--default",
+      "storyName": "Default",
+      "title": "Clients/Winning-11/Templates/RelationshipGardenTemplate",
+      "filename": "clients-winning-11-templates-relationshipgardentemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "clients-winning-11-templates-seednetworktemplate--default",
+      "storyName": "Default",
+      "title": "Clients/Winning-11/Templates/SeedNetworkTemplate",
+      "filename": "clients-winning-11-templates-seednetworktemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "clients-winning-11-templates-suggestionstemplate--default",
+      "storyName": "Default",
+      "title": "Clients/Winning-11/Templates/SuggestionsTemplate",
+      "filename": "clients-winning-11-templates-suggestionstemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "clients-winning-11-templates-teamdetailtemplate--default",
+      "storyName": "Default",
+      "title": "Clients/Winning-11/Templates/TeamDetailTemplate",
+      "filename": "clients-winning-11-templates-teamdetailtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "clients-winning-11-templates-teammemberstemplate--default",
+      "storyName": "Default",
+      "title": "Clients/Winning-11/Templates/TeamMembersTemplate",
+      "filename": "clients-winning-11-templates-teammemberstemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "clients-winning-11-templates-teamstemplate--default",
+      "storyName": "Default",
+      "title": "Clients/Winning-11/Templates/TeamsTemplate",
+      "filename": "clients-winning-11-templates-teamstemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "clients-winning-11-templates-trustintelligencetemplate--default",
+      "storyName": "Default",
+      "title": "Clients/Winning-11/Templates/TrustIntelligenceTemplate",
+      "filename": "clients-winning-11-templates-trustintelligencetemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "clients-winning-11-templates-userprofiletemplate--default",
+      "storyName": "Default",
+      "title": "Clients/Winning-11/Templates/UserProfileTemplate",
+      "filename": "clients-winning-11-templates-userprofiletemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "clients-winning-11-templates-userstemplate--default",
+      "storyName": "Default",
+      "title": "Clients/Winning-11/Templates/UsersTemplate",
+      "filename": "clients-winning-11-templates-userstemplate--default.png",
+      "success": true
+    }
+  ]
+}

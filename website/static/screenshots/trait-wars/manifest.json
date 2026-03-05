@@ -1,0 +1,63 @@
+{
+  "storybookUrl": "https://almadar-trait-wars-design-system.web.app",
+  "capturedAt": "2026-03-05T03:47:39.140Z",
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "total": 7,
+  "passed": 7,
+  "skipped": 0,
+  "failed": 0,
+  "screenshots": [
+    {
+      "storyId": "trait-wars-templates-armybuildertemplate--default",
+      "storyName": "Default",
+      "title": "Trait Wars/Templates/ArmyBuilderTemplate",
+      "filename": "trait-wars-templates-armybuildertemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "trait-wars-templates-battlefieldtemplate--default",
+      "storyName": "Default",
+      "title": "Trait Wars/Templates/BattlefieldTemplate",
+      "filename": "trait-wars-templates-battlefieldtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "trait-wars-templates-canvasbattletemplate--default",
+      "storyName": "Default",
+      "title": "Trait Wars/Templates/CanvasBattleTemplate",
+      "filename": "trait-wars-templates-canvasbattletemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "trait-wars-templates-canvascastletemplate--dominion-fortress",
+      "storyName": "Dominion Fortress",
+      "title": "Trait Wars/Templates/CanvasCastleTemplate",
+      "filename": "trait-wars-templates-canvascastletemplate--dominion-fortress.png",
+      "success": true
+    },
+    {
+      "storyId": "trait-wars-templates-canvasworldmaptemplate--default",
+      "storyName": "Default",
+      "title": "Trait Wars/Templates/CanvasWorldMapTemplate",
+      "filename": "trait-wars-templates-canvasworldmaptemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "trait-wars-templates-castletemplate--default",
+      "storyName": "Default",
+      "title": "Trait Wars/Templates/CastleTemplate",
+      "filename": "trait-wars-templates-castletemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "trait-wars-templates-heroprofiletemplate--default",
+      "storyName": "Default",
+      "title": "Trait Wars/Templates/HeroProfileTemplate",
+      "filename": "trait-wars-templates-heroprofiletemplate--default.png",
+      "success": true
+    }
+  ]
+}

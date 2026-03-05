@@ -26,7 +26,7 @@ const BASE_PROJECTS: Omit<ProjectEntry, "name" | "tagline" | "clientContext" | "
     key: "builder",
     category: "Platform",
     storybookUrl: "https://almadar-builder-design-system.web.app",
-    featuredStoryId: "builder-templates-studioprojecttemplate--story-mode",
+    featuredStoryId: "builder-organisms-studioprojectboard--default",
     appUrl: "https://kflow-builder-app.web.app",
     accentColor: "#c9a227",
   },

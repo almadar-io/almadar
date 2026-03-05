@@ -1,0 +1,84 @@
+{
+  "storybookUrl": "https://almadar-blaz-klemenc-design-system.web.app",
+  "capturedAt": "2026-03-05T03:46:33.979Z",
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "total": 10,
+  "passed": 10,
+  "skipped": 0,
+  "failed": 0,
+  "screenshots": [
+    {
+      "storyId": "blaz-klemenc-templates-creditstemplate--default",
+      "storyName": "Default",
+      "title": "Blaz-Klemenc/Templates/CreditsTemplate",
+      "filename": "blaz-klemenc-templates-creditstemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "blaz-klemenc-templates-fitnesstemplate--default",
+      "storyName": "Default",
+      "title": "Blaz-Klemenc/Templates/FitnessTemplate",
+      "filename": "blaz-klemenc-templates-fitnesstemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "blaz-klemenc-templates-mealplandetailtemplate--default",
+      "storyName": "Default",
+      "title": "Blaz-Klemenc/Templates/MealPlanDetailTemplate",
+      "filename": "blaz-klemenc-templates-mealplandetailtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "blaz-klemenc-templates-mealplanstemplate--default",
+      "storyName": "Default",
+      "title": "Blaz-Klemenc/Templates/MealPlansTemplate",
+      "filename": "blaz-klemenc-templates-mealplanstemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "blaz-klemenc-templates-progresstemplate--default",
+      "storyName": "Default",
+      "title": "Blaz-Klemenc/Templates/ProgressTemplate",
+      "filename": "blaz-klemenc-templates-progresstemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "blaz-klemenc-templates-scheduletemplate--default",
+      "storyName": "Default",
+      "title": "Blaz-Klemenc/Templates/ScheduleTemplate",
+      "filename": "blaz-klemenc-templates-scheduletemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "blaz-klemenc-templates-sessiondetailtemplate--default",
+      "storyName": "Default",
+      "title": "Blaz-Klemenc/Templates/SessionDetailTemplate",
+      "filename": "blaz-klemenc-templates-sessiondetailtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "blaz-klemenc-templates-sessionstemplate--default",
+      "storyName": "Default",
+      "title": "Blaz-Klemenc/Templates/SessionsTemplate",
+      "filename": "blaz-klemenc-templates-sessionstemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "blaz-klemenc-templates-traineedetailtemplate--default",
+      "storyName": "Default",
+      "title": "Blaz-Klemenc/Templates/TraineeDetailTemplate",
+      "filename": "blaz-klemenc-templates-traineedetailtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "blaz-klemenc-templates-traineestemplate--default",
+      "storyName": "Default",
+      "title": "Blaz-Klemenc/Templates/TraineesTemplate",
+      "filename": "blaz-klemenc-templates-traineestemplate--default.png",
+      "success": true
+    }
+  ]
+}

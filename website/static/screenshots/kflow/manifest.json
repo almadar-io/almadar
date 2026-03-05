@@ -1,0 +1,154 @@
+{
+  "storybookUrl": "https://almadar-kflow-design-system.web.app",
+  "capturedAt": "2026-03-05T03:49:01.804Z",
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "total": 20,
+  "passed": 20,
+  "skipped": 0,
+  "failed": 0,
+  "screenshots": [
+    {
+      "storyId": "kflow-templates-appshelltemplate--default",
+      "storyName": "Default",
+      "title": "KFlow/Templates/AppShellTemplate",
+      "filename": "kflow-templates-appshelltemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "kflow-templates-conceptdetailtemplate--default",
+      "storyName": "Default",
+      "title": "KFlow/Templates/ConceptDetailTemplate",
+      "filename": "kflow-templates-conceptdetailtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "kflow-templates-crossdomaindiscoverytemplate--default",
+      "storyName": "Default",
+      "title": "KFlow/Templates/CrossDomainDiscoveryTemplate",
+      "filename": "kflow-templates-crossdomaindiscoverytemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "kflow-templates-crossdomaingraphtemplate--default",
+      "storyName": "Default",
+      "title": "KFlow/Templates/CrossDomainGraphTemplate",
+      "filename": "kflow-templates-crossdomaingraphtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "kflow-templates-dailymenutemplate--default",
+      "storyName": "Default",
+      "title": "KFlow/Templates/DailyMenuTemplate",
+      "filename": "kflow-templates-dailymenutemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "kflow-templates-dashboardtemplate--default",
+      "storyName": "Default",
+      "title": "KFlow/Templates/DashboardTemplate",
+      "filename": "kflow-templates-dashboardtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "kflow-templates-knowledgebattletemplate--default",
+      "storyName": "Default",
+      "title": "KFlow/Templates/KnowledgeBattleTemplate",
+      "filename": "kflow-templates-knowledgebattletemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "kflow-templates-knowledgechallengetemplate--default",
+      "storyName": "Default",
+      "title": "KFlow/Templates/KnowledgeChallengeTemplate",
+      "filename": "kflow-templates-knowledgechallengetemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "kflow-templates-knowledgeexplorertemplate--default",
+      "storyName": "Default",
+      "title": "KFlow/Templates/KnowledgeExplorerTemplate",
+      "filename": "kflow-templates-knowledgeexplorertemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "kflow-templates-knowledgegraphtemplate--default",
+      "storyName": "Default",
+      "title": "KFlow/Templates/KnowledgeGraphTemplate",
+      "filename": "kflow-templates-knowledgegraphtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "kflow-templates-knowledgesubjecttemplate--default",
+      "storyName": "Default",
+      "title": "KFlow/Templates/KnowledgeSubjectTemplate",
+      "filename": "kflow-templates-knowledgesubjecttemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "kflow-templates-knowledgeworldmaptemplate--default",
+      "storyName": "Default",
+      "title": "KFlow/Templates/KnowledgeWorldMapTemplate",
+      "filename": "kflow-templates-knowledgeworldmaptemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "kflow-templates-learningpathtemplate--default",
+      "storyName": "Default",
+      "title": "KFlow/Templates/LearningPathTemplate",
+      "filename": "kflow-templates-learningpathtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "kflow-templates-learntemplate--default",
+      "storyName": "Default",
+      "title": "KFlow/Templates/LearnTemplate",
+      "filename": "kflow-templates-learntemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "kflow-templates-lessontemplate--default",
+      "storyName": "Default",
+      "title": "KFlow/Templates/LessonTemplate",
+      "filename": "kflow-templates-lessontemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "kflow-templates-physicslabtemplate--default",
+      "storyName": "Default",
+      "title": "KFlow/Templates/PhysicsLabTemplate",
+      "filename": "kflow-templates-physicslabtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "kflow-templates-seriesviewtemplate--default",
+      "storyName": "Default",
+      "title": "KFlow/Templates/SeriesViewTemplate",
+      "filename": "kflow-templates-seriesviewtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "kflow-templates-spacedreviewtemplate--default",
+      "storyName": "Default",
+      "title": "KFlow/Templates/SpacedReviewTemplate",
+      "filename": "kflow-templates-spacedreviewtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "kflow-templates-storiesshelltemplate--catalog-home",
+      "storyName": "Catalog Home",
+      "title": "KFlow/Templates/StoriesShellTemplate",
+      "filename": "kflow-templates-storiesshelltemplate--catalog-home.png",
+      "success": true
+    },
+    {
+      "storyId": "kflow-templates-storycatalogtemplate--default",
+      "storyName": "Default",
+      "title": "KFlow/Templates/StoryCatalogTemplate",
+      "filename": "kflow-templates-storycatalogtemplate--default.png",
+      "success": true
+    }
+  ]
+}

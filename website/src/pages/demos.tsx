@@ -4,106 +4,47 @@ import Heading from '@theme/Heading';
 import Link from '@docusaurus/Link';
 import Translate, { translate } from '@docusaurus/Translate';
 import HeroSection from '../components/HeroSection';
+import { ScreenshotGallery } from '../components/ScreenshotGallery';
 import styles from './demos.module.css';
 import { useProjects, PROJECTS, type ProjectEntry } from '../data/projects';
 
+// ─── Screenshot Manifest Types ───────────────────────────────────────────────
+
+interface Screenshot {
+  storyId: string;
+  storyName: string;
+  title: string;
+  filename: string;
+  success: boolean;
+}
+
+interface ScreenshotManifest {
+  storybookUrl: string;
+  capturedAt: string;
+  viewport: { width: number; height: number };
+  total: number;
+  screenshots: Screenshot[];
+}
+
 // ─── URL Builders ──────────────────────────────────────────────────────────
 
-interface ParsedStoryId {
-  storyPath: string;
-  existingParams: string;
-}
-
 /**
- * Parse featuredStoryId which may contain existing URL parameters
- * e.g., "story-id--name&globals=theme:light" -> { storyPath: "story-id--name", existingParams: "globals=theme:light" }
+ * Build external Storybook URL for a specific story
  */
-function parseStoryId(storyId: string): ParsedStoryId {
-  const ampIndex = storyId.indexOf('&');
-  if (ampIndex === -1) {
-    return { storyPath: storyId, existingParams: '' };
-  }
-  return {
-    storyPath: storyId.substring(0, ampIndex),
-    existingParams: storyId.substring(ampIndex + 1),
-  };
+function buildStorybookUrl(storybookUrl: string, storyId: string): string {
+  return `${storybookUrl}/?path=/story/${storyId}`;
 }
 
-/**
- * Build iframe URL for embedded Storybook (fullscreen mode)
- * Uses the specific featured story with all UI hidden
- * Storybook 7+ format: iframe.html?id=STORY_ID&viewMode=story
- */
-function buildIframeUrl(project: ProjectEntry): string {
-  const baseUrl = project.storybookUrl;
-  const { storyPath, existingParams } = parseStoryId(project.featuredStoryId);
-  
-  // Build URL: base/iframe.html?id=STORY_PATH&viewMode=story&existingParams
-  const params = existingParams 
-    ? `viewMode=story&${existingParams}` 
-    : 'viewMode=story';
-  
-  return `${baseUrl}/iframe.html?id=${storyPath}&${params}`;
-}
+// ─── Project Section with Screenshot Gallery ────────────────────────────────
 
-/**
- * Build external Storybook URL (opens in new tab)
- * Shows sidebar but hides addon panel for cleaner viewing
- */
-function buildExternalStorybookUrl(project: ProjectEntry): string {
-  const baseUrl = project.storybookUrl;
-  const { storyPath, existingParams } = parseStoryId(project.featuredStoryId);
-  
-  // panel=false hides addon panel but keeps sidebar visible
-  const params = existingParams 
-    ? `panel=false&${existingParams}` 
-    : 'panel=false';
-  
-  return `${baseUrl}/?path=/story/${storyPath}&${params}`;
-}
-
-// ─── Storybook iframe per project ──────────────────────────────────────────
-
-interface ProjectStorybookFrameProps {
+interface ProjectSectionProps {
   project: ProjectEntry;
-  onLoadStart?: () => void;
-  onLoadEnd?: () => void;
+  screenshots: Screenshot[];
 }
 
-function ProjectStorybookFrame({ project, onLoadStart, onLoadEnd }: ProjectStorybookFrameProps) {
-  const [loaded, setLoaded] = useState(false);
-  const [error, setError] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  
-  // Use specific story URL with fullscreen mode for iframe
-  const iframeSrc = buildIframeUrl(project);
-  const externalUrl = buildExternalStorybookUrl(project);
-
-  // Notify parent when load starts (on mount or src change)
-  useEffect(() => {
-    onLoadStart?.();
-    setLoaded(false);
-    setError(false);
-    
-    // Fallback: show iframe after 5 seconds even if onLoad doesn't fire
-    timeoutRef.current = setTimeout(() => {
-      setLoaded(true);
-      onLoadEnd?.();
-    }, 5000);
-    
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, [iframeSrc, onLoadStart, onLoadEnd]);
-
-  const handleLoad = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-    setLoaded(true);
-    onLoadEnd?.();
-  };
+function ProjectSection({ project, screenshots }: ProjectSectionProps) {
+  const featuredStoryId = project.featuredStoryId.split('&')[0]; // Remove any query params
+  const featuredUrl = buildStorybookUrl(project.storybookUrl, featuredStoryId);
 
   return (
     <div
@@ -122,12 +63,12 @@ function ProjectStorybookFrame({ project, onLoadStart, onLoadEnd }: ProjectStory
           </div>
           <div className={styles.projectLinks}>
             <Link
-              href={externalUrl}
+              href={featuredUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="button button--secondary button--sm"
             >
-              <Translate id="demos.openStorybook">Open Full Storybook</Translate>
+              <Translate id="demos.viewStorybook">View Storybook</Translate>
               {' ↗'}
             </Link>
             <Link
@@ -143,62 +84,14 @@ function ProjectStorybookFrame({ project, onLoadStart, onLoadEnd }: ProjectStory
         </div>
       </div>
 
-      {/* iframe — desktop only (fullscreen Storybook) */}
-      <div className={styles.iframeContainer}>
-        {!loaded && !error && (
-          <div
-            className={styles.iframeSkeleton}
-            style={{ background: project.accentColor + '18' }}
-          >
-            <span className={styles.skeletonLabel}>
-              Loading {project.name}...
-            </span>
-          </div>
-        )}
-        {error && (
-          <div className={styles.iframeError}>
-            <p>Failed to load design system preview.</p>
-            <Link
-              href={externalUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="button button--primary button--sm"
-            >
-              Open in New Tab ↗
-            </Link>
-          </div>
-        )}
-        <iframe
-          src={iframeSrc}
-          title={`${project.name} Design System`}
-          className={styles.iframe}
-          style={{ opacity: loaded ? 1 : 0 }}
-          onLoad={handleLoad}
-          onError={() => {
-            setError(true);
-            onLoadEnd?.();
-          }}
-          allow="fullscreen"
-          scrolling="no"
-        />
-      </div>
-
-      {/* Mobile fallback — link only */}
-      <div className={styles.mobileFallback}>
+      {/* Screenshot Gallery */}
+      <div className={styles.galleryContainer}>
         <div className="container">
-          <p className={styles.mobileNote}>
-            <Translate id="demos.mobileNote">
-              Open on a larger screen to browse the interactive design system.
-            </Translate>
-          </p>
-          <Link
-            href={externalUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="button button--primary button--md"
-          >
-            <Translate id="demos.openDesignSystem">Open Design System ↗</Translate>
-          </Link>
+          <ScreenshotGallery
+            projectKey={project.key}
+            storybookUrl={project.storybookUrl}
+            screenshots={screenshots}
+          />
         </div>
       </div>
     </div>
@@ -306,17 +199,40 @@ function ProjectNav({
 export default function Demos(): React.JSX.Element {
   const projects = useProjects();
   const [activeProject, setActiveProject] = useState(projects[0]?.key || PROJECTS[0].key);
+  const [screenshotData, setScreenshotData] = useState<Record<string, Screenshot[]>>({});
   const userInitiatedScroll = useRef(false);
-  const loadingCountRef = useRef(0);
-  const [, forceUpdate] = useState({});
 
-  // Track which project is in view (only updates state, doesn't auto-scroll)
+  // Load screenshot manifests for all projects
+  useEffect(() => {
+    const loadManifests = async () => {
+      const data: Record<string, Screenshot[]> = {};
+      
+      for (const project of projects) {
+        try {
+          const response = await fetch(`/screenshots/${project.key}/manifest.json`);
+          if (response.ok) {
+            const manifest: ScreenshotManifest = await response.json();
+            data[project.key] = manifest.screenshots.filter(s => s.success);
+          } else {
+            console.warn(`No screenshot manifest found for ${project.key}`);
+            data[project.key] = [];
+          }
+        } catch (error) {
+          console.warn(`Failed to load screenshots for ${project.key}:`, error);
+          data[project.key] = [];
+        }
+      }
+      
+      setScreenshotData(data);
+    };
+
+    loadManifests();
+  }, [projects]);
+
+  // Track which project is in view
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        // Skip updates during iframe loads to prevent scroll jumps
-        if (loadingCountRef.current > 0) return;
-        // Only update active state if user hasn't manually clicked
         if (!userInitiatedScroll.current) {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
@@ -339,29 +255,9 @@ export default function Demos(): React.JSX.Element {
     return () => observer.disconnect();
   }, []);
 
-  // Reset user initiated scroll flag after scroll completes
-  useEffect(() => {
-    const handleScrollEnd = () => {
-      userInitiatedScroll.current = false;
-    };
-
-    window.addEventListener('scroll', handleScrollEnd, { passive: true });
-    return () => window.removeEventListener('scroll', handleScrollEnd);
-  }, []);
-
   const handleProjectChange = (key: string) => {
     userInitiatedScroll.current = true;
     setActiveProject(key);
-  };
-
-  const handleIframeLoadStart = () => {
-    loadingCountRef.current += 1;
-    forceUpdate({}); // Trigger re-render to disable observer
-  };
-
-  const handleIframeLoadEnd = () => {
-    loadingCountRef.current = Math.max(0, loadingCountRef.current - 1);
-    forceUpdate({}); // Trigger re-render to re-enable observer
   };
 
   return (
@@ -398,11 +294,10 @@ export default function Demos(): React.JSX.Element {
 
         {/* One section per project */}
         {projects.map((project) => (
-          <ProjectStorybookFrame 
+          <ProjectSection 
             key={project.key} 
-            project={project} 
-            onLoadStart={handleIframeLoadStart}
-            onLoadEnd={handleIframeLoadEnd}
+            project={project}
+            screenshots={screenshotData[project.key] || []}
           />
         ))}
       </main>

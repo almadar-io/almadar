@@ -1,0 +1,56 @@
+{
+  "storybookUrl": "https://almadar-iram-design-system.web.app",
+  "capturedAt": "2026-03-05T03:47:48.592Z",
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "total": 6,
+  "passed": 6,
+  "skipped": 0,
+  "failed": 0,
+  "screenshots": [
+    {
+      "storyId": "iram-templates-bossarenatemplate--active-fight",
+      "storyName": "Active Fight",
+      "title": "Iram/Templates/BossArenaTemplate",
+      "filename": "iram-templates-bossarenatemplate--active-fight.png",
+      "success": true
+    },
+    {
+      "storyId": "iram-templates-cutscenetemplate--default",
+      "storyName": "Default",
+      "title": "Iram/Templates/CutsceneTemplate",
+      "filename": "iram-templates-cutscenetemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "iram-templates-dungeontemplate--boss-encounter",
+      "storyName": "Boss Encounter",
+      "title": "Iram/Templates/DungeonTemplate",
+      "filename": "iram-templates-dungeontemplate--boss-encounter.png",
+      "success": true
+    },
+    {
+      "storyId": "iram-templates-hubtemplate--default",
+      "storyName": "Default",
+      "title": "Iram/Templates/HubTemplate",
+      "filename": "iram-templates-hubtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "iram-templates-orbitalmanagementtemplate--default",
+      "storyName": "Default",
+      "title": "Iram/Templates/OrbitalManagementTemplate",
+      "filename": "iram-templates-orbitalmanagementtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "iram-templates-zoneselecttemplate--all-cleared",
+      "storyName": "All Cleared",
+      "title": "Iram/Templates/ZoneSelectTemplate",
+      "filename": "iram-templates-zoneselecttemplate--all-cleared.png",
+      "success": true
+    }
+  ]
+}
