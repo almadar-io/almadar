@@ -32,17 +32,18 @@ function parseStoryId(storyId: string): ParsedStoryId {
 /**
  * Build iframe URL for embedded Storybook (fullscreen mode)
  * Uses the specific featured story with all UI hidden
+ * Storybook 7+ format: iframe.html?id=STORY_ID&viewMode=story
  */
 function buildIframeUrl(project: ProjectEntry): string {
   const baseUrl = project.storybookUrl;
   const { storyPath, existingParams } = parseStoryId(project.featuredStoryId);
   
-  // Build URL: base/?path=/story/STORY_PATH&full=true&existingParams
+  // Build URL: base/iframe.html?id=STORY_PATH&viewMode=story&existingParams
   const params = existingParams 
-    ? `full=true&${existingParams}` 
-    : 'full=true';
+    ? `viewMode=story&${existingParams}` 
+    : 'viewMode=story';
   
-  return `${baseUrl}/?path=/story/${storyPath}&${params}`;
+  return `${baseUrl}/iframe.html?id=${storyPath}&${params}`;
 }
 
 /**

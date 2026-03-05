@@ -44,7 +44,7 @@ const BASE_PROJECTS: Omit<ProjectEntry, "name" | "tagline" | "clientContext" | "
     category: "Enterprise",
     storybookUrl: "https://almadar-inspection-system-design-system.web.app",
     featuredStoryId:
-      "clients-inspection-system-templates-inspectionformdemotemplate--empty-start&globals=theme:Inspection+System+Light",
+      "clients-inspection-system-templates-inspectionformtemplate--empty-start&globals=theme:Inspection+System+Light",
     appUrl: "https://almadar-inspection-system.web.app",
     accentColor: "#0ea5e9",
   },
@@ -61,7 +61,7 @@ const BASE_PROJECTS: Omit<ProjectEntry, "name" | "tagline" | "clientContext" | "
     key: "blaz-klemenc",
     category: "Consumer",
     storybookUrl: "https://almadar-blaz-klemenc-design-system.web.app",
-    featuredStoryId: "blaz-klemenc-templates-mealplandetailtemplate--default",
+    featuredStoryId: "blaz-klemenc-organisms-mealplandetailboard--default",
     appUrl: "https://almadar-blaz-klemenc.web.app",
     accentColor: "#10b981",
   },
