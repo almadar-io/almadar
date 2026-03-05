@@ -13,6 +13,7 @@ interface ScreenshotGalleryProps {
   storybookUrl: string;
   screenshots: Screenshot[];
   baseUrl?: string;
+  optimized?: boolean;
 }
 
 export function ScreenshotGallery({
@@ -20,6 +21,7 @@ export function ScreenshotGallery({
   storybookUrl,
   screenshots,
   baseUrl = '/screenshots',
+  optimized = true,
 }: ScreenshotGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [imageError, setImageError] = useState<Set<string>>(new Set());
@@ -48,17 +50,17 @@ export function ScreenshotGallery({
         {selectedScreenshot && (
           <>
             <div className="aspect-video w-full overflow-hidden">
-              {imageError.has(selectedScreenshot.filename) ? (
+              {imageError.has(selectedScreenshot.filename.replace('.png', '.jpg')) ? (
                 <div className="flex flex-col items-center justify-center w-full h-full bg-slate-100">
                   <ImageOff className="w-12 h-12 text-slate-400" />
                   <span className="mt-2 text-slate-500">Screenshot not found</span>
                 </div>
               ) : (
                 <img
-                  src={`${baseUrl}/${projectKey}/${selectedScreenshot.filename}`}
+                  src={`${baseUrl}/${projectKey}/${selectedScreenshot.filename.replace('.png', '.jpg')}`}
                   alt={selectedScreenshot.storyName}
                   className="w-full h-full object-cover object-top"
-                  onError={() => handleImageError(selectedScreenshot.filename)}
+                  onError={() => handleImageError(selectedScreenshot.filename.replace('.png', '.jpg'))}
                 />
               )}
             </div>
@@ -103,17 +105,17 @@ export function ScreenshotGallery({
               }`}
               title={screenshot.storyName}
             >
-              {imageError.has(screenshot.filename) ? (
+              {imageError.has(screenshot.filename.replace('.png', '.jpg')) ? (
                 <div className="w-full h-full bg-slate-100 flex items-center justify-center">
                   <ImageOff className="w-6 h-6 text-slate-300" />
                 </div>
               ) : (
                 <img
-                  src={`${baseUrl}/${projectKey}/${screenshot.filename}`}
+                  src={`${baseUrl}/${projectKey}/${screenshot.filename.replace('.png', '.jpg')}`}
                   alt={screenshot.storyName}
                   className="w-full h-full object-cover object-top"
                   loading="lazy"
-                  onError={() => handleImageError(screenshot.filename)}
+                  onError={() => handleImageError(screenshot.filename.replace('.png', '.jpg'))}
                 />
               )}
             </button>

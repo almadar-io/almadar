@@ -14,49 +14,49 @@
       "storyId": "trait-wars-templates-armybuildertemplate--default",
       "storyName": "Default",
       "title": "Trait Wars/Templates/ArmyBuilderTemplate",
-      "filename": "trait-wars-templates-armybuildertemplate--default.png",
+      "filename": "trait-wars-templates-armybuildertemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "trait-wars-templates-battlefieldtemplate--default",
       "storyName": "Default",
       "title": "Trait Wars/Templates/BattlefieldTemplate",
-      "filename": "trait-wars-templates-battlefieldtemplate--default.png",
+      "filename": "trait-wars-templates-battlefieldtemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "trait-wars-templates-canvasbattletemplate--default",
       "storyName": "Default",
       "title": "Trait Wars/Templates/CanvasBattleTemplate",
-      "filename": "trait-wars-templates-canvasbattletemplate--default.png",
+      "filename": "trait-wars-templates-canvasbattletemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "trait-wars-templates-canvascastletemplate--dominion-fortress",
       "storyName": "Dominion Fortress",
       "title": "Trait Wars/Templates/CanvasCastleTemplate",
-      "filename": "trait-wars-templates-canvascastletemplate--dominion-fortress.png",
+      "filename": "trait-wars-templates-canvascastletemplate--dominion-fortress.jpg",
       "success": true
     },
     {
       "storyId": "trait-wars-templates-canvasworldmaptemplate--default",
       "storyName": "Default",
       "title": "Trait Wars/Templates/CanvasWorldMapTemplate",
-      "filename": "trait-wars-templates-canvasworldmaptemplate--default.png",
+      "filename": "trait-wars-templates-canvasworldmaptemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "trait-wars-templates-castletemplate--default",
       "storyName": "Default",
       "title": "Trait Wars/Templates/CastleTemplate",
-      "filename": "trait-wars-templates-castletemplate--default.png",
+      "filename": "trait-wars-templates-castletemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "trait-wars-templates-heroprofiletemplate--default",
       "storyName": "Default",
       "title": "Trait Wars/Templates/HeroProfileTemplate",
-      "filename": "trait-wars-templates-heroprofiletemplate--default.png",
+      "filename": "trait-wars-templates-heroprofiletemplate--default.jpg",
       "success": true
     }
   ]

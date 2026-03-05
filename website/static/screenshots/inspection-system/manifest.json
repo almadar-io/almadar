@@ -14,28 +14,28 @@
       "storyId": "clients-inspection-system-templates-companiestemplate--default",
       "storyName": "Default",
       "title": "Clients/Inspection-System/Templates/CompaniesTemplate",
-      "filename": "clients-inspection-system-templates-companiestemplate--default.png",
+      "filename": "clients-inspection-system-templates-companiestemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "clients-inspection-system-templates-inspectionformtemplate--company-search",
       "storyName": "Company Search",
       "title": "Clients/Inspection-System/Templates/InspectionFormTemplate",
-      "filename": "clients-inspection-system-templates-inspectionformtemplate--company-search.png",
+      "filename": "clients-inspection-system-templates-inspectionformtemplate--company-search.jpg",
       "success": true
     },
     {
       "storyId": "clients-inspection-system-templates-inspectionstemplate--default",
       "storyName": "Default",
       "title": "Clients/Inspection-System/Templates/InspectionsTemplate",
-      "filename": "clients-inspection-system-templates-inspectionstemplate--default.png",
+      "filename": "clients-inspection-system-templates-inspectionstemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "clients-inspection-system-templates-inspectorstemplate--default",
       "storyName": "Default",
       "title": "Clients/Inspection-System/Templates/InspectorsTemplate",
-      "filename": "clients-inspection-system-templates-inspectorstemplate--default.png",
+      "filename": "clients-inspection-system-templates-inspectorstemplate--default.jpg",
       "success": true
     }
   ]

@@ -14,140 +14,140 @@
       "storyId": "kflow-templates-appshelltemplate--default",
       "storyName": "Default",
       "title": "KFlow/Templates/AppShellTemplate",
-      "filename": "kflow-templates-appshelltemplate--default.png",
+      "filename": "kflow-templates-appshelltemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "kflow-templates-conceptdetailtemplate--default",
       "storyName": "Default",
       "title": "KFlow/Templates/ConceptDetailTemplate",
-      "filename": "kflow-templates-conceptdetailtemplate--default.png",
+      "filename": "kflow-templates-conceptdetailtemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "kflow-templates-crossdomaindiscoverytemplate--default",
       "storyName": "Default",
       "title": "KFlow/Templates/CrossDomainDiscoveryTemplate",
-      "filename": "kflow-templates-crossdomaindiscoverytemplate--default.png",
+      "filename": "kflow-templates-crossdomaindiscoverytemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "kflow-templates-crossdomaingraphtemplate--default",
       "storyName": "Default",
       "title": "KFlow/Templates/CrossDomainGraphTemplate",
-      "filename": "kflow-templates-crossdomaingraphtemplate--default.png",
+      "filename": "kflow-templates-crossdomaingraphtemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "kflow-templates-dailymenutemplate--default",
       "storyName": "Default",
       "title": "KFlow/Templates/DailyMenuTemplate",
-      "filename": "kflow-templates-dailymenutemplate--default.png",
+      "filename": "kflow-templates-dailymenutemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "kflow-templates-dashboardtemplate--default",
       "storyName": "Default",
       "title": "KFlow/Templates/DashboardTemplate",
-      "filename": "kflow-templates-dashboardtemplate--default.png",
+      "filename": "kflow-templates-dashboardtemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "kflow-templates-knowledgebattletemplate--default",
       "storyName": "Default",
       "title": "KFlow/Templates/KnowledgeBattleTemplate",
-      "filename": "kflow-templates-knowledgebattletemplate--default.png",
+      "filename": "kflow-templates-knowledgebattletemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "kflow-templates-knowledgechallengetemplate--default",
       "storyName": "Default",
       "title": "KFlow/Templates/KnowledgeChallengeTemplate",
-      "filename": "kflow-templates-knowledgechallengetemplate--default.png",
+      "filename": "kflow-templates-knowledgechallengetemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "kflow-templates-knowledgeexplorertemplate--default",
       "storyName": "Default",
       "title": "KFlow/Templates/KnowledgeExplorerTemplate",
-      "filename": "kflow-templates-knowledgeexplorertemplate--default.png",
+      "filename": "kflow-templates-knowledgeexplorertemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "kflow-templates-knowledgegraphtemplate--default",
       "storyName": "Default",
       "title": "KFlow/Templates/KnowledgeGraphTemplate",
-      "filename": "kflow-templates-knowledgegraphtemplate--default.png",
+      "filename": "kflow-templates-knowledgegraphtemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "kflow-templates-knowledgesubjecttemplate--default",
       "storyName": "Default",
       "title": "KFlow/Templates/KnowledgeSubjectTemplate",
-      "filename": "kflow-templates-knowledgesubjecttemplate--default.png",
+      "filename": "kflow-templates-knowledgesubjecttemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "kflow-templates-knowledgeworldmaptemplate--default",
       "storyName": "Default",
       "title": "KFlow/Templates/KnowledgeWorldMapTemplate",
-      "filename": "kflow-templates-knowledgeworldmaptemplate--default.png",
+      "filename": "kflow-templates-knowledgeworldmaptemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "kflow-templates-learningpathtemplate--default",
       "storyName": "Default",
       "title": "KFlow/Templates/LearningPathTemplate",
-      "filename": "kflow-templates-learningpathtemplate--default.png",
+      "filename": "kflow-templates-learningpathtemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "kflow-templates-learntemplate--default",
       "storyName": "Default",
       "title": "KFlow/Templates/LearnTemplate",
-      "filename": "kflow-templates-learntemplate--default.png",
+      "filename": "kflow-templates-learntemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "kflow-templates-lessontemplate--default",
       "storyName": "Default",
       "title": "KFlow/Templates/LessonTemplate",
-      "filename": "kflow-templates-lessontemplate--default.png",
+      "filename": "kflow-templates-lessontemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "kflow-templates-physicslabtemplate--default",
       "storyName": "Default",
       "title": "KFlow/Templates/PhysicsLabTemplate",
-      "filename": "kflow-templates-physicslabtemplate--default.png",
+      "filename": "kflow-templates-physicslabtemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "kflow-templates-seriesviewtemplate--default",
       "storyName": "Default",
       "title": "KFlow/Templates/SeriesViewTemplate",
-      "filename": "kflow-templates-seriesviewtemplate--default.png",
+      "filename": "kflow-templates-seriesviewtemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "kflow-templates-spacedreviewtemplate--default",
       "storyName": "Default",
       "title": "KFlow/Templates/SpacedReviewTemplate",
-      "filename": "kflow-templates-spacedreviewtemplate--default.png",
+      "filename": "kflow-templates-spacedreviewtemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "kflow-templates-storiesshelltemplate--catalog-home",
       "storyName": "Catalog Home",
       "title": "KFlow/Templates/StoriesShellTemplate",
-      "filename": "kflow-templates-storiesshelltemplate--catalog-home.png",
+      "filename": "kflow-templates-storiesshelltemplate--catalog-home.jpg",
       "success": true
     },
     {
       "storyId": "kflow-templates-storycatalogtemplate--default",
       "storyName": "Default",
       "title": "KFlow/Templates/StoryCatalogTemplate",
-      "filename": "kflow-templates-storycatalogtemplate--default.png",
+      "filename": "kflow-templates-storycatalogtemplate--default.jpg",
       "success": true
     }
   ]

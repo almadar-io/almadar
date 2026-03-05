@@ -14,84 +14,84 @@
       "storyId": "builder-templates-aibuildertemplate--default",
       "storyName": "Default",
       "title": "Builder/Templates/AIBuilderTemplate",
-      "filename": "builder-templates-aibuildertemplate--default.png",
+      "filename": "builder-templates-aibuildertemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "builder-templates-domainlogicview--default",
       "storyName": "Default",
       "title": "Builder/Templates/DomainLogicView",
-      "filename": "builder-templates-domainlogicview--default.png",
+      "filename": "builder-templates-domainlogicview--default.jpg",
       "success": true
     },
     {
       "storyId": "builder-templates-logintemplate--default",
       "storyName": "Default",
       "title": "Builder/Templates/LoginTemplate",
-      "filename": "builder-templates-logintemplate--default.png",
+      "filename": "builder-templates-logintemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "builder-templates-previewdashboardtemplate--default",
       "storyName": "Default",
       "title": "Builder/Templates/PreviewDashboardTemplate",
-      "filename": "builder-templates-previewdashboardtemplate--default.png",
+      "filename": "builder-templates-previewdashboardtemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "builder-templates-previewtemplate--default",
       "storyName": "Default",
       "title": "Builder/Templates/PreviewTemplate",
-      "filename": "builder-templates-previewtemplate--default.png",
+      "filename": "builder-templates-previewtemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "builder-templates-studiohomeelectrontemplate--default",
       "storyName": "Default",
       "title": "Builder/Templates/StudioHomeElectronTemplate",
-      "filename": "builder-templates-studiohomeelectrontemplate--default.png",
+      "filename": "builder-templates-studiohomeelectrontemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "builder-templates-studiohomewebtemplate--default",
       "storyName": "Default",
       "title": "Builder/Templates/StudioHomeWebTemplate",
-      "filename": "builder-templates-studiohomewebtemplate--default.png",
+      "filename": "builder-templates-studiohomewebtemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "builder-templates-studioprojecttemplate--build-mode-schema",
       "storyName": "Build Mode Schema",
       "title": "Builder/Templates/StudioProjectTemplate",
-      "filename": "builder-templates-studioprojecttemplate--build-mode-schema.png",
+      "filename": "builder-templates-studioprojecttemplate--build-mode-schema.jpg",
       "success": true
     },
     {
       "storyId": "builder-templates-studiostatstemplate--default",
       "storyName": "Default",
       "title": "Builder/Templates/StudioStatsTemplate",
-      "filename": "builder-templates-studiostatstemplate--default.png",
+      "filename": "builder-templates-studiostatstemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "builder-templates-validationtemplate--default",
       "storyName": "Default",
       "title": "Builder/Templates/ValidationTemplate",
-      "filename": "builder-templates-validationtemplate--default.png",
+      "filename": "builder-templates-validationtemplate--default.jpg",
       "success": true
     },
     {
       "storyId": "builder-templates-validationview--default",
       "storyName": "Default",
       "title": "Builder/Templates/ValidationView",
-      "filename": "builder-templates-validationview--default.png",
+      "filename": "builder-templates-validationview--default.jpg",
       "success": true
     },
     {
       "storyId": "builder-templates-workspacetemplate--default",
       "storyName": "Default",
       "title": "Builder/Templates/WorkspaceTemplate",
-      "filename": "builder-templates-workspacetemplate--default.png",
+      "filename": "builder-templates-workspacetemplate--default.jpg",
       "success": true
     }
   ]

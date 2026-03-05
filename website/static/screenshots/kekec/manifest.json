@@ -14,42 +14,42 @@
       "storyId": "kekec-templates-ageselect--all-locked",
       "storyName": "All Locked",
       "title": "Kekec/Templates/AgeSelect",
-      "filename": "kekec-templates-ageselect--all-locked.png",
+      "filename": "kekec-templates-ageselect--all-locked.jpg",
       "success": true
     },
     {
       "storyId": "kekec-templates-eventhandler--owl-warning",
       "storyName": "Owl Warning",
       "title": "Kekec/Templates/EventHandler",
-      "filename": "kekec-templates-eventhandler--owl-warning.png",
+      "filename": "kekec-templates-eventhandler--owl-warning.jpg",
       "success": true
     },
     {
       "storyId": "kekec-templates-game--event-handler-game",
       "storyName": "Event Handler Game",
       "title": "Kekec/Templates/Game",
-      "filename": "kekec-templates-game--event-handler-game.png",
+      "filename": "kekec-templates-game--event-handler-game.jpg",
       "success": true
     },
     {
       "storyId": "kekec-templates-sequencer--bedanc-sleeps",
       "storyName": "Bedanc Sleeps",
       "title": "Kekec/Templates/Sequencer",
-      "filename": "kekec-templates-sequencer--bedanc-sleeps.png",
+      "filename": "kekec-templates-sequencer--bedanc-sleeps.jpg",
       "success": true
     },
     {
       "storyId": "kekec-templates-statearchitect--guard-dog",
       "storyName": "Guard Dog",
       "title": "Kekec/Templates/StateArchitect",
-      "filename": "kekec-templates-statearchitect--guard-dog.png",
+      "filename": "kekec-templates-statearchitect--guard-dog.jpg",
       "success": true
     },
     {
       "storyId": "kekec-templates-worldmap--default",
       "storyName": "Default",
       "title": "Kekec/Templates/WorldMap",
-      "filename": "kekec-templates-worldmap--default.png",
+      "filename": "kekec-templates-worldmap--default.jpg",
       "success": true
     }
   ]
