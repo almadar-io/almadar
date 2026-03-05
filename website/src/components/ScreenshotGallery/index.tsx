@@ -90,11 +90,11 @@ export function ScreenshotGallery({
       <VStack gap="lg" className="screenshot-gallery">
         {/* Main Image Container - Click to open fullscreen */}
         <Box 
-          className="relative border border-[var(--color-border)] rounded-[var(--radius-lg)] overflow-hidden bg-[var(--color-muted)] cursor-pointer group"
+          className="relative border border-[var(--color-border)] rounded-[var(--radius-lg)] overflow-hidden bg-[var(--color-muted)] cursor-pointer"
           onClick={() => setIsFullscreen(true)}
         >
           {/* Image Display */}
-          <div className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--color-background)]">
+          <div className="relative aspect-[16/10] w-full bg-[var(--color-background)]">
             {hasImageError ? (
               <Box className="flex flex-col items-center justify-center w-full h-full bg-[var(--color-muted)]">
                 <Icon icon={ImageOff} size="xl" color="text-[var(--color-muted-foreground)]" />
@@ -111,8 +111,7 @@ export function ScreenshotGallery({
               />
             )}
             
-            {/* Hover overlay hint */}
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
+
           </div>
           
           {/* Overlay Controls */}
@@ -154,8 +153,8 @@ export function ScreenshotGallery({
               {selectedIndex + 1} / {totalScreenshots}
             </div>
 
-            {/* Click hint */}
-            <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+            {/* Click hint - always visible */}
+            <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium">
               Click to expand
             </div>
           </div>
