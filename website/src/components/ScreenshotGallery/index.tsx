@@ -3,10 +3,8 @@ import {
   VStack, 
   HStack, 
   Box,
-  Button,
   Icon,
   Typography,
-  Modal,
 } from '@almadar/ui';
 import { 
   ChevronLeft, 
@@ -110,8 +108,6 @@ export function ScreenshotGallery({
                 onError={() => imageFilename && handleImageError(imageFilename)}
               />
             )}
-            
-
           </div>
           
           {/* Overlay Controls */}
@@ -120,30 +116,28 @@ export function ScreenshotGallery({
             {totalScreenshots > 1 && (
               <>
                 <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-auto">
-                  <Button
-                    variant="ghost"
-                    size="sm"
+                  <button
                     onClick={(e) => {
                       e.stopPropagation();
                       goToPrevious();
                     }}
-                    className="bg-[var(--color-background)]/80 backdrop-blur-sm hover:bg-[var(--color-background)] shadow-md"
-                    leftIcon={<Icon icon={ChevronLeft} size="md" />}
+                    className="button button--secondary button--sm shadow-md"
                     aria-label="Previous screenshot"
-                  />
+                  >
+                    <Icon icon={ChevronLeft} size="md" />
+                  </button>
                 </div>
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-auto">
-                  <Button
-                    variant="ghost"
-                    size="sm"
+                  <button
                     onClick={(e) => {
                       e.stopPropagation();
                       goToNext();
                     }}
-                    className="bg-[var(--color-background)]/80 backdrop-blur-sm hover:bg-[var(--color-background)] shadow-md"
-                    leftIcon={<Icon icon={ChevronRight} size="md" />}
+                    className="button button--secondary button--sm shadow-md"
                     aria-label="Next screenshot"
-                  />
+                  >
+                    <Icon icon={ChevronRight} size="md" />
+                  </button>
                 </div>
               </>
             )}
@@ -171,17 +165,16 @@ export function ScreenshotGallery({
                     {selectedScreenshot?.title}
                   </Typography>
                 </VStack>
-                <Button
-                  variant="secondary"
-                  size="sm"
+                <button
                   onClick={(e) => {
                     e.stopPropagation();
                     window.open(storybookStoryUrl, '_blank', 'noopener,noreferrer');
                   }}
-                  rightIcon={<Icon icon={ExternalLink} size="sm" />}
+                  className="button button--primary button--sm"
                 >
+                  <Icon icon={ExternalLink} size="sm" className="mr-2" />
                   Open in Storybook
-                </Button>
+                </button>
               </HStack>
             </div>
           </div>
@@ -237,7 +230,7 @@ export function ScreenshotGallery({
         </HStack>
       </VStack>
 
-      {/* Fullscreen Modal - Using a custom overlay instead of Modal component */}
+      {/* Fullscreen Modal */}
       {isFullscreen && (
         <div 
           className="fixed inset-0 z-[2147483647] bg-black flex flex-col"
@@ -257,24 +250,20 @@ export function ScreenshotGallery({
               </Typography>
             </VStack>
             <HStack gap="sm">
-              <Button
-                variant="ghost"
-                size="sm"
+              <button
                 onClick={() => window.open(storybookStoryUrl, '_blank', 'noopener,noreferrer')}
-                className="text-white hover:bg-white/20"
-                rightIcon={<Icon icon={ExternalLink} size="sm" />}
+                className="button button--primary button--sm"
               >
+                <Icon icon={ExternalLink} size="sm" className="mr-2" />
                 Storybook
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
+              </button>
+              <button
                 onClick={() => setIsFullscreen(false)}
-                className="text-white hover:bg-white/20"
-                leftIcon={<Icon icon={X} size="sm" />}
+                className="button button--secondary button--sm"
               >
+                <Icon icon={X} size="sm" className="mr-2" />
                 Close
-              </Button>
+              </button>
             </HStack>
           </div>
 
@@ -303,24 +292,22 @@ export function ScreenshotGallery({
             {totalScreenshots > 1 && (
               <>
                 <div className="absolute left-4 top-1/2 -translate-y-1/2">
-                  <Button
-                    variant="ghost"
-                    size="lg"
+                  <button
                     onClick={goToPrevious}
-                    className="bg-black/50 text-white hover:bg-black/70 backdrop-blur-sm"
-                    leftIcon={<Icon icon={ChevronLeft} size="lg" />}
+                    className="button button--secondary button--lg"
                     aria-label="Previous"
-                  />
+                  >
+                    <Icon icon={ChevronLeft} size="lg" />
+                  </button>
                 </div>
                 <div className="absolute right-4 top-1/2 -translate-y-1/2">
-                  <Button
-                    variant="ghost"
-                    size="lg"
+                  <button
                     onClick={goToNext}
-                    className="bg-black/50 text-white hover:bg-black/70 backdrop-blur-sm"
-                    leftIcon={<Icon icon={ChevronRight} size="lg" />}
+                    className="button button--secondary button--lg"
                     aria-label="Next"
-                  />
+                  >
+                    <Icon icon={ChevronRight} size="lg" />
+                  </button>
                 </div>
               </>
             )}
