@@ -73,6 +73,7 @@ interface ProjectStorybookFrameProps {
 function ProjectStorybookFrame({ project, onLoadStart, onLoadEnd }: ProjectStorybookFrameProps) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   
   // Use specific story URL with fullscreen mode for iframe
   const iframeSrc = buildIframeUrl(project);
@@ -83,9 +84,23 @@ function ProjectStorybookFrame({ project, onLoadStart, onLoadEnd }: ProjectStory
     onLoadStart?.();
     setLoaded(false);
     setError(false);
-  }, [iframeSrc, onLoadStart]);
+    
+    // Fallback: show iframe after 5 seconds even if onLoad doesn't fire
+    timeoutRef.current = setTimeout(() => {
+      setLoaded(true);
+      onLoadEnd?.();
+    }, 5000);
+    
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [iframeSrc, onLoadStart, onLoadEnd]);
 
   const handleLoad = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
     setLoaded(true);
     onLoadEnd?.();
   };
@@ -158,7 +173,6 @@ function ProjectStorybookFrame({ project, onLoadStart, onLoadEnd }: ProjectStory
           title={`${project.name} Design System`}
           className={styles.iframe}
           style={{ opacity: loaded ? 1 : 0 }}
-          loading="lazy"
           onLoad={handleLoad}
           onError={() => {
             setError(true);
