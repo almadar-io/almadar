@@ -28,6 +28,6 @@
       "@design-system/*": ["../../../design-system/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "../../../design-system/types"],
   "exclude": ["node_modules", "dist", "src/**/__tests__", "src/**/*.stories.ts", "src/**/*.stories.tsx"]
 }

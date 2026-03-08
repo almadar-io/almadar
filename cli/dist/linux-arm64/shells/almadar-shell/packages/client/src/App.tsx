@@ -14,6 +14,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider, UISlotProvider } from '@almadar/ui/context';
+import { UISlotComponent, NotifyListener } from '@almadar/ui/components';
 import {
   EventBusProvider,
   VerificationProvider,
@@ -60,6 +61,11 @@ function App() {
                     {/* {{GENERATED_ROUTES}} */}
                     <Route path="/" element={<div>Welcome to Almadar</div>} />
                   </Routes>
+                  {/* Portal slots for modal, drawer, and toast overlays */}
+                  <UISlotComponent slot="modal" portal />
+                  <UISlotComponent slot="drawer" portal />
+                  <UISlotComponent slot="toast" portal />
+                  <NotifyListener />
                 </BrowserRouter>
               </NavigationProvider>
             </UISlotProvider>

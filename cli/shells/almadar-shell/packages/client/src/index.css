@@ -1,6 +1,6 @@
+/* Import Almadar theme - @import must precede @tailwind directives */
+@import '@almadar/ui/themes/almadar.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import Almadar theme */
-@import '@almadar/ui/themes/almadar.css';
