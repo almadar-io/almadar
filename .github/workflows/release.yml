@@ -129,60 +129,73 @@ jobs:
           echo "Release assets:"
           ls -la release/ || echo "No release assets found"
 
-      - name: Create Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ steps.version.outputs.version }}
-          name: Almadar ${{ steps.version.outputs.version }}
-          draft: false
-          prerelease: false
-          generate_release_notes: true
-          files: release/*
-          make_latest: true
-          body: |
-            ## Almadar ${{ steps.version.outputs.version }}
+      - name: Create or update release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
 
-            ### Installation
+          BODY=$(cat <<'BODY_EOF'
+          ## Almadar VERSION_PLACEHOLDER
 
-            #### Install Script (macOS/Linux)
-            ```bash
-            curl -fsSL https://almadar.io/install.sh | sh
-            ```
+          ### Installation
 
-            #### Install Script (Windows PowerShell)
-            ```powershell
-            irm https://almadar.io/install.ps1 | iex
-            ```
+          #### Install Script (macOS/Linux)
+          ```bash
+          curl -fsSL https://almadar.io/install.sh | sh
+          ```
 
-            #### Direct Download
-            Download the appropriate binary for your platform from the assets below.
+          #### Install Script (Windows PowerShell)
+          ```powershell
+          irm https://almadar.io/install.ps1 | iex
+          ```
 
-            | Platform | Architecture | File |
-            |----------|-------------|------|
-            | Linux | x64 | `almadar-linux-x64.tar.gz` |
-            | Linux | ARM64 | `almadar-linux-arm64.tar.gz` |
-            | macOS | Intel | `almadar-darwin-x64.tar.gz` |
-            | macOS | Apple Silicon | `almadar-darwin-arm64.tar.gz` |
-            | Windows | x64 | `almadar-windows-x64.zip` |
+          #### Direct Download
+          Download the appropriate binary for your platform from the assets below.
 
-            ### Quick Start
+          | Platform | Architecture | File |
+          |----------|-------------|------|
+          | Linux | x64 | `almadar-linux-x64.tar.gz` |
+          | Linux | ARM64 | `almadar-linux-arm64.tar.gz` |
+          | macOS | Intel | `almadar-darwin-x64.tar.gz` |
+          | macOS | Apple Silicon | `almadar-darwin-arm64.tar.gz` |
+          | Windows | x64 | `almadar-windows-x64.zip` |
 
-            ```bash
-            # Validate a schema
-            almadar validate my-app.orb
+          ### Quick Start
 
-            # Compile to TypeScript
-            almadar compile my-app.orb --shell typescript
+          ```bash
+          # Validate a schema
+          almadar validate my-app.orb
 
-            # Start development server
-            almadar dev my-app.orb
-            ```
+          # Compile to TypeScript
+          almadar compile my-app.orb --shell typescript
 
-            ### Documentation
+          # Start development server
+          almadar dev my-app.orb
+          ```
 
-            - [Getting Started](https://almadar.io/docs/en/getting-started/introduction)
-            - [Standard Library](https://almadar.io/stdlib.html)
-            - [API Reference](https://almadar.io/docs/en/api)
+          ### Documentation
+
+          - [Getting Started](https://almadar.io/docs/en/getting-started/introduction)
+          - [Standard Library](https://almadar.io/stdlib.html)
+          - [API Reference](https://almadar.io/docs/en/api)
+          BODY_EOF
+          )
+
+          BODY="${BODY//VERSION_PLACEHOLDER/$VERSION}"
+
+          # Create release if it doesn't exist, update if it does
+          if gh release view "$VERSION" &>/dev/null; then
+            echo "Release $VERSION exists, updating assets..."
+            gh release upload "$VERSION" release/* --clobber
+          else
+            echo "Creating release $VERSION..."
+            gh release create "$VERSION" release/* \
+              --title "Almadar $VERSION" \
+              --notes "$BODY" \
+              --latest \
+              --generate-notes
+          fi
 
   publish-npm:
     name: Publish to npm
