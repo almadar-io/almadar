@@ -61,9 +61,8 @@ function App() {
                     {/* {{GENERATED_ROUTES}} */}
                     <Route path="/" element={<div>Welcome to Almadar</div>} />
                   </Routes>
-                  {/* Portal slots for modal, drawer, and toast overlays */}
-                  <UISlotComponent slot="modal" portal />
-                  <UISlotComponent slot="drawer" portal />
+                  {/* Portal slots rendered by compiled trait views via CompiledPortal */}
+                  {/* Toast notifications (non-overlapping, always safe to render here) */}
                   <UISlotComponent slot="toast" portal />
                   <NotifyListener />
                 </BrowserRouter>
