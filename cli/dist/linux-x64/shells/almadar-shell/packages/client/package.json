@@ -31,6 +31,8 @@
     "react-force-graph-2d": "^1.25.5",
     "@monaco-editor/react": "^4.7.0",
     "monaco-editor": "^0.52.2",
+    "leaflet": "^1.9.4",
+    "react-leaflet": "^4.2.1",
     "lucide-react": "^0.344.0"
   },
   "devDependencies": {
