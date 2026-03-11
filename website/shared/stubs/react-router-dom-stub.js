@@ -3,7 +3,8 @@
  * to avoid circular alias) and adds v6-only stubs for @almadar/ui.
  */
 
-const real = require('/home/osamah/kflow.ai.builder/almadar/website/node_modules/react-router-dom/index.js');
+const path = require('path');
+const real = require(path.resolve(__dirname, '../../node_modules/react-router-dom/index.js'));
 
 // Re-export all real v5 exports
 module.exports = {
