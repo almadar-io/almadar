@@ -526,23 +526,75 @@ Refactor the existing `packages/almadar-agent/` package:
 
 5. **Publish @almadar/agent@3.0.0** with the new modules.
 
-### Phase 2: Slim down tools/orbital-agent
+### Phase 2: Move evals into @almadar/agent, slim down tools/orbital-agent
 
-Replace orbital-agent's internal implementations with imports from `@almadar/agent`:
+**Move eval framework to the npm package** so it tests the framework directly, not the CLI wrapper:
+
+1. Move `tools/orbital-agent/src/eval/` to `packages/almadar-agent/src/evals/`
+   - `neural-eval.ts` (GFlowNet generation quality)
+   - `dream-eval.ts` (full generate + validate workflow)
+   - `metrics.ts`, `report.ts` (shared eval infra)
+2. Evals import from `@almadar/agent` directly (neural pipeline, agent loop, tools)
+3. Add eval scripts to `packages/almadar-agent/package.json`:
+   ```json
+   "scripts": {
+     "eval:neural": "tsx src/evals/neural-eval.ts",
+     "eval:dream": "tsx src/evals/dream-eval.ts",
+     "eval:all": "tsx src/evals/runner.ts"
+   }
+   ```
+4. Eval prompts (the 5 neural test cases + dream test cases) move with the eval code
+
+**Run acceptance gate** after Phase 1 + 2:
+
+```bash
+# Verify neural pipeline works through @almadar/agent
+cd packages/almadar-agent
+pnpm run eval:neural -- --complexity simple    # 2 simple prompts
+pnpm run eval:neural -- --complexity medium    # 2 medium prompts
+pnpm run eval:dream -- --provider deepseek     # full workflow
+
+# Pass criteria:
+# - neural-simple: >80% validation pass rate (same as before merge)
+# - neural-medium: >60% validation pass rate (same as before merge)
+# - dream: at least 1/2 prompts generate + validate + compile successfully
+```
+
+This is the merge acceptance gate. If evals regress compared to `tools/orbital-agent/` baseline results (stored in `tools/orbital-agent/eval-results/`), the merge broke something and we fix before proceeding.
+
+**Then slim down tools/orbital-agent:**
 
 1. Delete `tools/orbital-agent/src/neural/` (now in @almadar/agent)
 2. Delete `tools/orbital-agent/src/agent/agent-loop.ts`, `auto-fix.ts`, `provider-router.ts` (now in @almadar/agent)
-3. Import from `@almadar/agent` instead
-4. Keep CLI-specific code: Commander entry, terminal UI, eval framework, filesystem adapter, design system tools
+3. Delete `tools/orbital-agent/src/eval/` (now in @almadar/agent)
+4. Import from `@almadar/agent` instead
+5. Keep CLI-specific code: Commander entry, terminal UI, filesystem adapter, design system tools
+6. **Re-run evals via CLI** to verify the thin wrapper still works:
+   ```bash
+   cd tools/orbital-agent
+   orb eval:neural --complexity simple
+   ```
+   The CLI's eval command now delegates to `@almadar/agent`'s eval runner.
 
 ### Phase 3: Builder endpoint in almadar/agent server
 
-1. Add `@almadar/agent` as a dependency of `almadar/agent/`
+1. Add `@almadar/agent` and `@almadar/server` as dependencies of `almadar/agent/`
 2. Implement `src/adapters/server-executor.ts` (temp-file based `orbital validate`)
 3. Implement `src/adapters/python-executor.ts` (GFlowNet subprocess)
-4. Implement `src/routes/builder.ts` using `@almadar/agent/builder`
+4. Implement `src/routes/builder.ts` using `createSkillAgent` + `createBuilderTools`
 5. Copy Python inference scripts + model weights into the repo
-6. Test locally with `npm run dev`
+6. **Test locally:**
+   ```bash
+   cd almadar/agent && npm run dev
+   # In another terminal:
+   curl -X POST http://localhost:8080/api/agent/builder \
+     -H 'Content-Type: application/json' \
+     -d '{"prompt":"Build a todo app","mode":"neural"}'
+   ```
+7. **Run server-side eval** (hits the local server via HTTP):
+   ```bash
+   npm run eval:server  # POSTs eval prompts to /api/agent/builder, checks results
+   ```
 
 ### Phase 4: Frontend builder component
 
@@ -564,12 +616,30 @@ Wire into:
 2. Bundle model weights in the Docker image (~50MB)
 3. Configure Cloud Run: 2 CPU, 1GB memory, scale-to-zero
 4. Deploy and verify neural pipeline works in production
+5. **Run evals against production:**
+   ```bash
+   AGENT_URL=https://almadar-agent-server--kflow-b3a39.us-central1.hosted.app \
+     npm run eval:server
+   ```
+   Pass criteria: same thresholds as Phase 2 acceptance gate.
 
-### Phase 6: Edit mode + eval
+### Phase 6: Edit mode
 
 1. Implement `/api/agent/builder/edit` endpoint
-2. Port eval framework to run against deployed server
-3. Set up regression testing on each deploy
+2. Add edit-mode eval prompts (take existing schema, apply instruction, validate result)
+3. Wire into Studio frontend
+
+### Continuous Eval
+
+After all phases, evals run in three places:
+
+| Where | What | When |
+|-------|------|------|
+| `packages/almadar-agent/` | `pnpm run eval:all` | After any change to the framework |
+| `tools/orbital-agent/` | `orb eval:neural`, `orb eval:dream` | After any CLI change (delegates to @almadar/agent) |
+| `almadar/agent/` | `npm run eval:server` | After deploy, hits server endpoints via HTTP |
+
+All three run the same eval prompts and same pass criteria. If any regress, the change is reverted.
 
 ---
 
