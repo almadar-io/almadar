@@ -1,0 +1,163 @@
+.hero {
+  background: var(--almadar-midnight);
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201, 162, 39, 0.12) 0%, transparent 60%);
+  color: var(--almadar-parchment);
+  padding: 8rem 0 5rem;
+  text-align: center;
+}
+
+.heroTitle {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--almadar-parchment);
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.heroSubtitle {
+  font-size: 1.25rem;
+  color: var(--almadar-parchment-muted);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+
+.section {
+  padding: var(--section-padding) 0;
+}
+
+.sectionAlt {
+  background: rgba(201, 162, 39, 0.03);
+}
+
+[data-theme="dark"] .sectionAlt {
+  background: rgba(201, 162, 39, 0.05);
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.teamCard {
+  background: var(--ifm-background-surface-color, #fff);
+  border: 1px solid rgba(201, 162, 39, 0.15);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2rem;
+  text-align: center;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--site-gradient);
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.teamCard h3 {
+  font-size: 1.35rem;
+  margin-bottom: 0.35rem;
+}
+
+.role {
+  display: block;
+  color: var(--almadar-sand-gold);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.teamCard p {
+  font-size: 0.95rem;
+  color: var(--almadar-parchment-muted);
+  line-height: 1.65;
+  margin: 0;
+}
+
+[data-theme="light"] .teamCard p {
+  color: #64748b;
+}
+
+.article {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.article h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.article p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--almadar-parchment-muted);
+  margin-bottom: 1.25rem;
+}
+
+[data-theme="light"] .article p {
+  color: #475569;
+}
+
+@media (max-width: 996px) {
+  .heroTitle {
+    font-size: 2.25rem;
+  }
+
+  .teamGrid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+  }
+
+  .section {
+    padding: 3.5rem 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 5rem 0 3rem;
+  }
+
+  .heroTitle {
+    font-size: 1.85rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.05rem;
+  }
+}
+
+/* === Page Images === */
+.heroImage {
+    width: 100%;
+    max-width: 900px;
+    margin: 2rem auto 0;
+    display: block;
+    border-radius: 12px;
+}
+
+.sectionImage {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    display: block;
+    border-radius: 12px;
+}

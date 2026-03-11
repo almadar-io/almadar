@@ -1,0 +1,526 @@
+{
+  "home.hero.tag": {
+    "message": "Platforma z vgrajeno umetno inteligenco",
+    "description": "AI-Native Platform"
+  },
+  "home.hero.title": {
+    "message": "Fizika programske opreme",
+    "description": "The Physics of Software"
+  },
+  "home.hero.subtitle": {
+    "message": "Svetovni modeli za dobo agentov. Gradimo jezik, inteligenco in infrastrukturo za programsko opremo, ki razume samo sebe.",
+    "description": "World models for the agentic era. We build the language, intelligence, and infrastructure for software that understands itself."
+  },
+  "home.hero.cta1": {
+    "message": "Raziščite Studio",
+    "description": "Explore Studio"
+  },
+  "home.hero.cta2": {
+    "message": "Preberite dokumentacijo",
+    "description": "Read the Docs"
+  },
+  "home.idea.title": {
+    "message": "Kaj je svetovni model programske opreme?",
+    "description": "What is a World Model of Software?"
+  },
+  "home.idea.subtitle": {
+    "message": "Tradicionalno programiranje računalniku pove, kaj naj naredi, korak za korakom. Svetovni model opisuje, kako stvari delujejo: podatke, pravila, vedenja. Prevajalnik ga pretvori v katero koli platformo. Model ostane enak.",
+    "description": "Traditional programming tells computers what to do, step by step. A world model describes how things work: the data, the rules, the behaviors. The compiler turns it into any platform. The model stays the same."
+  },
+  "home.idea.describe": {
+    "message": "Opiši",
+    "description": "Describe"
+  },
+  "home.idea.describe.text": {
+    "message": "Zapišite, kaj vaš sistem počne, v jeziku .orb, formalnem jeziku za vedenje aplikacij.",
+    "description": "Write what your system does in .orb, a formal language for application behavior."
+  },
+  "home.idea.prove": {
+    "message": "Dokaži",
+    "description": "Prove"
+  },
+  "home.idea.prove.text": {
+    "message": "Prevajalnik preveri vsako možno stanje, preden se izvede ena sama vrstica kode.",
+    "description": "The compiler validates every possible state before a single line of code runs."
+  },
+  "home.idea.deploy": {
+    "message": "Namesti",
+    "description": "Deploy"
+  },
+  "home.idea.deploy.text": {
+    "message": "En model se prevede v spletno, mobilno ali katero koli prihodnjo platformo. Model je izdelek.",
+    "description": "One model compiles to web, mobile, or any future platform. The model is the product."
+  },
+  "home.pillars.title": {
+    "message": "Trije stebri",
+    "description": "Three Pillars"
+  },
+  "home.pillars.language.title": {
+    "message": "Orb",
+    "description": "Orb"
+  },
+  "home.pillars.language.desc": {
+    "message": "Formalni jezik za opis vedenja programske opreme. Odprtokoden. Z vgrajeno umetno inteligenco. Preverjen s prevajalnikom.",
+    "description": "A formal language for describing how software behaves. Open source. AI-native. Compiler-verified."
+  },
+  "home.pillars.language.link": {
+    "message": "Raziščite jezik",
+    "description": "Explore the Language"
+  },
+  "home.pillars.studio.title": {
+    "message": "Almadar Studio",
+    "description": "Almadar Studio"
+  },
+  "home.pillars.studio.desc": {
+    "message": "Gradbeno okolje, kjer ljudje in agenti umetne inteligence skupaj ustvarjajo programsko opremo. Opišite, generirajte, namestite.",
+    "description": "The builder where humans and AI agents collaborate to create software. Describe, generate, deploy."
+  },
+  "home.pillars.studio.link": {
+    "message": "Preizkusite Studio",
+    "description": "Try Studio"
+  },
+  "home.pillars.services.title": {
+    "message": "Almadar Services",
+    "description": "Almadar Services"
+  },
+  "home.pillars.services.desc": {
+    "message": "Infrastruktura z vgrajeno umetno inteligenco. Računalništvo, shranjevanje, avtentikacija, usmerjanje dogodkov. Zasnovano za agente.",
+    "description": "AI-native infrastructure. Compute, storage, authentication, event routing. Designed for agents."
+  },
+  "home.pillars.services.link": {
+    "message": "Oglejte si storitve",
+    "description": "View Services"
+  },
+  "home.proof.title": {
+    "message": "Dokazano v produkciji",
+    "description": "Proven in Production"
+  },
+  "home.stats.behaviors.value": {
+    "message": "129",
+    "description": "129"
+  },
+  "home.stats.behaviors.label": {
+    "message": "Standardnih vedenj v 18 domenah",
+    "description": "Standard behaviors across 18 domains"
+  },
+  "home.stats.projects.value": {
+    "message": "7",
+    "description": "7"
+  },
+  "home.stats.projects.label": {
+    "message": "Produkcijskih projektov v uporabi",
+    "description": "Production projects deployed"
+  },
+  "home.stats.cost.value": {
+    "message": "$0,05–$0,35",
+    "description": "$0.05–$0.35"
+  },
+  "home.stats.cost.label": {
+    "message": "Strošek AI računanja na aplikacijo",
+    "description": "AI compute cost per application"
+  },
+  "home.ai.title": {
+    "message": "Treniramo lastne modele",
+    "description": "We Train Our Own Models"
+  },
+  "home.ai.text": {
+    "message": "Nismo podjetje, ki ovije API-je velikih jezikovnih modelov in temu reče umetna inteligenca. Naš nevronski cevovod razume strukturo programske opreme tako, kot šahovski motor razume pozicije na plošči. Napoveduje napake, ocenjuje popravke in generira veljavno programsko opremo iz nič.",
+    "description": "We are not a company that wraps LLM APIs and calls it AI. Our neural pipeline understands software structure the way a chess engine understands board positions. It predicts errors, evaluates fixes, and generates valid software from scratch."
+  },
+  "home.ai.text2": {
+    "message": "Za razumevanje naravnega jezika še vedno uporabljamo velike jezikovne modele. Toda jedro strukturne inteligence je naše: majhni, specializirani modeli, ki jih je skoraj brezplačno poganjati.",
+    "description": "We still use LLMs for natural language understanding. But the core structural intelligence is ours: small, specialized models that cost almost nothing to run."
+  },
+  "home.cta.title": {
+    "message": "Pripravljeni na gradnjo?",
+    "description": "Ready to build?"
+  },
+  "home.cta.text": {
+    "message": "Začnite z Orb. Gradite s Studio. Namestite na Almadar Services.",
+    "description": "Start with Orb. Build with Studio. Deploy on Almadar Services."
+  },
+  "home.cta.start": {
+    "message": "Začnite graditi",
+    "description": "Start Building"
+  },
+  "home.cta.vision": {
+    "message": "Preberite vizijo",
+    "description": "Read the Vision"
+  },
+  "home.meta.title": {
+    "message": "Almadar — Fizika programske opreme",
+    "description": "Almadar — The Physics of Software"
+  },
+  "home.meta.desc": {
+    "message": "Almadar gradi jezik, inteligenco in infrastrukturo za programsko opremo, ki razume samo sebe.",
+    "description": "Almadar builds the language, intelligence, and infrastructure for software that understands itself."
+  },
+  "platform.hero.title": {
+    "message": "Platforma",
+    "description": "The Platform"
+  },
+  "platform.hero.subtitle": {
+    "message": "Trije stebri, en cilj: formalne opise programske opreme pretvoriti v delujoče aplikacije.",
+    "description": "Three pillars, one goal: turn formal descriptions of software into running applications."
+  },
+  "platform.language.title": {
+    "message": "Orb",
+    "description": "Orb"
+  },
+  "platform.language.desc": {
+    "message": "Formalni jezik za opis vedenja programskih sistemov. Odprtokoden, preverjen s prevajalnikom, z vgrajeno umetno inteligenco.",
+    "description": "A formal language for describing how software systems behave. Open source, compiler-verified, AI-native."
+  },
+  "platform.language.link": {
+    "message": "Dokumentacija jezika",
+    "description": "Language Docs"
+  },
+  "platform.studio.title": {
+    "message": "Almadar Studio",
+    "description": "Almadar Studio"
+  },
+  "platform.studio.desc": {
+    "message": "Gradbeno okolje, kjer ljudje in umetna inteligenca sodelujejo. Opišite, kaj želite, v naravnem jeziku, agent umetne inteligence pa generira veljaven program .orb.",
+    "description": "The builder where humans and AI collaborate. Describe what you want in plain language, the AI agent generates a valid .orb program."
+  },
+  "platform.studio.link": {
+    "message": "Odprite Studio",
+    "description": "Open Studio"
+  },
+  "platform.services.title": {
+    "message": "Almadar Services",
+    "description": "Almadar Services"
+  },
+  "platform.services.desc": {
+    "message": "Infrastruktura z vgrajeno umetno inteligenco za dobo agentov. Računalništvo, shranjevanje, avtentikacija, usmerjanje dogodkov, orkestracija velikih jezikovnih modelov in nadzor.",
+    "description": "AI-native infrastructure for the agentic era. Compute, storage, authentication, event routing, LLM orchestration, and observability."
+  },
+  "platform.services.link": {
+    "message": "Oglejte si storitve",
+    "description": "View Services"
+  },
+  "platform.connect.title": {
+    "message": "Kako se povezujejo",
+    "description": "How They Connect"
+  },
+  "platform.connect.step1.title": {
+    "message": "Opiši",
+    "description": "Describe"
+  },
+  "platform.connect.step1.desc": {
+    "message": "Uporabniki opišejo, kaj potrebujejo, v Studio. Agent umetne inteligence prevede naravni jezik v kodo .orb.",
+    "description": "Users describe what they need in Studio. The AI agent translates natural language into .orb code."
+  },
+  "platform.connect.step2.title": {
+    "message": "Prevedi",
+    "description": "Compile"
+  },
+  "platform.connect.step2.desc": {
+    "message": "Prevajalnik Orb preveri program in generira celotno aplikacijo: sprednji del, zaledni del, podatkovno bazo.",
+    "description": "The Orb compiler validates the program and generates a full-stack application: frontend, backend, database."
+  },
+  "platform.connect.step3.title": {
+    "message": "Zaženi",
+    "description": "Run"
+  },
+  "platform.connect.step3.desc": {
+    "message": "Almadar Services gosti aplikacijo z vgrajenim usmerjanjem dogodkov, shranjevanjem, avtentikacijo in storitvami umetne inteligence.",
+    "description": "Almadar Services hosts the application with event routing, storage, authentication, and AI services built in."
+  },
+  "platform.cta.title": {
+    "message": "Začnite kjerkoli",
+    "description": "Start Anywhere"
+  },
+  "platform.cta.text": {
+    "message": "Spoznajte jezik, preizkusite graditelj ali raziščite infrastrukturo. Vsak steber deluje samostojno. Skupaj tvorijo celotno platformo.",
+    "description": "Learn the language, try the builder, or explore the infrastructure. Each pillar works on its own. Together, they form a complete platform."
+  },
+  "platform.cta.studio": {
+    "message": "Preizkusite Studio",
+    "description": "Try Studio"
+  },
+  "platform.cta.docs": {
+    "message": "Preberite dokumentacijo",
+    "description": "Read the Docs"
+  },
+  "platform.meta.title": {
+    "message": "Platforma — Jezik, Studio, Storitve",
+    "description": "Platform — Language, Studio, Services"
+  },
+  "platform.meta.desc": {
+    "message": "Trije stebri platforme Almadar.",
+    "description": "Three pillars of the Almadar platform."
+  },
+  "vision.hero.title": {
+    "message": "Skupna digitalna resničnost",
+    "description": "A Shared Digital Reality"
+  },
+  "vision.hero.subtitle": {
+    "message": "Programska oprema, ki sobiva, se usklajuje in skupaj razvija.",
+    "description": "Software that coexists, coordinates, and evolves together."
+  },
+  "vision.coexist.title": {
+    "message": "Programska oprema, ki sobiva",
+    "description": "Software That Coexists"
+  },
+  "vision.coexist.p1": {
+    "message": "Danes je vsaka aplikacija otok. Ima svoj podatkovni model, svoja pravila, svoj jezik. Prenašanje informacij med sistemi pomeni gradnjo mostov, ki se zlomijo vsakič, ko se katera koli stran spremeni.",
+    "description": "Today, every application is an island. It has its own data model, its own rules, its own language. Moving information between systems means building bridges that break every time either side changes."
+  },
+  "vision.coexist.p2": {
+    "message": "Verjamemo, da bi morala programska oprema deliti skupno slovnico. Ko dve aplikaciji opišeta svoje vedenje v Orb, se lahko izvorno razumeta.",
+    "description": "We believe software should share a common grammar. When two applications describe their behavior in Orb, they can understand each other natively."
+  },
+  "vision.ownership.title": {
+    "message": "Skupnosti ohranijo lastništvo",
+    "description": "Communities Keep Ownership"
+  },
+  "vision.ownership.p1": {
+    "message": "Trenutni model koncentrira moč. Nekaj platform obvladuje orodja, podatke in distribucijo.",
+    "description": "The current model concentrates power. A few platforms own the tools, the data, and the distribution."
+  },
+  "vision.ownership.p2": {
+    "message": "Almadar to spreminja. Orb je odprtokoden. Standardna knjižnica je odprtokodna.",
+    "description": "Almadar changes this. Orb is open source. The standard library is open source."
+  },
+  "vision.models.title": {
+    "message": "Sestavljivi svetovni modeli",
+    "description": "Composable World Models"
+  },
+  "vision.models.p1": {
+    "message": "Svetovni model je formalni opis delovanja neke domene: kaj obstaja, kako se spreminja, kakšna so pravila.",
+    "description": "A world model is a formal description of how a domain works: what exists, how it changes, what the rules are."
+  },
+  "vision.models.p2": {
+    "message": "To je dolgoročna igra. Ko bo dovolj domen imelo formalne modele, programska oprema ne bo več zbirka izoliranih programov, temveč skupna, interoperabilna digitalna resničnost.",
+    "description": "This is the long game. When enough domains have formal models, software stops being a collection of isolated programs and becomes a shared, interoperable digital reality."
+  },
+  "vision.cta.title": {
+    "message": "Gradite z nami",
+    "description": "Build With Us"
+  },
+  "vision.cta.text": {
+    "message": "Skupna digitalna resničnost se začne s prvim modelom. Napišite svojega.",
+    "description": "The shared digital reality starts with the first model. Write yours."
+  },
+  "vision.cta.language": {
+    "message": "Raziščite jezik",
+    "description": "Explore the Language"
+  },
+  "vision.cta.contact": {
+    "message": "Stopite v stik",
+    "description": "Get in Touch"
+  },
+  "vision.meta.title": {
+    "message": "Vizija — Skupna digitalna resničnost",
+    "description": "Vision — A Shared Digital Reality"
+  },
+  "vision.meta.desc": {
+    "message": "Programska oprema, ki sobiva, se usklajuje in skupaj razvija.",
+    "description": "Software that coexists, coordinates, and evolves together."
+  },
+  "ai.hero.tag": {
+    "message": "Naša umetna inteligenca",
+    "description": "Our AI"
+  },
+  "ai.hero.title": {
+    "message": "Treniramo lastne modele",
+    "description": "We Train Our Own Models"
+  },
+  "ai.hero.subtitle": {
+    "message": "Ne ovojnice okoli tuje inteligence. Namensko grajene nevronske mreže, ki razumejo strukturo programske opreme.",
+    "description": "Not wrappers around someone else's intelligence. Purpose-built neural networks that understand software structure."
+  },
+  "ai.pipeline.title": {
+    "message": "Nevronski cevovod",
+    "description": "The Neural Pipeline"
+  },
+  "ai.pipeline.subtitle": {
+    "message": "Šest specializiranih modelov, ki delujejo skupaj. Vsak počne eno stvar dobro.",
+    "description": "Six specialized models working together. Each one does one thing well."
+  },
+  "ai.pipeline.mutator.title": {
+    "message": "Schema Mutator",
+    "description": "Schema Mutator"
+  },
+  "ai.pipeline.mutator.desc": {
+    "message": "Generira kandidatne programe .orb iz visokonivojskih opisov.",
+    "description": "Generates candidate .orb programs from high-level descriptions."
+  },
+  "ai.pipeline.classifier.title": {
+    "message": "Quality Classifier",
+    "description": "Quality Classifier"
+  },
+  "ai.pipeline.classifier.desc": {
+    "message": "Oceni vsakega kandidata glede na pravilnost, popolnost in kakovost uporabniške izkušnje.",
+    "description": "Scores each candidate on correctness, completeness, and UX quality."
+  },
+  "ai.pipeline.graph.title": {
+    "message": "Graph Transformer",
+    "description": "Graph Transformer"
+  },
+  "ai.pipeline.graph.desc": {
+    "message": "Razume strukturo avtomatov stanj v programih .orb kot grafe.",
+    "description": "Understands the state machine structure of .orb programs as graphs."
+  },
+  "ai.pipeline.edit.title": {
+    "message": "Edit Predictor",
+    "description": "Edit Predictor"
+  },
+  "ai.pipeline.edit.desc": {
+    "message": "Ob programu in napaki pri preverjanju napove minimalno spremembo, ki napako odpravi.",
+    "description": "Given a program and a validation error, predicts the minimal edit that fixes it."
+  },
+  "ai.pipeline.gflownet.title": {
+    "message": "GFlowNet Generator",
+    "description": "GFlowNet Generator"
+  },
+  "ai.pipeline.gflownet.desc": {
+    "message": "Gradi programe .orb korak za korakom in vzorči sorazmerno s kakovostjo.",
+    "description": "Constructs .orb programs step by step, sampling proportionally to quality."
+  },
+  "ai.pipeline.integration.title": {
+    "message": "Integracijska plast",
+    "description": "Integration Layer"
+  },
+  "ai.pipeline.integration.desc": {
+    "message": "Orkestrira celoten cevovod od začetka do konca. Združuje nevronske napovedi s preverjanjem prevajalnika.",
+    "description": "Orchestrates the pipeline end to end. Combines neural predictions with compiler validation."
+  },
+  "ai.cost.title": {
+    "message": "Stroškovna prednost",
+    "description": "Cost Advantage"
+  },
+  "ai.cost.p1": {
+    "message": "Veliki jezikovni modeli stanejo od $0,50 do $5,00 na kompleksno generiranje. Naši specializirani modeli stanejo od $0,05 do $0,35 za enako nalogo.",
+    "description": "Large language models cost $0.50 to $5.00 per complex generation. Our specialized models cost $0.05 to $0.35 for the same task."
+  },
+  "ai.cost.p2": {
+    "message": "Prihranki izhajajo iz osredotočenosti. Veliki jezikovni model je splošen napovedovalec besedila. Naši modeli morajo razumeti le strukturo programov .orb.",
+    "description": "The savings come from focus. An LLM is a general-purpose text predictor. Our models only need to understand .orb program structure."
+  },
+  "ai.diff.title": {
+    "message": "Ne le ovojnice za velike jezikovne modele",
+    "description": "Not LLM Wrappers"
+  },
+  "ai.diff.p1": {
+    "message": "Velike jezikovne modele uporabljamo za razumevanje naravnega jezika. Toda strukturna inteligenca je naša. Trenirana na naših podatkih, optimizirana za našo domeno.",
+    "description": "We use LLMs for natural language understanding. But the structural intelligence is ours. Trained on our data, optimized for our domain."
+  },
+  "ai.diff.p2": {
+    "message": "To pomeni, da nadzorujemo svoje stroške, svojo kakovost in svoj načrt razvoja.",
+    "description": "This means we control our costs, our quality, and our roadmap."
+  },
+  "ai.diff.cta": {
+    "message": "Oglejte si platformo",
+    "description": "See the Platform"
+  },
+  "ai.meta.title": {
+    "message": "Umetna inteligenca — Trenirani modeli za generiranje programske opreme",
+    "description": "AI — Trained Models for Software Generation"
+  },
+  "ai.meta.desc": {
+    "message": "Namensko grajene nevronske mreže, ki razumejo strukturo programske opreme.",
+    "description": "Purpose-built neural networks that understand software structure."
+  },
+  "about.hero.title": {
+    "message": "O podjetju Almadar",
+    "description": "About Almadar"
+  },
+  "about.hero.subtitle": {
+    "message": "Majhna ekipa, ki gradi fiziko programske opreme. S sedežem v Ljubljani, Slovenija.",
+    "description": "A small team building the physics of software. Based in Ljubljana, Slovenia."
+  },
+  "about.team.title": {
+    "message": "Ekipa",
+    "description": "The Team"
+  },
+  "about.team.osama.role": {
+    "message": "Soustanovitelj in tehnični vodja",
+    "description": "Co-Founder & Technical Lead"
+  },
+  "about.team.osama.bio": {
+    "message": "Več kot 15 let izkušenj z gradnjo poslovnih sistemov. Arhitekt programskega jezika Orb in prevajalnika Almadar.",
+    "description": "15+ years building enterprise systems. Architect of the Orb programming language and the Almadar compiler."
+  },
+  "about.team.maja.role": {
+    "message": "Soustanoviteljica in vodja programov",
+    "description": "Co-Founder & Program Manager"
+  },
+  "about.team.maja.bio": {
+    "message": "Več kot 10 let izkušenj z izvajanjem poslovnih projektov in vodenjem programov.",
+    "description": "10+ years in enterprise delivery and program management."
+  },
+  "about.story.title": {
+    "message": "Zakaj to gradimo",
+    "description": "Why We Build This"
+  },
+  "about.story.p1": {
+    "message": "Razvoj programske opreme ima temeljno težavo: vrzel med tem, kar si nekdo želi, in tem, kar lahko zgradi, se nenehno povečuje.",
+    "description": "Software development has a fundamental problem: the gap between what someone wants and what they can build keeps growing."
+  },
+  "about.story.p2": {
+    "message": "Almadar smo začeli z drugačno predpostavko. Kaj če bi imela programska oprema fiziko?",
+    "description": "We started Almadar with a different premise. What if software had physics?"
+  },
+  "about.story.p3": {
+    "message": "Iz te predpostavke so nastali Orb, prevajalnik Almadar in nevronski cevovod.",
+    "description": "That premise became Orb, the Almadar compiler, and the neural pipeline."
+  },
+  "about.meta.title": {
+    "message": "O nas — Ekipa Almadar",
+    "description": "About — The Almadar Team"
+  },
+  "about.meta.desc": {
+    "message": "Majhna ekipa v Ljubljani, Slovenija, ki gradi fiziko programske opreme.",
+    "description": "A small team in Ljubljana, Slovenia, building the physics of software."
+  },
+  "contact.hero.title": {
+    "message": "Stopite v stik",
+    "description": "Get in Touch"
+  },
+  "contact.hero.subtitle": {
+    "message": "Vlagatelji, partnerstva in poslovna povpraševanja.",
+    "description": "Investors, partnerships, and enterprise inquiries."
+  },
+  "contact.investors.title": {
+    "message": "Vlagatelji",
+    "description": "Investors"
+  },
+  "contact.investors.desc": {
+    "message": "Gradimo temeljno infrastrukturo za programsko opremo z vgrajeno umetno inteligenco.",
+    "description": "We are building foundational infrastructure for AI-native software."
+  },
+  "contact.partnerships.title": {
+    "message": "Partnerstva",
+    "description": "Partnerships"
+  },
+  "contact.partnerships.desc": {
+    "message": "Sistemski integratorji, svetovalci in tehnološka podjetja.",
+    "description": "System integrators, consultancies, and technology companies."
+  },
+  "contact.enterprise.title": {
+    "message": "Podjetja",
+    "description": "Enterprise"
+  },
+  "contact.enterprise.desc": {
+    "message": "Namenske namestitve, namenski infrastruktura in prilagojeni modeli umetne inteligence.",
+    "description": "Custom deployments, dedicated infrastructure, and tailored AI models."
+  },
+  "contact.email.title": {
+    "message": "Pišite nam",
+    "description": "Write to Us"
+  },
+  "contact.email.text": {
+    "message": "Za kakršno koli povpraševanje nas kontaktirajte neposredno na:",
+    "description": "For any inquiry, reach us directly at:"
+  },
+  "contact.meta.title": {
+    "message": "Kontakt — Almadar",
+    "description": "Contact — Almadar"
+  },
+  "contact.meta.desc": {
+    "message": "Vlagatelji, partnerstva in poslovna povpraševanja. hello@almadar.io",
+    "description": "Investors, partnerships, and enterprise inquiries. hello@almadar.io"
+  }
+}

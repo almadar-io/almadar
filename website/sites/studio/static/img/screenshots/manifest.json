@@ -1,0 +1,105 @@
+{
+  "storybookUrl": "https://almadar-builder-design-system.web.app",
+  "capturedAt": "2026-03-11T07:03:15.524Z",
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "total": 13,
+  "passed": 13,
+  "skipped": 0,
+  "failed": 0,
+  "screenshots": [
+    {
+      "storyId": "builder-templates-aibuildertemplate--default",
+      "storyName": "Default",
+      "title": "Builder/Templates/AIBuilderTemplate",
+      "filename": "builder-templates-aibuildertemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "builder-templates-domainlogicview--default",
+      "storyName": "Default",
+      "title": "Builder/Templates/DomainLogicView",
+      "filename": "builder-templates-domainlogicview--default.png",
+      "success": true
+    },
+    {
+      "storyId": "builder-templates-logintemplate--default",
+      "storyName": "Default",
+      "title": "Builder/Templates/LoginTemplate",
+      "filename": "builder-templates-logintemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "builder-templates-previewdashboardtemplate--default",
+      "storyName": "Default",
+      "title": "Builder/Templates/PreviewDashboardTemplate",
+      "filename": "builder-templates-previewdashboardtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "builder-templates-previewtemplate--default",
+      "storyName": "Default",
+      "title": "Builder/Templates/PreviewTemplate",
+      "filename": "builder-templates-previewtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "builder-templates-settingstemplate--default",
+      "storyName": "Default",
+      "title": "Builder/Templates/SettingsTemplate",
+      "filename": "builder-templates-settingstemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "builder-templates-studiohomeelectrontemplate--default",
+      "storyName": "Default",
+      "title": "Builder/Templates/StudioHomeElectronTemplate",
+      "filename": "builder-templates-studiohomeelectrontemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "builder-templates-studiohomewebtemplate--default",
+      "storyName": "Default",
+      "title": "Builder/Templates/StudioHomeWebTemplate",
+      "filename": "builder-templates-studiohomewebtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "builder-templates-studioprojecttemplate--build-mode-schema",
+      "storyName": "Build Mode Schema",
+      "title": "Builder/Templates/StudioProjectTemplate",
+      "filename": "builder-templates-studioprojecttemplate--build-mode-schema.png",
+      "success": true
+    },
+    {
+      "storyId": "builder-templates-studiostatstemplate--default",
+      "storyName": "Default",
+      "title": "Builder/Templates/StudioStatsTemplate",
+      "filename": "builder-templates-studiostatstemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "builder-templates-validationtemplate--default",
+      "storyName": "Default",
+      "title": "Builder/Templates/ValidationTemplate",
+      "filename": "builder-templates-validationtemplate--default.png",
+      "success": true
+    },
+    {
+      "storyId": "builder-templates-validationview--default",
+      "storyName": "Default",
+      "title": "Builder/Templates/ValidationView",
+      "filename": "builder-templates-validationview--default.png",
+      "success": true
+    },
+    {
+      "storyId": "builder-templates-workspacetemplate--default",
+      "storyName": "Default",
+      "title": "Builder/Templates/WorkspaceTemplate",
+      "filename": "builder-templates-workspacetemplate--default.png",
+      "success": true
+    }
+  ]
+}

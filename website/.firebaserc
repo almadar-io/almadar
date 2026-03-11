@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "kflow-b3a39"
+  },
+  "targets": {
+    "kflow-b3a39": {
+      "hosting": {
+        "main": ["almadar-main"],
+        "orb": ["almadar-orb"],
+        "studio": ["almadar-studio"],
+        "services": ["almadar-services"]
+      }
+    }
+  }
+}

@@ -1,0 +1,254 @@
+{
+  "orb.hero.tag": {
+    "message": "Odprta koda",
+    "description": "Open Source"
+  },
+  "orb.hero.title": {
+    "message": "Orb",
+    "description": "Orb"
+  },
+  "orb.hero.subtitle": {
+    "message": "Formalni jezik za opis vedenja programskih sistemov. Napišite model. Prevajalnik dokaže, da je pravilen.",
+    "description": "A formal language for describing how software systems behave. Write the model. The compiler proves it correct."
+  },
+  "orb.hero.cta1": {
+    "message": "Začnite",
+    "description": "Get Started"
+  },
+  "orb.hero.cta2": {
+    "message": "Standardna knjižnica",
+    "description": "Standard Library"
+  },
+  "orb.example.title": {
+    "message": "Ena datoteka, celotna aplikacija",
+    "description": "One File, Full Application"
+  },
+  "orb.example.subtitle": {
+    "message": "Popoln upravljalnik nalog v eni sami datoteki .orb.",
+    "description": "A complete task manager in a single .orb file."
+  },
+  "orb.why.title": {
+    "message": "Zakaj Orb?",
+    "description": "Why Orb?"
+  },
+  "orb.why.compile.title": {
+    "message": "Napiši enkrat, prevedi za karkoli",
+    "description": "Write Once, Compile Anywhere"
+  },
+  "orb.why.compile.desc": {
+    "message": "En model .orb se prevede v spletno, mobilno, namizno ali katero koli prihodnjo platformo.",
+    "description": "One .orb model compiles to web, mobile, desktop, or any future platform."
+  },
+  "orb.why.correct.title": {
+    "message": "Dokazljivo pravilno",
+    "description": "Provably Correct"
+  },
+  "orb.why.correct.desc": {
+    "message": "Prevajalnik preveri vsak prehod avtomata stanj, vsak pogoj, vsak učinek.",
+    "description": "The compiler validates every state machine transition, every guard, every effect."
+  },
+  "orb.why.ai.title": {
+    "message": "Umetna inteligenca ga generira izvorno",
+    "description": "AI Generates It Natively"
+  },
+  "orb.why.ai.desc": {
+    "message": "Strukturiran, formalen in kompakten. Modeli umetne inteligence generirajo veljavne programe .orb bolj zanesljivo kot poljubno kodo.",
+    "description": "Structured, formal, and compact. AI models generate valid .orb programs more reliably than arbitrary code."
+  },
+  "orb.stdlib.title": {
+    "message": "Standardna knjižnica",
+    "description": "Standard Library"
+  },
+  "orb.stdlib.subtitle": {
+    "message": "103 produkcijsko kakovostnih vedenj v 18 domenah.",
+    "description": "103 production-quality behaviors across 18 domains."
+  },
+  "orb.stdlib.cta": {
+    "message": "Brskajte po standardni knjižnici",
+    "description": "Browse the Standard Library"
+  },
+  "orb.community.title": {
+    "message": "Odprtokodna skupnost",
+    "description": "Open Source Community"
+  },
+  "orb.community.subtitle": {
+    "message": "Orb in prevajalnik sta odprtokodna.",
+    "description": "Orb and its compiler are open source."
+  },
+  "orb.meta.title": {
+    "message": "Orb — Programski jezik za formalne svetovne modele",
+    "description": "Orb — A Programming Language for Formal World Models"
+  },
+  "orb.meta.desc": {
+    "message": "Orb opisuje, kako se programski sistemi vedejo.",
+    "description": "Orb describes how software systems behave."
+  },
+  "stdlib.hero.title": {
+    "message": "Standardna knjižnica",
+    "description": "Standard Library"
+  },
+  "stdlib.hero.subtitle": {
+    "message": "103 produkcijsko kakovostnih vedenj v 18 domenah.",
+    "description": "103 production-quality behaviors across 18 domains."
+  },
+  "stdlib.domains.title": {
+    "message": "18 domen",
+    "description": "18 Domains"
+  },
+  "stdlib.domains.subtitle": {
+    "message": "Vsaka domena vsebuje produkcijsko pripravljena vedenja z entitetami, lastnostmi in stranmi.",
+    "description": "Each domain contains production-ready behaviors with entities, traits, and pages."
+  },
+  "stdlib.howto.title": {
+    "message": "Kako uporabljati",
+    "description": "How to Use"
+  },
+  "stdlib.howto.p1": {
+    "message": "Vedenja standardne knjižnice so distribuirana kot del paketa @almadar/std.",
+    "description": "Standard library behaviors are distributed as part of the @almadar/std package."
+  },
+  "stdlib.howto.p2": {
+    "message": "Vsako vedenje je popolna enota: definicije entitet, avtomati stanj, vzorci uporabniškega vmesnika in pogodbe dogodkov.",
+    "description": "Each behavior is a complete unit: entity definitions, state machines, UI patterns, and event contracts."
+  },
+  "stdlib.cta.title": {
+    "message": "Začnite",
+    "description": "Get Started"
+  },
+  "stdlib.cta.text": {
+    "message": "Namestite orodje CLI in začnite graditi s standardno knjižnico.",
+    "description": "Install the CLI and start building with the standard library."
+  },
+  "stdlib.cta.docs": {
+    "message": "Preberite dokumentacijo",
+    "description": "Read the Docs"
+  },
+  "stdlib.cta.download": {
+    "message": "Prenesite",
+    "description": "Download"
+  },
+  "stdlib.meta.title": {
+    "message": "Standardna knjižnica — 103 vedenj, 18 domen",
+    "description": "Standard Library — 103 Behaviors, 18 Domains"
+  },
+  "stdlib.meta.desc": {
+    "message": "Produkcijsko kakovostna vedenja za trgovino, zdravstvo, izobraževanje, finance, načrtovanje urnikov in še 13 drugih domen.",
+    "description": "Production-quality behaviors for Commerce, Healthcare, Education, Finance, Scheduling, and 13 more domains."
+  },
+  "downloads.hero.title": {
+    "message": "Prenosi",
+    "description": "Downloads"
+  },
+  "downloads.hero.subtitle": {
+    "message": "Prenesite orodje CLI, razširitve za urejevalnik in začnite graditi.",
+    "description": "Get the CLI, editor extensions, and start building."
+  },
+  "downloads.cli.title": {
+    "message": "Orbital CLI",
+    "description": "Orbital CLI"
+  },
+  "downloads.cli.desc": {
+    "message": "Prevajalnik in razvojni strežnik za ukazno vrstico.",
+    "description": "The command-line compiler and development server."
+  },
+  "downloads.vscode.title": {
+    "message": "Razširitev za VS Code",
+    "description": "VS Code Extension"
+  },
+  "downloads.vscode.desc": {
+    "message": "Barvanje skladnje, preverjanje in samodejno dopolnjevanje za datoteke .orb.",
+    "description": "Syntax highlighting, validation, and autocomplete for .orb files."
+  },
+  "downloads.vscode.link": {
+    "message": "Namestite iz Marketplace",
+    "description": "Install from Marketplace"
+  },
+  "downloads.zed.title": {
+    "message": "Razširitev za Zed",
+    "description": "Zed Extension"
+  },
+  "downloads.zed.desc": {
+    "message": "Izvorna podpora za .orb v urejevalniku Zed.",
+    "description": "Native .orb support for the Zed editor."
+  },
+  "downloads.zed.link": {
+    "message": "Namestite iz Zed Extensions",
+    "description": "Install from Zed Extensions"
+  },
+  "downloads.extensions.title": {
+    "message": "Razširitve za urejevalnik",
+    "description": "Editor Extensions"
+  },
+  "downloads.next.title": {
+    "message": "Naslednji koraki",
+    "description": "Next Steps"
+  },
+  "downloads.next.text": {
+    "message": "Namestite orodje CLI in sledite vodniku za začetek.",
+    "description": "Install the CLI, then follow the getting started guide."
+  },
+  "downloads.next.cta": {
+    "message": "Vodnik za začetek",
+    "description": "Getting Started Guide"
+  },
+  "downloads.meta.title": {
+    "message": "Prenosi — CLI in razširitve za urejevalnik",
+    "description": "Downloads — CLI & Editor Extensions"
+  },
+  "downloads.meta.desc": {
+    "message": "Prenesite Orbital CLI, razširitev za VS Code in razširitev za Zed.",
+    "description": "Download the Orbital CLI, VS Code extension, and Zed extension."
+  },
+  "playground.running": {
+    "message": "Izvajanje ...",
+    "description": "Running..."
+  },
+  "playground.empty": {
+    "message": "Napišite s-izraz in pritisnite Zaženi (ali Ctrl+Enter)",
+    "description": "Write an s-expression and press Run (or Ctrl+Enter)"
+  },
+  "playground.error": {
+    "message": "Napaka",
+    "description": "Error"
+  },
+  "playground.examples": {
+    "message": "Primeri",
+    "description": "Examples"
+  },
+  "playground.copied": {
+    "message": "Kopirano!",
+    "description": "Copied!"
+  },
+  "playground.share": {
+    "message": "Deli",
+    "description": "Share"
+  },
+  "playground.run": {
+    "message": "Zaženi",
+    "description": "Run"
+  },
+  "playground.title": {
+    "message": "Peskovnik",
+    "description": "Playground"
+  },
+  "playground.subtitle": {
+    "message": "Izvajajte Almadar s-izraze v brskalniku. Brez namestitve.",
+    "description": "Run Almadar s-expressions in the browser. No installation needed."
+  },
+  "playground.loading": {
+    "message": "Nalaganje peskovnika ...",
+    "description": "Loading playground..."
+  },
+  "playground.meta.title": {
+    "message": "Peskovnik — Almadar",
+    "description": "Playground — Almadar"
+  },
+  "playground.meta.description": {
+    "message": "Interaktivni peskovnik za Almadar s-izraze.",
+    "description": "Interactive Almadar s-expression playground."
+  },
+  "playground.renderui.empty": {
+    "message": "Napišite s-izraz render-ui, da vidite rezultat",
+    "description": "Write a render-ui s-expression to see the output"
+  }
+}

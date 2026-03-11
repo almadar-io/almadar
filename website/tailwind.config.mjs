@@ -17,6 +17,13 @@ export default {
     './.storybook/**/*.{js,ts,jsx,tsx}',
     // Website source
     './src/**/*.{js,ts,jsx,tsx}',
+    // Individual site sources
+    './sites/main/src/**/*.{js,ts,jsx,tsx}',
+    './sites/studio/src/**/*.{js,ts,jsx,tsx}',
+    './sites/services/src/**/*.{js,ts,jsx,tsx}',
+    './sites/orb/src/**/*.{js,ts,jsx,tsx}',
+    // Shared modules used across sites
+    './shared/**/*.{js,ts,jsx,tsx}',
   ],
   darkMode: 'class',
   theme: {

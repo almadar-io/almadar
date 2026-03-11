@@ -1,0 +1,254 @@
+{
+  "orb.hero.tag": {
+    "message": "مفتوح المصدر",
+    "description": "Open Source"
+  },
+  "orb.hero.title": {
+    "message": "Orb",
+    "description": "Orb"
+  },
+  "orb.hero.subtitle": {
+    "message": "لغة رسمية لوصف سلوك الأنظمة البرمجية. اكتب النموذج. المترجم يُثبت صحته. الذكاء الاصطناعي يُنشئه ويستهلكه بشكل طبيعي.",
+    "description": "A formal language for describing how software systems behave. Write the model. The compiler proves it correct. AI generates and consumes it natively."
+  },
+  "orb.hero.cta1": {
+    "message": "ابدأ الآن",
+    "description": "Get Started"
+  },
+  "orb.hero.cta2": {
+    "message": "المكتبة المعيارية",
+    "description": "Standard Library"
+  },
+  "orb.example.title": {
+    "message": "ملف واحد، تطبيق كامل",
+    "description": "One File, Full Application"
+  },
+  "orb.example.subtitle": {
+    "message": "مدير مهام كامل في ملف .orb واحد. المترجم يُنشئ الواجهة الأمامية والخادم الخلفي وقاعدة البيانات وواجهة API.",
+    "description": "A complete task manager in a single .orb file. The compiler generates frontend, backend, database, and API."
+  },
+  "orb.why.title": {
+    "message": "لماذا Orb؟",
+    "description": "Why Orb?"
+  },
+  "orb.why.compile.title": {
+    "message": "اكتب مرة، ترجِم لأي مكان",
+    "description": "Write Once, Compile Anywhere"
+  },
+  "orb.why.compile.desc": {
+    "message": "نموذج .orb واحد يُترجم إلى الويب أو الهاتف أو سطح المكتب أو أي منصة مستقبلية. السلوك مستقل عن المنصة.",
+    "description": "One .orb model compiles to web, mobile, desktop, or any future platform. The behavior is platform-independent."
+  },
+  "orb.why.correct.title": {
+    "message": "صحة مُثبتة",
+    "description": "Provably Correct"
+  },
+  "orb.why.correct.desc": {
+    "message": "المترجم يتحقق من كل انتقال في آلة الحالة وكل حارس وكل تأثير. إذا تمت الترجمة، فإنه يعمل.",
+    "description": "The compiler validates every state machine transition, every guard, every effect. If it compiles, it works."
+  },
+  "orb.why.ai.title": {
+    "message": "الذكاء الاصطناعي يُنشئه بشكل طبيعي",
+    "description": "AI Generates It Natively"
+  },
+  "orb.why.ai.desc": {
+    "message": "منظّم ورسمي ومضغوط. نماذج الذكاء الاصطناعي تُنشئ برامج .orb صالحة بموثوقية أعلى من الكود العشوائي.",
+    "description": "Structured, formal, and compact. AI models generate valid .orb programs more reliably than arbitrary code."
+  },
+  "orb.stdlib.title": {
+    "message": "المكتبة المعيارية",
+    "description": "Standard Library"
+  },
+  "orb.stdlib.subtitle": {
+    "message": "103 سلوكيات بجودة إنتاجية عبر 18 مجالاً. التجارة والرعاية الصحية والتعليم والمالية والجدولة وسير العمل والمزيد.",
+    "description": "103 production-quality behaviors across 18 domains. Commerce, healthcare, education, finance, scheduling, workflow, and more."
+  },
+  "orb.stdlib.cta": {
+    "message": "تصفح المكتبة المعيارية",
+    "description": "Browse the Standard Library"
+  },
+  "orb.community.title": {
+    "message": "مجتمع مفتوح المصدر",
+    "description": "Open Source Community"
+  },
+  "orb.community.subtitle": {
+    "message": "Orb والمترجم مفتوحا المصدر. ساهم أو أبلغ عن مشكلات أو ابنِ شيئاً جديداً.",
+    "description": "Orb and its compiler are open source. Contribute, report issues, or build something new."
+  },
+  "orb.meta.title": {
+    "message": "Orb — لغة برمجة للنماذج العالمية الرسمية",
+    "description": "Orb — A Programming Language for Formal World Models"
+  },
+  "orb.meta.desc": {
+    "message": "Orb تصف سلوك الأنظمة البرمجية. اكتب النموذج، والمترجم يُثبت صحته.",
+    "description": "Orb describes how software systems behave. Write the model, the compiler proves it correct."
+  },
+  "stdlib.hero.title": {
+    "message": "المكتبة المعيارية",
+    "description": "Standard Library"
+  },
+  "stdlib.hero.subtitle": {
+    "message": "103 سلوكيات بجودة إنتاجية عبر 18 مجالاً. استوردها وركّبها في برامج .orb الخاصة بك.",
+    "description": "103 production-quality behaviors across 18 domains. Import and compose them into your .orb programs."
+  },
+  "stdlib.domains.title": {
+    "message": "18 مجالاً",
+    "description": "18 Domains"
+  },
+  "stdlib.domains.subtitle": {
+    "message": "كل مجال يحتوي على سلوكيات جاهزة للإنتاج مع كيانات وسمات وصفحات. استورد ما تحتاجه.",
+    "description": "Each domain contains production-ready behaviors with entities, traits, and pages. Import what you need."
+  },
+  "stdlib.howto.title": {
+    "message": "كيفية الاستخدام",
+    "description": "How to Use"
+  },
+  "stdlib.howto.p1": {
+    "message": "سلوكيات المكتبة المعيارية تُوزّع كجزء من حزمة @almadar/std. أشِر إليها في برنامج .orb الخاص بك بالمجال والاسم. المترجم يحل الاستيرادات ويتحقق من التوافق.",
+    "description": "Standard library behaviors are distributed as part of the @almadar/std package. Reference them in your .orb program by domain and name. The compiler resolves imports and validates compatibility."
+  },
+  "stdlib.howto.p2": {
+    "message": "كل سلوك وحدة متكاملة: تعريفات كيانات وآلات حالة وأنماط واجهة مستخدم وعقود أحداث. يمكنك استخدامها كما هي أو تجاوز أجزاء محددة للتخصيص حسب مجالك.",
+    "description": "Each behavior is a complete unit: entity definitions, state machines, UI patterns, and event contracts. You can use them as-is or override specific parts to customize for your domain."
+  },
+  "stdlib.cta.title": {
+    "message": "ابدأ الآن",
+    "description": "Get Started"
+  },
+  "stdlib.cta.text": {
+    "message": "ثبّت واجهة سطر الأوامر وابدأ البناء مع المكتبة المعيارية.",
+    "description": "Install the CLI and start building with the standard library."
+  },
+  "stdlib.cta.docs": {
+    "message": "اقرأ التوثيق",
+    "description": "Read the Docs"
+  },
+  "stdlib.cta.download": {
+    "message": "تحميل",
+    "description": "Download"
+  },
+  "stdlib.meta.title": {
+    "message": "المكتبة المعيارية — 103 سلوكيات، 18 مجالاً",
+    "description": "Standard Library — 103 Behaviors, 18 Domains"
+  },
+  "stdlib.meta.desc": {
+    "message": "سلوكيات بجودة إنتاجية للتجارة والرعاية الصحية والتعليم والمالية والجدولة و13 مجالاً آخر.",
+    "description": "Production-quality behaviors for Commerce, Healthcare, Education, Finance, Scheduling, and 13 more domains."
+  },
+  "downloads.hero.title": {
+    "message": "التحميلات",
+    "description": "Downloads"
+  },
+  "downloads.hero.subtitle": {
+    "message": "احصل على واجهة سطر الأوامر وإضافات المحررات وابدأ البناء.",
+    "description": "Get the CLI, editor extensions, and start building."
+  },
+  "downloads.cli.title": {
+    "message": "Orbital CLI",
+    "description": "Orbital CLI"
+  },
+  "downloads.cli.desc": {
+    "message": "مترجم سطر الأوامر وخادم التطوير. تحقق وترجم وشغّل برامج .orb محلياً.",
+    "description": "The command-line compiler and development server. Validate, compile, and run .orb programs locally."
+  },
+  "downloads.vscode.title": {
+    "message": "إضافة VS Code",
+    "description": "VS Code Extension"
+  },
+  "downloads.vscode.desc": {
+    "message": "تمييز بناء الجمل والتحقق والإكمال التلقائي لملفات .orb في Visual Studio Code.",
+    "description": "Syntax highlighting, validation, and autocomplete for .orb files in Visual Studio Code."
+  },
+  "downloads.vscode.link": {
+    "message": "تثبيت من المتجر",
+    "description": "Install from Marketplace"
+  },
+  "downloads.zed.title": {
+    "message": "إضافة Zed",
+    "description": "Zed Extension"
+  },
+  "downloads.zed.desc": {
+    "message": "دعم .orb أصيل لمحرر Zed. تمييز بناء الجمل وقواعد Tree-sitter.",
+    "description": "Native .orb support for the Zed editor. Syntax highlighting and Tree-sitter grammar."
+  },
+  "downloads.zed.link": {
+    "message": "تثبيت من إضافات Zed",
+    "description": "Install from Zed Extensions"
+  },
+  "downloads.extensions.title": {
+    "message": "إضافات المحررات",
+    "description": "Editor Extensions"
+  },
+  "downloads.next.title": {
+    "message": "الخطوات التالية",
+    "description": "Next Steps"
+  },
+  "downloads.next.text": {
+    "message": "ثبّت واجهة سطر الأوامر، ثم اتبع دليل البدء لبناء أول تطبيق .orb لك.",
+    "description": "Install the CLI, then follow the getting started guide to build your first .orb application."
+  },
+  "downloads.next.cta": {
+    "message": "دليل البدء",
+    "description": "Getting Started Guide"
+  },
+  "downloads.meta.title": {
+    "message": "التحميلات — واجهة سطر الأوامر وإضافات المحررات",
+    "description": "Downloads — CLI & Editor Extensions"
+  },
+  "downloads.meta.desc": {
+    "message": "حمّل Orbital CLI وإضافة VS Code وإضافة Zed.",
+    "description": "Download the Orbital CLI, VS Code extension, and Zed extension."
+  },
+  "playground.running": {
+    "message": "جارٍ التشغيل...",
+    "description": "Running..."
+  },
+  "playground.empty": {
+    "message": "اكتب تعبير s-expression واضغط تشغيل (أو Ctrl+Enter)",
+    "description": "Write an s-expression and press Run (or Ctrl+Enter)"
+  },
+  "playground.error": {
+    "message": "خطأ",
+    "description": "Error"
+  },
+  "playground.examples": {
+    "message": "أمثلة",
+    "description": "Examples"
+  },
+  "playground.copied": {
+    "message": "تم النسخ!",
+    "description": "Copied!"
+  },
+  "playground.share": {
+    "message": "مشاركة",
+    "description": "Share"
+  },
+  "playground.run": {
+    "message": "تشغيل",
+    "description": "Run"
+  },
+  "playground.title": {
+    "message": "ساحة التجربة",
+    "description": "Playground"
+  },
+  "playground.subtitle": {
+    "message": "شغّل تعبيرات Almadar s-expressions في المتصفح. لا حاجة للتثبيت.",
+    "description": "Run Almadar s-expressions in the browser. No installation needed."
+  },
+  "playground.loading": {
+    "message": "جارٍ تحميل ساحة التجربة...",
+    "description": "Loading playground..."
+  },
+  "playground.meta.title": {
+    "message": "ساحة التجربة — Almadar",
+    "description": "Playground — Almadar"
+  },
+  "playground.meta.description": {
+    "message": "ساحة تجربة تفاعلية لتعبيرات Almadar s-expressions. اكتب وشغّل المعاملات مباشرة في المتصفح.",
+    "description": "Interactive Almadar s-expression playground. Write and run operators directly in the browser."
+  },
+  "playground.renderui.empty": {
+    "message": "اكتب تعبير render-ui s-expression لرؤية المخرجات",
+    "description": "Write a render-ui s-expression to see the output"
+  }
+}

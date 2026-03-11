@@ -1,0 +1,346 @@
+/* ==========================================
+   Almadar Main Site — Homepage Styles
+   Sand Gold + Teal palette
+   ========================================== */
+
+/* === Hero === */
+.hero {
+  background: var(--almadar-midnight);
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201, 162, 39, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 100%, rgba(20, 184, 166, 0.1) 0%, transparent 50%);
+  color: var(--almadar-parchment);
+  padding: 6rem 0 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroText {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.heroTitle {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--almadar-parchment);
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.heroSubtitle {
+  font-size: 1.35rem;
+  color: var(--almadar-parchment-muted);
+  max-width: 660px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.6;
+  font-family: var(--ifm-font-family-base);
+}
+
+.tag {
+  display: inline-block;
+  background: rgba(201, 162, 39, 0.15);
+  color: var(--almadar-sand-gold-light);
+  padding: 0.35rem 1rem;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(201, 162, 39, 0.25);
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* === Sections === */
+.section {
+  padding: var(--section-padding) 0;
+}
+
+.sectionAlt {
+  background: rgba(201, 162, 39, 0.03);
+}
+
+[data-theme="dark"] .sectionAlt {
+  background: rgba(201, 162, 39, 0.05);
+}
+
+.sectionDark {
+  background: var(--almadar-midnight);
+  color: var(--almadar-parchment);
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.sectionSubtitle {
+  font-size: 1.15rem;
+  color: var(--almadar-parchment-muted);
+  max-width: 680px;
+  margin: 1rem auto 0;
+  line-height: 1.7;
+}
+
+[data-theme="light"] .sectionSubtitle {
+  color: #64748b;
+}
+
+/* === THE IDEA — World Model Grid === */
+.ideaGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.ideaCard {
+  background: var(--ifm-background-surface-color, #fff);
+  border: 1px solid rgba(201, 162, 39, 0.15);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  text-align: center;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.ideaCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(201, 162, 39, 0.1);
+}
+
+.ideaIcon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+.ideaCard h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  color: var(--almadar-sand-gold);
+}
+
+.ideaCard p {
+  font-size: 0.95rem;
+  color: var(--almadar-parchment-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+[data-theme="light"] .ideaCard p {
+  color: #64748b;
+}
+
+/* === THREE PILLARS === */
+.pillarsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.pillarCard {
+  background: var(--ifm-background-surface-color, #fff);
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2rem;
+  position: relative;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.pillarCard::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--almadar-sand-gold), var(--almadar-teal));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.pillarCard:hover::before {
+  opacity: 1;
+}
+
+.pillarCard:hover {
+  box-shadow: 0 8px 32px rgba(201, 162, 39, 0.12);
+}
+
+.pillarCard h3 {
+  font-size: 1.35rem;
+  margin-bottom: 1rem;
+}
+
+.pillarCard p {
+  font-size: 1rem;
+  color: var(--almadar-parchment-muted);
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+}
+
+[data-theme="light"] .pillarCard p {
+  color: #64748b;
+}
+
+.pillarLink {
+  color: var(--almadar-sand-gold);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.pillarLink:hover {
+  color: var(--almadar-sand-gold-light);
+  text-decoration: none;
+}
+
+/* === PROOF — Stats === */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.statCard {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.statValue {
+  display: block;
+  font-size: 3rem;
+  font-weight: 800;
+  background: var(--site-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+  font-family: var(--ifm-heading-font-family);
+}
+
+.statLabel {
+  display: block;
+  font-size: 1rem;
+  color: var(--almadar-parchment-muted);
+  line-height: 1.5;
+}
+
+[data-theme="light"] .statLabel {
+  color: #64748b;
+}
+
+/* === AI IDENTITY === */
+.aiContent {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.aiTitle {
+  color: var(--almadar-parchment);
+  margin-bottom: 1.5rem;
+}
+
+.aiText {
+  color: var(--almadar-parchment-muted);
+  font-size: 1.1rem;
+  line-height: 1.75;
+  margin-bottom: 1.25rem;
+}
+
+/* === CTA === */
+.ctaCard {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  border: 1px solid rgba(201, 162, 39, 0.2);
+  border-radius: var(--radius-xl);
+  background: var(--ifm-background-surface-color, #fff);
+  position: relative;
+}
+
+.ctaCard::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, var(--almadar-sand-gold), var(--almadar-teal));
+  z-index: -1;
+  opacity: 0.3;
+}
+
+.ctaCard h2 {
+  margin-bottom: 1rem;
+}
+
+.ctaCard p {
+  color: var(--almadar-parchment-muted);
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+[data-theme="light"] .ctaCard p {
+  color: #64748b;
+}
+
+/* === Responsive === */
+@media (max-width: 996px) {
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.15rem;
+    margin: 0 auto 2.5rem;
+  }
+
+  .ideaGrid,
+  .pillarsGrid,
+  .statsGrid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+  }
+
+  .section {
+    padding: 3.5rem 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 4rem 0 3rem;
+  }
+
+  .heroTitle {
+    font-size: 2rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1rem;
+  }
+
+  .statValue {
+    font-size: 2.25rem;
+  }
+
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}

@@ -4,6 +4,8 @@ node_modules/
 # Build output
 build/
 .docusaurus/
+sites/*/build/
+sites/*/.docusaurus/
 .firebase/
 static/storybook/
 

@@ -1,0 +1,318 @@
+{
+  "services.hero.tag": {
+    "message": "Infrastruktura",
+    "description": "Infrastructure"
+  },
+  "services.hero.title": {
+    "message": "Infrastruktura za dobo agentov",
+    "description": "Infrastructure for the Agentic Era"
+  },
+  "services.hero.subtitle": {
+    "message": "Računalništvo, shranjevanje in orkestracija z vgrajeno umetno inteligenco.",
+    "description": "AI-native compute, storage, and orchestration."
+  },
+  "services.hero.cta1": {
+    "message": "Oglejte si cenik",
+    "description": "View Pricing"
+  },
+  "services.hero.cta2": {
+    "message": "Raziščite storitve",
+    "description": "Explore Services"
+  },
+  "services.layers.title": {
+    "message": "Tri plasti",
+    "description": "Three Layers"
+  },
+  "services.layers.subtitle": {
+    "message": "Inteligenca na vrhu, infrastruktura v sredini, integracije na robu.",
+    "description": "Intelligence on top, infrastructure in the middle, integrations at the edge."
+  },
+  "services.layers.brains.title": {
+    "message": "Brains",
+    "description": "Brains"
+  },
+  "services.layers.brains.desc": {
+    "message": "Orkestracija velikih jezikovnih modelov, upravljanje pomnilnika, upravljanje sej.",
+    "description": "LLM orchestration, memory management, session handling."
+  },
+  "services.layers.brains.link": {
+    "message": "Storitve umetne inteligence",
+    "description": "AI Services"
+  },
+  "services.layers.metal.title": {
+    "message": "Metal",
+    "description": "Metal"
+  },
+  "services.layers.metal.desc": {
+    "message": "Vodilo dogodkov, trajno shranjevanje, odkrivanje storitev, hrambo podatkov.",
+    "description": "Event bus, persistence, service discovery, storage."
+  },
+  "services.layers.metal.link": {
+    "message": "Računalniške storitve",
+    "description": "Compute Services"
+  },
+  "services.layers.integrations.title": {
+    "message": "Integracije",
+    "description": "Integrations"
+  },
+  "services.layers.integrations.desc": {
+    "message": "Stripe, Twilio, GitHub, e-pošta, YouTube, Docker, Redis.",
+    "description": "Stripe, Twilio, GitHub, Email, YouTube, Docker, Redis."
+  },
+  "services.layers.integrations.link": {
+    "message": "Katalog integracij",
+    "description": "Integration Catalog"
+  },
+  "services.catalog.title": {
+    "message": "Katalog storitev",
+    "description": "Service Catalog"
+  },
+  "services.waitlist.title": {
+    "message": "Kmalu na voljo",
+    "description": "Coming Soon"
+  },
+  "services.waitlist.text": {
+    "message": "Almadar Services je v zasebni beta različici. Pridružite se čakalni vrsti.",
+    "description": "Almadar Services is in private beta. Join the waitlist."
+  },
+  "services.waitlist.cta": {
+    "message": "Pridružite se čakalni vrsti",
+    "description": "Join Waitlist"
+  },
+  "services.meta.title": {
+    "message": "Almadar Services — Infrastruktura za dobo agentov",
+    "description": "Almadar Services — Infrastructure for the Agentic Era"
+  },
+  "services.meta.desc": {
+    "message": "Računalništvo, shranjevanje in orkestracija z vgrajeno umetno inteligenco.",
+    "description": "AI-native compute, storage, and orchestration."
+  },
+  "brains.hero.tag": {
+    "message": "Plast umetne inteligence",
+    "description": "AI Layer"
+  },
+  "brains.hero.title": {
+    "message": "Brains",
+    "description": "Brains"
+  },
+  "brains.hero.subtitle": {
+    "message": "Plast inteligence. Orkestracija velikih jezikovnih modelov, pomnilnik, seje.",
+    "description": "The intelligence layer. LLM orchestration, memory, sessions."
+  },
+  "brains.services.title": {
+    "message": "Storitve umetne inteligence",
+    "description": "AI Services"
+  },
+  "brains.cta.title": {
+    "message": "Raziščite druge plasti",
+    "description": "Explore Other Layers"
+  },
+  "brains.cta.metal": {
+    "message": "Storitve Metal",
+    "description": "Metal Services"
+  },
+  "brains.cta.integrations": {
+    "message": "Integracije",
+    "description": "Integrations"
+  },
+  "brains.meta.title": {
+    "message": "Brains — Storitve umetne inteligence",
+    "description": "Brains — AI Services"
+  },
+  "brains.meta.desc": {
+    "message": "Orkestracija velikih jezikovnih modelov, upravljanje pomnilnika, upravljanje sej.",
+    "description": "LLM orchestration, memory management, session handling."
+  },
+  "metal.hero.tag": {
+    "message": "Infrastrukturna plast",
+    "description": "Infrastructure Layer"
+  },
+  "metal.hero.title": {
+    "message": "Metal",
+    "description": "Metal"
+  },
+  "metal.hero.subtitle": {
+    "message": "Infrastrukturna plast. Dogodkovno vodeno računalništvo, trajno shranjevanje.",
+    "description": "The infrastructure layer. Event-driven compute, persistent storage."
+  },
+  "metal.services.title": {
+    "message": "Računalniške storitve",
+    "description": "Compute Services"
+  },
+  "metal.cta.title": {
+    "message": "Raziščite druge plasti",
+    "description": "Explore Other Layers"
+  },
+  "metal.cta.brains": {
+    "message": "Storitve umetne inteligence",
+    "description": "AI Services"
+  },
+  "metal.cta.integrations": {
+    "message": "Integracije",
+    "description": "Integrations"
+  },
+  "metal.meta.title": {
+    "message": "Metal — Računalniške storitve",
+    "description": "Metal — Compute Services"
+  },
+  "metal.meta.desc": {
+    "message": "Vodilo dogodkov, trajnost dogodkov, odkrivanje storitev, shramba, čakalna vrsta, avtentikacija.",
+    "description": "Event Bus, Event Persistence, Service Discovery, Storage, Queue, Auth."
+  },
+  "integrations.hero.tag": {
+    "message": "Povezovalniki",
+    "description": "Connectors"
+  },
+  "integrations.hero.title": {
+    "message": "Integracije",
+    "description": "Integrations"
+  },
+  "integrations.hero.subtitle": {
+    "message": "Vnaprej zgrajeni povezovalniki za storitve, ki jih vaše aplikacije potrebujejo.",
+    "description": "Pre-built connectors for the services your applications need."
+  },
+  "integrations.stripe.title": {
+    "message": "Stripe",
+    "description": "Stripe"
+  },
+  "integrations.stripe.desc": {
+    "message": "Obdelava plačil, naročnine, izdajanje računov.",
+    "description": "Payment processing, subscriptions, invoicing."
+  },
+  "integrations.twilio.title": {
+    "message": "Twilio",
+    "description": "Twilio"
+  },
+  "integrations.twilio.desc": {
+    "message": "SMS, glasovni klici in sporočila WhatsApp.",
+    "description": "SMS, voice calls, and WhatsApp messaging."
+  },
+  "integrations.github.title": {
+    "message": "GitHub",
+    "description": "GitHub"
+  },
+  "integrations.github.desc": {
+    "message": "Upravljanje repozitorijev, sledenje zahtevkom.",
+    "description": "Repository management, issue tracking."
+  },
+  "integrations.email.title": {
+    "message": "E-pošta",
+    "description": "Email"
+  },
+  "integrations.email.desc": {
+    "message": "Transakcijska e-pošta s predlogami.",
+    "description": "Transactional email with templates."
+  },
+  "integrations.youtube.title": {
+    "message": "YouTube",
+    "description": "YouTube"
+  },
+  "integrations.youtube.desc": {
+    "message": "Vdelava videov, upravljanje seznamov predvajanja.",
+    "description": "Video embedding, playlist management."
+  },
+  "integrations.docker.title": {
+    "message": "Docker",
+    "description": "Docker"
+  },
+  "integrations.docker.desc": {
+    "message": "Orkestracija vsebnikov za storitve po meri.",
+    "description": "Container orchestration for custom services."
+  },
+  "integrations.redis.title": {
+    "message": "Redis",
+    "description": "Redis"
+  },
+  "integrations.redis.desc": {
+    "message": "Predpomnjenje v pomnilniku, sporočanje z vzorcem objavi/naroči.",
+    "description": "In-memory caching, pub/sub messaging."
+  },
+  "integrations.catalog.title": {
+    "message": "Katalog integracij",
+    "description": "Integration Catalog"
+  },
+  "integrations.cta.title": {
+    "message": "Raziščite druge plasti",
+    "description": "Explore Other Layers"
+  },
+  "integrations.cta.brains": {
+    "message": "Storitve umetne inteligence",
+    "description": "AI Services"
+  },
+  "integrations.cta.metal": {
+    "message": "Storitve Metal",
+    "description": "Metal Services"
+  },
+  "integrations.meta.title": {
+    "message": "Integracije — Povezovalniki storitev",
+    "description": "Integrations — Service Connectors"
+  },
+  "integrations.meta.desc": {
+    "message": "Stripe, Twilio, GitHub, e-pošta, YouTube, Docker in Redis.",
+    "description": "Stripe, Twilio, GitHub, Email, YouTube, Docker, and Redis."
+  },
+  "svc-pricing.hero.title": {
+    "message": "Cenik storitev",
+    "description": "Services Pricing"
+  },
+  "svc-pricing.hero.subtitle": {
+    "message": "Odprta koda za vedno. Gostovanje v oblaku, ko ga potrebujete.",
+    "description": "Open source forever. Cloud hosting when you need it."
+  },
+  "svc-pricing.oss.name": {
+    "message": "OSS",
+    "description": "OSS"
+  },
+  "svc-pricing.oss.price": {
+    "message": "Brezplačno",
+    "description": "Free"
+  },
+  "svc-pricing.oss.desc": {
+    "message": "Gostite sami vse. Celotna platforma je odprtokodna.",
+    "description": "Self-host everything. The full platform is open source."
+  },
+  "svc-pricing.oss.cta": {
+    "message": "Oglejte si na GitHub",
+    "description": "View on GitHub"
+  },
+  "svc-pricing.cloud.name": {
+    "message": "Cloud",
+    "description": "Cloud"
+  },
+  "svc-pricing.cloud.price": {
+    "message": "Plačilo po uporabi",
+    "description": "Pay-per-use"
+  },
+  "svc-pricing.cloud.desc": {
+    "message": "Upravljano gostovanje z obračunavanjem po porabi.",
+    "description": "Managed hosting with usage-based billing."
+  },
+  "svc-pricing.cloud.cta": {
+    "message": "Kmalu na voljo",
+    "description": "Coming Soon"
+  },
+  "svc-pricing.enterprise.name": {
+    "message": "Enterprise",
+    "description": "Enterprise"
+  },
+  "svc-pricing.enterprise.price": {
+    "message": "Po dogovoru",
+    "description": "Custom"
+  },
+  "svc-pricing.enterprise.desc": {
+    "message": "Namenska infrastruktura, dogovori o ravni storitev po meri.",
+    "description": "Dedicated infrastructure, custom SLAs."
+  },
+  "svc-pricing.enterprise.cta": {
+    "message": "Kontaktirajte nas",
+    "description": "Contact Us"
+  },
+  "svc-pricing.meta.title": {
+    "message": "Cenik — Almadar Services",
+    "description": "Pricing — Almadar Services"
+  },
+  "svc-pricing.meta.desc": {
+    "message": "OSS brezplačno za vedno. Cloud s plačilom po uporabi kmalu na voljo.",
+    "description": "OSS free forever. Cloud pay-per-use coming soon."
+  }
+}

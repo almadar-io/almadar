@@ -1,0 +1,192 @@
+.hero {
+  background: var(--almadar-midnight);
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201, 162, 39, 0.12) 0%, transparent 60%);
+  color: var(--almadar-parchment);
+  padding: 8rem 0 5rem;
+  text-align: center;
+}
+
+.heroTitle {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--almadar-parchment);
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.heroSubtitle {
+  font-size: 1.25rem;
+  color: var(--almadar-parchment-muted);
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+
+.tag {
+  display: inline-block;
+  background: rgba(201, 162, 39, 0.15);
+  color: var(--almadar-sand-gold-light);
+  padding: 0.35rem 1rem;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(201, 162, 39, 0.25);
+}
+
+.section {
+  padding: var(--section-padding) 0;
+}
+
+.sectionAlt {
+  background: rgba(201, 162, 39, 0.03);
+}
+
+[data-theme="dark"] .sectionAlt {
+  background: rgba(201, 162, 39, 0.05);
+}
+
+.sectionDark {
+  background: var(--almadar-midnight);
+  color: var(--almadar-parchment);
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.sectionSubtitle {
+  font-size: 1.15rem;
+  color: var(--almadar-parchment-muted);
+  max-width: 600px;
+  margin: 1rem auto 0;
+  line-height: 1.7;
+}
+
+[data-theme="light"] .sectionSubtitle {
+  color: #64748b;
+}
+
+.pipelineGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.pipelineCard {
+  background: var(--ifm-background-surface-color, #fff);
+  border: 1px solid rgba(201, 162, 39, 0.15);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.pipelineCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(201, 162, 39, 0.1);
+}
+
+.pipelineCard h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+  color: var(--almadar-sand-gold);
+}
+
+.pipelineCard p {
+  font-size: 0.95rem;
+  color: var(--almadar-parchment-muted);
+  line-height: 1.65;
+  margin: 0;
+}
+
+[data-theme="light"] .pipelineCard p {
+  color: #64748b;
+}
+
+.costContent {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.costContent p {
+  font-size: 1.1rem;
+  line-height: 1.75;
+  color: var(--almadar-parchment-muted);
+  margin-bottom: 1.25rem;
+}
+
+[data-theme="light"] .costContent p {
+  color: #475569;
+}
+
+.differenceContent {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.lightTitle {
+  color: var(--almadar-parchment);
+  margin-bottom: 1.5rem;
+}
+
+.differenceContent p {
+  color: var(--almadar-parchment-muted);
+  font-size: 1.1rem;
+  line-height: 1.75;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 996px) {
+  .heroTitle {
+    font-size: 2.25rem;
+  }
+
+  .pipelineGrid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+  }
+
+  .section {
+    padding: 3.5rem 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 5rem 0 3rem;
+  }
+
+  .heroTitle {
+    font-size: 1.85rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.05rem;
+  }
+}
+
+/* === Page Images === */
+.heroImage {
+    width: 100%;
+    max-width: 900px;
+    margin: 2rem auto 0;
+    display: block;
+    border-radius: 12px;
+}
+
+.sectionImage {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    display: block;
+    border-radius: 12px;
+}

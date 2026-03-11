@@ -1,0 +1,139 @@
+.hero {
+  background: var(--almadar-midnight);
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201, 162, 39, 0.12) 0%, transparent 60%);
+  color: var(--almadar-parchment);
+  padding: 8rem 0 5rem;
+  text-align: center;
+}
+
+.heroTitle {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--almadar-parchment);
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.heroSubtitle {
+  font-size: 1.3rem;
+  color: var(--almadar-parchment-muted);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.section {
+  padding: var(--section-padding) 0;
+}
+
+.sectionAlt {
+  background: rgba(201, 162, 39, 0.03);
+}
+
+[data-theme="dark"] .sectionAlt {
+  background: rgba(201, 162, 39, 0.05);
+}
+
+.sectionDark {
+  background: var(--almadar-midnight);
+  color: var(--almadar-parchment);
+}
+
+.article {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.article h2 {
+  font-size: 2rem;
+  font-family: "Crimson Pro", Georgia, serif;
+  margin-bottom: 1.5rem;
+}
+
+.article p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--almadar-parchment-muted);
+  margin-bottom: 1.25rem;
+}
+
+[data-theme="light"] .article p {
+  color: #475569;
+}
+
+.ctaContent {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.ctaTitle {
+  color: var(--almadar-parchment);
+  margin-bottom: 1rem;
+}
+
+.ctaText {
+  color: var(--almadar-parchment-muted);
+  font-size: 1.15rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 996px) {
+  .heroTitle {
+    font-size: 2.25rem;
+  }
+
+  .section {
+    padding: 3.5rem 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 5rem 0 3rem;
+  }
+
+  .heroTitle {
+    font-size: 1.85rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.05rem;
+  }
+
+  .article h2 {
+    font-size: 1.5rem;
+  }
+
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* === Page Images === */
+.heroImage {
+    width: 100%;
+    max-width: 900px;
+    margin: 2rem auto 0;
+    display: block;
+    border-radius: 12px;
+}
+
+.sectionImage {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    display: block;
+    border-radius: 12px;
+}

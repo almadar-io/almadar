@@ -1,0 +1,318 @@
+{
+  "services.hero.tag": {
+    "message": "البنية التحتية",
+    "description": "Infrastructure"
+  },
+  "services.hero.title": {
+    "message": "بنية تحتية لعصر الوكلاء الأذكياء",
+    "description": "Infrastructure for the Agentic Era"
+  },
+  "services.hero.subtitle": {
+    "message": "حوسبة وتخزين وتنسيق أصيلة بالذكاء الاصطناعي. مبنية لتطبيقات يُنشئها الوكلاء ويُشغّلونها.",
+    "description": "AI-native compute, storage, and orchestration. Built for applications that agents create and operate."
+  },
+  "services.hero.cta1": {
+    "message": "عرض الأسعار",
+    "description": "View Pricing"
+  },
+  "services.hero.cta2": {
+    "message": "استكشف الخدمات",
+    "description": "Explore Services"
+  },
+  "services.layers.title": {
+    "message": "ثلاث طبقات",
+    "description": "Three Layers"
+  },
+  "services.layers.subtitle": {
+    "message": "الذكاء في الأعلى، البنية التحتية في الوسط، التكاملات على الأطراف.",
+    "description": "Intelligence on top, infrastructure in the middle, integrations at the edge."
+  },
+  "services.layers.brains.title": {
+    "message": "العقول",
+    "description": "Brains"
+  },
+  "services.layers.brains.desc": {
+    "message": "تنسيق LLM وإدارة الذاكرة ومعالجة الجلسات ووكلاء المهارات و DeepAgent. طبقة الذكاء.",
+    "description": "LLM orchestration, memory management, session handling, skill agents, and the DeepAgent. The intelligence layer."
+  },
+  "services.layers.brains.link": {
+    "message": "خدمات الذكاء الاصطناعي",
+    "description": "AI Services"
+  },
+  "services.layers.metal.title": {
+    "message": "المعدن",
+    "description": "Metal"
+  },
+  "services.layers.metal.desc": {
+    "message": "ناقل الأحداث والاستمرارية واكتشاف الخدمات والتخزين وقوائم الانتظار والمصادقة والمراقبة. طبقة البنية التحتية.",
+    "description": "Event bus, persistence, service discovery, storage, queues, authentication, and observability. The infrastructure layer."
+  },
+  "services.layers.metal.link": {
+    "message": "خدمات الحوسبة",
+    "description": "Compute Services"
+  },
+  "services.layers.integrations.title": {
+    "message": "التكاملات",
+    "description": "Integrations"
+  },
+  "services.layers.integrations.desc": {
+    "message": "Stripe و Twilio و GitHub و Email و YouTube و Docker و Redis. موصلات جاهزة للخدمات التي تحتاجها تطبيقاتك.",
+    "description": "Stripe, Twilio, GitHub, Email, YouTube, Docker, Redis. Pre-built connectors for the services your applications need."
+  },
+  "services.layers.integrations.link": {
+    "message": "كتالوج التكاملات",
+    "description": "Integration Catalog"
+  },
+  "services.catalog.title": {
+    "message": "كتالوج الخدمات",
+    "description": "Service Catalog"
+  },
+  "services.waitlist.title": {
+    "message": "قريباً",
+    "description": "Coming Soon"
+  },
+  "services.waitlist.text": {
+    "message": "خدمات Almadar في مرحلة تجريبية خاصة. انضم لقائمة الانتظار للحصول على وصول مبكر.",
+    "description": "Almadar Services is in private beta. Join the waitlist to get early access."
+  },
+  "services.waitlist.cta": {
+    "message": "انضم لقائمة الانتظار",
+    "description": "Join Waitlist"
+  },
+  "services.meta.title": {
+    "message": "خدمات Almadar — بنية تحتية لعصر الوكلاء الأذكياء",
+    "description": "Almadar Services — Infrastructure for the Agentic Era"
+  },
+  "services.meta.desc": {
+    "message": "حوسبة وتخزين وتنسيق أصيلة بالذكاء الاصطناعي. مبنية لتطبيقات يُنشئها الوكلاء ويُشغّلونها.",
+    "description": "AI-native compute, storage, and orchestration. Built for applications that agents create and operate."
+  },
+  "brains.hero.tag": {
+    "message": "طبقة الذكاء الاصطناعي",
+    "description": "AI Layer"
+  },
+  "brains.hero.title": {
+    "message": "العقول",
+    "description": "Brains"
+  },
+  "brains.hero.subtitle": {
+    "message": "طبقة الذكاء. تنسيق LLM والذاكرة والجلسات والوكلاء المستقلون.",
+    "description": "The intelligence layer. LLM orchestration, memory, sessions, and autonomous agents."
+  },
+  "brains.services.title": {
+    "message": "خدمات الذكاء الاصطناعي",
+    "description": "AI Services"
+  },
+  "brains.cta.title": {
+    "message": "استكشف الطبقات الأخرى",
+    "description": "Explore Other Layers"
+  },
+  "brains.cta.metal": {
+    "message": "خدمات المعدن",
+    "description": "Metal Services"
+  },
+  "brains.cta.integrations": {
+    "message": "التكاملات",
+    "description": "Integrations"
+  },
+  "brains.meta.title": {
+    "message": "العقول — خدمات الذكاء الاصطناعي",
+    "description": "Brains — AI Services"
+  },
+  "brains.meta.desc": {
+    "message": "تنسيق LLM وإدارة الذاكرة ومعالجة الجلسات ووكلاء المهارات و DeepAgent.",
+    "description": "LLM orchestration, memory management, session handling, skill agents, and the DeepAgent."
+  },
+  "metal.hero.tag": {
+    "message": "طبقة البنية التحتية",
+    "description": "Infrastructure Layer"
+  },
+  "metal.hero.title": {
+    "message": "المعدن",
+    "description": "Metal"
+  },
+  "metal.hero.subtitle": {
+    "message": "طبقة البنية التحتية. حوسبة مبنية على الأحداث وتخزين دائم وخدمات المنصة.",
+    "description": "The infrastructure layer. Event-driven compute, persistent storage, and platform services."
+  },
+  "metal.services.title": {
+    "message": "خدمات الحوسبة",
+    "description": "Compute Services"
+  },
+  "metal.cta.title": {
+    "message": "استكشف الطبقات الأخرى",
+    "description": "Explore Other Layers"
+  },
+  "metal.cta.brains": {
+    "message": "خدمات الذكاء الاصطناعي",
+    "description": "AI Services"
+  },
+  "metal.cta.integrations": {
+    "message": "التكاملات",
+    "description": "Integrations"
+  },
+  "metal.meta.title": {
+    "message": "المعدن — خدمات الحوسبة",
+    "description": "Metal — Compute Services"
+  },
+  "metal.meta.desc": {
+    "message": "ناقل الأحداث واستمرارية الأحداث واكتشاف الخدمات والتخزين وقوائم الانتظار والمصادقة والمراقبة.",
+    "description": "Event Bus, Event Persistence, Service Discovery, Storage, Queue, Auth, and Observability."
+  },
+  "integrations.hero.tag": {
+    "message": "الموصلات",
+    "description": "Connectors"
+  },
+  "integrations.hero.title": {
+    "message": "التكاملات",
+    "description": "Integrations"
+  },
+  "integrations.hero.subtitle": {
+    "message": "موصلات جاهزة للخدمات التي تحتاجها تطبيقاتك. لا حاجة لكود ربط.",
+    "description": "Pre-built connectors for the services your applications need. No glue code required."
+  },
+  "integrations.stripe.title": {
+    "message": "Stripe",
+    "description": "Stripe"
+  },
+  "integrations.stripe.desc": {
+    "message": "معالجة المدفوعات والاشتراكات والفوترة ومعالجة webhooks. اربط تطبيق .orb الخاص بك بـ Stripe في سطر واحد.",
+    "description": "Payment processing, subscriptions, invoicing, and webhook handling. Connect your .orb application to Stripe in one line."
+  },
+  "integrations.twilio.title": {
+    "message": "Twilio",
+    "description": "Twilio"
+  },
+  "integrations.twilio.desc": {
+    "message": "رسائل SMS ومكالمات صوتية ورسائل WhatsApp. أرسل إشعارات واستقبل ردود المستخدمين عبر واجهات Twilio للاتصالات.",
+    "description": "SMS, voice calls, and WhatsApp messaging. Send notifications and receive user responses through Twilio's communication APIs."
+  },
+  "integrations.github.title": {
+    "message": "GitHub",
+    "description": "GitHub"
+  },
+  "integrations.github.desc": {
+    "message": "إدارة المستودعات وتتبع المشكلات وطلبات السحب و webhooks. أتمتة سير عمل التطوير.",
+    "description": "Repository management, issue tracking, pull requests, and webhooks. Automate development workflows."
+  },
+  "integrations.email.title": {
+    "message": "البريد الإلكتروني",
+    "description": "Email"
+  },
+  "integrations.email.desc": {
+    "message": "بريد إلكتروني للمعاملات مع قوالب ومرفقات وتتبع التسليم. مبني على SendGrid و Amazon SES.",
+    "description": "Transactional email with templates, attachments, and delivery tracking. Built on SendGrid and Amazon SES."
+  },
+  "integrations.youtube.title": {
+    "message": "YouTube",
+    "description": "YouTube"
+  },
+  "integrations.youtube.desc": {
+    "message": "تضمين الفيديو وإدارة قوائم التشغيل والتحليلات. استخراج بيانات الفيديو الوصفية وعرض المحتوى بشكل أصيل.",
+    "description": "Video embedding, playlist management, and analytics. Pull video metadata and display content natively."
+  },
+  "integrations.docker.title": {
+    "message": "Docker",
+    "description": "Docker"
+  },
+  "integrations.docker.desc": {
+    "message": "تنسيق الحاويات للخدمات المخصصة. انشر خدمات خلفية إضافية بجانب تطبيق .orb الخاص بك.",
+    "description": "Container orchestration for custom services. Deploy additional backend services alongside your .orb application."
+  },
+  "integrations.redis.title": {
+    "message": "Redis",
+    "description": "Redis"
+  },
+  "integrations.redis.desc": {
+    "message": "تخزين مؤقت في الذاكرة ورسائل pub/sub وتخزين الجلسات. طبقة بيانات عالية الأداء للميزات الفورية.",
+    "description": "In-memory caching, pub/sub messaging, and session storage. High-performance data layer for real-time features."
+  },
+  "integrations.catalog.title": {
+    "message": "كتالوج التكاملات",
+    "description": "Integration Catalog"
+  },
+  "integrations.cta.title": {
+    "message": "استكشف الطبقات الأخرى",
+    "description": "Explore Other Layers"
+  },
+  "integrations.cta.brains": {
+    "message": "خدمات الذكاء الاصطناعي",
+    "description": "AI Services"
+  },
+  "integrations.cta.metal": {
+    "message": "خدمات المعدن",
+    "description": "Metal Services"
+  },
+  "integrations.meta.title": {
+    "message": "التكاملات — موصلات الخدمات",
+    "description": "Integrations — Service Connectors"
+  },
+  "integrations.meta.desc": {
+    "message": "Stripe و Twilio و GitHub و Email و YouTube و Docker و Redis. موصلات جاهزة.",
+    "description": "Stripe, Twilio, GitHub, Email, YouTube, Docker, and Redis. Pre-built connectors."
+  },
+  "svc-pricing.hero.title": {
+    "message": "أسعار الخدمات",
+    "description": "Services Pricing"
+  },
+  "svc-pricing.hero.subtitle": {
+    "message": "مفتوح المصدر للأبد. استضافة سحابية عند الحاجة.",
+    "description": "Open source forever. Cloud hosting when you need it."
+  },
+  "svc-pricing.oss.name": {
+    "message": "OSS",
+    "description": "OSS"
+  },
+  "svc-pricing.oss.price": {
+    "message": "مجاني",
+    "description": "Free"
+  },
+  "svc-pricing.oss.desc": {
+    "message": "استضف كل شيء بنفسك. المنصة بالكامل مفتوحة المصدر.",
+    "description": "Self-host everything. The full platform is open source."
+  },
+  "svc-pricing.oss.cta": {
+    "message": "عرض على GitHub",
+    "description": "View on GitHub"
+  },
+  "svc-pricing.cloud.name": {
+    "message": "Cloud",
+    "description": "Cloud"
+  },
+  "svc-pricing.cloud.price": {
+    "message": "الدفع حسب الاستخدام",
+    "description": "Pay-per-use"
+  },
+  "svc-pricing.cloud.desc": {
+    "message": "استضافة مُدارة بفوترة مبنية على الاستخدام. لا تكاليف مسبقة.",
+    "description": "Managed hosting with usage-based billing. No upfront costs."
+  },
+  "svc-pricing.cloud.cta": {
+    "message": "قريباً",
+    "description": "Coming Soon"
+  },
+  "svc-pricing.enterprise.name": {
+    "message": "Enterprise",
+    "description": "Enterprise"
+  },
+  "svc-pricing.enterprise.price": {
+    "message": "مخصص",
+    "description": "Custom"
+  },
+  "svc-pricing.enterprise.desc": {
+    "message": "بنية تحتية مخصصة واتفاقيات مستوى خدمة مخصصة ودعم ذو أولوية.",
+    "description": "Dedicated infrastructure, custom SLAs, and priority support."
+  },
+  "svc-pricing.enterprise.cta": {
+    "message": "تواصل معنا",
+    "description": "Contact Us"
+  },
+  "svc-pricing.meta.title": {
+    "message": "الأسعار — خدمات Almadar",
+    "description": "Pricing — Almadar Services"
+  },
+  "svc-pricing.meta.desc": {
+    "message": "OSS مجاني للأبد. Cloud بالدفع حسب الاستخدام قريباً. Enterprise بأسعار مخصصة.",
+    "description": "OSS free forever. Cloud pay-per-use coming soon. Enterprise with custom pricing."
+  }
+}

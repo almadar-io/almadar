@@ -1,0 +1,526 @@
+{
+  "home.hero.tag": {
+    "message": "منصة أصيلة بالذكاء الاصطناعي",
+    "description": "AI-Native Platform"
+  },
+  "home.hero.title": {
+    "message": "فيزياء البرمجيات",
+    "description": "The Physics of Software"
+  },
+  "home.hero.subtitle": {
+    "message": "نماذج عالمية لعصر الوكلاء الأذكياء. نبني اللغة والذكاء والبنية التحتية لبرمجيات تفهم نفسها.",
+    "description": "World models for the agentic era. We build the language, intelligence, and infrastructure for software that understands itself."
+  },
+  "home.hero.cta1": {
+    "message": "استكشف Studio",
+    "description": "Explore Studio"
+  },
+  "home.hero.cta2": {
+    "message": "اقرأ التوثيق",
+    "description": "Read the Docs"
+  },
+  "home.idea.title": {
+    "message": "ما هو النموذج العالمي للبرمجيات؟",
+    "description": "What is a World Model of Software?"
+  },
+  "home.idea.subtitle": {
+    "message": "البرمجة التقليدية تخبر الحاسوب بما يفعله خطوة بخطوة. النموذج العالمي يصف كيف تعمل الأشياء: البيانات والقواعد والسلوكيات. المترجم يحولها إلى أي منصة. النموذج يبقى كما هو.",
+    "description": "Traditional programming tells computers what to do, step by step. A world model describes how things work: the data, the rules, the behaviors. The compiler turns it into any platform. The model stays the same."
+  },
+  "home.idea.describe": {
+    "message": "صِف",
+    "description": "Describe"
+  },
+  "home.idea.describe.text": {
+    "message": "اكتب ما يفعله نظامك بلغة .orb، وهي لغة رسمية لوصف سلوك التطبيقات.",
+    "description": "Write what your system does in .orb, a formal language for application behavior."
+  },
+  "home.idea.prove": {
+    "message": "أثبِت",
+    "description": "Prove"
+  },
+  "home.idea.prove.text": {
+    "message": "المترجم يتحقق من صحة كل حالة ممكنة قبل تشغيل أي سطر من الكود.",
+    "description": "The compiler validates every possible state before a single line of code runs."
+  },
+  "home.idea.deploy": {
+    "message": "انشر",
+    "description": "Deploy"
+  },
+  "home.idea.deploy.text": {
+    "message": "نموذج واحد يُترجم إلى الويب أو الهاتف أو أي منصة مستقبلية. النموذج هو المنتج.",
+    "description": "One model compiles to web, mobile, or any future platform. The model is the product."
+  },
+  "home.pillars.title": {
+    "message": "ثلاثة أركان",
+    "description": "Three Pillars"
+  },
+  "home.pillars.language.title": {
+    "message": "Orb",
+    "description": "Orb"
+  },
+  "home.pillars.language.desc": {
+    "message": "لغة رسمية لوصف سلوك البرمجيات. مفتوحة المصدر. أصيلة بالذكاء الاصطناعي. مُتحقق منها بالمترجم.",
+    "description": "A formal language for describing how software behaves. Open source. AI-native. Compiler-verified."
+  },
+  "home.pillars.language.link": {
+    "message": "استكشف اللغة",
+    "description": "Explore the Language"
+  },
+  "home.pillars.studio.title": {
+    "message": "Almadar Studio",
+    "description": "Almadar Studio"
+  },
+  "home.pillars.studio.desc": {
+    "message": "بيئة البناء حيث يتعاون البشر ووكلاء الذكاء الاصطناعي لإنشاء البرمجيات. صِف، أنشئ، انشر.",
+    "description": "The builder where humans and AI agents collaborate to create software. Describe, generate, deploy."
+  },
+  "home.pillars.studio.link": {
+    "message": "جرّب Studio",
+    "description": "Try Studio"
+  },
+  "home.pillars.services.title": {
+    "message": "خدمات Almadar",
+    "description": "Almadar Services"
+  },
+  "home.pillars.services.desc": {
+    "message": "بنية تحتية أصيلة بالذكاء الاصطناعي. حوسبة، تخزين، مصادقة، توجيه أحداث. مصممة للوكلاء الأذكياء.",
+    "description": "AI-native infrastructure. Compute, storage, authentication, event routing. Designed for agents."
+  },
+  "home.pillars.services.link": {
+    "message": "عرض الخدمات",
+    "description": "View Services"
+  },
+  "home.proof.title": {
+    "message": "مُثبت في الإنتاج",
+    "description": "Proven in Production"
+  },
+  "home.stats.behaviors.value": {
+    "message": "129",
+    "description": "129"
+  },
+  "home.stats.behaviors.label": {
+    "message": "سلوك معياري عبر 18 مجالاً",
+    "description": "Standard behaviors across 18 domains"
+  },
+  "home.stats.projects.value": {
+    "message": "7",
+    "description": "7"
+  },
+  "home.stats.projects.label": {
+    "message": "مشاريع إنتاجية منشورة",
+    "description": "Production projects deployed"
+  },
+  "home.stats.cost.value": {
+    "message": "$0.05–$0.35",
+    "description": "$0.05–$0.35"
+  },
+  "home.stats.cost.label": {
+    "message": "تكلفة الحوسبة بالذكاء الاصطناعي لكل تطبيق",
+    "description": "AI compute cost per application"
+  },
+  "home.ai.title": {
+    "message": "نُدرّب نماذجنا الخاصة",
+    "description": "We Train Our Own Models"
+  },
+  "home.ai.text": {
+    "message": "لسنا شركة تغلّف واجهات LLM وتسميها ذكاءً اصطناعياً. خط أنابيبنا العصبي يفهم بنية البرمجيات كما يفهم محرك الشطرنج أوضاع الرقعة. يتنبأ بالأخطاء ويقيّم الإصلاحات ويُنشئ برمجيات صالحة من الصفر.",
+    "description": "We are not a company that wraps LLM APIs and calls it AI. Our neural pipeline understands software structure the way a chess engine understands board positions. It predicts errors, evaluates fixes, and generates valid software from scratch."
+  },
+  "home.ai.text2": {
+    "message": "ما زلنا نستخدم نماذج اللغة الكبيرة لفهم اللغة الطبيعية. لكن الذكاء البنيوي الجوهري ملكنا: نماذج صغيرة متخصصة تكاد لا تكلف شيئاً للتشغيل.",
+    "description": "We still use LLMs for natural language understanding. But the core structural intelligence is ours: small, specialized models that cost almost nothing to run."
+  },
+  "home.cta.title": {
+    "message": "مستعد للبناء؟",
+    "description": "Ready to build?"
+  },
+  "home.cta.text": {
+    "message": "ابدأ بلغة Orb. ابنِ مع Studio. انشر على خدمات Almadar.",
+    "description": "Start with Orb. Build with Studio. Deploy on Almadar Services."
+  },
+  "home.cta.start": {
+    "message": "ابدأ البناء",
+    "description": "Start Building"
+  },
+  "home.cta.vision": {
+    "message": "اقرأ الرؤية",
+    "description": "Read the Vision"
+  },
+  "home.meta.title": {
+    "message": "Almadar — فيزياء البرمجيات",
+    "description": "Almadar — The Physics of Software"
+  },
+  "home.meta.desc": {
+    "message": "Almadar تبني اللغة والذكاء والبنية التحتية لبرمجيات تفهم نفسها.",
+    "description": "Almadar builds the language, intelligence, and infrastructure for software that understands itself."
+  },
+  "platform.hero.title": {
+    "message": "المنصة",
+    "description": "The Platform"
+  },
+  "platform.hero.subtitle": {
+    "message": "ثلاثة أركان، هدف واحد: تحويل الأوصاف الرسمية للبرمجيات إلى تطبيقات عاملة.",
+    "description": "Three pillars, one goal: turn formal descriptions of software into running applications."
+  },
+  "platform.language.title": {
+    "message": "Orb",
+    "description": "Orb"
+  },
+  "platform.language.desc": {
+    "message": "لغة رسمية لوصف سلوك الأنظمة البرمجية. مفتوحة المصدر، مُتحقق منها بالمترجم، أصيلة بالذكاء الاصطناعي. اكتب الكيانات والسمات والصفحات. المترجم يضمن الصحة قبل توليد الكود.",
+    "description": "A formal language for describing how software systems behave. Open source, compiler-verified, AI-native. Write entities, traits, and pages. The compiler guarantees correctness before generating code."
+  },
+  "platform.language.link": {
+    "message": "توثيق اللغة",
+    "description": "Language Docs"
+  },
+  "platform.studio.title": {
+    "message": "Almadar Studio",
+    "description": "Almadar Studio"
+  },
+  "platform.studio.desc": {
+    "message": "بيئة البناء حيث يتعاون البشر والذكاء الاصطناعي. صِف ما تريده بلغة طبيعية، ووكيل الذكاء الاصطناعي يُنشئ برنامج .orb صالحاً. حرّر بصرياً أو بالكود. عاين بالوقت الفعلي. انشر بنقرة واحدة.",
+    "description": "The builder where humans and AI collaborate. Describe what you want in plain language, the AI agent generates a valid .orb program. Edit visually or in code. Preview in real time. Deploy with one click."
+  },
+  "platform.studio.link": {
+    "message": "افتح Studio",
+    "description": "Open Studio"
+  },
+  "platform.services.title": {
+    "message": "خدمات Almadar",
+    "description": "Almadar Services"
+  },
+  "platform.services.desc": {
+    "message": "بنية تحتية أصيلة بالذكاء الاصطناعي لعصر الوكلاء الأذكياء. حوسبة، تخزين، مصادقة، توجيه أحداث، تنسيق LLM، ومراقبة. مصممة لتطبيقات يبنيها الوكلاء ويشغّلونها.",
+    "description": "AI-native infrastructure for the agentic era. Compute, storage, authentication, event routing, LLM orchestration, and observability. Designed for applications that agents build and operate."
+  },
+  "platform.services.link": {
+    "message": "عرض الخدمات",
+    "description": "View Services"
+  },
+  "platform.connect.title": {
+    "message": "كيف تتصل ببعضها",
+    "description": "How They Connect"
+  },
+  "platform.connect.step1.title": {
+    "message": "صِف",
+    "description": "Describe"
+  },
+  "platform.connect.step1.desc": {
+    "message": "يصف المستخدمون ما يحتاجونه في Studio. وكيل الذكاء الاصطناعي يترجم اللغة الطبيعية إلى كود .orb.",
+    "description": "Users describe what they need in Studio. The AI agent translates natural language into .orb code."
+  },
+  "platform.connect.step2.title": {
+    "message": "ترجِم",
+    "description": "Compile"
+  },
+  "platform.connect.step2.desc": {
+    "message": "مترجم Orb يتحقق من صحة البرنامج ويُنشئ تطبيقاً متكاملاً: واجهة أمامية، خادم خلفي، قاعدة بيانات.",
+    "description": "The Orb compiler validates the program and generates a full-stack application: frontend, backend, database."
+  },
+  "platform.connect.step3.title": {
+    "message": "شغّل",
+    "description": "Run"
+  },
+  "platform.connect.step3.desc": {
+    "message": "خدمات Almadar تستضيف التطبيق مع توجيه الأحداث والتخزين والمصادقة وخدمات الذكاء الاصطناعي المدمجة.",
+    "description": "Almadar Services hosts the application with event routing, storage, authentication, and AI services built in."
+  },
+  "platform.cta.title": {
+    "message": "ابدأ من أي مكان",
+    "description": "Start Anywhere"
+  },
+  "platform.cta.text": {
+    "message": "تعلّم اللغة، أو جرّب بيئة البناء، أو استكشف البنية التحتية. كل ركن يعمل بمفرده. معاً يشكلون منصة متكاملة.",
+    "description": "Learn the language, try the builder, or explore the infrastructure. Each pillar works on its own. Together, they form a complete platform."
+  },
+  "platform.cta.studio": {
+    "message": "جرّب Studio",
+    "description": "Try Studio"
+  },
+  "platform.cta.docs": {
+    "message": "اقرأ التوثيق",
+    "description": "Read the Docs"
+  },
+  "platform.meta.title": {
+    "message": "المنصة — اللغة، Studio، الخدمات",
+    "description": "Platform — Language, Studio, Services"
+  },
+  "platform.meta.desc": {
+    "message": "الأركان الثلاثة لمنصة Almadar: Orb و Almadar Studio وخدمات Almadar.",
+    "description": "Three pillars of the Almadar platform: Orb, Almadar Studio, and Almadar Services."
+  },
+  "vision.hero.title": {
+    "message": "واقع رقمي مشترك",
+    "description": "A Shared Digital Reality"
+  },
+  "vision.hero.subtitle": {
+    "message": "برمجيات تتعايش وتتنسق وتتطور معاً.",
+    "description": "Software that coexists, coordinates, and evolves together."
+  },
+  "vision.coexist.title": {
+    "message": "برمجيات تتعايش",
+    "description": "Software That Coexists"
+  },
+  "vision.coexist.p1": {
+    "message": "اليوم، كل تطبيق جزيرة معزولة. لديه نموذج بياناته الخاص وقواعده الخاصة ولغته الخاصة. نقل المعلومات بين الأنظمة يعني بناء جسور تنكسر كلما تغيّر أي طرف.",
+    "description": "Today, every application is an island. It has its own data model, its own rules, its own language. Moving information between systems means building bridges that break every time either side changes."
+  },
+  "vision.coexist.p2": {
+    "message": "نؤمن بأن البرمجيات يجب أن تتشارك قواعد لغوية موحدة. عندما يصف تطبيقان سلوكهما بلغة Orb، يستطيعان فهم بعضهما بشكل طبيعي. البيانات تتدفق دون طبقات ترجمة. القواعد تتركب دون كود ربط.",
+    "description": "We believe software should share a common grammar. When two applications describe their behavior in Orb, they can understand each other natively. Data flows without translation layers. Rules compose without glue code."
+  },
+  "vision.ownership.title": {
+    "message": "المجتمعات تحتفظ بالملكية",
+    "description": "Communities Keep Ownership"
+  },
+  "vision.ownership.p1": {
+    "message": "النموذج الحالي يُركّز السلطة. منصات قليلة تملك الأدوات والبيانات والتوزيع. المجتمعات التي تبني على تلك المنصات تستأجر حضورها الرقمي.",
+    "description": "The current model concentrates power. A few platforms own the tools, the data, and the distribution. Communities that build on those platforms rent their digital presence."
+  },
+  "vision.ownership.p2": {
+    "message": "Almadar تغيّر هذا. Orb مفتوحة المصدر. المكتبة المعيارية مفتوحة المصدر. عندما يصف مجتمع مجاله بلغة Orb، فإنه يملك ذلك الوصف. يمكنه ترجمته لأي منصة واستضافته في أي مكان وتطويره بشروطه الخاصة.",
+    "description": "Almadar changes this. Orb is open source. The standard library is open source. When a community describes their domain in Orb, they own that description. They can compile it to any platform, host it anywhere, and evolve it on their own terms."
+  },
+  "vision.models.title": {
+    "message": "نماذج عالمية قابلة للتركيب",
+    "description": "Composable World Models"
+  },
+  "vision.models.p1": {
+    "message": "النموذج العالمي هو وصف رسمي لكيفية عمل مجال ما: ما الموجود، كيف يتغير، ما القواعد. في .orb، نظام جدولة رعاية صحية ومتتبع مخزون كلاهما نموذجان عالميان. يمكن التحقق من كل منهما بشكل مستقل وتركيبهما معاً.",
+    "description": "A world model is a formal description of how a domain works: what exists, how it changes, what the rules are. In .orb, a healthcare scheduling system and an inventory tracker are both world models. They can be validated independently and composed together."
+  },
+  "vision.models.p2": {
+    "message": "هذه هي اللعبة الطويلة. عندما يكون لمجالات كافية نماذج رسمية، تتوقف البرمجيات عن كونها مجموعة برامج معزولة وتصبح واقعاً رقمياً مشتركاً قابلاً للتشغيل المتبادل. كل نموذج لبنة بناء. كل تركيب يخلق شيئاً جديداً.",
+    "description": "This is the long game. When enough domains have formal models, software stops being a collection of isolated programs and becomes a shared, interoperable digital reality. Each model is a building block. Each composition creates something new."
+  },
+  "vision.cta.title": {
+    "message": "ابنِ معنا",
+    "description": "Build With Us"
+  },
+  "vision.cta.text": {
+    "message": "الواقع الرقمي المشترك يبدأ بالنموذج الأول. اكتب نموذجك.",
+    "description": "The shared digital reality starts with the first model. Write yours."
+  },
+  "vision.cta.language": {
+    "message": "استكشف اللغة",
+    "description": "Explore the Language"
+  },
+  "vision.cta.contact": {
+    "message": "تواصل معنا",
+    "description": "Get in Touch"
+  },
+  "vision.meta.title": {
+    "message": "الرؤية — واقع رقمي مشترك",
+    "description": "Vision — A Shared Digital Reality"
+  },
+  "vision.meta.desc": {
+    "message": "برمجيات تتعايش وتتنسق وتتطور معاً. المجتمعات تحتفظ بالملكية. نماذج عالمية قابلة للتركيب.",
+    "description": "Software that coexists, coordinates, and evolves together. Communities keeping ownership. Composable world models."
+  },
+  "ai.hero.tag": {
+    "message": "ذكاؤنا الاصطناعي",
+    "description": "Our AI"
+  },
+  "ai.hero.title": {
+    "message": "نُدرّب نماذجنا الخاصة",
+    "description": "We Train Our Own Models"
+  },
+  "ai.hero.subtitle": {
+    "message": "ليست أغلفة حول ذكاء شخص آخر. شبكات عصبية مبنية لغرض محدد تفهم بنية البرمجيات كما يفهم محرك الشطرنج أوضاع الرقعة.",
+    "description": "Not wrappers around someone else's intelligence. Purpose-built neural networks that understand software structure the way a chess engine understands board positions."
+  },
+  "ai.pipeline.title": {
+    "message": "خط الأنابيب العصبي",
+    "description": "The Neural Pipeline"
+  },
+  "ai.pipeline.subtitle": {
+    "message": "ستة نماذج متخصصة تعمل معاً. كل نموذج يتقن مهمة واحدة.",
+    "description": "Six specialized models working together. Each one does one thing well."
+  },
+  "ai.pipeline.mutator.title": {
+    "message": "مُولّد المخططات",
+    "description": "Schema Mutator"
+  },
+  "ai.pipeline.mutator.desc": {
+    "message": "يُنشئ برامج .orb مرشحة من أوصاف عالية المستوى. ينتج نقاط بداية متنوعة وصالحة بنيوياً.",
+    "description": "Generates candidate .orb programs from high-level descriptions. Produces diverse, structurally valid starting points."
+  },
+  "ai.pipeline.classifier.title": {
+    "message": "مُصنّف الجودة",
+    "description": "Quality Classifier"
+  },
+  "ai.pipeline.classifier.desc": {
+    "message": "يُقيّم كل مرشح من حيث الصحة والاكتمال وجودة تجربة المستخدم. يستبعد البرامج التي ستفشل في التحقق.",
+    "description": "Scores each candidate on correctness, completeness, and UX quality. Filters out programs that would fail validation."
+  },
+  "ai.pipeline.graph.title": {
+    "message": "محوّل الرسوم البيانية",
+    "description": "Graph Transformer"
+  },
+  "ai.pipeline.graph.desc": {
+    "message": "يفهم بنية آلة الحالة لبرامج .orb كرسوم بيانية. يكتشف الحالات غير القابلة للوصول والانتقالات المفقودة والدوائر المعطلة.",
+    "description": "Understands the state machine structure of .orb programs as graphs. Detects unreachable states, missing transitions, and broken circuits."
+  },
+  "ai.pipeline.edit.title": {
+    "message": "مُتنبئ التعديلات",
+    "description": "Edit Predictor"
+  },
+  "ai.pipeline.edit.desc": {
+    "message": "بمعطى برنامج وخطأ تحقق، يتنبأ بأقل تعديل يصلحه. مثل الإكمال التلقائي، لكن للإصلاحات البنيوية.",
+    "description": "Given a program and a validation error, predicts the minimal edit that fixes it. Like autocomplete, but for structural repairs."
+  },
+  "ai.pipeline.gflownet.title": {
+    "message": "مُولّد GFlowNet",
+    "description": "GFlowNet Generator"
+  },
+  "ai.pipeline.gflownet.desc": {
+    "message": "يبني برامج .orb خطوة بخطوة، مع أخذ عينات متناسبة مع الجودة. ينتج حلولاً متنوعة بدلاً من الانهيار إلى مخرج واحد.",
+    "description": "Constructs .orb programs step by step, sampling proportionally to quality. Produces diverse solutions rather than collapsing to a single output."
+  },
+  "ai.pipeline.integration.title": {
+    "message": "طبقة التكامل",
+    "description": "Integration Layer"
+  },
+  "ai.pipeline.integration.desc": {
+    "message": "يُنسق خط الأنابيب من البداية إلى النهاية. يجمع بين التنبؤات العصبية والتحقق بالمترجم لضمان الصحة.",
+    "description": "Orchestrates the pipeline end to end. Combines neural predictions with compiler validation to guarantee correctness."
+  },
+  "ai.cost.title": {
+    "message": "ميزة التكلفة",
+    "description": "Cost Advantage"
+  },
+  "ai.cost.p1": {
+    "message": "نماذج اللغة الكبيرة تكلف من 0.50$ إلى 5.00$ لكل عملية توليد معقدة. نماذجنا المتخصصة تكلف من 0.05$ إلى 0.35$ للمهمة ذاتها. هذا تخفيض بمقدار 10 إلى 15 ضعفاً.",
+    "description": "Large language models cost $0.50 to $5.00 per complex generation. Our specialized models cost $0.05 to $0.35 for the same task. That is a 10x to 15x reduction."
+  },
+  "ai.cost.p2": {
+    "message": "التوفير يأتي من التركيز. نموذج اللغة الكبير متنبئ نصوص عام الغرض. نماذجنا تحتاج فقط لفهم بنية برامج .orb، وهي مساحة مشكلة أصغر بكثير. نماذج أصغر، استنتاج أسرع، تكلفة أقل.",
+    "description": "The savings come from focus. An LLM is a general-purpose text predictor. Our models only need to understand .orb program structure, a much smaller problem space. Smaller models, faster inference, lower cost."
+  },
+  "ai.diff.title": {
+    "message": "لسنا أغلفة LLM",
+    "description": "Not LLM Wrappers"
+  },
+  "ai.diff.p1": {
+    "message": "نستخدم نماذج اللغة الكبيرة لفهم اللغة الطبيعية: تفسير ما يريده المستخدمون. لكن الذكاء البنيوي الذي يُنشئ ويتحقق من ويُصلح برامج .orb ملكنا. مُدرّب على بياناتنا ومُحسّن لمجالنا.",
+    "description": "We use LLMs for natural language understanding: interpreting what users want. But the structural intelligence that generates, validates, and repairs .orb programs is ours. Trained on our data, optimized for our domain."
+  },
+  "ai.diff.p2": {
+    "message": "هذا يعني أننا نتحكم في تكاليفنا وجودتنا وخارطة طريقنا. لا نعتمد على تسعير واجهات أو تحديثات نماذج شركة أخرى.",
+    "description": "This means we control our costs, our quality, and our roadmap. We do not depend on another company's API pricing or model updates."
+  },
+  "ai.diff.cta": {
+    "message": "شاهد المنصة",
+    "description": "See the Platform"
+  },
+  "ai.meta.title": {
+    "message": "الذكاء الاصطناعي — نماذج مُدرّبة لتوليد البرمجيات",
+    "description": "AI — Trained Models for Software Generation"
+  },
+  "ai.meta.desc": {
+    "message": "شبكات عصبية مبنية لغرض محدد تفهم بنية البرمجيات. ليست أغلفة LLM.",
+    "description": "Purpose-built neural networks that understand software structure. Not LLM wrappers."
+  },
+  "about.hero.title": {
+    "message": "عن Almadar",
+    "description": "About Almadar"
+  },
+  "about.hero.subtitle": {
+    "message": "فريق صغير يبني فيزياء البرمجيات. مقرّه في ليوبليانا، سلوفينيا.",
+    "description": "A small team building the physics of software. Based in Ljubljana, Slovenia."
+  },
+  "about.team.title": {
+    "message": "الفريق",
+    "description": "The Team"
+  },
+  "about.team.osama.role": {
+    "message": "شريك مؤسس ومدير تقني",
+    "description": "Co-Founder & Technical Lead"
+  },
+  "about.team.osama.bio": {
+    "message": "أكثر من 15 عاماً في بناء أنظمة المؤسسات. صمّم وبنى منصة الفوترة الإلكترونية الوطنية في المملكة العربية السعودية. مهندس لغة Orb البرمجية ومترجم Almadar. يقود خط الأنابيب العصبي والمكتبة المعيارية والبنية التحتية.",
+    "description": "15+ years building enterprise systems. Designed and built Saudi Arabia's national e-invoicing platform. Architect of the Orb programming language and the Almadar compiler. Leads the AI pipeline, standard library, and infrastructure."
+  },
+  "about.team.maja.role": {
+    "message": "شريكة مؤسسة ومديرة برامج",
+    "description": "Co-Founder & Program Manager"
+  },
+  "about.team.maja.bio": {
+    "message": "أكثر من 10 أعوام في تسليم مشاريع المؤسسات وإدارة البرامج. تدير مشاريع العملاء وبوابات الجودة واستراتيجية الإطلاق. تضمن أن كل منتج يُشحن يلبي معايير الإنتاج.",
+    "description": "10+ years in enterprise delivery and program management. Manages client projects, quality gates, and go-to-market strategy. Ensures every shipped product meets production standards."
+  },
+  "about.story.title": {
+    "message": "لماذا نبني هذا",
+    "description": "Why We Build This"
+  },
+  "about.story.p1": {
+    "message": "تطوير البرمجيات لديه مشكلة جوهرية: الفجوة بين ما يريده شخص ما وما يستطيع بناءه تتسع باستمرار. الأدوات تصبح أقوى لكنها أيضاً أعقد. مساعدو الذكاء الاصطناعي يولّدون الكود أسرع، لكن النهج الأساسي لا يزال نفسه: اكتب كوداً، أتمنّ أن يعمل، أصلح الأخطاء حين لا يعمل.",
+    "description": "Software development has a fundamental problem: the gap between what someone wants and what they can build keeps growing. Tools get more powerful, but also more complex. AI assistants generate code faster, but the underlying approach is still the same: write code, hope it works, debug when it does not."
+  },
+  "about.story.p2": {
+    "message": "بدأنا Almadar بفرضية مختلفة. ماذا لو كان للبرمجيات فيزياء؟ ماذا لو استطعت وصف سلوك نظام بشكل رسمي، ومترجم يستطيع إثبات صحته قبل توليد أي كود؟ ماذا لو فهم الذكاء الاصطناعي بنية البرمجيات بدلاً من مجرد التنبؤ بالرمز التالي؟",
+    "description": "We started Almadar with a different premise. What if software had physics? What if you could describe how a system behaves, formally, and a compiler could prove it correct before generating any code? What if AI understood software structure instead of just predicting the next token?"
+  },
+  "about.story.p3": {
+    "message": "تلك الفرضية أصبحت Orb ومترجم Almadar وخط الأنابيب العصبي. ما زلنا في البداية. لكن بعد سبعة مشاريع إنتاجية و103 سلوكيات معيارية، الفرضية صامدة.",
+    "description": "That premise became Orb, the Almadar compiler, and the neural pipeline. It is still early. But seven production projects and 103 standard behaviors later, the premise holds."
+  },
+  "about.meta.title": {
+    "message": "عن الفريق — فريق Almadar",
+    "description": "About — The Almadar Team"
+  },
+  "about.meta.desc": {
+    "message": "فريق صغير في ليوبليانا، سلوفينيا، يبني فيزياء البرمجيات.",
+    "description": "A small team in Ljubljana, Slovenia, building the physics of software."
+  },
+  "contact.hero.title": {
+    "message": "تواصل معنا",
+    "description": "Get in Touch"
+  },
+  "contact.hero.subtitle": {
+    "message": "المستثمرون والشراكات واستفسارات المؤسسات.",
+    "description": "Investors, partnerships, and enterprise inquiries."
+  },
+  "contact.investors.title": {
+    "message": "المستثمرون",
+    "description": "Investors"
+  },
+  "contact.investors.desc": {
+    "message": "نبني بنية تحتية أساسية لبرمجيات أصيلة بالذكاء الاصطناعي. إذا كنت تستثمر في أدوات المطورين أو بنية الذكاء الاصطناعي التحتية أو شركات المنصات، نودّ التحدث معك.",
+    "description": "We are building foundational infrastructure for AI-native software. If you invest in developer tools, AI infrastructure, or platform companies, we would like to talk."
+  },
+  "contact.partnerships.title": {
+    "message": "الشراكات",
+    "description": "Partnerships"
+  },
+  "contact.partnerships.desc": {
+    "message": "شركات تكامل الأنظمة والاستشارات والتكنولوجيا التي تريد البناء على منصة Almadar أو بالتعاون معها.",
+    "description": "System integrators, consultancies, and technology companies that want to build on or with the Almadar platform."
+  },
+  "contact.enterprise.title": {
+    "message": "المؤسسات",
+    "description": "Enterprise"
+  },
+  "contact.enterprise.desc": {
+    "message": "نشر مخصص، بنية تحتية مخصصة، ونماذج ذكاء اصطناعي مفصّلة للمؤسسات الكبيرة.",
+    "description": "Custom deployments, dedicated infrastructure, and tailored AI models for large organizations."
+  },
+  "contact.email.title": {
+    "message": "راسلنا",
+    "description": "Write to Us"
+  },
+  "contact.email.text": {
+    "message": "لأي استفسار، تواصل معنا مباشرة على:",
+    "description": "For any inquiry, reach us directly at:"
+  },
+  "contact.meta.title": {
+    "message": "تواصل — Almadar",
+    "description": "Contact — Almadar"
+  },
+  "contact.meta.desc": {
+    "message": "المستثمرون والشراكات واستفسارات المؤسسات. hello@almadar.io",
+    "description": "Investors, partnerships, and enterprise inquiries. hello@almadar.io"
+  }
+}

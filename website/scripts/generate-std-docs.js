@@ -1,8 +1,8 @@
 /**
  * Generate Standard Library Documentation Data
  *
- * Uses the TypeScript docs generator from @kflow-builder/shared to generate
- * JSON data files that Handlebars templates can consume to render docs.
+ * Imports generateStdLibDocs() from @almadar/std (local monorepo build)
+ * and writes JSON data files consumed by the orb site's reference components.
  *
  * Usage: node scripts/generate-std-docs.js
  */
@@ -14,44 +14,51 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT = path.join(__dirname, '..');
-const DATA_DIR = path.join(ROOT, 'src', 'data');
 
-// Import generator from shared package
-const SHARED_STD = path.join(ROOT, '..', 'shared', 'dist', 'orbitals', 'std', 'index.js');
+// Output to orb site data directory (V2 multi-site structure)
+const ORB_DATA_DIR = path.join(ROOT, 'sites', 'orb', 'src', 'data');
+// Also keep legacy location in sync
+const LEGACY_DATA_DIR = path.join(ROOT, 'src', 'data');
+
+// Import from @almadar/std built dist (monorepo local path)
+const STD_DIST = path.join(ROOT, '..', '..', 'packages', 'almadar-std', 'dist', 'index.js');
 
 async function main() {
-    console.log('📚 Generating Standard Library Documentation Data...\n');
+    console.log('Generating Standard Library Documentation Data...\n');
 
-    // Import the docs generator from shared
-    const std = await import(SHARED_STD);
-
-    // Generate all documentation
-    const { modules, behaviors } = std.generateStdLibDocs();
-
-    // Ensure data directory exists
-    if (!fs.existsSync(DATA_DIR)) {
-        fs.mkdirSync(DATA_DIR, { recursive: true });
+    // Verify the dist exists
+    if (!fs.existsSync(STD_DIST)) {
+        console.error(`ERROR: @almadar/std dist not found at ${STD_DIST}`);
+        console.error('Run: cd packages/almadar-std && pnpm run build');
+        process.exit(1);
     }
 
-    // Write modules data
-    fs.writeFileSync(
-        path.join(DATA_DIR, 'stdlib-modules.json'),
-        JSON.stringify(modules, null, 2)
-    );
-    console.log('✓ Generated src/data/stdlib-modules.json');
-    console.log(`  • ${modules.stats.totalModules} modules`);
-    console.log(`  • ${modules.stats.totalOperators} operators`);
+    const std = await import(STD_DIST);
+    const { modules, behaviors } = std.generateStdLibDocs();
 
-    // Write behaviors data
-    fs.writeFileSync(
-        path.join(DATA_DIR, 'stdlib-behaviors.json'),
-        JSON.stringify(behaviors, null, 2)
-    );
-    console.log('\n✓ Generated src/data/stdlib-behaviors.json');
-    console.log(`  • ${behaviors.stats.totalBehaviorCategories} categories`);
-    console.log(`  • ${behaviors.stats.totalBehaviors} behaviors`);
+    // Write to both output directories
+    for (const [label, dir] of [['sites/orb/src/data', ORB_DATA_DIR], ['src/data', LEGACY_DATA_DIR]]) {
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
 
-    console.log('\n✅ Documentation data generation complete!');
+        fs.writeFileSync(
+            path.join(dir, 'stdlib-modules.json'),
+            JSON.stringify(modules, null, 2)
+        );
+        fs.writeFileSync(
+            path.join(dir, 'stdlib-behaviors.json'),
+            JSON.stringify(behaviors, null, 2)
+        );
+        console.log(`Written to ${label}/`);
+    }
+
+    console.log(`\n  ${modules.stats.totalModules} modules, ${modules.stats.totalOperators} operators`);
+    console.log(`  ${behaviors.stats.totalBehaviorCategories} categories, ${behaviors.stats.totalBehaviors} behaviors`);
+    console.log('\nDone.');
 }
 
-main().catch(console.error);
+main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+});

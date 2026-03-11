@@ -1,0 +1,346 @@
+{
+  "studio.hero.title.prefix": {
+    "message": "ابنِ برمجيات",
+    "description": "Build Software"
+  },
+  "studio.hero.title.accent": {
+    "message": "بالذكاء الاصطناعي",
+    "description": "with AI"
+  },
+  "studio.hero.subtitle": {
+    "message": "صِف ما تريده. احصل على تطبيق عامل. حرّر، عاين، انشر.",
+    "description": "Describe what you want. Get a working application. Edit, preview, deploy."
+  },
+  "studio.hero.cta.start": {
+    "message": "ابدأ البناء",
+    "description": "Start Building"
+  },
+  "studio.hero.cta.features": {
+    "message": "شاهد الميزات",
+    "description": "See Features"
+  },
+  "studio.steps.title": {
+    "message": "كيف يعمل",
+    "description": "How It Works"
+  },
+  "studio.steps.subtitle": {
+    "message": "من الفكرة إلى الإنتاج في ثلاث خطوات",
+    "description": "From idea to production in three steps"
+  },
+  "studio.steps.describe.title": {
+    "message": "صِف",
+    "description": "Describe"
+  },
+  "studio.steps.describe.desc": {
+    "message": "أخبر الذكاء الاصطناعي بما تريد بناءه بلغة طبيعية. صِف بياناتك وسير عملك وواجهتك.",
+    "description": "Tell the AI what you want to build in plain language. Describe your data, workflows, and UI."
+  },
+  "studio.steps.generate.title": {
+    "message": "أنشئ",
+    "description": "Generate"
+  },
+  "studio.steps.generate.desc": {
+    "message": "وكيل الذكاء الاصطناعي يكتب برنامج .orb كاملاً. المترجم يُنتج تطبيقاً متكاملاً.",
+    "description": "The AI agent writes a complete .orb program. The compiler produces a full-stack application."
+  },
+  "studio.steps.deploy.title": {
+    "message": "انشر",
+    "description": "Deploy"
+  },
+  "studio.steps.deploy.desc": {
+    "message": "نقرة واحدة للنشر. تطبيقك يعمل على Firebase Hosting مع خادم خلفي.",
+    "description": "One click to deploy. Your app is live on Firebase Hosting with a server backend."
+  },
+  "studio.features.title": {
+    "message": "كل ما تحتاجه للبناء",
+    "description": "Everything You Need to Build"
+  },
+  "studio.features.subtitle": {
+    "message": "بيئة تطوير متكاملة مدعومة بالذكاء الاصطناعي",
+    "description": "A complete development environment powered by AI"
+  },
+  "studio.feature.agent.title": {
+    "message": "وكيل الذكاء الاصطناعي",
+    "description": "AI Agent"
+  },
+  "studio.feature.agent.desc": {
+    "message": "صِف ما تريده بلغة طبيعية. DeepAgent يُنشئ برنامج .orb كاملاً بالكيانات والسمات والصفحات.",
+    "description": "Describe what you want in plain language. The DeepAgent generates a complete .orb program with entities, traits, and pages."
+  },
+  "studio.feature.editor.title": {
+    "message": "المحرر البصري",
+    "description": "Visual Editor"
+  },
+  "studio.feature.editor.desc": {
+    "message": "حرّر المخططات بصرياً بواجهة سحب وإفلات، أو انتقل لوضع الكود مع محرر Monaco كامل.",
+    "description": "Edit schemas visually with a drag-and-drop interface, or switch to code mode with a full Monaco editor."
+  },
+  "studio.feature.git.title": {
+    "message": "سجل Git",
+    "description": "Git History"
+  },
+  "studio.feature.git.desc": {
+    "message": "كل تغيير هو التزام. تصفح سجل الإصدارات الكامل وقارن الفروقات وارجع لأي نقطة.",
+    "description": "Every change is a commit. Browse the full version history, compare diffs, and roll back to any point."
+  },
+  "studio.feature.preview.title": {
+    "message": "معاينة حية",
+    "description": "Live Preview"
+  },
+  "studio.feature.preview.desc": {
+    "message": "شاهد تطبيقك يعمل بالوقت الفعلي أثناء البناء. التغييرات تُترجم فوراً في الخلفية.",
+    "description": "See your application running in real time as you build. Changes compile instantly in the background."
+  },
+  "studio.feature.deploy.title": {
+    "message": "نشر بنقرة واحدة",
+    "description": "One-Click Deploy"
+  },
+  "studio.feature.deploy.desc": {
+    "message": "انشر للإنتاج مع Firebase App Hosting. الواجهة الأمامية والخادم الخلفي وقاعدة البيانات تُجهّز تلقائياً.",
+    "description": "Deploy to production with Firebase App Hosting. Frontend, backend, and database provisioned automatically."
+  },
+  "studio.feature.collab.title": {
+    "message": "تعاون الفريق",
+    "description": "Team Collaboration"
+  },
+  "studio.feature.collab.desc": {
+    "message": "شارك المشاريع مع فريقك. راجع التغييرات واترك تعليقات وأدِر الوصول بالأدوار.",
+    "description": "Share projects with your team. Review changes, leave comments, and manage access with roles."
+  },
+  "studio.cta.title": {
+    "message": "ابدأ البناء. مجاناً.",
+    "description": "Start Building. It's Free."
+  },
+  "studio.cta.subtitle": {
+    "message": "أنشئ أول تطبيق لك في دقائق. لا حاجة لبطاقة ائتمان.",
+    "description": "Create your first application in minutes. No credit card required."
+  },
+  "studio.cta.button": {
+    "message": "افتح Studio",
+    "description": "Open Studio"
+  },
+  "studio.meta.title": {
+    "message": "ابنِ برمجيات بالذكاء الاصطناعي",
+    "description": "Build Software with AI"
+  },
+  "studio.meta.description": {
+    "message": "Almadar Studio - صِف ما تريده، واحصل على تطبيق عامل. بيئة بناء برمجيات مدعومة بالذكاء الاصطناعي.",
+    "description": "Almadar Studio - Describe what you want, get a working application. AI-powered software builder."
+  },
+  "pricing.hero.title": {
+    "message": "الأسعار",
+    "description": "Pricing"
+  },
+  "pricing.hero.subtitle": {
+    "message": "ابدأ مجاناً. توسّع عند الحاجة.",
+    "description": "Start free. Scale when you need to."
+  },
+  "pricing.free.name": {
+    "message": "مجاني",
+    "description": "Free"
+  },
+  "pricing.free.price": {
+    "message": "$0",
+    "description": "$0"
+  },
+  "pricing.free.period": {
+    "message": "للأبد",
+    "description": "forever"
+  },
+  "pricing.free.desc": {
+    "message": "للمشاريع الشخصية والتعلم.",
+    "description": "For personal projects and learning."
+  },
+  "pricing.free.cta": {
+    "message": "ابدأ الآن",
+    "description": "Get Started"
+  },
+  "pricing.pro.name": {
+    "message": "Pro",
+    "description": "Pro"
+  },
+  "pricing.pro.price": {
+    "message": "$29",
+    "description": "$29"
+  },
+  "pricing.pro.period": {
+    "message": "/شهرياً",
+    "description": "/month"
+  },
+  "pricing.pro.desc": {
+    "message": "للمحترفين والفرق الصغيرة.",
+    "description": "For professionals and small teams."
+  },
+  "pricing.pro.cta": {
+    "message": "ابدأ تجربة Pro",
+    "description": "Start Pro Trial"
+  },
+  "pricing.enterprise.name": {
+    "message": "Enterprise",
+    "description": "Enterprise"
+  },
+  "pricing.enterprise.price": {
+    "message": "مخصص",
+    "description": "Custom"
+  },
+  "pricing.enterprise.desc": {
+    "message": "للمؤسسات ذات المتطلبات الخاصة.",
+    "description": "For organizations with specific requirements."
+  },
+  "pricing.enterprise.cta": {
+    "message": "تواصل معنا",
+    "description": "Contact Us"
+  },
+  "pricing.meta.title": {
+    "message": "الأسعار — Almadar Studio",
+    "description": "Pricing — Almadar Studio"
+  },
+  "pricing.meta.desc": {
+    "message": "مجاني للمشاريع الشخصية. Pro بسعر $29/شهرياً. Enterprise بأسعار مخصصة.",
+    "description": "Free for personal projects. Pro at $29/month. Enterprise with custom pricing."
+  },
+  "features.hero.title": {
+    "message": "الميزات",
+    "description": "Features"
+  },
+  "features.hero.subtitle": {
+    "message": "كل ما تحتاجه لبناء ومعاينة ونشر تطبيقات متكاملة.",
+    "description": "Everything you need to build, preview, and deploy full-stack applications."
+  },
+  "features.agent.title": {
+    "message": "وكيل الذكاء الاصطناعي",
+    "description": "AI Agent"
+  },
+  "features.agent.desc": {
+    "message": "صِف ما تريده بلغة طبيعية. DeepAgent يُنشئ برنامج .orb كاملاً بالكيانات وآلات الحالة وأنماط الواجهة والصفحات. يفهم متطلبات المجال وينتج مخرجات بجودة إنتاجية.",
+    "description": "Describe what you want in plain language. The DeepAgent generates a complete .orb program with entities, state machines, UI patterns, and pages. It understands domain requirements and produces production-quality output."
+  },
+  "features.editor.title": {
+    "message": "المحرر البصري",
+    "description": "Visual Editor"
+  },
+  "features.editor.desc": {
+    "message": "حرّر مخطط تطبيقك بصرياً بواجهة منظمة، أو انتقل لوضع الكود مع محرر Monaco كامل. كلا العرضين يبقيان متزامنين.",
+    "description": "Edit your application schema visually with a structured interface, or switch to code mode with a full Monaco editor. Both views stay in sync."
+  },
+  "features.git.title": {
+    "message": "سجل Git",
+    "description": "Git History"
+  },
+  "features.git.desc": {
+    "message": "كل تغيير هو التزام. تصفح سجل الإصدارات الكامل لمشروعك وقارن الفروقات بين أي إصدارين وارجع لأي نقطة.",
+    "description": "Every change is a commit. Browse the full version history of your project, compare diffs between any two versions, and roll back to any point."
+  },
+  "features.preview.title": {
+    "message": "معاينة حية",
+    "description": "Live Preview"
+  },
+  "features.preview.desc": {
+    "message": "شاهد تطبيقك يعمل بالوقت الفعلي أثناء البناء. التغييرات تُترجم فوراً في الخلفية. لا تحديث يدوي ولا انتظار.",
+    "description": "See your application running in real time as you build. Changes compile instantly in the background. No manual refresh, no waiting."
+  },
+  "features.deploy.title": {
+    "message": "نشر بنقرة واحدة",
+    "description": "One-Click Deploy"
+  },
+  "features.deploy.desc": {
+    "message": "انشر للإنتاج مع Firebase App Hosting. الواجهة الأمامية والخادم الخلفي وقاعدة البيانات تُجهّز تلقائياً. يدعم النطاقات المخصصة.",
+    "description": "Deploy to production with Firebase App Hosting. Frontend, backend, and database are provisioned automatically. Custom domains supported."
+  },
+  "features.collab.title": {
+    "message": "تعاون الفريق",
+    "description": "Team Collaboration"
+  },
+  "features.collab.desc": {
+    "message": "شارك المشاريع مع فريقك. راجع التغييرات واترك تعليقات وأدِر الوصول بصلاحيات مبنية على الأدوار.",
+    "description": "Share projects with your team. Review changes, leave comments, and manage access with role-based permissions."
+  },
+  "features.cta.title": {
+    "message": "مستعد للبناء؟",
+    "description": "Ready to Build?"
+  },
+  "features.cta.text": {
+    "message": "أنشئ أول تطبيق لك في دقائق. مجاني للبدء.",
+    "description": "Create your first application in minutes. Free to start."
+  },
+  "features.cta.button": {
+    "message": "افتح Studio",
+    "description": "Open Studio"
+  },
+  "features.meta.title": {
+    "message": "الميزات — Almadar Studio",
+    "description": "Features — Almadar Studio"
+  },
+  "features.meta.desc": {
+    "message": "وكيل الذكاء الاصطناعي، المحرر البصري، سجل Git، المعاينة الحية، النشر بنقرة واحدة، وتعاون الفريق.",
+    "description": "AI Agent, Visual Editor, Git History, Live Preview, One-Click Deploy, and Team Collaboration."
+  },
+  "showcase.hero.title": {
+    "message": "معرض المشاريع",
+    "description": "Showcase"
+  },
+  "showcase.hero.subtitle": {
+    "message": "مشاريع حقيقية بُنيت بـ Almadar Studio ونُشرت للإنتاج.",
+    "description": "Real projects built with Almadar Studio and deployed to production."
+  },
+  "showcase.inspection.title": {
+    "message": "نظام التفتيش",
+    "description": "Inspection System"
+  },
+  "showcase.inspection.desc": {
+    "message": "منصة تفتيش ميداني للامتثال الصناعي. جدولة وقوائم تحقق وأدلة مصورة وتقارير PDF وتتبع الحالة بالوقت الفعلي.",
+    "description": "Field inspection platform for industrial compliance. Scheduling, checklists, photo evidence, PDF reports, and real-time status tracking."
+  },
+  "showcase.traitwars.title": {
+    "message": "Trait Wars",
+    "description": "Trait Wars"
+  },
+  "showcase.traitwars.desc": {
+    "message": "لعبة استراتيجية متساوية القياس مع جمع الأبطال وقتال قائم على الأدوار والتحكم بالأراضي. عرض Canvas مع واجهات DOM.",
+    "description": "Isometric strategy game with hero collection, turn-based combat, and territory control. Canvas rendering with DOM UI overlays."
+  },
+  "showcase.knowledge.title": {
+    "message": "منصة المعرفة",
+    "description": "Knowledge Platform"
+  },
+  "showcase.knowledge.desc": {
+    "message": "إدارة معرفة منظمة مع مجموعات ومقالات واختبارات وتتبع التقدم. متعدد المستأجرين مع وصول مبني على الأدوار.",
+    "description": "Structured knowledge management with collections, articles, quizzes, and progress tracking. Multi-tenant with role-based access."
+  },
+  "showcase.blazklemenc.title": {
+    "message": "Blazklemenc",
+    "description": "Blazklemenc"
+  },
+  "showcase.blazklemenc.desc": {
+    "message": "معرض أعمال ونظام حجز لأعمال تدريب شخصي. جدولة ومدفوعات وإدارة عملاء.",
+    "description": "Professional portfolio and booking system for a personal training business. Scheduling, payments, and client management."
+  },
+  "showcase.winning11.title": {
+    "message": "Winning-11",
+    "description": "Winning-11"
+  },
+  "showcase.winning11.desc": {
+    "message": "تطبيق إدارة فرق كرة القدم مع إحصائيات اللاعبين وجدولة المباريات وبناء التشكيلات وجداول البطولات.",
+    "description": "Football team management app with player stats, match scheduling, formation builder, and tournament brackets."
+  },
+  "showcase.cta.title": {
+    "message": "ابنِ مشروعك التالي",
+    "description": "Build Yours Next"
+  },
+  "showcase.cta.text": {
+    "message": "كل مشروع في هذه الصفحة بُني بوصف المتطلبات لوكيل الذكاء الاصطناعي. لا قوالب. لا كود معياري.",
+    "description": "Every project on this page was built by describing requirements to the AI agent. No templates. No boilerplate."
+  },
+  "showcase.cta.button": {
+    "message": "ابدأ البناء",
+    "description": "Start Building"
+  },
+  "showcase.meta.title": {
+    "message": "معرض المشاريع — مشاريع بُنيت بـ Almadar",
+    "description": "Showcase — Projects Built with Almadar"
+  },
+  "showcase.meta.desc": {
+    "message": "مشاريع حقيقية بُنيت بـ Almadar Studio ونُشرت للإنتاج.",
+    "description": "Real projects built with Almadar Studio and deployed to production."
+  }
+}
