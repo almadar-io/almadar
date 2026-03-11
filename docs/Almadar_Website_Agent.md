@@ -2,240 +2,613 @@
 
 ## Problem
 
-We have three separate agent implementations:
+We have three agent codebases that don't share code:
 
-| Codebase | What It Does | Where It Runs |
-|----------|-------------|---------------|
-| `packages/almadar-agent/` | Full agent framework (LangGraph, workspace, git, sessions, memory) | Builder app (apps/builder/) |
-| `tools/orbital-agent/` | CLI agent + neural pipeline (GFlowNet, JEPA, 45 tools, eval) | Local CLI (`orb` command) |
-| `almadar/agent/` | Standalone server with chat-only endpoint | Firebase App Hosting (website chat) |
+| Codebase | Purpose | Size | Deployment |
+|----------|---------|------|------------|
+| `packages/almadar-agent/` | Full agent framework (LangGraph, workspace, git, sessions, memory, orchestration) | 42,690 LOC | npm `@almadar/agent` |
+| `tools/orbital-agent/` | CLI agent + neural pipeline (GFlowNet, JEPA, 30+ tools, eval) | 7,558 LOC | Local CLI (`orb`) |
+| `almadar/agent/` | Standalone Express server, chat-only | 200 LOC | Firebase App Hosting |
 
-The neural pipeline (GFlowNet, graph transformer, edit predictor) lives only in `tools/orbital-agent/` and can't be used from the website. The agent framework in `packages/almadar-agent/` has orchestration but no neural path. The standalone server in `almadar/agent/` can only answer questions.
+The problems:
 
-We want users on `orb.almadar.io` and `studio.almadar.io` to build .orb schemas directly in the browser.
+1. The neural pipeline (GFlowNet, graph transformer, edit predictor) is trapped in `tools/orbital-agent/` and unreachable from the website or the framework.
+2. `tools/orbital-agent/` reinvents concepts that `@almadar/agent` already has (agent loop, tool registry, provider routing, auto-fix), but with different APIs.
+3. `almadar/agent/` (the server) uses neither framework. It talks to `@almadar/llm` and `@almadar/skills` directly with a hand-rolled chat loop.
+4. Adding builder mode to the server by copying files from orbital-agent would create a third copy of agent logic.
 
 ---
 
-## Architecture
+## Architecture: Three Layers
 
-### Merge Strategy
+Instead of copying code into the server, we decompose `@almadar/agent` into composable layers that all three consumers can use. The neural pipeline merges into the framework as a new module. The CLI and server become thin consumers.
 
-Merge `tools/orbital-agent/` into `almadar/agent/` as the single agent server. The server exposes multiple modes:
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    CONSUMERS (thin)                          │
+│                                                             │
+│  almadar/agent/          tools/orbital-agent/   apps/builder│
+│  (Express server)        (CLI)                  (IDE)       │
+│  - HTTP routes           - Commander.js CLI      - React UI │
+│  - SSE streaming         - Terminal UI           - Monaco   │
+│  - Rate limiting         - Local filesystem      - Preview  │
+│  - CORS/Helmet           - Eval framework                   │
+└──────────┬──────────────────────┬──────────────────┬────────┘
+           │                      │                  │
+           ▼                      ▼                  ▼
+┌─────────────────────────────────────────────────────────────┐
+│              @almadar/agent  (npm framework)                │
+│                                                             │
+│  ┌─ Core (no I/O, no side effects) ──────────────────────┐ │
+│  │                                                        │ │
+│  │  agent/                                                │ │
+│  │    AgentLoop          Stateless LLM turn loop          │ │
+│  │    ToolRegistry       Register + dispatch tools        │ │
+│  │    SystemPrompt       Compose prompts from skills      │ │
+│  │    ProviderRouter     Complexity-based model selection  │ │
+│  │    AutoFix            Validation error repair          │ │
+│  │    EventTransformer   Raw events -> typed SSE events   │ │
+│  │                                                        │ │
+│  │  orchestration/                                        │ │
+│  │    ComplexityClassifier  Simple/medium/complex          │ │
+│  │    FixingOrchestrator    Error-specific fix planning    │ │
+│  │                                                        │ │
+│  │  orbitals/                                             │ │
+│  │    OrbitalGenerator   Single orbital via LLM           │ │
+│  │    OrbitalCombiner    Deterministic merge              │ │
+│  │    BatchGenerator     Parallel generation              │ │
+│  │                                                        │ │
+│  │  neural/              ← NEW (from orbital-agent)       │ │
+│  │    GoalParser         NL -> GoalSpec struct            │ │
+│  │    NeuralPipeline     GFlowNet end-to-end              │ │
+│  │    SchemaGenerator    Python inference bridge           │ │
+│  │                                                        │ │
+│  │  tools/               (pure functions, injectable I/O) │ │
+│  │    validateSchema()   Runs orbital validate            │ │
+│  │    combineOrbitals()  Merges orbital definitions       │ │
+│  │    generateOrbital()  Single orbital via LLM           │ │
+│  │    queryStructure()   Schema introspection             │ │
+│  │    schemaChunking()   Extract/apply chunks             │ │
+│  │                                                        │ │
+│  │  types/                                                │ │
+│  │    ToolDefinition, GoalSpec, AgentTurn, SSEEvent       │ │
+│  │    NeuralPipelineResult, ValidationResult              │ │
+│  └────────────────────────────────────────────────────────┘ │
+│                                                             │
+│  ┌─ Adapters (I/O, pluggable) ───────────────────────────┐ │
+│  │                                                        │ │
+│  │  persistence/                                          │ │
+│  │    MemoryBackend      In-process (server, CLI)         │ │
+│  │    FirestoreBackend   Cloud (builder app)              │ │
+│  │                                                        │ │
+│  │  workspace/                                            │ │
+│  │    WorkspaceManager   File I/O abstraction             │ │
+│  │    GitSink            Auto-commit writes               │ │
+│  │    FirestoreSink      Backup writes                    │ │
+│  │    MemorySink         In-memory (server, tests)        │ │
+│  │                                                        │ │
+│  │  session/                                              │ │
+│  │    SessionManager     Thread lifecycle                 │ │
+│  │    LangGraphAdapter   Checkpoint-based (builder)       │ │
+│  │    StatelessAdapter   Per-request (server)             │ │
+│  │                                                        │ │
+│  │  memory/                                               │ │
+│  │    MemoryManager      User prefs + project context     │ │
+│  │    PreferenceLearner  Learn patterns from usage        │ │
+│  │                                                        │ │
+│  │  safety/                                               │ │
+│  │    RateLimiter, CircuitBreaker, AuditLog               │ │
+│  └────────────────────────────────────────────────────────┘ │
+│                                                             │
+│  ┌─ Integrations (optional, heavy deps) ─────────────────┐ │
+│  │  LangGraph adapter    (peer dep: @langchain/langgraph) │ │
+│  │  Firestore backends   (peer dep: firebase-admin)       │ │
+│  │  Git operations       (peer dep: simple-git)           │ │
+│  └────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+           │                      │
+           ▼                      ▼
+┌─────────────────────┐  ┌────────────────────┐
+│  @almadar/llm       │  │  @almadar/skills   │
+│  Multi-provider LLM │  │  Skill generators  │
+└─────────────────────┘  └────────────────────┘
+```
+
+### Key Principle: Core Has No I/O
+
+The `Core` layer is pure computation. It takes inputs and returns outputs. It never reads files, writes files, makes HTTP calls, or spawns processes directly. All I/O is injected:
+
+```typescript
+// Core: takes a schema string, returns validation result
+async function validateSchema(
+  schema: string,
+  executor: (cmd: string, args: string[]) => Promise<{ stdout: string; code: number }>
+): Promise<ValidationResult>
+
+// Server adapter: writes temp file, runs orbital binary
+const serverExecutor = async (cmd, args) => {
+  const tmpFile = `/tmp/orbital-${uuid()}.orb`;
+  await writeFile(tmpFile, schema);
+  const result = await exec(cmd, [...args, tmpFile]);
+  await unlink(tmpFile);
+  return result;
+};
+
+// CLI adapter: uses real file path
+const cliExecutor = async (cmd, args) => exec(cmd, args);
+```
+
+This means:
+- The server uses `MemorySink` + `StatelessAdapter` + temp-file executors
+- The CLI uses direct filesystem + `MemoryBackend`
+- The builder app uses `GitSink` + `FirestoreBackend` + `LangGraphAdapter`
+
+Same core code, different I/O adapters.
+
+---
+
+## What Changes in @almadar/agent
+
+### New Module: `neural/`
+
+Absorb from `tools/orbital-agent/src/neural/`:
+
+| File | What It Does | Dependencies |
+|------|-------------|--------------|
+| `goal-parser.ts` | Extracts GoalSpec (entity count, fields, traits) from natural language | `@almadar/llm` |
+| `neural-pipeline.ts` | End-to-end: parse goal, run GFlowNet, validate, auto-fix | GoalParser, SchemaGenerator, validateSchema, autoFix |
+| `schema-generator.ts` | Wraps Python GFlowNet inference as subprocess | Injectable executor |
+| `infer.py` + deps | Python inference (GFlowNet + graph encoder) | PyTorch (CPU) |
+
+The neural pipeline becomes a first-class generation path alongside the LLM agent loop:
+
+```typescript
+// @almadar/agent exports
+export { GoalParser, parseGoal } from './neural/goal-parser.js';
+export { NeuralPipeline, runNeuralPipeline } from './neural/neural-pipeline.js';
+export { SchemaGenerator } from './neural/schema-generator.js';
+export type { GoalSpec, NeuralPipelineResult } from './neural/types.js';
+```
+
+### Refactored Module: `agent/`
+
+The agent loop from `tools/orbital-agent/src/agent/agent-loop.ts` is more suitable for stateless use than the current LangGraph-based `createSkillAgent()`. We keep both:
+
+```typescript
+// Stateless loop (server, CLI) - from orbital-agent
+export { AgentLoop, runAgentTurn } from './agent/agent-loop.js';
+
+// LangGraph loop (builder app) - existing
+export { createSkillAgent, resumeSkillAgent } from './agent/skill-agent.js';
+```
+
+The stateless `AgentLoop` operates on a message array. No checkpoints, no LangGraph, no Firestore. The caller owns the message history.
+
+```typescript
+interface AgentLoop {
+  runTurn(options: {
+    messages: Message[];
+    tools: ToolDefinition[];
+    systemPrompt: string;
+    llm: LLMClient;
+    onEvent?: (event: SSEEvent) => void;
+  }): Promise<AgentTurnResult>;
+}
+
+interface AgentTurnResult {
+  messages: Message[];      // Updated history
+  toolCalls: ToolCall[];    // Tools that were executed
+  done: boolean;            // LLM signaled completion
+}
+```
+
+### Refactored Module: `tools/`
+
+Tools become pure functions with injectable I/O. Currently `tools/orbital-agent/src/tools/validate.ts` calls `exec()` directly. After refactoring:
+
+```typescript
+// Before (orbital-agent): coupled to filesystem
+export async function validate(schemaPath: string): Promise<ValidationResult> {
+  const { stdout } = await exec('orbital', ['validate', schemaPath]);
+  return parseValidationOutput(stdout);
+}
+
+// After (@almadar/agent): injectable executor
+export function createValidateTool(
+  executor: CommandExecutor
+): ToolDefinition {
+  return {
+    name: 'validate',
+    description: 'Validate an .orb schema',
+    parameters: z.object({ schema: z.string() }),
+    async execute({ schema }) {
+      return executor.validateSchema(schema);
+    },
+  };
+}
+```
+
+### New Export: `builder` subpath
+
+A convenience module that wires up core + neural + tools for the builder use case:
+
+```typescript
+// @almadar/agent/builder
+import { AgentLoop } from '../agent/agent-loop.js';
+import { NeuralPipeline } from '../neural/neural-pipeline.js';
+import { createBuilderTools } from '../tools/builder-tools.js';
+
+export interface BuilderConfig {
+  llm: LLMClient;
+  executor: CommandExecutor;      // How to run `orbital validate`
+  pythonExecutor?: PythonExecutor; // How to run GFlowNet inference
+  onEvent?: (event: SSEEvent) => void;
+}
+
+export async function generateSchema(
+  prompt: string,
+  mode: 'neural' | 'llm' | 'auto',
+  config: BuilderConfig,
+): Promise<BuilderResult> {
+  // Auto mode: try neural for simple, fall back to LLM
+  // Neural mode: run GFlowNet pipeline
+  // LLM mode: run agent loop with builder tools
+}
+
+export async function editSchema(
+  schema: string,
+  instruction: string,
+  config: BuilderConfig,
+): Promise<BuilderResult> {
+  // Load schema into agent context
+  // Run agent loop with edit-focused tools
+}
+
+export async function validateSchema(
+  schema: string,
+  config: BuilderConfig,
+): Promise<ValidationResult> {
+  // Stateless validation, no LLM
+}
+```
+
+---
+
+## What Changes in tools/orbital-agent
+
+After the refactoring, `tools/orbital-agent/` becomes a thin CLI over `@almadar/agent`:
+
+```typescript
+// tools/orbital-agent/src/cli.ts (simplified)
+import { AgentLoop, NeuralPipeline, createBuilderTools } from '@almadar/agent';
+import { LLMClient } from '@almadar/llm';
+
+// CLI-specific: filesystem executor, terminal UI, eval framework
+import { createFilesystemExecutor } from './adapters/filesystem.js';
+import { createTerminalUI } from './ui/terminal.js';
+
+const executor = createFilesystemExecutor(process.cwd());
+const llm = new LLMClient({ provider: 'deepseek' });
+
+// Uses the same core as the server, different adapters
+const result = await generateSchema(prompt, 'auto', {
+  llm,
+  executor,
+  onEvent: (e) => terminalUI.render(e),
+});
+```
+
+What stays in orbital-agent (CLI-specific):
+- Commander.js CLI entry point
+- Terminal UI (spinners, colors, cost display)
+- Local filesystem adapter
+- Eval framework (neural-eval, dream-eval)
+- Design system tools (scaffold, pattern-sync, verify)
+
+What moves to @almadar/agent (shared):
+- `src/neural/*` (goal parser, pipeline, schema generator, infer.py)
+- `src/agent/agent-loop.ts` (stateless loop)
+- `src/agent/auto-fix.ts` (validation repair)
+- `src/agent/provider-router.ts` (complexity routing)
+- `src/agent/system-prompt.ts` (prompt composition)
+- `src/tools/validate.ts`, `combine-orbitals.ts`, `generate-orbital.ts` (as pure functions)
+
+---
+
+## What Changes in almadar/agent (server)
+
+The server becomes a thin HTTP layer over `@almadar/agent/builder`:
 
 ```
 almadar/agent/
 ├── src/
-│   ├── index.ts                    # Express server entry
+│   ├── index.ts                 # Express, middleware, mount routes
 │   ├── routes/
-│   │   ├── chat.ts                 # /api/agent/chat (existing Q&A)
-│   │   ├── builder.ts              # /api/agent/builder (NEW: schema generation)
-│   │   └── health.ts               # /health
-│   │
-│   ├── agent/                      # From tools/orbital-agent/src/agent/
-│   │   ├── agent-loop.ts           # Core LLM loop (message history, compaction)
-│   │   ├── auto-fix.ts             # Validation error fixing
-│   │   ├── provider-router.ts      # Complexity-based provider selection
-│   │   ├── system-prompt.ts        # Prompt composition from tools + skills
-│   │   └── tool-registry.ts        # Tool registry (builder-safe subset)
-│   │
-│   ├── neural/                     # From tools/orbital-agent/src/neural/
-│   │   ├── goal-parser.ts          # NL -> GoalSpec extraction
-│   │   ├── schema-generator.ts     # GFlowNet inference wrapper
-│   │   ├── neural-pipeline.ts      # Full pipeline: parse -> generate -> validate -> fix
-│   │   └── infer.py                # Python GFlowNet inference (subprocess)
-│   │
-│   ├── tools/                      # From tools/orbital-agent/src/tools/ (safe subset)
-│   │   ├── validate.ts             # orbital validate (in-memory, no filesystem)
-│   │   ├── combine-orbitals.ts     # Merge orbital definitions
-│   │   ├── generate-orbital.ts     # Single orbital generation via LLM
-│   │   └── query-schema.ts         # Schema introspection
-│   │
-│   ├── eval/                       # From tools/orbital-agent/src/eval/
-│   │   ├── neural-eval.ts          # Neural vs LLM comparison
-│   │   └── runner.ts               # Eval CLI
-│   │
-│   └── models/                     # Trained model weights (or fetched from GCS)
-│       ├── gflownet-best.pt
-│       ├── graph-model-best.pt
-│       └── edit-predictor-best.pt
+│   │   ├── chat.ts              # /api/agent/chat (existing)
+│   │   ├── builder.ts           # /api/agent/builder (NEW)
+│   │   └── health.ts            # /health
+│   ├── adapters/
+│   │   ├── server-executor.ts   # Temp-file based command executor
+│   │   └── python-executor.ts   # GFlowNet subprocess manager
+│   └── middleware/
+│       └── rate-limit.ts        # Per-IP rate limiting
+├── models/                      # Trained weights (bundled in image)
+│   ├── gflownet-best.pt
+│   ├── graph-model-best.pt
+│   └── edit-predictor-best.pt
+├── python/                      # Python inference scripts
+│   ├── infer.py
+│   ├── decompose_schema.py
+│   ├── gflownet.py
+│   └── graph_model.py
+├── package.json
+└── apphosting.yaml
 ```
 
-### What We Keep vs Drop
+The builder route is ~50 lines:
 
-**KEEP (no workspace/git/session needed):**
+```typescript
+// src/routes/builder.ts
+import { generateSchema, editSchema, validateSchema } from '@almadar/agent/builder';
+import { LLMClient } from '@almadar/llm';
+import { serverExecutor } from '../adapters/server-executor.js';
+import { pythonExecutor } from '../adapters/python-executor.js';
 
-| Component | Source | Why |
-|-----------|--------|-----|
-| Agent loop | `tools/orbital-agent/src/agent/agent-loop.ts` | Core generation logic, message history, compaction |
-| Auto-fix | `tools/orbital-agent/src/agent/auto-fix.ts` | Validation error repair |
-| Provider router | `tools/orbital-agent/src/agent/provider-router.ts` | Smart model selection |
-| System prompt builder | `tools/orbital-agent/src/agent/system-prompt.ts` | Compose prompts from skills + tools |
-| Tool registry | `tools/orbital-agent/src/agent/tool-registry.ts` | Register tools for LLM (filtered subset) |
-| Neural pipeline | `tools/orbital-agent/src/neural/*` | GFlowNet generation (the whole point) |
-| Goal parser | `tools/orbital-agent/src/neural/goal-parser.ts` | NL to structured GoalSpec |
-| Schema generator | `tools/orbital-agent/src/neural/schema-generator.ts` | GFlowNet inference |
-| Validate tool | `tools/orbital-agent/src/tools/validate.ts` | `orbital validate` wrapper |
-| Combine orbitals | `tools/orbital-agent/src/tools/combine-orbitals.ts` | Merge multiple orbitals |
-| Generate orbital | `tools/orbital-agent/src/tools/generate-orbital.ts` | Single orbital via LLM |
-| Query schema | `tools/orbital-agent/src/tools/filesystem.ts` (partial) | Schema introspection |
-| Skills | `packages/almadar-skills/` | All skill generators (npm dependency) |
-| LLM client | `packages/almadar-llm/` | Multi-provider streaming (npm dependency) |
-| Eval framework | `tools/orbital-agent/src/eval/` | Quality benchmarking |
+router.post('/builder', async (req, res) => {
+  const { prompt, mode, threadId, options } = req.body;
 
-**DROP (requires workspace/git/sessions):**
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
 
-| Component | Why Drop |
-|-----------|----------|
-| Workspace manager | No filesystem on server |
-| Git client / sink | No git repos for web users |
-| Firestore sink | No per-user project persistence (yet) |
-| Session manager (LangGraph checkpoints) | Thread-level memory is sufficient |
-| Memory manager (.orb memory files) | No user profiles |
-| Scaffold tool | No project directory creation |
-| Compile tool | No filesystem to write app/ to |
-| Verify tool | No Playwright browser on server |
-| Lint tool | No eslint on server |
-| Design system tools | No filesystem |
-| Multi-user / state-sync | Single-user per request |
+  const llm = new LLMClient({
+    provider: options?.provider || 'deepseek',
+    model: options?.model,
+  });
+
+  await generateSchema(prompt, mode || 'auto', {
+    llm,
+    executor: serverExecutor,
+    pythonExecutor,
+    onEvent: (event) => {
+      res.write(`data: ${JSON.stringify(event)}\n\n`);
+    },
+  });
+
+  res.end();
+});
+
+router.post('/builder/validate', async (req, res) => {
+  const result = await validateSchema(req.body.schema, { executor: serverExecutor });
+  res.json(result);
+});
+
+router.post('/builder/edit', async (req, res) => {
+  // Same SSE pattern as /builder
+});
+```
+
+No agent logic in the server. All generation, validation, fixing, neural inference lives in `@almadar/agent`. The server only handles HTTP, SSE framing, and adapter wiring.
 
 ---
 
-## Builder Mode API
+## Dependency Graph After Refactoring
 
-### Endpoint: `POST /api/agent/builder`
+```
+@almadar/skills ──────────────────────────────────────┐
+@almadar/llm ─────────────────────────────────────────┤
+@almadar/core ─────────────────────────────────────────┤
+                                                       ▼
+                                              @almadar/agent
+                                              (npm framework)
+                                                       │
+                    ┌──────────────────────────────────┼──────────────────┐
+                    ▼                                  ▼                  ▼
+            almadar/agent/                   tools/orbital-agent/    apps/builder/
+            (server)                         (CLI)                  (IDE)
+            deps:                            deps:                  deps:
+              @almadar/agent                   @almadar/agent        @almadar/agent
+              @almadar/llm                     @almadar/llm          @almadar/llm
+              @almadar/skills                  @almadar/skills       @almadar/skills
+              express, cors, helmet            commander, ora        react, monaco
+```
 
-SSE streaming endpoint. Same protocol as the chat endpoint.
+---
+
+## Builder API
+
+### `POST /api/agent/builder`
+
+SSE streaming endpoint.
 
 ```typescript
 // Request
 {
-  prompt: string;              // "Build a todo app with categories"
-  mode: "neural" | "llm" | "auto";  // Generation strategy
-  threadId?: string;           // Resume conversation
+  prompt: string;                          // "Build a todo app with categories"
+  mode: "neural" | "llm" | "auto";        // Generation strategy
+  threadId?: string;                       // Resume conversation
   options?: {
-    provider?: string;         // LLM provider override
-    model?: string;            // Model override
-    maxFixRounds?: number;     // Auto-fix iterations (default: 3)
-    samples?: number;          // GFlowNet samples (default: 5)
-    temperature?: number;      // GFlowNet temperature (default: 0.8)
+    provider?: string;                     // LLM provider override
+    model?: string;                        // Model override
+    maxFixRounds?: number;                 // Auto-fix iterations (default: 3)
+    samples?: number;                      // GFlowNet samples (default: 5)
+    temperature?: number;                  // GFlowNet temperature (default: 0.8)
   };
 }
 
-// SSE Events (streamed)
+// SSE Events
 { type: "start", data: { threadId, mode } }
 { type: "status", data: { phase: "parsing" | "generating" | "validating" | "fixing" | "done" } }
-{ type: "message", data: { role: "assistant", content: "..." } }  // Streamed text
-{ type: "schema", data: { orb: "..." } }                          // Generated .orb content
+{ type: "message", data: { role: "assistant", content: "..." } }
+{ type: "schema", data: { orb: "..." } }
 { type: "validation", data: { pass: boolean, errors: [], warnings: [] } }
 { type: "fix", data: { round: 1, description: "..." } }
-{ type: "goal", data: { entities: 2, traits: 4, ... } }           // Parsed GoalSpec
+{ type: "goal", data: { entities: 2, traits: 4, ... } }
 { type: "neural", data: { steps: 23, goalMatch: 0.78, actions: [...] } }
 { type: "done", data: { success: boolean, schema: "..." } }
 { type: "error", data: { error: "..." } }
+```
+
+### `POST /api/agent/builder/validate`
+
+Stateless, no SSE.
+
+```typescript
+// Request
+{ schema: string }
+
+// Response
+{ valid: boolean, errors: [], warnings: [] }
+```
+
+### `POST /api/agent/builder/edit`
+
+SSE streaming, same event protocol as `/builder`.
+
+```typescript
+// Request
+{
+  schema: string;
+  instruction: string;
+  threadId?: string;
+}
 ```
 
 ### Mode Selection
 
 ```
 "auto" (default):
-  1. Parse goal to estimate complexity
-  2. Simple (1-2 entities) -> try neural first
-     - If neural succeeds (goalMatch > 0.7 + validates): done
-     - If neural fails: fall back to LLM
+  1. Parse goal -> estimate complexity
+  2. Simple (1-2 entities) -> neural first
+     - goalMatch > 0.7 + validates -> done
+     - Otherwise -> fall back to LLM
   3. Complex (3+ entities) -> LLM agent loop
-     - Decompose into orbitals
-     - Generate each via subagent
-     - Combine + validate + fix
 
 "neural":
-  Force GFlowNet pipeline. Fast (2-10s), cheap (<$0.01).
-  Best for simple-medium schemas.
+  GFlowNet pipeline. 2-10s, <$0.01/request.
 
 "llm":
-  Force LLM agent loop. Slower (30-300s), costlier ($0.05-0.35).
-  Best for complex multi-entity schemas.
-```
-
-### Endpoint: `POST /api/agent/builder/edit`
-
-Edit an existing schema via the agent.
-
-```typescript
-// Request
-{
-  schema: string;              // Current .orb content
-  instruction: string;         // "Add a comments entity with author and text"
-  threadId?: string;
-}
-
-// SSE Events: same as builder, but starts from existing schema
-```
-
-### Endpoint: `POST /api/agent/builder/validate`
-
-Stateless validation (no LLM, no generation).
-
-```typescript
-// Request
-{ schema: string }
-
-// Response (not SSE, regular JSON)
-{
-  valid: boolean;
-  errors: [{ code: string, message: string, path: string }];
-  warnings: [{ code: string, message: string, path: string }];
-}
+  Agent loop with DeepSeek. 30-120s, $0.05-0.15/request.
 ```
 
 ---
 
-## Validation Without Filesystem
+## Implementation Phases
 
-The `orbital validate` binary reads from a file path. For the server, we need to validate in-memory schemas. Two approaches:
+### Phase 1: Decompose @almadar/agent
 
-**Option A: Temp file (simple)**
-Write schema to `/tmp/orbital-{uuid}.orb`, run `orbital validate`, read result, delete file.
+Refactor the existing `packages/almadar-agent/` package:
 
-**Option B: stdin (if compiler supports it)**
-Pipe schema to `orbital validate --stdin`. Requires a small Rust CLI change.
+1. **Extract stateless AgentLoop** from the LangGraph-based `createSkillAgent`. The existing LangGraph path stays for the builder app. The new stateless path works with plain message arrays.
 
-Start with Option A. It's fast enough (validate takes <100ms) and avoids compiler changes.
+2. **Add `neural/` module** by moving `tools/orbital-agent/src/neural/*` into `packages/almadar-agent/src/neural/`. Adapt imports to use `@almadar/llm` instead of direct provider calls.
+
+3. **Make tools injectable.** Refactor `tools/validate.ts`, `tools/combine-orbitals.ts`, `tools/generate-orbital.ts` to accept a `CommandExecutor` interface instead of calling `exec()` directly.
+
+4. **Add `builder` export subpath** (`packages/almadar-agent/builder`) that wires up core + neural + tools into `generateSchema()`, `editSchema()`, `validateSchema()`.
+
+5. **Publish @almadar/agent@3.0.0** with the new modules.
+
+### Phase 2: Slim down tools/orbital-agent
+
+Replace orbital-agent's internal implementations with imports from `@almadar/agent`:
+
+1. Delete `tools/orbital-agent/src/neural/` (now in @almadar/agent)
+2. Delete `tools/orbital-agent/src/agent/agent-loop.ts`, `auto-fix.ts`, `provider-router.ts` (now in @almadar/agent)
+3. Import from `@almadar/agent` instead
+4. Keep CLI-specific code: Commander entry, terminal UI, eval framework, filesystem adapter, design system tools
+
+### Phase 3: Builder endpoint in almadar/agent server
+
+1. Add `@almadar/agent` as a dependency of `almadar/agent/`
+2. Implement `src/adapters/server-executor.ts` (temp-file based `orbital validate`)
+3. Implement `src/adapters/python-executor.ts` (GFlowNet subprocess)
+4. Implement `src/routes/builder.ts` using `@almadar/agent/builder`
+5. Copy Python inference scripts + model weights into the repo
+6. Test locally with `npm run dev`
+
+### Phase 4: Frontend builder component
+
+Build `AlmadarBuilder.tsx` shared component:
+
+1. Input bar for prompts
+2. Generation progress display (phase, mode, neural stats)
+3. Schema preview with syntax highlighting
+4. Validation status
+5. Download / copy / "Open in Studio" actions
+
+Wire into:
+- `orb.almadar.io`: simple "try it" builder in the hero section
+- `studio.almadar.io`: Monaco editor + agent sidebar
+
+### Phase 5: Deploy with Python runtime
+
+1. Update `apphosting.yaml` to install PyTorch CPU
+2. Bundle model weights in the Docker image (~50MB)
+3. Configure Cloud Run: 2 CPU, 1GB memory, scale-to-zero
+4. Deploy and verify neural pipeline works in production
+
+### Phase 6: Edit mode + eval
+
+1. Implement `/api/agent/builder/edit` endpoint
+2. Port eval framework to run against deployed server
+3. Set up regression testing on each deploy
 
 ---
 
-## Neural Pipeline on Server
+## Neural Pipeline Details
 
 ### Python Subprocess
 
-The GFlowNet inference runs in Python (`infer.py`). The server spawns it as a subprocess:
+GFlowNet inference runs in Python. The `PythonExecutor` adapter manages the subprocess:
 
 ```typescript
-const result = await execPythonInference({
-  goalSpec,
-  modelPath: './models/gflownet-best.pt',
-  samples: 5,
-  temperature: 0.8,
-});
+interface PythonExecutor {
+  infer(goal: GoalSpec, options: InferOptions): Promise<InferResult>;
+}
+
+// Option A: Subprocess per request (simple, stateless)
+class SubprocessPythonExecutor implements PythonExecutor {
+  async infer(goal, options) {
+    const goalFile = `/tmp/goal-${uuid()}.json`;
+    await writeFile(goalFile, JSON.stringify(goal));
+    const { stdout } = await exec('python3', [
+      'python/infer.py',
+      '--goal-file', goalFile,
+      '--samples', String(options.samples),
+      '--temperature', String(options.temperature),
+      '--model-dir', 'models/',
+    ]);
+    await unlink(goalFile);
+    return JSON.parse(stdout);
+  }
+}
+
+// Option B: Long-running Python worker (warm models, lower latency)
+class WorkerPythonExecutor implements PythonExecutor {
+  // Spawns infer.py in server mode, communicates via stdin/stdout
+  // Models loaded once on startup, reused across requests
+}
 ```
 
-**Requirements on the server:**
-- Python 3.10+ with PyTorch (CPU-only, no GPU needed)
-- Model weights bundled in the Docker image (~50MB total)
-- `infer.py` + `decompose_schema.py` + `gflownet.py` + `graph_model.py` copied to server
+Start with Option A. Optimize to Option B when latency matters.
 
-### Model Loading Strategy
+### Model Weights
 
-**Cold start:** First inference loads models into memory (~2s). Subsequent calls reuse the loaded models.
+Three trained models (~50MB total):
 
-**Option:** Keep a warm Python process that listens on a Unix socket or stdin for inference requests, avoiding subprocess overhead per request. This is an optimization for later.
+| Model | File | Purpose | Loaded By |
+|-------|------|---------|-----------|
+| GFlowNet | `gflownet-best.pt` | Schema generation policy (96% valid rate) | `infer.py` |
+| Graph Encoder | `graph-model-best.pt` | Schema-to-embedding (shared encoder) | `infer.py` |
+| Edit Predictor | `edit-predictor-best.pt` | Edit outcome prediction, 99.7% accuracy (JEPA) | `infer.py` |
+
+Source: `packages/almadar-test-schemas/training-data/models/`
 
 ---
 
 ## Frontend Integration
 
-### orb.almadar.io
-
-The Orb site gets a "Try It" builder experience:
+### orb.almadar.io (Try It)
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -258,9 +631,7 @@ The Orb site gets a "Try It" builder experience:
 └─────────────────────────────────────────────────────┘
 ```
 
-### studio.almadar.io
-
-Studio gets the full builder with a schema editor (Monaco) + agent sidebar:
+### studio.almadar.io (Full Editor)
 
 ```
 ┌──────────────────────────┬──────────────────────────┐
@@ -283,154 +654,38 @@ Studio gets the full builder with a schema editor (Monaco) + agent sidebar:
 
 ---
 
-## Implementation Phases
-
-### Phase 1: Merge orbital-agent into almadar/agent
-
-Copy the following from `tools/orbital-agent/src/` into `almadar/agent/src/`:
-
-```
-agent/agent-loop.ts
-agent/auto-fix.ts
-agent/provider-router.ts
-agent/system-prompt.ts
-agent/tool-registry.ts
-neural/goal-parser.ts
-neural/schema-generator.ts
-neural/neural-pipeline.ts
-neural/infer.py
-tools/validate.ts
-tools/combine-orbitals.ts
-tools/generate-orbital.ts
-```
-
-Copy Python inference dependencies:
-```
-tools/training-data/decompose_schema.py
-tools/training-data/gflownet.py
-tools/training-data/graph_model.py
-tools/training-data/schema_to_graph.py
-```
-
-Copy trained models:
-```
-packages/almadar-test-schemas/training-data/models/gflownet-best.pt
-packages/almadar-test-schemas/training-data/models/graph-model-best.pt
-packages/almadar-test-schemas/training-data/models/edit-predictor-best.pt
-```
-
-Update imports. Strip filesystem/git dependencies. The agent-loop and tools need to work with in-memory schema strings instead of file paths.
-
-**Deliverable:** `almadar/agent/` has both chat mode and builder mode. Neural pipeline runs locally.
-
-### Phase 2: Builder API endpoint
-
-Implement `POST /api/agent/builder` with SSE streaming:
-
-1. Parse request (prompt, mode, options)
-2. If mode is "neural" or "auto" with simple goal: run neural pipeline
-3. If mode is "llm" or auto-fallback: run agent loop
-4. Stream events as SSE
-5. Return final schema in `done` event
-
-Implement `POST /api/agent/builder/validate` for stateless validation.
-
-**Deliverable:** Builder endpoint works, returns .orb schemas via SSE.
-
-### Phase 3: Frontend builder component
-
-Build `AlmadarBuilder.tsx` shared component (like `AlmadarChat.tsx`):
-
-1. Input bar for prompts
-2. Generation progress (phase, mode, steps)
-3. Schema preview (syntax highlighted)
-4. Validation status
-5. Download / copy / edit actions
-6. Conversation mode for iterative edits
-
-Wire into `orb.almadar.io` (simple builder) and `studio.almadar.io` (full editor).
-
-**Deliverable:** Users can generate .orb schemas from the website.
-
-### Phase 4: Deploy with Python runtime
-
-Update the Firebase App Hosting config to include Python:
-
-```yaml
-build:
-  command: |
-    npm install && npm run build
-    pip install torch --index-url https://download.pytorch.org/whl/cpu
-run:
-  runtime: nodejs22
-  command: node dist/index.js
-```
-
-Bundle model weights in the Docker image. Configure Cloud Run with enough memory for PyTorch CPU inference (~1GB).
-
-**Deliverable:** Neural pipeline runs in production.
-
-### Phase 5: Edit mode
-
-Implement `POST /api/agent/builder/edit`:
-
-1. Accept existing schema + natural language instruction
-2. Agent reads schema, understands structure
-3. Applies edit (add entity, modify trait, change pattern, etc.)
-4. Validates result
-5. Returns diff + updated schema
-
-This enables the Studio editor workflow where users iterate on schemas.
-
-**Deliverable:** Users can edit existing schemas via natural language.
-
-### Phase 6: Eval integration
-
-Port `tools/orbital-agent/src/eval/` to run against the deployed server:
-
-1. Neural eval: benchmark GFlowNet generation quality
-2. Dream eval: full workflow (generate + validate)
-3. Regression testing on each deploy
-
-**Deliverable:** Continuous quality monitoring.
-
----
-
 ## Cost Model
 
 | Mode | LLM Calls | Time | Cost/Request | Use Case |
 |------|-----------|------|-------------|----------|
 | Neural (GFlowNet) | 1 (goal parse) | 2-10s | <$0.01 | Simple apps, demos, try-it |
-| Neural + fix | 2-4 | 5-20s | <$0.03 | Simple apps with validation errors |
+| Neural + fix | 2-4 | 5-20s | <$0.03 | Simple apps needing repair |
 | LLM (DeepSeek) | 6-15 | 30-120s | $0.05-0.15 | Medium complexity |
 | LLM (Anthropic) | 6-15 | 30-120s | $0.15-0.35 | Complex multi-entity |
 
-For the website "try it" flow, neural mode keeps costs near zero. The LLM fallback handles cases the neural model can't.
-
 ---
 
-## Server Resource Requirements
+## Server Resources
 
 ```yaml
-# apphosting.yaml
 runConfig:
-  cpu: 2              # Neural inference is CPU-bound
-  memoryMiB: 1024     # PyTorch + model weights + Node.js
-  minInstances: 0     # Scale to zero when idle
-  maxInstances: 5     # Cap concurrent generations
-  concurrency: 10     # Multiple chat requests per instance, 1 generation at a time
+  cpu: 2
+  memoryMiB: 1024
+  minInstances: 0
+  maxInstances: 5
+  concurrency: 10
 ```
 
 ---
 
 ## Security
 
-- **Rate limiting:** 10 generations/hour per IP (anonymous), 50/hour per authenticated user
-- **Schema size limit:** 500KB max generated schema
-- **Prompt length limit:** 2000 characters
-- **No filesystem escape:** All validation via temp files in /tmp with UUID names, cleaned up immediately
-- **No user code execution:** Server never runs user-provided code
-- **Model weights are read-only:** Loaded once, never modified by requests
+- Rate limiting: 10 generations/hour per IP (anonymous), 50/hour authenticated
+- Schema size limit: 500KB
+- Prompt length limit: 2000 characters
+- Temp files in /tmp with UUID names, cleaned up immediately
+- No user code execution
+- Model weights read-only
 
 ---
 
@@ -438,9 +693,9 @@ runConfig:
 
 | Metric | Target |
 |--------|--------|
-| Neural generation success rate | >80% for 1-2 entity apps |
-| LLM generation success rate | >95% for all complexities |
+| Neural generation success (1-2 entity) | >80% |
+| LLM generation success (all complexities) | >95% |
 | Time to first schema (neural) | <5s |
 | Time to first schema (LLM) | <60s |
 | Validation pass rate (first attempt) | >70% neural, >90% LLM |
-| Monthly cost (1000 generations/day) | <$300 |
+| Monthly cost (1000 gen/day) | <$300 |
