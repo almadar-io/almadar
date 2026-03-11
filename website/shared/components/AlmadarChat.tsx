@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
 import styles from "./AlmadarChat.module.css";
 
 // ─── Types ───────────────────────────────────────────────────────────────
@@ -63,10 +64,13 @@ function useChat() {
   const [streaming, setStreaming] = useState(false);
   const [threadId, setThreadId] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const container = messagesContainerRef.current;
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
   }, [messages]);
 
   const send = useCallback(async (text: string) => {
@@ -167,13 +171,13 @@ function useChat() {
     if (abortRef.current) abortRef.current.abort();
   }, []);
 
-  return { messages, input, setInput, streaming, send, handleKey, stop, messagesEndRef };
+  return { messages, input, setInput, streaming, send, handleKey, stop, messagesContainerRef };
 }
 
 // ─── Floating Chat Panel ────────────────────────────────────────────────
 
 function FloatingPanel({ onClose }: { onClose: () => void }) {
-  const { messages, input, setInput, streaming, send, handleKey, messagesEndRef } = useChat();
+  const { messages, input, setInput, streaming, send, handleKey, messagesContainerRef } = useChat();
 
   return (
     <div className={styles.floatingPanel}>
@@ -190,7 +194,7 @@ function FloatingPanel({ onClose }: { onClose: () => void }) {
       </div>
 
       {/* Messages */}
-      <div className={styles.messages}>
+      <div className={styles.messages} ref={messagesContainerRef}>
         {messages.length === 0 && (
           <div className={styles.welcome}>
             <p className={styles.welcomeTitle}>Ask anything about Almadar</p>
@@ -222,9 +226,8 @@ function FloatingPanel({ onClose }: { onClose: () => void }) {
           if (msg.role === "error") {
             return <div key={msg.id} className={styles.msgError}>{msg.content}</div>;
           }
-          return <div key={msg.id} className={styles.msgAssistant}>{msg.content}</div>;
+          return <div key={msg.id} className={styles.msgAssistant}><ReactMarkdown>{msg.content}</ReactMarkdown></div>;
         })}
-        <div ref={messagesEndRef} />
       </div>
 
       {/* Input */}
@@ -252,14 +255,14 @@ function FloatingPanel({ onClose }: { onClose: () => void }) {
 // ─── Inline Chat (Hero) ─────────────────────────────────────────────────
 
 function InlineChat() {
-  const { messages, input, setInput, streaming, send, handleKey, messagesEndRef } = useChat();
+  const { messages, input, setInput, streaming, send, handleKey, messagesContainerRef } = useChat();
   const hasMessages = messages.length > 0;
 
   return (
     <div className={styles.inlineWrap}>
       {/* Conversation area — only shown when messages exist */}
       {hasMessages && (
-        <div className={styles.inlineMessages}>
+        <div className={styles.inlineMessages} ref={messagesContainerRef}>
           {messages.map(msg => {
             if (msg.role === "user") {
               return <div key={msg.id} className={styles.msgUser}>{msg.content}</div>;
@@ -275,9 +278,8 @@ function InlineChat() {
             if (msg.role === "error") {
               return <div key={msg.id} className={styles.msgError}>{msg.content}</div>;
             }
-            return <div key={msg.id} className={styles.msgAssistant}>{msg.content}</div>;
+            return <div key={msg.id} className={styles.msgAssistant}><ReactMarkdown>{msg.content}</ReactMarkdown></div>;
           })}
-          <div ref={messagesEndRef} />
         </div>
       )}
 
