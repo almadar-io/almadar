@@ -26,6 +26,16 @@ const SUGGESTIONS = [
   "Tell me about the AI",
 ];
 
+// ─── Text Direction Detection ───────────────────────────────────────────
+
+const RTL_REGEX = /[\u0590-\u05FF\u0600-\u06FF\u0700-\u074F\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
+
+function getDir(text: string): "rtl" | "ltr" {
+  // Find the first letter character, skipping markdown symbols, whitespace, punctuation
+  const stripped = text.replace(/^[\s#*_>`\-\d.[\]()!]+/, "");
+  return RTL_REGEX.test(stripped.charAt(0)) ? "rtl" : "ltr";
+}
+
 // ─── SSE Stream Parser ──────────────────────────────────────────────────
 
 interface SSEEvent {
@@ -213,7 +223,7 @@ function FloatingPanel({ onClose }: { onClose: () => void }) {
 
         {messages.map(msg => {
           if (msg.role === "user") {
-            return <div key={msg.id} className={styles.msgUser}>{msg.content}</div>;
+            return <div key={msg.id} className={styles.msgUser} dir={getDir(msg.content)}>{msg.content}</div>;
           }
           if (msg.role === "status") {
             return (
@@ -226,7 +236,7 @@ function FloatingPanel({ onClose }: { onClose: () => void }) {
           if (msg.role === "error") {
             return <div key={msg.id} className={styles.msgError}>{msg.content}</div>;
           }
-          return <div key={msg.id} className={styles.msgAssistant}><ReactMarkdown>{msg.content}</ReactMarkdown></div>;
+          return <div key={msg.id} className={styles.msgAssistant} dir={getDir(msg.content)}><ReactMarkdown>{msg.content}</ReactMarkdown></div>;
         })}
       </div>
 
@@ -239,6 +249,7 @@ function FloatingPanel({ onClose }: { onClose: () => void }) {
           onKeyDown={handleKey}
           placeholder="Ask about Almadar, Orb, Studio..."
           disabled={streaming}
+          dir="auto"
         />
         <button
           className={styles.sendBtn}
@@ -265,7 +276,7 @@ function InlineChat() {
         <div className={styles.inlineMessages} ref={messagesContainerRef}>
           {messages.map(msg => {
             if (msg.role === "user") {
-              return <div key={msg.id} className={styles.msgUser}>{msg.content}</div>;
+              return <div key={msg.id} className={styles.msgUser} dir={getDir(msg.content)}>{msg.content}</div>;
             }
             if (msg.role === "status") {
               return (
@@ -278,7 +289,7 @@ function InlineChat() {
             if (msg.role === "error") {
               return <div key={msg.id} className={styles.msgError}>{msg.content}</div>;
             }
-            return <div key={msg.id} className={styles.msgAssistant}><ReactMarkdown>{msg.content}</ReactMarkdown></div>;
+            return <div key={msg.id} className={styles.msgAssistant} dir={getDir(msg.content)}><ReactMarkdown>{msg.content}</ReactMarkdown></div>;
           })}
         </div>
       )}
@@ -298,6 +309,7 @@ function InlineChat() {
             placeholder="Ask me anything about Almadar..."
             disabled={streaming}
             autoComplete="off"
+            dir="auto"
           />
           <button
             className={styles.inlineSendBtn}

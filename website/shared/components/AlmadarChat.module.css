@@ -317,6 +317,10 @@
   line-height: 1.5;
 }
 
+.msgUser[dir="rtl"] {
+  border-radius: 12px 12px 12px 4px;
+}
+
 .msgAssistant {
   align-self: flex-start;
   max-width: 95%;
