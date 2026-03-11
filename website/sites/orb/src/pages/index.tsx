@@ -4,6 +4,7 @@ import Link from "@docusaurus/Link";
 import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
+import BrowserOnly from "@docusaurus/BrowserOnly";
 import CodeBlock from "@theme/CodeBlock";
 import styles from "./index.module.css";
 
@@ -158,6 +159,33 @@ function StdLibSection() {
   );
 }
 
+function TryItSection() {
+  return (
+    <section className={`${styles.section} ${styles.sectionAlt}`}>
+      <div className="container">
+        <div className={styles.sectionHeader}>
+          <Heading as="h2">
+            <Translate id="orb.tryit.title">Try It</Translate>
+          </Heading>
+          <p className={styles.sectionSubtitle}>
+            <Translate id="orb.tryit.subtitle">
+              Describe an app. Get a valid .orb program in seconds.
+            </Translate>
+          </p>
+        </div>
+        <div className={styles.centered}>
+          <BrowserOnly fallback={<p style={{ color: '#94a3b8' }}>Loading builder...</p>}>
+            {() => {
+              const { AlmadarBuilder } = require('@site/src/components/AlmadarBuilder');
+              return <AlmadarBuilder compact />;
+            }}
+          </BrowserOnly>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function CommunitySection() {
   return (
     <section className={`${styles.section} ${styles.sectionDark}`}>
@@ -192,6 +220,7 @@ export default function OrbHome(): ReactNode {
         <ExampleSection />
         <WhySection />
         <StdLibSection />
+        <TryItSection />
         <CommunitySection />
       </main>
     </Layout>

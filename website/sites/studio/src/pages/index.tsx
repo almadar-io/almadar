@@ -4,6 +4,7 @@ import Link from "@docusaurus/Link";
 import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
+import BrowserOnly from "@docusaurus/BrowserOnly";
 
 import styles from "./index.module.css";
 
@@ -234,6 +235,33 @@ function Showcase(): ReactNode {
   );
 }
 
+function TryItLive(): ReactNode {
+  return (
+    <section className={styles.steps}>
+      <div className="container">
+        <div className={styles.sectionHeader}>
+          <Heading as="h2">
+            <Translate id="studio.tryit.title">Try It Live</Translate>
+          </Heading>
+          <p>
+            <Translate id="studio.tryit.subtitle">
+              Describe an app idea and watch the AI generate a complete .orb program
+            </Translate>
+          </p>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '1rem 0 2rem' }}>
+          <BrowserOnly fallback={<p style={{ color: '#94a3b8' }}>Loading builder...</p>}>
+            {() => {
+              const { AlmadarBuilder } = require('@site/src/components/AlmadarBuilder');
+              return <AlmadarBuilder />;
+            }}
+          </BrowserOnly>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function CallToAction(): ReactNode {
   return (
     <section className={styles.cta}>
@@ -276,6 +304,7 @@ export default function StudioHome(): ReactNode {
         <HowItWorks />
         <Features />
         <Showcase />
+        <TryItLive />
         <CallToAction />
       </main>
     </Layout>
