@@ -39,10 +39,10 @@ Instead of copying code into the server, we decompose `@almadar/agent` into comp
 ┌─────────────────────────────────────────────────────────────┐
 │              @almadar/agent  (npm framework)                │
 │                                                             │
-│  ┌─ Core (no I/O, no side effects) ──────────────────────┐ │
+│  ┌─ Core (LangGraph required) ────────────────────────────┐ │
 │  │                                                        │ │
 │  │  agent/                                                │ │
-│  │    AgentLoop          Stateless LLM turn loop          │ │
+│  │    AgentLoop          LangGraph agent loop + tool call │ │
 │  │    ToolRegistry       Register + dispatch tools        │ │
 │  │    SystemPrompt       Compose prompts from skills      │ │
 │  │    ProviderRouter     Complexity-based model selection  │ │
@@ -100,8 +100,12 @@ Instead of copying code into the server, we decompose `@almadar/agent` into comp
 │  │    RateLimiter, CircuitBreaker, AuditLog               │ │
 │  └────────────────────────────────────────────────────────┘ │
 │                                                             │
-│  ┌─ Integrations (optional, heavy deps) ─────────────────┐ │
-│  │  LangGraph adapter    (peer dep: @langchain/langgraph) │ │
+│  ┌─ Required ───────────────────────────────────────────┐   │
+│  │  @langchain/langgraph   Agent loop + tool dispatch    │   │
+│  │  @langchain/core        Message types + tool schemas  │   │
+│  └────────────────────────────────────────────────────────┘ │
+│                                                             │
+│  ┌─ Optional Integrations (heavy deps) ─────────────────┐ │
 │  │  Firestore backends   (peer dep: firebase-admin)       │ │
 │  │  Git operations       (peer dep: simple-git)           │ │
 │  └────────────────────────────────────────────────────────┘ │
@@ -114,9 +118,11 @@ Instead of copying code into the server, we decompose `@almadar/agent` into comp
 └─────────────────────┘  └────────────────────┘
 ```
 
-### Key Principle: Core Has No I/O
+### Key Principle: LangGraph Everywhere, I/O Injected
 
-The `Core` layer is pure computation. It takes inputs and returns outputs. It never reads files, writes files, makes HTTP calls, or spawns processes directly. All I/O is injected:
+LangGraph is the agent runtime for all consumers. It handles the LLM call loop, tool call parsing across providers (OpenAI function calling, Anthropic tool use, DeepSeek), parallel tool dispatch, message graph management, and optional checkpointing. Reimplementing this would be duplicating 2000+ lines of battle-tested orchestration code.
+
+What varies between consumers is the I/O: how tools read/write files, how sessions persist, how events stream to the UI. All I/O is injected:
 
 ```typescript
 // Core: takes a schema string, returns validation result
@@ -172,35 +178,40 @@ export type { GoalSpec, NeuralPipelineResult } from './neural/types.js';
 
 ### Refactored Module: `agent/`
 
-The agent loop from `tools/orbital-agent/src/agent/agent-loop.ts` is more suitable for stateless use than the current LangGraph-based `createSkillAgent()`. We keep both:
+`createSkillAgent()` already uses LangGraph for tool calling and orchestration. The refactoring makes the checkpointer pluggable, not optional:
 
 ```typescript
-// Stateless loop (server, CLI) - from orbital-agent
-export { AgentLoop, runAgentTurn } from './agent/agent-loop.js';
-
-// LangGraph loop (builder app) - existing
+// All consumers use the same LangGraph-based agent
 export { createSkillAgent, resumeSkillAgent } from './agent/skill-agent.js';
 ```
 
-The stateless `AgentLoop` operates on a message array. No checkpoints, no LangGraph, no Firestore. The caller owns the message history.
+The difference between consumers is the checkpointer and session backend:
 
 ```typescript
-interface AgentLoop {
-  runTurn(options: {
-    messages: Message[];
-    tools: ToolDefinition[];
-    systemPrompt: string;
-    llm: LLMClient;
-    onEvent?: (event: SSEEvent) => void;
-  }): Promise<AgentTurnResult>;
-}
+// Server: in-memory checkpointer, no persistence across requests
+const agent = await createSkillAgent({
+  skill: 'kflow-orbitals',
+  checkpointer: new MemoryCheckpointer(),   // dies with the request
+  tools: builderTools,
+});
 
-interface AgentTurnResult {
-  messages: Message[];      // Updated history
-  toolCalls: ToolCall[];    // Tools that were executed
-  done: boolean;            // LLM signaled completion
-}
+// CLI: in-memory checkpointer, optional resume from saved state
+const agent = await createSkillAgent({
+  skill: 'kflow-orbitals',
+  checkpointer: new MemoryCheckpointer(),
+  tools: cliTools,
+});
+
+// Builder app: Firestore checkpointer, resumable across sessions
+const agent = await createSkillAgent({
+  skill: 'kflow-orbitals',
+  checkpointer: new FirestoreCheckpointer(db),
+  tools: fullTools,
+  sessionManager: firestoreSessionManager,
+});
 ```
+
+LangGraph handles tool call parsing, dispatch, parallel execution, and the message loop for all three. The server just doesn't persist checkpoints beyond the request lifecycle.
 
 ### Refactored Module: `tools/`
 
@@ -230,47 +241,31 @@ export function createValidateTool(
 
 ### New Export: `builder` subpath
 
-A convenience module that wires up core + neural + tools for the builder use case:
+A convenience module that creates a LangGraph agent pre-configured for builder use (no workspace, no git, no Firestore):
 
 ```typescript
 // @almadar/agent/builder
-import { AgentLoop } from '../agent/agent-loop.js';
-import { NeuralPipeline } from '../neural/neural-pipeline.js';
-import { createBuilderTools } from '../tools/builder-tools.js';
+export { createBuilderTools } from './tools/builder-tools.js';
+export { MemoryCheckpointer } from './persistence/memory-checkpointer.js';
 
-export interface BuilderConfig {
-  llm: LLMClient;
-  executor: CommandExecutor;      // How to run `orbital validate`
-  pythonExecutor?: PythonExecutor; // How to run GFlowNet inference
-  onEvent?: (event: SSEEvent) => void;
-}
+// createBuilderTools returns the safe subset of tools for web use:
+// - validate (via CommandExecutor)
+// - generate_orbital (via LLM subagent)
+// - combine_orbitals (deterministic merge)
+// - query_schema_structure (introspection)
+// - neural_generate (via PythonExecutor, optional)
+// - auto_fix (LLM-based error repair)
+//
+// Excluded: compile, verify, lint, scaffold, git, filesystem,
+//           design-system, deploy, screenshot
 
-export async function generateSchema(
-  prompt: string,
-  mode: 'neural' | 'llm' | 'auto',
-  config: BuilderConfig,
-): Promise<BuilderResult> {
-  // Auto mode: try neural for simple, fall back to LLM
-  // Neural mode: run GFlowNet pipeline
-  // LLM mode: run agent loop with builder tools
-}
-
-export async function editSchema(
-  schema: string,
-  instruction: string,
-  config: BuilderConfig,
-): Promise<BuilderResult> {
-  // Load schema into agent context
-  // Run agent loop with edit-focused tools
-}
-
-export async function validateSchema(
-  schema: string,
-  config: BuilderConfig,
-): Promise<ValidationResult> {
-  // Stateless validation, no LLM
-}
+export function createBuilderTools(config: {
+  executor: CommandExecutor;        // How to run `orbital validate`
+  pythonExecutor?: PythonExecutor;  // How to run GFlowNet inference
+}): ToolDefinition[];
 ```
+
+The consumer (server, CLI, builder app) calls `createSkillAgent()` with these tools. LangGraph handles everything else: the LLM decides which tools to call, LangGraph dispatches them, collects results, and loops until the agent signals completion.
 
 ---
 
@@ -301,17 +296,21 @@ const result = await generateSchema(prompt, 'auto', {
 What stays in orbital-agent (CLI-specific):
 - Commander.js CLI entry point
 - Terminal UI (spinners, colors, cost display)
-- Local filesystem adapter
+- Local filesystem adapter (CommandExecutor impl)
 - Eval framework (neural-eval, dream-eval)
 - Design system tools (scaffold, pattern-sync, verify)
 
 What moves to @almadar/agent (shared):
 - `src/neural/*` (goal parser, pipeline, schema generator, infer.py)
-- `src/agent/agent-loop.ts` (stateless loop)
 - `src/agent/auto-fix.ts` (validation repair)
-- `src/agent/provider-router.ts` (complexity routing)
+- `src/agent/provider-router.ts` (complexity routing, merged with existing orchestration/provider-router.ts)
 - `src/agent/system-prompt.ts` (prompt composition)
-- `src/tools/validate.ts`, `combine-orbitals.ts`, `generate-orbital.ts` (as pure functions)
+- `src/tools/validate.ts`, `combine-orbitals.ts`, `generate-orbital.ts` (as injectable tools)
+
+What gets deleted (replaced by @almadar/agent):
+- `src/agent/agent-loop.ts` (replaced by LangGraph-based createSkillAgent)
+- `src/agent/create-agent.ts` (replaced by createSkillAgent with MemoryCheckpointer)
+- `src/agent/tool-registry.ts` (replaced by createAgentTools from @almadar/agent)
 
 ---
 
@@ -322,16 +321,14 @@ The server becomes a thin HTTP layer over `@almadar/agent/builder`:
 ```
 almadar/agent/
 ├── src/
-│   ├── index.ts                 # Express, middleware, mount routes
+│   ├── index.ts                 # Express app, uses @almadar/server middleware
 │   ├── routes/
-│   │   ├── chat.ts              # /api/agent/chat (existing)
-│   │   ├── builder.ts           # /api/agent/builder (NEW)
+│   │   ├── chat.ts              # /api/agent/chat (existing Q&A)
+│   │   ├── builder.ts           # /api/agent/builder (NEW: schema generation)
 │   │   └── health.ts            # /health
-│   ├── adapters/
-│   │   ├── server-executor.ts   # Temp-file based command executor
-│   │   └── python-executor.ts   # GFlowNet subprocess manager
-│   └── middleware/
-│       └── rate-limit.ts        # Per-IP rate limiting
+│   └── adapters/
+│       ├── server-executor.ts   # Temp-file based command executor
+│       └── python-executor.ts   # GFlowNet subprocess manager
 ├── models/                      # Trained weights (bundled in image)
 │   ├── gflownet-best.pt
 │   ├── graph-model-best.pt
@@ -345,14 +342,25 @@ almadar/agent/
 └── apphosting.yaml
 ```
 
-The builder route is ~50 lines:
+**Dependencies:**
+
+| Package | What the server uses from it |
+|---------|------------------------------|
+| `@almadar/agent` | `createSkillAgent`, `createBuilderTools`, `transformAgentEvent`, `MemoryCheckpointer` (the agent framework, LangGraph, tool calling) |
+| `@almadar/server` | Express middleware (error handling, validation, async wrappers), rate limiting. NOT data services, event bus, or WebSocket. |
+| `@almadar/llm` | `LLMClient` for chat mode streaming |
+| `@almadar/skills` | Skill generators (chat skill, generation skills) |
+| `express`, `cors`, `helmet` | HTTP layer |
+
+Currently `almadar/agent/` doesn't use `@almadar/server` at all. It hand-rolls Express middleware. As we add builder mode, we should use `@almadar/server/middleware` for error handling, request validation, and auth (for rate limit tiers), rather than reimplementing them.
+
+The builder route wires up `@almadar/agent`'s LangGraph-based agent with server-specific adapters:
 
 ```typescript
 // src/routes/builder.ts
-import { generateSchema, editSchema, validateSchema } from '@almadar/agent/builder';
-import { LLMClient } from '@almadar/llm';
+import { createSkillAgent, createBuilderTools, transformAgentEvent,
+         MemoryCheckpointer } from '@almadar/agent';
 import { serverExecutor } from '../adapters/server-executor.js';
-import { pythonExecutor } from '../adapters/python-executor.js';
 
 router.post('/builder', async (req, res) => {
   const { prompt, mode, threadId, options } = req.body;
@@ -360,34 +368,39 @@ router.post('/builder', async (req, res) => {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
 
-  const llm = new LLMClient({
+  // Create agent with server adapters
+  // LangGraph handles tool call parsing, dispatch, and the message loop
+  const { agent, threadId: tid } = await createSkillAgent({
+    skill: mode === 'neural' ? 'neural-generation' : 'kflow-orbitals',
+    checkpointer: new MemoryCheckpointer(),  // no persistence beyond request
+    tools: createBuilderTools({ executor: serverExecutor }),
     provider: options?.provider || 'deepseek',
     model: options?.model,
+    threadId,
   });
 
-  await generateSchema(prompt, mode || 'auto', {
-    llm,
-    executor: serverExecutor,
-    pythonExecutor,
-    onEvent: (event) => {
-      res.write(`data: ${JSON.stringify(event)}\n\n`);
-    },
-  });
+  // Stream LangGraph events as SSE
+  for await (const rawEvent of agent.stream({ prompt })) {
+    const sseEvent = transformAgentEvent(rawEvent);
+    if (sseEvent) {
+      res.write(`data: ${JSON.stringify(sseEvent)}\n\n`);
+    }
+  }
 
   res.end();
 });
 
 router.post('/builder/validate', async (req, res) => {
-  const result = await validateSchema(req.body.schema, { executor: serverExecutor });
+  const result = await serverExecutor.validateSchema(req.body.schema);
   res.json(result);
 });
 
 router.post('/builder/edit', async (req, res) => {
-  // Same SSE pattern as /builder
+  // Same pattern: createSkillAgent + stream events
 });
 ```
 
-No agent logic in the server. All generation, validation, fixing, neural inference lives in `@almadar/agent`. The server only handles HTTP, SSE framing, and adapter wiring.
+No agent logic in the server. LangGraph handles tool calling, dispatch, and the message loop. The server only handles HTTP, SSE framing, and adapter wiring.
 
 ---
 
@@ -397,9 +410,13 @@ No agent logic in the server. All generation, validation, fixing, neural inferen
 @almadar/skills ──────────────────────────────────────┐
 @almadar/llm ─────────────────────────────────────────┤
 @almadar/core ─────────────────────────────────────────┤
+@langchain/langgraph ─────────────────────────────────┤
                                                        ▼
                                               @almadar/agent
                                               (npm framework)
+                                                       │
+                                              @almadar/server
+                                              (shared infra)
                                                        │
                     ┌──────────────────────────────────┼──────────────────┐
                     ▼                                  ▼                  ▼
@@ -407,9 +424,10 @@ No agent logic in the server. All generation, validation, fixing, neural inferen
             (server)                         (CLI)                  (IDE)
             deps:                            deps:                  deps:
               @almadar/agent                   @almadar/agent        @almadar/agent
-              @almadar/llm                     @almadar/llm          @almadar/llm
-              @almadar/skills                  @almadar/skills       @almadar/skills
-              express, cors, helmet            commander, ora        react, monaco
+              @almadar/server (middleware)      @almadar/llm          @almadar/server
+              @almadar/llm                     @almadar/skills       @almadar/llm
+              @almadar/skills                  commander, ora        @almadar/skills
+              express, cors, helmet                                  react, monaco
 ```
 
 ---
@@ -494,17 +512,17 @@ SSE streaming, same event protocol as `/builder`.
 
 ## Implementation Phases
 
-### Phase 1: Decompose @almadar/agent
+### Phase 1: Absorb neural pipeline + add builder tools to @almadar/agent
 
 Refactor the existing `packages/almadar-agent/` package:
 
-1. **Extract stateless AgentLoop** from the LangGraph-based `createSkillAgent`. The existing LangGraph path stays for the builder app. The new stateless path works with plain message arrays.
+1. **Add `neural/` module** by moving `tools/orbital-agent/src/neural/*` into `packages/almadar-agent/src/neural/`. Adapt imports to use `@almadar/llm` instead of direct provider calls.
 
-2. **Add `neural/` module** by moving `tools/orbital-agent/src/neural/*` into `packages/almadar-agent/src/neural/`. Adapt imports to use `@almadar/llm` instead of direct provider calls.
+2. **Add `MemoryCheckpointer`** to `persistence/`. This is a simple in-memory LangGraph checkpointer for consumers that don't need Firestore persistence (server, CLI). LangGraph requires a checkpointer to function, but it doesn't have to persist anywhere.
 
-3. **Make tools injectable.** Refactor `tools/validate.ts`, `tools/combine-orbitals.ts`, `tools/generate-orbital.ts` to accept a `CommandExecutor` interface instead of calling `exec()` directly.
+3. **Make tools injectable.** Refactor `tools/validate.ts`, `tools/combine-orbitals.ts`, `tools/generate-orbital.ts` to accept a `CommandExecutor` interface instead of calling `exec()` directly. This lets the server use temp files, the CLI use real paths, and tests use mocks.
 
-4. **Add `builder` export subpath** (`packages/almadar-agent/builder`) that wires up core + neural + tools into `generateSchema()`, `editSchema()`, `validateSchema()`.
+4. **Add `builder` export subpath** (`packages/almadar-agent/builder`) with `createBuilderTools()` that returns the safe subset of tools (validate, generate, combine, neural, auto-fix). No filesystem, git, or design-system tools.
 
 5. **Publish @almadar/agent@3.0.0** with the new modules.
 
