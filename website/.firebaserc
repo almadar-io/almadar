@@ -7,7 +7,7 @@
       "hosting": {
         "main": ["almadar-main"],
         "orb": ["almadar-orb"],
-        "studio": ["almadar-studio"],
+        "studio": ["almadar-studio-web"],
         "services": ["almadar-services"]
       }
     }
