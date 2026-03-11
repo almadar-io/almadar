@@ -94,13 +94,22 @@ jobs:
 
       - name: Move builds to correct locations
         run: |
+          mkdir -p website/sites/main website/sites/orb website/sites/studio website/sites/services
           mv website/sites/build-main website/sites/main/build
           mv website/sites/build-orb website/sites/orb/build
           mv website/sites/build-studio website/sites/studio/build
           mv website/sites/build-services website/sites/services/build
 
+      - name: Authenticate to Firebase
+        run: |
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > /tmp/firebase-sa.json
+
       - name: Deploy all sites to Firebase
         working-directory: website
         run: npx firebase-tools deploy --only hosting --project kflow-b3a39
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          GOOGLE_APPLICATION_CREDENTIALS: /tmp/firebase-sa.json
+
+      - name: Cleanup credentials
+        if: always()
+        run: rm -f /tmp/firebase-sa.json
