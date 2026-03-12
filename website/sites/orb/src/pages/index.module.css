@@ -7,6 +7,8 @@
     min-height: 85vh;
     display: flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
     padding: 6rem 0;
 }
 
@@ -49,7 +51,7 @@
     font-size: 1.3rem;
     line-height: 1.7;
     max-width: 600px;
-    margin-bottom: 2rem;
+    margin: 0 auto 2rem;
 }
 
 .installBox {
@@ -74,6 +76,7 @@
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 /* ─── Sections ─────────────────────────────────────────────────────────── */

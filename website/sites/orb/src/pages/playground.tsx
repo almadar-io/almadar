@@ -36,7 +36,7 @@ interface SlotPatternEntry { pattern: Record<string, unknown>; props: Record<str
 interface SlotState { patterns: SlotPatternEntry[]; source?: { trait?: string } }
 
 interface RuntimeComponents {
-  OrbitalProvider: React.ComponentType<{ children: ReactNode; initialData?: Record<string, unknown[]>; skipTheme?: boolean }>;
+  OrbitalProvider: React.ComponentType<{ children: ReactNode; initialData?: Record<string, unknown[]>; skipTheme?: boolean; verification?: boolean }>;
   UISlotProvider: React.ComponentType<{ children: ReactNode }>;
   SlotsProvider: React.ComponentType<{ children: ReactNode }>;
   EntitySchemaProvider: React.ComponentType<{ entities: unknown[]; children: ReactNode }>;
@@ -166,7 +166,7 @@ function OrbitalPreview({ schema, mockData }: { schema: unknown; mockData: Recor
   if (!rt) return <div className={styles.previewLoading}>Loading runtime…</div>;
 
   return (
-    <rt.OrbitalProvider initialData={mockData} skipTheme>
+    <rt.OrbitalProvider initialData={mockData} skipTheme verification>
       <rt.UISlotProvider>
         <SchemaRunner rt={rt} schema={schema} mockData={mockData} />
       </rt.UISlotProvider>
