@@ -4,3 +4,8 @@
 
 @tailwind components;
 @tailwind utilities;
+
+[data-theme="dark"] .card {
+    background-color: #1e293b; /* Slate 800 - lighter than #0f172a bg */
+    border-color: #334155;
+}

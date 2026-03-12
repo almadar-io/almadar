@@ -18,7 +18,7 @@ function Hero() {
             Software that coexists, coordinates, and evolves together.
           </Translate>
         </p>
-        <img src="/img/vision-hero.webp" alt="" className={styles.heroImage} loading="eager" />
+        <img src="/img/vision-hero.png" alt="" className={styles.heroImage} loading="eager" />
       </div>
     </header>
   );
@@ -39,7 +39,7 @@ function CoexistenceSection() {
           </p>
           <p>
             <Translate id="vision.coexist.p2">
-              We believe software should share a common grammar. When two applications describe their behavior in .orb, they can understand each other natively. Data flows without translation layers. Rules compose without glue code.
+              We believe software should share a common grammar. The idea flows seamlessly: a nurse identifies a need on the floor, and that domain knowledge translates directly into .orb. Data flows without translation layers. Rules compose without glue code.
             </Translate>
           </p>
         </article>
@@ -58,12 +58,12 @@ function OwnershipSection() {
           </Heading>
           <p>
             <Translate id="vision.ownership.p1">
-              The current model concentrates power. A few platforms own the tools, the data, and the distribution. Communities that build on those platforms rent their digital presence.
+              The current model concentrates power and wastes immense resources. A few platforms own the tools, the data, and the distribution, creating heavy, inefficient silos. Communities that build on those platforms rent their digital presence at a high cost, both financially and ecologically.
             </Translate>
           </p>
           <p>
             <Translate id="vision.ownership.p2">
-              Almadar changes this. Orb is open source. The standard library is open source. When a community describes their domain in Orb, they own that description. They can compile it to any platform, host it anywhere, and evolve it on their own terms.
+              Almadar changes this with an efficiency-first, "Go Green" philosophy. Orb is open source. The standard library is open source. When a community describes their domain in Orb, they build lightweight, efficient models that they own. They can compile it to any platform, host it sustainably anywhere, and evolve it on their own terms.
             </Translate>
           </p>
         </article>
@@ -80,7 +80,7 @@ function WorldModelsSection() {
           <Heading as="h2">
             <Translate id="vision.models.title">Composable World Models</Translate>
           </Heading>
-          <img src="/img/vision-composable.webp" alt="Composable world models" className={styles.sectionImage} loading="lazy" />
+          <img src="/img/vision-composable.png" alt="Composable world models" className={styles.sectionImage} loading="lazy" />
           <p>
             <Translate id="vision.models.p1">
               A world model is a formal description of how a domain works: what exists, how it changes, what the rules are. In .orb, a healthcare scheduling system and an inventory tracker are both world models. They can be validated independently and composed together.

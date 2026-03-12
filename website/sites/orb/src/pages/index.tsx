@@ -82,7 +82,7 @@ function ExampleSection() {
             </Translate>
           </p>
         </div>
-        <img src="/img/hero-code-to-app.webp" alt="Code to app compilation" className={styles.sectionImage} loading="lazy" />
+        <img src="/img/hero-code-to-app.png" alt="Code to app compilation" className={styles.sectionImage} loading="lazy" />
         <div className={styles.codeWrapper}>
           <CodeBlock language="json" title="task-manager.orb">
             {EXAMPLE_CODE}
@@ -148,7 +148,7 @@ function StdLibSection() {
             </Translate>
           </p>
         </div>
-        <img src="/img/stdlib-domains.webp" alt="18 standard library domains" className={styles.sectionImage} loading="lazy" />
+        <img src="/img/stdlib-domains.png" alt="18 standard library domains" className={styles.sectionImage} loading="lazy" />
         <div className={styles.domainGrid}>
           {["Commerce", "Healthcare", "Education", "Finance", "Scheduling", "Workflow", "Social", "Media", "Gaming", "IoT", "CRM", "Analytics", "Communication", "Content", "Location", "HR", "Legal", "Real Estate"].map((domain) => (
             <span key={domain} className={styles.domainTag}>{domain}</span>

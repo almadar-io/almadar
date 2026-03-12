@@ -73,7 +73,7 @@ function IntegrationsGrid() {
             <Translate id="integrations.catalog.title">Integration Catalog</Translate>
           </Heading>
         </div>
-        <img src="/img/integrations-connectors.webp" alt="Integration connectors" className={styles.sectionImage} loading="lazy" />
+        <img src="/img/integrations-connectors.png" alt="Integration connectors" className={styles.sectionImage} loading="lazy" />
         <div className={styles.integrationsGrid}>
           {INTEGRATIONS.map((item) => (
             <div key={item.titleId} className={styles.integrationCard}>

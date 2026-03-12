@@ -15,7 +15,7 @@ function Hero() {
         </Heading>
         <p className={styles.heroSubtitle}>
           <Translate id="pricing.hero.subtitle">
-            Start free. Scale when you need to.
+            Start free. Scale when you need to. Reach out for custom and enterprise solutions.
           </Translate>
         </p>
       </div>

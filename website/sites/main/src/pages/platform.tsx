@@ -33,7 +33,7 @@ const PILLARS = [
   {
     titleId: "platform.studio.title", title: "Almadar Studio",
     descId: "platform.studio.desc", desc: "The builder where humans and AI collaborate. Describe what you want in plain language, the AI agent generates a valid program. Edit visually or in code. Preview in real time. Deploy with one click.",
-    linkHref: "https://studio.almadar.io",
+    linkHref: "https://kflow-builder-app.web.app/",
     linkId: "platform.studio.link", linkText: "Open Studio",
   },
   {

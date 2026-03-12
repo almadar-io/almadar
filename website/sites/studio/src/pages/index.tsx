@@ -12,7 +12,6 @@ import styles from "./index.module.css";
 const steps = [
   {
     number: 1,
-    icon: <MessageSquare size={32} strokeWidth={1.5} />,
     titleId: "studio.steps.describe.title",
     titleDefault: "Describe",
     descId: "studio.steps.describe.desc",
@@ -22,7 +21,6 @@ const steps = [
   },
   {
     number: 2,
-    icon: <Settings size={32} strokeWidth={1.5} />,
     titleId: "studio.steps.generate.title",
     titleDefault: "Generate",
     descId: "studio.steps.generate.desc",
@@ -32,7 +30,6 @@ const steps = [
   },
   {
     number: 3,
-    icon: <Rocket size={32} strokeWidth={1.5} />,
     titleId: "studio.steps.deploy.title",
     titleDefault: "Deploy",
     descId: "studio.steps.deploy.desc",
@@ -110,7 +107,7 @@ function Hero(): ReactNode {
           </Translate>
         </p>
         <div className={styles.heroButtons}>
-          <Link className="button button--primary button--lg" to="https://studio.almadar.io/app">
+          <Link className="button button--primary button--lg" to="https://kflow-builder-app.web.app/">
             <Translate id="studio.hero.cta.start">Start Building</Translate>
           </Link>
           <Link className="button button--secondary button--lg" to="/features">
@@ -142,7 +139,6 @@ function HowItWorks(): ReactNode {
             <div key={step.number} className={styles.stepRow}>
               <div className={styles.stepInfo}>
                 <span className={styles.stepNumber}>{step.number}</span>
-                <span className={styles.stepIcon}>{step.icon}</span>
                 <Heading as="h3">
                   <Translate id={step.titleId}>{step.titleDefault}</Translate>
                 </Heading>
@@ -278,7 +274,7 @@ function CallToAction(): ReactNode {
               Create your first application in minutes. No credit card required.
             </Translate>
           </p>
-          <Link className={styles.ctaButton} to="https://studio.almadar.io/app">
+          <Link className={styles.ctaButton} to="https://kflow-builder-app.web.app/">
             <Translate id="studio.cta.button">Open Studio</Translate>
           </Link>
         </div>

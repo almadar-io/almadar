@@ -453,6 +453,28 @@
           "pureFunction": true
         },
         {
+          "name": "str/concat",
+          "shortName": "concat",
+          "displayName": "Concat",
+          "description": "Concatenate strings together",
+          "params": [
+            {
+              "name": "strings",
+              "type": "string",
+              "description": "Strings to concatenate"
+            }
+          ],
+          "example": "[\"str/concat\", \"/users/\", \"@entity.id\"] // => \"/users/123\"",
+          "returnType": "string",
+          "returnTypeHuman": "text",
+          "arityHuman": "1–99 arguments",
+          "minArity": 1,
+          "maxArity": 99,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
           "name": "str/upper",
           "shortName": "upper",
           "displayName": "Upper",
@@ -1110,7 +1132,7 @@
           "pureFunction": true
         }
       ],
-      "operatorCount": 26
+      "operatorCount": 27
     },
     {
       "id": "array",
@@ -2617,9 +2639,31 @@
           "hasSideEffects": false,
           "acceptsLambda": false,
           "pureFunction": true
+        },
+        {
+          "name": "path",
+          "shortName": "path",
+          "displayName": "path",
+          "description": "Build a dot-separated path string from segments. Used with set effect for dynamic field paths.",
+          "params": [
+            {
+              "name": "...segments",
+              "type": "string[]",
+              "description": "Path segments to join with dots"
+            }
+          ],
+          "example": "[\"path\", \"formValues\", \"@payload.fieldId\"] // => \"formValues.customerName\"",
+          "returnType": "string",
+          "returnTypeHuman": "text",
+          "arityHuman": "1 or more",
+          "minArity": 1,
+          "maxArity": null,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
         }
       ],
-      "operatorCount": 18
+      "operatorCount": 19
     },
     {
       "id": "time",
@@ -4097,20 +4141,52 @@
           "name": "async/delay",
           "shortName": "delay",
           "displayName": "Delay",
-          "description": "Wait for specified milliseconds",
+          "description": "Wait for specified milliseconds, optionally execute an effect after",
           "params": [
             {
               "name": "ms",
               "type": "number",
               "description": "Milliseconds to wait"
+            },
+            {
+              "name": "effect",
+              "type": "expression",
+              "description": "Optional effect to execute after delay"
             }
           ],
-          "example": "[\"async/delay\", 2000] // Wait 2 seconds",
-          "returnType": "void",
-          "returnTypeHuman": "nothing",
-          "arityHuman": "1 argument",
+          "example": "[\"async/delay\", 2000, [\"emit\", \"RETRY\"]] // Wait 2s then emit",
+          "returnType": "any",
+          "returnTypeHuman": "any value",
+          "arityHuman": "1–2 arguments",
           "minArity": 1,
-          "maxArity": 1,
+          "maxArity": 2,
+          "hasSideEffects": true,
+          "acceptsLambda": false,
+          "pureFunction": false
+        },
+        {
+          "name": "async/interval",
+          "shortName": "interval",
+          "displayName": "Interval",
+          "description": "Execute an effect periodically at a fixed interval",
+          "params": [
+            {
+              "name": "ms",
+              "type": "number",
+              "description": "Interval in milliseconds"
+            },
+            {
+              "name": "effect",
+              "type": "expression",
+              "description": "Effect to execute each interval"
+            }
+          ],
+          "example": "[\"async/interval\", 5000, [\"emit\", \"POLL_TICK\"]] // Emit every 5s",
+          "returnType": "string",
+          "returnTypeHuman": "text",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
           "hasSideEffects": true,
           "acceptsLambda": false,
           "pureFunction": false
@@ -4290,14 +4366,2101 @@
           "pureFunction": false
         }
       ],
-      "operatorCount": 8
+      "operatorCount": 9
+    },
+    {
+      "id": "nn",
+      "name": "Neural Network",
+      "displayName": "Neural Network Operations",
+      "description": "Define and compose neural network layers and modules.",
+      "icon": "🧠",
+      "operators": [
+        {
+          "name": "nn/sequential",
+          "shortName": "sequential",
+          "displayName": "Sequential",
+          "description": "Create a sequential neural network from layers",
+          "params": [
+            {
+              "name": "...layers",
+              "type": "nn/layer[]",
+              "description": "Layers to stack sequentially"
+            }
+          ],
+          "example": "[\"nn/sequential\", [\"nn/linear\", 16, 64], [\"nn/relu\"], [\"nn/linear\", 64, 4]]",
+          "returnType": "nn/module",
+          "returnTypeHuman": "nn/module",
+          "arityHuman": "1 or more",
+          "minArity": 1,
+          "maxArity": null,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "nn/linear",
+          "shortName": "linear",
+          "displayName": "Linear",
+          "description": "Fully connected linear layer (output = input * weights + bias)",
+          "params": [
+            {
+              "name": "inFeatures",
+              "type": "number",
+              "description": "Input dimension"
+            },
+            {
+              "name": "outFeatures",
+              "type": "number",
+              "description": "Output dimension"
+            }
+          ],
+          "example": "[\"nn/linear\", 16, 64] // 16 inputs -> 64 outputs",
+          "returnType": "nn/layer",
+          "returnTypeHuman": "nn/layer",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "nn/relu",
+          "shortName": "relu",
+          "displayName": "Relu",
+          "description": "ReLU activation function: max(0, x)",
+          "params": [],
+          "example": "[\"nn/relu\"]",
+          "returnType": "nn/layer",
+          "returnTypeHuman": "nn/layer",
+          "arityHuman": "0 arguments",
+          "minArity": 0,
+          "maxArity": 0,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "nn/tanh",
+          "shortName": "tanh",
+          "displayName": "Tanh",
+          "description": "Tanh activation function: (e^x - e^-x) / (e^x + e^-x)",
+          "params": [],
+          "example": "[\"nn/tanh\"]",
+          "returnType": "nn/layer",
+          "returnTypeHuman": "nn/layer",
+          "arityHuman": "0 arguments",
+          "minArity": 0,
+          "maxArity": 0,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "nn/sigmoid",
+          "shortName": "sigmoid",
+          "displayName": "Sigmoid",
+          "description": "Sigmoid activation function: 1 / (1 + e^-x)",
+          "params": [],
+          "example": "[\"nn/sigmoid\"]",
+          "returnType": "nn/layer",
+          "returnTypeHuman": "nn/layer",
+          "arityHuman": "0 arguments",
+          "minArity": 0,
+          "maxArity": 0,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "nn/softmax",
+          "shortName": "softmax",
+          "displayName": "Softmax",
+          "description": "Softmax activation function (normalizes to probability distribution)",
+          "params": [
+            {
+              "name": "dim",
+              "type": "number",
+              "description": "Dimension to apply softmax",
+              "optional": true,
+              "defaultValue": -1
+            }
+          ],
+          "example": "[\"nn/softmax\"]",
+          "returnType": "nn/layer",
+          "returnTypeHuman": "nn/layer",
+          "arityHuman": "0–1 arguments",
+          "minArity": 0,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "nn/dropout",
+          "shortName": "dropout",
+          "displayName": "Dropout",
+          "description": "Dropout layer for regularization (randomly zeros elements during training)",
+          "params": [
+            {
+              "name": "p",
+              "type": "number",
+              "description": "Dropout probability",
+              "optional": true,
+              "defaultValue": 0.5
+            }
+          ],
+          "example": "[\"nn/dropout\", 0.3] // 30% dropout",
+          "returnType": "nn/layer",
+          "returnTypeHuman": "nn/layer",
+          "arityHuman": "0–1 arguments",
+          "minArity": 0,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "nn/batchnorm",
+          "shortName": "batchnorm",
+          "displayName": "Batchnorm",
+          "description": "Batch normalization layer",
+          "params": [
+            {
+              "name": "numFeatures",
+              "type": "number",
+              "description": "Number of features to normalize"
+            }
+          ],
+          "example": "[\"nn/batchnorm\", 64]",
+          "returnType": "nn/layer",
+          "returnTypeHuman": "nn/layer",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "nn/layernorm",
+          "shortName": "layernorm",
+          "displayName": "Layernorm",
+          "description": "Layer normalization",
+          "params": [
+            {
+              "name": "normalizedShape",
+              "type": "number | number[]",
+              "description": "Shape to normalize over"
+            }
+          ],
+          "example": "[\"nn/layernorm\", 64]",
+          "returnType": "nn/layer",
+          "returnTypeHuman": "nn/layer",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "nn/forward",
+          "shortName": "forward",
+          "displayName": "Forward",
+          "description": "Execute forward pass through network",
+          "params": [
+            {
+              "name": "module",
+              "type": "nn/module",
+              "description": "The neural network module"
+            },
+            {
+              "name": "input",
+              "type": "tensor",
+              "description": "Input tensor"
+            }
+          ],
+          "example": "[\"nn/forward\", \"@entity.architecture\", \"@entity.sensors\"]",
+          "returnType": "tensor",
+          "returnTypeHuman": "tensor",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "nn/getWeights",
+          "shortName": "getWeights",
+          "displayName": "Get Weights",
+          "description": "Get network weights as a flat tensor",
+          "params": [
+            {
+              "name": "module",
+              "type": "nn/module",
+              "description": "The neural network module"
+            }
+          ],
+          "example": "[\"nn/getWeights\", \"@entity.architecture\"]",
+          "returnType": "tensor",
+          "returnTypeHuman": "tensor",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "nn/setWeights",
+          "shortName": "setWeights",
+          "displayName": "Set Weights",
+          "description": "Set network weights from a flat tensor",
+          "params": [
+            {
+              "name": "module",
+              "type": "nn/module",
+              "description": "The neural network module"
+            },
+            {
+              "name": "weights",
+              "type": "tensor",
+              "description": "New weights as flat tensor"
+            }
+          ],
+          "example": "[\"nn/setWeights\", \"@entity.architecture\", \"@payload.newWeights\"]",
+          "returnType": "nn/module",
+          "returnTypeHuman": "nn/module",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": true,
+          "acceptsLambda": false,
+          "pureFunction": false
+        },
+        {
+          "name": "nn/paramCount",
+          "shortName": "paramCount",
+          "displayName": "Param Count",
+          "description": "Get total number of trainable parameters",
+          "params": [
+            {
+              "name": "module",
+              "type": "nn/module",
+              "description": "The neural network module"
+            }
+          ],
+          "example": "[\"nn/paramCount\", \"@entity.architecture\"] // => 3300",
+          "returnType": "number",
+          "returnTypeHuman": "number",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "nn/clone",
+          "shortName": "clone",
+          "displayName": "Clone",
+          "description": "Create a deep copy of the network with same weights",
+          "params": [
+            {
+              "name": "module",
+              "type": "nn/module",
+              "description": "The neural network module to clone"
+            }
+          ],
+          "example": "[\"nn/clone\", \"@entity.architecture\"]",
+          "returnType": "nn/module",
+          "returnTypeHuman": "nn/module",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        }
+      ],
+      "operatorCount": 14
+    },
+    {
+      "id": "tensor",
+      "name": "Tensor",
+      "displayName": "Tensor Operations",
+      "description": "Create and manipulate multi-dimensional arrays for numerical computing.",
+      "icon": "📊",
+      "operators": [
+        {
+          "name": "tensor/from",
+          "shortName": "from",
+          "displayName": "From",
+          "description": "Create tensor from array",
+          "params": [
+            {
+              "name": "data",
+              "type": "array",
+              "description": "Array of numbers (can be nested for multi-dimensional)"
+            }
+          ],
+          "example": "[\"tensor/from\", [1.0, 2.0, 3.0]]",
+          "returnType": "tensor",
+          "returnTypeHuman": "tensor",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/zeros",
+          "shortName": "zeros",
+          "displayName": "Zeros",
+          "description": "Create tensor filled with zeros",
+          "params": [
+            {
+              "name": "shape",
+              "type": "number[]",
+              "description": "Shape of the tensor"
+            }
+          ],
+          "example": "[\"tensor/zeros\", [3, 4]] // 3x4 tensor of zeros",
+          "returnType": "tensor",
+          "returnTypeHuman": "tensor",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/ones",
+          "shortName": "ones",
+          "displayName": "Ones",
+          "description": "Create tensor filled with ones",
+          "params": [
+            {
+              "name": "shape",
+              "type": "number[]",
+              "description": "Shape of the tensor"
+            }
+          ],
+          "example": "[\"tensor/ones\", [3, 4]] // 3x4 tensor of ones",
+          "returnType": "tensor",
+          "returnTypeHuman": "tensor",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/rand",
+          "shortName": "rand",
+          "displayName": "Rand",
+          "description": "Create tensor with random values in [0, 1)",
+          "params": [
+            {
+              "name": "shape",
+              "type": "number[]",
+              "description": "Shape of the tensor"
+            }
+          ],
+          "example": "[\"tensor/rand\", [16]] // Random 16-element vector",
+          "returnType": "tensor",
+          "returnTypeHuman": "tensor",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/randn",
+          "shortName": "randn",
+          "displayName": "Randn",
+          "description": "Create tensor with random values from standard normal distribution",
+          "params": [
+            {
+              "name": "shape",
+              "type": "number[]",
+              "description": "Shape of the tensor"
+            }
+          ],
+          "example": "[\"tensor/randn\", [16]] // Random normal 16-element vector",
+          "returnType": "tensor",
+          "returnTypeHuman": "tensor",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/shape",
+          "shortName": "shape",
+          "displayName": "Shape",
+          "description": "Get tensor shape as array",
+          "params": [
+            {
+              "name": "tensor",
+              "type": "tensor",
+              "description": "The tensor"
+            }
+          ],
+          "example": "[\"tensor/shape\", \"@entity.sensors\"] // => [16]",
+          "returnType": "number[]",
+          "returnTypeHuman": "number[]",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/get",
+          "shortName": "get",
+          "displayName": "Get",
+          "description": "Get element at index",
+          "params": [
+            {
+              "name": "tensor",
+              "type": "tensor",
+              "description": "The tensor"
+            },
+            {
+              "name": "index",
+              "type": "number | number[]",
+              "description": "Index (single for 1D, array for multi-D)"
+            }
+          ],
+          "example": "[\"tensor/get\", \"@entity.output\", 3] // Get 4th element",
+          "returnType": "number",
+          "returnTypeHuman": "number",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/slice",
+          "shortName": "slice",
+          "displayName": "Slice",
+          "description": "Get slice of tensor",
+          "params": [
+            {
+              "name": "tensor",
+              "type": "tensor",
+              "description": "The tensor"
+            },
+            {
+              "name": "start",
+              "type": "number",
+              "description": "Start index"
+            },
+            {
+              "name": "end",
+              "type": "number",
+              "description": "End index (exclusive)"
+            }
+          ],
+          "example": "[\"tensor/slice\", \"@entity.output\", 0, 3] // First 3 elements",
+          "returnType": "tensor",
+          "returnTypeHuman": "tensor",
+          "arityHuman": "3 arguments",
+          "minArity": 3,
+          "maxArity": 3,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/reshape",
+          "shortName": "reshape",
+          "displayName": "Reshape",
+          "description": "Reshape tensor to new shape (total elements must match)",
+          "params": [
+            {
+              "name": "tensor",
+              "type": "tensor",
+              "description": "The tensor"
+            },
+            {
+              "name": "shape",
+              "type": "number[]",
+              "description": "New shape"
+            }
+          ],
+          "example": "[\"tensor/reshape\", \"@entity.data\", [4, 4]] // Reshape to 4x4",
+          "returnType": "tensor",
+          "returnTypeHuman": "tensor",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/flatten",
+          "shortName": "flatten",
+          "displayName": "Flatten",
+          "description": "Flatten tensor to 1D",
+          "params": [
+            {
+              "name": "tensor",
+              "type": "tensor",
+              "description": "The tensor"
+            }
+          ],
+          "example": "[\"tensor/flatten\", \"@entity.data\"]",
+          "returnType": "tensor",
+          "returnTypeHuman": "tensor",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/add",
+          "shortName": "add",
+          "displayName": "Add",
+          "description": "Element-wise addition",
+          "params": [
+            {
+              "name": "a",
+              "type": "tensor",
+              "description": "First tensor"
+            },
+            {
+              "name": "b",
+              "type": "tensor | number",
+              "description": "Second tensor or scalar"
+            }
+          ],
+          "example": "[\"tensor/add\", \"@entity.a\", \"@entity.b\"]",
+          "returnType": "tensor",
+          "returnTypeHuman": "tensor",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/sub",
+          "shortName": "sub",
+          "displayName": "Sub",
+          "description": "Element-wise subtraction",
+          "params": [
+            {
+              "name": "a",
+              "type": "tensor",
+              "description": "First tensor"
+            },
+            {
+              "name": "b",
+              "type": "tensor | number",
+              "description": "Second tensor or scalar"
+            }
+          ],
+          "example": "[\"tensor/sub\", \"@entity.a\", \"@entity.b\"]",
+          "returnType": "tensor",
+          "returnTypeHuman": "tensor",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/mul",
+          "shortName": "mul",
+          "displayName": "Mul",
+          "description": "Element-wise multiplication",
+          "params": [
+            {
+              "name": "a",
+              "type": "tensor",
+              "description": "First tensor"
+            },
+            {
+              "name": "b",
+              "type": "tensor | number",
+              "description": "Second tensor or scalar"
+            }
+          ],
+          "example": "[\"tensor/mul\", \"@entity.weights\", 0.99] // Decay weights",
+          "returnType": "tensor",
+          "returnTypeHuman": "tensor",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/div",
+          "shortName": "div",
+          "displayName": "Div",
+          "description": "Element-wise division",
+          "params": [
+            {
+              "name": "a",
+              "type": "tensor",
+              "description": "First tensor"
+            },
+            {
+              "name": "b",
+              "type": "tensor | number",
+              "description": "Second tensor or scalar"
+            }
+          ],
+          "example": "[\"tensor/div\", \"@entity.gradient\", \"@entity.batchSize\"]",
+          "returnType": "tensor",
+          "returnTypeHuman": "tensor",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/matmul",
+          "shortName": "matmul",
+          "displayName": "Matmul",
+          "description": "Matrix multiplication",
+          "params": [
+            {
+              "name": "a",
+              "type": "tensor",
+              "description": "First tensor (NxM)"
+            },
+            {
+              "name": "b",
+              "type": "tensor",
+              "description": "Second tensor (MxK)"
+            }
+          ],
+          "example": "[\"tensor/matmul\", \"@entity.input\", \"@entity.weights\"]",
+          "returnType": "tensor",
+          "returnTypeHuman": "tensor",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/dot",
+          "shortName": "dot",
+          "displayName": "Dot",
+          "description": "Dot product of two 1D tensors",
+          "params": [
+            {
+              "name": "a",
+              "type": "tensor",
+              "description": "First vector"
+            },
+            {
+              "name": "b",
+              "type": "tensor",
+              "description": "Second vector"
+            }
+          ],
+          "example": "[\"tensor/dot\", \"@entity.a\", \"@entity.b\"]",
+          "returnType": "number",
+          "returnTypeHuman": "number",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/sum",
+          "shortName": "sum",
+          "displayName": "Sum",
+          "description": "Sum of tensor elements",
+          "params": [
+            {
+              "name": "tensor",
+              "type": "tensor",
+              "description": "The tensor"
+            },
+            {
+              "name": "dim",
+              "type": "number",
+              "description": "Dimension to reduce",
+              "optional": true
+            }
+          ],
+          "example": "[\"tensor/sum\", \"@entity.rewards\"] // Total reward",
+          "returnType": "number | tensor",
+          "returnTypeHuman": "number | tensor",
+          "arityHuman": "1–2 arguments",
+          "minArity": 1,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/mean",
+          "shortName": "mean",
+          "displayName": "Mean",
+          "description": "Mean of tensor elements",
+          "params": [
+            {
+              "name": "tensor",
+              "type": "tensor",
+              "description": "The tensor"
+            },
+            {
+              "name": "dim",
+              "type": "number",
+              "description": "Dimension to reduce",
+              "optional": true
+            }
+          ],
+          "example": "[\"tensor/mean\", \"@entity.losses\"]",
+          "returnType": "number | tensor",
+          "returnTypeHuman": "number | tensor",
+          "arityHuman": "1–2 arguments",
+          "minArity": 1,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/max",
+          "shortName": "max",
+          "displayName": "Max",
+          "description": "Maximum value in tensor",
+          "params": [
+            {
+              "name": "tensor",
+              "type": "tensor",
+              "description": "The tensor"
+            },
+            {
+              "name": "dim",
+              "type": "number",
+              "description": "Dimension to reduce",
+              "optional": true
+            }
+          ],
+          "example": "[\"tensor/max\", \"@entity.qValues\"]",
+          "returnType": "number | tensor",
+          "returnTypeHuman": "number | tensor",
+          "arityHuman": "1–2 arguments",
+          "minArity": 1,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/min",
+          "shortName": "min",
+          "displayName": "Min",
+          "description": "Minimum value in tensor",
+          "params": [
+            {
+              "name": "tensor",
+              "type": "tensor",
+              "description": "The tensor"
+            },
+            {
+              "name": "dim",
+              "type": "number",
+              "description": "Dimension to reduce",
+              "optional": true
+            }
+          ],
+          "example": "[\"tensor/min\", \"@entity.distances\"]",
+          "returnType": "number | tensor",
+          "returnTypeHuman": "number | tensor",
+          "arityHuman": "1–2 arguments",
+          "minArity": 1,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/argmax",
+          "shortName": "argmax",
+          "displayName": "Argmax",
+          "description": "Index of maximum value",
+          "params": [
+            {
+              "name": "tensor",
+              "type": "tensor",
+              "description": "The tensor"
+            },
+            {
+              "name": "dim",
+              "type": "number",
+              "description": "Dimension to reduce",
+              "optional": true
+            }
+          ],
+          "example": "[\"tensor/argmax\", \"@entity.qValues\"] // Best action index",
+          "returnType": "number | tensor",
+          "returnTypeHuman": "number | tensor",
+          "arityHuman": "1–2 arguments",
+          "minArity": 1,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/norm",
+          "shortName": "norm",
+          "displayName": "Norm",
+          "description": "L2 norm of tensor",
+          "params": [
+            {
+              "name": "tensor",
+              "type": "tensor",
+              "description": "The tensor"
+            },
+            {
+              "name": "p",
+              "type": "number",
+              "description": "Norm order (default 2)",
+              "optional": true,
+              "defaultValue": 2
+            }
+          ],
+          "example": "[\"tensor/norm\", \"@entity.gradient\"]",
+          "returnType": "number",
+          "returnTypeHuman": "number",
+          "arityHuman": "1–2 arguments",
+          "minArity": 1,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/allInRange",
+          "shortName": "allInRange",
+          "displayName": "All In Range",
+          "description": "Check if all elements are within range [min, max]",
+          "params": [
+            {
+              "name": "tensor",
+              "type": "tensor",
+              "description": "The tensor"
+            },
+            {
+              "name": "range",
+              "type": "[number, number]",
+              "description": "Range as [min, max]"
+            }
+          ],
+          "example": "[\"tensor/allInRange\", \"@payload.input\", [-1.0, 1.0]]",
+          "returnType": "boolean",
+          "returnTypeHuman": "true/false",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/outOfRangeIndices",
+          "shortName": "outOfRangeIndices",
+          "displayName": "Out Of Range Indices",
+          "description": "Get indices of elements outside range",
+          "params": [
+            {
+              "name": "tensor",
+              "type": "tensor",
+              "description": "The tensor"
+            },
+            {
+              "name": "range",
+              "type": "[number, number]",
+              "description": "Range as [min, max]"
+            }
+          ],
+          "example": "[\"tensor/outOfRangeIndices\", \"@payload.input\", [-1.0, 1.0]]",
+          "returnType": "number[]",
+          "returnTypeHuman": "number[]",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/clamp",
+          "shortName": "clamp",
+          "displayName": "Clamp",
+          "description": "Clamp all elements to range [min, max]",
+          "params": [
+            {
+              "name": "tensor",
+              "type": "tensor",
+              "description": "The tensor"
+            },
+            {
+              "name": "min",
+              "type": "number",
+              "description": "Minimum value"
+            },
+            {
+              "name": "max",
+              "type": "number",
+              "description": "Maximum value"
+            }
+          ],
+          "example": "[\"tensor/clamp\", \"@entity.output\", -10.0, 10.0]",
+          "returnType": "tensor",
+          "returnTypeHuman": "tensor",
+          "arityHuman": "3 arguments",
+          "minArity": 3,
+          "maxArity": 3,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/clampPerDim",
+          "shortName": "clampPerDim",
+          "displayName": "Clamp Per Dim",
+          "description": "Clamp each dimension to its specified range",
+          "params": [
+            {
+              "name": "tensor",
+              "type": "tensor",
+              "description": "The tensor"
+            },
+            {
+              "name": "ranges",
+              "type": "object",
+              "description": "Per-dimension ranges { \"0\": {min, max}, ... }"
+            }
+          ],
+          "example": "[\"tensor/clampPerDim\", \"@entity.rawOutput\", \"@entity.outputContract.ranges\"]",
+          "returnType": "tensor",
+          "returnTypeHuman": "tensor",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/outOfRangeDims",
+          "shortName": "outOfRangeDims",
+          "displayName": "Out Of Range Dims",
+          "description": "Get dimensions that exceed their specified ranges",
+          "params": [
+            {
+              "name": "tensor",
+              "type": "tensor",
+              "description": "The tensor"
+            },
+            {
+              "name": "ranges",
+              "type": "object",
+              "description": "Per-dimension ranges { \"0\": {min, max}, ... }"
+            }
+          ],
+          "example": "[\"tensor/outOfRangeDims\", \"@entity.rawOutput\", \"@entity.outputContract.ranges\"]",
+          "returnType": "array",
+          "returnTypeHuman": "list",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/toArray",
+          "shortName": "toArray",
+          "displayName": "To Array",
+          "description": "Convert tensor to nested array",
+          "params": [
+            {
+              "name": "tensor",
+              "type": "tensor",
+              "description": "The tensor"
+            }
+          ],
+          "example": "[\"tensor/toArray\", \"@entity.output\"]",
+          "returnType": "array",
+          "returnTypeHuman": "list",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "tensor/toList",
+          "shortName": "toList",
+          "displayName": "To List",
+          "description": "Convert 1D tensor to flat array",
+          "params": [
+            {
+              "name": "tensor",
+              "type": "tensor",
+              "description": "The tensor (must be 1D)"
+            }
+          ],
+          "example": "[\"tensor/toList\", \"@entity.output\"]",
+          "returnType": "number[]",
+          "returnTypeHuman": "number[]",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        }
+      ],
+      "operatorCount": 29
+    },
+    {
+      "id": "train",
+      "name": "Training",
+      "displayName": "Training Operations",
+      "description": "Training loops, loss functions, and optimization for neural networks.",
+      "icon": "🎯",
+      "operators": [
+        {
+          "name": "train/loop",
+          "shortName": "loop",
+          "displayName": "Loop",
+          "description": "Execute training loop with constraints",
+          "params": [
+            {
+              "name": "module",
+              "type": "nn/module",
+              "description": "The neural network to train"
+            },
+            {
+              "name": "data",
+              "type": "array",
+              "description": "Training data (array of {input, target} or experiences)"
+            },
+            {
+              "name": "config",
+              "type": "train/config",
+              "description": "Training configuration with constraints"
+            }
+          ],
+          "example": "[\"train/loop\", \"@entity.architecture\", \"@entity.buffer\", \"@entity.trainingConfig\"]",
+          "returnType": "train/result",
+          "returnTypeHuman": "train/result",
+          "arityHuman": "3 arguments",
+          "minArity": 3,
+          "maxArity": 3,
+          "hasSideEffects": true,
+          "acceptsLambda": false,
+          "pureFunction": false
+        },
+        {
+          "name": "train/step",
+          "shortName": "step",
+          "displayName": "Step",
+          "description": "Execute single training step (forward, loss, backward, update)",
+          "params": [
+            {
+              "name": "module",
+              "type": "nn/module",
+              "description": "The neural network"
+            },
+            {
+              "name": "input",
+              "type": "tensor",
+              "description": "Input tensor"
+            },
+            {
+              "name": "target",
+              "type": "tensor",
+              "description": "Target tensor"
+            },
+            {
+              "name": "config",
+              "type": "train/config",
+              "description": "Training configuration"
+            }
+          ],
+          "example": "[\"train/step\", \"@entity.architecture\", \"@batch.input\", \"@batch.target\", \"@entity.config\"]",
+          "returnType": "train/stepResult",
+          "returnTypeHuman": "train/stepResult",
+          "arityHuman": "4 arguments",
+          "minArity": 4,
+          "maxArity": 4,
+          "hasSideEffects": true,
+          "acceptsLambda": false,
+          "pureFunction": false
+        },
+        {
+          "name": "train/validate",
+          "shortName": "validate",
+          "displayName": "Validate",
+          "description": "Validate model on test cases, returns pass/fail metrics",
+          "params": [
+            {
+              "name": "module",
+              "type": "nn/module",
+              "description": "The neural network"
+            },
+            {
+              "name": "testCases",
+              "type": "array",
+              "description": "Array of {input, expected, tolerance?}"
+            }
+          ],
+          "example": "[\"train/validate\", \"@entity.architecture\", \"@entity.validationSet\"]",
+          "returnType": "train/validationResult",
+          "returnTypeHuman": "train/validationResult",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "train/checkRegression",
+          "shortName": "checkRegression",
+          "displayName": "Check Regression",
+          "description": "Check if new model regresses on required invariants",
+          "params": [
+            {
+              "name": "newModule",
+              "type": "nn/module",
+              "description": "Newly trained network"
+            },
+            {
+              "name": "oldModule",
+              "type": "nn/module",
+              "description": "Previous network"
+            },
+            {
+              "name": "invariants",
+              "type": "array",
+              "description": "Test cases that must not regress"
+            }
+          ],
+          "example": "[\"train/checkRegression\", \"@payload.newWeights\", \"@entity.architecture\", \"@entity.requiredInvariants\"]",
+          "returnType": "train/regressionResult",
+          "returnTypeHuman": "train/regressionResult",
+          "arityHuman": "3 arguments",
+          "minArity": 3,
+          "maxArity": 3,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "train/checkConstraints",
+          "shortName": "checkConstraints",
+          "displayName": "Check Constraints",
+          "description": "Check if network weights satisfy all constraints",
+          "params": [
+            {
+              "name": "module",
+              "type": "nn/module",
+              "description": "The neural network"
+            },
+            {
+              "name": "constraints",
+              "type": "train/constraints",
+              "description": "Constraint specification"
+            }
+          ],
+          "example": "[\"train/checkConstraints\", \"@payload.newWeights\", \"@entity.constraints\"]",
+          "returnType": "train/constraintResult",
+          "returnTypeHuman": "train/constraintResult",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "train/checkWeightMagnitude",
+          "shortName": "checkWeightMagnitude",
+          "displayName": "Check Weight Magnitude",
+          "description": "Check if all weights are within magnitude limit",
+          "params": [
+            {
+              "name": "module",
+              "type": "nn/module",
+              "description": "The neural network"
+            },
+            {
+              "name": "maxMagnitude",
+              "type": "number",
+              "description": "Maximum allowed weight magnitude"
+            }
+          ],
+          "example": "[\"train/checkWeightMagnitude\", \"@entity.architecture\", 10.0]",
+          "returnType": "boolean",
+          "returnTypeHuman": "true/false",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "train/checkForbiddenOutputs",
+          "shortName": "checkForbiddenOutputs",
+          "displayName": "Check Forbidden Outputs",
+          "description": "Check if model produces outputs in forbidden regions",
+          "params": [
+            {
+              "name": "module",
+              "type": "nn/module",
+              "description": "The neural network"
+            },
+            {
+              "name": "testInputs",
+              "type": "array",
+              "description": "Inputs to test"
+            },
+            {
+              "name": "forbiddenRegions",
+              "type": "array",
+              "description": "Forbidden output regions"
+            }
+          ],
+          "example": "[\"train/checkForbiddenOutputs\", \"@entity.architecture\", \"@entity.testInputs\", \"@entity.forbiddenOutputRegions\"]",
+          "returnType": "train/forbiddenResult",
+          "returnTypeHuman": "train/forbiddenResult",
+          "arityHuman": "3 arguments",
+          "minArity": 3,
+          "maxArity": 3,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "train/clipGradients",
+          "shortName": "clipGradients",
+          "displayName": "Clip Gradients",
+          "description": "Clip gradients to max norm (modifies in place)",
+          "params": [
+            {
+              "name": "module",
+              "type": "nn/module",
+              "description": "The neural network"
+            },
+            {
+              "name": "maxNorm",
+              "type": "number",
+              "description": "Maximum gradient norm"
+            }
+          ],
+          "example": "[\"train/clipGradients\", \"@entity.architecture\", 1.0]",
+          "returnType": "number",
+          "returnTypeHuman": "number",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": true,
+          "acceptsLambda": false,
+          "pureFunction": false
+        },
+        {
+          "name": "train/getGradientNorm",
+          "shortName": "getGradientNorm",
+          "displayName": "Get Gradient Norm",
+          "description": "Get current gradient norm",
+          "params": [
+            {
+              "name": "module",
+              "type": "nn/module",
+              "description": "The neural network"
+            }
+          ],
+          "example": "[\"train/getGradientNorm\", \"@entity.architecture\"]",
+          "returnType": "number",
+          "returnTypeHuman": "number",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "train/clipWeights",
+          "shortName": "clipWeights",
+          "displayName": "Clip Weights",
+          "description": "Clip weights to max magnitude (modifies in place)",
+          "params": [
+            {
+              "name": "module",
+              "type": "nn/module",
+              "description": "The neural network"
+            },
+            {
+              "name": "maxMagnitude",
+              "type": "number",
+              "description": "Maximum weight magnitude"
+            }
+          ],
+          "example": "[\"train/clipWeights\", \"@entity.architecture\", 10.0]",
+          "returnType": "void",
+          "returnTypeHuman": "nothing",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": true,
+          "acceptsLambda": false,
+          "pureFunction": false
+        },
+        {
+          "name": "train/getMaxWeightMagnitude",
+          "shortName": "getMaxWeightMagnitude",
+          "displayName": "Get Max Weight Magnitude",
+          "description": "Get maximum weight magnitude in network",
+          "params": [
+            {
+              "name": "module",
+              "type": "nn/module",
+              "description": "The neural network"
+            }
+          ],
+          "example": "[\"train/getMaxWeightMagnitude\", \"@entity.architecture\"]",
+          "returnType": "number",
+          "returnTypeHuman": "number",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "train/mse",
+          "shortName": "mse",
+          "displayName": "Mse",
+          "description": "Mean squared error loss",
+          "params": [
+            {
+              "name": "predicted",
+              "type": "tensor",
+              "description": "Predicted values"
+            },
+            {
+              "name": "target",
+              "type": "tensor",
+              "description": "Target values"
+            }
+          ],
+          "example": "[\"train/mse\", \"@entity.output\", \"@batch.target\"]",
+          "returnType": "number",
+          "returnTypeHuman": "number",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "train/crossEntropy",
+          "shortName": "crossEntropy",
+          "displayName": "Cross Entropy",
+          "description": "Cross-entropy loss for classification",
+          "params": [
+            {
+              "name": "logits",
+              "type": "tensor",
+              "description": "Raw model outputs (logits)"
+            },
+            {
+              "name": "labels",
+              "type": "tensor",
+              "description": "Target class labels"
+            }
+          ],
+          "example": "[\"train/crossEntropy\", \"@entity.logits\", \"@batch.labels\"]",
+          "returnType": "number",
+          "returnTypeHuman": "number",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "train/huber",
+          "shortName": "huber",
+          "displayName": "Huber",
+          "description": "Huber loss (smooth L1, robust to outliers)",
+          "params": [
+            {
+              "name": "predicted",
+              "type": "tensor",
+              "description": "Predicted values"
+            },
+            {
+              "name": "target",
+              "type": "tensor",
+              "description": "Target values"
+            },
+            {
+              "name": "delta",
+              "type": "number",
+              "description": "Threshold for quadratic vs linear",
+              "optional": true,
+              "defaultValue": 1
+            }
+          ],
+          "example": "[\"train/huber\", \"@entity.qValues\", \"@batch.targets\", 1.0]",
+          "returnType": "number",
+          "returnTypeHuman": "number",
+          "arityHuman": "2–3 arguments",
+          "minArity": 2,
+          "maxArity": 3,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "train/sgd",
+          "shortName": "sgd",
+          "displayName": "Sgd",
+          "description": "Stochastic gradient descent optimizer step",
+          "params": [
+            {
+              "name": "module",
+              "type": "nn/module",
+              "description": "The neural network"
+            },
+            {
+              "name": "lr",
+              "type": "number",
+              "description": "Learning rate"
+            },
+            {
+              "name": "momentum",
+              "type": "number",
+              "description": "Momentum factor",
+              "optional": true,
+              "defaultValue": 0
+            }
+          ],
+          "example": "[\"train/sgd\", \"@entity.architecture\", 0.01, 0.9]",
+          "returnType": "void",
+          "returnTypeHuman": "nothing",
+          "arityHuman": "2–3 arguments",
+          "minArity": 2,
+          "maxArity": 3,
+          "hasSideEffects": true,
+          "acceptsLambda": false,
+          "pureFunction": false
+        },
+        {
+          "name": "train/adam",
+          "shortName": "adam",
+          "displayName": "Adam",
+          "description": "Adam optimizer step",
+          "params": [
+            {
+              "name": "module",
+              "type": "nn/module",
+              "description": "The neural network"
+            },
+            {
+              "name": "lr",
+              "type": "number",
+              "description": "Learning rate"
+            },
+            {
+              "name": "beta1",
+              "type": "number",
+              "description": "First moment decay",
+              "optional": true,
+              "defaultValue": 0.9
+            },
+            {
+              "name": "beta2",
+              "type": "number",
+              "description": "Second moment decay",
+              "optional": true,
+              "defaultValue": 0.999
+            }
+          ],
+          "example": "[\"train/adam\", \"@entity.architecture\", 0.001]",
+          "returnType": "void",
+          "returnTypeHuman": "nothing",
+          "arityHuman": "2–4 arguments",
+          "minArity": 2,
+          "maxArity": 4,
+          "hasSideEffects": true,
+          "acceptsLambda": false,
+          "pureFunction": false
+        },
+        {
+          "name": "train/sampleBatch",
+          "shortName": "sampleBatch",
+          "displayName": "Sample Batch",
+          "description": "Sample random batch from experience buffer",
+          "params": [
+            {
+              "name": "buffer",
+              "type": "array",
+              "description": "Experience buffer"
+            },
+            {
+              "name": "batchSize",
+              "type": "number",
+              "description": "Number of samples"
+            }
+          ],
+          "example": "[\"train/sampleBatch\", \"@entity.experienceBuffer\", 32]",
+          "returnType": "array",
+          "returnTypeHuman": "list",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "train/computeReturns",
+          "shortName": "computeReturns",
+          "displayName": "Compute Returns",
+          "description": "Compute discounted returns from rewards",
+          "params": [
+            {
+              "name": "rewards",
+              "type": "array",
+              "description": "Array of rewards"
+            },
+            {
+              "name": "gamma",
+              "type": "number",
+              "description": "Discount factor"
+            }
+          ],
+          "example": "[\"train/computeReturns\", \"@episode.rewards\", 0.99]",
+          "returnType": "tensor",
+          "returnTypeHuman": "tensor",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "train/computeAdvantages",
+          "shortName": "computeAdvantages",
+          "displayName": "Compute Advantages",
+          "description": "Compute GAE advantages for policy gradient",
+          "params": [
+            {
+              "name": "rewards",
+              "type": "array",
+              "description": "Array of rewards"
+            },
+            {
+              "name": "values",
+              "type": "tensor",
+              "description": "Value estimates"
+            },
+            {
+              "name": "config",
+              "type": "object",
+              "description": "Config with gamma, lambda"
+            }
+          ],
+          "example": "[\"train/computeAdvantages\", \"@episode.rewards\", \"@episode.values\", { \"gamma\": 0.99, \"lambda\": 0.95 }]",
+          "returnType": "tensor",
+          "returnTypeHuman": "tensor",
+          "arityHuman": "3 arguments",
+          "minArity": 3,
+          "maxArity": 3,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        }
+      ],
+      "operatorCount": 19
+    },
+    {
+      "id": "prob",
+      "name": "Probabilistic",
+      "displayName": "Probabilistic Programming",
+      "description": "Distribution sampling, Bayesian inference via rejection sampling, and statistical summaries.",
+      "icon": "🎲",
+      "operators": [
+        {
+          "name": "prob/seed",
+          "shortName": "seed",
+          "displayName": "Seed",
+          "description": "Set seeded PRNG for deterministic probabilistic sampling",
+          "params": [
+            {
+              "name": "n",
+              "type": "number",
+              "description": "Seed value (integer)"
+            }
+          ],
+          "example": "[\"prob/seed\", 42]",
+          "returnType": "void",
+          "returnTypeHuman": "nothing",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": true,
+          "acceptsLambda": false,
+          "pureFunction": false
+        },
+        {
+          "name": "prob/flip",
+          "shortName": "flip",
+          "displayName": "Flip",
+          "description": "Bernoulli trial: returns true with probability p",
+          "params": [
+            {
+              "name": "p",
+              "type": "number",
+              "description": "Probability of true (0 to 1)"
+            }
+          ],
+          "example": "[\"prob/flip\", 0.5] // => true or false with equal probability",
+          "returnType": "boolean",
+          "returnTypeHuman": "true/false",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "prob/gaussian",
+          "shortName": "gaussian",
+          "displayName": "Gaussian",
+          "description": "Sample from a Gaussian (normal) distribution",
+          "params": [
+            {
+              "name": "mu",
+              "type": "number",
+              "description": "Mean"
+            },
+            {
+              "name": "sigma",
+              "type": "number",
+              "description": "Standard deviation"
+            }
+          ],
+          "example": "[\"prob/gaussian\", 0, 1] // => standard normal sample",
+          "returnType": "number",
+          "returnTypeHuman": "number",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "prob/uniform",
+          "shortName": "uniform",
+          "displayName": "Uniform",
+          "description": "Sample from a uniform distribution [lo, hi)",
+          "params": [
+            {
+              "name": "lo",
+              "type": "number",
+              "description": "Lower bound (inclusive)"
+            },
+            {
+              "name": "hi",
+              "type": "number",
+              "description": "Upper bound (exclusive)"
+            }
+          ],
+          "example": "[\"prob/uniform\", 0, 10] // => number in [0, 10)",
+          "returnType": "number",
+          "returnTypeHuman": "number",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "prob/beta",
+          "shortName": "beta",
+          "displayName": "Beta",
+          "description": "Sample from a Beta(alpha, beta) distribution",
+          "params": [
+            {
+              "name": "alpha",
+              "type": "number",
+              "description": "Alpha shape parameter (> 0)"
+            },
+            {
+              "name": "beta",
+              "type": "number",
+              "description": "Beta shape parameter (> 0)"
+            }
+          ],
+          "example": "[\"prob/beta\", 2, 5] // => number in [0, 1], mean ~ 0.286",
+          "returnType": "number",
+          "returnTypeHuman": "number",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "prob/categorical",
+          "shortName": "categorical",
+          "displayName": "Categorical",
+          "description": "Weighted random selection from items",
+          "params": [
+            {
+              "name": "items",
+              "type": "array",
+              "description": "Array of items to choose from"
+            },
+            {
+              "name": "weights",
+              "type": "number[]",
+              "description": "Array of weights (same length as items)"
+            }
+          ],
+          "example": "[\"prob/categorical\", [\"a\", \"b\", \"c\"], [1, 2, 1]] // => \"b\" most likely",
+          "returnType": "any",
+          "returnTypeHuman": "any value",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "prob/poisson",
+          "shortName": "poisson",
+          "displayName": "Poisson",
+          "description": "Sample from a Poisson distribution",
+          "params": [
+            {
+              "name": "lambda",
+              "type": "number",
+              "description": "Rate parameter (> 0)"
+            }
+          ],
+          "example": "[\"prob/poisson\", 4] // => non-negative integer, mean ~ 4",
+          "returnType": "number",
+          "returnTypeHuman": "number",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "prob/condition",
+          "shortName": "condition",
+          "displayName": "Condition",
+          "description": "Mark current sample as rejected if predicate is false",
+          "params": [
+            {
+              "name": "predicate",
+              "type": "boolean",
+              "description": "Condition that must hold"
+            }
+          ],
+          "example": "[\"prob/condition\", [\">\", \"@entity.x\", 0]]",
+          "returnType": "void",
+          "returnTypeHuman": "nothing",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": true,
+          "acceptsLambda": false,
+          "pureFunction": false
+        },
+        {
+          "name": "prob/sample",
+          "shortName": "sample",
+          "displayName": "Sample",
+          "description": "Evaluate an expression n times and collect results",
+          "params": [
+            {
+              "name": "n",
+              "type": "number",
+              "description": "Number of samples"
+            },
+            {
+              "name": "expr",
+              "type": "SExpr",
+              "description": "Expression to evaluate (lazy)"
+            }
+          ],
+          "example": "[\"prob/sample\", 1000, [\"prob/flip\", 0.5]] // => array of booleans",
+          "returnType": "array",
+          "returnTypeHuman": "list",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "prob/posterior",
+          "shortName": "posterior",
+          "displayName": "Posterior",
+          "description": "Rejection sampling: returns accepted query values",
+          "params": [
+            {
+              "name": "model",
+              "type": "SExpr",
+              "description": "Model expression (lazy, may call set/condition)"
+            },
+            {
+              "name": "evidence",
+              "type": "SExpr",
+              "description": "Evidence expression (lazy, boolean)"
+            },
+            {
+              "name": "query",
+              "type": "SExpr",
+              "description": "Query expression (lazy, value to collect)"
+            },
+            {
+              "name": "n",
+              "type": "number",
+              "description": "Number of samples to attempt"
+            }
+          ],
+          "example": "[\"prob/posterior\", model, evidence, query, 5000]",
+          "returnType": "array",
+          "returnTypeHuman": "list",
+          "arityHuman": "4 arguments",
+          "minArity": 4,
+          "maxArity": 4,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "prob/infer",
+          "shortName": "infer",
+          "displayName": "Infer",
+          "description": "Like posterior but returns {mean, variance, samples, acceptRate}",
+          "params": [
+            {
+              "name": "model",
+              "type": "SExpr",
+              "description": "Model expression (lazy)"
+            },
+            {
+              "name": "evidence",
+              "type": "SExpr",
+              "description": "Evidence expression (lazy, boolean)"
+            },
+            {
+              "name": "query",
+              "type": "SExpr",
+              "description": "Query expression (lazy)"
+            },
+            {
+              "name": "n",
+              "type": "number",
+              "description": "Number of samples to attempt"
+            }
+          ],
+          "example": "[\"prob/infer\", model, evidence, query, 5000]",
+          "returnType": "object",
+          "returnTypeHuman": "object",
+          "arityHuman": "4 arguments",
+          "minArity": 4,
+          "maxArity": 4,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "prob/expected-value",
+          "shortName": "expected-value",
+          "displayName": "Expected-value",
+          "description": "Mean of numeric samples",
+          "params": [
+            {
+              "name": "samples",
+              "type": "number[]",
+              "description": "Array of numeric samples"
+            }
+          ],
+          "example": "[\"prob/expected-value\", [2, 4, 6, 8]] // => 5",
+          "returnType": "number",
+          "returnTypeHuman": "number",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "prob/variance",
+          "shortName": "variance",
+          "displayName": "Variance",
+          "description": "Population variance of numeric samples",
+          "params": [
+            {
+              "name": "samples",
+              "type": "number[]",
+              "description": "Array of numeric samples"
+            }
+          ],
+          "example": "[\"prob/variance\", [2, 4, 4, 4, 5, 5, 7, 9]] // => 4",
+          "returnType": "number",
+          "returnTypeHuman": "number",
+          "arityHuman": "1 argument",
+          "minArity": 1,
+          "maxArity": 1,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "prob/histogram",
+          "shortName": "histogram",
+          "displayName": "Histogram",
+          "description": "Bin numeric samples into a histogram",
+          "params": [
+            {
+              "name": "samples",
+              "type": "number[]",
+              "description": "Array of numeric samples"
+            },
+            {
+              "name": "bins",
+              "type": "number",
+              "description": "Number of bins"
+            }
+          ],
+          "example": "[\"prob/histogram\", [1, 2, 3, 4, 5], 2] // => {binEdges, counts}",
+          "returnType": "object",
+          "returnTypeHuman": "object",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "prob/percentile",
+          "shortName": "percentile",
+          "displayName": "Percentile",
+          "description": "Get the p-th percentile (0-100) from samples",
+          "params": [
+            {
+              "name": "samples",
+              "type": "number[]",
+              "description": "Array of numeric samples"
+            },
+            {
+              "name": "p",
+              "type": "number",
+              "description": "Percentile (0 to 100)"
+            }
+          ],
+          "example": "[\"prob/percentile\", [1, 2, 3, 4, 5], 50] // => 3",
+          "returnType": "number",
+          "returnTypeHuman": "number",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        },
+        {
+          "name": "prob/credible-interval",
+          "shortName": "credible-interval",
+          "displayName": "Credible-interval",
+          "description": "Compute symmetric credible interval from samples",
+          "params": [
+            {
+              "name": "samples",
+              "type": "number[]",
+              "description": "Array of numeric samples"
+            },
+            {
+              "name": "alpha",
+              "type": "number",
+              "description": "Significance level (e.g., 0.05 for 95% interval)"
+            }
+          ],
+          "example": "[\"prob/credible-interval\", samples, 0.05] // => [lo, hi]",
+          "returnType": "array",
+          "returnTypeHuman": "list",
+          "arityHuman": "2 arguments",
+          "minArity": 2,
+          "maxArity": 2,
+          "hasSideEffects": false,
+          "acceptsLambda": false,
+          "pureFunction": true
+        }
+      ],
+      "operatorCount": 16
     }
   ],
   "stats": {
-    "totalModules": 8,
-    "totalOperators": 164,
-    "totalBehaviorCategories": 7,
-    "totalBehaviors": 34,
-    "generatedAt": "2026-01-29T11:11:31.244Z"
+    "totalModules": 12,
+    "totalOperators": 245,
+    "totalBehaviorCategories": 1,
+    "totalBehaviors": 104,
+    "generatedAt": "2026-03-11T06:21:48.729Z"
   }
 }

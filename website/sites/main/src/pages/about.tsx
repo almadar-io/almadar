@@ -24,7 +24,7 @@ function Hero() {
 
 const TEAM = [
   {
-    name: "Osama Alghanmi",
+    name: "Osama",
     roleId: "about.team.osama.role",
     roleDefault: "Co-Founder & Technical Lead",
     bioId: "about.team.osama.bio",
@@ -48,7 +48,7 @@ function TeamSection() {
             <Translate id="about.team.title">The Team</Translate>
           </Heading>
         </div>
-        <img src="/img/about-team.webp" alt="The Almadar team" className={styles.sectionImage} loading="lazy" />
+        <img src="/img/about-team.png" alt="The Almadar team" className={styles.sectionImage} loading="lazy" />
         <div className={styles.teamGrid}>
           {TEAM.map((member) => (
             <div key={member.name} className={styles.teamCard}>

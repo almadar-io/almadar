@@ -67,7 +67,7 @@ function PipelineSection() {
             </Translate>
           </p>
         </div>
-        <img src="/img/ai-pipeline.webp" alt="Neural pipeline" className={styles.sectionImage} loading="lazy" />
+        <img src="/img/ai-pipeline.png" alt="Neural pipeline" className={styles.sectionImage} loading="lazy" />
         <div className={styles.pipelineGrid}>
           {PIPELINE_STEPS.map((step) => (
             <div key={step.titleId} className={styles.pipelineCard}>
@@ -90,7 +90,7 @@ function CostSection() {
             <Translate id="ai.cost.title">10x Cheaper Than LLMs</Translate>
           </Heading>
         </div>
-        <img src="/img/ai-cost.webp" alt="Cost comparison" className={styles.sectionImage} loading="lazy" />
+        <img src="/img/ai-cost.png" alt="Cost comparison" className={styles.sectionImage} loading="lazy" />
         <div className={styles.costContent}>
           <p>
             <Translate id="ai.cost.p1">
