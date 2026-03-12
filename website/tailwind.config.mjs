@@ -8,6 +8,10 @@
  * using CSS variable references so any @almadar/ui theme works.
  */
 
+import { fileURLToPath } from 'url';
+import path from 'path';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -24,6 +28,8 @@ export default {
     './sites/orb/src/**/*.{js,ts,jsx,tsx}',
     // Shared modules used across sites
     './shared/**/*.{js,ts,jsx,tsx}',
+    // @almadar/ui components (absolute path, needed because Docusaurus CWD differs from config location)
+    path.resolve(__dirname, 'node_modules/@almadar/ui/dist/**/*.js'),
   ],
   darkMode: 'class',
   theme: {

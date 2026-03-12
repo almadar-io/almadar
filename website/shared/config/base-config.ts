@@ -108,6 +108,14 @@ export function createConfig(opts: SiteConfig): Config {
                   'react-router-dom': path.resolve(__dirname, '../stubs/react-router-dom-stub.js'),
                   // Shared components accessible from all sites
                   '@shared': path.resolve(__dirname, '../components'),
+                  // Resolve @almadar/std from local monorepo (not published to npm)
+                  '@almadar/std': path.resolve(__dirname, '../../../packages/almadar-std'),
+                },
+                // Node core modules are not available in the browser; stub them out
+                // (almadar-runtime pulls in fs/path for its Node-side external loader)
+                fallback: {
+                  fs: false,
+                  path: false,
                 },
               },
               module: {
@@ -116,6 +124,19 @@ export function createConfig(opts: SiteConfig): Config {
                   {
                     test: /\.m?js$/,
                     resolve: { fullySpecified: false },
+                  },
+                  // Force pure-ESM node_modules to be treated as CJS-compatible
+                  // so webpack can bundle/serve them without chunk-load failures.
+                  // react-markdown v9+ and its unified/hast/remark/micromark
+                  // dependencies all use "type":"module" in their package.json.
+                  {
+                    test: /\.js$/,
+                    include: [
+                      /node_modules\/(react-markdown|unified|bail|extend-error|is-plain-obj|trough|vfile|vfile-message|unist-util-|hast-util-|hast-to-hyperscript|mdast-util-|remark-|rehype-|micromark)/,
+                      /packages\/almadar-std\/dist/,
+                      /node_modules\/@almadar\/patterns/,
+                    ],
+                    type: 'javascript/auto',
                   },
                 ],
               },
