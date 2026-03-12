@@ -1743,5 +1743,14 @@
   },
   "projects.trait-wars.tech.boss": {
     "message": "Boj v areni šefov"
+  },
+  "showcase.viewDemo": {
+    "message": "View Demo"
+  },
+  "demos.viewStorybook": {
+    "message": "View Storybook"
+  },
+  "demos.jumpTo": {
+    "message": "Jump to project"
   }
 }

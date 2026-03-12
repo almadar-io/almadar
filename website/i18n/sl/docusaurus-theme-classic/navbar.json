@@ -32,7 +32,7 @@
     "description": "Navbar item with label GitHub"
   },
   "logo.alt": {
-    "message": "Almadar Logo",
+    "message": "Logotip Almadar",
     "description": "The alt text of navbar logo"
   }
 }

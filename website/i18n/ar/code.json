@@ -1743,5 +1743,14 @@
   },
   "projects.trait-wars.tech.boss": {
     "message": "قتال ساحة الزعيم"
+  },
+  "showcase.viewDemo": {
+    "message": "View Demo"
+  },
+  "demos.viewStorybook": {
+    "message": "View Storybook"
+  },
+  "demos.jumpTo": {
+    "message": "Jump to project"
   }
 }

@@ -1,59 +1,45 @@
 {
   "home.hero.tag": {
-    "message": "منصة أصيلة بالذكاء الاصطناعي",
-    "description": "AI-Native Platform"
+    "message": "منصة أصيلة بالذكاء الاصطناعي"
   },
   "home.hero.title": {
-    "message": "فيزياء البرمجيات",
-    "description": "The Physics of Software"
+    "message": "فيزياء البرمجيات"
   },
   "home.hero.subtitle": {
-    "message": "نماذج عالمية لعصر الوكلاء الأذكياء. نبني اللغة والذكاء والبنية التحتية لبرمجيات تفهم نفسها.",
-    "description": "World models for the agentic era. We build the language, intelligence, and infrastructure for software that understands itself."
+    "message": "نماذج عالمية لعصر الوكلاء الأذكياء. نبني اللغة والذكاء والبنية التحتية لبرمجيات تفهم نفسها."
   },
   "home.hero.cta1": {
-    "message": "استكشف Studio",
-    "description": "Explore Studio"
+    "message": "استكشف Studio"
   },
   "home.hero.cta2": {
-    "message": "اقرأ التوثيق",
-    "description": "Read the Docs"
+    "message": "اقرأ التوثيق"
   },
   "home.idea.title": {
-    "message": "ما هو النموذج العالمي للبرمجيات؟",
-    "description": "What is a World Model of Software?"
+    "message": "ما هو النموذج العالمي للبرمجيات؟"
   },
   "home.idea.subtitle": {
-    "message": "البرمجة التقليدية تخبر الحاسوب بما يفعله خطوة بخطوة. النموذج العالمي يصف كيف تعمل الأشياء: البيانات والقواعد والسلوكيات. المترجم يحولها إلى أي منصة. النموذج يبقى كما هو.",
-    "description": "Traditional programming tells computers what to do, step by step. A world model describes how things work: the data, the rules, the behaviors. The compiler turns it into any platform. The model stays the same."
+    "message": "البرمجة التقليدية تخبر الحاسوب بما يفعله خطوة بخطوة. النموذج العالمي يصف كيف تعمل الأشياء: البيانات والقواعد والسلوكيات. المترجم يحولها إلى أي منصة. النموذج يبقى كما هو."
   },
   "home.idea.describe": {
-    "message": "صِف",
-    "description": "Describe"
+    "message": "صِف"
   },
   "home.idea.describe.text": {
-    "message": "اكتب ما يفعله نظامك بلغة .orb، وهي لغة رسمية لوصف سلوك التطبيقات.",
-    "description": "Write what your system does in .orb, a formal language for application behavior."
+    "message": "اكتب ما يفعله نظامك بلغة .orb، وهي لغة رسمية لوصف سلوك التطبيقات."
   },
   "home.idea.prove": {
-    "message": "أثبِت",
-    "description": "Prove"
+    "message": "أثبِت"
   },
   "home.idea.prove.text": {
-    "message": "المترجم يتحقق من صحة كل حالة ممكنة قبل تشغيل أي سطر من الكود.",
-    "description": "The compiler validates every possible state before a single line of code runs."
+    "message": "المترجم يتحقق من صحة كل حالة ممكنة قبل تشغيل أي سطر من الكود."
   },
   "home.idea.deploy": {
-    "message": "انشر",
-    "description": "Deploy"
+    "message": "انشر"
   },
   "home.idea.deploy.text": {
-    "message": "نموذج واحد يُترجم إلى الويب أو الهاتف أو أي منصة مستقبلية. النموذج هو المنتج.",
-    "description": "One model compiles to web, mobile, or any future platform. The model is the product."
+    "message": "نموذج واحد يُترجم إلى الويب أو الهاتف أو أي منصة مستقبلية. النموذج هو المنتج."
   },
   "home.pillars.title": {
-    "message": "ثلاثة أركان",
-    "description": "Three Pillars"
+    "message": "ثلاثة أركان"
   },
   "home.pillars.language.title": {
     "message": "Orb",
@@ -92,8 +78,7 @@
     "description": "View Services"
   },
   "home.proof.title": {
-    "message": "مُثبت في الإنتاج",
-    "description": "Proven in Production"
+    "message": "مُثبت في الإنتاج"
   },
   "home.stats.behaviors.value": {
     "message": "129",
@@ -120,48 +105,37 @@
     "description": "AI compute cost per application"
   },
   "home.ai.title": {
-    "message": "نُدرّب نماذجنا الخاصة",
-    "description": "We Train Our Own Models"
+    "message": "نُدرّب نماذجنا الخاصة"
   },
   "home.ai.text": {
-    "message": "لسنا شركة تغلّف واجهات LLM وتسميها ذكاءً اصطناعياً. خط أنابيبنا العصبي يفهم بنية البرمجيات كما يفهم محرك الشطرنج أوضاع الرقعة. يتنبأ بالأخطاء ويقيّم الإصلاحات ويُنشئ برمجيات صالحة من الصفر.",
-    "description": "We are not a company that wraps LLM APIs and calls it AI. Our neural pipeline understands software structure the way a chess engine understands board positions. It predicts errors, evaluates fixes, and generates valid software from scratch."
+    "message": "لسنا شركة تغلّف واجهات LLM وتسميها ذكاءً اصطناعياً. خط أنابيبنا العصبي يفهم بنية البرمجيات كما يفهم محرك الشطرنج أوضاع الرقعة. يتنبأ بالأخطاء ويقيّم الإصلاحات ويُنشئ برمجيات صالحة من الصفر."
   },
   "home.ai.text2": {
-    "message": "ما زلنا نستخدم نماذج اللغة الكبيرة لفهم اللغة الطبيعية. لكن الذكاء البنيوي الجوهري ملكنا: نماذج صغيرة متخصصة تكاد لا تكلف شيئاً للتشغيل.",
-    "description": "We still use LLMs for natural language understanding. But the core structural intelligence is ours: small, specialized models that cost almost nothing to run."
+    "message": "ما زلنا نستخدم نماذج اللغة الكبيرة لفهم اللغة الطبيعية. لكن الذكاء البنيوي الجوهري ملكنا: نماذج صغيرة متخصصة تكاد لا تكلف شيئاً للتشغيل."
   },
   "home.cta.title": {
-    "message": "مستعد للبناء؟",
-    "description": "Ready to build?"
+    "message": "مستعد للبناء؟"
   },
   "home.cta.text": {
-    "message": "ابدأ بلغة Orb. ابنِ مع Studio. انشر على خدمات Almadar.",
-    "description": "Start with Orb. Build with Studio. Deploy on Almadar Services."
+    "message": "ابدأ بلغة Orb. ابنِ مع Studio. انشر على خدمات Almadar."
   },
   "home.cta.start": {
-    "message": "ابدأ البناء",
-    "description": "Start Building"
+    "message": "ابدأ البناء"
   },
   "home.cta.vision": {
-    "message": "اقرأ الرؤية",
-    "description": "Read the Vision"
+    "message": "اقرأ الرؤية"
   },
   "home.meta.title": {
-    "message": "Almadar — فيزياء البرمجيات",
-    "description": "Almadar — The Physics of Software"
+    "message": "Almadar — فيزياء البرمجيات"
   },
   "home.meta.desc": {
-    "message": "Almadar تبني اللغة والذكاء والبنية التحتية لبرمجيات تفهم نفسها.",
-    "description": "Almadar builds the language, intelligence, and infrastructure for software that understands itself."
+    "message": "Almadar تبني اللغة والذكاء والبنية التحتية لبرمجيات تفهم نفسها."
   },
   "platform.hero.title": {
-    "message": "المنصة",
-    "description": "The Platform"
+    "message": "المنصة"
   },
   "platform.hero.subtitle": {
-    "message": "ثلاثة أركان، هدف واحد: تحويل الأوصاف الرسمية للبرمجيات إلى تطبيقات عاملة.",
-    "description": "Three pillars, one goal: turn formal descriptions of software into running applications."
+    "message": "ثلاثة أركان، هدف واحد: تحويل الأوصاف الرسمية للبرمجيات إلى تطبيقات عاملة."
   },
   "platform.language.title": {
     "message": "Orb",
@@ -200,144 +174,109 @@
     "description": "View Services"
   },
   "platform.connect.title": {
-    "message": "كيف تتصل ببعضها",
-    "description": "How They Connect"
+    "message": "كيف تتصل ببعضها"
   },
   "platform.connect.step1.title": {
-    "message": "صِف",
-    "description": "Describe"
+    "message": "صِف"
   },
   "platform.connect.step1.desc": {
-    "message": "يصف المستخدمون ما يحتاجونه في Studio. وكيل الذكاء الاصطناعي يترجم اللغة الطبيعية إلى كود .orb.",
-    "description": "Users describe what they need in Studio. The AI agent translates natural language into .orb code."
+    "message": "يصف المستخدمون ما يحتاجونه في Studio. وكيل الذكاء الاصطناعي يترجم اللغة الطبيعية إلى كود .orb."
   },
   "platform.connect.step2.title": {
-    "message": "ترجِم",
-    "description": "Compile"
+    "message": "ترجِم"
   },
   "platform.connect.step2.desc": {
-    "message": "مترجم Orb يتحقق من صحة البرنامج ويُنشئ تطبيقاً متكاملاً: واجهة أمامية، خادم خلفي، قاعدة بيانات.",
-    "description": "The Orb compiler validates the program and generates a full-stack application: frontend, backend, database."
+    "message": "مترجم Orb يتحقق من صحة البرنامج ويُنشئ تطبيقاً متكاملاً: واجهة أمامية، خادم خلفي، قاعدة بيانات."
   },
   "platform.connect.step3.title": {
-    "message": "شغّل",
-    "description": "Run"
+    "message": "شغّل"
   },
   "platform.connect.step3.desc": {
-    "message": "خدمات Almadar تستضيف التطبيق مع توجيه الأحداث والتخزين والمصادقة وخدمات الذكاء الاصطناعي المدمجة.",
-    "description": "Almadar Services hosts the application with event routing, storage, authentication, and AI services built in."
+    "message": "خدمات Almadar تستضيف التطبيق مع توجيه الأحداث والتخزين والمصادقة وخدمات الذكاء الاصطناعي المدمجة."
   },
   "platform.cta.title": {
-    "message": "ابدأ من أي مكان",
-    "description": "Start Anywhere"
+    "message": "ابدأ من أي مكان"
   },
   "platform.cta.text": {
-    "message": "تعلّم اللغة، أو جرّب بيئة البناء، أو استكشف البنية التحتية. كل ركن يعمل بمفرده. معاً يشكلون منصة متكاملة.",
-    "description": "Learn the language, try the builder, or explore the infrastructure. Each pillar works on its own. Together, they form a complete platform."
+    "message": "تعلّم اللغة، أو جرّب بيئة البناء، أو استكشف البنية التحتية. كل ركن يعمل بمفرده. معاً يشكلون منصة متكاملة."
   },
   "platform.cta.studio": {
-    "message": "جرّب Studio",
-    "description": "Try Studio"
+    "message": "جرّب Studio"
   },
   "platform.cta.docs": {
-    "message": "اقرأ التوثيق",
-    "description": "Read the Docs"
+    "message": "اقرأ التوثيق"
   },
   "platform.meta.title": {
-    "message": "المنصة — اللغة، Studio، الخدمات",
-    "description": "Platform — Language, Studio, Services"
+    "message": "المنصة — اللغة، Studio، الخدمات"
   },
   "platform.meta.desc": {
-    "message": "الأركان الثلاثة لمنصة Almadar: Orb و Almadar Studio وخدمات Almadar.",
-    "description": "Three pillars of the Almadar platform: Orb, Almadar Studio, and Almadar Services."
+    "message": "الأركان الثلاثة لمنصة Almadar: Orb و Almadar Studio وخدمات Almadar."
   },
   "vision.hero.title": {
-    "message": "واقع رقمي مشترك",
-    "description": "A Shared Digital Reality"
+    "message": "واقع رقمي مشترك"
   },
   "vision.hero.subtitle": {
-    "message": "برمجيات تتعايش وتتنسق وتتطور معاً.",
-    "description": "Software that coexists, coordinates, and evolves together."
+    "message": "برمجيات تتعايش وتتنسق وتتطور معاً."
   },
   "vision.coexist.title": {
-    "message": "برمجيات تتعايش",
-    "description": "Software That Coexists"
+    "message": "برمجيات تتعايش"
   },
   "vision.coexist.p1": {
-    "message": "اليوم، كل تطبيق جزيرة معزولة. لديه نموذج بياناته الخاص وقواعده الخاصة ولغته الخاصة. نقل المعلومات بين الأنظمة يعني بناء جسور تنكسر كلما تغيّر أي طرف.",
-    "description": "Today, every application is an island. It has its own data model, its own rules, its own language. Moving information between systems means building bridges that break every time either side changes."
+    "message": "اليوم، كل تطبيق جزيرة معزولة. لديه نموذج بياناته الخاص وقواعده الخاصة ولغته الخاصة. نقل المعلومات بين الأنظمة يعني بناء جسور تنكسر كلما تغيّر أي طرف."
   },
   "vision.coexist.p2": {
-    "message": "نؤمن بأن البرمجيات يجب أن تتشارك قواعد لغوية موحدة. عندما يصف تطبيقان سلوكهما بلغة Orb، يستطيعان فهم بعضهما بشكل طبيعي. البيانات تتدفق دون طبقات ترجمة. القواعد تتركب دون كود ربط.",
-    "description": "We believe software should share a common grammar. When two applications describe their behavior in Orb, they can understand each other natively. Data flows without translation layers. Rules compose without glue code."
+    "message": "نؤمن بأن البرمجيات يجب أن تتشارك قواعد لغوية موحدة. عندما يصف تطبيقان سلوكهما بلغة Orb، يستطيعان فهم بعضهما بشكل طبيعي. البيانات تتدفق دون طبقات ترجمة. القواعد تتركب دون كود ربط."
   },
   "vision.ownership.title": {
-    "message": "المجتمعات تحتفظ بالملكية",
-    "description": "Communities Keep Ownership"
+    "message": "المجتمعات تحتفظ بالملكية"
   },
   "vision.ownership.p1": {
-    "message": "النموذج الحالي يُركّز السلطة. منصات قليلة تملك الأدوات والبيانات والتوزيع. المجتمعات التي تبني على تلك المنصات تستأجر حضورها الرقمي.",
-    "description": "The current model concentrates power. A few platforms own the tools, the data, and the distribution. Communities that build on those platforms rent their digital presence."
+    "message": "النموذج الحالي يُركّز السلطة. منصات قليلة تملك الأدوات والبيانات والتوزيع. المجتمعات التي تبني على تلك المنصات تستأجر حضورها الرقمي."
   },
   "vision.ownership.p2": {
-    "message": "Almadar تغيّر هذا. Orb مفتوحة المصدر. المكتبة المعيارية مفتوحة المصدر. عندما يصف مجتمع مجاله بلغة Orb، فإنه يملك ذلك الوصف. يمكنه ترجمته لأي منصة واستضافته في أي مكان وتطويره بشروطه الخاصة.",
-    "description": "Almadar changes this. Orb is open source. The standard library is open source. When a community describes their domain in Orb, they own that description. They can compile it to any platform, host it anywhere, and evolve it on their own terms."
+    "message": "Almadar تغيّر هذا. Orb مفتوحة المصدر. المكتبة المعيارية مفتوحة المصدر. عندما يصف مجتمع مجاله بلغة Orb، فإنه يملك ذلك الوصف. يمكنه ترجمته لأي منصة واستضافته في أي مكان وتطويره بشروطه الخاصة."
   },
   "vision.models.title": {
-    "message": "نماذج عالمية قابلة للتركيب",
-    "description": "Composable World Models"
+    "message": "نماذج عالمية قابلة للتركيب"
   },
   "vision.models.p1": {
-    "message": "النموذج العالمي هو وصف رسمي لكيفية عمل مجال ما: ما الموجود، كيف يتغير، ما القواعد. في .orb، نظام جدولة رعاية صحية ومتتبع مخزون كلاهما نموذجان عالميان. يمكن التحقق من كل منهما بشكل مستقل وتركيبهما معاً.",
-    "description": "A world model is a formal description of how a domain works: what exists, how it changes, what the rules are. In .orb, a healthcare scheduling system and an inventory tracker are both world models. They can be validated independently and composed together."
+    "message": "النموذج العالمي هو وصف رسمي لكيفية عمل مجال ما: ما الموجود، كيف يتغير، ما القواعد. في .orb، نظام جدولة رعاية صحية ومتتبع مخزون كلاهما نموذجان عالميان. يمكن التحقق من كل منهما بشكل مستقل وتركيبهما معاً."
   },
   "vision.models.p2": {
-    "message": "هذه هي اللعبة الطويلة. عندما يكون لمجالات كافية نماذج رسمية، تتوقف البرمجيات عن كونها مجموعة برامج معزولة وتصبح واقعاً رقمياً مشتركاً قابلاً للتشغيل المتبادل. كل نموذج لبنة بناء. كل تركيب يخلق شيئاً جديداً.",
-    "description": "This is the long game. When enough domains have formal models, software stops being a collection of isolated programs and becomes a shared, interoperable digital reality. Each model is a building block. Each composition creates something new."
+    "message": "هذه هي اللعبة الطويلة. عندما يكون لمجالات كافية نماذج رسمية، تتوقف البرمجيات عن كونها مجموعة برامج معزولة وتصبح واقعاً رقمياً مشتركاً قابلاً للتشغيل المتبادل. كل نموذج لبنة بناء. كل تركيب يخلق شيئاً جديداً."
   },
   "vision.cta.title": {
-    "message": "ابنِ معنا",
-    "description": "Build With Us"
+    "message": "ابنِ معنا"
   },
   "vision.cta.text": {
-    "message": "الواقع الرقمي المشترك يبدأ بالنموذج الأول. اكتب نموذجك.",
-    "description": "The shared digital reality starts with the first model. Write yours."
+    "message": "الواقع الرقمي المشترك يبدأ بالنموذج الأول. اكتب نموذجك."
   },
   "vision.cta.language": {
-    "message": "استكشف اللغة",
-    "description": "Explore the Language"
+    "message": "استكشف اللغة"
   },
   "vision.cta.contact": {
-    "message": "تواصل معنا",
-    "description": "Get in Touch"
+    "message": "تواصل معنا"
   },
   "vision.meta.title": {
-    "message": "الرؤية — واقع رقمي مشترك",
-    "description": "Vision — A Shared Digital Reality"
+    "message": "الرؤية — واقع رقمي مشترك"
   },
   "vision.meta.desc": {
-    "message": "برمجيات تتعايش وتتنسق وتتطور معاً. المجتمعات تحتفظ بالملكية. نماذج عالمية قابلة للتركيب.",
-    "description": "Software that coexists, coordinates, and evolves together. Communities keeping ownership. Composable world models."
+    "message": "برمجيات تتعايش وتتنسق وتتطور معاً. المجتمعات تحتفظ بالملكية. نماذج عالمية قابلة للتركيب."
   },
   "ai.hero.tag": {
-    "message": "ذكاؤنا الاصطناعي",
-    "description": "Our AI"
+    "message": "ذكاؤنا الاصطناعي"
   },
   "ai.hero.title": {
-    "message": "نُدرّب نماذجنا الخاصة",
-    "description": "We Train Our Own Models"
+    "message": "نُدرّب نماذجنا الخاصة"
   },
   "ai.hero.subtitle": {
-    "message": "ليست أغلفة حول ذكاء شخص آخر. شبكات عصبية مبنية لغرض محدد تفهم بنية البرمجيات كما يفهم محرك الشطرنج أوضاع الرقعة.",
-    "description": "Not wrappers around someone else's intelligence. Purpose-built neural networks that understand software structure the way a chess engine understands board positions."
+    "message": "ليست أغلفة حول ذكاء شخص آخر. شبكات عصبية مبنية لغرض محدد تفهم بنية البرمجيات كما يفهم محرك الشطرنج أوضاع الرقعة."
   },
   "ai.pipeline.title": {
-    "message": "خط الأنابيب العصبي",
-    "description": "The Neural Pipeline"
+    "message": "خط الأنابيب العصبي"
   },
   "ai.pipeline.subtitle": {
-    "message": "ستة نماذج متخصصة تعمل معاً. كل نموذج يتقن مهمة واحدة.",
-    "description": "Six specialized models working together. Each one does one thing well."
+    "message": "ستة نماذج متخصصة تعمل معاً. كل نموذج يتقن مهمة واحدة."
   },
   "ai.pipeline.mutator.title": {
     "message": "مُولّد المخططات",
@@ -388,52 +327,40 @@
     "description": "Orchestrates the pipeline end to end. Combines neural predictions with compiler validation to guarantee correctness."
   },
   "ai.cost.title": {
-    "message": "ميزة التكلفة",
-    "description": "Cost Advantage"
+    "message": "ميزة التكلفة"
   },
   "ai.cost.p1": {
-    "message": "نماذج اللغة الكبيرة تكلف من 0.50$ إلى 5.00$ لكل عملية توليد معقدة. نماذجنا المتخصصة تكلف من 0.05$ إلى 0.35$ للمهمة ذاتها. هذا تخفيض بمقدار 10 إلى 15 ضعفاً.",
-    "description": "Large language models cost $0.50 to $5.00 per complex generation. Our specialized models cost $0.05 to $0.35 for the same task. That is a 10x to 15x reduction."
+    "message": "نماذج اللغة الكبيرة تكلف من 0.50$ إلى 5.00$ لكل عملية توليد معقدة. نماذجنا المتخصصة تكلف من 0.05$ إلى 0.35$ للمهمة ذاتها. هذا تخفيض بمقدار 10 إلى 15 ضعفاً."
   },
   "ai.cost.p2": {
-    "message": "التوفير يأتي من التركيز. نموذج اللغة الكبير متنبئ نصوص عام الغرض. نماذجنا تحتاج فقط لفهم بنية برامج .orb، وهي مساحة مشكلة أصغر بكثير. نماذج أصغر، استنتاج أسرع، تكلفة أقل.",
-    "description": "The savings come from focus. An LLM is a general-purpose text predictor. Our models only need to understand .orb program structure, a much smaller problem space. Smaller models, faster inference, lower cost."
+    "message": "التوفير يأتي من التركيز. نموذج اللغة الكبير متنبئ نصوص عام الغرض. نماذجنا تحتاج فقط لفهم بنية برامج .orb، وهي مساحة مشكلة أصغر بكثير. نماذج أصغر، استنتاج أسرع، تكلفة أقل."
   },
   "ai.diff.title": {
-    "message": "لسنا أغلفة LLM",
-    "description": "Not LLM Wrappers"
+    "message": "لسنا أغلفة LLM"
   },
   "ai.diff.p1": {
-    "message": "نستخدم نماذج اللغة الكبيرة لفهم اللغة الطبيعية: تفسير ما يريده المستخدمون. لكن الذكاء البنيوي الذي يُنشئ ويتحقق من ويُصلح برامج .orb ملكنا. مُدرّب على بياناتنا ومُحسّن لمجالنا.",
-    "description": "We use LLMs for natural language understanding: interpreting what users want. But the structural intelligence that generates, validates, and repairs .orb programs is ours. Trained on our data, optimized for our domain."
+    "message": "نستخدم نماذج اللغة الكبيرة لفهم اللغة الطبيعية: تفسير ما يريده المستخدمون. لكن الذكاء البنيوي الذي يُنشئ ويتحقق من ويُصلح برامج .orb ملكنا. مُدرّب على بياناتنا ومُحسّن لمجالنا."
   },
   "ai.diff.p2": {
-    "message": "هذا يعني أننا نتحكم في تكاليفنا وجودتنا وخارطة طريقنا. لا نعتمد على تسعير واجهات أو تحديثات نماذج شركة أخرى.",
-    "description": "This means we control our costs, our quality, and our roadmap. We do not depend on another company's API pricing or model updates."
+    "message": "هذا يعني أننا نتحكم في تكاليفنا وجودتنا وخارطة طريقنا. لا نعتمد على تسعير واجهات أو تحديثات نماذج شركة أخرى."
   },
   "ai.diff.cta": {
-    "message": "شاهد المنصة",
-    "description": "See the Platform"
+    "message": "شاهد المنصة"
   },
   "ai.meta.title": {
-    "message": "الذكاء الاصطناعي — نماذج مُدرّبة لتوليد البرمجيات",
-    "description": "AI — Trained Models for Software Generation"
+    "message": "الذكاء الاصطناعي — نماذج مُدرّبة لتوليد البرمجيات"
   },
   "ai.meta.desc": {
-    "message": "شبكات عصبية مبنية لغرض محدد تفهم بنية البرمجيات. ليست أغلفة LLM.",
-    "description": "Purpose-built neural networks that understand software structure. Not LLM wrappers."
+    "message": "شبكات عصبية مبنية لغرض محدد تفهم بنية البرمجيات. ليست أغلفة LLM."
   },
   "about.hero.title": {
-    "message": "عن Almadar",
-    "description": "About Almadar"
+    "message": "عن Almadar"
   },
   "about.hero.subtitle": {
-    "message": "فريق صغير يبني فيزياء البرمجيات. مقرّه في ليوبليانا، سلوفينيا.",
-    "description": "A small team building the physics of software. Based in Ljubljana, Slovenia."
+    "message": "فريق صغير يبني فيزياء البرمجيات. مقرّه في ليوبليانا، سلوفينيا."
   },
   "about.team.title": {
-    "message": "الفريق",
-    "description": "The Team"
+    "message": "الفريق"
   },
   "about.team.osama.role": {
     "message": "شريك مؤسس ومدير تقني",
@@ -452,36 +379,28 @@
     "description": "10+ years in enterprise delivery and program management. Manages client projects, quality gates, and go-to-market strategy. Ensures every shipped product meets production standards."
   },
   "about.story.title": {
-    "message": "لماذا نبني هذا",
-    "description": "Why We Build This"
+    "message": "لماذا نبني هذا"
   },
   "about.story.p1": {
-    "message": "تطوير البرمجيات لديه مشكلة جوهرية: الفجوة بين ما يريده شخص ما وما يستطيع بناءه تتسع باستمرار. الأدوات تصبح أقوى لكنها أيضاً أعقد. مساعدو الذكاء الاصطناعي يولّدون الكود أسرع، لكن النهج الأساسي لا يزال نفسه: اكتب كوداً، أتمنّ أن يعمل، أصلح الأخطاء حين لا يعمل.",
-    "description": "Software development has a fundamental problem: the gap between what someone wants and what they can build keeps growing. Tools get more powerful, but also more complex. AI assistants generate code faster, but the underlying approach is still the same: write code, hope it works, debug when it does not."
+    "message": "تطوير البرمجيات لديه مشكلة جوهرية: الفجوة بين ما يريده شخص ما وما يستطيع بناءه تتسع باستمرار. الأدوات تصبح أقوى لكنها أيضاً أعقد. مساعدو الذكاء الاصطناعي يولّدون الكود أسرع، لكن النهج الأساسي لا يزال نفسه: اكتب كوداً، أتمنّ أن يعمل، أصلح الأخطاء حين لا يعمل."
   },
   "about.story.p2": {
-    "message": "بدأنا Almadar بفرضية مختلفة. ماذا لو كان للبرمجيات فيزياء؟ ماذا لو استطعت وصف سلوك نظام بشكل رسمي، ومترجم يستطيع إثبات صحته قبل توليد أي كود؟ ماذا لو فهم الذكاء الاصطناعي بنية البرمجيات بدلاً من مجرد التنبؤ بالرمز التالي؟",
-    "description": "We started Almadar with a different premise. What if software had physics? What if you could describe how a system behaves, formally, and a compiler could prove it correct before generating any code? What if AI understood software structure instead of just predicting the next token?"
+    "message": "بدأنا Almadar بفرضية مختلفة. ماذا لو كان للبرمجيات فيزياء؟ ماذا لو استطعت وصف سلوك نظام بشكل رسمي، ومترجم يستطيع إثبات صحته قبل توليد أي كود؟ ماذا لو فهم الذكاء الاصطناعي بنية البرمجيات بدلاً من مجرد التنبؤ بالرمز التالي؟"
   },
   "about.story.p3": {
-    "message": "تلك الفرضية أصبحت Orb ومترجم Almadar وخط الأنابيب العصبي. ما زلنا في البداية. لكن بعد سبعة مشاريع إنتاجية و103 سلوكيات معيارية، الفرضية صامدة.",
-    "description": "That premise became Orb, the Almadar compiler, and the neural pipeline. It is still early. But seven production projects and 103 standard behaviors later, the premise holds."
+    "message": "تلك الفرضية أصبحت Orb ومترجم Almadar وخط الأنابيب العصبي. ما زلنا في البداية. لكن بعد سبعة مشاريع إنتاجية و103 سلوكيات معيارية، الفرضية صامدة."
   },
   "about.meta.title": {
-    "message": "عن الفريق — فريق Almadar",
-    "description": "About — The Almadar Team"
+    "message": "عن الفريق — فريق Almadar"
   },
   "about.meta.desc": {
-    "message": "فريق صغير في ليوبليانا، سلوفينيا، يبني فيزياء البرمجيات.",
-    "description": "A small team in Ljubljana, Slovenia, building the physics of software."
+    "message": "فريق صغير في ليوبليانا، سلوفينيا، يبني فيزياء البرمجيات."
   },
   "contact.hero.title": {
-    "message": "تواصل معنا",
-    "description": "Get in Touch"
+    "message": "تواصل معنا"
   },
   "contact.hero.subtitle": {
-    "message": "المستثمرون والشراكات واستفسارات المؤسسات.",
-    "description": "Investors, partnerships, and enterprise inquiries."
+    "message": "المستثمرون والشراكات واستفسارات المؤسسات."
   },
   "contact.investors.title": {
     "message": "المستثمرون",
@@ -508,19 +427,429 @@
     "description": "Custom deployments, dedicated infrastructure, and tailored AI models for large organizations."
   },
   "contact.email.title": {
-    "message": "راسلنا",
-    "description": "Write to Us"
+    "message": "راسلنا"
   },
   "contact.email.text": {
-    "message": "لأي استفسار، تواصل معنا مباشرة على:",
-    "description": "For any inquiry, reach us directly at:"
+    "message": "لأي استفسار، تواصل معنا مباشرة على:"
   },
   "contact.meta.title": {
-    "message": "تواصل — Almadar",
-    "description": "Contact — Almadar"
+    "message": "تواصل — Almadar"
   },
   "contact.meta.desc": {
-    "message": "المستثمرون والشراكات واستفسارات المؤسسات. hello@almadar.io",
-    "description": "Investors, partnerships, and enterprise inquiries. hello@almadar.io"
+    "message": "المستثمرون والشراكات واستفسارات المؤسسات. hello@almadar.io"
+  },
+  "chat.thinking": {
+    "message": "Generating your application..."
+  },
+  "chat.writing": {
+    "message": "Writing .orb schema..."
+  },
+  "chat.schemaReady": {
+    "message": "Your application schema is ready:"
+  },
+  "chat.done": {
+    "message": "Done! Open Almadar Studio to see your generated application."
+  },
+  "chat.triggerLabel": {
+    "message": "Ask AI to build something"
+  },
+  "chat.triggerTitle": {
+    "message": "Build with AI"
+  },
+  "chat.title": {
+    "message": "Almadar AI"
+  },
+  "chat.welcome.title": {
+    "message": "Describe the app you want to build"
+  },
+  "chat.welcome.text": {
+    "message": "Our AI agent will generate a complete .orb application schema for you."
+  },
+  "chat.openStudio": {
+    "message": "Open in Studio"
+  },
+  "chat.placeholder": {
+    "message": "Describe what you want to build..."
+  },
+  "chat.send": {
+    "message": "Send"
+  },
+  "home.ai.cta": {
+    "message": "Learn About Our AI"
+  },
+  "hero.viz.appName": {
+    "message": "Order Fulfillment App"
+  },
+  "hero.viz.entityName": {
+    "message": "Order"
+  },
+  "hero.viz.pageName": {
+    "message": "Track Order"
+  },
+  "hero.viz.traitName": {
+    "message": "Fulfillment"
+  },
+  "hero.viz.defaultApp": {
+    "message": "Application"
+  },
+  "hero.viz.appPrefix": {
+    "message": "APP:"
+  },
+  "hero.viz.entityLabel": {
+    "message": "(Entity)"
+  },
+  "hero.viz.traitLabel": {
+    "message": "(Trait)"
+  },
+  "hero.viz.pageLabel": {
+    "message": "(Page)"
+  },
+  "hero.viz.orbitalUnit": {
+    "message": "Orbital Unit = Entity + Traits + Pages"
+  },
+  "blog.recentPosts.oneSchemaTitle": {
+    "message": "One Schema, Six Apps"
+  },
+  "blog.recentPosts.jsonThinksTitle": {
+    "message": "JSON That Thinks: Turing-Complete JSON"
+  },
+  "blog.recentPosts.threeExecutionModelsTitle": {
+    "message": "Three Execution Models, One Source of Truth"
+  },
+  "blog.recentPosts.closedCircuitTitle": {
+    "message": "The Closed Circuit Pattern"
+  },
+  "blog.recentPosts.heading": {
+    "message": "Recent Posts"
+  },
+  "blog.recentPosts.readArticle": {
+    "message": "Read Article →"
+  },
+  "theme.ErrorPageContent.title": {
+    "message": "هذه الصفحة لا تستجيب.",
+    "description": "The title of the fallback page when the page crashed"
+  },
+  "theme.BackToTopButton.buttonAriaLabel": {
+    "message": "إنتقل للأعلى",
+    "description": "The ARIA label for the back to top button"
+  },
+  "theme.blog.archive.title": {
+    "message": "أرشيف",
+    "description": "The page & hero title of the blog archive page"
+  },
+  "theme.blog.archive.description": {
+    "message": "أرشيف",
+    "description": "The page & hero description of the blog archive page"
+  },
+  "theme.blog.paginator.navAriaLabel": {
+    "message": "التنقل في صفحة قائمة المدونة",
+    "description": "The ARIA label for the blog pagination"
+  },
+  "theme.blog.paginator.newerEntries": {
+    "message": "أحدث الإدخالات",
+    "description": "The label used to navigate to the newer blog posts page (previous page)"
+  },
+  "theme.blog.paginator.olderEntries": {
+    "message": "أقدم الإدخالات",
+    "description": "The label used to navigate to the older blog posts page (next page)"
+  },
+  "theme.blog.post.paginator.navAriaLabel": {
+    "message": "التنقل في صفحة مقالات المدونة",
+    "description": "The ARIA label for the blog posts pagination"
+  },
+  "theme.blog.post.paginator.newerPost": {
+    "message": "أحدث المقالات",
+    "description": "The blog post button label to navigate to the newer/previous post"
+  },
+  "theme.blog.post.paginator.olderPost": {
+    "message": "أقدم المقالات",
+    "description": "The blog post button label to navigate to the older/next post"
+  },
+  "theme.tags.tagsPageLink": {
+    "message": "عرض كل الوسوم",
+    "description": "The label of the link targeting the tag list page"
+  },
+  "theme.colorToggle.ariaLabel.mode.system": {
+    "message": "system mode",
+    "description": "The name for the system color mode"
+  },
+  "theme.colorToggle.ariaLabel.mode.light": {
+    "message": "الوضع الفاتح",
+    "description": "The name for the light color mode"
+  },
+  "theme.colorToggle.ariaLabel.mode.dark": {
+    "message": "الوضع الداكن",
+    "description": "The name for the dark color mode"
+  },
+  "theme.colorToggle.ariaLabel": {
+    "message": "التبديل بين الوضع الداكن والفاتح (الحالي {mode})",
+    "description": "The ARIA label for the color mode toggle"
+  },
+  "theme.docs.breadcrumbs.navAriaLabel": {
+    "message": "التنقل التفصيلي",
+    "description": "The ARIA label for the breadcrumbs"
+  },
+  "theme.docs.DocCard.categoryDescription.plurals": {
+    "message": "{count} مواد",
+    "description": "The default description for a category card in the generated index about how many items this category includes"
+  },
+  "theme.docs.paginator.navAriaLabel": {
+    "message": "صفحة التوثيق",
+    "description": "The ARIA label for the docs pagination"
+  },
+  "theme.docs.paginator.previous": {
+    "message": "السابق",
+    "description": "The label used to navigate to the previous doc"
+  },
+  "theme.docs.paginator.next": {
+    "message": "التالي",
+    "description": "The label used to navigate to the next doc"
+  },
+  "theme.docs.tagDocListPageTitle.nDocsTagged": {
+    "message": "مستند موسوم واحد|{count} مستندات موسومة",
+    "description": "Pluralized label for \"{count} docs tagged\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.docs.tagDocListPageTitle": {
+    "message": "{nDocsTagged} مستند موسوم بـ \"{tagName}\"",
+    "description": "The title of the page for a docs tag"
+  },
+  "theme.docs.versionBadge.label": {
+    "message": "الإصدار: {versionLabel}"
+  },
+  "theme.docs.versions.unreleasedVersionLabel": {
+    "message": "هذه الوثائق لم يتم طرحها بَعـد للإصدار {siteTitle} {versionLabel}.",
+    "description": "The label used to tell the user that he's browsing an unreleased doc version"
+  },
+  "theme.docs.versions.unmaintainedVersionLabel": {
+    "message": "هذه هي وثائق {siteTitle} {versionLabel}، التي لم تعد تتم صيانتها بشكل نشط.",
+    "description": "The label used to tell the user that he's browsing an unmaintained doc version"
+  },
+  "theme.docs.versions.latestVersionSuggestionLabel": {
+    "message": "للحصول على أحدث الوثائق، راجع {latestVersionLink} ({versionLabel}).",
+    "description": "The label used to tell the user to check the latest version"
+  },
+  "theme.docs.versions.latestVersionLinkLabel": {
+    "message": "احدث إصدار",
+    "description": "The label used for the latest version suggestion link label"
+  },
+  "theme.common.editThisPage": {
+    "message": "تعديل هذه الصفحة",
+    "description": "The link label to edit the current page"
+  },
+  "theme.common.headingLinkTitle": {
+    "message": "إرتباط مُبـاشر بالعنوان {heading}",
+    "description": "Title for link to heading"
+  },
+  "theme.lastUpdated.atDate": {
+    "message": " في {date}",
+    "description": "The words used to describe on which date a page has been last updated"
+  },
+  "theme.lastUpdated.byUser": {
+    "message": " بواسطة {user}",
+    "description": "The words used to describe by who the page has been last updated"
+  },
+  "theme.lastUpdated.lastUpdatedAtBy": {
+    "message": "آخر تحديث {atDate}{byUser}",
+    "description": "The sentence used to display when a page has been last updated, and by who"
+  },
+  "theme.navbar.mobileVersionsDropdown.label": {
+    "message": "الإصدارات",
+    "description": "The label for the navbar versions dropdown on mobile view"
+  },
+  "theme.NotFound.title": {
+    "message": "الصفحة غير موجودة",
+    "description": "The title of the 404 page"
+  },
+  "theme.tags.tagsListLabel": {
+    "message": "الوسوم:",
+    "description": "The label alongside a tag list"
+  },
+  "theme.admonition.caution": {
+    "message": "حذر",
+    "description": "The default label used for the Caution admonition (:::caution)"
+  },
+  "theme.admonition.danger": {
+    "message": "خطر",
+    "description": "The default label used for the Danger admonition (:::danger)"
+  },
+  "theme.admonition.info": {
+    "message": "معلومات",
+    "description": "The default label used for the Info admonition (:::info)"
+  },
+  "theme.admonition.note": {
+    "message": "ملاحظة",
+    "description": "The default label used for the Note admonition (:::note)"
+  },
+  "theme.admonition.tip": {
+    "message": "تلميح",
+    "description": "The default label used for the Tip admonition (:::tip)"
+  },
+  "theme.admonition.warning": {
+    "message": "warning",
+    "description": "The default label used for the Warning admonition (:::warning)"
+  },
+  "theme.AnnouncementBar.closeButtonAriaLabel": {
+    "message": "إغلاق",
+    "description": "The ARIA label for close button of announcement bar"
+  },
+  "theme.blog.sidebar.navAriaLabel": {
+    "message": "أحدث مُشـاركات المدونة",
+    "description": "The ARIA label for recent posts in the blog sidebar"
+  },
+  "theme.DocSidebarItem.expandCategoryAriaLabel": {
+    "message": "Expand sidebar category '{label}'",
+    "description": "The ARIA label to expand the sidebar category"
+  },
+  "theme.DocSidebarItem.collapseCategoryAriaLabel": {
+    "message": "Collapse sidebar category '{label}'",
+    "description": "The ARIA label to collapse the sidebar category"
+  },
+  "theme.IconExternalLink.ariaLabel": {
+    "message": "(opens in new tab)",
+    "description": "The ARIA label for the external link icon"
+  },
+  "theme.NavBar.navAriaLabel": {
+    "message": "Main",
+    "description": "The ARIA label for the main navigation"
+  },
+  "theme.navbar.mobileLanguageDropdown.label": {
+    "message": "اللُغـات",
+    "description": "The label for the mobile language switcher dropdown"
+  },
+  "theme.NotFound.p1": {
+    "message": "لم نتمكن من العثور على ما كنت تبحث عنه.",
+    "description": "The first paragraph of the 404 page"
+  },
+  "theme.NotFound.p2": {
+    "message": "يُـرجى الإتصال بمالك الموقع الذي ربطك بعنوان URL الأصلي وإخباره بأن الارتباط الخاص به مُعطل.",
+    "description": "The 2nd paragraph of the 404 page"
+  },
+  "theme.TOCCollapsible.toggleButtonLabel": {
+    "message": "مُحتويات هذه الصفحة",
+    "description": "The label used by the button on the collapsible TOC component"
+  },
+  "theme.blog.post.readMore": {
+    "message": "اقرأ المزيد",
+    "description": "The label used in blog post item excerpts to link to full blog posts"
+  },
+  "theme.blog.post.readMoreLabel": {
+    "message": "اقرأ المزيد {title}",
+    "description": "The ARIA label for the link to full blog posts from excerpts"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} دقائق قراءة|{readingTime} دقائق قراءة",
+    "description": "Pluralized label for \"{readingTime} min read\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.CodeBlock.copy": {
+    "message": "نسخ",
+    "description": "The copy button label on code blocks"
+  },
+  "theme.CodeBlock.copied": {
+    "message": "تم النسخ",
+    "description": "The copied button label on code blocks"
+  },
+  "theme.CodeBlock.copyButtonAriaLabel": {
+    "message": "نسخ الرمز إلى الحافظة",
+    "description": "The ARIA label for copy code blocks button"
+  },
+  "theme.CodeBlock.wordWrapToggle": {
+    "message": "تبديل التفاف النص",
+    "description": "The title attribute for toggle word wrapping button of code block lines"
+  },
+  "theme.docs.breadcrumbs.home": {
+    "message": "الرئيسية",
+    "description": "The ARIA label for the home page in the breadcrumbs"
+  },
+  "theme.docs.sidebar.collapseButtonTitle": {
+    "message": "طي الشريط الجانبي",
+    "description": "The title attribute for collapse button of doc sidebar"
+  },
+  "theme.docs.sidebar.collapseButtonAriaLabel": {
+    "message": "طي الشريط الجانبي",
+    "description": "The title attribute for collapse button of doc sidebar"
+  },
+  "theme.docs.sidebar.navAriaLabel": {
+    "message": "Docs sidebar",
+    "description": "The ARIA label for the sidebar navigation"
+  },
+  "theme.docs.sidebar.closeSidebarButtonAriaLabel": {
+    "message": "Close navigation bar",
+    "description": "The ARIA label for close button of mobile sidebar"
+  },
+  "theme.navbar.mobileSidebarSecondaryMenu.backButtonLabel": {
+    "message": "→ العودة إلى القائمة الرئيسية",
+    "description": "The label of the back button to return to main menu, inside the mobile navbar sidebar secondary menu (notably used to display the docs sidebar)"
+  },
+  "theme.docs.sidebar.toggleSidebarButtonAriaLabel": {
+    "message": "Toggle navigation bar",
+    "description": "The ARIA label for hamburger menu button of mobile navigation"
+  },
+  "theme.navbar.mobileDropdown.collapseButton.expandAriaLabel": {
+    "message": "Expand the dropdown",
+    "description": "The ARIA label of the button to expand the mobile dropdown navbar item"
+  },
+  "theme.navbar.mobileDropdown.collapseButton.collapseAriaLabel": {
+    "message": "Collapse the dropdown",
+    "description": "The ARIA label of the button to collapse the mobile dropdown navbar item"
+  },
+  "theme.docs.sidebar.expandButtonTitle": {
+    "message": "توسيع الشريط الجانبي",
+    "description": "The ARIA label and title attribute for expand button of doc sidebar"
+  },
+  "theme.docs.sidebar.expandButtonAriaLabel": {
+    "message": "توسيع الشريط الجانبي",
+    "description": "The ARIA label and title attribute for expand button of doc sidebar"
+  },
+  "theme.blog.post.plurals": {
+    "message": "مقالة واحدة|{count} مقالات",
+    "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.blog.tagTitle": {
+    "message": "{nPosts} موسومة بـ \"{tagName}\"",
+    "description": "The title of the page for a blog tag"
+  },
+  "theme.blog.author.pageTitle": {
+    "message": "{authorName} - {nPosts}",
+    "description": "The title of the page for a blog author"
+  },
+  "theme.blog.authorsList.pageTitle": {
+    "message": "Authors",
+    "description": "The title of the authors page"
+  },
+  "theme.blog.authorsList.viewAll": {
+    "message": "View All Authors",
+    "description": "The label of the link targeting the blog authors page"
+  },
+  "theme.blog.author.noPosts": {
+    "message": "This author has not written any posts yet.",
+    "description": "The text for authors with 0 blog post"
+  },
+  "theme.contentVisibility.unlistedBanner.title": {
+    "message": "Unlisted page",
+    "description": "The unlisted content banner title"
+  },
+  "theme.contentVisibility.unlistedBanner.message": {
+    "message": "This page is unlisted. Search engines will not index it, and only users having a direct link can access it.",
+    "description": "The unlisted content banner message"
+  },
+  "theme.contentVisibility.draftBanner.title": {
+    "message": "Draft page",
+    "description": "The draft content banner title"
+  },
+  "theme.contentVisibility.draftBanner.message": {
+    "message": "This page is a draft. It will only be visible in dev and be excluded from the production build.",
+    "description": "The draft content banner message"
+  },
+  "theme.ErrorPageContent.tryAgain": {
+    "message": "المُحاولة مجددًا",
+    "description": "The label of the button to try again rendering when the React error boundary captures an error"
+  },
+  "theme.common.skipToMainContent": {
+    "message": "إنتقل إلى المحتوى الرئيسي",
+    "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
+  },
+  "theme.tags.tagsPageTitle": {
+    "message": "الوسوم",
+    "description": "The title of the tag list page"
   }
 }

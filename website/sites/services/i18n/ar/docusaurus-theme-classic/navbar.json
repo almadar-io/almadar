@@ -1,0 +1,46 @@
+{
+  "title": {
+    "message": "Almadar Services",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "Almadar Services Logo",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Brains": {
+    "message": "العقول",
+    "description": "Navbar item with label Brains"
+  },
+  "item.label.Metal": {
+    "message": "المعدن",
+    "description": "Navbar item with label Metal"
+  },
+  "item.label.Integrations": {
+    "message": "التكاملات",
+    "description": "Navbar item with label Integrations"
+  },
+  "item.label.Pricing": {
+    "message": "الأسعار",
+    "description": "Navbar item with label Pricing"
+  },
+  "item.label.Products": {
+    "message": "المنتجات",
+    "description": "Navbar item with label Products"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  },
+  "item.label.Discord": {
+    "message": "Discord",
+    "description": "Navbar item with label Discord"
+  },
+  "item.label.Studio — Build apps with AI": {
+    "message": "Studio — ابني تطبيقاتك بالذكاء الاصطناعي",
+    "description": "Navbar item with label Studio — Build apps with AI"
+  },
+  "item.label.Orb — A programming language": {
+    "message": "Orb — لغة برمجة",
+    "description": "Navbar item with label Orb — A programming language"
+  }
+}

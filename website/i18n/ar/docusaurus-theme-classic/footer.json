@@ -44,7 +44,7 @@
     "description": "The footer copyright"
   },
   "link.item.label.Contact": {
-    "message": "Contact",
+    "message": "اتصل بنا",
     "description": "The label of footer link with label=Contact linking to mailto:hello@almadar.io"
   }
 }

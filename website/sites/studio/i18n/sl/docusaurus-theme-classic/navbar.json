@@ -1,0 +1,42 @@
+{
+  "title": {
+    "message": "Almadar Studio",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "Logotip Almadar Studio",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Features": {
+    "message": "Funkcionalnosti",
+    "description": "Navbar item with label Features"
+  },
+  "item.label.Showcase": {
+    "message": "Primeri uporabe",
+    "description": "Navbar item with label Showcase"
+  },
+  "item.label.Pricing": {
+    "message": "Cenik",
+    "description": "Navbar item with label Pricing"
+  },
+  "item.label.Products": {
+    "message": "Produkti",
+    "description": "Navbar item with label Products"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  },
+  "item.label.Discord": {
+    "message": "Discord",
+    "description": "Navbar item with label Discord"
+  },
+  "item.label.Services — Cloud infrastructure": {
+    "message": "Services — Oblačna infrastruktura",
+    "description": "Navbar item with label Services — Cloud infrastructure"
+  },
+  "item.label.Orb — A programming language": {
+    "message": "Orb — Programski jezik",
+    "description": "Navbar item with label Orb — A programming language"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "title": {
+    "message": "استوديو Almadar",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "شعار Almadar Studio",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Features": {
+    "message": "الميزات",
+    "description": "Navbar item with label Features"
+  },
+  "item.label.Showcase": {
+    "message": "معرض الأعمال",
+    "description": "Navbar item with label Showcase"
+  },
+  "item.label.Pricing": {
+    "message": "الأسعار",
+    "description": "Navbar item with label Pricing"
+  },
+  "item.label.Products": {
+    "message": "المنتجات",
+    "description": "Navbar item with label Products"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  },
+  "item.label.Discord": {
+    "message": "Discord",
+    "description": "Navbar item with label Discord"
+  },
+  "item.label.Services — Cloud infrastructure": {
+    "message": "Services — البنية التحتية السحابية",
+    "description": "Navbar item with label Services — Cloud infrastructure"
+  },
+  "item.label.Orb — A programming language": {
+    "message": "Orb — لغة برمجة",
+    "description": "Navbar item with label Orb — A programming language"
+  }
+}
