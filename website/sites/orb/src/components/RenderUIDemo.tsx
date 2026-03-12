@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import Heading from '@theme/Heading';
 import Translate from '@docusaurus/Translate';
+import type { SExpr } from '@almadar/core';
 
 // Design system infrastructure — already synced into the website
 import { EventBusProvider } from '../../../../src/design-systems/almadar-ui/providers/OrbitalProvider';
@@ -170,7 +171,7 @@ function RenderUIDemoController() {
           });
         },
       });
-      evaluator.evaluate(parsed, effectCtx);
+      evaluator.evaluate(parsed as SExpr, effectCtx);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : String(err));
     } finally {

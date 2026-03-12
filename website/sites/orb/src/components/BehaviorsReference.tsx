@@ -34,7 +34,8 @@ interface Behavior {
   hasTicks: boolean;
   ticksCount: number;
   transitionsCount: number;
-  stateMachine: StateMachine;
+  stateMachine?: StateMachine;
+  sourceCode?: string;
 }
 
 interface Category {

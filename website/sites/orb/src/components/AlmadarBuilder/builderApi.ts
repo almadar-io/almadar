@@ -8,8 +8,8 @@
 // Agent server URL
 const AGENT_BASE =
   typeof window !== 'undefined' &&
-  (window as Record<string, unknown>).__ALMADAR_AGENT_URL__
-    ? String((window as Record<string, unknown>).__ALMADAR_AGENT_URL__)
+  (window as unknown as Record<string, unknown>).__ALMADAR_AGENT_URL__
+    ? String((window as unknown as Record<string, unknown>).__ALMADAR_AGENT_URL__)
     : 'https://almadar-agent-server--kflow-b3a39.us-central1.hosted.app';
 
 // ============================================================================

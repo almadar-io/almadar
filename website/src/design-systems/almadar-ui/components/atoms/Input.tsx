@@ -105,7 +105,7 @@ export const Input = React.forwardRef<
             value={value as string}
             onChange={onChange as React.ChangeEventHandler<HTMLSelectElement>}
             className={cn(baseClassName, "appearance-none pr-10", className)}
-            {...(props as React.SelectHTMLAttributes<HTMLSelectElement>)}
+            {...(props as unknown as React.SelectHTMLAttributes<HTMLSelectElement>)}
           >
             <option value="">Select...</option>
             {options?.map((opt) => (
@@ -131,7 +131,7 @@ export const Input = React.forwardRef<
             onChange={onChange as React.ChangeEventHandler<HTMLTextAreaElement>}
             rows={rows}
             className={baseClassName}
-            {...(props as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
+            {...(props as unknown as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
           />
         </div>
       );

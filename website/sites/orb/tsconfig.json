@@ -1,5 +1,10 @@
 {
   "extends": "@docusaurus/tsconfig",
-  "compilerOptions": { "baseUrl": "." },
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["../../shared/components/*"]
+    }
+  },
   "exclude": [".docusaurus", "build"]
 }

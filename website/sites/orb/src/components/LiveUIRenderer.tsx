@@ -6,7 +6,7 @@
  */
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import type { OrbitalSchema, EntityDefinition, TraitDefinition, PageDefinition } from '@almadar/core';
+import type { OrbitalSchema, SExpr } from '@almadar/core';
 
 // Import @almadar/ui components that can be rendered
 // These are the patterns supported by render-ui
@@ -51,8 +51,9 @@ interface LiveUIRendererProps {
   onEvaluated?: (calls: RenderUICall[], error: string | null) => void;
 }
 
-// Pattern component registry
-const PATTERN_COMPONENTS: Record<string, React.ComponentType<Record<string, unknown>>> = {
+// Pattern component registry (typed as any for flexibility)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const PATTERN_COMPONENTS: Record<string, React.ComponentType<any>> = {
   'badge': Badge,
   'progress-bar': ProgressBar,
   'alert': Alert,
@@ -125,7 +126,7 @@ async function evaluateAndExtractRenders(
       },
     });
 
-    evaluator.evaluate(parsed, effectCtx);
+    evaluator.evaluate(parsed as SExpr, effectCtx);
     
     return { calls, error: null };
   } catch (err: unknown) {
@@ -312,7 +313,7 @@ export function LiveUIRenderer({
               borderBottom: '1px solid #334155'
             }}
           >
-            <HStack justify="space-between">
+            <HStack justify="between">
               <Text 
                 variant="body2" 
                 style={{ 
