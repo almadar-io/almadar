@@ -444,47 +444,22 @@ function getModuleCategory(name: string): string {
 
 /** Parse the example comment to extract expression and expected value */
 function parseExample(example: string): { expr: string; expected: string } {
-  // format: '["op", args] // => value'
-  const parts = example.split("// =>");
-  return {
-    expr: parts[0].trim(),
-    expected: parts[1]?.trim() ?? "",
-  };
+  // Try "// =>" first (preserves expected value)
+  const arrowIdx = example.indexOf("// =>");
+  if (arrowIdx > 0) {
+    return {
+      expr: example.substring(0, arrowIdx).trim(),
+      expected: example.substring(arrowIdx + 5).trim(),
+    };
+  }
+  // Fallback: strip any trailing // comment
+  const commentIdx = example.lastIndexOf(" //");
+  if (commentIdx > 0) {
+    return { expr: example.substring(0, commentIdx).trim(), expected: "" };
+  }
+  return { expr: example.trim(), expected: "" };
 }
 
-/** Build a mini OrbitalSchema that renders the result value */
-function buildResultSchema(label: string, result: string, isError: boolean): unknown {
-  const resultPattern = isError
-    ? { type: "alert", variant: "danger", title: "Error", message: result }
-    : { type: "stat-display", label, value: result };
-
-  return {
-    name: "module-result",
-    orbitals: [{
-      name: "ResultOrbital",
-      entity: {
-        name: "Result",
-        persistence: "runtime",
-        fields: [{ name: "id", type: "string" }],
-      },
-      traits: [{
-        name: "ResultTrait",
-        category: "interaction",
-        linkedEntity: "Result",
-        stateMachine: {
-          states: [{ name: "showing", isInitial: true }],
-          transitions: [{
-            from: "showing",
-            to: "showing",
-            event: "INIT",
-            effects: [["render-ui", "main", resultPattern]],
-          }],
-        },
-      }],
-      pages: [{ name: "result", path: "/" }],
-    }],
-  };
-}
 
 function ModuleOperatorPanel({ moduleName, opName, op }: {
   moduleName: string;
@@ -493,8 +468,7 @@ function ModuleOperatorPanel({ moduleName, opName, op }: {
 }) {
   const { expr: defaultExpr } = parseExample(op.example);
   const [expr, setExpr] = useState(defaultExpr || `["${opName}"]`);
-  const [resultSchema, setResultSchema] = useState<unknown>(null);
-  const [previewKey, setPreviewKey] = useState(0);
+  const [result, setResult] = useState<{ text: string; isError: boolean } | null>(null);
 
   const run = useCallback(async () => {
     try {
@@ -502,16 +476,15 @@ function ModuleOperatorPanel({ moduleName, opName, op }: {
       const { SExpressionEvaluator, createMinimalContext } = await import("@almadar/evaluator");
       const evaluator = new SExpressionEvaluator();
       const ctx = createMinimalContext({}, {}, "initial");
-      const result = evaluator.evaluate(parsed, ctx);
-      const formatted = result === null ? "null"
-        : result === undefined ? "undefined"
-        : typeof result === "object" ? JSON.stringify(result, null, 2)
-        : String(result);
-      setResultSchema(buildResultSchema(opName, formatted, false));
+      const value = evaluator.evaluate(parsed, ctx);
+      const formatted = value === null ? "null"
+        : value === undefined ? "undefined"
+        : typeof value === "object" ? JSON.stringify(value, null, 2)
+        : String(value);
+      setResult({ text: formatted, isError: false });
     } catch (e) {
-      setResultSchema(buildResultSchema(opName, (e as Error).message, true));
+      setResult({ text: (e as Error).message, isError: true });
     }
-    setPreviewKey((k) => k + 1);
   }, [expr, opName]);
 
   // Run on first load with the default example
@@ -540,8 +513,8 @@ function ModuleOperatorPanel({ moduleName, opName, op }: {
       </div>
 
       <div className={styles.opPreviewBox}>
-        {resultSchema
-          ? <OrbitalPreview key={previewKey} schema={resultSchema} mockData={{}} />
+        {result
+          ? <pre className={result.isError ? styles.opResultError : styles.opResultSuccess}>{result.text}</pre>
           : <div className={styles.previewLoading}>Press Run to execute</div>
         }
       </div>

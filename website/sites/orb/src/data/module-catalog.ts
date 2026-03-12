@@ -1,433 +1,433 @@
 export const MODULE_CATALOG: Record<string, Record<string, { description: string; example: string; returnType: string }>> = {
   "math": {
     "math/abs": {
-      "description": "The number",
+      "description": "Absolute value of a number",
       "example": "[\"math/abs\", -5] // => 5",
       "returnType": "number"
     },
     "math/min": {
-      "description": "Numbers to compare",
+      "description": "Smallest of the given numbers",
       "example": "[\"math/min\", 3, 1, 4] // => 1",
       "returnType": "number"
     },
     "math/max": {
-      "description": "Numbers to compare",
+      "description": "Largest of the given numbers",
       "example": "[\"math/max\", 3, 1, 4] // => 4",
       "returnType": "number"
     },
     "math/clamp": {
-      "description": "Maximum bound",
+      "description": "Clamp a value between min and max",
       "example": "[\"math/clamp\", 150, 0, 100] // => 100",
       "returnType": "number"
     },
     "math/floor": {
-      "description": "The number",
+      "description": "Round down to nearest integer",
       "example": "[\"math/floor\", 3.7] // => 3",
       "returnType": "number"
     },
     "math/ceil": {
-      "description": "The number",
+      "description": "Round up to nearest integer",
       "example": "[\"math/ceil\", 3.2] // => 4",
       "returnType": "number"
     },
     "math/round": {
-      "description": "Decimal places",
+      "description": "Round to given decimal places",
       "example": "[\"math/round\", 3.456, 2] // => 3.46",
       "returnType": "number"
     },
     "math/pow": {
-      "description": "The exponent",
+      "description": "Raise base to exponent",
       "example": "[\"math/pow\", 2, 8] // => 256",
       "returnType": "number"
     },
     "math/sqrt": {
-      "description": "The number",
+      "description": "Square root",
       "example": "[\"math/sqrt\", 16] // => 4",
       "returnType": "number"
     },
     "math/mod": {
-      "description": "Divisor",
+      "description": "Modulo (remainder)",
       "example": "[\"math/mod\", 7, 3] // => 1",
       "returnType": "number"
     },
     "math/sign": {
-      "description": "The number",
+      "description": "Sign of a number (-1, 0, or 1)",
       "example": "[\"math/sign\", -42] // => -1",
       "returnType": "number"
     },
     "math/lerp": {
-      "description": "Interpolation factor (0-1)",
+      "description": "Linear interpolation between two values",
       "example": "[\"math/lerp\", 0, 100, 0.5] // => 50",
       "returnType": "number"
     },
     "math/map": {
-      "description": "Output range maximum",
+      "description": "Map a value from one range to another",
       "example": "[\"math/map\", 5, 0, 10, 0, 100] // => 50",
       "returnType": "number"
     },
     "math/random": {
-      "description": "Maximum (inclusive)",
-      "example": "[\"math/randomInt\", 1, 6] // => 4",
+      "description": "Random float between 0 and 1",
+      "example": "[\"math/random\"]",
       "returnType": "number"
     },
     "math/default": {
-      "description": "Default value",
+      "description": "Return value or default if null/undefined",
       "example": "[\"math/default\", null, 0] // => 0",
       "returnType": "number"
     }
   },
   "str": {
     "str/len": {
-      "description": "The string",
+      "description": "Length of a string",
       "example": "[\"str/len\", \"hello\"] // => 5",
       "returnType": "number"
     },
     "str/concat": {
-      "description": "Strings to concatenate",
-      "example": "[\"str/concat\", \"/users/\", \"@entity.id\"] // => \"/users/123\"",
+      "description": "Concatenate strings",
+      "example": "[\"str/concat\", \"hello\", \" \", \"world\"] // => \"hello world\"",
       "returnType": "string"
     },
     "str/upper": {
-      "description": "The string",
+      "description": "Convert to uppercase",
       "example": "[\"str/upper\", \"hello\"] // => \"HELLO\"",
       "returnType": "string"
     },
     "str/lower": {
-      "description": "The string",
+      "description": "Convert to lowercase",
       "example": "[\"str/lower\", \"HELLO\"] // => \"hello\"",
       "returnType": "string"
     },
     "str/trim": {
-      "description": "The string",
-      "example": "[\"str/trimEnd\", \"hello  \"] // => \"hello\"",
+      "description": "Remove whitespace from both ends",
+      "example": "[\"str/trim\", \"  hello  \"] // => \"hello\"",
       "returnType": "string"
     },
     "str/split": {
-      "description": "Delimiter",
+      "description": "Split string by delimiter",
       "example": "[\"str/split\", \"a,b,c\", \",\"] // => [\"a\", \"b\", \"c\"]",
       "returnType": "array"
     },
     "str/join": {
-      "description": "Delimiter",
-      "example": "[\"str/join\", [\"a\", \"b\", \"c\"], \", \"] // => \"a, b, c\"",
+      "description": "Join array with delimiter",
+      "example": "[\"str/join\", [\"str/split\", \"a,b,c\", \",\"], \", \"] // => \"a, b, c\"",
       "returnType": "string"
     },
     "str/slice": {
-      "description": "End index (exclusive)",
+      "description": "Extract substring by index range",
       "example": "[\"str/slice\", \"hello\", 1, 4] // => \"ell\"",
       "returnType": "string"
     },
     "str/replace": {
-      "description": "Replacement",
-      "example": "[\"str/replaceAll\", \"a-b-c\", \"-\", \"_\"] // => \"a_b_c\"",
+      "description": "Replace first occurrence",
+      "example": "[\"str/replace\", \"a-b-c\", \"-\", \"_\"] // => \"a_b-c\"",
       "returnType": "string"
     },
     "str/includes": {
-      "description": "Padding character",
-      "example": "[\"str/padEnd\", \"5\", 3, \"0\"] // => \"500\"",
-      "returnType": "string"
+      "description": "Check if string contains substring",
+      "example": "[\"str/includes\", \"hello world\", \"world\"] // => true",
+      "returnType": "boolean"
     },
     "str/repeat": {
-      "description": "Repeat count",
+      "description": "Repeat string N times",
       "example": "[\"str/repeat\", \"ab\", 3] // => \"ababab\"",
       "returnType": "string"
     },
     "str/reverse": {
-      "description": "The string",
+      "description": "Reverse a string",
       "example": "[\"str/reverse\", \"hello\"] // => \"olleh\"",
       "returnType": "string"
     },
     "str/capitalize": {
-      "description": "The string",
-      "example": "[\"str/snakeCase\", \"Hello World\"] // => \"hello_world\"",
+      "description": "Capitalize first letter",
+      "example": "[\"str/capitalize\", \"hello world\"] // => \"Hello world\"",
       "returnType": "string"
     },
     "str/default": {
-      "description": "Default value",
+      "description": "Return string or default if null/empty",
       "example": "[\"str/default\", null, \"N/A\"] // => \"N/A\"",
       "returnType": "string"
     },
     "str/template": {
-      "description": "Variables to substitute",
+      "description": "Substitute variables in template string",
       "example": "[\"str/template\", \"Hello, {name}!\", {\"name\": \"World\"}] // => \"Hello, World!\"",
       "returnType": "string"
     },
     "str/truncate": {
-      "description": "Suffix for truncated strings",
+      "description": "Truncate string with suffix",
       "example": "[\"str/truncate\", \"Hello World\", 8, \"...\"] // => \"Hello...\"",
       "returnType": "string"
     }
   },
   "array": {
     "array/len": {
-      "description": "The array",
-      "example": "[\"array/empty?\", []] // => true",
-      "returnType": "boolean"
+      "description": "Length of an array",
+      "example": "[\"array/len\", [1, 2, 3]] // => 3",
+      "returnType": "number"
     },
     "array/first": {
-      "description": "The array",
+      "description": "First element",
       "example": "[\"array/first\", [1, 2, 3]] // => 1",
       "returnType": "any"
     },
     "array/last": {
-      "description": "The array",
+      "description": "Last element",
       "example": "[\"array/last\", [1, 2, 3]] // => 3",
       "returnType": "any"
     },
     "array/nth": {
-      "description": "Index (0-based)",
+      "description": "Element at index (0-based)",
       "example": "[\"array/nth\", [1, 2, 3], 1] // => 2",
       "returnType": "any"
     },
     "array/slice": {
-      "description": "End index (exclusive)",
+      "description": "Extract sub-array by index range",
       "example": "[\"array/slice\", [1, 2, 3, 4], 1, 3] // => [2, 3]",
       "returnType": "array"
     },
     "array/concat": {
-      "description": "Arrays to concatenate",
+      "description": "Concatenate arrays",
       "example": "[\"array/concat\", [1, 2], [3, 4]] // => [1, 2, 3, 4]",
       "returnType": "array"
     },
     "array/append": {
-      "description": "Item to add",
+      "description": "Add item to end",
       "example": "[\"array/append\", [1, 2], 3] // => [1, 2, 3]",
       "returnType": "array"
     },
     "array/prepend": {
-      "description": "Item to add",
+      "description": "Add item to beginning",
       "example": "[\"array/prepend\", [2, 3], 1] // => [1, 2, 3]",
       "returnType": "array"
     },
     "array/insert": {
-      "description": "Item to insert",
+      "description": "Insert item at index",
       "example": "[\"array/insert\", [1, 3], 1, 2] // => [1, 2, 3]",
       "returnType": "array"
     },
     "array/remove": {
-      "description": "Item to remove",
-      "example": "[\"array/removeItem\", [1, 2, 3, 2], 2] // => [1, 3, 2]",
+      "description": "Remove element at index",
+      "example": "[\"array/remove\", [1, 2, 3], 1] // => [1, 3]",
       "returnType": "array"
     },
     "array/reverse": {
-      "description": "The array",
+      "description": "Reverse array order",
       "example": "[\"array/reverse\", [1, 2, 3]] // => [3, 2, 1]",
       "returnType": "array"
     },
     "array/sort": {
-      "description": "\"asc\" or \"desc\"",
-      "example": "[\"array/sort\", \"@items\", \"price\", \"desc\"]",
+      "description": "Sort array elements",
+      "example": "[\"array/sort\", [3, 1, 4, 1, 5]]",
       "returnType": "array"
     },
     "array/shuffle": {
-      "description": "The array",
+      "description": "Randomly shuffle array",
       "example": "[\"array/shuffle\", [1, 2, 3, 4, 5]]",
       "returnType": "array"
     },
     "array/unique": {
-      "description": "The array",
+      "description": "Remove duplicates",
       "example": "[\"array/unique\", [1, 2, 2, 3, 1]] // => [1, 2, 3]",
       "returnType": "array"
     },
     "array/flatten": {
-      "description": "The array",
+      "description": "Flatten nested arrays",
       "example": "[\"array/flatten\", [[1, 2], [3, 4]]] // => [1, 2, 3, 4]",
       "returnType": "array"
     },
     "array/zip": {
-      "description": "Second array",
-      "example": "[\"array/zip\", [1, 2], [\"a\", \"b\"]] // => [[1, \"a\"], [2, \"b\"]]",
+      "description": "Pair elements from two arrays",
+      "example": "[\"array/zip\", [1, 2, 3], [4, 5, 6]] // => [[1, 4], [2, 5], [3, 6]]",
       "returnType": "array"
     },
     "array/includes": {
-      "description": "Item to find",
-      "example": "[\"array/indexOf\", [1, 2, 3], 2] // => 1",
-      "returnType": "number"
+      "description": "Check if array contains item",
+      "example": "[\"array/includes\", [1, 2, 3], 2] // => true",
+      "returnType": "boolean"
     },
     "array/find": {
-      "description": "Predicate function",
-      "example": "[\"array/findIndex\", \"@items\", [\"fn\", \"x\", [\"=\", \"@x.status\", \"active\"]]]",
-      "returnType": "number"
+      "description": "Find first element matching predicate",
+      "example": "[\"array/find\", [1, 2, 3, 4], [\"fn\", \"x\", [\">\", \"@x\", 2]]] // => 3",
+      "returnType": "any"
     },
     "array/filter": {
-      "description": "Predicate function",
-      "example": "[\"array/filter\", \"@items\", [\"fn\", \"x\", [\">\", \"@x.price\", 100]]]",
+      "description": "Keep elements matching predicate",
+      "example": "[\"array/filter\", [1, 2, 3, 4, 5], [\"fn\", \"x\", [\">\", \"@x\", 2]]] // => [3, 4, 5]",
       "returnType": "array"
     },
     "array/reject": {
-      "description": "Predicate function",
-      "example": "[\"array/reject\", \"@items\", [\"fn\", \"x\", [\"=\", \"@x.status\", \"deleted\"]]]",
+      "description": "Remove elements matching predicate",
+      "example": "[\"array/reject\", [1, 2, 3, 4, 5], [\"fn\", \"x\", [\">\", \"@x\", 3]]] // => [1, 2, 3]",
       "returnType": "array"
     },
     "array/map": {
-      "description": "Transform function",
-      "example": "[\"array/map\", \"@items\", [\"fn\", \"x\", [\"*\", \"@x.price\", 1.1]]]",
+      "description": "Transform each element",
+      "example": "[\"array/map\", [1, 2, 3], [\"fn\", \"x\", [\"*\", \"@x\", 2]]] // => [2, 4, 6]",
       "returnType": "array"
     },
     "array/reduce": {
-      "description": "Initial accumulator value",
-      "example": "[\"array/reduce\", \"@items\", [\"fn\", [\"acc\", \"x\"], [\"+\", \"@acc\", \"@x.price\"]], 0]",
+      "description": "Reduce array to single value",
+      "example": "[\"array/reduce\", [1, 2, 3, 4], [\"fn\", [\"acc\", \"x\"], [\"+\", \"@acc\", \"@x\"]], 0] // => 10",
       "returnType": "any"
     },
     "array/every": {
-      "description": "Predicate function",
-      "example": "[\"array/every\", \"@items\", [\"fn\", \"x\", [\">\", \"@x.price\", 0]]]",
+      "description": "Check all elements match predicate",
+      "example": "[\"array/every\", [2, 4, 6], [\"fn\", \"x\", [\">\", \"@x\", 0]]] // => true",
       "returnType": "boolean"
     },
     "array/some": {
-      "description": "Predicate function",
-      "example": "[\"array/some\", \"@items\", [\"fn\", \"x\", [\"=\", \"@x.status\", \"active\"]]]",
+      "description": "Check any element matches predicate",
+      "example": "[\"array/some\", [1, 2, 3], [\"fn\", \"x\", [\">\", \"@x\", 2]]] // => true",
       "returnType": "boolean"
     },
     "array/count": {
-      "description": "Predicate function",
-      "example": "[\"array/count\", \"@tasks\", [\"fn\", \"t\", [\"=\", \"@t.status\", \"done\"]]]",
+      "description": "Count elements matching predicate",
+      "example": "[\"array/count\", [1, 2, 3, 4, 5], [\"fn\", \"x\", [\">\", \"@x\", 3]]] // => 2",
       "returnType": "number"
     },
     "array/sum": {
-      "description": "Field to sum",
-      "example": "[\"array/sum\", \"@cart.items\", \"price\"]",
+      "description": "Sum numeric elements",
+      "example": "[\"array/sum\", [10, 20, 30]] // => 60",
       "returnType": "number"
     },
     "array/avg": {
-      "description": "Field to average",
-      "example": "[\"array/avg\", \"@ratings\", \"score\"]",
+      "description": "Average of numeric elements",
+      "example": "[\"array/avg\", [10, 20, 30]] // => 20",
       "returnType": "number"
     },
     "array/min": {
-      "description": "Field to compare",
-      "example": "[\"array/min\", \"@products\", \"price\"]",
+      "description": "Smallest element",
+      "example": "[\"array/min\", [3, 1, 4, 1, 5]] // => 1",
       "returnType": "number"
     },
     "array/max": {
-      "description": "Field to group by",
-      "example": "[\"array/groupBy\", \"@orders\", \"status\"]",
-      "returnType": "any"
+      "description": "Largest element",
+      "example": "[\"array/max\", [3, 1, 4, 1, 5]] // => 5",
+      "returnType": "number"
     },
     "array/partition": {
-      "description": "Predicate function",
-      "example": "[\"array/partition\", \"@items\", [\"fn\", \"x\", [\">\", \"@x.price\", 50]]]",
+      "description": "Split into [matching, non-matching]",
+      "example": "[\"array/partition\", [1, 2, 3, 4, 5], [\"fn\", \"x\", [\">\", \"@x\", 3]]]",
       "returnType": "array"
     },
     "array/take": {
-      "description": "Number of elements",
-      "example": "[\"array/take\", \"@items\", 5]",
+      "description": "Take first N elements",
+      "example": "[\"array/take\", [1, 2, 3, 4, 5], 3] // => [1, 2, 3]",
       "returnType": "array"
     },
     "array/drop": {
-      "description": "Number of elements to skip",
-      "example": "[\"array/dropLast\", \"@items\", 2]",
+      "description": "Skip first N elements",
+      "example": "[\"array/drop\", [1, 2, 3, 4, 5], 2] // => [3, 4, 5]",
       "returnType": "array"
     }
   },
   "object": {
     "object/keys": {
-      "description": "The object",
+      "description": "Get all keys",
       "example": "[\"object/keys\", {\"a\": 1, \"b\": 2}] // => [\"a\", \"b\"]",
       "returnType": "array"
     },
     "object/values": {
-      "description": "The object",
+      "description": "Get all values",
       "example": "[\"object/values\", {\"a\": 1, \"b\": 2}] // => [1, 2]",
       "returnType": "array"
     },
     "object/entries": {
-      "description": "Array of [key, value] pairs",
-      "example": "[\"object/fromEntries\", [[\"a\", 1], [\"b\", 2]]] // => {\"a\": 1, \"b\": 2}",
-      "returnType": "any"
+      "description": "Get [key, value] pairs",
+      "example": "[\"object/entries\", {\"a\": 1, \"b\": 2}] // => [[\"a\", 1], [\"b\", 2]]",
+      "returnType": "array"
     },
     "object/get": {
-      "description": "Default if path not found",
-      "example": "[\"object/get\", \"@user\", \"profile.name\", \"Anonymous\"]",
+      "description": "Get value at path with optional default",
+      "example": "[\"object/get\", {\"name\": \"John\", \"age\": 30}, \"name\", \"Unknown\"] // => \"John\"",
       "returnType": "any"
     },
     "object/set": {
-      "description": "Value to set",
-      "example": "[\"object/set\", \"@user\", \"profile.name\", \"John\"]",
+      "description": "Set value at path (immutable)",
+      "example": "[\"object/set\", {\"name\": \"John\"}, \"age\", 30]",
       "returnType": "any"
     },
     "object/has": {
-      "description": "Dot-separated path",
-      "example": "[\"object/has\", \"@user\", \"profile.name\"]",
+      "description": "Check if path exists",
+      "example": "[\"object/has\", {\"name\": \"John\", \"age\": 30}, \"name\"] // => true",
       "returnType": "boolean"
     },
     "object/merge": {
-      "description": "Objects to merge",
-      "example": "[\"object/deepMerge\", {\"a\": {\"b\": 1}}, {\"a\": {\"c\": 2}}]",
+      "description": "Shallow merge objects",
+      "example": "[\"object/merge\", {\"a\": 1}, {\"b\": 2}] // => {\"a\": 1, \"b\": 2}",
       "returnType": "any"
     },
     "object/pick": {
-      "description": "Keys to keep",
-      "example": "[\"object/pick\", \"@entity\", [\"name\", \"email\"]]",
+      "description": "Keep only specified keys",
+      "example": "[\"object/pick\", {\"name\": \"John\", \"age\": 30, \"email\": \"j@e.com\"}, [\"str/split\", \"name,email\", \",\"]]",
       "returnType": "any"
     },
     "object/omit": {
-      "description": "Transform function",
-      "example": "[\"object/mapKeys\", \"@data\", [\"fn\", \"k\", [\"str/upper\", \"@k\"]]]",
+      "description": "Remove specified keys",
+      "example": "[\"object/omit\", {\"name\": \"John\", \"age\": 30, \"email\": \"j@e.com\"}, [\"str/split\", \"email\", \",\"]]",
       "returnType": "any"
     },
     "object/filter": {
-      "description": "The object",
-      "example": "[\"object/empty?\", {}] // => true",
-      "returnType": "boolean"
+      "description": "Keep entries matching predicate",
+      "example": "[\"object/filter\", {\"a\": 1, \"b\": 0, \"c\": 3}, [\"fn\", \"v\", [\">\", \"@v\", 0]]]",
+      "returnType": "any"
     },
     "object/equals": {
-      "description": "Second object",
+      "description": "Deep equality check",
       "example": "[\"object/equals\", {\"a\": 1}, {\"a\": 1}] // => true",
       "returnType": "boolean"
     },
     "object/clone": {
-      "description": "Path segments to join with dots",
-      "example": "[\"path\", \"formValues\", \"@payload.fieldId\"] // => \"formValues.customerName\"",
-      "returnType": "string"
+      "description": "Deep clone an object",
+      "example": "[\"object/clone\", {\"a\": 1, \"b\": {\"c\": 2}}]",
+      "returnType": "any"
     }
   },
   "format": {
     "format/number": {
-      "description": "Format options (decimals, locale)",
+      "description": "Format number with locale separators",
       "example": "[\"format/number\", 1234567.89] // => \"1,234,567.89\"",
       "returnType": "string"
     },
     "format/currency": {
-      "description": "Locale",
+      "description": "Format as currency",
       "example": "[\"format/currency\", 1234.56, \"USD\"] // => \"$1,234.56\"",
       "returnType": "string"
     },
     "format/percent": {
-      "description": "Decimal places",
+      "description": "Format as percentage",
       "example": "[\"format/percent\", 0.856, 1] // => \"85.6%\"",
       "returnType": "string"
     },
     "format/bytes": {
-      "description": "Bytes",
+      "description": "Format byte count as human-readable",
       "example": "[\"format/bytes\", 2500000] // => \"2.4 MB\"",
       "returnType": "string"
     },
     "format/ordinal": {
-      "description": "Number",
+      "description": "Format as ordinal (1st, 2nd, ...)",
       "example": "[\"format/ordinal\", 42] // => \"42nd\"",
       "returnType": "string"
     },
     "format/plural": {
-      "description": "Plural form",
+      "description": "Pluralize with count",
       "example": "[\"format/plural\", 5, \"item\", \"items\"] // => \"5 items\"",
       "returnType": "string"
     },
     "format/list": {
-      "description": "\"and\" or \"or\"",
-      "example": "[\"format/list\", [\"Alice\", \"Bob\", \"Charlie\"], \"and\"] // => \"Alice, Bob, and Charlie\"",
+      "description": "Format array as English list",
+      "example": "[\"format/list\", [\"str/split\", \"Alice,Bob,Charlie\", \",\"], \"and\"] // => \"Alice, Bob, and Charlie\"",
       "returnType": "string"
     },
     "format/phone": {
-      "description": "Card number",
-      "example": "[\"format/creditCard\", \"4111111111111234\"] // => \"•••• •••• •••• 1234\"",
+      "description": "Format phone number",
+      "example": "[\"format/phone\", \"12125551234\"]",
       "returnType": "string"
     }
   },
   "time": {
     "time/now": {
-      "description": "Current timestamp",
-      "example": "[\"time/now\"] // => 1705593600000",
+      "description": "Current timestamp in milliseconds",
+      "example": "[\"time/now\"]",
       "returnType": "number"
     },
     "time/today": {
@@ -436,496 +436,496 @@ export const MODULE_CATALOG: Record<string, Record<string, { description: string
       "returnType": "number"
     },
     "time/parse": {
-      "description": "Format pattern",
+      "description": "Parse date string to timestamp",
       "example": "[\"time/parse\", \"2024-01-18\", \"YYYY-MM-DD\"]",
       "returnType": "number"
     },
     "time/format": {
-      "description": "Format pattern",
-      "example": "[\"time/format\", \"@entity.createdAt\", \"MMM DD, YYYY\"]",
+      "description": "Format timestamp as string",
+      "example": "[\"time/format\", 1705593600000, \"YYYY-MM-DD\"]",
       "returnType": "string"
     },
     "time/year": {
-      "description": "Timestamp",
-      "example": "[\"time/year\", \"@entity.createdAt\"] // => 2024",
+      "description": "Extract year from timestamp",
+      "example": "[\"time/year\", 1705593600000]",
       "returnType": "number"
     },
     "time/month": {
-      "description": "Timestamp",
-      "example": "[\"time/month\", \"@entity.createdAt\"] // => 1",
+      "description": "Extract month (1-12) from timestamp",
+      "example": "[\"time/month\", 1705593600000]",
       "returnType": "number"
     },
     "time/day": {
-      "description": "Timestamp",
-      "example": "[\"time/day\", \"@entity.createdAt\"] // => 18",
+      "description": "Extract day of month from timestamp",
+      "example": "[\"time/day\", 1705593600000]",
       "returnType": "number"
     },
     "time/weekday": {
-      "description": "Timestamp",
-      "example": "[\"time/weekday\", \"@entity.createdAt\"] // => 4 (Thursday)",
+      "description": "Extract day of week (0=Sun, 6=Sat)",
+      "example": "[\"time/weekday\", 1705593600000]",
       "returnType": "number"
     },
     "time/hour": {
-      "description": "Timestamp",
-      "example": "[\"time/hour\", \"@entity.createdAt\"] // => 14",
+      "description": "Extract hour (0-23) from timestamp",
+      "example": "[\"time/hour\", 1705593600000]",
       "returnType": "number"
     },
     "time/minute": {
-      "description": "Timestamp",
-      "example": "[\"time/minute\", \"@entity.createdAt\"] // => 30",
+      "description": "Extract minute (0-59) from timestamp",
+      "example": "[\"time/minute\", 1705593600000]",
       "returnType": "number"
     },
     "time/second": {
-      "description": "Timestamp",
-      "example": "[\"time/second\", \"@entity.createdAt\"] // => 45",
+      "description": "Extract second (0-59) from timestamp",
+      "example": "[\"time/second\", 1705593600000]",
       "returnType": "number"
     },
     "time/add": {
-      "description": "Time unit (year/month/week/day/hour/minute/second/ms)",
+      "description": "Add time units to timestamp",
       "example": "[\"time/add\", [\"time/now\"], 7, \"day\"]",
       "returnType": "number"
     },
     "time/subtract": {
-      "description": "Time unit",
+      "description": "Subtract time units from timestamp",
       "example": "[\"time/subtract\", [\"time/now\"], 1, \"hour\"]",
       "returnType": "number"
     },
     "time/diff": {
-      "description": "Timestamp",
-      "example": "[\"time/isToday\", \"@entity.createdAt\"]",
-      "returnType": "boolean"
+      "description": "Difference between two timestamps (ms)",
+      "example": "[\"time/diff\", [\"time/now\"], [\"time/subtract\", [\"time/now\"], 2, \"hour\"]]",
+      "returnType": "number"
     },
     "time/relative": {
-      "description": "Timestamp",
-      "example": "[\"time/relative\", \"@entity.lastActivityAt\"] // => \"2 hours ago\"",
+      "description": "Human-readable relative time",
+      "example": "[\"time/relative\", [\"time/subtract\", [\"time/now\"], 2, \"hour\"]]",
       "returnType": "string"
     },
     "time/duration": {
-      "description": "Duration in milliseconds",
+      "description": "Format milliseconds as duration",
       "example": "[\"time/duration\", 9000000] // => \"2h 30m\"",
       "returnType": "string"
     }
   },
   "validate": {
     "validate/required": {
-      "description": "Value to check",
-      "example": "[\"validate/required\", \"@payload.name\"]",
+      "description": "Check value is not null/undefined/empty",
+      "example": "[\"validate/required\", \"hello\"] // => true",
       "returnType": "boolean"
     },
     "validate/string": {
-      "description": "Value to check",
-      "example": "[\"validate/string\", \"@payload.name\"]",
+      "description": "Check value is a string",
+      "example": "[\"validate/string\", \"hello\"] // => true",
       "returnType": "boolean"
     },
     "validate/number": {
-      "description": "Value to check",
-      "example": "[\"validate/number\", \"@payload.age\"]",
+      "description": "Check value is a number",
+      "example": "[\"validate/number\", 42] // => true",
       "returnType": "boolean"
     },
     "validate/boolean": {
-      "description": "Value to check",
-      "example": "[\"validate/boolean\", \"@payload.active\"]",
+      "description": "Check value is a boolean",
+      "example": "[\"validate/boolean\", true] // => true",
       "returnType": "boolean"
     },
     "validate/array": {
-      "description": "Value to check",
-      "example": "[\"validate/array\", \"@payload.items\"]",
+      "description": "Check value is an array",
+      "example": "[\"validate/array\", [1, 2, 3]] // => true",
       "returnType": "boolean"
     },
     "validate/object": {
-      "description": "Value to check",
-      "example": "[\"validate/object\", \"@payload.data\"]",
+      "description": "Check value is an object",
+      "example": "[\"validate/object\", {\"a\": 1}] // => true",
       "returnType": "boolean"
     },
     "validate/email": {
-      "description": "Email to validate",
-      "example": "[\"validate/email\", \"@payload.email\"]",
+      "description": "Check valid email format",
+      "example": "[\"validate/email\", \"user@example.com\"] // => true",
       "returnType": "boolean"
     },
     "validate/url": {
-      "description": "URL to validate",
-      "example": "[\"validate/url\", \"@payload.website\"]",
+      "description": "Check valid URL format",
+      "example": "[\"validate/url\", \"https://example.com\"] // => true",
       "returnType": "boolean"
     },
     "validate/uuid": {
-      "description": "UUID to validate",
-      "example": "[\"validate/uuid\", \"@payload.id\"]",
+      "description": "Check valid UUID format",
+      "example": "[\"validate/uuid\", \"550e8400-e29b-41d4-a716-446655440000\"] // => true",
       "returnType": "boolean"
     },
     "validate/phone": {
-      "description": "Card number to validate",
-      "example": "[\"validate/creditCard\", \"@payload.cardNumber\"]",
+      "description": "Check valid phone number",
+      "example": "[\"validate/phone\", \"+12125551234\"] // => true",
       "returnType": "boolean"
     },
     "validate/date": {
-      "description": "Maximum length",
-      "example": "[\"validate/maxLength\", \"@payload.name\", 50]",
+      "description": "Check valid date string",
+      "example": "[\"validate/date\", \"2024-01-18\"] // => true",
       "returnType": "boolean"
     },
     "validate/length": {
-      "description": "Required length",
-      "example": "[\"validate/length\", \"@payload.code\", 6]",
+      "description": "Check exact string length",
+      "example": "[\"validate/length\", \"abc123\", 6] // => true",
       "returnType": "boolean"
     },
     "validate/min": {
-      "description": "Minimum value",
-      "example": "[\"validate/min\", \"@payload.age\", 18]",
+      "description": "Check value >= minimum",
+      "example": "[\"validate/min\", 21, 18] // => true",
       "returnType": "boolean"
     },
     "validate/max": {
-      "description": "Maximum value",
-      "example": "[\"validate/max\", \"@payload.quantity\", 100]",
+      "description": "Check value <= maximum",
+      "example": "[\"validate/max\", 50, 100] // => true",
       "returnType": "boolean"
     },
     "validate/range": {
-      "description": "Maximum value",
-      "example": "[\"validate/range\", \"@payload.rating\", 1, 5]",
+      "description": "Check value is within range",
+      "example": "[\"validate/range\", 3, 1, 5] // => true",
       "returnType": "boolean"
     },
     "validate/pattern": {
-      "description": "Disallowed values",
-      "example": "[\"validate/noneOf\", \"@payload.username\", [\"admin\", \"root\", \"system\"]]",
+      "description": "Check string matches regex pattern",
+      "example": "[\"validate/pattern\", \"abc123\", \"^[a-z0-9]+$\"] // => true",
       "returnType": "boolean"
     },
     "validate/equals": {
-      "description": "Second value",
-      "example": "[\"validate/equals\", \"@payload.password\", \"@payload.confirmPassword\"]",
+      "description": "Check two values are equal",
+      "example": "[\"validate/equals\", \"hello\", \"hello\"] // => true",
       "returnType": "boolean"
     },
     "validate/check": {
-      "description": "Validation rules by field",
+      "description": "Run multiple validation rules",
       "example": "",
       "returnType": "any"
     }
   },
   "prob": {
     "prob/seed": {
-      "description": "Seed value (integer)",
+      "description": "Set random seed for reproducibility",
       "example": "[\"prob/seed\", 42]",
       "returnType": "void"
     },
     "prob/flip": {
-      "description": "Probability of true (0 to 1)",
-      "example": "[\"prob/flip\", 0.5] // => true or false with equal probability",
+      "description": "Random boolean with given probability",
+      "example": "[\"prob/flip\", 0.5]",
       "returnType": "boolean"
     },
     "prob/gaussian": {
-      "description": "Standard deviation",
-      "example": "[\"prob/gaussian\", 0, 1] // => standard normal sample",
+      "description": "Sample from normal distribution",
+      "example": "[\"prob/gaussian\", 0, 1]",
       "returnType": "number"
     },
     "prob/uniform": {
-      "description": "Upper bound (exclusive)",
-      "example": "[\"prob/uniform\", 0, 10] // => number in [0, 10)",
+      "description": "Random number in [min, max)",
+      "example": "[\"prob/uniform\", 0, 10]",
       "returnType": "number"
     },
     "prob/beta": {
-      "description": "Beta shape parameter (> 0)",
-      "example": "[\"prob/beta\", 2, 5] // => number in [0, 1], mean ~ 0.286",
+      "description": "Sample from beta distribution",
+      "example": "[\"prob/beta\", 2, 5]",
       "returnType": "number"
     },
     "prob/categorical": {
-      "description": "Array of weights (same length as items)",
-      "example": "[\"prob/categorical\", [\"a\", \"b\", \"c\"], [1, 2, 1]] // => \"b\" most likely",
+      "description": "Weighted random selection",
+      "example": "[\"prob/categorical\", [10, 20, 30], [1, 2, 1]]",
       "returnType": "any"
     },
     "prob/poisson": {
-      "description": "Rate parameter (> 0)",
-      "example": "[\"prob/poisson\", 4] // => non-negative integer, mean ~ 4",
+      "description": "Sample from Poisson distribution",
+      "example": "[\"prob/poisson\", 4]",
       "returnType": "number"
     },
     "prob/condition": {
-      "description": "Condition that must hold",
-      "example": "[\"prob/condition\", [\">\", \"@entity.x\", 0]]",
+      "description": "Assert a condition holds",
+      "example": "[\"prob/condition\", [\">\", 5, 0]]",
       "returnType": "void"
     },
     "prob/sample": {
-      "description": "Expression to evaluate (lazy)",
-      "example": "[\"prob/sample\", 1000, [\"prob/flip\", 0.5]] // => array of booleans",
+      "description": "Draw N samples from expression",
+      "example": "[\"prob/sample\", 1000, [\"prob/flip\", 0.5]]",
       "returnType": "array"
     },
     "prob/posterior": {
-      "description": "Number of samples to attempt",
-      "example": "[\"prob/posterior\", model, evidence, query, 5000]",
+      "description": "Rejection sampling for posterior inference",
+      "example": "[\"prob/posterior\", [\"prob/gaussian\", 0, 1], true, null, 100]",
       "returnType": "array"
     },
     "prob/infer": {
-      "description": "Array of numeric samples",
-      "example": "[\"prob/expected-value\", [2, 4, 6, 8]] // => 5",
+      "description": "Compute mean of numeric samples",
+      "example": "[\"prob/infer\", [2, 4, 6, 8]] // => 5",
       "returnType": "number"
     },
     "prob/variance": {
-      "description": "Array of numeric samples",
+      "description": "Compute variance of samples",
       "example": "[\"prob/variance\", [2, 4, 4, 4, 5, 5, 7, 9]] // => 4",
       "returnType": "number"
     },
     "prob/histogram": {
-      "description": "Number of bins",
-      "example": "[\"prob/histogram\", [1, 2, 3, 4, 5], 2] // => {binEdges, counts}",
+      "description": "Bin samples into histogram",
+      "example": "[\"prob/histogram\", [1, 2, 3, 4, 5], 2]",
       "returnType": "object"
     },
     "prob/percentile": {
-      "description": "Significance level (e.g., 0.05 for 95% interval)",
-      "example": "[\"prob/credible-interval\", samples, 0.05] // => [lo, hi]",
-      "returnType": "array"
+      "description": "Compute percentile of samples",
+      "example": "[\"prob/percentile\", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 0.5] // => 5",
+      "returnType": "number"
     }
   },
   "async": {
     "async/delay": {
-      "description": "Optional effect to execute after delay",
-      "example": "[\"async/delay\", 2000, [\"emit\", \"RETRY\"]] // Wait 2s then emit",
+      "description": "Execute effect after delay (ms)",
+      "example": "[\"async/delay\", 2000, [\"emit\", \"RETRY\"]]",
       "returnType": "any"
     },
     "async/interval": {
-      "description": "Effect to execute each interval",
-      "example": "[\"async/interval\", 5000, [\"emit\", \"POLL_TICK\"]] // Emit every 5s",
+      "description": "Execute effect on interval (ms)",
+      "example": "[\"async/interval\", 5000, [\"emit\", \"POLL_TICK\"]]",
       "returnType": "string"
     },
     "async/timeout": {
-      "description": "Timeout in milliseconds",
-      "example": "[\"async/timeout\", [\"call\", \"api\", \"fetchData\"], 5000]",
+      "description": "Execute with timeout limit (ms)",
+      "example": "[\"async/timeout\", [\"emit\", \"FETCH\"], 5000]",
       "returnType": "any"
     },
     "async/debounce": {
-      "description": "Debounce delay in milliseconds",
+      "description": "Debounce event emission (ms)",
       "example": "[\"async/debounce\", \"SEARCH\", 300]",
       "returnType": "void"
     },
     "async/throttle": {
-      "description": "Throttle interval in milliseconds",
+      "description": "Throttle event emission (ms)",
       "example": "[\"async/throttle\", \"SCROLL\", 100]",
       "returnType": "void"
     },
     "async/retry": {
-      "description": "{ attempts, backoff, baseDelay }",
-      "example": "",
+      "description": "Retry effect with backoff",
+      "example": "[\"async/retry\", [\"emit\", \"FETCH\"], {\"attempts\": 3}]",
       "returnType": "any"
     },
     "async/race": {
-      "description": "Effects to race",
-      "example": "[\"async/race\", [\"call\", \"api1\"], [\"call\", \"api2\"]]",
+      "description": "Return first effect to complete",
+      "example": "[\"async/race\", [\"emit\", \"FAST\"], [\"emit\", \"SLOW\"]]",
       "returnType": "any"
     },
     "async/all": {
-      "description": "Effects to execute",
-      "example": "[\"async/all\", [\"call\", \"api1\"], [\"call\", \"api2\"]]",
+      "description": "Execute all effects in parallel",
+      "example": "[\"async/all\", [\"emit\", \"A\"], [\"emit\", \"B\"]]",
       "returnType": "array"
     },
     "async/sequence": {
-      "description": "Effects to execute in order",
-      "example": "[\"async/sequence\", [\"call\", \"validate\"], [\"call\", \"save\"]]",
+      "description": "Execute effects in order",
+      "example": "[\"async/sequence\", [\"emit\", \"FIRST\"], [\"emit\", \"SECOND\"]]",
       "returnType": "array"
     }
   },
   "nn": {
     "nn/sequential": {
-      "description": "Layers to stack sequentially",
+      "description": "Stack layers sequentially",
       "example": "[\"nn/sequential\", [\"nn/linear\", 16, 64], [\"nn/relu\"], [\"nn/linear\", 64, 4]]",
       "returnType": "nn/module"
     },
     "nn/linear": {
-      "description": "Output dimension",
-      "example": "[\"nn/linear\", 16, 64] // 16 inputs -> 64 outputs",
+      "description": "Fully connected layer",
+      "example": "[\"nn/linear\", 16, 64]",
       "returnType": "nn/layer"
     },
     "nn/relu": {
-      "description": "ReLU activation function: max(0, x)",
+      "description": "ReLU activation: max(0, x)",
       "example": "[\"nn/relu\"]",
       "returnType": "nn/layer"
     },
     "nn/tanh": {
-      "description": "Tanh activation function: (e^x - e^-x) / (e^x + e^-x)",
+      "description": "Tanh activation function",
       "example": "[\"nn/tanh\"]",
       "returnType": "nn/layer"
     },
     "nn/sigmoid": {
-      "description": "Sigmoid activation function: 1 / (1 + e^-x)",
+      "description": "Sigmoid activation: 1/(1+e^-x)",
       "example": "[\"nn/sigmoid\"]",
       "returnType": "nn/layer"
     },
     "nn/softmax": {
-      "description": "Dimension to apply softmax",
+      "description": "Softmax normalization",
       "example": "[\"nn/softmax\"]",
       "returnType": "nn/layer"
     },
     "nn/dropout": {
-      "description": "Dropout probability",
-      "example": "[\"nn/dropout\", 0.3] // 30% dropout",
+      "description": "Dropout regularization",
+      "example": "[\"nn/dropout\", 0.3]",
       "returnType": "nn/layer"
     },
     "nn/batchnorm": {
-      "description": "Number of features to normalize",
+      "description": "Batch normalization",
       "example": "[\"nn/batchnorm\", 64]",
       "returnType": "nn/layer"
     },
     "nn/layernorm": {
-      "description": "Shape to normalize over",
+      "description": "Layer normalization",
       "example": "[\"nn/layernorm\", 64]",
       "returnType": "nn/layer"
     },
     "nn/forward": {
-      "description": "The neural network module",
-      "example": "[\"nn/paramCount\", \"@entity.architecture\"] // => 3300",
-      "returnType": "number"
+      "description": "Forward pass through network",
+      "example": "[\"nn/forward\", [\"nn/sequential\", [\"nn/linear\", 4, 8], [\"nn/relu\"]], [1, 2, 3, 4]]",
+      "returnType": "any"
     },
     "nn/clone": {
-      "description": "The neural network module to clone",
-      "example": "[\"nn/clone\", \"@entity.architecture\"]",
+      "description": "Clone a neural network module",
+      "example": "[\"nn/clone\", [\"nn/sequential\", [\"nn/linear\", 4, 8]]]",
       "returnType": "nn/module"
     }
   },
   "tensor": {
     "tensor/from": {
-      "description": "Array of numbers (can be nested for multi-dimensional)",
+      "description": "Create tensor from array",
       "example": "[\"tensor/from\", [1.0, 2.0, 3.0]]",
       "returnType": "tensor"
     },
     "tensor/zeros": {
-      "description": "Shape of the tensor",
-      "example": "[\"tensor/zeros\", [3, 4]] // 3x4 tensor of zeros",
+      "description": "Tensor of zeros with given shape",
+      "example": "[\"tensor/zeros\", [3, 4]]",
       "returnType": "tensor"
     },
     "tensor/ones": {
-      "description": "Shape of the tensor",
-      "example": "[\"tensor/ones\", [3, 4]] // 3x4 tensor of ones",
+      "description": "Tensor of ones with given shape",
+      "example": "[\"tensor/ones\", [3, 4]]",
       "returnType": "tensor"
     },
     "tensor/rand": {
-      "description": "Shape of the tensor",
-      "example": "[\"tensor/rand\", [16]] // Random 16-element vector",
+      "description": "Random uniform tensor",
+      "example": "[\"tensor/rand\", [16]]",
       "returnType": "tensor"
     },
     "tensor/randn": {
-      "description": "Shape of the tensor",
-      "example": "[\"tensor/randn\", [16]] // Random normal 16-element vector",
+      "description": "Random normal tensor",
+      "example": "[\"tensor/randn\", [16]]",
       "returnType": "tensor"
     },
     "tensor/shape": {
-      "description": "The tensor",
-      "example": "[\"tensor/shape\", \"@entity.sensors\"] // => [16]",
+      "description": "Get tensor dimensions",
+      "example": "[\"tensor/shape\", [\"tensor/from\", [1, 2, 3]]]",
       "returnType": "number[]"
     },
     "tensor/get": {
-      "description": "Index (single for 1D, array for multi-D)",
-      "example": "[\"tensor/get\", \"@entity.output\", 3] // Get 4th element",
+      "description": "Get element at index",
+      "example": "[\"tensor/get\", [\"tensor/from\", [10, 20, 30]], 1] // => 20",
       "returnType": "number"
     },
     "tensor/slice": {
-      "description": "End index (exclusive)",
-      "example": "[\"tensor/slice\", \"@entity.output\", 0, 3] // First 3 elements",
+      "description": "Slice tensor by index range",
+      "example": "[\"tensor/slice\", [\"tensor/from\", [1, 2, 3, 4, 5]], 0, 3]",
       "returnType": "tensor"
     },
     "tensor/reshape": {
-      "description": "New shape",
-      "example": "[\"tensor/reshape\", \"@entity.data\", [4, 4]] // Reshape to 4x4",
+      "description": "Reshape tensor to new dimensions",
+      "example": "[\"tensor/reshape\", [\"tensor/from\", [1, 2, 3, 4]], [2, 2]]",
       "returnType": "tensor"
     },
     "tensor/flatten": {
-      "description": "The tensor",
-      "example": "[\"tensor/flatten\", \"@entity.data\"]",
+      "description": "Flatten to 1D tensor",
+      "example": "[\"tensor/flatten\", [\"tensor/from\", [1, 2, 3]]]",
       "returnType": "tensor"
     },
     "tensor/add": {
-      "description": "Second tensor or scalar",
-      "example": "[\"tensor/add\", \"@entity.a\", \"@entity.b\"]",
+      "description": "Element-wise addition",
+      "example": "[\"tensor/add\", [\"tensor/from\", [1, 2, 3]], [\"tensor/from\", [4, 5, 6]]]",
       "returnType": "tensor"
     },
     "tensor/sub": {
-      "description": "Second tensor or scalar",
-      "example": "[\"tensor/sub\", \"@entity.a\", \"@entity.b\"]",
+      "description": "Element-wise subtraction",
+      "example": "[\"tensor/sub\", [\"tensor/from\", [4, 5, 6]], [\"tensor/from\", [1, 2, 3]]]",
       "returnType": "tensor"
     },
     "tensor/mul": {
-      "description": "Second tensor or scalar",
-      "example": "[\"tensor/mul\", \"@entity.weights\", 0.99] // Decay weights",
+      "description": "Element-wise multiplication or scalar multiply",
+      "example": "[\"tensor/mul\", [\"tensor/from\", [1, 2, 3]], 2]",
       "returnType": "tensor"
     },
     "tensor/div": {
-      "description": "Second tensor or scalar",
-      "example": "[\"tensor/div\", \"@entity.gradient\", \"@entity.batchSize\"]",
+      "description": "Element-wise division or scalar divide",
+      "example": "[\"tensor/div\", [\"tensor/from\", [10, 20, 30]], 10]",
       "returnType": "tensor"
     },
     "tensor/matmul": {
-      "description": "Second tensor (MxK)",
-      "example": "[\"tensor/matmul\", \"@entity.input\", \"@entity.weights\"]",
+      "description": "Matrix multiplication",
+      "example": "[\"tensor/matmul\", [\"tensor/from\", [[1, 2], [3, 4]]], [\"tensor/from\", [[5, 6], [7, 8]]]]",
       "returnType": "tensor"
     },
     "tensor/dot": {
-      "description": "Second vector",
-      "example": "[\"tensor/dot\", \"@entity.a\", \"@entity.b\"]",
+      "description": "Dot product of two vectors",
+      "example": "[\"tensor/dot\", [\"tensor/from\", [1, 2, 3]], [\"tensor/from\", [4, 5, 6]]]",
       "returnType": "number"
     },
     "tensor/sum": {
-      "description": "Dimension to reduce",
-      "example": "[\"tensor/sum\", \"@entity.rewards\"] // Total reward",
+      "description": "Sum all elements",
+      "example": "[\"tensor/sum\", [\"tensor/from\", [1, 2, 3, 4]]]",
       "returnType": "number | tensor"
     },
     "tensor/mean": {
-      "description": "Dimension to reduce",
-      "example": "[\"tensor/mean\", \"@entity.losses\"]",
+      "description": "Mean of all elements",
+      "example": "[\"tensor/mean\", [\"tensor/from\", [2, 4, 6, 8]]]",
       "returnType": "number | tensor"
     },
     "tensor/max": {
-      "description": "Dimension to reduce",
-      "example": "[\"tensor/max\", \"@entity.qValues\"]",
+      "description": "Maximum element",
+      "example": "[\"tensor/max\", [\"tensor/from\", [3, 1, 4, 1, 5]]]",
       "returnType": "number | tensor"
     },
     "tensor/min": {
-      "description": "Dimension to reduce",
-      "example": "[\"tensor/min\", \"@entity.distances\"]",
+      "description": "Minimum element",
+      "example": "[\"tensor/min\", [\"tensor/from\", [3, 1, 4, 1, 5]]]",
       "returnType": "number | tensor"
     },
     "tensor/argmax": {
-      "description": "Dimension to reduce",
-      "example": "[\"tensor/argmax\", \"@entity.qValues\"] // Best action index",
+      "description": "Index of maximum element",
+      "example": "[\"tensor/argmax\", [\"tensor/from\", [3, 1, 4, 1, 5]]]",
       "returnType": "number | tensor"
     },
     "tensor/norm": {
-      "description": "Range as [min, max]",
-      "example": "[\"tensor/outOfRangeIndices\", \"@payload.input\", [-1.0, 1.0]]",
-      "returnType": "number[]"
+      "description": "L2 norm of tensor",
+      "example": "[\"tensor/norm\", [\"tensor/from\", [3, 4]]]",
+      "returnType": "number"
     },
     "tensor/clamp": {
-      "description": "The tensor (must be 1D)",
-      "example": "[\"tensor/toList\", \"@entity.output\"]",
-      "returnType": "number[]"
+      "description": "Clamp values to range",
+      "example": "[\"tensor/clamp\", [\"tensor/from\", [-1, 0, 5, 10]], 0, 5]",
+      "returnType": "tensor"
     }
   },
   "train": {
     "train/loop": {
-      "description": "Training configuration with constraints",
-      "example": "[\"train/loop\", \"@entity.architecture\", \"@entity.buffer\", \"@entity.trainingConfig\"]",
+      "description": "Run training loop with config",
+      "example": "[\"train/loop\", [\"nn/sequential\", [\"nn/linear\", 4, 8]], [], {}]",
       "returnType": "train/result"
     },
     "train/step": {
-      "description": "Training configuration",
-      "example": "[\"train/step\", \"@entity.architecture\", \"@batch.input\", \"@batch.target\", \"@entity.config\"]",
+      "description": "Single training step",
+      "example": "[\"train/step\", [\"nn/sequential\", [\"nn/linear\", 4, 8]], [1, 2, 3, 4], [0, 1], {}]",
       "returnType": "train/stepResult"
     },
     "train/validate": {
-      "description": "The neural network",
-      "example": "[\"train/getMaxWeightMagnitude\", \"@entity.architecture\"]",
-      "returnType": "number"
+      "description": "Validate model on test data",
+      "example": "[\"train/validate\", [\"nn/sequential\", [\"nn/linear\", 4, 2]], []]",
+      "returnType": "any"
     },
     "train/mse": {
-      "description": "Target class labels",
-      "example": "[\"train/crossEntropy\", \"@entity.logits\", \"@batch.labels\"]",
+      "description": "Mean squared error loss",
+      "example": "[\"train/mse\", [\"tensor/from\", [1, 2, 3]], [\"tensor/from\", [1.5, 2.5, 2.5]]]",
       "returnType": "number"
     },
     "train/huber": {
-      "description": "Threshold for quadratic vs linear",
-      "example": "[\"train/huber\", \"@entity.qValues\", \"@batch.targets\", 1.0]",
+      "description": "Huber loss (smooth L1)",
+      "example": "[\"train/huber\", [\"tensor/from\", [1, 2, 3]], [\"tensor/from\", [1.5, 2.5, 2.5]], 1.0]",
       "returnType": "number"
     },
     "train/sgd": {
-      "description": "Momentum factor",
-      "example": "[\"train/sgd\", \"@entity.architecture\", 0.01, 0.9]",
+      "description": "SGD optimizer step",
+      "example": "[\"train/sgd\", [\"nn/sequential\", [\"nn/linear\", 4, 2]], 0.01, 0.9]",
       "returnType": "void"
     },
     "train/adam": {
-      "description": "Config with gamma, lambda",
-      "example": "[\"train/computeAdvantages\", \"@episode.rewards\", \"@episode.values\", { \"gamma\": 0.99, \"lambda\": 0.95 }]",
-      "returnType": "tensor"
+      "description": "Adam optimizer step",
+      "example": "[\"train/adam\", [\"nn/sequential\", [\"nn/linear\", 4, 2]], 0.001]",
+      "returnType": "void"
     }
   }
 };

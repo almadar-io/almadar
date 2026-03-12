@@ -1050,7 +1050,31 @@
     min-height: 120px;
     max-height: 300px;
     overflow: auto;
-    background: #ffffff;
+    background: #0a0f1a;
     border-radius: 8px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #1e293b;
+}
+
+.opResultSuccess {
+    margin: 0;
+    padding: 1rem;
+    font-family: var(--ifm-font-family-monospace);
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: #a5f3fc;
+    background: transparent;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.opResultError {
+    margin: 0;
+    padding: 1rem;
+    font-family: var(--ifm-font-family-monospace);
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: #fca5a5;
+    background: transparent;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
