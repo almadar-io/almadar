@@ -92,15 +92,33 @@ function LayersSection() {
 }
 
 const CATALOG = [
-  { name: "LLM Service", layer: "Brains" },
-  { name: "DeepAgent", layer: "Brains" },
-  { name: "Memory Manager", layer: "Brains" },
-  { name: "Event Bus", layer: "Metal" },
-  { name: "Auth Service", layer: "Metal" },
-  { name: "Storage", layer: "Metal" },
-  { name: "Stripe", layer: "Integrations" },
-  { name: "Twilio", layer: "Integrations" },
-  { name: "GitHub", layer: "Integrations" },
+  // Brains
+  { name: "LLM Orchestrator", layer: "Brains" },
+  { name: "DeepAgent SDK", layer: "Brains" },
+  { name: "Semantic Memory", layer: "Brains" },
+  { name: "S-Expression Engine", layer: "Brains" },
+  { name: "Context Manager", layer: "Brains" },
+  { name: "Vector Search", layer: "Brains" },
+  
+  // Metal
+  { name: "Distributed Event Bus", layer: "Metal" },
+  { name: "Managed Authentication", layer: "Metal" },
+  { name: "Persistent Storage", layer: "Metal" },
+  { name: "Service Discovery", layer: "Metal" },
+  { name: "Observability Hub", layer: "Metal" },
+  { name: "Secret Manager", layer: "Metal" },
+  { name: "IAM & RBAC", layer: "Metal" },
+  { name: "VPC Networking", layer: "Metal" },
+
+  // Integrations
+  { name: "Stripe Connector", layer: "Integrations" },
+  { name: "Twilio Gateway", layer: "Integrations" },
+  { name: "GitHub Automations", layer: "Integrations" },
+  { name: "Firebase Sync", layer: "Integrations" },
+  { name: "PostgreSQL Bridge", layer: "Integrations" },
+  { name: "Redis Cache", layer: "Integrations" },
+  { name: "AWS S3 Adapter", layer: "Integrations" },
+  { name: "Slack & Discord", layer: "Integrations" },
 ];
 
 function CatalogSection() {

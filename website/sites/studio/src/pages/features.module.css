@@ -202,3 +202,19 @@
         min-height: 200px;
     }
 }
+.featureImage {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.featureImage:hover {
+    transform: scale(1.02);
+}
+
+[data-theme="dark"] .featureImage {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
