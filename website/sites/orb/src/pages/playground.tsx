@@ -5,6 +5,7 @@ import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 import { CornerDownLeft } from "lucide-react";
 import Translate, { translate } from "@docusaurus/Translate";
+import type { OrbitalSchema } from "@almadar/core";
 import {
   PLAYGROUND_EXAMPLES,
   EXAMPLE_CATEGORIES,
@@ -13,7 +14,7 @@ import {
 import { RENDER_UI_EXAMPLES, type RenderUIExample } from "../data/render-ui-registry";
 import styles from "./playground.module.css";
 
-type PlaygroundTab = "sexpr" | "renderui";
+type PlaygroundTab = "sexpr" | "renderui" | "liveui";
 
 // ─── Types ────────────────────────────────────────────────────────────────
 
@@ -222,9 +223,11 @@ function ExamplesDropdown({
 function PlaygroundEditor({
   value,
   onChange,
+  language = "json",
 }: {
   value: string;
   onChange: (v: string) => void;
+  language?: string;
 }) {
   // Dynamic import to avoid SSR issues
   const [MonacoEditor, setMonacoEditor] = useState<React.ComponentType<{
@@ -258,7 +261,7 @@ function PlaygroundEditor({
     <MonacoEditor
       value={value}
       onChange={(v) => onChange(v ?? "")}
-      language="json"
+      language={language}
       theme="vs-dark"
       height="100%"
       options={{
@@ -497,6 +500,242 @@ function RenderUICore() {
   );
 }
 
+// ─── Live UI Runtime Playground ───────────────────────────────────────────
+
+// Default minimal Orbital schema for the live preview
+const DEFAULT_ORBITAL_SCHEMA: OrbitalSchema = {
+  name: "playground-preview",
+  version: "1.0.0",
+  orbitals: [
+    {
+      name: "PlaygroundOrbital",
+      entity: {
+        name: "Example",
+        persistence: "runtime",
+        fields: [
+          { name: "id", type: "uuid" },
+          { name: "title", type: "string" },
+          { name: "status", type: "string" },
+          { name: "progress", type: "number" },
+        ],
+      },
+      traits: [
+        {
+          name: "PreviewTrait",
+          category: "interaction",
+          linkedEntity: "Example",
+          stateMachine: {
+            states: [
+              {
+                name: "showing",
+                isInitial: true,
+                effects: [
+                  ["render-ui", "main", "heading", { content: "Live Preview", level: 2 }],
+                  ["render-ui", "main", "badge", { label: "Active", variant: "success" }],
+                  ["render-ui", "main", "progress-bar", { value: 75, max: 100, showLabel: true }],
+                  ["render-ui", "main", "alert", { 
+                    variant: "info", 
+                    title: "Welcome",
+                    message: "This is a live preview using the OrbitalRuntime with mock data."
+                  }],
+                ],
+              },
+            ],
+          },
+        },
+      ],
+      pages: [
+        {
+          name: "preview",
+          path: "/",
+          traits: [{ ref: "PreviewTrait" }],
+        },
+      ],
+    },
+  ],
+};
+
+// Mock data for the default schema
+const DEFAULT_MOCK_DATA: Record<string, unknown[]> = {
+  Example: [
+    { id: "1", title: "Sample Task", status: "active", progress: 75 },
+    { id: "2", title: "Another Task", status: "completed", progress: 100 },
+  ],
+};
+
+function LiveUICore() {
+  const [schemaCode, setSchemaCode] = useState(JSON.stringify(DEFAULT_ORBITAL_SCHEMA, null, 2));
+  const [mockDataCode, setMockDataCode] = useState(JSON.stringify(DEFAULT_MOCK_DATA, null, 2));
+  const [error, setError] = useState<string | null>(null);
+
+  // Parse schema and mock data
+  let parsedSchema: OrbitalSchema | null = null;
+  let parsedMockData: Record<string, unknown[]> = {};
+
+  try {
+    parsedSchema = JSON.parse(schemaCode);
+    if (!parsedSchema?.orbitals || !Array.isArray(parsedSchema.orbitals)) {
+      throw new Error("Invalid schema: must have 'orbitals' array");
+    }
+  } catch (e) {
+    if (!error) setError(e instanceof Error ? e.message : "Invalid JSON");
+  }
+
+  try {
+    parsedMockData = JSON.parse(mockDataCode);
+  } catch (e) {
+    if (!error) setError("Mock data: " + (e instanceof Error ? e.message : "Invalid JSON"));
+  }
+
+  // Clear error when code changes and becomes valid
+  useEffect(() => {
+    try {
+      JSON.parse(schemaCode);
+      JSON.parse(mockDataCode);
+      setError(null);
+    } catch {
+      // Keep error
+    }
+  }, [schemaCode, mockDataCode]);
+
+  return (
+    <div className={styles.threePaneLayout}>
+      {/* Schema Editor */}
+      <div className={styles.editorPane}>
+        <div className={styles.panelHeader}>
+          <span className={styles.panelLabel}>Schema (.orb)</span>
+        </div>
+        <div className={styles.editorWrapper}>
+          <PlaygroundEditor value={schemaCode} onChange={setSchemaCode} />
+        </div>
+      </div>
+
+      {/* Mock Data Editor */}
+      <div className={styles.dataPane}>
+        <div className={styles.panelHeader}>
+          <span className={styles.panelLabel}>Mock Data</span>
+        </div>
+        <div className={styles.editorWrapper}>
+          <PlaygroundEditor value={mockDataCode} onChange={setMockDataCode} />
+        </div>
+        <div className={styles.panelHint}>
+          Define entity data here. No server needed!
+        </div>
+      </div>
+
+      {/* Live Preview */}
+      <div className={styles.previewPane}>
+        <div className={styles.panelHeader}>
+          <span className={styles.panelLabel}>Live Preview</span>
+          {error && <span className={styles.panelError}>Error</span>}
+        </div>
+        <div className={styles.previewWrapper}>
+          {error ? (
+            <div className={styles.previewError}>
+              <pre>{error}</pre>
+            </div>
+          ) : parsedSchema ? (
+            <LiveRuntimePreview schema={parsedSchema} mockData={parsedMockData} />
+          ) : (
+            <div className={styles.previewEmpty}>
+              Enter a valid OrbitalSchema to preview
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Live runtime preview using @almadar/ui/runtime
+function LiveRuntimePreview({
+  schema,
+  mockData,
+}: {
+  schema: OrbitalSchema;
+  mockData: Record<string, unknown[]>;
+}) {
+  // Dynamic import to avoid SSR issues
+  const [RuntimePreview, setRuntimePreview] = useState<React.ComponentType<{
+    schema: OrbitalSchema;
+    mockData: Record<string, unknown[]>;
+  }> | null>(null);
+
+  useEffect(() => {
+    // Import runtime components dynamically (browser-only)
+    Promise.all([
+      import("@almadar/ui/providers"),
+      import("@almadar/ui/context"),
+      import("@almadar/ui/runtime"),
+      import("@almadar/ui/components/organisms"),
+    ]).then(([
+      { OrbitalProvider },
+      { UISlotProvider },
+      { useResolvedSchema, SlotsProvider, EntitySchemaProvider, TraitProvider, useTraitStateMachine, useSlotsActions },
+      { UISlotRenderer },
+    ]) => {
+      // Create a preview component that wires everything together
+      const Preview = ({ schema, mockData }: { schema: OrbitalSchema; mockData: Record<string, unknown[]> }) => {
+        const { page, traits, allEntities } = useResolvedSchema(schema);
+        const slotsActions = useSlotsActions();
+
+        // Initialize trait state machine
+        useTraitStateMachine(traits, slotsActions, {});
+
+        // Send INIT event on mount
+        useEffect(() => {
+          if (traits.length > 0) {
+            // Trigger INIT after a short delay to allow setup
+            const timer = setTimeout(() => {
+              // The state machine will auto-trigger INIT on mount
+            }, 0);
+            return () => clearTimeout(timer);
+          }
+        }, [traits]);
+
+        if (!page) {
+          return <div className={styles.previewEmpty}>No page found in schema</div>;
+        }
+
+        return (
+          <div className={styles.runtimePreview}>
+            <UISlotRenderer />
+          </div>
+        );
+      };
+
+      // Wrapper with all providers
+      const WrappedPreview = ({ schema, mockData }: { schema: OrbitalSchema; mockData: Record<string, unknown[]> }) => {
+        const { page, traits, allEntities, allTraits } = useResolvedSchema(schema);
+
+        return (
+          <OrbitalProvider initialData={mockData} skipTheme>
+            <UISlotProvider>
+              <SlotsProvider>
+                <EntitySchemaProvider entities={Array.from(allEntities.values())}>
+                  <TraitProvider traits={traits} entities={allEntities}>
+                    <Preview schema={schema} mockData={mockData} />
+                  </TraitProvider>
+                </EntitySchemaProvider>
+              </SlotsProvider>
+            </UISlotProvider>
+          </OrbitalProvider>
+        );
+      };
+
+      setRuntimePreview(() => WrappedPreview);
+    }).catch((err) => {
+      console.error("Failed to load runtime:", err);
+    });
+  }, []);
+
+  if (!RuntimePreview) {
+    return <div className={styles.previewLoading}>Loading runtime...</div>;
+  }
+
+  return <RuntimePreview schema={schema} mockData={mockData} />;
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────
 
 export default function Playground(): ReactNode {
@@ -537,6 +776,12 @@ export default function Playground(): ReactNode {
             >
               render-ui
             </button>
+            <button
+              className={`${styles.tab} ${activeTab === "liveui" ? styles.tabActive : ""}`}
+              onClick={() => setActiveTab("liveui")}
+            >
+              Live UI
+            </button>
           </div>
         </div>
       </div>
@@ -550,7 +795,11 @@ export default function Playground(): ReactNode {
             </div>
           }
         >
-          {() => activeTab === "sexpr" ? <PlaygroundCore /> : <RenderUICore />}
+          {() => {
+            if (activeTab === "sexpr") return <PlaygroundCore />;
+            if (activeTab === "renderui") return <RenderUICore />;
+            return <LiveUICore />;
+          }}
         </BrowserOnly>
       </main>
     </Layout>

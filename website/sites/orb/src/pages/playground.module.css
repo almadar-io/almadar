@@ -442,7 +442,125 @@
     background: rgba(20, 184, 166, 0.08);
 }
 
+/* ─── Three Pane Layout (Live UI Tab) ────────────────────────────────────── */
+
+.threePaneLayout {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    flex: 1;
+    min-height: 0;
+}
+
+.dataPane {
+    border-right: 1px solid #334155;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.panelHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 1rem;
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+    flex-shrink: 0;
+}
+
+.panelLabel {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+}
+
+.panelError {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #f87171;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.editorWrapper {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.panelHint {
+    padding: 0.5rem 1rem;
+    background: #0f172a;
+    border-top: 1px solid #334155;
+    font-size: 0.75rem;
+    color: #64748b;
+    font-style: italic;
+}
+
+.previewWrapper {
+    flex: 1;
+    overflow: auto;
+    background: #0f172a;
+    position: relative;
+}
+
+.previewLoading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.previewError {
+    padding: 1rem;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    margin: 1rem;
+}
+
+.previewError pre {
+    color: #dc2626;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.85rem;
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+.previewEmpty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #64748b;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 2rem;
+}
+
+.runtimePreview {
+    min-height: 100%;
+    padding: 1rem;
+}
+
 /* ─── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+    .threePaneLayout {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+    }
+
+    .editorPane,
+    .dataPane {
+        border-right: none;
+        border-bottom: 1px solid #334155;
+    }
+}
 
 @media (max-width: 768px) {
     .splitPane {
