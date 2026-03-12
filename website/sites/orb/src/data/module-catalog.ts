@@ -1,4 +1,156 @@
 export const MODULE_CATALOG: Record<string, Record<string, { description: string; example: string; returnType: string }>> = {
+  "core": {
+    "core/add": {
+      "description": "Addition: a + b (supports multiple args)",
+      "example": "[\"+\", 10, 20, 30] // => 60",
+      "returnType": "number"
+    },
+    "core/subtract": {
+      "description": "Subtraction: a - b",
+      "example": "[\"-\", 100, 37] // => 63",
+      "returnType": "number"
+    },
+    "core/multiply": {
+      "description": "Multiplication: a * b",
+      "example": "[\"*\", 7, 8] // => 56",
+      "returnType": "number"
+    },
+    "core/divide": {
+      "description": "Division: a / b",
+      "example": "[\"/\", 355, 113] // => 3.1415929203539825",
+      "returnType": "number"
+    },
+    "core/modulo": {
+      "description": "Modulo (remainder): a % b",
+      "example": "[\"%\", 17, 5] // => 2",
+      "returnType": "number"
+    },
+    "core/equal": {
+      "description": "Equality comparison: a = b",
+      "example": "[\"=\", 42, 42] // => true",
+      "returnType": "boolean"
+    },
+    "core/not-equal": {
+      "description": "Inequality comparison: a != b",
+      "example": "[\"!=\", 1, 2] // => true",
+      "returnType": "boolean"
+    },
+    "core/less-than": {
+      "description": "Less than: a < b",
+      "example": "[\"<\", 3, 7] // => true",
+      "returnType": "boolean"
+    },
+    "core/greater-than": {
+      "description": "Greater than: a > b",
+      "example": "[\">\", 10, 5] // => true",
+      "returnType": "boolean"
+    },
+    "core/less-equal": {
+      "description": "Less than or equal: a <= b",
+      "example": "[\"<=\", 5, 5] // => true",
+      "returnType": "boolean"
+    },
+    "core/greater-equal": {
+      "description": "Greater than or equal: a >= b",
+      "example": "[\">=\", 10, 3] // => true",
+      "returnType": "boolean"
+    },
+    "core/and": {
+      "description": "Logical AND (short-circuits)",
+      "example": "[\"and\", true, true, true] // => true",
+      "returnType": "boolean"
+    },
+    "core/or": {
+      "description": "Logical OR (short-circuits)",
+      "example": "[\"or\", false, false, true] // => true",
+      "returnType": "boolean"
+    },
+    "core/not": {
+      "description": "Logical NOT",
+      "example": "[\"not\", false] // => true",
+      "returnType": "boolean"
+    },
+    "core/if": {
+      "description": "Conditional: if(cond, then, else)",
+      "example": "[\"if\", [\">\", 10, 5], \"big\", \"small\"] // => big",
+      "returnType": "any"
+    },
+    "core/if-nested": {
+      "description": "Nested conditionals for multi-way branching",
+      "example": "[\"if\", [\">\", 85, 90], \"A\", [\"if\", [\">\", 85, 80], \"B\", \"C\"]] // => B",
+      "returnType": "any"
+    },
+    "core/let": {
+      "description": "Local variable bindings: let([[name, value], ...], body)",
+      "example": "[\"let\", [[\"x\", 10], [\"y\", 20]], [\"+\", \"@x\", \"@y\"]] // => 30",
+      "returnType": "any"
+    },
+    "core/let-computed": {
+      "description": "Let with computed bindings referencing earlier bindings",
+      "example": "[\"let\", [[\"a\", 5]], [\"let\", [[\"b\", [\"*\", \"@a\", 2]]], [\"+\", \"@a\", \"@b\"]]] // => 15",
+      "returnType": "any"
+    },
+    "core/do": {
+      "description": "Sequence block: evaluate expressions, return last result",
+      "example": "[\"do\", [\"+\", 1, 2], [\"*\", 3, 4], [\"-\", 100, 1]] // => 99",
+      "returnType": "any"
+    },
+    "core/when": {
+      "description": "Conditional execution: when(cond, effect). No else branch.",
+      "example": "[\"when\", [\">\", 10, 5], [\"str/concat\", \"triggered\", \"!\"]] // => triggered!",
+      "returnType": "void"
+    },
+    "core/fn-map": {
+      "description": "Lambda with array/map: transform each element",
+      "example": "[\"array/map\", [1, 2, 3, 4, 5], [\"fn\", \"x\", [\"*\", \"@x\", \"@x\"]]] // => [1,4,9,16,25]",
+      "returnType": "array"
+    },
+    "core/fn-filter": {
+      "description": "Lambda with array/filter: keep elements matching predicate",
+      "example": "[\"array/filter\", [1, 2, 3, 4, 5, 6], [\"fn\", \"x\", [\"=\", [\"%\", \"@x\", 2], 0]]] // => [2,4,6]",
+      "returnType": "array"
+    },
+    "core/fn-reduce": {
+      "description": "Lambda with array/reduce: fold array to single value (multi-param fn)",
+      "example": "[\"array/reduce\", [1, 2, 3, 4], 0, [\"fn\", [\"acc\", \"x\"], [\"+\", \"@acc\", [\"*\", \"@x\", \"@x\"]]]] // => 30",
+      "returnType": "any"
+    },
+    "core/fn-find": {
+      "description": "Lambda with array/find: find first element matching predicate",
+      "example": "[\"array/find\", [10, 20, 30, 40], [\"fn\", \"x\", [\">\", \"@x\", 25]]] // => 30",
+      "returnType": "any"
+    },
+    "core/pipeline": {
+      "description": "Chained operations: map then filter then reduce",
+      "example": "[\"array/reduce\", [\"array/filter\", [\"array/map\", [1, 2, 3, 4, 5], [\"fn\", \"x\", [\"*\", \"@x\", 10]]], [\"fn\", \"x\", [\">\", \"@x\", 25]]], 0, [\"fn\", [\"acc\", \"x\"], [\"+\", \"@acc\", \"@x\"]]] // => 120",
+      "returnType": "any"
+    },
+    "core/let-fn": {
+      "description": "Let + fn: bind data, then transform with lambda",
+      "example": "[\"let\", [[\"data\", [\"str/split\", \"a,b,c,d\", \",\"]]], [\"array/map\", \"@data\", [\"fn\", \"x\", [\"str/upper\", \"@x\"]]]] // => [\"A\",\"B\",\"C\",\"D\"]",
+      "returnType": "any"
+    },
+    "core/if-fn": {
+      "description": "Conditional inside lambda: classify elements",
+      "example": "[\"array/map\", [1, 2, 3, 4, 5], [\"fn\", \"x\", [\"if\", [\">\", \"@x\", 3], \"high\", \"low\"]]] // => [\"low\",\"low\",\"low\",\"high\",\"high\"]",
+      "returnType": "array"
+    },
+    "core/matches": {
+      "description": "Regex pattern matching on strings",
+      "example": "[\"matches\", \"hello-world-42\", \"^[a-z]+-[a-z]+-[0-9]+$\"] // => true",
+      "returnType": "boolean"
+    },
+    "core/math-composed": {
+      "description": "Composed math: sqrt(x*x + y*y) distance formula",
+      "example": "[\"math/round\", [\"math/sqrt\", [\"+\", [\"*\", 3, 3], [\"*\", 4, 4]]], 0] // => 5",
+      "returnType": "number"
+    },
+    "core/obj-reduce": {
+      "description": "Build objects from arrays via reduce",
+      "example": "[\"array/reduce\", [\"str/split\", \"x,y,z\", \",\"], {}, [\"fn\", [\"acc\", \"k\"], [\"object/set\", \"@acc\", \"@k\", [\"str/upper\", \"@k\"]]]] // => {\"x\":\"X\",\"y\":\"Y\",\"z\":\"Z\"}",
+      "returnType": "object"
+    }
+  },
   "math": {
     "math/abs": {
       "description": "Absolute value of a number",
