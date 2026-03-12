@@ -288,6 +288,78 @@ function buildMockData(schema: Record<string, unknown>): Record<string, unknown[
   return { [entityName]: [item, { ...item, id: "2" }] };
 }
 
+/**
+ * When mock data exists for a trait's linked entity, adjust the schema so
+ * the state machine starts in a data-displaying state instead of the empty state.
+ *
+ * Many behaviors define two INIT handlers: one from the "empty" state (shows
+ * placeholder UI) and one from a data state like "hasItems" (shows entity list).
+ * The playground generates mock data, so we want to start in the data state.
+ *
+ * Logic: for each trait whose linkedEntity has mock data, find a non-initial
+ * state that also handles INIT. If found, make it the initial state.
+ */
+function adjustSchemaForMockData(
+  schema: Record<string, unknown>,
+  mockData: Record<string, unknown[]>,
+): Record<string, unknown> {
+  const orbitals = schema.orbitals as Record<string, unknown>[] | undefined;
+  if (!orbitals?.length) return schema;
+
+  let changed = false;
+  const updatedOrbitals = orbitals.map((orbital) => {
+    const traits = (orbital.traits as Record<string, unknown>[]) ?? [];
+    const updatedTraits = traits.map((trait) => {
+      const sm = trait.stateMachine as Record<string, unknown> | undefined;
+      if (!sm) return trait;
+
+      const linkedEntity = trait.linkedEntity as string | undefined;
+      if (!linkedEntity || !mockData[linkedEntity]?.length) return trait;
+
+      const states = (sm.states as Record<string, unknown>[]) ?? [];
+      const transitions = (sm.transitions as Record<string, unknown>[]) ?? [];
+
+      // Find current initial state
+      const initialStateName =
+        (states.find((s) => s.isInitial)?.name as string) ??
+        (states[0]?.name as string);
+      if (!initialStateName) return trait;
+
+      // Find a non-initial state that also handles INIT
+      const dataState = states.find((s) => {
+        const name = s.name as string;
+        if (name === initialStateName) return false;
+        return transitions.some(
+          (t) =>
+            t.event === "INIT" &&
+            (t.from === name ||
+              (Array.isArray(t.from) && (t.from as string[]).includes(name))),
+        );
+      });
+
+      if (!dataState) return trait;
+
+      changed = true;
+      const dataStateName = dataState.name as string;
+      const updatedStates = states.map((s) => {
+        if ((s.name as string) === initialStateName)
+          return { ...s, isInitial: false };
+        if ((s.name as string) === dataStateName)
+          return { ...s, isInitial: true };
+        return s;
+      });
+
+      return { ...trait, stateMachine: { ...sm, states: updatedStates } };
+    });
+
+    return updatedTraits !== traits
+      ? { ...orbital, traits: updatedTraits }
+      : orbital;
+  });
+
+  return changed ? { ...schema, orbitals: updatedOrbitals } : schema;
+}
+
 function BehaviorStateMachineInfo({ schema }: { schema: Record<string, unknown> }) {
   const orbital = (schema.orbitals as Record<string, unknown>[])?.[0];
   const traits = (orbital?.traits as Record<string, unknown>[]) ?? [];
@@ -323,6 +395,7 @@ function BehaviorsTab({ initialSelected }: { initialSelected?: string | null }) 
 
   const schema = BEHAVIOR_CATALOG[selected] as Record<string, unknown> | undefined ?? null;
   const mockData = schema ? buildMockData(schema) : {};
+  const adjustedSchema = schema ? adjustSchemaForMockData(schema, mockData) : null;
 
   const handleSelect = useCallback((name: string) => {
     setSelected(name);
@@ -339,8 +412,8 @@ function BehaviorsTab({ initialSelected }: { initialSelected?: string | null }) 
         </div>
         {schema && <BehaviorStateMachineInfo schema={schema} />}
         <div className={styles.livePreviewBox}>
-          {schema
-            ? <OrbitalPreview key={previewKey} schema={schema} mockData={mockData} />
+          {adjustedSchema
+            ? <OrbitalPreview key={previewKey} schema={adjustedSchema} mockData={mockData} />
             : <div className={styles.previewEmpty}>Select a behavior</div>
           }
         </div>

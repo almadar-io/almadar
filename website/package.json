@@ -38,7 +38,7 @@
     "@almadar/core": "^2.2.0",
     "@almadar/evaluator": "^2.3.1",
     "@almadar/patterns": "^2.6.2",
-    "@almadar/ui": "^2.9.1",
+    "@almadar/ui": "^2.9.4",
     "@docusaurus/core": "^3.7.0",
     "@docusaurus/plugin-google-gtag": "^3.9.2",
     "@docusaurus/preset-classic": "^3.7.0",
