@@ -25,9 +25,9 @@ interface SiteConfig {
 
 const SITE_ICONS: Record<string, { logo: string; favicon: string }> = {
   main: { logo: "img/almadar-icon.png", favicon: "img/favicon.ico" },
-  orb: { logo: "img/almadar-icon.png", favicon: "img/favicon.ico" },
-  studio: { logo: "img/almadar-icon.png", favicon: "img/favicon.ico" },
-  services: { logo: "img/almadar-icon.png", favicon: "img/favicon.ico" },
+  orb: { logo: "img/orb-icon.png", favicon: "img/favicon.ico" },
+  studio: { logo: "img/studio-icon.png", favicon: "img/favicon.ico" },
+  services: { logo: "img/services-icon.png", favicon: "img/favicon.ico" },
 };
 
 const PRODUCT_SITES = [
