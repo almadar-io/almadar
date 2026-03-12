@@ -6,6 +6,7 @@ import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
 import styles from "./index.module.css";
+import { PenLine, Check, Rocket, Code2, Palette, Cloud } from "lucide-react";
 
 const AlmadarChat = React.lazy(() => import("@shared/AlmadarChat"));
 
@@ -62,17 +63,17 @@ function WorldModelSection() {
         </div>
         <div className={styles.ideaGrid}>
           <div className={styles.ideaCard}>
-            <div className={styles.ideaIcon}>&#x270D;</div>
+            <div className={styles.ideaIcon}><PenLine size={32} strokeWidth={1.5} /></div>
             <h3><Translate id="home.idea.describe">Describe</Translate></h3>
             <p><Translate id="home.idea.describe.text">Write what your system does in Orb, a formal language for application behavior.</Translate></p>
           </div>
           <div className={styles.ideaCard}>
-            <div className={styles.ideaIcon}>&#x2713;</div>
+            <div className={styles.ideaIcon}><Check size={32} strokeWidth={1.5} /></div>
             <h3><Translate id="home.idea.prove">Prove</Translate></h3>
             <p><Translate id="home.idea.prove.text">The compiler validates every possible state before a single line of code runs.</Translate></p>
           </div>
           <div className={styles.ideaCard}>
-            <div className={styles.ideaIcon}>&#x1F680;</div>
+            <div className={styles.ideaIcon}><Rocket size={32} strokeWidth={1.5} /></div>
             <h3><Translate id="home.idea.deploy">Deploy</Translate></h3>
             <p><Translate id="home.idea.deploy.text">One model compiles to web, mobile, or any future platform. The model is the product.</Translate></p>
           </div>
@@ -84,6 +85,7 @@ function WorldModelSection() {
 
 const PILLARS = [
   {
+    icon: <Code2 size={32} strokeWidth={1.5} />,
     titleId: "home.pillars.language.title",
     titleDefault: "Orb",
     descId: "home.pillars.language.desc",
@@ -93,6 +95,7 @@ const PILLARS = [
     linkDefault: "Explore the Language",
   },
   {
+    icon: <Palette size={32} strokeWidth={1.5} />,
     titleId: "home.pillars.studio.title",
     titleDefault: "Almadar Studio",
     descId: "home.pillars.studio.desc",
@@ -102,6 +105,7 @@ const PILLARS = [
     linkDefault: "Try Studio",
   },
   {
+    icon: <Cloud size={32} strokeWidth={1.5} />,
     titleId: "home.pillars.services.title",
     titleDefault: "Almadar Services",
     descId: "home.pillars.services.desc",
@@ -124,6 +128,7 @@ function PillarsSection() {
         <div className={styles.pillarsGrid}>
           {PILLARS.map((p) => (
             <div key={p.titleId} className={styles.pillarCard}>
+              <div style={{ marginBottom: "1rem" }}>{p.icon}</div>
               <h3><Translate id={p.titleId}>{p.titleDefault}</Translate></h3>
               <p><Translate id={p.descId}>{p.descDefault}</Translate></p>
               <Link href={p.href} className={styles.pillarLink}>

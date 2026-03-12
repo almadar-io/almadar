@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import BrowserOnly from "@docusaurus/BrowserOnly";
 import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
+import { CornerDownLeft } from "lucide-react";
 import Translate, { translate } from "@docusaurus/Translate";
 import {
   PLAYGROUND_EXAMPLES,
@@ -348,7 +349,9 @@ export function PlaygroundCore() {
             disabled={isRunning}
           >
             <Translate id="playground.run">Run</Translate>
-            <span className={styles.shortcut}>Ctrl+↵</span>
+            <span className={styles.shortcut} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+              Ctrl<CornerDownLeft size={14} strokeWidth={2} />
+            </span>
           </button>
         </div>
       </div>
@@ -460,7 +463,9 @@ function RenderUICore() {
             disabled={isRunning}
           >
             <Translate id="playground.run">Run</Translate>
-            <span className={styles.shortcut}>Ctrl+&#x21B5;</span>
+            <span className={styles.shortcut} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+              Ctrl<CornerDownLeft size={14} strokeWidth={2} />
+            </span>
           </button>
         </div>
       </div>

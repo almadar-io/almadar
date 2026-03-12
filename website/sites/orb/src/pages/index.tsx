@@ -6,6 +6,7 @@ import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
 import BrowserOnly from "@docusaurus/BrowserOnly";
 import CodeBlock from "@theme/CodeBlock";
+import { MonitorSmartphone, ShieldCheck, Bot } from "lucide-react";
 import styles from "./index.module.css";
 
 function Hero() {
@@ -94,14 +95,17 @@ function ExampleSection() {
 
 const FEATURES = [
   {
+    icon: <MonitorSmartphone size={32} strokeWidth={1.5} />,
     titleId: "orb.why.compile.title", title: "Write Once, Compile Anywhere",
     descId: "orb.why.compile.desc", desc: "One .orb model compiles to web, mobile, desktop, or any future platform. The behavior is platform-independent.",
   },
   {
+    icon: <ShieldCheck size={32} strokeWidth={1.5} />,
     titleId: "orb.why.correct.title", title: "Provably Correct",
     descId: "orb.why.correct.desc", desc: "The compiler validates every state machine transition, every guard, every effect. If it compiles, it works.",
   },
   {
+    icon: <Bot size={32} strokeWidth={1.5} />,
     titleId: "orb.why.ai.title", title: "AI Generates It Natively",
     descId: "orb.why.ai.desc", desc: "Structured, formal, and compact. AI models generate valid .orb programs more reliably than arbitrary code.",
   },
@@ -119,6 +123,7 @@ function WhySection() {
         <div className={styles.featuresGrid}>
           {FEATURES.map((f) => (
             <div key={f.titleId} className={styles.featureCard}>
+              <div style={{ marginBottom: "1rem" }}>{f.icon}</div>
               <h3><Translate id={f.titleId}>{f.title}</Translate></h3>
               <p><Translate id={f.descId}>{f.desc}</Translate></p>
             </div>

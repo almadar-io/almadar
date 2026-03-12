@@ -21,6 +21,7 @@ import {
   type BuilderSSEEvent,
   type BuilderStreamResponse,
 } from './builderApi';
+import { Zap, AlertTriangle } from 'lucide-react';
 import styles from './AlmadarBuilder.module.css';
 
 // ============================================================================
@@ -230,7 +231,9 @@ export function AlmadarBuilder({
       {/* Header */}
       <div className={styles.header}>
         <div className={styles.headerLeft}>
-          <span className={styles.headerIcon}>&#x26A1;</span>
+          <span className={styles.headerIcon}>
+            <Zap size={20} strokeWidth={2} />
+          </span>
           <span className={styles.headerTitle}>
             {isEditMode ? 'Edit Schema' : 'Build'}
           </span>
@@ -280,7 +283,9 @@ export function AlmadarBuilder({
       {/* Error */}
       {error && status === 'error' && (
         <div className={styles.error}>
-          <span className={styles.errorIcon}>&#x26A0;</span>
+          <span className={styles.errorIcon}>
+            <AlertTriangle size={18} strokeWidth={2} style={{ display: 'block' }} />
+          </span>
           <span className={styles.errorText}>{error}</span>
         </div>
       )}

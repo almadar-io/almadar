@@ -4,6 +4,7 @@ import Link from "@docusaurus/Link";
 import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
+import { BrainCircuit, Server, Plug } from "lucide-react";
 import styles from "./index.module.css";
 
 function Hero() {
@@ -37,18 +38,21 @@ function Hero() {
 
 const LAYERS = [
   {
+    icon: <BrainCircuit size={32} strokeWidth={1.5} />,
     titleId: "services.layers.brains.title", title: "Brains",
     descId: "services.layers.brains.desc", desc: "LLM orchestration, memory management, session handling, skill agents, and the DeepAgent. The intelligence layer.",
     href: "/brains",
     linkId: "services.layers.brains.link", linkText: "AI Services",
   },
   {
+    icon: <Server size={32} strokeWidth={1.5} />,
     titleId: "services.layers.metal.title", title: "Metal",
     descId: "services.layers.metal.desc", desc: "Event bus, persistence, service discovery, storage, queues, authentication, and observability. The infrastructure layer.",
     href: "/metal",
     linkId: "services.layers.metal.link", linkText: "Compute Services",
   },
   {
+    icon: <Plug size={32} strokeWidth={1.5} />,
     titleId: "services.layers.integrations.title", title: "Integrations",
     descId: "services.layers.integrations.desc", desc: "Stripe, Twilio, GitHub, Email, YouTube, Docker, Redis. Pre-built connectors for the services your applications need.",
     href: "/integrations",
@@ -73,6 +77,7 @@ function LayersSection() {
         <div className={styles.layersGrid}>
           {LAYERS.map((layer) => (
             <div key={layer.titleId} className={styles.layerCard}>
+              <div style={{ marginBottom: "1rem" }}>{layer.icon}</div>
               <h3><Translate id={layer.titleId}>{layer.title}</Translate></h3>
               <p><Translate id={layer.descId}>{layer.desc}</Translate></p>
               <Link to={layer.href} className={styles.layerLink}>

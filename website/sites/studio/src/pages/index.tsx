@@ -5,13 +5,14 @@ import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
 import BrowserOnly from "@docusaurus/BrowserOnly";
+import { MessageSquare, Settings, Rocket, Bot, Palette, FileText, Search, Zap, Users } from "lucide-react";
 
 import styles from "./index.module.css";
 
 const steps = [
   {
     number: 1,
-    icon: "\u{1F4AC}",
+    icon: <MessageSquare size={32} strokeWidth={1.5} />,
     titleId: "studio.steps.describe.title",
     titleDefault: "Describe",
     descId: "studio.steps.describe.desc",
@@ -21,7 +22,7 @@ const steps = [
   },
   {
     number: 2,
-    icon: "\u{2699}\uFE0F",
+    icon: <Settings size={32} strokeWidth={1.5} />,
     titleId: "studio.steps.generate.title",
     titleDefault: "Generate",
     descId: "studio.steps.generate.desc",
@@ -31,7 +32,7 @@ const steps = [
   },
   {
     number: 3,
-    icon: "\u{1F680}",
+    icon: <Rocket size={32} strokeWidth={1.5} />,
     titleId: "studio.steps.deploy.title",
     titleDefault: "Deploy",
     descId: "studio.steps.deploy.desc",
@@ -43,7 +44,7 @@ const steps = [
 
 const features = [
   {
-    icon: "\u{1F916}",
+    icon: <Bot size={32} strokeWidth={1.5} />,
     titleId: "studio.feature.agent.title",
     titleDefault: "AI Agent",
     descId: "studio.feature.agent.desc",
@@ -51,7 +52,7 @@ const features = [
       "Describe what you want in plain language. The DeepAgent generates a complete .orb program with entities, traits, and pages.",
   },
   {
-    icon: "\u{1F3A8}",
+    icon: <Palette size={32} strokeWidth={1.5} />,
     titleId: "studio.feature.editor.title",
     titleDefault: "Visual Editor",
     descId: "studio.feature.editor.desc",
@@ -59,7 +60,7 @@ const features = [
       "Edit schemas visually with a drag-and-drop interface, or switch to code mode with a full Monaco editor.",
   },
   {
-    icon: "\u{1F4DC}",
+    icon: <FileText size={32} strokeWidth={1.5} />,
     titleId: "studio.feature.git.title",
     titleDefault: "Git History",
     descId: "studio.feature.git.desc",
@@ -67,7 +68,7 @@ const features = [
       "Every change is a commit. Browse the full version history, compare diffs, and roll back to any point.",
   },
   {
-    icon: "\u{1F50D}",
+    icon: <Search size={32} strokeWidth={1.5} />,
     titleId: "studio.feature.preview.title",
     titleDefault: "Live Preview",
     descId: "studio.feature.preview.desc",
@@ -75,7 +76,7 @@ const features = [
       "See your application running in real time as you build. Changes compile instantly in the background.",
   },
   {
-    icon: "\u26A1",
+    icon: <Zap size={32} strokeWidth={1.5} />,
     titleId: "studio.feature.deploy.title",
     titleDefault: "One-Click Deploy",
     descId: "studio.feature.deploy.desc",
@@ -83,7 +84,7 @@ const features = [
       "Deploy to production with Firebase App Hosting. Frontend, backend, and database provisioned automatically.",
   },
   {
-    icon: "\u{1F465}",
+    icon: <Users size={32} strokeWidth={1.5} />,
     titleId: "studio.feature.collab.title",
     titleDefault: "Team Collaboration",
     descId: "studio.feature.collab.desc",

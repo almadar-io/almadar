@@ -1,10 +1,10 @@
 :root {
-    --site-primary: #c9a227;
-    --site-primary-light: #e8c547;
-    --site-primary-dark: #8b6914;
-    --site-accent: #14b8a6;
-    --site-bg: #faf8f5;
-    --site-gradient: linear-gradient(135deg, #c9a227 0%, #e8c547 100%);
+    --site-primary: #14b8a6;
+    --site-primary-light: #2dd4bf;
+    --site-primary-dark: #0d9488;
+    --site-accent: #c9a227;
+    --site-bg: #f8fafc;
+    --site-gradient: linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%);
 
     /* Main site specific */
     --almadar-sand-gold: #c9a227;
@@ -15,8 +15,8 @@
 }
 
 [data-theme="dark"] {
-    --site-primary: #e8c547;
-    --site-primary-light: #fbbf24;
-    --site-primary-dark: #c9a227;
+    --site-primary: #2dd4bf;
+    --site-primary-light: #5eead4;
+    --site-primary-dark: #14b8a6;
     --site-bg: #0f172a;
 }

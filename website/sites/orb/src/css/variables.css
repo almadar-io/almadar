@@ -3,7 +3,7 @@
     --site-primary-light: #22d3ee;
     --site-primary-dark: #0891b2;
     --site-accent: #10b981;
-    --site-bg: #ffffff;
+    --site-bg: #f8fafc;
     --site-gradient: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
 
     --almadar-sand-gold: #c9a227;
@@ -16,7 +16,7 @@
     --site-primary: #22d3ee;
     --site-primary-light: #67e8f9;
     --site-primary-dark: #06b6d4;
-    --site-bg: #0a0a0a;
+    --site-bg: #0f172a;
     --ifm-background-color: #0a0a0a;
     --ifm-background-surface-color: #171717;
 }

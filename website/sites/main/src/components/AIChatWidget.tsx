@@ -13,6 +13,7 @@ import {
   CardContent,
   Input,
 } from "@almadar/ui";
+import { X } from "lucide-react";
 import styles from "./AIChatWidget.module.css";
 
 // ─── Types ────────────────────────────────────────────────────────────────
@@ -294,7 +295,7 @@ export default function AIChatWidget(): ReactNode {
               aria-label="Close"
               className="text-[#64748b] hover:text-[#f8fafc]"
             >
-              &#x2715;
+              <X size={16} strokeWidth={2} />
             </Button>
           </HStack>
 
