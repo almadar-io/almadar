@@ -45,7 +45,7 @@ function CLISection() {
           </div>
           <div className="col col--6">
             <img 
-              src="/img/downloads-platforms.webp" 
+              src="/img/downloads-platforms.png" 
               alt="Supported Platforms" 
               style={{ maxWidth: "100%", height: "auto", display: "block", margin: "0 auto" }} 
             />

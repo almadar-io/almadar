@@ -2,6 +2,7 @@ import { themes as prismThemes } from "prism-react-renderer";
 import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 import path from "path";
+import webpack from "webpack";
 
 interface SiteConfig {
   site: 'main' | 'orb' | 'studio' | 'services';
@@ -104,12 +105,14 @@ export function createConfig(opts: SiteConfig): Config {
             return {
               resolve: {
                 alias: {
-                  // Stub out components that depend on react-router v6 (Docusaurus uses v5)
-                  'react-router-dom': path.resolve(__dirname, '../stubs/react-router-dom-stub.js'),
                   // Shared components accessible from all sites
                   '@shared': path.resolve(__dirname, '../components'),
                   // Resolve @almadar/std from local monorepo (not published to npm)
                   '@almadar/std': path.resolve(__dirname, '../../../packages/almadar-std'),
+                  // Deduplicate react-router: force all imports to the website's
+                  // single v5 copy so Router context is shared across the bundle.
+                  'react-router': path.resolve(__dirname, '../../node_modules/react-router'),
+                  'react-router-dom': path.resolve(__dirname, '../../node_modules/react-router-dom'),
                 },
                 // Node core modules are not available in the browser; stub them out
                 // (almadar-runtime pulls in fs/path for its Node-side external loader)
@@ -118,6 +121,20 @@ export function createConfig(opts: SiteConfig): Config {
                   path: false,
                 },
               },
+              plugins: [
+                new webpack.NormalModuleReplacementPlugin(
+                  /^react-router(-dom)?$/,
+                  function (resource: any) {
+                    if (
+                      resource.context &&
+                      (resource.context.includes('/@almadar/ui/') ||
+                        resource.context.includes('/almadar-ui/'))
+                    ) {
+                      resource.request = path.resolve(__dirname, '../stubs/react-router-dom-stub.js');
+                    }
+                  }
+                ),
+              ],
               module: {
                 rules: [
                   // Allow ESM imports without extensions (react-syntax-highlighter)

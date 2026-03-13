@@ -42,7 +42,7 @@ export default function NotFound(): React.ReactNode {
     <Layout title="Page not found">
       <main style={containerStyle}>
         <img 
-          src="/img/404-illustration.webp" 
+          src="/img/404-illustration.png" 
           alt="404 Illustration" 
           style={{ width: "100%", maxWidth: "400px", marginBottom: "1.5rem" }} 
         />

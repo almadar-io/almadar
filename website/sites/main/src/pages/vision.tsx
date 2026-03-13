@@ -18,7 +18,7 @@ function Hero() {
             Software that coexists, coordinates, and evolves together.
           </Translate>
         </p>
-        <img src="/img/vision-hero.webp" alt="" className={styles.heroImage} loading="eager" />
+        <img src="/img/vision-hero.png" alt="" className={styles.heroImage} loading="eager" style={{ maxWidth: "400px", display: "block", margin: "2rem auto 0 auto" }} />
       </div>
     </header>
   );
@@ -94,7 +94,7 @@ function WorldModelsSection() {
               </p>
             </div>
             <div className="col col--6">
-              <img src="/img/vision-composable.webp" alt="Composable world models" className={styles.sectionImage} loading="lazy" style={{ margin: 0 }} />
+              <img src="/img/vision-composable.png" alt="Composable world models" className={styles.sectionImage} loading="lazy" style={{ margin: 0 }} />
             </div>
           </div>
         </article>

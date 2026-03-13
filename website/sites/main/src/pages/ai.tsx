@@ -79,7 +79,7 @@ function PipelineSection() {
             </div>
           </div>
           <div className="col col--5">
-            <img src="/img/ai-pipeline.webp" alt="Neural pipeline" className={styles.sectionImage} loading="lazy" style={{ margin: 0 }} />
+            <img src="/img/ai-pipeline.png" alt="Neural pipeline" className={styles.sectionImage} loading="lazy" style={{ margin: 0, maxWidth: "100%", display: "block" }} />
           </div>
         </div>
       </div>
@@ -112,7 +112,7 @@ function CostSection() {
             </div>
           </div>
           <div className="col col--6">
-            <img src="/img/ai-cost.webp" alt="Cost comparison" className={styles.sectionImage} loading="lazy" style={{ margin: 0 }} />
+            <img src="/img/ai-cost.png" alt="Cost comparison" className={styles.sectionImage} loading="lazy" style={{ margin: 0 }} />
           </div>
         </div>
       </div>
