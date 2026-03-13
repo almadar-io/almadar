@@ -40,7 +40,7 @@
     "@almadar/patterns": "^2.6.2",
     "@almadar/runtime": "^2.0.3",
     "@almadar/std": "^2.7.1",
-    "@almadar/ui": "^2.11.7",
+    "@almadar/ui": "^2.11.9",
     "@docusaurus/core": "^3.7.0",
     "@docusaurus/plugin-google-gtag": "^3.9.2",
     "@docusaurus/preset-classic": "^3.7.0",
