@@ -72,21 +72,27 @@ function ExampleSection() {
   return (
     <section className={styles.section}>
       <div className="container">
-        <div className={styles.sectionHeader}>
-          <Heading as="h2">
-            <Translate id="orb.example.title">One File, Full Application</Translate>
-          </Heading>
-          <p className={styles.sectionSubtitle}>
-            <Translate id="orb.example.subtitle">
-              A complete task manager in a single .orb file. The compiler generates frontend, backend, database, and API.
-            </Translate>
-          </p>
-        </div>
-        <img src="/img/hero-code-to-app.webp" alt="Code to app compilation" className={styles.sectionImage} loading="lazy" />
-        <div className={styles.codeWrapper}>
-          <CodeBlock language="json" title="task-manager.orb">
-            {EXAMPLE_CODE}
-          </CodeBlock>
+        <div className="row align-items--center">
+          <div className="col col--5">
+            <div className={styles.sectionHeader} style={{ textAlign: "left", marginBottom: 0 }}>
+              <Heading as="h2">
+                <Translate id="orb.example.title">One File, Full Application</Translate>
+              </Heading>
+              <p className={styles.sectionSubtitle} style={{ margin: "1rem 0" }}>
+                <Translate id="orb.example.subtitle">
+                  A complete task manager in a single .orb file. The compiler generates frontend, backend, database, and API.
+                </Translate>
+              </p>
+            </div>
+            <img src="/img/hero-code-to-app.webp" alt="Code to app compilation" className={styles.sectionImage} loading="lazy" style={{ marginBottom: "2rem" }} />
+          </div>
+          <div className="col col--7">
+            <div className={styles.codeWrapper}>
+              <CodeBlock language="json" title="task-manager.orb">
+                {EXAMPLE_CODE}
+              </CodeBlock>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -138,17 +144,23 @@ function StdLibSection() {
   return (
     <section className={styles.section}>
       <div className="container">
-        <div className={styles.sectionHeader}>
-          <Heading as="h2">
-            <Translate id="orb.stdlib.title">Standard Library</Translate>
-          </Heading>
-          <p className={styles.sectionSubtitle}>
-            <Translate id="orb.stdlib.subtitle">
-              103 production-quality behaviors across 18 domains. Commerce, healthcare, education, finance, scheduling, workflow, and more.
-            </Translate>
-          </p>
+        <div className="row align-items--center">
+          <div className="col col--4">
+            <div className={styles.sectionHeader} style={{ textAlign: "left", marginBottom: 0 }}>
+              <Heading as="h2">
+                <Translate id="orb.stdlib.title">Standard Library</Translate>
+              </Heading>
+              <p className={styles.sectionSubtitle} style={{ margin: "1rem 0" }}>
+                <Translate id="orb.stdlib.subtitle">
+                  103 production-quality behaviors across 18 domains. Commerce, healthcare, education, finance, scheduling, workflow, and more.
+                </Translate>
+              </p>
+            </div>
+          </div>
+          <div className="col col--8">
+            <img src="/img/stdlib-domains.webp" alt="Standard Library Domains" className={styles.sectionImage} loading="lazy" style={{ margin: 0 }} />
+          </div>
         </div>
-        <img src="/img/stdlib-domains.webp" alt="18 standard library domains" className={styles.sectionImage} loading="lazy" />
         <div className={styles.domainGrid}>
           {["Commerce", "Healthcare", "Education", "Finance", "Scheduling", "Workflow", "Social", "Media", "Gaming", "IoT", "CRM", "Analytics", "Communication", "Content", "Location", "HR", "Legal", "Real Estate"].map((domain) => (
             <span key={domain} className={styles.domainTag}>{domain}</span>

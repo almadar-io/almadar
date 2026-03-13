@@ -77,20 +77,26 @@ function WorldModelsSection() {
     <section className={styles.section}>
       <div className="container">
         <article className={styles.article}>
-          <Heading as="h2">
-            <Translate id="vision.models.title">Composable World Models</Translate>
-          </Heading>
-          <img src="/img/vision-composable.webp" alt="Composable world models" className={styles.sectionImage} loading="lazy" />
-          <p>
-            <Translate id="vision.models.p1">
-              A world model is a formal description of how a domain works: what exists, how it changes, what the rules are. In .orb, a healthcare scheduling system and an inventory tracker are both world models. They can be validated independently and composed together.
-            </Translate>
-          </p>
-          <p>
-            <Translate id="vision.models.p2">
-              This is the long game. When enough domains have formal models, software stops being a collection of isolated programs and becomes a shared, interoperable digital reality. Each model is a building block. Each composition creates something new.
-            </Translate>
-          </p>
+          <div className="row align-items--center">
+            <div className="col col--6">
+              <Heading as="h2">
+                <Translate id="vision.models.title">Composable World Models</Translate>
+              </Heading>
+              <p>
+                <Translate id="vision.models.p1">
+                  A world model is a formal description of how a domain works: what exists, how it changes, what the rules are. In .orb, a healthcare scheduling system and an inventory tracker are both world models. They can be validated independently and composed together.
+                </Translate>
+              </p>
+              <p>
+                <Translate id="vision.models.p2">
+                  This is the long game. When enough domains have formal models, software stops being a collection of isolated programs and becomes a shared, interoperable digital reality. Each model is a building block. Each composition creates something new.
+                </Translate>
+              </p>
+            </div>
+            <div className="col col--6">
+              <img src="/img/vision-composable.webp" alt="Composable world models" className={styles.sectionImage} loading="lazy" style={{ margin: 0 }} />
+            </div>
+          </div>
         </article>
       </div>
     </section>

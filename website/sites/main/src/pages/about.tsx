@@ -43,25 +43,31 @@ function TeamSection() {
   return (
     <section className={styles.section}>
       <div className="container">
-        <div className={styles.sectionHeader}>
-          <Heading as="h2">
-            <Translate id="about.team.title">The Team</Translate>
-          </Heading>
-        </div>
-        <img src="/img/about-team.webp" alt="The Almadar team" className={styles.sectionImage} loading="lazy" />
-        <div className={styles.teamGrid}>
-          {TEAM.map((member) => (
-            <div key={member.name} className={styles.teamCard}>
-              <div className={styles.avatar}>{member.name.charAt(0)}</div>
-              <h3>{member.name}</h3>
-              <span className={styles.role}>
-                <Translate id={member.roleId}>{member.roleDefault}</Translate>
-              </span>
-              <p>
-                <Translate id={member.bioId}>{member.bioDefault}</Translate>
-              </p>
+        <div className="row align-items--center">
+          <div className="col col--6">
+            <div className={styles.sectionHeader} style={{ textAlign: "left", marginBottom: "2rem" }}>
+              <Heading as="h2">
+                <Translate id="about.team.title">The Team</Translate>
+              </Heading>
             </div>
-          ))}
+            <div className={styles.teamGrid}>
+              {TEAM.map((member) => (
+                <div key={member.name} className={styles.teamCard}>
+                  <div className={styles.avatar}>{member.name.charAt(0)}</div>
+                  <h3>{member.name}</h3>
+                  <span className={styles.role}>
+                    <Translate id={member.roleId}>{member.roleDefault}</Translate>
+                  </span>
+                  <p>
+                    <Translate id={member.bioId}>{member.bioDefault}</Translate>
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="col col--6">
+            <img src="/img/about-team.webp" alt="The Almadar team" className={styles.sectionImage} loading="lazy" style={{ margin: 0 }} />
+          </div>
         </div>
       </div>
     </section>

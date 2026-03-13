@@ -68,20 +68,26 @@ function IntegrationsGrid() {
   return (
     <section className={styles.section}>
       <div className="container">
-        <div className={styles.sectionHeader}>
-          <Heading as="h2">
-            <Translate id="integrations.catalog.title">Integration Catalog</Translate>
-          </Heading>
-        </div>
-        <img src="/img/integrations-connectors.webp" alt="Integration connectors" className={styles.sectionImage} loading="lazy" />
-        <div className={styles.integrationsGrid}>
-          {INTEGRATIONS.map((item) => (
-            <div key={item.titleId} className={styles.integrationCard}>
-              <span className={styles.integrationCategory}>{item.category}</span>
-              <h3><Translate id={item.titleId}>{item.title}</Translate></h3>
-              <p><Translate id={item.descId}>{item.desc}</Translate></p>
+        <div className="row align-items--center">
+          <div className="col col--6">
+            <div className={styles.sectionHeader} style={{ textAlign: "left", marginBottom: "2rem" }}>
+              <Heading as="h2">
+                <Translate id="integrations.catalog.title">Integration Catalog</Translate>
+              </Heading>
             </div>
-          ))}
+            <div className={styles.integrationsGrid}>
+              {INTEGRATIONS.map((item) => (
+                <div key={item.titleId} className={styles.integrationCard}>
+                  <span className={styles.integrationCategory}>{item.category}</span>
+                  <h3><Translate id={item.titleId}>{item.title}</Translate></h3>
+                  <p><Translate id={item.descId}>{item.desc}</Translate></p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="col col--6">
+            <img src="/img/integrations-connectors.webp" alt="Integration connectors" className={styles.sectionImage} loading="lazy" style={{ margin: 0 }} />
+          </div>
         </div>
       </div>
     </section>

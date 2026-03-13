@@ -61,19 +61,25 @@ function ServicesGrid() {
   return (
     <section className={styles.section}>
       <div className="container">
-        <div className={styles.sectionHeader}>
-          <Heading as="h2">
-            <Translate id="brains.services.title">AI Services</Translate>
-          </Heading>
-        </div>
-        <img src="/img/brains-orchestration.webp" alt="Agent orchestration" className={styles.sectionImage} loading="lazy" />
-        <div className={styles.servicesGrid}>
-          {SERVICES.map((svc) => (
-            <div key={svc.title} className={styles.serviceCard}>
-              <Heading as="h3">{svc.title}</Heading>
-              <p>{svc.desc}</p>
+        <div className="row align-items--center">
+          <div className="col col--6">
+            <div className={styles.sectionHeader} style={{ textAlign: "left", marginBottom: "2rem" }}>
+              <Heading as="h2">
+                <Translate id="brains.services.title">AI Services</Translate>
+              </Heading>
             </div>
-          ))}
+            <div className={styles.servicesGrid}>
+              {SERVICES.map((svc) => (
+                <div key={svc.title} className={styles.serviceCard}>
+                  <Heading as="h3">{svc.title}</Heading>
+                  <p>{svc.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="col col--6">
+            <img src="/img/brains-orchestration.webp" alt="Agent orchestration" className={styles.sectionImage} loading="lazy" style={{ margin: 0 }} />
+          </div>
         </div>
       </div>
     </section>

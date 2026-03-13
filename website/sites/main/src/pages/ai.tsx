@@ -57,24 +57,30 @@ function PipelineSection() {
   return (
     <section className={styles.section}>
       <div className="container">
-        <div className={styles.sectionHeader}>
-          <Heading as="h2">
-            <Translate id="ai.pipeline.title">Six Specialized Models</Translate>
-          </Heading>
-          <p className={styles.sectionSubtitle}>
-            <Translate id="ai.pipeline.subtitle">
-              Each model does one thing well. Together, they generate verified applications from descriptions.
-            </Translate>
-          </p>
-        </div>
-        <img src="/img/ai-pipeline.webp" alt="Neural pipeline" className={styles.sectionImage} loading="lazy" />
-        <div className={styles.pipelineGrid}>
-          {PIPELINE_STEPS.map((step) => (
-            <div key={step.titleId} className={styles.pipelineCard}>
-              <h3><Translate id={step.titleId}>{step.title}</Translate></h3>
-              <p><Translate id={step.descId}>{step.desc}</Translate></p>
+        <div className="row align-items--center">
+          <div className="col col--7">
+            <div className={styles.sectionHeader} style={{ textAlign: "left", marginBottom: "2rem" }}>
+              <Heading as="h2">
+                <Translate id="ai.pipeline.title">Six Specialized Models</Translate>
+              </Heading>
+              <p className={styles.sectionSubtitle} style={{ margin: "1rem 0" }}>
+                <Translate id="ai.pipeline.subtitle">
+                  Each model does one thing well. Together, they generate verified applications from descriptions.
+                </Translate>
+              </p>
             </div>
-          ))}
+            <div className={styles.pipelineGrid}>
+              {PIPELINE_STEPS.map((step) => (
+                <div key={step.titleId} className={styles.pipelineCard}>
+                  <h3><Translate id={step.titleId}>{step.title}</Translate></h3>
+                  <p><Translate id={step.descId}>{step.desc}</Translate></p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="col col--5">
+            <img src="/img/ai-pipeline.webp" alt="Neural pipeline" className={styles.sectionImage} loading="lazy" style={{ margin: 0 }} />
+          </div>
         </div>
       </div>
     </section>
@@ -85,23 +91,29 @@ function CostSection() {
   return (
     <section className={`${styles.section} ${styles.sectionAlt}`}>
       <div className="container">
-        <div className={styles.sectionHeader}>
-          <Heading as="h2">
-            <Translate id="ai.cost.title">10x Cheaper Than LLMs</Translate>
-          </Heading>
-        </div>
-        <img src="/img/ai-cost.webp" alt="Cost comparison" className={styles.sectionImage} loading="lazy" />
-        <div className={styles.costContent}>
-          <p>
-            <Translate id="ai.cost.p1">
-              General-purpose LLMs cost $0.50 to $5.00 per complex generation. Our specialized models cost $0.05 to $0.35 for the same task. That is a 10x to 15x reduction.
-            </Translate>
-          </p>
-          <p>
-            <Translate id="ai.cost.p2">
-              The savings come from focus. An LLM has to know everything about everything. Our models only need to understand application structure, a much smaller problem. Smaller models, faster inference, lower cost.
-            </Translate>
-          </p>
+        <div className="row align-items--center">
+          <div className="col col--6">
+            <div className={styles.sectionHeader} style={{ textAlign: "left", marginBottom: "2rem" }}>
+              <Heading as="h2">
+                <Translate id="ai.cost.title">10x Cheaper Than LLMs</Translate>
+              </Heading>
+            </div>
+            <div className={styles.costContent}>
+              <p>
+                <Translate id="ai.cost.p1">
+                  General-purpose LLMs cost $0.50 to $5.00 per complex generation. Our specialized models cost $0.05 to $0.35 for the same task. That is a 10x to 15x reduction.
+                </Translate>
+              </p>
+              <p>
+                <Translate id="ai.cost.p2">
+                  The savings come from focus. An LLM has to know everything about everything. Our models only need to understand application structure, a much smaller problem. Smaller models, faster inference, lower cost.
+                </Translate>
+              </p>
+            </div>
+          </div>
+          <div className="col col--6">
+            <img src="/img/ai-cost.webp" alt="Cost comparison" className={styles.sectionImage} loading="lazy" style={{ margin: 0 }} />
+          </div>
         </div>
       </div>
     </section>
