@@ -582,8 +582,8 @@
 
 .liveLayout {
     display: flex;
-    flex: 1;
     height: calc(100vh - 200px);
+    max-height: calc(100vh - 200px);
     min-height: 600px;
     overflow: hidden;
 }
@@ -710,6 +710,7 @@
 
 .liveRight {
     flex: 1;
+    min-height: 0; /* Allow flex child to shrink within parent's height */
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -848,8 +849,13 @@
 /* ─── Preview Box ────────────────────────────────────────────────────────── */
 
 .livePreviewBox {
-    flex: 1;
+    flex: 1 1 0; /* Grow to fill, but basis=0 prevents content from expanding */
+    height: 0; /* Force flex-allocated height only, not content height */
     overflow: auto;
+    position: relative;
+    /* Creates a containing block for position:fixed HUD elements so they
+       anchor to the preview box instead of the browser viewport */
+    transform: translateZ(0);
     /* Theme-driven properties (scoped equivalent of html/body from design-system index.css) */
     background-color: var(--color-background, #ffffff);
     color: var(--color-foreground, #18181b);
@@ -863,8 +869,8 @@
 }
 
 .runtimePreview {
-    min-height: 100%;
-    padding: 1.5rem;
+    height: 100%;
+    padding: 1rem;
 }
 
 .previewLoading {
