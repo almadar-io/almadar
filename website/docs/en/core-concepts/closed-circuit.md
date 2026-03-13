@@ -10,6 +10,8 @@ When a user clicks "Open Modal", the state machine transitions to `modalOpen` an
 
 This is a **broken circuit**.
 
+![Closed Circuit Diagram](/img/docs-closed-circuit.webp)
+
 ---
 
 ## The Closed Circuit Principle

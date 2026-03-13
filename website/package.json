@@ -38,6 +38,7 @@
     "@almadar/core": "^2.2.0",
     "@almadar/evaluator": "^2.4.0",
     "@almadar/patterns": "^2.6.2",
+    "@almadar/runtime": "^2.0.3",
     "@almadar/ui": "^2.11.1",
     "@docusaurus/core": "^3.7.0",
     "@docusaurus/plugin-google-gtag": "^3.9.2",

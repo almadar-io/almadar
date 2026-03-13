@@ -18,6 +18,13 @@ function Hero() {
             Get the CLI, editor extensions, and start building.
           </Translate>
         </p>
+        <div style={{ marginTop: "3rem", display: "flex", justifyContent: "center" }}>
+          <img 
+            src="/img/downloads-platforms.webp" 
+            alt="Supported Platforms" 
+            style={{ maxWidth: "100%", height: "auto", width: "800px" }} 
+          />
+        </div>
       </div>
     </header>
   );

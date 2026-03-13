@@ -41,6 +41,11 @@ export default function NotFound(): React.ReactNode {
   return (
     <Layout title="Page not found">
       <main style={containerStyle}>
+        <img 
+          src="/img/404-illustration.webp" 
+          alt="404 Illustration" 
+          style={{ width: "100%", maxWidth: "400px", marginBottom: "1.5rem" }} 
+        />
         <div style={headingStyle}>404</div>
         <div style={subtitleStyle}>Page not found</div>
         <p style={messageStyle}>

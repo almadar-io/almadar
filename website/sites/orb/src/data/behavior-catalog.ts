@@ -92804,7 +92804,7 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                                     "value": [
                                       "round",
                                       [
-                                        "average",
+                                        "array/avg",
                                         [
                                           "map",
                                           "@SensorReading",
@@ -93239,7 +93239,7 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                                     "value": [
                                       "round",
                                       [
-                                        "average",
+                                        "array/avg",
                                         [
                                           "map",
                                           "@SensorReading",
@@ -94319,7 +94319,7 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
               "transitions": [
                 {
                   "from": "loading",
-                  "to": "loading",
+                  "to": "displaying",
                   "event": "INIT",
                   "effects": [
                     [
@@ -94344,6 +94344,13 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                                 "type": "typography",
                                 "variant": "h2",
                                 "content": "Dashboard"
+                              },
+                              {
+                                "type": "button",
+                                "label": "Refresh",
+                                "icon": "refresh-cw",
+                                "variant": "secondary",
+                                "action": "REFRESH"
                               }
                             ]
                           },
@@ -94351,8 +94358,56 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                             "type": "divider"
                           },
                           {
-                            "type": "loading-state",
-                            "title": "Loading metrics..."
+                            "type": "simple-grid",
+                            "cols": 4,
+                            "gap": "md",
+                            "children": [
+                              {
+                                "type": "card",
+                                "children": [
+                                  {
+                                    "type": "stat-display",
+                                    "label": "Total Metrics",
+                                    "icon": "hash",
+                                    "entity": "StatMetric"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "card",
+                                "children": [
+                                  {
+                                    "type": "stat-display",
+                                    "label": "Active Trends",
+                                    "icon": "trending-up",
+                                    "entity": "StatMetric"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "divider"
+                          },
+                          {
+                            "type": "data-list",
+                            "entity": "StatMetric",
+                            "emptyTitle": "No metrics yet",
+                            "emptyDescription": "Refresh to load metrics.",
+                            "columns": [
+                              {
+                                "field": "name",
+                                "label": "Metric"
+                              },
+                              {
+                                "field": "value",
+                                "label": "Value"
+                              },
+                              {
+                                "field": "unit",
+                                "label": "Unit"
+                              }
+                            ]
                           }
                         ]
                       }
