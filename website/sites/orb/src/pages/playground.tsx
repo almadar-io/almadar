@@ -3,11 +3,14 @@ import type { ReactNode } from "react";
 import BrowserOnly from "@docusaurus/BrowserOnly";
 import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
-import { Search } from "lucide-react";
+import { Search, Sun, Moon } from "lucide-react";
 import { translate } from "@docusaurus/Translate";
 import { BEHAVIOR_CATALOG } from "../data/behavior-catalog";
 import { MODULE_CATALOG } from "../data/module-catalog";
 import styles from "./playground.module.css";
+
+// Load all theme CSS so data-theme attributes resolve to actual variables
+import "../../../../src/design-systems/almadar-ui/themes/index.css";
 
 // ─── Runtime loader (shared) ──────────────────────────────────────────────────
 
@@ -40,7 +43,9 @@ interface RuntimeComponents {
   UISlotProvider: React.ComponentType<{ children: ReactNode }>;
   SlotsProvider: React.ComponentType<{ children: ReactNode }>;
   EntitySchemaProvider: React.ComponentType<{ entities: unknown[]; children: ReactNode }>;
+  VerificationProvider: React.ComponentType<{ children: ReactNode; enabled?: boolean }>;
   UISlotRenderer: React.ComponentType<{ includeHud?: boolean; includeFloating?: boolean }>;
+  RuntimeDebugger: React.ComponentType<{ mode?: 'floating' | 'inline'; defaultCollapsed?: boolean; defaultTab?: string; schema?: Record<string, unknown>; className?: string }>;
   useResolvedSchema: (schema: unknown) => { page: unknown; traits: unknown[]; allEntities: Map<string, unknown> };
   useTraitStateMachine: (traits: unknown[], actions: unknown, opts?: unknown) => { sendEvent: (event: string, payload?: Record<string, unknown>) => void };
   useSlotsActions: () => unknown;
@@ -63,7 +68,9 @@ async function loadRuntime(): Promise<RuntimeComponents> {
     UISlotProvider: context.UISlotProvider,
     SlotsProvider: runtime.SlotsProvider,
     EntitySchemaProvider: runtime.EntitySchemaProvider,
+    VerificationProvider: providers.VerificationProvider,
     UISlotRenderer: components.UISlotRenderer,
+    RuntimeDebugger: components.RuntimeDebugger,
     useResolvedSchema: runtime.useResolvedSchema,
     useTraitStateMachine: runtime.useTraitStateMachine,
     useSlotsActions: runtime.useSlotsActions,
@@ -142,15 +149,17 @@ function TraitInitializer({ rt, traits }: { rt: RuntimeComponents; traits: unkno
 function SchemaRunner({ rt, schema, mockData }: { rt: RuntimeComponents; schema: unknown; mockData: Record<string, unknown[]> }) {
   const { traits, allEntities } = rt.useResolvedSchema(schema);
   return (
-    <rt.SlotsProvider>
-      <rt.EntitySchemaProvider entities={Array.from(allEntities.values())}>
-        <TraitInitializer rt={rt} traits={traits} />
-        <SlotBridge rt={rt} />
-        <div className={styles.runtimePreview}>
-          <rt.UISlotRenderer includeHud includeFloating />
-        </div>
-      </rt.EntitySchemaProvider>
-    </rt.SlotsProvider>
+    <rt.VerificationProvider enabled>
+      <rt.SlotsProvider>
+        <rt.EntitySchemaProvider entities={Array.from(allEntities.values())}>
+          <TraitInitializer rt={rt} traits={traits} />
+          <SlotBridge rt={rt} />
+          <div className={styles.runtimePreview}>
+            <rt.UISlotRenderer includeHud includeFloating />
+          </div>
+        </rt.EntitySchemaProvider>
+      </rt.SlotsProvider>
+    </rt.VerificationProvider>
   );
 }
 
@@ -171,6 +180,63 @@ function OrbitalPreview({ schema, mockData }: { schema: unknown; mockData: Recor
         <SchemaRunner rt={rt} schema={schema} mockData={mockData} />
       </rt.UISlotProvider>
     </rt.OrbitalProvider>
+  );
+}
+
+// ─── Theme Options ───────────────────────────────────────────────────────────
+
+const THEME_OPTIONS = [
+  { value: "wireframe", label: "Wireframe" },
+  { value: "minimalist", label: "Minimalist" },
+  { value: "almadar", label: "Almadar" },
+  { value: "trait-wars", label: "Trait Wars" },
+  { value: "ocean", label: "Ocean" },
+  { value: "forest", label: "Forest" },
+  { value: "sunset", label: "Sunset" },
+  { value: "lavender", label: "Lavender" },
+  { value: "rose", label: "Rose" },
+  { value: "slate", label: "Slate" },
+  { value: "ember", label: "Ember" },
+  { value: "midnight", label: "Midnight" },
+  { value: "sand", label: "Sand" },
+  { value: "neon", label: "Neon" },
+  { value: "arctic", label: "Arctic" },
+  { value: "copper", label: "Copper" },
+];
+
+function ThemeControls({
+  theme,
+  mode,
+  onThemeChange,
+  onModeToggle,
+}: {
+  theme: string;
+  mode: "light" | "dark";
+  onThemeChange: (t: string) => void;
+  onModeToggle: () => void;
+}) {
+  return (
+    <div className={styles.themeControls}>
+      <select
+        value={theme}
+        onChange={(e) => onThemeChange(e.target.value)}
+        className={styles.themeSelect}
+        title="Select theme"
+      >
+        {THEME_OPTIONS.map((t) => (
+          <option key={t.value} value={t.value}>
+            {t.label}
+          </option>
+        ))}
+      </select>
+      <button
+        onClick={onModeToggle}
+        className={styles.modeToggle}
+        title={mode === "light" ? "Switch to dark mode" : "Switch to light mode"}
+      >
+        {mode === "light" ? <Sun size={14} /> : <Moon size={14} />}
+      </button>
+    </div>
   );
 }
 
@@ -392,13 +458,33 @@ function BehaviorsTab({ initialSelected }: { initialSelected?: string | null }) 
     initialSelected && BEHAVIOR_CATALOG[initialSelected] ? initialSelected : "std-cart"
   );
   const [previewKey, setPreviewKey] = useState(0);
+  const [selectedTheme, setSelectedTheme] = useState("wireframe");
+  const [selectedMode, setSelectedMode] = useState<"light" | "dark">("light");
+  const [useMockData, setUseMockData] = useState(true);
+  const [rt, setRt] = useState<RuntimeComponents | null>(null);
+
+  // Load runtime for RuntimeDebugger
+  useEffect(() => {
+    loadRuntime().then(setRt).catch(() => { /* handled by OrbitalPreview */ });
+  }, []);
 
   const schema = BEHAVIOR_CATALOG[selected] as Record<string, unknown> | undefined ?? null;
   const mockData = schema ? buildMockData(schema) : {};
-  const adjustedSchema = schema ? adjustSchemaForMockData(schema, mockData) : null;
+  const adjustedSchema = useMockData && schema ? adjustSchemaForMockData(schema, mockData) : schema;
+
+  const appliedTheme = `${selectedTheme}-${selectedMode}`;
 
   const handleSelect = useCallback((name: string) => {
     setSelected(name);
+    setPreviewKey((k) => k + 1);
+  }, []);
+
+  const handleModeToggle = useCallback(() => {
+    setSelectedMode((m) => (m === "light" ? "dark" : "light"));
+  }, []);
+
+  const handleMockDataToggle = useCallback(() => {
+    setUseMockData((v) => !v);
     setPreviewKey((k) => k + 1);
   }, []);
 
@@ -407,16 +493,46 @@ function BehaviorsTab({ initialSelected }: { initialSelected?: string | null }) 
       <Picker items={BEHAVIOR_LIST} selected={selected} onSelect={handleSelect} getCategory={getBehaviorCategory} />
       <div className={styles.liveRight}>
         <div className={styles.liveHeader}>
-          <div className={styles.liveBehaviorName}>{selected}</div>
-          {schema && <div className={styles.liveBehaviorDesc}>{(schema.description as string) || ""}</div>}
+          <div className={styles.liveHeaderInfo}>
+            <div className={styles.liveBehaviorName}>{selected}</div>
+            {schema && <div className={styles.liveBehaviorDesc}>{(schema.description as string) || ""}</div>}
+          </div>
+          <ThemeControls
+            theme={selectedTheme}
+            mode={selectedMode}
+            onThemeChange={setSelectedTheme}
+            onModeToggle={handleModeToggle}
+          />
         </div>
         {schema && <BehaviorStateMachineInfo schema={schema} />}
-        <div className={styles.livePreviewBox}>
+        {schema && (
+          <div className={styles.mockDataBar}>
+            <label className={styles.mockDataToggle}>
+              <input
+                type="checkbox"
+                checked={useMockData}
+                onChange={handleMockDataToggle}
+              />
+              <span className={styles.mockDataToggleLabel}>Auto-fill initial state</span>
+            </label>
+          </div>
+        )}
+        <div className={styles.livePreviewBox} data-theme={appliedTheme}>
           {adjustedSchema
-            ? <OrbitalPreview key={previewKey} schema={adjustedSchema} mockData={mockData} />
+            ? <OrbitalPreview key={previewKey} schema={adjustedSchema} mockData={useMockData ? mockData : {}} />
             : <div className={styles.previewEmpty}>Select a behavior</div>
           }
         </div>
+        {rt && (
+          <div className={styles.debuggerContainer}>
+            <rt.RuntimeDebugger
+              mode="inline"
+              defaultCollapsed={false}
+              defaultTab="dispatch"
+              schema={schema as Record<string, unknown> | undefined}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
