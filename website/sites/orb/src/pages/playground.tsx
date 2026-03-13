@@ -527,7 +527,7 @@ function BehaviorsTab({ initialSelected }: { initialSelected?: string | null }) 
           <div className={styles.debuggerContainer}>
             <rt.RuntimeDebugger
               mode="inline"
-              defaultCollapsed={false}
+              defaultCollapsed
               defaultTab="dispatch"
               schema={schema as Record<string, unknown> | undefined}
             />
