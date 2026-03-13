@@ -162,9 +162,6 @@
     --focus-ring-offset: 2px;
     --focus-ring-color: #c9a84c;
 
-    /* Apply background and foreground colors */
-    background-color: var(--color-background);
-    color: var(--color-foreground);
 }
 
 /* ==========================================================================
@@ -321,7 +318,4 @@
     --focus-ring-offset: 2px;
     --focus-ring-color: #9e7e1e;
 
-    /* Apply background and foreground colors */
-    background-color: var(--color-background);
-    color: var(--color-foreground);
 }

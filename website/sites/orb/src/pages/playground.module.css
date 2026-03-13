@@ -1154,6 +1154,6 @@
     max-height: 240px;
     overflow: auto;
     border-top: 1px solid #1e293b;
-    background: var(--color-background, #ffffff);
-    color: var(--color-foreground, #18181b);
+    background: #0a0f1a;
+    color: #e2e8f0;
 }
