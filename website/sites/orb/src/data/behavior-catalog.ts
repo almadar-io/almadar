@@ -8060,6 +8060,116 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                 {
                   "from": "Fresh",
                   "to": "Fresh",
+                  "event": "INIT",
+                  "effects": [
+                    [
+                      "fetch",
+                      "CacheEntry"
+                    ],
+                    [
+                      "render-ui",
+                      "main",
+                      {
+                        "type": "stack",
+                        "direction": "vertical",
+                        "gap": "lg",
+                        "children": [
+                          {
+                            "type": "stack",
+                            "direction": "horizontal",
+                            "justify": "space-between",
+                            "children": [
+                              {
+                                "type": "stack",
+                                "direction": "horizontal",
+                                "gap": "sm",
+                                "children": [
+                                  {
+                                    "type": "icon",
+                                    "name": "database",
+                                    "size": "lg"
+                                  },
+                                  {
+                                    "type": "typography",
+                                    "content": "Cache - Fresh",
+                                    "variant": "h2"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "badge",
+                                "label": "@entity.isFresh",
+                                "icon": "check-circle",
+                                "variant": "outline"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "divider"
+                          },
+                          {
+                            "type": "stack",
+                            "direction": "horizontal",
+                            "gap": "md",
+                            "children": [
+                              {
+                                "type": "stat-display",
+                                "label": "Key",
+                                "value": "@entity.cacheKey",
+                                "icon": "key"
+                              },
+                              {
+                                "type": "stat-display",
+                                "label": "Hits",
+                                "value": "@entity.cacheHits",
+                                "icon": "check"
+                              },
+                              {
+                                "type": "stat-display",
+                                "label": "Misses",
+                                "value": "@entity.cacheMisses",
+                                "icon": "x"
+                              },
+                              {
+                                "type": "stat-display",
+                                "label": "TTL (ms)",
+                                "value": "@entity.ttlMs",
+                                "icon": "clock"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "divider"
+                          },
+                          {
+                            "type": "stack",
+                            "direction": "horizontal",
+                            "gap": "sm",
+                            "children": [
+                              {
+                                "type": "button",
+                                "label": "Lookup",
+                                "icon": "search",
+                                "variant": "primary",
+                                "event": "LOOKUP"
+                              },
+                              {
+                                "type": "button",
+                                "label": "Invalidate",
+                                "icon": "trash-2",
+                                "variant": "secondary",
+                                "event": "INVALIDATE"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "from": "Fresh",
+                  "to": "Fresh",
                   "event": "LOOKUP",
                   "guard": [
                     "<",
