@@ -66,7 +66,7 @@ function ServicesGrid() {
             <Translate id="metal.services.title">Compute Services</Translate>
           </Heading>
         </div>
-        <img src="/img/metal-eventbus.png" alt="Event bus architecture" className={styles.sectionImage} loading="lazy" />
+        <img src="/img/metal-eventbus.webp" alt="Event bus architecture" className={styles.sectionImage} loading="lazy" />
         <div className={styles.servicesGrid}>
           {SERVICES.map((svc) => (
             <div key={svc.title} className={styles.serviceCard}>

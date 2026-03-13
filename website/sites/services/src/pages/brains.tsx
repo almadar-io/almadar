@@ -66,7 +66,7 @@ function ServicesGrid() {
             <Translate id="brains.services.title">AI Services</Translate>
           </Heading>
         </div>
-        <img src="/img/brains-orchestration.png" alt="Agent orchestration" className={styles.sectionImage} loading="lazy" />
+        <img src="/img/brains-orchestration.webp" alt="Agent orchestration" className={styles.sectionImage} loading="lazy" />
         <div className={styles.servicesGrid}>
           {SERVICES.map((svc) => (
             <div key={svc.title} className={styles.serviceCard}>

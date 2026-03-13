@@ -18,7 +18,7 @@ function Hero() {
             Software that coexists, coordinates, and evolves together.
           </Translate>
         </p>
-        <img src="/img/vision-hero.png" alt="" className={styles.heroImage} loading="eager" />
+        <img src="/img/vision-hero.webp" alt="" className={styles.heroImage} loading="eager" />
       </div>
     </header>
   );
@@ -80,7 +80,7 @@ function WorldModelsSection() {
           <Heading as="h2">
             <Translate id="vision.models.title">Composable World Models</Translate>
           </Heading>
-          <img src="/img/vision-composable.png" alt="Composable world models" className={styles.sectionImage} loading="lazy" />
+          <img src="/img/vision-composable.webp" alt="Composable world models" className={styles.sectionImage} loading="lazy" />
           <p>
             <Translate id="vision.models.p1">
               A world model is a formal description of how a domain works: what exists, how it changes, what the rules are. In .orb, a healthcare scheduling system and an inventory tracker are both world models. They can be validated independently and composed together.
