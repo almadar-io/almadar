@@ -30,7 +30,7 @@ function Hero() {
             <Translate id="services.hero.cta2">Explore Services</Translate>
           </Link>
         </div>
-        <img src="/img/hero-layers.png" alt="Three-layer architecture" className={styles.heroImage} loading="eager" />
+        <img src="/img/hero-layers.webp" alt="Three-layer architecture" className={styles.heroImage} loading="eager" />
       </div>
     </header>
   );
