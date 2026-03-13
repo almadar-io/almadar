@@ -24,10 +24,10 @@ interface SiteConfig {
 }
 
 const SITE_ICONS: Record<string, { logo: string; favicon: string }> = {
-  main: { logo: "img/almadar-icon.png", favicon: "img/favicon.ico" },
-  orb: { logo: "img/orb-icon.png", favicon: "img/favicon.ico" },
-  studio: { logo: "img/studio-icon.png", favicon: "img/favicon.ico" },
-  services: { logo: "img/services-icon.png", favicon: "img/favicon.ico" },
+  main: { logo: "img/almadar-icon-512.png", favicon: "img/favicon.ico" },
+  orb: { logo: "img/orb-icon-512.png", favicon: "img/favicon.ico" },
+  studio: { logo: "img/studio-icon.svg", favicon: "img/favicon.ico" },
+  services: { logo: "img/services-icon.svg", favicon: "img/favicon.ico" },
 };
 
 const PRODUCT_SITES = [
@@ -170,7 +170,7 @@ export function createConfig(opts: SiteConfig): Config {
         title: opts.title,
         logo: {
           alt: `${opts.title} Logo`,
-          src: SITE_ICONS[opts.site]?.logo || "img/almadar-icon-transparent.svg",
+          src: SITE_ICONS[opts.site]?.logo || "img/almadar-icon-512.png",
         },
         items: [
           ...(opts.navbarItems || []),

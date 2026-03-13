@@ -18,13 +18,6 @@ function Hero() {
             Get the CLI, editor extensions, and start building.
           </Translate>
         </p>
-        <div style={{ marginTop: "3rem", display: "flex", justifyContent: "center" }}>
-          <img 
-            src="/img/downloads-platforms.webp" 
-            alt="Supported Platforms" 
-            style={{ maxWidth: "100%", height: "auto", width: "800px" }} 
-          />
-        </div>
       </div>
     </header>
   );
@@ -34,17 +27,28 @@ function CLISection() {
   return (
     <section className={styles.section}>
       <div className="container">
-        <div className={styles.downloadCard}>
-          <div className={styles.downloadInfo}>
-            <h2><Translate id="downloads.cli.title">Orbital CLI</Translate></h2>
-            <p>
-              <Translate id="downloads.cli.desc">
-                The command-line compiler and development server. Validate, compile, and run .orb programs locally.
-              </Translate>
-            </p>
+        <div className="row align-items--center">
+          <div className="col col--6">
+            <div className={styles.downloadCard}>
+              <div className={styles.downloadInfo}>
+                <h2><Translate id="downloads.cli.title">Orbital CLI</Translate></h2>
+                <p>
+                  <Translate id="downloads.cli.desc">
+                    The command-line compiler and development server. Validate, compile, and run .orb programs locally.
+                  </Translate>
+                </p>
+              </div>
+              <div className={styles.installBox}>
+                <code>npm install -g @almadar/cli</code>
+              </div>
+            </div>
           </div>
-          <div className={styles.installBox}>
-            <code>npm install -g @almadar/cli</code>
+          <div className="col col--6">
+            <img 
+              src="/img/downloads-platforms.webp" 
+              alt="Supported Platforms" 
+              style={{ maxWidth: "100%", height: "auto", display: "block", margin: "0 auto" }} 
+            />
           </div>
         </div>
       </div>

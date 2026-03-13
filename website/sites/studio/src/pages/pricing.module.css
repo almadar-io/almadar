@@ -62,6 +62,7 @@
   transition: all var(--transition-normal);
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 [data-theme="dark"] .pricingCard {

@@ -851,7 +851,8 @@
 .livePreviewBox {
     flex: 1 1 0; /* Grow to fill, but basis=0 prevents content from expanding */
     height: 0; /* Force flex-allocated height only, not content height */
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     position: relative;
     /* Creates a containing block for position:fixed HUD elements so they
        anchor to the preview box instead of the browser viewport */

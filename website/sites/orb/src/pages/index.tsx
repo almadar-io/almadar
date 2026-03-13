@@ -144,24 +144,24 @@ function StdLibSection() {
   return (
     <section className={styles.section}>
       <div className="container">
-        <div className="row align-items--center">
-          <div className="col col--4">
-            <div className={styles.sectionHeader} style={{ textAlign: "left", marginBottom: 0 }}>
-              <Heading as="h2">
+        <div className="row align-items--center" style={{ minHeight: "350px" }}>
+          <div className="col col--5">
+            <div className={styles.sectionHeader} style={{ textAlign: "left", marginBottom: "2rem" }}>
+              <Heading as="h2" style={{ marginTop: 0 }}>
                 <Translate id="orb.stdlib.title">Standard Library</Translate>
               </Heading>
-              <p className={styles.sectionSubtitle} style={{ margin: "1rem 0" }}>
+              <p className={styles.sectionSubtitle} style={{ margin: "1rem 0 0 0" }}>
                 <Translate id="orb.stdlib.subtitle">
                   103 production-quality behaviors across 18 domains. Commerce, healthcare, education, finance, scheduling, workflow, and more.
                 </Translate>
               </p>
             </div>
           </div>
-          <div className="col col--8">
-            <img src="/img/stdlib-domains.webp" alt="Standard Library Domains" className={styles.sectionImage} loading="lazy" style={{ margin: 0 }} />
+          <div className="col col--7">
+            <img src="/img/stdlib-domains.webp" alt="Standard Library Domains" className={styles.sectionImage} loading="lazy" style={{ margin: 0, height: "100%", objectFit: "contain" }} />
           </div>
         </div>
-        <div className={styles.domainGrid}>
+        <div className={styles.domainGrid} style={{ marginTop: "2rem" }}>
           {["Commerce", "Healthcare", "Education", "Finance", "Scheduling", "Workflow", "Social", "Media", "Gaming", "IoT", "CRM", "Analytics", "Communication", "Content", "Location", "HR", "Legal", "Real Estate"].map((domain) => (
             <span key={domain} className={styles.domainTag}>{domain}</span>
           ))}

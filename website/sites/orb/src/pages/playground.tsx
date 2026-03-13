@@ -518,6 +518,11 @@ function BehaviorsTab({ initialSelected }: { initialSelected?: string | null }) 
           </div>
         )}
         <div className={styles.livePreviewBox} data-theme={appliedTheme}>
+          {/* Pre-create portal root inside the preview box so UISlotRenderer's
+              getOrCreatePortalRoot() finds it here instead of document.body.
+              The transform:translateZ(0) stacking context on .livePreviewBox
+              then anchors fixed-positioned portal children to this box. */}
+          <div id="ui-slot-portal-root" style={{ position: 'absolute', inset: 0, zIndex: 50, pointerEvents: 'none' }} data-theme={appliedTheme} />
           {adjustedSchema
             ? <OrbitalPreview key={previewKey} schema={adjustedSchema} mockData={useMockData ? mockData : {}} />
             : <div className={styles.previewEmpty}>Select a behavior</div>
