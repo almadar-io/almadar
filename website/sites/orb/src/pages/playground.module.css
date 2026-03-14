@@ -854,9 +854,6 @@
     overflow-x: hidden;
     overflow-y: auto;
     position: relative;
-    /* Creates a containing block for position:fixed HUD elements so they
-       anchor to the preview box instead of the browser viewport */
-    transform: translateZ(0);
     /* Theme-driven properties (scoped equivalent of html/body from design-system index.css) */
     background-color: var(--color-background, #ffffff);
     color: var(--color-foreground, #18181b);
