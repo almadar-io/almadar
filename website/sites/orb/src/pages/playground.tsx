@@ -523,7 +523,7 @@ function BehaviorsTab({ initialSelected }: { initialSelected?: string | null }) 
               This keeps theme CSS variables in scope. The portal root is a
               zero-height container; modal/drawer content uses position:fixed
               to cover the viewport (no transform on the ancestor to trap it). */}
-          <div id="ui-slot-portal-root" style={{ position: 'relative', zIndex: 50, pointerEvents: 'none' }} data-theme={appliedTheme} />
+          <div id="ui-slot-portal-root" style={{ position: 'relative', zIndex: 9999, pointerEvents: 'none' }} data-theme={appliedTheme} />
           {adjustedSchema
             ? <OrbitalPreview key={previewKey} schema={adjustedSchema} mockData={useMockData ? mockData : {}} />
             : <div className={styles.previewEmpty}>Select a behavior</div>
