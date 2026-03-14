@@ -44,7 +44,7 @@ interface RuntimeComponents {
   SlotsProvider: React.ComponentType<{ children: ReactNode }>;
   EntitySchemaProvider: React.ComponentType<{ entities: unknown[]; children: ReactNode }>;
   VerificationProvider: React.ComponentType<{ children: ReactNode; enabled?: boolean }>;
-  UISlotRenderer: React.ComponentType<{ includeHud?: boolean; includeFloating?: boolean }>;
+  UISlotRenderer: React.ComponentType<{ includeHud?: boolean; hudMode?: 'fixed' | 'inline'; includeFloating?: boolean }>;
   RuntimeDebugger: React.ComponentType<{ mode?: 'floating' | 'inline'; defaultCollapsed?: boolean; defaultTab?: string; schema?: Record<string, unknown>; className?: string }>;
   useResolvedSchema: (schema: unknown) => { page: unknown; traits: unknown[]; allEntities: Map<string, unknown> };
   useTraitStateMachine: (traits: unknown[], actions: unknown, opts?: unknown) => { sendEvent: (event: string, payload?: Record<string, unknown>) => void };
@@ -155,7 +155,7 @@ function SchemaRunner({ rt, schema, mockData }: { rt: RuntimeComponents; schema:
           <TraitInitializer rt={rt} traits={traits} />
           <SlotBridge rt={rt} />
           <div className={styles.runtimePreview}>
-            <rt.UISlotRenderer includeHud includeFloating />
+            <rt.UISlotRenderer includeHud hudMode="inline" includeFloating />
           </div>
         </rt.EntitySchemaProvider>
       </rt.SlotsProvider>
