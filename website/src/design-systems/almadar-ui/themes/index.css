@@ -13,8 +13,8 @@
  * browser-default borders/backgrounds on raw HTML elements. This scoped
  * reset normalizes them inside themed containers and the portal root.
  */
-[data-theme] button,
-#ui-slot-portal-root button {
+:where([data-theme]) button,
+:where(#ui-slot-portal-root) button {
     border: 0;
     background: transparent;
     padding: 0;
@@ -23,12 +23,12 @@
     cursor: pointer;
 }
 
-[data-theme] *,
-[data-theme] *::before,
-[data-theme] *::after,
-#ui-slot-portal-root *,
-#ui-slot-portal-root *::before,
-#ui-slot-portal-root *::after {
+:where([data-theme]) *,
+:where([data-theme]) *::before,
+:where([data-theme]) *::after,
+:where(#ui-slot-portal-root) *,
+:where(#ui-slot-portal-root) *::before,
+:where(#ui-slot-portal-root) *::after {
     box-sizing: border-box;
     border-width: 0;
     border-style: solid;

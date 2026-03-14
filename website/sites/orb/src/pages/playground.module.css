@@ -854,6 +854,11 @@
     overflow-x: hidden;
     overflow-y: auto;
     position: relative;
+    /* Creates a containing block for fixed-positioned children (portal overlays,
+       HUD slots, floating slots). CSS spec: a transform on an ancestor makes
+       position:fixed behave as position:absolute relative to that ancestor.
+       This keeps all runtime content clipped within the preview box. */
+    transform: translateZ(0);
     /* Theme-driven properties (scoped equivalent of html/body from design-system index.css) */
     background-color: var(--color-background, #ffffff);
     color: var(--color-foreground, #18181b);

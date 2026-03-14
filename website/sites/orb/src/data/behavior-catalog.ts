@@ -17440,9 +17440,11 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
+                            "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
                             "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
@@ -17797,9 +17799,11 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
+                            "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
                             "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
@@ -18169,9 +18173,11 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
+                            "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
                             "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
@@ -18516,9 +18522,11 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
+                            "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
                             "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
@@ -25138,9 +25146,11 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
                             "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
@@ -25487,9 +25497,11 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
                             "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
@@ -25837,9 +25849,11 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
                             "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
@@ -26186,9 +26200,11 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
                             "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
@@ -26538,9 +26554,11 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
                             "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
@@ -26890,9 +26908,11 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
                             "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
@@ -31393,10 +31413,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png"
@@ -31857,10 +31879,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png"
@@ -32325,10 +32349,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png"
@@ -32788,10 +32814,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png"
@@ -33247,10 +33275,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png"
@@ -33711,10 +33741,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png"
@@ -35795,9 +35827,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png"
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png"
@@ -36110,9 +36145,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png"
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png"
@@ -36415,9 +36453,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png"
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png"
@@ -36720,9 +36761,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png"
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png"
@@ -37025,9 +37069,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png"
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png"
@@ -37330,9 +37377,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png"
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png"
@@ -56162,9 +56212,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png"
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png"
@@ -56436,9 +56489,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png"
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png"
@@ -56710,9 +56766,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png"
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png"
@@ -57013,9 +57072,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png"
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png"
@@ -57292,9 +57354,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png"
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png"
@@ -57594,9 +57659,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png"
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png"
@@ -57868,9 +57936,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png"
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png"
@@ -58895,10 +58966,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
+                            "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png",
@@ -59166,10 +59239,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
+                            "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png",
@@ -59496,10 +59571,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
+                            "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png",
@@ -59835,10 +59912,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
+                            "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png",
@@ -60082,10 +60161,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
+                            "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png",
@@ -60329,10 +60410,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
+                            "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png",
@@ -60576,10 +60659,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
+                            "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png",
@@ -60823,10 +60908,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
+                            "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png",
@@ -61070,10 +61157,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
+                            "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png",
@@ -62295,11 +62384,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png"
@@ -62748,11 +62838,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png"
@@ -63184,11 +63275,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png"
@@ -63620,11 +63712,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png"
@@ -64051,11 +64144,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png"
@@ -64482,11 +64576,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "bridge": "/terrain/Isometric/stoneStep_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "archivist": "/sprite-sheets/archivist-sprite-sheet-se.png"
@@ -97044,10 +97139,10 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
                             "bridge": "/terrain/Isometric/stoneStep_N.png",
                             "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
@@ -97471,10 +97566,10 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
                             "bridge": "/terrain/Isometric/stoneStep_N.png",
                             "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
@@ -97916,10 +98011,10 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
                             "bridge": "/terrain/Isometric/stoneStep_N.png",
                             "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
@@ -98353,10 +98448,10 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
+                            "dirt": "/terrain/Isometric/dirt_N.png",
                             "bridge": "/terrain/Isometric/stoneStep_N.png",
                             "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
@@ -101263,9 +101358,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
+                            "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png"
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png",
@@ -101563,9 +101661,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
+                            "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png"
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png",
@@ -101863,9 +101964,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
+                            "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png"
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png",
@@ -102163,9 +102267,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
+                            "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png"
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png",
@@ -102486,9 +102593,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
+                            "grass": "/terrain/Isometric/dirtTiles_N.png",
                             "stone": "/terrain/Isometric/stoneSide_N.png",
-                            "dirt": "/terrain/Isometric/dirt_N.png"
+                            "dirt": "/terrain/Isometric/dirt_N.png",
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png",
@@ -103294,10 +103404,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "stone": "/terrain/Isometric/stoneSide_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png",
@@ -103589,10 +103701,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "stone": "/terrain/Isometric/stoneSide_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png",
@@ -103906,10 +104020,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "stone": "/terrain/Isometric/stoneSide_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png",
@@ -104228,10 +104344,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "stone": "/terrain/Isometric/stoneSide_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png",
@@ -104523,10 +104641,12 @@ export const BEHAVIOR_CATALOG: Record<string, unknown> = {
                         "enableCamera": true,
                         "assetBaseUrl": "https://almadar-kflow-assets.web.app/shared",
                         "assetManifest": {
-                          "terrain": {
+                          "terrains": {
                             "grass": "/terrain/Isometric/dirtTiles_N.png",
+                            "stone": "/terrain/Isometric/stoneSide_N.png",
                             "dirt": "/terrain/Isometric/dirt_N.png",
-                            "stone": "/terrain/Isometric/stoneSide_N.png"
+                            "bridge": "/terrain/Isometric/stoneStep_N.png",
+                            "wall": "/terrain/Isometric/stoneWallArchway_N.png"
                           },
                           "units": {
                             "guardian": "/sprite-sheets/guardian-sprite-sheet-se.png",

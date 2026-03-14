@@ -521,8 +521,9 @@ function BehaviorsTab({ initialSelected }: { initialSelected?: string | null }) 
           {/* Pre-create portal root inside the preview box so UISlotRenderer's
               getOrCreatePortalRoot() finds it here instead of on document.body.
               This keeps theme CSS variables in scope. The portal root is a
-              zero-height container; modal/drawer content uses position:fixed
-              to cover the viewport (no transform on the ancestor to trap it). */}
+              zero-height container; portal content uses position:fixed but the
+              livePreviewBox has transform:translateZ(0) which constrains fixed
+              elements to the preview box boundaries. */}
           <div id="ui-slot-portal-root" style={{ position: 'relative', zIndex: 9999, pointerEvents: 'none' }} data-theme={appliedTheme} />
           {adjustedSchema
             ? <OrbitalPreview key={previewKey} schema={adjustedSchema} mockData={useMockData ? mockData : {}} />
