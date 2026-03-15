@@ -1,25 +1,20 @@
 ---
 slug: guard-clauses-state-machines
-title: "Guard Clauses in State Machines: Permission Systems That Actually Work"
+title: "Guard Clauses v State Machines: Sistem dovoljenj, ki dejansko deluje"
 authors: [osamah]
 tags: [architecture, state-machines]
-image: /img/blog/guard-clauses-state-machines.png
 ---
 
-![Guard Clauses in State Machines: Permission Systems That Actually Work](/img/blog/guard-clauses-state-machines.png)
-
-Authorization logic scattered across your app? What if it was just... part of the state definition?
+Avtorizacijska logika raztresena po vaši aplikaciji? Kaj če bi bila preprosto... del definicije stanja?
 
 <!-- truncate -->
 
-<OrbitalDiagram />
+## Avtorizacijska zmešnjava
 
-## The Authorization Mess
-
-Most apps handle permissions like this:
+Večina aplikacij obravnava dovoljenja tako:
 
 ```typescript
-// In the component
+// V komponenti
 function ApproveButton({ order }) {
   const { user } = useAuth();
   
@@ -30,40 +25,40 @@ function ApproveButton({ order }) {
   
   return (
     <button disabled={!canApprove} onClick={handleApprove}>
-      Approve
+      Odobri
     </button>
   );
 }
 
-// In the API route
+// V API poti
 app.post('/api/orders/:id/approve', async (req, res) => {
   const { user } = req;
   const order = await Order.findById(req.params.id);
   
-  // Same logic, duplicated!
+  // Ista logika, podvojena!
   if (user.roleLevel < 5) {
-    return res.status(403).json({ error: 'Insufficient permissions' });
+    return res.status(403).json({ error: 'Nezadostna dovoljenja' });
   }
   if (order.isFlagged) {
-    return res.status(400).json({ error: 'Order is flagged' });
+    return res.status(400).json({ error: 'Naročilo je označeno' });
   }
   if (order.amount <= 0) {
-    return res.status(400).json({ error: 'Invalid amount' });
+    return res.status(400).json({ error: 'Neveljaven znesek' });
   }
   
-  // ... actual approval logic
+  // ... dejanska logika odobritve
 });
 ```
 
-**Problems:**
-- ❌ Logic duplicated in frontend and backend
-- ❌ Hard to keep in sync
-- ❌ Scattered across files
-- ❌ No single source of truth
+**Problemi:**
+- ❌ Logika podvojena v frontendu in backendu
+- ❌ Težko vzdrževati sinhronizirano
+- ❌ Raztresena po datotekah
+- ❌ Ni enega vira resnice
 
-## Guards: Declarative Authorization
+## Guards: Deklarativna avtorizacija
 
-In Almadar, guards are part of the state machine:
+V Almadarju so guards del state machine:
 
 ```json
 {
@@ -83,11 +78,11 @@ In Almadar, guards are part of the state machine:
 }
 ```
 
-The guard is **declarative**, **serializable**, and **enforced everywhere**.
+Guard je **deklarativen**, **serializabilen** in **vsiljen povsod**.
 
-## How Guards Work
+## Kako Guards delujejo
 
-### 1. Define the Guard
+### 1. Definiraj Guard
 
 ```json
 {
@@ -95,42 +90,42 @@ The guard is **declarative**, **serializable**, and **enforced everywhere**.
 }
 ```
 
-### 2. Evaluated at Transition Time
+### 2. Ovrednoten ob času prehoda
 
-When the `APPROVE` event is received:
-1. The guard expression is evaluated
-2. If `true`: transition executes
-3. If `false`: transition blocked, optional error message
+Ko se prejme dogodek `APPROVE`:
+1. Guard izraz se ovrednoti
+2. Če je `true`: prehod se izvede
+3. Če je `false`: prehod je blokiran, opcijsko sporočilo o napaki
 
-### 3. Applied Everywhere
+### 3. Uporabljen povsod
 
-The same guard applies to:
-- ✅ UI (button disabled if guard fails)
-- ✅ State machine (transition blocked)
-- ✅ Generated API (request rejected)
-- ✅ Audit logs (authorization decision recorded)
+Isti guard se uporablja za:
+- ✅ UI (gumb onemogočen, če guard ne uspe)
+- ✅ State machine (prehod blokiran)
+- ✅ Generiran API (zahtevek zavrnjen)
+- ✅ Audit logi (odločitev o avtorizaciji zabeležena)
 
-## Guard Examples
+## Primeri Guardov
 
-### Simple Comparison
+### Enostavna primerjava
 
 ```json
 {
   "guard": ["=", "@entity.ownerId", "@user.id"]
 }
-// Only the owner can perform this action
+// Samo lastnik lahko izvede to akcijo
 ```
 
-### Role-Based
+### Na podlagi vlog
 
 ```json
 {
   "guard": [">=", "@user.roleLevel", 5]
 }
-// Admin level (5+) required
+// Zahtevana stopnja admin (5+)
 ```
 
-### Multi-Factor
+### Večfaktorski
 
 ```json
 {
@@ -143,10 +138,10 @@ The same guard applies to:
     ["<", "@entity.amount", 10000]
   ]
 }
-// (Admin OR Finance) AND Not Locked AND Amount < 10k
+// (Admin ALI Finance) IN Ni zaklenjeno IN Znesek < 10k
 ```
 
-### Time-Based
+### Časovni
 
 ```json
 {
@@ -155,19 +150,19 @@ The same guard applies to:
     86400000
   ]
 }
-// Action only allowed within 24 hours of creation
+// Akcija dovoljena samo v 24 urah po ustvarjanju
 ```
 
-### Array Membership
+### Članstvo v arrayu
 
 ```json
 {
   "guard": ["contains", "@user.permissions", "orders:approve"]
 }
-// User must have explicit permission
+// Uporabnik mora imeti izrecno dovoljenje
 ```
 
-## Complex Example: Approval Workflow
+## Kompleksen primer: Approval Workflow
 
 ```json
 {
@@ -233,46 +228,46 @@ The same guard applies to:
 }
 ```
 
-This encodes a complete approval matrix:
-- Anyone can submit (if valid)
-- Level 5+ can approve up to $5K
-- Level 7+ can approve up to $50K
-- Level 9+ can approve anything
-- Escalated orders need Level 9+
+To kodira celotno matriko odobritev:
+- Vsakdo lahko pošlje (če je veljavno)
+- Stopnja 5+ lahko odobri do 5K
+- Stopnja 7+ lahko odobri do 50K
+- Stopnja 9+ lahko odobri karkoli
+- Eskalirana naročila potrebujejo stopnjo 9+
 
-## Real-World Analogy: Airport Security
+## Primerjava iz resničnega sveta: Letališka varnost
 
-Airport security is a state machine with guards:
+Letališka varnost je state machine z guards:
 
 ```
-Check-in ──(has ticket?)──► Bag Drop ──(weight < 23kg?)──► Security
+Check-in ──(ima karto?)──► Bag Drop ──(teža < 23kg?)──► Varnost
                                                     
-Security ──(no liquids?)──► Scan ──(no weapons?)──► Gate
+Varnost ──(brez tekočin?)──► Sken ──(brez orožja?)──► Gate
                                               
-Gate ──(boarding pass valid?)──► Boarding ──(seat available?)──► Seated
+Gate ──(boarding pass veljaven?)──► Boarding ──(prosto mesto?)──► Sedež
 ```
 
-Each transition has a guard. If you fail:
-- No ticket? → Can't check in
-- Overweight bag? → Pay extra or repack
-- Liquids in bag? → Throw them away
+Vsak prehod ima guard. Če ne uspe:
+- Ni karte? → Ni možen check-in
+- Pretežka prtljaga? → Plačaj dodatno ali prepakiraj
+- Tekočine v torbi? → Vrzi stran
 
-The guards are **explicit**, **unambiguous**, and **applied consistently**.
+Guardi so **eksplicitni**, **nedvoumni** in **konsistentno uporabljeni**.
 
-## Guards vs Traditional Auth
+## Guards v primerjavi s tradicionalno avtorizacijo
 
-| Aspect | Traditional | Almadar Guards |
+| Aspekt | Tradicionalno | Almadar Guards |
 |--------|-------------|----------------|
-| Location | Scattered across files | Centralized in schema |
-| Frontend | Duplicated logic | Auto-generated checks |
-| Backend | Middleware + route handlers | Auto-generated validation |
-| Audit | Manual logging | Automatic decision recording |
-| Testing | Integration tests | Unit test the guard expression |
-| Documentation | Separate docs | Self-documenting schema |
+| Lokacija | Raztreseno po datotekah | Centralizirano v schemi |
+| Frontend | Podvojena logika | Avto-generirane preverbe |
+| Backend | Middleware + route handlerji | Avto-generirana validacija |
+| Audit | Ročno logiranje | Samodejno beleženje odločitev |
+| Testiranje | Integracijski testi | Unit test guard izraza |
+| Dokumentacija | Ločena dokumentacija | Samo-dokumentirajoča shema |
 
-## Try It: Build a Permission System
+## Poskusite: Zgradite sistem dovoljenj
 
-Create `approval-workflow.orb`:
+Ustvarite `approval-workflow.orb`:
 
 ```json
 {
@@ -339,15 +334,15 @@ Create `approval-workflow.orb`:
 }
 ```
 
-This creates:
-- Only authors can submit their documents
-- Level 5+ can approve/reject
-- Confidential documents need Level 7+
-- Authors can edit rejected documents
+To ustvari:
+- Samo avtorji lahko pošljejo svoje dokumente
+- Stopnja 5+ lahko odobri/zavrne
+- Zaupni dokumenti potrebujejo stopnjo 7+
+- Avtorji lahko urejajo zavrnjene dokumente
 
-## Advanced: Dynamic Guards
+## Napredno: Dinamični Guards
 
-Guards can reference external data:
+Guardi lahko referencirajo zunanje podatke:
 
 ```json
 {
@@ -359,23 +354,23 @@ Guards can reference external data:
 }
 ```
 
-The guard references:
-- User's credit score
-- User's annual income (for loan limit)
-- User's blacklist
+Guard referencira:
+- Kreditni rezultat uporabnika
+- Letni dohodek uporabnika (za omejitev posojila)
+- Črni seznam uporabnika
 
-All resolved at evaluation time.
+Vse se razreši ob času vrednotenja.
 
-## The Takeaway
+## Spoznanje
 
-Guards bring **declarative authorization** to state machines:
+Guardi prinašajo **deklarativno avtorizacijo** v state machines:
 
-- ✅ Logic centralized in schema
-- ✅ Automatically applied frontend and backend
-- ✅ Self-documenting permission rules
-- ✅ Composable boolean expressions
-- ✅ Type-safe binding references
+- ✅ Logika centralizirana v schemi
+- ✅ Samodejno uporabljeno frontend in backend
+- ✅ Samo-dokumentirajoča pravila dovoljenj
+- ✅ Kompozabilne boolean izraze
+- ✅ Type-safe reference vezave
 
-Stop scattering authorization logic across your app. Define it once, enforce it everywhere.
+Nehajte raztresati avtorizacijsko logiko po aplikaciji. Definirajte jo enkrat, vsilite jo povsod.
 
-Learn more about [guards and effects](https://orb.almadar.io/docs/traits).
+Več o [guardih in effectih](https://orb.almadar.io/docs/traits).

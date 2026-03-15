@@ -1,22 +1,17 @@
 ---
 slug: fsm-underused-pattern
-title: "Finite State Machines: The Most Underused Design Pattern in Frontend Development"
+title: "Finite State Machines: الـ pattern الأقل استخداماً في تطوير الواجهات الأمامية"
 authors: [osamah]
 tags: [architecture, state-machines]
-image: /img/blog/fsm-underused-pattern.png
 ---
 
-![Finite State Machines: The Most Underused Design Pattern](/img/blog/fsm-underused-pattern.png)
-
-If you're using `useState` for complex UI, you're probably doing it wrong. There's a 50-year-old solution you're ignoring.
+إذا كنت تستخدم `useState` لواجهات معقدة، فأنت على الأرجح تقوم بذلك بشكل خاطئ. هناك حل عمره 50 عاماً تتجاهله.
 
 <!-- truncate -->
 
-<OrbitalDiagram />
+## فخ الأعلام المنطقية
 
-## The Boolean Flag Trap
-
-Here's a familiar pattern:
+إليك pattern (نمط تصميم متكرر) مألوفاً:
 
 ```typescript
 function UserProfile() {
@@ -25,7 +20,7 @@ function UserProfile() {
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  
+
   const handleSave = async () => {
     setIsSaving(true);
     setIsError(false);
@@ -39,19 +34,19 @@ function UserProfile() {
       setIsSaving(false);
     }
   };
-  
+
   // What combinations are valid?
-  // isLoading=true, isError=true? 
+  // isLoading=true, isError=true?
   // isEditing=true, isSaving=true?
   // Who knows!
 }
 ```
 
-This creates **2^n possible states** (32 combinations for 5 booleans). Most are invalid or nonsensical.
+هذا يخلق **2^n حالة ممكنة** (32 تركيبة لـ 5 أعلام منطقية). معظمها غير صالح أو بلا معنى.
 
-## The State Machine Alternative
+## بديل الـ State Machine
 
-What if you explicitly defined valid states?
+ماذا لو عرّفت الحالات الصالحة بشكل صريح؟
 
 ```json
 {
@@ -77,11 +72,11 @@ What if you explicitly defined valid states?
 }
 ```
 
-Now there are exactly **5 states** and **9 valid transitions**. No impossible combinations.
+الآن، هناك تحديداً **5 حالات** و **9 transitions صالحة**. لا تركيبات مستحيلة.
 
-## Visualizing the Difference
+## تصوّر الفرق
 
-### Boolean Flags: Spaghetti State
+### الأعلام المنطقية: حالة متشابكة
 ```
          isLoading=true
         /             \
@@ -90,9 +85,9 @@ isError=true?      isEditing=true?
      ?                   ?
 ```
 
-Any combination is possible. Bugs arise from invalid states you didn't consider.
+أي تركيبة ممكنة الحدوث. الأخطاء تنشأ من حالات غير صالحة لم تفكر فيها.
 
-### State Machine: Directed Graph
+### الـ State Machine: رسم بياني موجّه
 ```
                     ┌─────────┐
          ┌─────────►│  idle   │◄────────┐
@@ -120,11 +115,11 @@ Any combination is possible. Bugs arise from invalid states you didn't consider.
          └──────────────────────────────┘
 ```
 
-Every path is explicit. Invalid transitions don't exist.
+كل مسار صريح. الـ transitions غير الصالحة غير موجودة.
 
-## Real-World Example: Form Submission
+## مثال واقعي: إرسال نموذج
 
-### The Boolean Way
+### طريقة الأعلام المنطقية
 ```typescript
 function ContactForm() {
   const [formData, setFormData] = useState({});
@@ -132,12 +127,12 @@ function ContactForm() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  
+
   const submit = async () => {
     setIsSubmitting(true);
     setIsError(false);
     setIsSuccess(false);
-    
+
     try {
       await api.submit(formData);
       setIsSuccess(true);
@@ -148,14 +143,14 @@ function ContactForm() {
       setIsSubmitting(false);
     }
   };
-  
+
   // Bug: What if isSuccess and isError are both true?
   // Bug: Can I submit again while isSubmitting?
   // Bug: What clears isSuccess?
 }
 ```
 
-### The State Machine Way
+### طريقة الـ State Machine
 ```json
 {
   "states": [
@@ -208,38 +203,38 @@ function ContactForm() {
 }
 ```
 
-Benefits:
-- ✅ Can't submit while already submitting
-- ✅ Validation happens in its own state
-- ✅ Error and success are mutually exclusive
-- ✅ Clear paths for retry
+الفوائد:
+- لا يمكن الإرسال أثناء الإرسال
+- التحقق يحدث في حالته الخاصة
+- الخطأ والنجاح متبادلا الاستبعاد
+- مسارات واضحة لإعادة المحاولة
 
-## Why Developers Avoid State Machines
+## لماذا يتجنب المطورون الـ State Machines
 
-### Myth 1: "They're Too Complex"
+### الخرافة 1: "معقدة جداً"
 
-Reality: Boolean flags *seem* simpler until you have 5+ of them. Then the interaction matrix becomes incomprehensible.
+الواقع: الأعلام المنطقية *تبدو* أبسط حتى يصبح لديك 5 منها أو أكثر. عندها تصبح مصفوفة التفاعلات غير مفهومة.
 
-### Myth 2: "They're Only for Games"
+### الخرافة 2: "للألعاب فقط"
 
-Reality: Game developers use FSMs because they **work**. UI is just like a game: user actions trigger state changes.
+الواقع: مطورو الألعاب يستخدمون finite state machines (آلات حالة محدودة) لأنها **تعمل**. الواجهات تشبه الألعاب تماماً: إجراءات المستخدم تُفعّل تغييرات في الحالة.
 
-### Myth 3: "They're Hard to Change"
+### الخرافة 3: "صعبة التغيير"
 
-Reality: Changing a state machine means adding a state or transition. Changing boolean flags means hunting through `useEffect` chains.
+الواقع: تغيير state machine يعني إضافة حالة أو transition. تغيير الأعلام المنطقية يعني البحث عبر سلاسل `useEffect`.
 
-## When to Use State Machines
+## متى تستخدم State Machines
 
-| Scenario | Boolean Flags | State Machine |
-|----------|--------------|---------------|
-| 2-3 simple states | ✅ Okay | ✅ Better |
-| Async operations | ❌ Buggy | ✅ Clear |
-| Multi-step flows | ❌ Messy | ✅ Perfect |
-| Complex UI modes | ❌ Impossible | ✅ Ideal |
+| السيناريو | الأعلام المنطقية | الـ State Machine |
+|-----------|-----------------|------------|
+| 2-3 حالات بسيطة | مقبولة | أفضل |
+| عمليات غير متزامنة | مليء بالأخطاء | واضح |
+| تدفقات متعددة الخطوات | فوضوي | مثالي |
+| أوضاع واجهة معقدة | مستحيل | ملائم تماماً |
 
-## Almadar Makes It Easy
+## Almadar يجعلها سهلة
 
-In Almadar, you don't implement the state machine — you **declare** it:
+في Almadar، لا تُنفّذ الـ state machine — بل **تصرح** عنها:
 
 ```json
 {
@@ -293,23 +288,23 @@ In Almadar, you don't implement the state machine — you **declare** it:
 }
 ```
 
-The compiler generates:
-- State machine runtime
-- TypeScript types
-- Event handlers
-- UI bindings
+الـ compiler يولد:
+- محرك الـ state machine
+- أنواع TypeScript
+- معالجات الأحداث
+- binding الواجهة
 
-You just define the logic.
+أنت تعرّف فقط المنطق.
 
-## Real-World Analogy: Traffic Lights (Again)
+## تشبيه واقعي: إشارات المرور (مرة أخرى)
 
-Traffic lights are the canonical state machine:
+إشارات المرور هي الـ state machine النموذجية:
 
 ```
 Red → Green → Yellow → Red
 ```
 
-Imagine if traffic lights used boolean flags:
+تخيل لو استخدمت إشارات المرور أعلاماً منطقية:
 
 ```javascript
 const [isRed, setIsRed] = useState(true);
@@ -321,13 +316,13 @@ const [isYellow, setIsYellow] = useState(false);
 // Bug: Green could turn directly to Red!
 ```
 
-Traffic engineers use state machines because **lives depend on predictable states**.
+يستخدم مهندسو المرور state machines لأن **الأرواح تعتمد على حالات متوقعة**.
 
-Your users' sanity depends on it too.
+سلامة عقل مستخدميك تعتمد عليها أيضاً.
 
-## Try It: Convert a Boolean Mess
+## جرّبه: حوّل فوضى الأعلام المنطقية
 
-Take this boolean-heavy component:
+خذ هذا المكوّن المثقل بالأعلام المنطقية:
 
 ```typescript
 function Checkout() {
@@ -340,7 +335,7 @@ function Checkout() {
 }
 ```
 
-And convert to Almadar schema:
+وجرب تحويله إلى schema في Almadar:
 
 ```json
 {
@@ -357,17 +352,17 @@ And convert to Almadar schema:
 }
 ```
 
-The state machine version has **6 explicit states** instead of **32 possible boolean combinations**.
+نسخة الـ state machine تحتوي على **6 حالات صريحة** بدلاً من **32 تركيبة ممكنة من الأعلام المنطقية**.
 
-## The Takeaway
+## الخلاصة
 
-Finite state machines aren't academic exercises — they're **practical tools** for managing complexity.
+الـ finite state machines ليست تمارين أكاديمية — إنها **أدوات عملية** لإدارة التعقيد.
 
-- 2-3 booleans: Probably fine
-- 4+ booleans: Consider a state machine
-- Async flows: Definitely use a state machine
-- Multi-step UI: State machine or bust
+- 2-3 أعلام منطقية: ربما لا بأس بها
+- 4 أعلام منطقية أو أكثر: فكّر في state machine
+- تدفقات غير متزامنة: بالتأكيد استخدم state machine
+- واجهات متعددة الخطوات: state machine أو لا شيء
 
-Almadar makes state machines the default, not the exception. Because your users deserve predictable software.
+Almadar يجعل الـ state machines الخيار الافتراضي، لا الاستثناء. لأن مستخدميك يستحقون برمجيات متوقعة.
 
-Ready to try? [Build your first state machine](https://orb.almadar.io/docs/getting-started/introduction).
+هل أنت مستعد للتجربة؟ [ابنِ state machine الأولى لك](https://orb.almadar.io/docs/getting-started/introduction).

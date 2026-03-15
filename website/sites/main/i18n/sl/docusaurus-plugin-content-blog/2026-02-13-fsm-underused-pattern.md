@@ -1,22 +1,17 @@
 ---
 slug: fsm-underused-pattern
-title: "Finite State Machines: The Most Underused Design Pattern in Frontend Development"
+title: "Končni avtomati stanja: Najbolj podcenjeni design pattern v frontend razvoju"
 authors: [osamah]
 tags: [architecture, state-machines]
-image: /img/blog/fsm-underused-pattern.png
 ---
 
-![Finite State Machines: The Most Underused Design Pattern](/img/blog/fsm-underused-pattern.png)
-
-If you're using `useState` for complex UI, you're probably doing it wrong. There's a 50-year-old solution you're ignoring.
+Če uporabljate `useState` za kompleksen UI, verjetno delate narobe. Obstaja 50 let stara rešitev, ki jo ignorirate.
 
 <!-- truncate -->
 
-<OrbitalDiagram />
+## Past zastavic boolean
 
-## The Boolean Flag Trap
-
-Here's a familiar pattern:
+Tukaj je znan vzorec:
 
 ```typescript
 function UserProfile() {
@@ -40,18 +35,18 @@ function UserProfile() {
     }
   };
   
-  // What combinations are valid?
+  // Katere kombinacije so veljavne?
   // isLoading=true, isError=true? 
   // isEditing=true, isSaving=true?
-  // Who knows!
+  // Kdo ve!
 }
 ```
 
-This creates **2^n possible states** (32 combinations for 5 booleans). Most are invalid or nonsensical.
+To ustvarja **2^n možnih stanj** (32 kombinacij za 5 booleanov). Večina je neveljavnih ali nesmiselnih.
 
-## The State Machine Alternative
+## State Machine alternativa
 
-What if you explicitly defined valid states?
+Kaj če eksplicitno definirate veljavna stanja?
 
 ```json
 {
@@ -77,11 +72,11 @@ What if you explicitly defined valid states?
 }
 ```
 
-Now there are exactly **5 states** and **9 valid transitions**. No impossible combinations.
+Zdaj je natančno **5 stanj** in **9 veljavnih prehodov**. Ni nemogočih kombinacij.
 
-## Visualizing the Difference
+## Vizualizacija razlike
 
-### Boolean Flags: Spaghetti State
+### Zastavice boolean: Špageti stanja
 ```
          isLoading=true
         /             \
@@ -90,9 +85,9 @@ isError=true?      isEditing=true?
      ?                   ?
 ```
 
-Any combination is possible. Bugs arise from invalid states you didn't consider.
+Vsaka kombinacija je možna. Napake nastanejo iz neveljavnih stanj, ki jih niste upoštevali.
 
-### State Machine: Directed Graph
+### State Machine: Usmerjen graf
 ```
                     ┌─────────┐
          ┌─────────►│  idle   │◄────────┐
@@ -120,11 +115,11 @@ Any combination is possible. Bugs arise from invalid states you didn't consider.
          └──────────────────────────────┘
 ```
 
-Every path is explicit. Invalid transitions don't exist.
+Vsaka pot je eksplicitna. Neveljavni prehodi ne obstajajo.
 
-## Real-World Example: Form Submission
+## Primer iz resničnega sveta: Pošiljanje forme
 
-### The Boolean Way
+### Boolean način
 ```typescript
 function ContactForm() {
   const [formData, setFormData] = useState({});
@@ -149,13 +144,13 @@ function ContactForm() {
     }
   };
   
-  // Bug: What if isSuccess and isError are both true?
-  // Bug: Can I submit again while isSubmitting?
-  // Bug: What clears isSuccess?
+  // Napaka: Kaj če sta isSuccess in isError oba true?
+  // Napaka: Lahko ponovno pošljem med isSubmitting?
+  // Napaka: Kaj počisti isSuccess?
 }
 ```
 
-### The State Machine Way
+### State Machine način
 ```json
 {
   "states": [
@@ -208,38 +203,38 @@ function ContactForm() {
 }
 ```
 
-Benefits:
-- ✅ Can't submit while already submitting
-- ✅ Validation happens in its own state
-- ✅ Error and success are mutually exclusive
-- ✅ Clear paths for retry
+Prednosti:
+- ✅ Ni pošiljanja medtem ko že pošiljaš
+- ✅ Validacija se zgodi v svojem stanju
+- ✅ Napaka in uspeh sta medsebojno izključujoča
+- ✅ Jasne poti za ponovni poskus
 
-## Why Developers Avoid State Machines
+## Zakaj razvijalci izogibajo State Machines
 
-### Myth 1: "They're Too Complex"
+### Mit 1: "Preveč kompleksni so"
 
-Reality: Boolean flags *seem* simpler until you have 5+ of them. Then the interaction matrix becomes incomprehensible.
+Realnost: Zastavice boolean *izgledajo* enostavne, dokler jih ni 5+. Potem postane interakcijska matrika nepredstavljiva.
 
-### Myth 2: "They're Only for Games"
+### Mit 2: "Samo za igre so"
 
-Reality: Game developers use FSMs because they **work**. UI is just like a game: user actions trigger state changes.
+Realnost: Igralni razvijalci uporabljajo FSM, ker **delujejo**. UI je kot igra: uporabniške akcije sprožijo spremembe stanja.
 
-### Myth 3: "They're Hard to Change"
+### Mit 3: "Težko jih je spreminjati"
 
-Reality: Changing a state machine means adding a state or transition. Changing boolean flags means hunting through `useEffect` chains.
+Realnost: Spreminjanje state machine pomeni dodajanje stanja ali prehoda. Spreminjanje zastavic boolean pomeni lovljenje skozi `useEffect` verige.
 
-## When to Use State Machines
+## Kdaj uporabiti State Machines
 
-| Scenario | Boolean Flags | State Machine |
+| Scenarij | Zastavice boolean | State Machine |
 |----------|--------------|---------------|
-| 2-3 simple states | ✅ Okay | ✅ Better |
-| Async operations | ❌ Buggy | ✅ Clear |
-| Multi-step flows | ❌ Messy | ✅ Perfect |
-| Complex UI modes | ❌ Impossible | ✅ Ideal |
+| 2-3 enostavna stanja | ✅ V redu | ✅ Boljše |
+| Asinhrone operacije | ❌ Napako povzročajo | ✅ Jasno |
+| Večkoraki poteki | ❌ Nerodno | ✅ Popolno |
+| Kompleksni UI načini | ❌ Nemogoče | ✅ Idealno |
 
-## Almadar Makes It Easy
+## Almadar to olajša
 
-In Almadar, you don't implement the state machine — you **declare** it:
+V Almadarju ne implementirate state machine — ga **deklarirate**:
 
 ```json
 {
@@ -293,41 +288,41 @@ In Almadar, you don't implement the state machine — you **declare** it:
 }
 ```
 
-The compiler generates:
+Compiler generira:
 - State machine runtime
-- TypeScript types
-- Event handlers
-- UI bindings
+- TypeScript tipe
+- Event handlerje
+- UI vezave
 
-You just define the logic.
+Vi samo definirate logiko.
 
-## Real-World Analogy: Traffic Lights (Again)
+## Primerjava iz resničnega sveta: Semaforji (spet)
 
-Traffic lights are the canonical state machine:
+Semaforji so kanonični state machine:
 
 ```
-Red → Green → Yellow → Red
+Rdeča → Zelena → Rumena → Rdeča
 ```
 
-Imagine if traffic lights used boolean flags:
+Predstavljajte si, če bi semaforji uporabljali zastavice boolean:
 
 ```javascript
 const [isRed, setIsRed] = useState(true);
 const [isGreen, setIsGreen] = useState(false);
 const [isYellow, setIsYellow] = useState(false);
 
-// Bug: All could be true!
-// Bug: All could be false!
-// Bug: Green could turn directly to Red!
+// Napaka: Vsi bi lahko bili true!
+// Napaka: Vsi bi lahko bili false!
+// Napaka: Zelena bi lahko šla neposredno v Rdečo!
 ```
 
-Traffic engineers use state machines because **lives depend on predictable states**.
+Prometni inženirji uporabljajo state machine, ker **od življenja je odvisno predvidljivo stanje**.
 
-Your users' sanity depends on it too.
+Vaši uporabniki si zaslužijo enako.
 
-## Try It: Convert a Boolean Mess
+## Poskusite: Pretvorite boolean zmešnjavo
 
-Take this boolean-heavy component:
+Vzemite to komponento polno booleanov:
 
 ```typescript
 function Checkout() {
@@ -336,11 +331,11 @@ function Checkout() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [hasError, setHasError] = useState(false);
-  // ... nightmare of useEffect
+  // ... nočna mora useEffect
 }
 ```
 
-And convert to Almadar schema:
+In pretvorite v Almadar schema:
 
 ```json
 {
@@ -357,17 +352,17 @@ And convert to Almadar schema:
 }
 ```
 
-The state machine version has **6 explicit states** instead of **32 possible boolean combinations**.
+State machine različica ima **6 eksplicitnih stanj** namesto **32 možnih boolean kombinacij**.
 
-## The Takeaway
+## Spoznanje
 
-Finite state machines aren't academic exercises — they're **practical tools** for managing complexity.
+Končni avtomati stanja niso akademske vaje — so **praktična orodja** za upravljanje kompleksnosti.
 
-- 2-3 booleans: Probably fine
-- 4+ booleans: Consider a state machine
-- Async flows: Definitely use a state machine
-- Multi-step UI: State machine or bust
+- 2-3 booleani: Verjetno v redu
+- 4+ booleani: Razmislite o state machine
+- Asinhrone poteki: Definitivno uporabite state machine
+- Večkoraki UI: State machine ali nič
 
-Almadar makes state machines the default, not the exception. Because your users deserve predictable software.
+Almadar naredi state machine privzete, ne izjeme. Ker si vaši uporabniki zaslužijo predvidljivo programsko opremo.
 
-Ready to try? [Build your first state machine](https://orb.almadar.io/docs/getting-started/introduction).
+Pripravljeni poskusiti? [Zgradite svoj prvi state machine](https://orb.almadar.io/docs/getting-started/introduction).

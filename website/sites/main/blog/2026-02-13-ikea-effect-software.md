@@ -3,6 +3,7 @@ slug: ikea-effect-software
 title: "The IKEA Effect for Software: Why We Built Apps from Flat-Packs"
 authors: [osamah]
 tags: [architecture, philosophy]
+image: /img/blog/ikea-effect-software.png
 ---
 
 IKEA revolutionized furniture by making it composable, flat-packed, and assembly-friendly. What if software worked the same way?

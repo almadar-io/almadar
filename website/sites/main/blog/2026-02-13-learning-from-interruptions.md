@@ -3,7 +3,10 @@ slug: learning-from-interruptions
 title: "Learning from Interruptions: How Our AI Remembers Your Preferences (Without Being Creepy)"
 authors: [osamah]
 tags: [architecture, ai]
+image: /img/blog/learning-from-interruptions.png
 ---
+
+![Learning from Interruptions: How Our AI Remembers Your Preferences](/img/blog/learning-from-interruptions.png)
 
 Every time you approve or reject an AI's action, it learns. After 5 approvals, that action happens automatically.
 

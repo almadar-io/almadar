@@ -1,38 +1,34 @@
 ---
 slug: machines-with-traits-part-1
-title: "Machines with Traits: How Almadar Will Transform Robotics"
+title: "Stroji s Traits: Kako bo Almadar transformiral robotiko"
 authors: [almadar]
 tags: [robotics, vision, automation, state-machines]
 ---
 
-# Machines with Traits: How Almadar Will Transform Robotics
+# Stroji s Traits: Kako bo Almadar transformiral robotiko
 
-> **A Vision for the Future of Automation**
-
----
-
-## Introduction
-
-Imagine a world where you don't need to write thousands of lines of code to make a robot move intelligently. A world where you declare machine behavior the same way you describe planets moving in their orbits.
-
-This is the world of **Almadar**.
-
-In this series, we'll explore how the Almadar language can revolutionize robotics and industrial automation.
-
-<!-- truncate -->
-
-<OrbitalDiagram />
+> **Vizija za prihodnost avtomatizacije**
 
 ---
 
-## The Problem: Why is Robot Programming Hard?
+## Uvod
 
-### The Traditional Approach
+Predstavljajte si svet, kjer ne potrebujete pisati tisočev vrstic kode, da robot inteligentno premaknete. Svet, kjer deklarirate vedênje stroja na enak način, kot opisujete planete, ki se gibljejo v svojih orbitah.
 
-When engineers program a robot today, they face enormous challenges:
+To je svet **Almadar**.
+
+V tej seriji bomo raziskovali, kako jezik Almadar lahko revolucionira robotiko in industrijsko avtomatizacijo.
+
+---
+
+## Problem: Zakaj je programiranje robotov težko?
+
+### Tradicionalni pristop
+
+Ko inženirji danes programirajo robota, se soočijo z ogromnimi izzivi:
 
 ```python
-# Traditional approach - tangled, complex code
+# Tradicionalni pristop - zapletena, kompleksna koda
 class RobotArm:
     def __init__(self):
         self.position = (0, 0, 0)
@@ -42,43 +38,43 @@ class RobotArm:
         
     def move_to(self, target):
         if self.error_state:
-            self.handle_error()  # Where is this defined?
+            self.handle_error()  # Kje je to definirano?
             return
         if self.is_holding and self.weight > MAX_WEIGHT:
-            self.emergency_stop()  # What happens after?
+            self.emergency_stop()  # Kaj se zgodi potem?
             return
-        # ... hundreds more lines
+        # ... še stotine vrstic
 ```
 
-**The Problems:**
+**Problemi:**
 
-1. **Increasing complexity** — Every new condition doubles the complexity
-2. **Hidden bugs** — What happens if we forget a certain state?
-3. **Testing difficulty** — How do we ensure all paths are covered?
-4. **Separate documentation** — The code says one thing, docs say another
+1. **Naraščajoča kompleksnost** — Vsak nov pogoj podvoji kompleksnost
+2. **Skrite napake** — Kaj se zgodi, če pozabimo določeno stanje?
+3. **Težavno testiranje** — Kako zagotovimo, da so vse poti pokrite?
+4. **Ločena dokumentacija** — Koda pravi eno, dokumentacija drugo
 
 ---
 
-## The Solution: Traits as a Way of Thinking
+## Rešitev: Traits kot način razmišljanja
 
-### The Physics of Software
+### Fizika programske opreme
 
-In physics, we describe object motion with simple laws:
+V fiziki opisujemo gibanje objektov z preprostimi zakoni:
 
-- An object is either **stationary** or **moving**
-- Transitioning between them requires a **force** (event)
-- Laws **govern** when transitions can occur
+- Objekt je bodisi **v mirovanju** bodisi **v gibanju**
+- Prehod med njima zahteva **silo** (dogodek)
+- Zakoni **nadzorujejo**, kdaj se prehodi lahko zgodijo
 
-**Almadar applies the same logic to software:**
+**Almadar uporablja enako logiko za programsko opremo:**
 
-| Physics | Almadar |
+| Fizika | Almadar |
 |---------|---------|
-| State (stationary/moving) | State machine states |
-| Force | Events |
-| Laws | Guards |
-| Reaction | Effects |
+| Stanje (mirovanje/gibanje) | State machine stanja |
+| Sila | Dogodki |
+| Zakoni | Guardi |
+| Reakcija | Effects |
 
-### Example: Robotic Arm in Almadar
+### Primer: Robotska roka v Almadarju
 
 ```json
 {
@@ -180,28 +176,28 @@ In physics, we describe object motion with simple laws:
 }
 ```
 
-### What Does This Mean?
+### Kaj to pomeni?
 
-1. **All states are clear** — idle, moving, holding, error
-2. **All transitions are defined** — No surprises
-3. **Guards protect** — Cannot grab weight greater than 50
-4. **Any state to emergency** — One explicit transition per state ensures every state can reach `error`
+1. **Vsa stanja so jasna** — idle, moving, holding, error
+2. **Vsi prehodi so definirani** — Ni presenečenj
+3. **Guardi varujejo** — Ni mogoče zgrabiti teže večje od 50
+4. **Katero koli stanje v emergency** — Ekspliciten prehod na stanje zagotavlja, da vsako stanje lahko doseže `error`
 
 ---
 
-## The Opportunity
+## Priložnost
 
-### Why Almadar is Suitable
+### Zakaj je Almadar primeren
 
-| Need | Almadar Solution |
+| Potreba | Almadar Rešitev |
 |------|------------------|
-| Development speed | 60% faster than traditional |
-| Reliability | Guaranteed state machines |
-| Safety | Guards prevent wrong behavior |
-| Documentation | The schema IS the documentation |
-| Training | Declarative, readable syntax |
+| Hitrost razvoja | 60% hitreje kot tradicionalno |
+| Zanesljivost | Zagotovljeni state machines |
+| Varnost | Guardi preprečujejo napačno vedênje |
+| Dokumentacija | Shema JE dokumentacija |
+| Usposabljanje | Deklarativna, berljiva sintaksa |
 
-### Example: Delivery Robot
+### Primer: Delivery Robot
 
 ```json
 {
@@ -226,54 +222,56 @@ In physics, we describe object motion with simple laws:
 }
 ```
 
-**Three Orbitals communicating automatically:**
+**Trije Orbitali, ki samodejno komunicirajo:**
 
-1. **Navigation** — Controls movement
-2. **Delivery** — Manages packages
-3. **Communication** — Notifies the customer
+1. **Navigation** — Nadzoruje gibanje
+2. **Delivery** — Upravlja pakete
+3. **Communication** — Obvesti stranko
 
-When Delivery emits `DELIVERY_COMPLETE`, Communication listens and sends confirmation to the customer automatically.
-
----
-
-## Next Steps
-
-### For Developers
-
-1. **Download the compiler** — `npm install -g @almadar/cli`
-2. **Read the documentation** — [Getting Started Guide](https://orb.almadar.io/docs/getting-started/introduction)
-3. **Try the example** — Build your first robotic trait
-
-### For Companies
-
-1. **Contact us** — hello@almadar.io
-2. **Book a demo** — We'll show you Almadar on your project
-3. **Start small** — A pilot project to prove value
-
-### For Educational Institutions
-
-We offer:
-- **Guest lectures** — Introduction to Almadar
-- **Graduation projects** — Supervision and guidance
-- **Research partnerships** — Joint development
+Ko Delivery emitira `DELIVERY_COMPLETE`, Communication posluša in pošlje potrditev stranki samodejno.
 
 ---
 
-## Conclusion
+## Naslednji koraki
 
-> **"Machines no longer need thousands of lines. They need clear, defined traits."**
+### Za razvijalce
 
-Almadar is not just a programming language. It's a new way of thinking about machine behavior. A way that makes programming closer to physics, and development closer to design.
+1. **Prenesite compiler** — `npm install -g @almadar/cli`
+2. **Preberite dokumentacijo** — [Getting Started Guide](https://orb.almadar.io/docs/getting-started/introduction)
+3. **Poskusite primer** — Zgradite svoj prvi robotski trait
 
-**Are you ready?**
+### Za podjetja
+
+1. **Kontaktirajte nas** — hello@almadar.io
+2. **Rezervirajte demo** — Pokazali vam bomo Almadar na vašem projektu
+3. **Začnite majhno** — Pilot projekt za dokaz vrednosti
+
+### Za izobraževalne ustanove
+
+Ponujamo:
+- **Gostujoča predavanja** — Uvod v Almadar
+- **Diplomski projekti** — Supervizija in vodstvo
+- **Raziskovalna partnerstva** — Skupen razvoj
 
 ---
 
-## In the Next Part
+## Zaključek
 
-Part 2: Building an Industrial Robot Controller (coming soon) — We'll build a complete robotic arm together using the Almadar language, step by step.
+> **"Stroji ne potrebujejo več tisočev vrstic. Potrebujejo jasne, definirane traits."**
+
+Almadar ni samo programski jezik. Je nov način razmišljanja o vedênju strojev. Način, ki programiranje približa fiziki, razvoj pa oblikovanju.
+
+**Ste pripravljeni?**
 
 ---
 
-*Written by the Almadar Team*  
-*January 2025*
+## V naslednjem delu
+
+Part 2: Gradnja industrijskega robotskega krmilnika (kmalu) — Skupaj bomo zgradili robotsko roko z jezikom Almadar, korak za korakom.
+
+<!-- truncate -->
+
+---
+
+*Napisala ekipa Almadar*  
+*Januar 2025*
