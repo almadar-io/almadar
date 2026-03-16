@@ -1159,3 +1159,109 @@
     background: #0a0f1a;
     color: #e2e8f0;
 }
+
+/* ─── Code Panel ────────────────────────────────────────────────────── */
+
+.codePanel {
+    flex-shrink: 0;
+    border-top: 1px solid #1e293b;
+}
+
+.codePanelToggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.5rem 1.25rem;
+    background: #080d16;
+    color: #94a3b8;
+    border: none;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    transition: background 0.15s, color 0.15s;
+}
+
+.codePanelToggle:hover {
+    background: #0f172a;
+    color: #e2e8f0;
+}
+
+.codePanelLevel {
+    margin-left: auto;
+    font-size: 0.6rem;
+    background: rgba(20, 184, 166, 0.15);
+    color: #5eead4;
+    padding: 0.1rem 0.5rem;
+    border-radius: 9999px;
+    text-transform: capitalize;
+    letter-spacing: 0.02em;
+}
+
+.codePanelBody {
+    display: flex;
+    flex-direction: column;
+}
+
+.codeTabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid #1e293b;
+    background: #080d16;
+}
+
+.codeTab {
+    padding: 0.4rem 1rem;
+    background: transparent;
+    color: #64748b;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.codeTab:hover {
+    color: #94a3b8;
+}
+
+.codeTabActive {
+    color: #5eead4;
+    border-bottom-color: #14b8a6;
+}
+
+.codeContent {
+    max-height: 400px;
+    overflow: auto;
+    background: #020617;
+}
+
+.codeContent::-webkit-scrollbar { width: 6px; height: 6px; }
+.codeContent::-webkit-scrollbar-track { background: transparent; }
+.codeContent::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+
+.codeBlock {
+    margin: 0;
+    padding: 1rem 1.25rem;
+    font-family: var(--ifm-font-family-monospace);
+    font-size: 0.75rem;
+    line-height: 1.65;
+    color: #e2e8f0;
+    background: transparent;
+    white-space: pre;
+    tab-size: 2;
+}
+
+.codeBlock code {
+    background: none;
+    padding: 0;
+    border: none;
+    font-size: inherit;
+    color: inherit;
+}
+

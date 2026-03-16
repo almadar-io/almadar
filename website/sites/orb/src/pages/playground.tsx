@@ -3,9 +3,9 @@ import type { ReactNode } from "react";
 import BrowserOnly from "@docusaurus/BrowserOnly";
 import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
-import { Search, Sun, Moon } from "lucide-react";
+import { Search, Sun, Moon, Code, ChevronDown, ChevronUp } from "lucide-react";
 import { translate } from "@docusaurus/Translate";
-import { BEHAVIOR_CATALOG } from "../data/behavior-catalog";
+import { BEHAVIOR_CATALOG, type BehaviorEntry } from "../data/behavior-catalog";
 import { MODULE_CATALOG } from "../data/module-catalog";
 import styles from "./playground.module.css";
 
@@ -306,33 +306,21 @@ function Picker<T extends { name: string; description: string }>({
 // TAB 1: BEHAVIORS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const BEHAVIOR_LIST = Object.values(BEHAVIOR_CATALOG).map((b) => {
-  const s = b as Record<string, unknown>;
-  return { name: s.name as string, description: (s.description as string) || "" };
-});
+const BEHAVIOR_LIST = Object.values(BEHAVIOR_CATALOG).map((b: BehaviorEntry) => ({
+  name: b.name,
+  description: b.description || "",
+}));
 
-const BEHAVIOR_CATEGORY_RULES: [RegExp, string][] = [
-  [/game|combat|collision|crafting|dialogue|enemy|platformer|rpg|strategy|puzzle/, "Game"],
-  [/cart|checkout|catalog|booking|payment|invoice|subscription/, "Commerce"],
-  [/calendar|availability|scheduler/, "Scheduling"],
-  [/task|approval|confirmation|pipeline|kanban/, "Workflow"],
-  [/feed|article|content|bookmark|annotation|media|curriculum/, "Content"],
-  [/chart|dashboard/, "Dashboard"],
-  [/filter|drawer|alert|fetch|async|notification/, "UI"],
-  [/device|iot|circuit|cache/, "Infrastructure"],
-  [/social/, "Social"],
-  [/health|patient/, "Healthcare"],
-  [/finance|bank|budget|loan/, "Finance"],
-  [/geo|map|location/, "Geospatial"],
-  [/sim|agent|physics|neural/, "Simulation"],
-];
+const LEVEL_LABELS: Record<string, string> = {
+  atom: "⚛ Atoms",
+  molecule: "🔬 Molecules",
+  organism: "🧬 Organisms",
+};
 
 function getBehaviorCategory(name: string): string {
-  const key = name.replace(/^std-/, "");
-  for (const [pattern, cat] of BEHAVIOR_CATEGORY_RULES) {
-    if (pattern.test(key)) return cat;
-  }
-  return "General";
+  const entry = BEHAVIOR_CATALOG[name];
+  if (!entry) return "Other";
+  return LEVEL_LABELS[entry.level] ?? "Other";
 }
 
 function buildMockData(schema: Record<string, unknown>): Record<string, unknown[]> {
@@ -340,18 +328,22 @@ function buildMockData(schema: Record<string, unknown>): Record<string, unknown[
   const entity = orbital?.entity as Record<string, unknown> | undefined;
   if (!entity) return {};
   const fields = (entity.fields as Record<string, unknown>[]) ?? [];
-  const item: Record<string, unknown> = { id: "1" };
-  for (const f of fields) {
-    const fname = f.name as string;
-    if (fname === "id") continue;
-    const ftype = f.type as string;
-    if (ftype === "string") item[fname] = `Sample ${fname}`;
-    else if (ftype === "number") item[fname] = 42;
-    else if (ftype === "boolean") item[fname] = true;
-    else item[fname] = (f.default ?? null);
-  }
   const entityName = entity.name as string;
-  return { [entityName]: [item, { ...item, id: "2" }] };
+  const items = Array.from({ length: 10 }, (_, i) => {
+    const idx = i + 1;
+    const item: Record<string, unknown> = { id: String(idx) };
+    for (const f of fields) {
+      const fname = f.name as string;
+      if (fname === "id") continue;
+      const ftype = f.type as string;
+      if (ftype === "string") item[fname] = `${entityName} ${fname.charAt(0).toUpperCase() + fname.slice(1)} ${idx}`;
+      else if (ftype === "number") item[fname] = idx * 10;
+      else if (ftype === "boolean") item[fname] = idx % 2 === 0;
+      else item[fname] = f.default ?? null;
+    }
+    return item;
+  });
+  return { [entityName]: items };
 }
 
 /**
@@ -453,6 +445,60 @@ function BehaviorStateMachineInfo({ schema }: { schema: Record<string, unknown> 
   );
 }
 
+// ─── Code Panel ───────────────────────────────────────────────────────────────
+
+type CodeTab = "source" | "schema";
+
+function CodePanel({ entry }: { entry: BehaviorEntry }) {
+  const [expanded, setExpanded] = useState(false);
+  const [activeTab, setActiveTab] = useState<CodeTab>("source");
+
+  const schemaJson = JSON.stringify(entry.schema, null, 2);
+  const hasSource = entry.source.trim().length > 0;
+
+  const content = activeTab === "source" && hasSource ? entry.source : schemaJson;
+  const lang = activeTab === "source" ? "typescript" : "json";
+
+  return (
+    <div className={styles.codePanel}>
+      <button
+        className={styles.codePanelToggle}
+        onClick={() => setExpanded((v) => !v)}
+      >
+        <Code size={14} />
+        <span>Code</span>
+        <span className={styles.codePanelLevel}>{entry.level}</span>
+        {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+      </button>
+      {expanded && (
+        <div className={styles.codePanelBody}>
+          <div className={styles.codeTabs}>
+            {hasSource && (
+              <button
+                className={`${styles.codeTab} ${activeTab === "source" ? styles.codeTabActive : ""}`}
+                onClick={() => setActiveTab("source")}
+              >
+                Source (.ts)
+              </button>
+            )}
+            <button
+              className={`${styles.codeTab} ${activeTab === "schema" ? styles.codeTabActive : ""}`}
+              onClick={() => setActiveTab("schema")}
+            >
+              Schema (.orb)
+            </button>
+          </div>
+          <div className={styles.codeContent}>
+            <pre className={styles.codeBlock} data-language={lang}>
+              <code>{content}</code>
+            </pre>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function BehaviorsTab({ initialSelected }: { initialSelected?: string | null }) {
   const [selected, setSelected] = useState(
     initialSelected && BEHAVIOR_CATALOG[initialSelected] ? initialSelected : "std-cart"
@@ -468,13 +514,20 @@ function BehaviorsTab({ initialSelected }: { initialSelected?: string | null }) 
     loadRuntime().then(setRt).catch(() => { /* handled by OrbitalPreview */ });
   }, []);
 
-  const schema = BEHAVIOR_CATALOG[selected] as Record<string, unknown> | undefined ?? null;
+  const entry = BEHAVIOR_CATALOG[selected] ?? null;
+  const schema = (entry?.schema as Record<string, unknown>) ?? null;
   const mockData = schema ? buildMockData(schema) : {};
   const adjustedSchema = useMockData && schema ? adjustSchemaForMockData(schema, mockData) : schema;
 
   const appliedTheme = `${selectedTheme}-${selectedMode}`;
 
   const handleSelect = useCallback((name: string) => {
+    // Clear stale portal content before remounting the preview.
+    // The portal root sits outside the keyed OrbitalPreview, so React
+    // doesn't destroy it on remount. Without this, the previous behavior's
+    // modal/slot content persists visually.
+    const portal = document.getElementById('ui-slot-portal-root');
+    if (portal) portal.innerHTML = '';
     setSelected(name);
     setPreviewKey((k) => k + 1);
   }, []);
@@ -495,7 +548,7 @@ function BehaviorsTab({ initialSelected }: { initialSelected?: string | null }) 
         <div className={styles.liveHeader}>
           <div className={styles.liveHeaderInfo}>
             <div className={styles.liveBehaviorName}>{selected}</div>
-            {schema && <div className={styles.liveBehaviorDesc}>{(schema.description as string) || ""}</div>}
+            {entry && <div className={styles.liveBehaviorDesc}>{entry.description}</div>}
           </div>
           <ThemeControls
             theme={selectedTheme}
@@ -530,6 +583,7 @@ function BehaviorsTab({ initialSelected }: { initialSelected?: string | null }) 
             : <div className={styles.previewEmpty}>Select a behavior</div>
           }
         </div>
+        {entry && <CodePanel entry={entry} />}
         {rt && (
           <div className={styles.debuggerContainer}>
             <rt.RuntimeDebugger
