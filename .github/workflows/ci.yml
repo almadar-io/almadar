@@ -39,7 +39,7 @@ jobs:
 
       - name: Build website
         working-directory: website
-        run: npm run build:site
+        run: npm run build
 
   lint:
     name: Lint
