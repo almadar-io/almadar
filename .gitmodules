@@ -2,5 +2,5 @@
 	path = agent
 	url = git@github.com:almadar-io/almadar-agent-server.git
 [submodule "website/sites/orb"]
-	path = website/sites/orb
+	path = orb
 	url = https://github.com/almadar-io/orb.git
