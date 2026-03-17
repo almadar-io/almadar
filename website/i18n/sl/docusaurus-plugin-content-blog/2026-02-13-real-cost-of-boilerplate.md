@@ -342,4 +342,4 @@ Schema s 120 vrsticami, ki generira 5.000-vrstično aplikacijo, pomeni:
 
 Resnično vprašanje ni "ali lahko napišem 5.000 vrstic?" Ampak "ali jih želim vzdrževati naslednjih 5 let?"
 
-Začnite z [Getting Started vodnikom](/docs/getting-started/introduction) in sami vidite razliko.
+Začnite z [Getting Started vodnikom](https://orb.almadar.io/docs/getting-started/introduction) in sami vidite razliko.

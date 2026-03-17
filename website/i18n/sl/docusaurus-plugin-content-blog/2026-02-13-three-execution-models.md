@@ -435,4 +435,4 @@ Ena shema. Trije modeli. Pravo orodje za pravo delo.
 
 Ker cilj ni teči povsod — je teči **dobro** povsod.
 
-Več o [Getting Started](/docs/getting-started/introduction).
+Več o [Getting Started](https://orb.almadar.io/docs/getting-started/introduction).

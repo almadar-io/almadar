@@ -255,4 +255,4 @@ Z deklarativno definicijo strukture aplikacije:
 
 Shema postane **dokumentacija, ki se izvaja**.
 
-Pripravljeni napisati svojo prvo shemo? Oglejte si [vodnik za začetek](/docs/getting-started/introduction).
+Pripravljeni napisati svojo prvo shemo? Oglejte si [vodnik za začetek](https://orb.almadar.io/docs/getting-started/introduction).

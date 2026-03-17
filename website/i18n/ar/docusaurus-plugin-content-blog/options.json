@@ -1,14 +1,14 @@
 {
   "title": {
-    "message": "المدونة",
+    "message": "Blog",
     "description": "The title for the blog used in SEO"
   },
   "description": {
-    "message": "مدونة المدار - مقالات عن البرمجة التصريحية وآلات الحالة",
+    "message": "Blog",
     "description": "The description for the blog used in SEO"
   },
   "sidebar.title": {
-    "message": "أحدث المنشورات",
+    "message": "Recent posts",
     "description": "The label for the left sidebar"
   }
 }

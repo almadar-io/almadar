@@ -154,4 +154,4 @@ Almadar naredi state machines praktične za poslovne aplikacije:
 
 Vaši uporabniki ne bodo vedeli, da uporabljajo state machine. Samo opazili bodo, da stvari delujejo.
 
-Pripravljeni poskusiti? Preverite [Getting Started vodnik](/docs/getting-started/introduction).
+Pripravljeni poskusiti? Preverite [Getting Started vodnik](https://orb.almadar.io/docs/getting-started/introduction).

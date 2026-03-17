@@ -44,6 +44,6 @@ Almadar يجلب نموذجاً جديداً لتطوير البرمجيات:
 
 ## البداية
 
-هل أنت مستعد لتجربة Almadar؟ اطلع على [التوثيق](/ar/docs) للبدء، أو [حمّل CLI](/ar/docs/downloads/cli) لإنشاء مشروعك الأول.
+هل أنت مستعد لتجربة Almadar؟ اطلع على [التوثيق](https://orb.almadar.io/docs) للبدء، أو [حمّل CLI](https://orb.almadar.io/docs/downloads/cli) لإنشاء مشروعك الأول.
 
 ترقبوا المزيد من التحديثات والدروس والتعمق في بنية Almadar!

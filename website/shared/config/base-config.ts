@@ -51,7 +51,8 @@ function buildProductsDropdown(currentSite: string) {
 }
 
 export function createConfig(opts: SiteConfig): Config {
-  const siteDir = path.resolve(__dirname, '../../sites', opts.site);
+  // Site root is two levels up from shared/config/
+  const siteDir = path.resolve(__dirname, '../..');
 
   return {
     title: opts.title,
@@ -78,7 +79,7 @@ export function createConfig(opts: SiteConfig): Config {
 
     staticDirectories: [
       'static',
-      '../../shared/static',
+      './shared/static',
       ...(opts.staticDirectories || []),
     ],
 

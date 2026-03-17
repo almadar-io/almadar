@@ -80,4 +80,4 @@ Effects so stranski učinki prehoda. Almadar podpira:
 
 ## Naslednji koraki
 
-Pripravljeni graditi s state machines? Preverite naš [Getting Started vodnik](/docs/getting-started/introduction).
+Pripravljeni graditi s state machines? Preverite naš [Getting Started vodnik](https://orb.almadar.io/docs/getting-started/introduction).

@@ -800,4 +800,4 @@ React + Express. Django + PostgreSQL. Rails + Redis. هذه خيارات تقن�
 
 تعتبر Almadar نموذج سلوك يُصرَّف إلى تقنية. schema واحد. خمسة تطبيقات. لأن النموذج صحيح.
 
-استكشف جميع المشاريع وجرب بناء مشروعك الخاص في [almadar.io](/docs/getting-started/introduction).
+استكشف جميع المشاريع وجرب بناء مشروعك الخاص في [almadar.io](https://orb.almadar.io/docs/getting-started/introduction).

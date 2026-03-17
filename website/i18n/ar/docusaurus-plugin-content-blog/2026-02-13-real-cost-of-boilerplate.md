@@ -341,4 +341,4 @@ cd taskly-app && npm install && npm run dev
 
 لا يكمن السؤال الحقيقي في "هل يمكنني كتابة 5,000 سطر؟" بل "هل أريد صيانتها خلال السنوات الخمس القادمة؟"
 
-ابدأ بـ[دليل البدء](/docs/getting-started/introduction) وشاهد الفرق بنفسك.
+ابدأ بـ[دليل البدء](https://orb.almadar.io/docs/getting-started/introduction) وشاهد الفرق بنفسك.

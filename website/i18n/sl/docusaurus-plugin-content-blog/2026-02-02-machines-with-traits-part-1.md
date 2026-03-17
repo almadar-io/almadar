@@ -237,7 +237,7 @@ Ko Delivery emitira `DELIVERY_COMPLETE`, Communication posluša in pošlje potrd
 ### Za razvijalce
 
 1. **Prenesite compiler** — `npm install -g @almadar/cli`
-2. **Preberite dokumentacijo** — [Getting Started Guide](/docs/getting-started/introduction)
+2. **Preberite dokumentacijo** — [Getting Started Guide](https://orb.almadar.io/docs/getting-started/introduction)
 3. **Poskusite primer** — Zgradite svoj prvi robotski trait
 
 ### Za podjetja
@@ -267,7 +267,7 @@ Almadar ni samo programski jezik. Je nov način razmišljanja o vedênju strojev
 
 ## V naslednjem delu
 
-[Part 2: Gradnja industrijskega robotskega krmilnika](/blog/machines-with-traits-part-2) — Skupaj bomo zgradili robotsko roko z jezikom Almadar, korak za korakom.
+Part 2: Gradnja industrijskega robotskega krmilnika (kmalu) — Skupaj bomo zgradili robotsko roko z jezikom Almadar, korak za korakom.
 
 <!-- truncate -->
 

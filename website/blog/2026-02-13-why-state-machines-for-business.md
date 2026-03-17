@@ -154,4 +154,4 @@ Almadar makes state machines practical for business applications:
 
 Your users won't know they're using a state machine. They'll just notice that things work.
 
-Ready to try it? Check out the [Getting Started guide](/docs/getting-started/introduction).
+Ready to try it? Check out the [Getting Started guide](https://orb.almadar.io/docs/getting-started/introduction).

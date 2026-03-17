@@ -365,4 +365,4 @@ function Checkout() {
 
 Almadar يجعل الـ state machines الخيار الافتراضي، لا الاستثناء. لأن مستخدميك يستحقون برمجيات متوقعة.
 
-هل أنت مستعد للتجربة؟ [ابنِ state machine الأولى لك](/docs/getting-started/introduction).
+هل أنت مستعد للتجربة؟ [ابنِ state machine الأولى لك](https://orb.almadar.io/docs/getting-started/introduction).

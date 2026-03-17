@@ -935,4 +935,4 @@ React + Express. Django + PostgreSQL. Rails + Redis. These are technology choice
 
 Almadar is a behavior model that happens to compile to technology. One schema. Five apps. Because the model is right.
 
-Explore all projects and try building your own at [almadar.io](/docs/getting-started/introduction).
+Explore all projects and try building your own at [almadar.io](https://orb.almadar.io/docs/getting-started/introduction).

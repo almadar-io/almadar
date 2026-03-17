@@ -3,36 +3,52 @@
     "message": "Almadar",
     "description": "The title in the navbar"
   },
-  "item.label.Home": {
-    "message": "Domov",
-    "description": "Navbar item with label Home"
+  "logo.alt": {
+    "message": "Logotip Almadar",
+    "description": "The alt text of navbar logo"
   },
-  "item.label.Demos": {
-    "message": "Predstavitve",
-    "description": "Navbar item with label Demos"
+  "item.label.Vision": {
+    "message": "Vizija",
+    "description": "Navbar item with label Vision"
   },
-  "item.label.Developers": {
-    "message": "Razvijalci",
-    "description": "Navbar item with label Developers"
+  "item.label.AI": {
+    "message": "AI",
+    "description": "Navbar item with label AI"
   },
-  "item.label.Enterprise": {
-    "message": "Podjetje",
-    "description": "Navbar item with label Enterprise"
+  "item.label.Platform": {
+    "message": "Platforma",
+    "description": "Navbar item with label Platform"
   },
   "item.label.Blog": {
     "message": "Blog",
     "description": "Navbar item with label Blog"
   },
-  "item.label.Discord": {
-    "message": "Discord",
-    "description": "Navbar item with label Discord"
+  "item.label.About": {
+    "message": "O nas",
+    "description": "Navbar item with label About"
+  },
+  "item.label.Products": {
+    "message": "Produkti",
+    "description": "Navbar item with label Products"
   },
   "item.label.GitHub": {
     "message": "GitHub",
     "description": "Navbar item with label GitHub"
   },
-  "logo.alt": {
-    "message": "Logotip Almadar",
-    "description": "The alt text of navbar logo"
+  "item.label.Discord": {
+    "message": "Discord",
+    "description": "Navbar item with label Discord"
+  },
+  "item.label.Studio — Build apps with AI": {
+    "message": "Studio — Gradite aplikacije z AI",
+    "description": "Navbar item with label Studio — Build apps with AI"
+  },
+  "item.label.Services — Cloud infrastructure": {
+    "message": "Services — Oblačna infrastruktura",
+    "description": "Navbar item with label Services — Cloud infrastructure"
+  },
+  "item.label.Orb — A programming language": {
+    "message": "Orb — Programski jezik",
+    "description": "Navbar item with label Orb — A programming language"
   }
 }

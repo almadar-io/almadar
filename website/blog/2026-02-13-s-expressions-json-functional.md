@@ -315,4 +315,4 @@ They give you:
 
 Next time you're tempted to use `eval()` or string templates for dynamic logic, remember: there's a 60-year-old solution that actually works.
 
-Want to explore more? Check out the [standard library operators](/docs/stdlib).
+Want to explore more? Check out the [standard library operators](https://orb.almadar.io/docs/stdlib).

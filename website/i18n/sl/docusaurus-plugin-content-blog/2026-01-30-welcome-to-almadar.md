@@ -44,6 +44,6 @@ Kot elektroni orbitirajo okoli jeder po kvantnih pravilih, vaše komponente apli
 
 ## Kako začeti
 
-Pripravljeni poskusiti Almadar? Preverite našo [dokumentacijo](/docs) za začetek, ali [prenesite CLI](/docs/downloads/cli) za ustvarjanje vašega prvega projekta.
+Pripravljeni poskusiti Almadar? Preverite našo [dokumentacijo](https://orb.almadar.io/docs) za začetek, ali [prenesite CLI](https://orb.almadar.io/docs/downloads/cli) za ustvarjanje vašega prvega projekta.
 
 Ostanite z nami za več posodobitev, tutorialov in globinskih raziskav Almadar arhitekture!

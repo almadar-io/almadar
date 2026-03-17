@@ -46,6 +46,6 @@ Just as electrons orbit nuclei following quantum rules, your application compone
 
 ## Getting Started
 
-Ready to try Almadar? Check out our [documentation](/docs) to get started, or [download the CLI](/docs/downloads/cli) to create your first project.
+Ready to try Almadar? Check out our [documentation](https://orb.almadar.io/docs) to get started, or [download the CLI](https://orb.almadar.io/docs/downloads/cli) to create your first project.
 
 Stay tuned for more updates, tutorials, and deep dives into the Almadar architecture!

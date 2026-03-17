@@ -3,6 +3,7 @@ slug: ikea-effect-software
 title: "The IKEA Effect for Software: Why We Built Apps from Flat-Packs"
 authors: [osamah]
 tags: [architecture, philosophy]
+image: /img/blog/ikea-effect-software.png
 ---
 
 IKEA revolutionized furniture by making it composable, flat-packed, and assembly-friendly. What if software worked the same way?
@@ -188,4 +189,4 @@ Almadar aims to do the same for software. Not by making developers obsolete, but
 
 The future isn't custom carpentry for every shelf. It's knowing which standard parts to combine, and where to add the custom touches that matter.
 
-Ready to assemble your first app? [Get started with the CLI](/docs/downloads/cli).
+Ready to assemble your first app? [Get started with the CLI](https://orb.almadar.io/docs/downloads/cli).

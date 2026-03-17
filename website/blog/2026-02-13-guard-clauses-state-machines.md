@@ -3,7 +3,10 @@ slug: guard-clauses-state-machines
 title: "Guard Clauses in State Machines: Permission Systems That Actually Work"
 authors: [osamah]
 tags: [architecture, state-machines]
+image: /img/blog/guard-clauses-state-machines.png
 ---
+
+![Guard Clauses in State Machines: Permission Systems That Actually Work](/img/blog/guard-clauses-state-machines.png)
 
 Authorization logic scattered across your app? What if it was just... part of the state definition?
 
@@ -375,4 +378,4 @@ Guards bring **declarative authorization** to state machines:
 
 Stop scattering authorization logic across your app. Define it once, enforce it everywhere.
 
-Learn more about [guards and effects](/docs/traits).
+Learn more about [guards and effects](https://orb.almadar.io/docs/traits).

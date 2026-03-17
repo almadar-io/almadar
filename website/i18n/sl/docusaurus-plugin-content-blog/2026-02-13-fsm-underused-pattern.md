@@ -365,4 +365,4 @@ Končni avtomati stanja niso akademske vaje — so **praktična orodja** za upra
 
 Almadar naredi state machine privzete, ne izjeme. Ker si vaši uporabniki zaslužijo predvidljivo programsko opremo.
 
-Pripravljeni poskusiti? [Zgradite svoj prvi state machine](/docs/getting-started/introduction).
+Pripravljeni poskusiti? [Zgradite svoj prvi state machine](https://orb.almadar.io/docs/getting-started/introduction).

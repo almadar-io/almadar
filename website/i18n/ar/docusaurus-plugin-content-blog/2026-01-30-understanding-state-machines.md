@@ -80,4 +80,4 @@ tags: [architecture, tutorial]
 
 ## الخطوات التالية
 
-هل أنت مستعد للبناء باستخدام state machines؟ اطلع على [دليل البداية](/ar/docs/getting-started/introduction).
+هل أنت مستعد للبناء باستخدام state machines؟ اطلع على [دليل البداية](https://orb.almadar.io/docs/getting-started/introduction).

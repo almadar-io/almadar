@@ -259,4 +259,4 @@ Orbitals give you:
 
 The next time you're designing a system, don't start with "how many services?" Start with "what behaviors do I need, and how do they compose?"
 
-Learn more about [cross-orbital events](/docs/traits) and the [standard library](/docs/stdlib).
+Learn more about [cross-orbital events](https://orb.almadar.io/docs/traits) and the [standard library](https://orb.almadar.io/docs/stdlib).

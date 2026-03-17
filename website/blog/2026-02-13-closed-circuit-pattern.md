@@ -374,4 +374,4 @@ In Almadar:
 
 Because the best way to prevent bugs isn't testing — it's making them impossible to write.
 
-Learn more about [state machines in Almadar](/docs/traits).
+Learn more about [state machines in Almadar](https://orb.almadar.io/docs/traits).

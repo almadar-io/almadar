@@ -800,4 +800,4 @@ React + Express. Django + PostgreSQL. Rails + Redis. To so tehnološke izbire. N
 
 Almadar je model vedênja, ki se prevede v tehnologijo. Ena shema. Pet aplikacij. Ker je model pravilen.
 
-Raziščite vse projekte in poskusite zgraditi svojega na [almadar.io](/docs/getting-started/introduction).
+Raziščite vse projekte in poskusite zgraditi svojega na [almadar.io](https://orb.almadar.io/docs/getting-started/introduction).

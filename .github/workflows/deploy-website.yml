@@ -35,7 +35,7 @@ jobs:
 
       - name: Build main site
         working-directory: website
-        run: npm run build:main
+        run: npm run build
         env:
           NODE_ENV: production
 
@@ -43,12 +43,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-main
-          path: website/sites/main/build
+          path: website/build
 
       - name: Upload main for GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: website/sites/main/build
+          path: website/build
 
   deploy-github-pages:
     name: Deploy to GitHub Pages
@@ -72,12 +72,8 @@ jobs:
       - name: Download main build
         uses: actions/download-artifact@v4
         with:
-          path: website/sites
-
-      - name: Move build to correct location
-        run: |
-          mkdir -p website/sites/main
-          mv website/sites/build-main website/sites/main/build
+          name: build-main
+          path: website/build
 
       - name: Authenticate to Firebase
         run: |

@@ -435,4 +435,4 @@ schema واحد. ثلاثة نماذج. الأداة المناسبة للمهم
 
 لأن الهدف ليس العمل في كل مكان — بل العمل **بشكل جيد** في كل مكان.
 
-تعرف على المزيد حول [البدء](/docs/getting-started/introduction).
+تعرف على المزيد حول [البدء](https://orb.almadar.io/docs/getting-started/introduction).

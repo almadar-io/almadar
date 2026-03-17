@@ -372,4 +372,4 @@ V Almadarju:
 
 Ker najboljši način za preprečevanje napak ni testiranje — je narediti, da so nemogoče za zapisati.
 
-Več o [state machines v Almadarju](/docs/traits).
+Več o [state machines v Almadarju](https://orb.almadar.io/docs/traits).

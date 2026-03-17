@@ -373,4 +373,4 @@ Guardi prinašajo **deklarativno avtorizacijo** v state machines:
 
 Nehajte raztresati avtorizacijsko logiko po aplikaciji. Definirajte jo enkrat, vsilite jo povsod.
 
-Več o [guardih in effectih](/docs/traits).
+Več o [guardih in effectih](https://orb.almadar.io/docs/traits).

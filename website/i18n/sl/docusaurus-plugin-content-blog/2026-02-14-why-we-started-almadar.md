@@ -77,4 +77,4 @@ Vizija je jasna: vsaka poslovna aplikacija, ki sledi pogostim vzorcem, bi morala
 
 Almadar smo zaceli, ker smo bili naveliCani graditi isto stvar znova in znova. Nadaljevali smo, ker smo spoznali, da nismo edini.
 
-Ce se vam karkoli od tega zdi znano, bi vas radi slisali. Oglejte si naso [dokumentacijo](/docs), preizkusite [CLI](/docs/downloads/cli) ali nas preprosto kontaktirajte in nam povejte, kaj gradite. Orbita se sele zacenja.
+Ce se vam karkoli od tega zdi znano, bi vas radi slisali. Oglejte si naso [dokumentacijo](https://orb.almadar.io/docs), preizkusite [CLI](https://orb.almadar.io/docs/downloads/cli) ali nas preprosto kontaktirajte in nam povejte, kaj gradite. Orbita se sele zacenja.

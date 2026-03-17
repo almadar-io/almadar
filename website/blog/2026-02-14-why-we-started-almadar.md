@@ -77,4 +77,4 @@ The vision is straightforward: any business application that follows common patt
 
 We started Almadar because we were tired of building the same thing over and over. We kept building it because we realized we were not the only ones.
 
-If any of this resonates with you, we would love to hear from you. Check out our [documentation](/docs), try the [CLI](/docs/downloads/cli), or just reach out and tell us what you are building. The orbit is just getting started.
+If any of this resonates with you, we would love to hear from you. Check out our [documentation](https://orb.almadar.io/docs), try the [CLI](https://orb.almadar.io/docs/downloads/cli), or just reach out and tell us what you are building. The orbit is just getting started.

@@ -290,6 +290,6 @@ By defining your application's structure declaratively:
 
 The schema becomes the **documentation that executes**.
 
-Ready to write your first schema? Check out the [Getting Started guide](/docs/getting-started/introduction).
+Ready to write your first schema? Check out the [Getting Started guide](https://orb.almadar.io/docs/getting-started/introduction).
 
 

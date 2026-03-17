@@ -243,4 +243,4 @@ The result is a Turing-complete language that:
 
 Because the best syntax might be the one you already know.
 
-Explore the [S-expression standard library](/docs/stdlib) to see all available operators.
+Explore the [S-expression standard library](https://orb.almadar.io/docs/stdlib) to see all available operators.

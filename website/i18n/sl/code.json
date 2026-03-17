@@ -1,10 +1,536 @@
 {
+  "home.hero.tag": {
+    "message": "Platforma z vgrajeno umetno inteligenco"
+  },
+  "home.hero.title": {
+    "message": "Fizika programske opreme"
+  },
+  "home.hero.subtitle": {
+    "message": "Svetovni modeli za dobo agentov. Gradimo jezik, inteligenco in infrastrukturo za programsko opremo, ki razume samo sebe."
+  },
+  "home.hero.cta1": {
+    "message": "Raziščite Studio"
+  },
+  "home.hero.cta2": {
+    "message": "Preberite dokumentacijo"
+  },
+  "home.idea.title": {
+    "message": "Kaj je svetovni model programske opreme?"
+  },
+  "home.idea.subtitle": {
+    "message": "Tradicionalno programiranje računalniku pove, kaj naj naredi, korak za korakom. Svetovni model opisuje, kako stvari delujejo: podatke, pravila, vedenja. Prevajalnik ga pretvori v katero koli platformo. Model ostane enak."
+  },
+  "home.idea.describe": {
+    "message": "Opiši"
+  },
+  "home.idea.describe.text": {
+    "message": "Zapišite, kaj vaš sistem počne, v jeziku .orb, formalnem jeziku za vedenje aplikacij."
+  },
+  "home.idea.prove": {
+    "message": "Dokaži"
+  },
+  "home.idea.prove.text": {
+    "message": "Prevajalnik preveri vsako možno stanje, preden se izvede ena sama vrstica kode."
+  },
+  "home.idea.deploy": {
+    "message": "Namesti"
+  },
+  "home.idea.deploy.text": {
+    "message": "En model se prevede v spletno, mobilno ali katero koli prihodnjo platformo. Model je izdelek."
+  },
+  "home.pillars.title": {
+    "message": "Trije stebri"
+  },
+  "home.pillars.language.title": {
+    "message": "Orb",
+    "description": "Orb"
+  },
+  "home.pillars.language.desc": {
+    "message": "Formalni jezik za opis vedenja programske opreme. Odprtokoden. Z vgrajeno umetno inteligenco. Preverjen s prevajalnikom.",
+    "description": "A formal language for describing how software behaves. Open source. AI-native. Compiler-verified."
+  },
+  "home.pillars.language.link": {
+    "message": "Raziščite jezik",
+    "description": "Explore the Language"
+  },
+  "home.pillars.studio.title": {
+    "message": "Almadar Studio",
+    "description": "Almadar Studio"
+  },
+  "home.pillars.studio.desc": {
+    "message": "Gradbeno okolje, kjer ljudje in agenti umetne inteligence skupaj ustvarjajo programsko opremo. Opišite, generirajte, namestite.",
+    "description": "The builder where humans and AI agents collaborate to create software. Describe, generate, deploy."
+  },
+  "home.pillars.studio.link": {
+    "message": "Preizkusite Studio",
+    "description": "Try Studio"
+  },
+  "home.pillars.services.title": {
+    "message": "Almadar Services",
+    "description": "Almadar Services"
+  },
+  "home.pillars.services.desc": {
+    "message": "Infrastruktura z vgrajeno umetno inteligenco. Računalništvo, shranjevanje, avtentikacija, usmerjanje dogodkov. Zasnovano za agente.",
+    "description": "AI-native infrastructure. Compute, storage, authentication, event routing. Designed for agents."
+  },
+  "home.pillars.services.link": {
+    "message": "Oglejte si storitve",
+    "description": "View Services"
+  },
+  "home.proof.title": {
+    "message": "Dokazano v produkciji"
+  },
+  "home.stats.behaviors.value": {
+    "message": "129",
+    "description": "129"
+  },
+  "home.stats.behaviors.label": {
+    "message": "Standardnih vedenj v 18 domenah",
+    "description": "Standard behaviors across 18 domains"
+  },
+  "home.stats.projects.value": {
+    "message": "7",
+    "description": "7"
+  },
+  "home.stats.projects.label": {
+    "message": "Produkcijskih projektov v uporabi",
+    "description": "Production projects deployed"
+  },
+  "home.stats.cost.value": {
+    "message": "$0,05–$0,35",
+    "description": "$0.05–$0.35"
+  },
+  "home.stats.cost.label": {
+    "message": "Strošek AI računanja na aplikacijo",
+    "description": "AI compute cost per application"
+  },
+  "home.ai.title": {
+    "message": "Treniramo lastne modele"
+  },
+  "home.ai.text": {
+    "message": "Nismo podjetje, ki ovije API-je velikih jezikovnih modelov in temu reče umetna inteligenca. Naš nevronski cevovod razume strukturo programske opreme tako, kot šahovski motor razume pozicije na plošči. Napoveduje napake, ocenjuje popravke in generira veljavno programsko opremo iz nič."
+  },
+  "home.ai.text2": {
+    "message": "Za razumevanje naravnega jezika še vedno uporabljamo velike jezikovne modele. Toda jedro strukturne inteligence je naše: majhni, specializirani modeli, ki jih je skoraj brezplačno poganjati."
+  },
+  "home.cta.title": {
+    "message": "Pripravljeni na gradnjo?"
+  },
+  "home.cta.text": {
+    "message": "Začnite z Orb. Gradite s Studio. Namestite na Almadar Services."
+  },
+  "home.cta.start": {
+    "message": "Začnite graditi"
+  },
+  "home.cta.vision": {
+    "message": "Preberite vizijo"
+  },
+  "home.meta.title": {
+    "message": "Almadar — Fizika programske opreme"
+  },
+  "home.meta.desc": {
+    "message": "Almadar gradi jezik, inteligenco in infrastrukturo za programsko opremo, ki razume samo sebe."
+  },
+  "platform.hero.title": {
+    "message": "Platforma"
+  },
+  "platform.hero.subtitle": {
+    "message": "Trije stebri, en cilj: formalne opise programske opreme pretvoriti v delujoče aplikacije."
+  },
+  "platform.language.title": {
+    "message": "Orb",
+    "description": "Orb"
+  },
+  "platform.language.desc": {
+    "message": "Formalni jezik za opis vedenja programskih sistemov. Odprtokoden, preverjen s prevajalnikom, z vgrajeno umetno inteligenco.",
+    "description": "A formal language for describing how software systems behave. Open source, compiler-verified, AI-native."
+  },
+  "platform.language.link": {
+    "message": "Dokumentacija jezika",
+    "description": "Language Docs"
+  },
+  "platform.studio.title": {
+    "message": "Almadar Studio",
+    "description": "Almadar Studio"
+  },
+  "platform.studio.desc": {
+    "message": "Gradbeno okolje, kjer ljudje in umetna inteligenca sodelujejo. Opišite, kaj želite, v naravnem jeziku, agent umetne inteligence pa generira veljaven program .orb.",
+    "description": "The builder where humans and AI collaborate. Describe what you want in plain language, the AI agent generates a valid .orb program."
+  },
+  "platform.studio.link": {
+    "message": "Odprite Studio",
+    "description": "Open Studio"
+  },
+  "platform.services.title": {
+    "message": "Almadar Services",
+    "description": "Almadar Services"
+  },
+  "platform.services.desc": {
+    "message": "Infrastruktura z vgrajeno umetno inteligenco za dobo agentov. Računalništvo, shranjevanje, avtentikacija, usmerjanje dogodkov, orkestracija velikih jezikovnih modelov in nadzor.",
+    "description": "AI-native infrastructure for the agentic era. Compute, storage, authentication, event routing, LLM orchestration, and observability."
+  },
+  "platform.services.link": {
+    "message": "Oglejte si storitve",
+    "description": "View Services"
+  },
+  "platform.connect.title": {
+    "message": "Kako se povezujejo"
+  },
+  "platform.connect.step1.title": {
+    "message": "Opiši"
+  },
+  "platform.connect.step1.desc": {
+    "message": "Uporabniki opišejo, kaj potrebujejo, v Studio. Agent umetne inteligence prevede naravni jezik v kodo .orb."
+  },
+  "platform.connect.step2.title": {
+    "message": "Prevedi"
+  },
+  "platform.connect.step2.desc": {
+    "message": "Prevajalnik Orb preveri program in generira celotno aplikacijo: sprednji del, zaledni del, podatkovno bazo."
+  },
+  "platform.connect.step3.title": {
+    "message": "Zaženi"
+  },
+  "platform.connect.step3.desc": {
+    "message": "Almadar Services gosti aplikacijo z vgrajenim usmerjanjem dogodkov, shranjevanjem, avtentikacijo in storitvami umetne inteligence."
+  },
+  "platform.cta.title": {
+    "message": "Začnite kjerkoli"
+  },
+  "platform.cta.text": {
+    "message": "Spoznajte jezik, preizkusite graditelj ali raziščite infrastrukturo. Vsak steber deluje samostojno. Skupaj tvorijo celotno platformo."
+  },
+  "platform.cta.studio": {
+    "message": "Preizkusite Studio"
+  },
+  "platform.cta.docs": {
+    "message": "Preberite dokumentacijo"
+  },
+  "platform.meta.title": {
+    "message": "Platforma — Jezik, Studio, Storitve"
+  },
+  "platform.meta.desc": {
+    "message": "Trije stebri platforme Almadar."
+  },
+  "vision.hero.title": {
+    "message": "Skupna digitalna resničnost"
+  },
+  "vision.hero.subtitle": {
+    "message": "Programska oprema, ki sobiva, se usklajuje in skupaj razvija."
+  },
+  "vision.coexist.title": {
+    "message": "Programska oprema, ki sobiva"
+  },
+  "vision.coexist.p1": {
+    "message": "Danes je vsaka aplikacija otok. Ima svoj podatkovni model, svoja pravila, svoj jezik. Prenašanje informacij med sistemi pomeni gradnjo mostov, ki se zlomijo vsakič, ko se katera koli stran spremeni."
+  },
+  "vision.coexist.p2": {
+    "message": "Verjamemo, da bi morala programska oprema deliti skupno slovnico. Ko dve aplikaciji opišeta svoje vedenje v Orb, se lahko izvorno razumeta."
+  },
+  "vision.ownership.title": {
+    "message": "Skupnosti ohranijo lastništvo"
+  },
+  "vision.ownership.p1": {
+    "message": "Trenutni model koncentrira moč. Nekaj platform obvladuje orodja, podatke in distribucijo."
+  },
+  "vision.ownership.p2": {
+    "message": "Almadar to spreminja. Orb je odprtokoden. Standardna knjižnica je odprtokodna."
+  },
+  "vision.models.title": {
+    "message": "Sestavljivi svetovni modeli"
+  },
+  "vision.models.p1": {
+    "message": "Svetovni model je formalni opis delovanja neke domene: kaj obstaja, kako se spreminja, kakšna so pravila."
+  },
+  "vision.models.p2": {
+    "message": "To je dolgoročna igra. Ko bo dovolj domen imelo formalne modele, programska oprema ne bo več zbirka izoliranih programov, temveč skupna, interoperabilna digitalna resničnost."
+  },
+  "vision.cta.title": {
+    "message": "Gradite z nami"
+  },
+  "vision.cta.text": {
+    "message": "Skupna digitalna resničnost se začne s prvim modelom. Napišite svojega."
+  },
+  "vision.cta.language": {
+    "message": "Raziščite jezik"
+  },
+  "vision.cta.contact": {
+    "message": "Stopite v stik"
+  },
+  "vision.meta.title": {
+    "message": "Vizija — Skupna digitalna resničnost"
+  },
+  "vision.meta.desc": {
+    "message": "Programska oprema, ki sobiva, se usklajuje in skupaj razvija."
+  },
+  "ai.hero.tag": {
+    "message": "Naša umetna inteligenca"
+  },
+  "ai.hero.title": {
+    "message": "Treniramo lastne modele"
+  },
+  "ai.hero.subtitle": {
+    "message": "Ne ovojnice okoli tuje inteligence. Namensko grajene nevronske mreže, ki razumejo strukturo programske opreme."
+  },
+  "ai.pipeline.title": {
+    "message": "Nevronski cevovod"
+  },
+  "ai.pipeline.subtitle": {
+    "message": "Šest specializiranih modelov, ki delujejo skupaj. Vsak počne eno stvar dobro."
+  },
+  "ai.pipeline.mutator.title": {
+    "message": "Schema Mutator",
+    "description": "Schema Mutator"
+  },
+  "ai.pipeline.mutator.desc": {
+    "message": "Generira kandidatne programe .orb iz visokonivojskih opisov.",
+    "description": "Generates candidate .orb programs from high-level descriptions."
+  },
+  "ai.pipeline.classifier.title": {
+    "message": "Quality Classifier",
+    "description": "Quality Classifier"
+  },
+  "ai.pipeline.classifier.desc": {
+    "message": "Oceni vsakega kandidata glede na pravilnost, popolnost in kakovost uporabniške izkušnje.",
+    "description": "Scores each candidate on correctness, completeness, and UX quality."
+  },
+  "ai.pipeline.graph.title": {
+    "message": "Graph Transformer",
+    "description": "Graph Transformer"
+  },
+  "ai.pipeline.graph.desc": {
+    "message": "Razume strukturo avtomatov stanj v programih .orb kot grafe.",
+    "description": "Understands the state machine structure of .orb programs as graphs."
+  },
+  "ai.pipeline.edit.title": {
+    "message": "Edit Predictor",
+    "description": "Edit Predictor"
+  },
+  "ai.pipeline.edit.desc": {
+    "message": "Ob programu in napaki pri preverjanju napove minimalno spremembo, ki napako odpravi.",
+    "description": "Given a program and a validation error, predicts the minimal edit that fixes it."
+  },
+  "ai.pipeline.gflownet.title": {
+    "message": "GFlowNet Generator",
+    "description": "GFlowNet Generator"
+  },
+  "ai.pipeline.gflownet.desc": {
+    "message": "Gradi programe .orb korak za korakom in vzorči sorazmerno s kakovostjo.",
+    "description": "Constructs .orb programs step by step, sampling proportionally to quality."
+  },
+  "ai.pipeline.integration.title": {
+    "message": "Integracijska plast",
+    "description": "Integration Layer"
+  },
+  "ai.pipeline.integration.desc": {
+    "message": "Orkestrira celoten cevovod od začetka do konca. Združuje nevronske napovedi s preverjanjem prevajalnika.",
+    "description": "Orchestrates the pipeline end to end. Combines neural predictions with compiler validation."
+  },
+  "ai.cost.title": {
+    "message": "Stroškovna prednost"
+  },
+  "ai.cost.p1": {
+    "message": "Veliki jezikovni modeli stanejo od $0,50 do $5,00 na kompleksno generiranje. Naši specializirani modeli stanejo od $0,05 do $0,35 za enako nalogo."
+  },
+  "ai.cost.p2": {
+    "message": "Prihranki izhajajo iz osredotočenosti. Veliki jezikovni model je splošen napovedovalec besedila. Naši modeli morajo razumeti le strukturo programov .orb."
+  },
+  "ai.diff.title": {
+    "message": "Ne le ovojnice za velike jezikovne modele"
+  },
+  "ai.diff.p1": {
+    "message": "Velike jezikovne modele uporabljamo za razumevanje naravnega jezika. Toda strukturna inteligenca je naša. Trenirana na naših podatkih, optimizirana za našo domeno."
+  },
+  "ai.diff.p2": {
+    "message": "To pomeni, da nadzorujemo svoje stroške, svojo kakovost in svoj načrt razvoja."
+  },
+  "ai.diff.cta": {
+    "message": "Oglejte si platformo"
+  },
+  "ai.meta.title": {
+    "message": "Umetna inteligenca — Trenirani modeli za generiranje programske opreme"
+  },
+  "ai.meta.desc": {
+    "message": "Namensko grajene nevronske mreže, ki razumejo strukturo programske opreme."
+  },
+  "about.hero.title": {
+    "message": "O podjetju Almadar"
+  },
+  "about.hero.subtitle": {
+    "message": "Majhna ekipa, ki gradi fiziko programske opreme. S sedežem v Ljubljani, Slovenija."
+  },
+  "about.team.title": {
+    "message": "Ekipa"
+  },
+  "about.team.osama.role": {
+    "message": "Soustanovitelj in tehnični vodja",
+    "description": "Co-Founder & Technical Lead"
+  },
+  "about.team.osama.bio": {
+    "message": "Več kot 15 let izkušenj z gradnjo poslovnih sistemov. Arhitekt programskega jezika Orb in prevajalnika Almadar.",
+    "description": "15+ years building enterprise systems. Architect of the Orb programming language and the Almadar compiler."
+  },
+  "about.team.maja.role": {
+    "message": "Soustanoviteljica in vodja programov",
+    "description": "Co-Founder & Program Manager"
+  },
+  "about.team.maja.bio": {
+    "message": "Več kot 10 let izkušenj z izvajanjem poslovnih projektov in vodenjem programov.",
+    "description": "10+ years in enterprise delivery and program management."
+  },
+  "about.story.title": {
+    "message": "Zakaj to gradimo"
+  },
+  "about.story.p1": {
+    "message": "Razvoj programske opreme ima temeljno težavo: vrzel med tem, kar si nekdo želi, in tem, kar lahko zgradi, se nenehno povečuje."
+  },
+  "about.story.p2": {
+    "message": "Almadar smo začeli z drugačno predpostavko. Kaj če bi imela programska oprema fiziko?"
+  },
+  "about.story.p3": {
+    "message": "Iz te predpostavke so nastali Orb, prevajalnik Almadar in nevronski cevovod."
+  },
+  "about.meta.title": {
+    "message": "O nas — Ekipa Almadar"
+  },
+  "about.meta.desc": {
+    "message": "Majhna ekipa v Ljubljani, Slovenija, ki gradi fiziko programske opreme."
+  },
+  "contact.hero.title": {
+    "message": "Stopite v stik"
+  },
+  "contact.hero.subtitle": {
+    "message": "Vlagatelji, partnerstva in poslovna povpraševanja."
+  },
+  "contact.investors.title": {
+    "message": "Vlagatelji",
+    "description": "Investors"
+  },
+  "contact.investors.desc": {
+    "message": "Gradimo temeljno infrastrukturo za programsko opremo z vgrajeno umetno inteligenco.",
+    "description": "We are building foundational infrastructure for AI-native software."
+  },
+  "contact.partnerships.title": {
+    "message": "Partnerstva",
+    "description": "Partnerships"
+  },
+  "contact.partnerships.desc": {
+    "message": "Sistemski integratorji, svetovalci in tehnološka podjetja.",
+    "description": "System integrators, consultancies, and technology companies."
+  },
+  "contact.enterprise.title": {
+    "message": "Podjetja",
+    "description": "Enterprise"
+  },
+  "contact.enterprise.desc": {
+    "message": "Namenske namestitve, namenski infrastruktura in prilagojeni modeli umetne inteligence.",
+    "description": "Custom deployments, dedicated infrastructure, and tailored AI models."
+  },
+  "contact.email.title": {
+    "message": "Pišite nam"
+  },
+  "contact.email.text": {
+    "message": "Za kakršno koli povpraševanje nas kontaktirajte neposredno na:"
+  },
+  "contact.meta.title": {
+    "message": "Kontakt — Almadar"
+  },
+  "contact.meta.desc": {
+    "message": "Vlagatelji, partnerstva in poslovna povpraševanja. hello@almadar.io"
+  },
+  "chat.thinking": {
+    "message": "Generating your application..."
+  },
+  "chat.writing": {
+    "message": "Writing .orb schema..."
+  },
+  "chat.schemaReady": {
+    "message": "Your application schema is ready:"
+  },
+  "chat.done": {
+    "message": "Done! Open Almadar Studio to see your generated application."
+  },
+  "chat.triggerLabel": {
+    "message": "Ask AI to build something"
+  },
+  "chat.triggerTitle": {
+    "message": "Build with AI"
+  },
+  "chat.title": {
+    "message": "Almadar AI"
+  },
+  "chat.welcome.title": {
+    "message": "Describe the app you want to build"
+  },
+  "chat.welcome.text": {
+    "message": "Our AI agent will generate a complete .orb application schema for you."
+  },
+  "chat.openStudio": {
+    "message": "Open in Studio"
+  },
+  "chat.placeholder": {
+    "message": "Describe what you want to build..."
+  },
+  "chat.send": {
+    "message": "Send"
+  },
+  "home.ai.cta": {
+    "message": "Learn About Our AI"
+  },
+  "hero.viz.appName": {
+    "message": "Order Fulfillment App"
+  },
+  "hero.viz.entityName": {
+    "message": "Order"
+  },
+  "hero.viz.pageName": {
+    "message": "Track Order"
+  },
+  "hero.viz.traitName": {
+    "message": "Fulfillment"
+  },
+  "hero.viz.defaultApp": {
+    "message": "Application"
+  },
+  "hero.viz.appPrefix": {
+    "message": "APP:"
+  },
+  "hero.viz.entityLabel": {
+    "message": "(Entity)"
+  },
+  "hero.viz.traitLabel": {
+    "message": "(Trait)"
+  },
+  "hero.viz.pageLabel": {
+    "message": "(Page)"
+  },
+  "hero.viz.orbitalUnit": {
+    "message": "Orbital Unit = Entity + Traits + Pages"
+  },
+  "blog.recentPosts.oneSchemaTitle": {
+    "message": "One Schema, Six Apps"
+  },
+  "blog.recentPosts.jsonThinksTitle": {
+    "message": "JSON That Thinks: Turing-Complete JSON"
+  },
+  "blog.recentPosts.threeExecutionModelsTitle": {
+    "message": "Three Execution Models, One Source of Truth"
+  },
+  "blog.recentPosts.closedCircuitTitle": {
+    "message": "The Closed Circuit Pattern"
+  },
+  "blog.recentPosts.heading": {
+    "message": "Recent Posts"
+  },
+  "blog.recentPosts.readArticle": {
+    "message": "Read Article →"
+  },
   "theme.ErrorPageContent.title": {
-    "message": "Ta stran se ne odziva.",
+    "message": "Ta stran se je zrušila.",
     "description": "The title of the fallback page when the page crashed"
   },
   "theme.BackToTopButton.buttonAriaLabel": {
-    "message": "Pomakni se na vrh",
+    "message": "Nazaj na vrh",
     "description": "The ARIA label for the back to top button"
   },
   "theme.blog.archive.title": {
@@ -16,43 +542,43 @@
     "description": "The page & hero description of the blog archive page"
   },
   "theme.blog.paginator.navAriaLabel": {
-    "message": "Navigacija po straneh bloga",
+    "message": "Navigacija kazala po blogu",
     "description": "The ARIA label for the blog pagination"
   },
   "theme.blog.paginator.newerEntries": {
-    "message": "Novejši zapisi",
+    "message": "Novejši prispevki",
     "description": "The label used to navigate to the newer blog posts page (previous page)"
   },
   "theme.blog.paginator.olderEntries": {
-    "message": "Starejši zapisi",
+    "message": "Starejši prispevki",
     "description": "The label used to navigate to the older blog posts page (next page)"
   },
   "theme.blog.post.paginator.navAriaLabel": {
-    "message": "Navigacija po objavah bloga",
+    "message": "Navigacija prispevka na blogu",
     "description": "The ARIA label for the blog posts pagination"
   },
   "theme.blog.post.paginator.newerPost": {
-    "message": "Novejša objava",
+    "message": "Novejši prispevek",
     "description": "The blog post button label to navigate to the newer/previous post"
   },
   "theme.blog.post.paginator.olderPost": {
-    "message": "Starejša objava",
+    "message": "Starejši prispevek",
     "description": "The blog post button label to navigate to the older/next post"
   },
   "theme.tags.tagsPageLink": {
-    "message": "Prikaži vse oznake",
+    "message": "Poglej vse oznake",
     "description": "The label of the link targeting the tag list page"
   },
   "theme.colorToggle.ariaLabel.mode.system": {
-    "message": "sistemski način",
+    "message": "system mode",
     "description": "The name for the system color mode"
   },
   "theme.colorToggle.ariaLabel.mode.light": {
-    "message": "Svetli način",
+    "message": "svetli način",
     "description": "The name for the light color mode"
   },
   "theme.colorToggle.ariaLabel.mode.dark": {
-    "message": "Temni način",
+    "message": "temni način",
     "description": "The name for the dark color mode"
   },
   "theme.colorToggle.ariaLabel": {
@@ -64,46 +590,46 @@
     "description": "The ARIA label for the breadcrumbs"
   },
   "theme.docs.DocCard.categoryDescription.plurals": {
-    "message": "{count} elementov",
+    "message": "1 vnos|2 vnosa|{count} vnosi|{count} vnosov",
     "description": "The default description for a category card in the generated index about how many items this category includes"
   },
   "theme.docs.paginator.navAriaLabel": {
-    "message": "Stran dokumentacije",
+    "message": "Strani z dokumenti",
     "description": "The ARIA label for the docs pagination"
   },
   "theme.docs.paginator.previous": {
-    "message": "Prejšnje",
+    "message": "Prejšnji",
     "description": "The label used to navigate to the previous doc"
   },
   "theme.docs.paginator.next": {
-    "message": "Naprej",
+    "message": "Naslednji",
     "description": "The label used to navigate to the next doc"
   },
   "theme.docs.tagDocListPageTitle.nDocsTagged": {
-    "message": "En dokument z oznako|{count} dokumentov z oznako",
+    "message": "En dokument ima oznako|Dva dokumenta imata oznako|{count} dokumenti imajo oznako|{count} dokumentov ima oznako",
     "description": "Pluralized label for \"{count} docs tagged\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
   },
   "theme.docs.tagDocListPageTitle": {
-    "message": "{nDocsTagged} z oznako \"{tagName}\"",
+    "message": "{nDocsTagged} ima oznako \"{tagName}\"",
     "description": "The title of the page for a docs tag"
   },
   "theme.docs.versionBadge.label": {
-    "message": "Različica: {versionLabel}"
+    "message": "Verzija: {versionLabel}"
   },
   "theme.docs.versions.unreleasedVersionLabel": {
-    "message": "Ta dokumentacija je za različico {siteTitle} {versionLabel}, ki še ni izdana.",
+    "message": "To je še neobjavljena dokumentacija za {siteTitle}, verzijo {versionLabel}.",
     "description": "The label used to tell the user that he's browsing an unreleased doc version"
   },
   "theme.docs.versions.unmaintainedVersionLabel": {
-    "message": "To je dokumentacija za {siteTitle} {versionLabel}, ki se je ne vzdržuje več.",
+    "message": "To je dokumentacija za {siteTitle} {versionLabel}, ki ni več aktivno vzdrževana.",
     "description": "The label used to tell the user that he's browsing an unmaintained doc version"
   },
   "theme.docs.versions.latestVersionSuggestionLabel": {
-    "message": "Za najnovejšo dokumentacijo si oglejte {latestVersionLink} ({versionLabel}).",
+    "message": "Za najnovejšo dokumentacijo, poglejte {latestVersionLink} ({versionLabel}).",
     "description": "The label used to tell the user to check the latest version"
   },
   "theme.docs.versions.latestVersionLinkLabel": {
-    "message": "najnovejša različica",
+    "message": "zadnja verzija",
     "description": "The label used for the latest version suggestion link label"
   },
   "theme.common.editThisPage": {
@@ -111,7 +637,7 @@
     "description": "The link label to edit the current page"
   },
   "theme.common.headingLinkTitle": {
-    "message": "Neposredna povezava do {heading}",
+    "message": "Direktna povezava na {heading}",
     "description": "Title for link to heading"
   },
   "theme.lastUpdated.atDate": {
@@ -119,71 +645,71 @@
     "description": "The words used to describe on which date a page has been last updated"
   },
   "theme.lastUpdated.byUser": {
-    "message": " od {user}",
+    "message": " {user}",
     "description": "The words used to describe by who the page has been last updated"
   },
   "theme.lastUpdated.lastUpdatedAtBy": {
-    "message": "Nazadnje posodobljeno{atDate}{byUser}",
+    "message": "Nazadnje posodobil {byUser}, {atDate}",
     "description": "The sentence used to display when a page has been last updated, and by who"
   },
   "theme.navbar.mobileVersionsDropdown.label": {
-    "message": "Različice",
+    "message": "Verzije",
     "description": "The label for the navbar versions dropdown on mobile view"
   },
   "theme.NotFound.title": {
-    "message": "Stran ni najdena",
+    "message": "Strani ni bilo možno najti",
     "description": "The title of the 404 page"
   },
   "theme.tags.tagsListLabel": {
     "message": "Oznake:",
     "description": "The label alongside a tag list"
   },
-  "theme.admonition.caution": {
-    "message": "Pozor",
-    "description": "The default label used for the Caution admonition (:::caution)"
-  },
-  "theme.admonition.danger": {
-    "message": "Nevarnost",
-    "description": "The default label used for the Danger admonition (:::danger)"
-  },
-  "theme.admonition.info": {
-    "message": "Informacije",
-    "description": "The default label used for the Info admonition (:::info)"
-  },
-  "theme.admonition.note": {
-    "message": "Opomba",
-    "description": "The default label used for the Note admonition (:::note)"
-  },
-  "theme.admonition.tip": {
-    "message": "Namig",
-    "description": "The default label used for the Tip admonition (:::tip)"
-  },
-  "theme.admonition.warning": {
-    "message": "Opozorilo",
-    "description": "The default label used for the Warning admonition (:::warning)"
-  },
   "theme.AnnouncementBar.closeButtonAriaLabel": {
     "message": "Zapri",
     "description": "The ARIA label for close button of announcement bar"
   },
+  "theme.admonition.caution": {
+    "message": "pozor",
+    "description": "The default label used for the Caution admonition (:::caution)"
+  },
+  "theme.admonition.danger": {
+    "message": "nevarnost",
+    "description": "The default label used for the Danger admonition (:::danger)"
+  },
+  "theme.admonition.info": {
+    "message": "informacija",
+    "description": "The default label used for the Info admonition (:::info)"
+  },
+  "theme.admonition.note": {
+    "message": "opomba",
+    "description": "The default label used for the Note admonition (:::note)"
+  },
+  "theme.admonition.tip": {
+    "message": "namig",
+    "description": "The default label used for the Tip admonition (:::tip)"
+  },
+  "theme.admonition.warning": {
+    "message": "opozorilo",
+    "description": "The default label used for the Warning admonition (:::warning)"
+  },
   "theme.blog.sidebar.navAriaLabel": {
-    "message": "Najnovejše objave na blogu",
+    "message": "Navigacija svežih prispevkov na blogu",
     "description": "The ARIA label for recent posts in the blog sidebar"
   },
   "theme.DocSidebarItem.expandCategoryAriaLabel": {
-    "message": "Razširi kategorijo '{label}'",
+    "message": "Razširite kategorijo stranske vrstice '{label}'",
     "description": "The ARIA label to expand the sidebar category"
   },
   "theme.DocSidebarItem.collapseCategoryAriaLabel": {
-    "message": "Strni kategorijo '{label}'",
+    "message": "Strni kategorijo stranske vrstice '{label}'",
     "description": "The ARIA label to collapse the sidebar category"
   },
   "theme.IconExternalLink.ariaLabel": {
-    "message": "(odpre se v novem zavihku)",
+    "message": "(opens in new tab)",
     "description": "The ARIA label for the external link icon"
   },
   "theme.NavBar.navAriaLabel": {
-    "message": "Glavna",
+    "message": "Glavna navigacija",
     "description": "The ARIA label for the main navigation"
   },
   "theme.navbar.mobileLanguageDropdown.label": {
@@ -191,27 +717,27 @@
     "description": "The label for the mobile language switcher dropdown"
   },
   "theme.NotFound.p1": {
-    "message": "Nismo mogli najti tega, kar ste iskali.",
+    "message": "Iskane strani ni bilo možno najti",
     "description": "The first paragraph of the 404 page"
   },
   "theme.NotFound.p2": {
-    "message": "Obrnite se na lastnika spletnega mesta, ki vas je povezal na prvotni URL, in jim sporočite, da je povezava pokvarjena.",
+    "message": "Prosim kontaktirajte lastnike strani, s katere ste sledili povezavi in jih obvestite, da povezava ne deluje.",
     "description": "The 2nd paragraph of the 404 page"
   },
   "theme.TOCCollapsible.toggleButtonLabel": {
-    "message": "Vsebina te strani",
+    "message": "Na tej strani",
     "description": "The label used by the button on the collapsible TOC component"
   },
   "theme.blog.post.readMore": {
-    "message": "Preberi več",
+    "message": "Preberite več",
     "description": "The label used in blog post item excerpts to link to full blog posts"
   },
   "theme.blog.post.readMoreLabel": {
-    "message": "Preberi več o {title}",
+    "message": "Preberite več o {title}",
     "description": "The ARIA label for the link to full blog posts from excerpts"
   },
   "theme.blog.post.readingTime.plurals": {
-    "message": "{readingTime} min branja",
+    "message": "Minuta branja|Minuti branja|{readingTime} minute branja|{readingTime} minut branja",
     "description": "Pluralized label for \"{readingTime} min read\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
   },
   "theme.CodeBlock.copy": {
@@ -219,27 +745,27 @@
     "description": "The copy button label on code blocks"
   },
   "theme.CodeBlock.copied": {
-    "message": "Kopirano",
+    "message": "Kopirano v odložišče",
     "description": "The copied button label on code blocks"
   },
   "theme.CodeBlock.copyButtonAriaLabel": {
-    "message": "Kopiraj kodo v odložišče",
+    "message": "Kopiraj v odložišče",
     "description": "The ARIA label for copy code blocks button"
   },
   "theme.CodeBlock.wordWrapToggle": {
-    "message": "Preklopi ovijanje besedila",
+    "message": "Preklopi oblivanje besedila",
     "description": "The title attribute for toggle word wrapping button of code block lines"
   },
   "theme.docs.breadcrumbs.home": {
-    "message": "Domov",
+    "message": "Domača stran",
     "description": "The ARIA label for the home page in the breadcrumbs"
   },
   "theme.docs.sidebar.collapseButtonTitle": {
-    "message": "Strni stransko vrstico",
+    "message": "Skrči stransko vrstico",
     "description": "The title attribute for collapse button of doc sidebar"
   },
   "theme.docs.sidebar.collapseButtonAriaLabel": {
-    "message": "Strni stransko vrstico",
+    "message": "Skrči stransko vrstico",
     "description": "The title attribute for collapse button of doc sidebar"
   },
   "theme.docs.sidebar.navAriaLabel": {
@@ -259,11 +785,11 @@
     "description": "The ARIA label for hamburger menu button of mobile navigation"
   },
   "theme.navbar.mobileDropdown.collapseButton.expandAriaLabel": {
-    "message": "Razširi spustni meni",
+    "message": "Expand the dropdown",
     "description": "The ARIA label of the button to expand the mobile dropdown navbar item"
   },
   "theme.navbar.mobileDropdown.collapseButton.collapseAriaLabel": {
-    "message": "Strni spustni meni",
+    "message": "Collapse the dropdown",
     "description": "The ARIA label of the button to collapse the mobile dropdown navbar item"
   },
   "theme.docs.sidebar.expandButtonTitle": {
@@ -275,11 +801,11 @@
     "description": "The ARIA label and title attribute for expand button of doc sidebar"
   },
   "theme.blog.post.plurals": {
-    "message": "Ena objava|{count} objav",
+    "message": "En prispevek|Dva prispevka|{count} prispevki|{count} prispevkov",
     "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
   },
   "theme.blog.tagTitle": {
-    "message": "{nPosts} z oznako \"{tagName}\"",
+    "message": "{nPosts} ima oznako \"{tagName}\"",
     "description": "The title of the page for a blog tag"
   },
   "theme.blog.author.pageTitle": {
@@ -299,11 +825,11 @@
     "description": "The text for authors with 0 blog post"
   },
   "theme.contentVisibility.unlistedBanner.title": {
-    "message": "Neizpisana stran",
+    "message": "Nezabeležena stran",
     "description": "The unlisted content banner title"
   },
   "theme.contentVisibility.unlistedBanner.message": {
-    "message": "Ta stran je neizpisana. Iskalniki je ne bodo indeksirali, do nje pa lahko dostopajo samo uporabniki z neposredno povezavo.",
+    "message": "Ta stran ni zabeležena. Iskalniki je ne bodo indeksirali, do nje bodo uporabniki lahko dostopali le z direktno povezavo.",
     "description": "The unlisted content banner message"
   },
   "theme.contentVisibility.draftBanner.title": {
@@ -311,1446 +837,19 @@
     "description": "The draft content banner title"
   },
   "theme.contentVisibility.draftBanner.message": {
-    "message": "Ta stran je osnutek. Vidna bo samo v razvojnem načinu in izključena iz produkcijske gradnje.",
+    "message": "Ta stran je osnutek. Viden bo samo v razvijalcu in bo izključen iz proizvodne zgradbe.",
     "description": "The draft content banner message"
   },
   "theme.ErrorPageContent.tryAgain": {
-    "message": "Poskusi znova",
+    "message": "Poskusite ponovno",
     "description": "The label of the button to try again rendering when the React error boundary captures an error"
   },
   "theme.common.skipToMainContent": {
-    "message": "Preskoči na glavno vsebino",
+    "message": "Preskoči na vsebino",
     "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
   },
   "theme.tags.tagsPageTitle": {
     "message": "Oznake",
     "description": "The title of the tag list page"
-  },
-  "homepage.title": {
-    "message": "Fizika programske opreme"
-  },
-  "homepage.subtitle": {
-    "message": "Gradite celovite aplikacije z deklarativnimi shemami. Določite entitete, vedenja in uporabniški vmesnik kot stroje stanj, ki se prevedejo v produkcijsko pripravljeno kodo."
-  },
-  "homepage.getStarted": {
-    "message": "Začni"
-  },
-  "homepage.downloadCLI": {
-    "message": "Prenesi CLI",
-    "description": "Download CLI button"
-  },
-  "homepage.features.title": {
-    "message": "Gradite hitreje, zaženite s samozavestjo",
-    "description": "Features section title"
-  },
-  "homepage.features.subtitle": {
-    "message": "Vse, kar potrebujete za prehod od ideje do produkcije",
-    "description": "Features section subtitle"
-  },
-  "homepage.feature.declarative.title": {
-    "message": "Deklarativne sheme",
-    "description": "Declarative feature title"
-  },
-  "homepage.feature.declarative.description": {
-    "message": "Določite celotno aplikacijo kot shemo. Entitete, lastnosti, strani in integracije - vse na enem mestu.",
-    "description": "Declarative feature description"
-  },
-  "homepage.feature.stateMachines.title": {
-    "message": "Stroji stanj",
-    "description": "State machines feature title"
-  },
-  "homepage.feature.stateMachines.description": {
-    "message": "Oblikujte vedenja kot stroje stanj s stražarji in učinki. Predvidljivi, testabilni in varni po zasnovi.",
-    "description": "State machines feature description"
-  },
-  "homepage.feature.fullStack.title": {
-    "message": "Celotna generacija",
-    "description": "Full-stack feature title"
-  },
-  "homepage.feature.fullStack.description": {
-    "message": "Prevedite v React vmesje, Express/FastAPI strežnik in modele podatkovne baze. Ena shema, celotna aplikacija.",
-    "description": "Full-stack feature description"
-  },
-  "homepage.feature.integrations.title": {
-    "message": "Vgrajene integracije",
-    "description": "Integrations feature title"
-  },
-  "homepage.feature.integrations.description": {
-    "message": "Povežite se z zunanjimi storitvami z vgrajenimi konektorji. Stripe, Twilio, OpenAI in več.",
-    "description": "Integrations feature description"
-  },
-  "homepage.feature.realtime.title": {
-    "message": "V realnem času in igre",
-    "description": "Realtime feature title"
-  },
-  "homepage.feature.realtime.description": {
-    "message": "Gradite aplikacije v realnem času in igre z istim deklarativnim pristopom. Vgrajena podpora WebSocket.",
-    "description": "Realtime feature description"
-  },
-  "homepage.feature.aiPowered.title": {
-    "message": "Poganja umetna inteligenca",
-    "description": "AI feature title"
-  },
-  "homepage.feature.aiPowered.description": {
-    "message": "Generirajte sheme iz naravnega jezika. Pustite umetni inteligenci, da obdela ponavljajočo se kodo, vi pa se osredotočite na logiko.",
-    "description": "AI feature description"
-  },
-  "homepage.philosophy.tag": {
-    "message": "Filozofija",
-    "description": "Philosophy tag"
-  },
-  "homepage.philosophy.title": {
-    "message": "Anatomija orbitala",
-    "description": "Philosophy title"
-  },
-  "homepage.philosophy.description": {
-    "message": "Kakor elektroni krožijo okoli jedra po kvantnih pravilih, tako sledijo komponente vaše aplikacije pravilom stroja stanj. Vsak orbital je entiteta s priloženimi lastnostmi, ki določajo njegovo vedenje, vmesnik in integracije.",
-    "description": "Philosophy description"
-  },
-  "homepage.philosophy.entity": {
-    "message": "Entiteta (snov)",
-    "description": "Entity term"
-  },
-  "homepage.philosophy.entity.description": {
-    "message": "Nespremenljivo jedro. Entiteta določa obliko vaših podatkov in njihovo privlačnost.",
-    "description": "Entity description"
-  },
-  "homepage.philosophy.trait": {
-    "message": "Lastnost (energija)",
-    "description": "Trait term"
-  },
-  "homepage.philosophy.trait.description": {
-    "message": "Dinamična orbita. Stroj stanj, ki določa vedenje in logiko.",
-    "description": "Trait description"
-  },
-  "homepage.philosophy.page": {
-    "message": "Stran (prostor)",
-    "description": "Page term"
-  },
-  "homepage.philosophy.page.description": {
-    "message": "Okvir. Posoda za pot, kjer uporabniki komunicirajo z orbitali.",
-    "description": "Page description"
-  },
-  "homepage.cta.title": {
-    "message": "Pripravljeni za gradnjo?"
-  },
-  "homepage.cta.description": {
-    "message": "Namestite CLI in ustvarite svojo prvo orbitalno shemo v nekaj sekundah."
-  },
-  "homepage.cta.readDocs": {
-    "message": "Preberi dokumentacijo",
-    "description": "Read docs button"
-  },
-  "homepage.cta.viewGithub": {
-    "message": "Ogled na GitHub",
-    "description": "View on GitHub button"
-  },
-  "homepage.meta.title": {
-    "message": "Fizika programske opreme"
-  },
-  "homepage.meta.description": {
-    "message": "Almadar - Celovite deklarativne aplikacije prek strojev stanj"
-  },
-  "homepage.effect.set": {
-    "message": "Posodobi polje entitete",
-    "description": "Set effect description"
-  },
-  "homepage.effect.increment": {
-    "message": "S-izraz matematika",
-    "description": "S-expression math effect description"
-  },
-  "homepage.effect.renderui": {
-    "message": "Upodobi vzorec v režo",
-    "description": "Render-ui effect description"
-  },
-  "enterprise.tag": {
-    "message": "Za podjetja"
-  },
-  "enterprise.title": {
-    "message": "Almadar za ekipe in podjetja"
-  },
-  "enterprise.subtitle": {
-    "message": "Razširite svoj razvoj s podjetniškimi funkcijami, podporo po meri in prilagodljivimi možnostmi uvajanja."
-  },
-  "enterprise.cta.contact": {
-    "message": "Stopite v stik s prodajo"
-  },
-  "enterprise.cta.docs": {
-    "message": "Ogled dokumentacije"
-  },
-  "enterprise.features.title": {
-    "message": "Podjetniške funkcije"
-  },
-  "enterprise.features.subtitle": {
-    "message": "Vse, kar potrebujete za gradnjo v velikem obsegu"
-  },
-  "enterprise.feature.collaboration.title": {
-    "message": "Timsko sodelovanje",
-    "description": "Collaboration feature title"
-  },
-  "enterprise.feature.collaboration.description": {
-    "message": "Sodelujte s svojo ekipo pri shemah z nadzorom dostopa, dnevnikom različic in sodelovanjem v realnem času.",
-    "description": "Collaboration feature description"
-  },
-  "enterprise.feature.deployment.title": {
-    "message": "Zasebno uvajanje",
-    "description": "Deployment feature title"
-  },
-  "enterprise.feature.deployment.description": {
-    "message": "Uvajajte lokalno ali v svoji zasebni oblaku. Popoln nadzor nad vašimi podatki in infrastrukturo.",
-    "description": "Deployment feature description"
-  },
-  "enterprise.feature.security.title": {
-    "message": "Varnost podjetij",
-    "description": "Security feature title"
-  },
-  "enterprise.feature.security.description": {
-    "message": "SSO/SAML integracija, revizijski dnevniki, skladnost s SOC 2 in napredni varnostni nadzori.",
-    "description": "Security feature description"
-  },
-  "enterprise.feature.support.title": {
-    "message": "Prednostna podpora",
-    "description": "Support feature title"
-  },
-  "enterprise.feature.support.description": {
-    "message": "Namenski podporni kanali z zagotovljenimi časi odziva in neposreden dostop do naše inženirske ekipe.",
-    "description": "Support feature description"
-  },
-  "enterprise.feature.training.title": {
-    "message": "Usposabljanje po meri",
-    "description": "Training feature title"
-  },
-  "enterprise.feature.training.description": {
-    "message": "Programi uvajanja, delavnice in usposabljanje po meri za potrebe vaše ekipe.",
-    "description": "Training feature description"
-  },
-  "enterprise.feature.customization.title": {
-    "message": "Integracije po meri",
-    "description": "Customization feature title"
-  },
-  "enterprise.feature.customization.description": {
-    "message": "Gradite konektorje po meri za vaše notranje sisteme. Pomagamo vam povezati Almadar z vašo infrastrukturo.",
-    "description": "Customization feature description"
-  },
-  "enterprise.pricing.title": {
-    "message": "Prilagodljivo določanje cen"
-  },
-  "enterprise.pricing.subtitle": {
-    "message": "Načrti, ki rastejo z vašim podjetjem"
-  },
-  "enterprise.pricing.team.title": {
-    "message": "Ekipa"
-  },
-  "enterprise.pricing.team.description": {
-    "message": "Za majhne ekipe, ki se začenjajo"
-  },
-  "enterprise.pricing.team.feature1": {
-    "message": "Do 10 članov"
-  },
-  "enterprise.pricing.team.feature2": {
-    "message": "Skupne sheme"
-  },
-  "enterprise.pricing.team.feature3": {
-    "message": "Podpora po e-pošti"
-  },
-  "enterprise.pricing.team.feature4": {
-    "message": "Oblakovno uvajanje"
-  },
-  "enterprise.pricing.popular": {
-    "message": "Najbolj priljubljeno"
-  },
-  "enterprise.pricing.business.title": {
-    "message": "Poslovni"
-  },
-  "enterprise.pricing.business.description": {
-    "message": "Za rastoča podjetja"
-  },
-  "enterprise.pricing.business.feature1": {
-    "message": "Neomejeni člani"
-  },
-  "enterprise.pricing.business.feature2": {
-    "message": "SSO/SAML integracija"
-  },
-  "enterprise.pricing.business.feature3": {
-    "message": "Prednostna podpora"
-  },
-  "enterprise.pricing.business.feature4": {
-    "message": "Možnost zasebnega oblaka"
-  },
-  "enterprise.pricing.business.feature5": {
-    "message": "Revizijski dnevniki"
-  },
-  "enterprise.pricing.enterprise.title": {
-    "message": "Podjetje"
-  },
-  "enterprise.pricing.enterprise.description": {
-    "message": "Za velika podjetja"
-  },
-  "enterprise.pricing.enterprise.feature1": {
-    "message": "Lokalno uvajanje"
-  },
-  "enterprise.pricing.enterprise.feature2": {
-    "message": "Integracije po meri"
-  },
-  "enterprise.pricing.enterprise.feature3": {
-    "message": "Namenska podpora"
-  },
-  "enterprise.pricing.enterprise.feature4": {
-    "message": "SLA garancija"
-  },
-  "enterprise.pricing.enterprise.feature5": {
-    "message": "Usposabljanje po meri"
-  },
-  "enterprise.pricing.contact": {
-    "message": "Stopite v stik"
-  },
-  "enterprise.contact.title": {
-    "message": "Pripravljeni za začetek?"
-  },
-  "enterprise.contact.description": {
-    "message": "Stopite v stik z našo prodajno ekipo za razpravo o vaših zahtevah in prejeli prilagojeno ponudbo."
-  },
-  "enterprise.meta.title": {
-    "message": "Za podjetja"
-  },
-  "enterprise.meta.description": {
-    "message": "Almadar za podjetja - Razširite svoj razvoj s podjetniškimi funkcijami"
-  },
-  "demos.tag": {
-    "message": "Predstavitve"
-  },
-  "demos.title": {
-    "message": "Interaktivne predstavitve"
-  },
-  "demos.description": {
-    "message": "Doživite moč Almadarja skozi interaktivne žive predloge."
-  },
-  "demos.cta": {
-    "message": "Oglej si predstavitve"
-  },
-  "demos.meta.title": {
-    "message": "Interaktivne predstavitve"
-  },
-  "demos.meta.description": {
-    "message": "Raziščite sistem oblikovanja Almadar in predloge"
-  },
-  "carousel.title": {
-    "message": "Interaktivne predstavitve"
-  },
-  "carousel.subtitle": {
-    "message": "Raziščite prave aplikacije, zgrajene z Almadarjem."
-  },
-  "carousel.viewAll": {
-    "message": "Oglej si vse predstavitve"
-  },
-  "carousel.exploreDemo": {
-    "message": "Razišči predstavitev →"
-  },
-  "demo.category.socialNetwork": {
-    "message": "Družabno omrežje",
-    "description": "Demo category: Social Network"
-  },
-  "demo.category.govTech": {
-    "message": "Vladna tehnologija",
-    "description": "Demo category: Gov Tech"
-  },
-  "demo.category.fitnessApp": {
-    "message": "Aplikacija za fitnes",
-    "description": "Demo category: Fitness App"
-  },
-  "demo.category.devTools": {
-    "message": "Orodja za razvijalce",
-    "description": "Demo category: Dev Tools"
-  },
-  "demo.category.gameTools": {
-    "message": "Orodja za igre",
-    "description": "Demo category: Game Tools"
-  },
-  "demo.category.dataViz": {
-    "message": "Vizualizacija podatkov",
-    "description": "Demo category: Data Viz"
-  },
-  "demo.executiveDashboard.title": {
-    "message": "Nadzorna plošča za vodstvo",
-    "description": "Demo title: Executive Dashboard"
-  },
-  "demo.executiveDashboard.description": {
-    "message": "Celovit pregled zdravja sistema, opozoril in ključnih kazalnikov s povzetkom dejavnosti v realnem času.",
-    "description": "Demo description: Executive Dashboard"
-  },
-  "demo.trustIntelligence.title": {
-    "message": "Inteligenca zaupanja",
-    "description": "Demo title: Trust Intelligence"
-  },
-  "demo.trustIntelligence.description": {
-    "message": "Analiza, poganja umetna inteligenca, za ocene zaupanja ekipe, trende uspešnosti in najboljše izvajalce.",
-    "description": "Demo description: Trust Intelligence"
-  },
-  "demo.graphIntelligence.title": {
-    "message": "Grafna inteligenca",
-    "description": "Demo title: Graph Intelligence"
-  },
-  "demo.graphIntelligence.description": {
-    "message": "Vizualizacija omrežja z odkrivanjem gruč, metrik gostote in analizo povezav.",
-    "description": "Demo description: Graph Intelligence"
-  },
-  "demo.userProfile360.title": {
-    "message": "Uporabniški profil 360°",
-    "description": "Demo title: User Profile 360"
-  },
-  "demo.userProfile360.description": {
-    "message": "Celovita analiza uporabnika z zgodovino dejavnosti, metrikami zaupanja in uporabo povezav.",
-    "description": "Demo description: User Profile 360"
-  },
-  "demo.inspectionManagement.title": {
-    "message": "Upravljanje inšpekcij",
-    "description": "Demo title: Inspection Management"
-  },
-  "demo.inspectionManagement.description": {
-    "message": "Poenoteno središče za sledenje pregledom skladnosti, terenskim operacijam in statusu inšpekcij.",
-    "description": "Demo description: Inspection Management"
-  },
-  "demo.inspectionForm.title": {
-    "message": "Obrazec za inšpekcijo",
-    "description": "Demo title: Inspection Form"
-  },
-  "demo.inspectionForm.description": {
-    "message": "Večstopenjski obrazec za inšpekcijo s pogojnimi polji, pravnimi sklici in zaznavanjem kršitev.",
-    "description": "Demo description: Inspection Form"
-  },
-  "demo.fitnessTracker.title": {
-    "message": "Sledilnik fitnesa",
-    "description": "Demo title: Fitness Tracker"
-  },
-  "demo.fitnessTracker.description": {
-    "message": "Beleženje treningov s sledenjem uteži, grafi napredka in dnevnimi vnosi počutja.",
-    "description": "Demo description: Fitness Tracker"
-  },
-  "demo.mealPlanDetail.title": {
-    "message": "Podrobnosti jedilnika",
-    "description": "Demo title: Meal Plan Detail"
-  },
-  "demo.mealPlanDetail.description": {
-    "message": "Podroben načrt prehrane z analizo hranilnih snovi, analizo umetne inteligence in povezavami za deljenje.",
-    "description": "Demo description: Meal Plan Detail"
-  },
-  "demo.trainingSchedule.title": {
-    "message": "Urnik treningov",
-    "description": "Demo title: Training Schedule"
-  },
-  "demo.trainingSchedule.description": {
-    "message": "Tedenski koledar treningov z upravljanjem sej, sledenjem statusa in pregledom dosežkov.",
-    "description": "Demo description: Training Schedule"
-  },
-  "demo.almadarStudio.title": {
-    "message": "Almadar Studio",
-    "description": "Demo title: Almadar Studio"
-  },
-  "demo.almadarStudio.description": {
-    "message": "Razvojno okolje, poganja umetna inteligenca, za gradnjo celovitih aplikacij iz naravnega jezika.",
-    "description": "Demo description: Almadar Studio"
-  },
-  "demo.studioFullView.title": {
-    "message": "Polni pogled studia",
-    "description": "Demo title: Studio Full View"
-  },
-  "demo.studioFullView.description": {
-    "message": "Postavitev celotnega razvojnega okolja s ploščo agenta, inšpektorjem, urejevalnikom shem in živim predogledom.",
-    "description": "Demo description: Studio Full View"
-  },
-  "demo.aiAgentPanel.title": {
-    "message": "Plošča agentske umetne inteligence",
-    "description": "Demo title: AI Agent Panel"
-  },
-  "demo.aiAgentPanel.description": {
-    "message": "Takojšnji asistent umetne inteligence s klici orodij, sledenjem nalog in razlikami shem.",
-    "description": "Demo description: AI Agent Panel"
-  },
-  "demo.gameMapEditor.title": {
-    "message": "Urejevalnik zemljevidov iger",
-    "description": "Demo title: Game Map Editor"
-  },
-  "demo.gameMapEditor.description": {
-    "message": "Interaktivni izometrični urejevalnik za oblikovanje zemljevidov iger s risanjem terena, postavljanjem enot in orodji za območja.",
-    "description": "Demo description: Game Map Editor"
-  },
-  "demo.interactiveGraph.title": {
-    "message": "Interaktivni graf",
-    "description": "Demo title: Interactive Graph"
-  },
-  "demo.interactiveGraph.description": {
-    "message": "Plošča za usmerjen graf s silami z vozlišči, ki jih je mogoče povleči, nadzorom povečave in grozdenimi postavitvami.",
-    "description": "Demo description: Interactive Graph"
-  },
-  "blog.recentPosts.heading": {
-    "message": "Nedavne objave"
-  },
-  "blog.recentPosts.readArticle": {
-    "message": "Preberi članek →"
-  },
-  "blog.recentPosts.oneSchemaTitle": {
-    "message": "Ena shema, šest aplikacij"
-  },
-  "blog.recentPosts.jsonThinksTitle": {
-    "message": "JSON, ki razmišlja: Turing-complete JSON"
-  },
-  "blog.recentPosts.threeExecutionModelsTitle": {
-    "message": "Trije izvedbeni modeli, ena resnica"
-  },
-  "blog.recentPosts.closedCircuitTitle": {
-    "message": "Vzorec zaprtega kroga: Zakaj se vaši uporabniki zataknejo (in kako to preprečiti)"
-  },
-  "homepage.schema.inYourLanguage": {
-    "message": "V vašem jeziku",
-    "description": "Tab label for the localized schema example on the homepage"
-  },
-  "homepage.animation.title": {
-    "message": "Kako deluje",
-    "description": "Animation section title"
-  },
-  "homepage.animation.subtitle": {
-    "message": "Vsaka aplikacija Almadar je sestavljena iz orbitalnih enot. Entiteta hrani vaše podatke, lastnosti določajo vedenje kot stroji stanj, strani pa jih vežejo na poti. Opazujte, kako se arhitektura sestavi sama.",
-    "description": "Animation section subtitle"
-  },
-  "homepage.animation.caption": {
-    "message": "Orbitalna enota = Entiteta + Lastnosti + Strani",
-    "description": "Animation section caption"
-  },
-  "hero.viz.appName": {
-    "message": "Aplikacija za izpolnitev naročil"
-  },
-  "hero.viz.entityName": {
-    "message": "Naročilo"
-  },
-  "hero.viz.pageName": {
-    "message": "Sledenje naročilu"
-  },
-  "hero.viz.traitName": {
-    "message": "Izpolnitev"
-  },
-  "hero.viz.defaultApp": {
-    "message": "Aplikacija"
-  },
-  "hero.viz.appPrefix": {
-    "message": "APP:"
-  },
-  "hero.viz.entityLabel": {
-    "message": "(Entiteta)"
-  },
-  "hero.viz.traitLabel": {
-    "message": "(Lastnost)"
-  },
-  "hero.viz.pageLabel": {
-    "message": "(Stran)"
-  },
-  "hero.viz.orbitalUnit": {
-    "message": "Orbitalna enota = Entiteta + Lastnosti + Strani"
-  },
-  "developers.hero.tag": {
-    "message": "Programski jezik"
-  },
-  "developers.hero.title": {
-    "message": "Orbitalni jezik"
-  },
-  "developers.hero.subtitle": {
-    "message": "Almadar je deklarativni shemski jezik za celovite aplikacije. Določite entitete, avtomate stanj in UI v eni datoteki .orb — prevajalnik ustvari ostalo."
-  },
-  "developers.hero.getStarted": {
-    "message": "Začni"
-  },
-  "developers.hero.viewExamples": {
-    "message": "Oglejte si primere"
-  },
-  "developers.animation.title": {
-    "message": "Kako deluje"
-  },
-  "developers.animation.subtitle": {
-    "message": "Vsaka aplikacija Almadar je sestavljena iz orbitalnih enot. Entiteta hrani vaše podatke, lastnosti določajo vedenje kot stroji stanj, strani pa jih vežejo na poti. Opazujte, kako se arhitektura sestavi sama."
-  },
-  "developers.animation.caption": {
-    "message": "Orbitalna enota = Entiteta + Lastnosti + Strani"
-  },
-  "developers.concepts.title": {
-    "message": "Osnovni koncepti"
-  },
-  "developers.concepts.subtitle": {
-    "message": "Trije gradniki sestavljajo vsako aplikacijo Almadar"
-  },
-  "developers.concepts.entity.label": {
-    "message": "Entiteta"
-  },
-  "developers.concepts.entity.tagline": {
-    "message": "Oblika podatkov"
-  },
-  "developers.concepts.entity.desc": {
-    "message": "Entitete definirajo vaš podatkovni model. Polja so tipizirana, imajo lahko privzete vrednosti in podpirajo tri načine shranjevanja: runtime (v pomnilniku), persistent (baza podatkov) in singleton."
-  },
-  "developers.concepts.trait.label": {
-    "message": "Lastnost"
-  },
-  "developers.concepts.trait.tagline": {
-    "message": "Avtomat stanj + UI"
-  },
-  "developers.concepts.trait.desc": {
-    "message": "Lastnosti modelirajo vedenje kot avtomate stanj s stanji, dogodki, stražarji in učinki. Učinki lahko nastavljajo polja entitet, oddajajo dogodke, kličejo storitve ali prikazujejo vzorce UI."
-  },
-  "developers.concepts.page.label": {
-    "message": "Stran"
-  },
-  "developers.concepts.page.tagline": {
-    "message": "Vezava poti"
-  },
-  "developers.concepts.page.desc": {
-    "message": "Strani vežejo Orbitalne enote na poti. Definirajo URL, postavitev in katere Orbitalne enote (skupine Entity + Traits) so nameščene. Strani se generirajo kot komponente React poti."
-  },
-  "developers.quickstart.inYourLanguage": {
-    "message": "V vašem jeziku"
-  },
-  "developers.quickstart.title": {
-    "message": "Prva shema v 60 sekundah"
-  },
-  "developers.quickstart.desc": {
-    "message": "Namestite CLI, ustvarite svojo prvo shemo in jo prevedite v delujočo aplikacijo."
-  },
-  "developers.quickstart.step1": {
-    "message": "Namestite CLI"
-  },
-  "developers.quickstart.step2": {
-    "message": "Uredite svojo .orb shemo"
-  },
-  "developers.quickstart.step3": {
-    "message": "Zaženite almadar dev my-app.orb za opazovanje in prevajanje"
-  },
-  "developers.quickstart.fullGuide": {
-    "message": "Celoten vodnik za začetek"
-  },
-  "developers.modules.title": {
-    "message": "Moduli standardne knjižnice"
-  },
-  "developers.modules.subtitle": {
-    "message": "213+ vgrajenih operatorjev v 9 modulih — vsi na voljo kot s-izrazi v stražarjih in učinkih"
-  },
-  "developers.modules.operators": {
-    "message": "operatorji"
-  },
-  "developers.modules.viewAll": {
-    "message": "Oglejte si celoten referenčni priročnik operatorjev"
-  },
-  "developers.tutorials.title": {
-    "message": "Učne poti"
-  },
-  "developers.tutorials.subtitle": {
-    "message": "Strukturirane poti od nič do produkcije"
-  },
-  "developers.tutorials.beginner.label": {
-    "message": "Začetnik"
-  },
-  "developers.tutorials.beginner.desc": {
-    "message": "Zgradite svojo prvo Orbitalno enoto, razumejte avtomate stanj in namestite delujočo aplikacijo."
-  },
-  "developers.tutorials.intermediate.label": {
-    "message": "Srednji nivo"
-  },
-  "developers.tutorials.intermediate.desc": {
-    "message": "Delajte z vzorci UI, pišite stražarje z s-izrazi in povežite več Orbitalnih enot."
-  },
-  "developers.tutorials.advanced.label": {
-    "message": "Napredni"
-  },
-  "developers.tutorials.advanced.desc": {
-    "message": "Gradite produkcijske aplikacije z integracijami, generiranjem z AI in lastnimi veščinami."
-  },
-  "developers.tutorials.start": {
-    "message": "Začni pot"
-  },
-  "developers.playground.title": {
-    "message": "Preizkusite v brskalniku"
-  },
-  "developers.playground.subtitle": {
-    "message": "Zaženite Almadar s-izraze v živo — ni potrebe po namestitvi"
-  },
-  "playground.loading": {
-    "message": "Nalaganje..."
-  },
-  "developers.meta.title": {
-    "message": "Razvijalci — Almadar"
-  },
-  "developers.meta.description": {
-    "message": "Razvijalsko središče Almadar — orbitalni jezik, referenčni priročnik operatorjev, vadnice in vodnik za hiter začetek."
-  },
-  "enterprise.security.title": {
-    "message": "Varnost in skladnost"
-  },
-  "enterprise.security.subtitle": {
-    "message": "Zasnovano za regulirane panoge od prvega dne"
-  },
-  "enterprise.security.auth.title": {
-    "message": "Avtentikacija in dostop"
-  },
-  "enterprise.security.auth.sso": {
-    "message": "SSO prek SAML 2.0 in OIDC"
-  },
-  "enterprise.security.auth.rbac": {
-    "message": "Nadzor dostopa na podlagi vlog (RBAC)"
-  },
-  "enterprise.security.auth.audit": {
-    "message": "Nespremenljivi revizijski dnevniki za vse operacije shem"
-  },
-  "enterprise.security.auth.mfa": {
-    "message": "Uveljavljanje večfaktorske avtentikacije"
-  },
-  "enterprise.security.compliance.title": {
-    "message": "Skladnost"
-  },
-  "enterprise.security.compliance.soc2": {
-    "message": "SOC 2 Type II (v teku)"
-  },
-  "enterprise.security.compliance.gdpr": {
-    "message": "Obdelava podatkov v skladu z GDPR"
-  },
-  "enterprise.security.compliance.hipaa": {
-    "message": "Možnosti uvajanja za HIPAA"
-  },
-  "enterprise.security.compliance.gov": {
-    "message": "Podpora vladnim in reguliranim panogam"
-  },
-  "enterprise.security.ai.title": {
-    "message": "Varnost UI (prihaja kmalu)"
-  },
-  "enterprise.security.ai.icagi": {
-    "message": "Integracija IC-AGI za preverjanje shem in uveljavljanje politik"
-  },
-  "enterprise.security.ai.sandboxed": {
-    "message": "Generiranje UI v peskovniku z vrati za pregled shem"
-  },
-  "enterprise.security.ai.audit": {
-    "message": "Revizijska sled odločitev umetne inteligence"
-  },
-  "enterprise.security.ai.policy": {
-    "message": "Politika kot koda za sheme, ki jih generira umetna inteligenca"
-  },
-  "enterprise.caseStudies.title": {
-    "message": "Preizkušeno v praksi"
-  },
-  "enterprise.caseStudies.subtitle": {
-    "message": "Prave namestitve zgrajene na Almadar"
-  },
-  "enterprise.cs.inspection.badge": {
-    "message": "Terenske operacije"
-  },
-  "enterprise.cs.inspection.title": {
-    "message": "Sistem pregledov"
-  },
-  "enterprise.cs.inspection.desc": {
-    "message": "500+ pregledov na dan, 99,9% zanesljivost sinhronizacije, 60% manj napak pri skladnosti."
-  },
-  "enterprise.cs.readMore": {
-    "message": "Preberite študijo primera"
-  },
-  "enterprise.cs.trainer.badge": {
-    "message": "Zdravje in fitnes"
-  },
-  "enterprise.cs.trainer.title": {
-    "message": "Aplikacija za profesionalne trenerje"
-  },
-  "enterprise.cs.trainer.desc": {
-    "message": "70% manj administrativnega časa, 3x več strank na trenerja, 95% stopnja zadržanja strank."
-  },
-  "homepage.talkToSales": {
-    "message": "Pogovorite se s prodajo"
-  },
-  "homepage.how.title": {
-    "message": "Kako deluje Almadar"
-  },
-  "homepage.how.subtitle": {
-    "message": "Od naravnega jezika do delujoče aplikacije v treh korakih"
-  },
-  "homepage.how.step1.title": {
-    "message": "Opišite v naravnem jeziku"
-  },
-  "homepage.how.step1.desc": {
-    "message": "Povejte Almadar, kaj želite zgraditi. Brez kode, brez sintakse shem — samo opišite vedenje, podatke in UI v preprostem jeziku."
-  },
-  "homepage.how.step2.title": {
-    "message": "UI generira shemo"
-  },
-  "homepage.how.step2.desc": {
-    "message": "DeepAgent prevede vaš opis v strukturirano OrbitalSchema — entitete, avtomate stanj, vzorce UI in točke integracije."
-  },
-  "homepage.how.step3.title": {
-    "message": "Sistem generira aplikacijo"
-  },
-  "homepage.how.step3.desc": {
-    "message": "Prevajalnik Almadar ustvari produkcijsko pripravljeno celovito aplikacijo: React frontend, Express backend, modele baze podatkov in API-je."
-  },
-  "homepage.stats.cost.value": {
-    "message": "87%"
-  },
-  "homepage.stats.cost.label": {
-    "message": "Zmanjšanje stroškov razvoja"
-  },
-  "homepage.stats.speed.value": {
-    "message": "60%"
-  },
-  "homepage.stats.speed.label": {
-    "message": "Hitrejša dostava"
-  },
-  "homepage.stats.auto.value": {
-    "message": "70%"
-  },
-  "homepage.stats.auto.label": {
-    "message": "Kode aplikacije se generira samodejno"
-  },
-  "homepage.proof.title": {
-    "message": "Preizkušeno v produkciji"
-  },
-  "homepage.proof.subtitle": {
-    "message": "Resnični rezultati ekip, ki so prešle na Almadar"
-  },
-  "homepage.proof.caseStudies": {
-    "message": "Študije primerov:"
-  },
-  "homepage.proof.cs.inspection": {
-    "message": "Vladni sistem pregledov"
-  },
-  "homepage.proof.cs.trainer": {
-    "message": "Platforma trenerjev z UI"
-  },
-  "homepage.cta.startBuilding": {
-    "message": "Začni graditi"
-  },
-  "homepage.cta.enterprise": {
-    "message": "Za podjetja"
-  },
-  "playground.running": {
-    "message": "Izvajanje..."
-  },
-  "playground.empty": {
-    "message": "Napišite s-izraz in pritisnite Zaženi (ali Ctrl+Enter)"
-  },
-  "playground.error": {
-    "message": "Napaka"
-  },
-  "playground.examples": {
-    "message": "Primeri"
-  },
-  "playground.copied": {
-    "message": "Kopirano!"
-  },
-  "playground.share": {
-    "message": "Deli"
-  },
-  "playground.run": {
-    "message": "Zaženi"
-  },
-  "playground.meta.title": {
-    "message": "Playground — Almadar"
-  },
-  "playground.meta.description": {
-    "message": "Interaktivni Almadar s-izraz playground. Pišite in zaganjajte operatorje neposredno v brskalniku."
-  },
-  "playground.title": {
-    "message": "Playground"
-  },
-  "playground.subtitle": {
-    "message": "Zaženite Almadar s-izraze v brskalniku. Ni potrebe po namestitvi."
-  },
-  "cs.inspection.meta.title": {
-    "message": "Sistem pregledov — Almadar študija primera"
-  },
-  "cs.inspection.meta.desc": {
-    "message": "Kako smo digitalizirali tisoče papirnih pregledov s popolno zanesljivostjo brez spleta z uporabo Orbitalov."
-  },
-  "cs.inspection.badge": {
-    "message": "Terenske operacije"
-  },
-  "cs.inspection.title": {
-    "message": "Sistem pregledov"
-  },
-  "cs.inspection.subtitle": {
-    "message": "Digitalizacija tisoč papirnih pregledov s popolno zanesljivostjo brez spleta."
-  },
-  "cs.inspection.challenge.label": {
-    "message": "Izziv"
-  },
-  "cs.inspection.challenge.desc": {
-    "message": "Naročnik je moral digitalizirati papirni postopek pregledov. Terenske inšpektorje delajo na oddaljenih lokacijah z nestabilno povezljivostjo. Potrebovali so sistem, ki deluje brez interneta in se zanesljivo sinhronizira ob ponovni vzpostavitvi povezave."
-  },
-  "cs.inspection.solution.label": {
-    "message": "Rešitev"
-  },
-  "cs.inspection.solution.desc": {
-    "message": "Pregled smo preslikali kot stabilno Entiteto, ovito v GeoLocation in Sync Orbitalih. Vsak pregled samodejno zajame podatke o lokaciji in se sinhronizira v ozadju, ko se vzpostavi povezava."
-  },
-  "cs.inspection.orbital1.name": {
-    "message": "Inspection Entity:"
-  },
-  "cs.inspection.orbital1.desc": {
-    "message": "Osnovna podatkovna struktura za vse vrste pregledov"
-  },
-  "cs.inspection.orbital2.name": {
-    "message": "GeoLocation Orbital:"
-  },
-  "cs.inspection.orbital2.desc": {
-    "message": "Samodejno zajemanje in preverjanje lokacije"
-  },
-  "cs.inspection.orbital3.name": {
-    "message": "Sync Orbital:"
-  },
-  "cs.inspection.orbital3.desc": {
-    "message": "Sinhronizacija v ozadju z reševanjem konfliktov"
-  },
-  "cs.inspection.orbital4.name": {
-    "message": "Approval Orbital:"
-  },
-  "cs.inspection.orbital4.desc": {
-    "message": "Potek dela za pregled in odobritev nadzornika"
-  },
-  "cs.inspection.future.label": {
-    "message": "Dolgoročna vzdržljivost"
-  },
-  "cs.inspection.future.desc": {
-    "message": "Nova pravila skladnosti se dodajo kot posamezni Orbitali in se takoj razširijo na vse terenske enote. Ko se predpisi spremenijo, preprosto priključimo nov validacijski Orbital — ni treba prepisovati osnovne logike pregledov."
-  },
-  "cs.inspection.result.label": {
-    "message": "Rezultat:"
-  },
-  "cs.inspection.result.desc": {
-    "message": "500+ pregledov na dan, 99,9% zanesljivost sinhronizacije, 60% manj napak pri skladnosti."
-  },
-  "cs.inspection.cta.title": {
-    "message": "Imate podoben izziv?"
-  },
-  "cs.inspection.cta.desc": {
-    "message": "Pogovorimo se, kako lahko Orbitali rešijo izzive vaših terenskih operacij."
-  },
-  "cs.trainer.meta.title": {
-    "message": "Aplikacija za profesionalne trenerje — Almadar študija primera"
-  },
-  "cs.trainer.meta.desc": {
-    "message": "Kako smo zgradili aplikacijo za upravljanje trenerjev, ki ločuje logiko coachinga od obračunavanja z Orbitali."
-  },
-  "cs.trainer.badge": {
-    "message": "Zdravje in fitnes"
-  },
-  "cs.trainer.title": {
-    "message": "Aplikacija za profesionalne trenerje"
-  },
-  "cs.trainer.subtitle": {
-    "message": "Trenerjem omogoča upravljanje strank na daljavo brez administrativne preobremenitve."
-  },
-  "cs.trainer.challenge.label": {
-    "message": "Izziv"
-  },
-  "cs.trainer.challenge.desc": {
-    "message": "Osebni trenerji so porabili več časa za administracijo kot za coaching. Potrebovali so sistem za upravljanje načrtov treninga, sledenje napredku strank in obračunavanje — vse na enem mestu, brez kompleksnosti."
-  },
-  "cs.trainer.solution.label": {
-    "message": "Rešitev"
-  },
-  "cs.trainer.solution.desc": {
-    "message": "Načrti treningov so sestavljeni iz vzorcev vaj. Logika coachinga je ločena od obračunavanja. Vsaka skrb ima lasten Orbital, ki se lahko razvija neodvisno."
-  },
-  "cs.trainer.orbital1.name": {
-    "message": "Client Entity:"
-  },
-  "cs.trainer.orbital1.desc": {
-    "message": "Osnoven profil in sledenje ciljem"
-  },
-  "cs.trainer.orbital2.name": {
-    "message": "Workout Plan Orbital:"
-  },
-  "cs.trainer.orbital2.desc": {
-    "message": "Sestavljive predloge vaj"
-  },
-  "cs.trainer.orbital3.name": {
-    "message": "Progress Tracking Orbital:"
-  },
-  "cs.trainer.orbital3.desc": {
-    "message": "Metrike, fotografije, meritve"
-  },
-  "cs.trainer.orbital4.name": {
-    "message": "Billing Orbital:"
-  },
-  "cs.trainer.orbital4.desc": {
-    "message": "Upravljanje naročnin in plačil"
-  },
-  "cs.trainer.future.label": {
-    "message": "Dolgoročna vzdržljivost"
-  },
-  "cs.trainer.future.desc": {
-    "message": "Ko se fitnes metrike razvijajo, se novi podatkovni Orbitali priključijo brez prekinitve osnovne logike aplikacije. Ko je naročnik hotel dodati integracijo nosljivih naprav, smo preprosto priključili nov Wearable Sync Orbital."
-  },
-  "cs.trainer.result.label": {
-    "message": "Rezultat:"
-  },
-  "cs.trainer.result.desc": {
-    "message": "70% manj administrativnega časa, 3x več strank na trenerja, 95% stopnja zadržanja strank."
-  },
-  "cs.trainer.cta.title": {
-    "message": "Gradite kaj podobnega?"
-  },
-  "cs.trainer.cta.desc": {
-    "message": "Pogovorimo se, kako lahko Orbitali poenostavijo vaše storitveno podjetje."
-  },
-  "homepage.why.title": {
-    "message": "Zakaj Almadar"
-  },
-  "homepage.why.subtitle": {
-    "message": "Kaj dobite, česar tradicionalna agencija ne more ponuditi"
-  },
-  "homepage.why.agencyCol": {
-    "message": "Tradicionalna agencija"
-  },
-  "homepage.why.almadarCol": {
-    "message": "Almadar"
-  },
-  "homepage.why.agency.team": {
-    "message": "Velike ekipe (5–10 ljudi)"
-  },
-  "homepage.why.almadar.team": {
-    "message": "Vitka ekipa — 2 vrhunska strokovnjaka"
-  },
-  "homepage.why.agency.timeline": {
-    "message": "Meseci razvoja"
-  },
-  "homepage.why.almadar.timeline": {
-    "message": "Tedni do produkcije"
-  },
-  "homepage.why.agency.cost": {
-    "message": "Visoki stroški, nepredvidljiv obseg"
-  },
-  "homepage.why.almadar.cost": {
-    "message": "Fiksna cena, jasne obveznosti"
-  },
-  "homepage.why.agency.changes": {
-    "message": "Dragi zahtevki za spremembe"
-  },
-  "homepage.why.almadar.changes": {
-    "message": "Prilagodljive, stroškovno učinkovite spremembe"
-  },
-  "homepage.why.agency.docs": {
-    "message": "Dokumentacija kot poznejša misel"
-  },
-  "homepage.why.almadar.docs": {
-    "message": "Celotna dokumentacija vključena"
-  },
-  "homepage.why.deliverables.title": {
-    "message": "Kaj dobite"
-  },
-  "homepage.why.deliverables.app": {
-    "message": "Delujoča aplikacija, nameščena v produkciji"
-  },
-  "homepage.why.deliverables.source": {
-    "message": "Celotna izvorna koda — standardne tehnologije, brez lastniških omejitev"
-  },
-  "homepage.why.deliverables.docs": {
-    "message": "Popolna dokumentacija za vašo ekipo"
-  },
-  "homepage.why.deliverables.support": {
-    "message": "60-dnevna podpora po zagonu vključena"
-  },
-  "homepage.why.deliverables.transfer": {
-    "message": "Prenos znanja, da lahko sistem vzdržujete in razširjate"
-  },
-  "homepage.team.title": {
-    "message": "Dva strokovnjaka. Popolna odgovornost."
-  },
-  "homepage.team.subtitle": {
-    "message": "Delajte neposredno s starejšimi razvijalci, ki oblikujejo vašo aplikacijo. Brez nepotrebnih plasti med vami in vašim produktom."
-  },
-  "homepage.team.osama.name": {
-    "message": "Osama Alghanmi"
-  },
-  "homepage.team.osama.role": {
-    "message": "Soustanovitelj in tehnični vodja"
-  },
-  "homepage.team.osama.bio": {
-    "message": "Zgradil Saudi arabsko nacionalno platformo za e-fakturiranje. 15+ let izkušenj z enterprise sistemi, zasnovo prevajalnikov in full-stack razvojem."
-  },
-  "homepage.team.maja.name": {
-    "message": "Maja Golob"
-  },
-  "homepage.team.maja.role": {
-    "message": "Soustanoviteljica in programska vodja"
-  },
-  "homepage.team.maja.bio": {
-    "message": "10+ let pri dostavljanju enterprise programskih projektov. Strokovnjakinja za upravljanje deležnikov, načrtovanje dostave in večkulturne ekipe."
-  },
-  "homepage.team.experience": {
-    "message": "25+ let skupnih izkušenj z gradnjo programske opreme v velikem obsegu. Locirani v Ljubljani, Slovenija. Delamo globalno."
-  },
-  "homepage.cta.startProject": {
-    "message": "Začni projekt"
-  },
-  "homepage.cta.developers": {
-    "message": "Dokumentacija za razvijalce"
-  },
-  "homepage.startProject": {
-    "message": "Začni projekt"
-  },
-  "homepage.enterprise": {
-    "message": "Enterprise"
-  },
-  "homepage.work.title": {
-    "message": "Naše delo"
-  },
-  "homepage.work.subtitle": {
-    "message": "Vsak Almadar projekt je opremljen z v celoti nameščenim sistemom za oblikovanje."
-  },
-  "homepage.work.viewDesignSystem": {
-    "message": "Sistem za oblikovanje"
-  },
-  "homepage.work.openApp": {
-    "message": "Odpri aplikacijo"
-  },
-  "homepage.work.sectionLabel.clientContext": {
-    "message": "Kontekst"
-  },
-  "homepage.work.sectionLabel.whatWeBuilt": {
-    "message": "Kar smo zgradili"
-  },
-  "homepage.work.keyCapability": {
-    "message": "Ključna zmogljivost"
-  },
-  "demos.backToPortfolio": {
-    "message": "Nazaj na portfolio"
-  },
-  "demos.openStorybook": {
-    "message": "Odpri celoten Storybook"
-  },
-  "demos.openApp": {
-    "message": "Odpri aplikacijo"
-  },
-  "demos.openDesignSystem": {
-    "message": "Odpri sistem za oblikovanje ↗"
-  },
-  "demos.mobileNote": {
-    "message": "Odprite na večjem zaslonu za ogled interaktivnega sistema za oblikovanje."
-  },
-  "developers.renderUIDemo.tag": {
-    "message": "render-ui"
-  },
-  "developers.renderUIDemo.title": {
-    "message": "Predogled komponent v živo"
-  },
-  "developers.renderUIDemo.subtitle": {
-    "message": "render-ui pretvori s-izraz v pravo komponento — brez JSX, brez datotek predlog. Uredite izraz in opazujte, kako se predogled samodejno posodablja."
-  },
-  "developers.renderUIDemo.previewEmpty": {
-    "message": "Zaženite izraz, da vidite izhod"
-  },
-  "developers.renderUIDemo.noSlots": {
-    "message": "V tem izrazu ni klicev render-ui"
-  },
-  "showcase.title": {
-    "message": "Naše delo"
-  },
-  "showcase.subtitle": {
-    "message": "Vsak Almadar projekt je opremljen z v celoti nameščenim sistemom za oblikovanje. Preglejte predloge, komponente in interakcije — brez namestitve."
-  },
-  "showcase.clientProblem": {
-    "message": "Problem naročnika"
-  },
-  "showcase.whatWeBuilt": {
-    "message": "Kar smo zgradili"
-  },
-  "showcase.openApp": {
-    "message": "Odpri aplikacijo"
-  },
-  "showcase.viewDesignSystem": {
-    "message": "Sistem za oblikovanje"
-  },
-  "showcase.openLiveApp": {
-    "message": "Odpri aplikacijo v živo"
-  },
-  "projects.builder.name": {
-    "message": "Almadar Builder",
-    "description": "Almadar Builder project name"
-  },
-  "projects.builder.tagline": {
-    "message": "IDE na osnovi shem, ki ustvari vsak projekt v tem portfelju",
-    "description": "Almadar Builder tagline"
-  },
-  "projects.builder.clientContext": {
-    "message": "Vsak projekt stranke v tem portfelju je bil zgrajen z istim orodjem: IDE v brskalniku, kjer razvijalci opisujejo vedenje aplikacije kot Orbital sheme (.orb datoteke) in prevajalnik ustvari aplikacijo TypeScript polnega sklada. Builder je moral biti samo-gostujoč — sam IDE je Almadar aplikacija, zgrajena z lastnim sistemom za oblikovanje in prevedena s svojo cevovodom.",
-    "description": "Almadar Builder client context"
-  },
-  "projects.builder.whatWeBuilt": {
-    "message": "Polno razvojno okolje v brskalniku za pisanje Orbital shem. Platno razvijalcem omogoča vizualno sestavljanje entitet, lastnosti, strani in dogodkov. Živi ovrednotitelj potrdi s-izraze med tipkanjem. Prevodnik se izvaja v procesu in pretočno oddaja ustvarjeno kodo v podokno za predogled. DeepAgent — AI asistent, vgrajen v builder — prevaja zahteve naravnega jezika v veljavne .orb sheme z uporabo istega ovrednotitelja.",
-    "description": "Almadar Builder what we built"
-  },
-  "projects.builder.keyCapability": {
-    "message": "Samopisna platforma: sam uporabniški vmesnik builderja je ustvarjen iz Orbital sheme. Stroji stanj, izrazi varovanja in učinki render-ui, ki poganjo plošče builderja, so avtorizirani v isti .obliki .orb, ki jo uporabljajo projekti strank.",
-    "description": "Almadar Builder key capability"
-  },
-  "projects.builder.tech.canvas": {
-    "message": "Urejevalnik platna shem"
-  },
-  "projects.builder.tech.evaluator": {
-    "message": "Živi ovrednotitelj s-izrazov"
-  },
-  "projects.builder.tech.compiler": {
-    "message": "Prevajalnik v brskalniku"
-  },
-  "projects.builder.tech.ai": {
-    "message": "DeepAgent AI asistent"
-  },
-  "projects.builder.tech.operators": {
-    "message": "213+ std operatorjev"
-  },
-  "projects.kflow.name": {
-    "message": "KFlow",
-    "description": "KFlow project name"
-  },
-  "projects.kflow.tagline": {
-    "message": "Plattforma za znanje med domenami, ki uči skozi resnične inženirske dogodke",
-    "description": "KFlow tagline"
-  },
-  "projects.kflow.clientContext": {
-    "message": "Večina učnih platform razmeji znanje po predmetih: fizika tu, kriptografija tam, ekologija nekje drugje. Stranka je želela platformo, ki prikazuje strukturne vzorce, ki povezujejo inženirske discipline — poučuje skozi resnične dogodke, kjer so se napake v eni domeni razširile v druge.",
-    "description": "KFlow client context"
-  },
-  "projects.kflow.whatWeBuilt": {
-    "message": "Platforma za raziskovanje znanja, kjer se učenci premikajo med koncepti, zgodbami in tečaji skozi graf med domenami. Vsaka zgodba je resnični inženirski dogodek (\"Napaka v vrednosti 125 milijonov dolarjev\", \"Most, ki je nihalo\") kontekstualiziran čez discipline. Graf znanja prikazuje, kako se koncepti povezujejo med domenami. Nadzorna plošča sledi zaporedjem, obvladanju in širini čez učenčev zemljevid konceptov.",
-    "description": "KFlow what we built"
-  },
-  "projects.kflow.keyCapability": {
-    "message": "Vsebinski model kot shema: vsak koncept, zgodba in tečaj so Orbital entitete z lastnostmi, ki upravljajo stanje napredka, varovanja predpogojev in logiko priporočil. Dodajanje nove domene pomeni avtorizacijo sheme, ne pisanje priporočilnih algoritmov.",
-    "description": "KFlow key capability"
-  },
-  "projects.kflow.tech.graph": {
-    "message": "Graf znanja med domenami"
-  },
-  "projects.kflow.tech.stories": {
-    "message": "Pogon zgodb resničnih dogodkov"
-  },
-  "projects.kflow.tech.mastery": {
-    "message": "Sledenje obvladanju konceptov"
-  },
-  "projects.kflow.tech.achievements": {
-    "message": "Sistem zaporedij in dosežkov"
-  },
-  "projects.kflow.tech.curriculum": {
-    "message": "Učni načrt med domenami"
-  },
-  "projects.inspection-system.name": {
-    "message": "Inšpekcijski Sistem",
-    "description": "Inspection System project name"
-  },
-  "projects.inspection-system.tagline": {
-    "message": "Upravljanje inšpekcij na terenu za vladne inšpektorje v Sloveniji",
-    "description": "Inspection System tagline"
-  },
-  "projects.inspection-system.clientContext": {
-    "message": "Vladni inšpektorji v Sloveniji izvajajo zapletene, zakonsko določene inšpekcije na terenu s 50–60 pogojnimi pravili na vrsto inšpekcije, pravnimi sklici na uradni list (Uradni list RS), večstransko udeležbo in formalnim generiranjem dokumentov z elektronskimi podpisi. Obstoječa orodja so bila papirnata ali generični graditelji obrazcev brez razumevanja strukture življenjskega cikla inšpekcije.",
-    "description": "Inspection System client context"
-  },
-  "projects.inspection-system.whatWeBuilt": {
-    "message": "Sistem za upravljanje inšpekcij na terenu, ki temelji na shemah. Celoten 5-fazni življenjski cikel (Uvod → Vsebina → Priprava → Zapis → Zaključek) je kodiran kot stroj stanj v .orb shemi. Varovanja uveljavljajo pravne predpogoje ob vsaki fazni tranziciji. Učinki sprožijo sestavljanje dokumentov, upravljanje udeležencev in preverjanje pravil v pravem trenutku — samodejno.",
-    "description": "Inspection System what we built"
-  },
-  "projects.inspection-system.keyCapability": {
-    "message": "Pogojna zapletenost na osnovi shem: ista shema obravnava več vrst inšpekcij. Pravila se pojavljajo in izginjajo glede na stanje entitete, ne razvejitvenih poti kode. Dodajanje nove vrste inšpekcije pomeni avtorizacijo sheme, ne refaktoring logike.",
-    "description": "Inspection System key capability"
-  },
-  "projects.inspection-system.tech.entities": {
-    "message": "14 entitet"
-  },
-  "projects.inspection-system.tech.statemachine": {
-    "message": "5-fazni stroj stanj"
-  },
-  "projects.inspection-system.tech.rules": {
-    "message": "50–60 pogojnih pravil"
-  },
-  "projects.inspection-system.tech.documents": {
-    "message": "Generiranje dokumentov"
-  },
-  "projects.inspection-system.tech.offline": {
-    "message": "Deluje brez povezave"
-  },
-  "projects.winning-11.name": {
-    "message": "Winning 11",
-    "description": "Winning 11 project name"
-  },
-  "projects.winning-11.tagline": {
-    "message": "Inteligenca odnosov na osnovi zaupanja, zgrajena na Dunbarjevem številu",
-    "description": "Winning 11 tagline"
-  },
-  "projects.winning-11.clientContext": {
-    "message": "Profesionalne mrežne platforme optimizirajo za količino povezav, ne kakovosti odnosov. Stranka je želela platformo, utemeljeno na Dunbarjevem številu (največ 150 pomembnih odnosov), kjer so povezave namerne, ocenjene z zaupanjem in aktivno vzdrževane — ne samo nabirani kontakti.",
-    "description": "Winning 11 client context"
-  },
-  "projects.winning-11.whatWeBuilt": {
-    "message": "Platforma za upravljanje odnosov s psihološko globino. Uporabniki opravijo oceno združljivosti ob registraciji. Vsaka povezava ima dinamično oceno zaupanja, izračunano iz psihologije, zgodovine interakcij in potrditev vrstnikov. Mesta so omejena (največ 150) z čakalnico za presežek. Odnosi imajo zdravstvena stanja (Mirovno, Potrebuje pozornost, Zdravo, Cvetoče), ki propadejo brez interakcije.",
-    "description": "Winning 11 what we built"
-  },
-  "projects.winning-11.keyCapability": {
-    "message": "Koordinacija strojev stanj z več entitetami: stroj stanj zdravja na entiteti Povezava teče neodvisno od stroja stanj Uporabnik, oddaja dogodke, ki se prikažejo na nadzorni plošči. Zapleteno obnašanje med entitetami brez kode za usklajevanje.",
-    "description": "Winning 11 key capability"
-  },
-  "projects.winning-11.tech.entities": {
-    "message": "14 entitet"
-  },
-  "projects.winning-11.tech.statemachines": {
-    "message": "5 strojev stanj"
-  },
-  "projects.winning-11.tech.ai": {
-    "message": "Ocenjevanje zaupanja z AI"
-  },
-  "projects.winning-11.tech.pages": {
-    "message": "18 strani"
-  },
-  "projects.winning-11.tech.ui": {
-    "message": "Uporabniški vmesnik z metaforo vrta"
-  },
-  "projects.blaz-klemenc.name": {
-    "message": "Blaz Klemenc",
-    "description": "Blaz Klemenc project name"
-  },
-  "projects.blaz-klemenc.tagline": {
-    "message": "Platforma za fitnes trenerja z AI analizo obrokov",
-    "description": "Blaz Klemenc tagline"
-  },
-  "projects.blaz-klemenc.clientContext": {
-    "message": "Osebni trenerji, ki upravljajo več vajencev, morajo slediti dodeljevanju sej na osnovi kreditov, napredku glavnih dvigov, načrtov obrokov, dnevnih metrik dobrega počutja, kinezioloških pregledov in skupinskih razporedov — čez razdrobljen nabor preglednic, WhatsApp sporočil in generičnih fitnes aplikacij.",
-    "description": "Blaz Klemenc client context"
-  },
-  "projects.blaz-klemenc.whatWeBuilt": {
-    "message": "Enotna platforma za upravljanje trener-vajenec. Krediti se kupujejo v blokih in potečejo po datumu — sistem samodejno sledi dodelitvi in poteku. Načrte obrokov vnašajo vajenci in analizira AI storitev, ki oceni razčlenitev makro in mikro hranil. Sledenje dvigom prikazuje krivulje zgodovinskega napredka.",
-    "description": "Blaz Klemenc what we built"
-  },
-  "projects.blaz-klemenc.keyCapability": {
-    "message": "Integracija storitev iz sheme: AI analiza obrokov je deklarirana kot učinek klic-storitve v lastnosti. Ovrednotitelj obravnava klic, stanja napak in vezavo rezultatov — brez kode za asinhrono lepljenje v aplikacijski plasti.",
-    "description": "Blaz Klemenc key capability"
-  },
-  "projects.blaz-klemenc.tech.entities": {
-    "message": "15+ entitet"
-  },
-  "projects.blaz-klemenc.tech.credits": {
-    "message": "Stroj stanj poteka kreditov"
-  },
-  "projects.blaz-klemenc.tech.ai": {
-    "message": "AI analiza obrokov"
-  },
-  "projects.blaz-klemenc.tech.progress": {
-    "message": "Vizualizacija napredka"
-  },
-  "projects.blaz-klemenc.tech.links": {
-    "message": "Povezave za deljenje"
-  },
-  "projects.kekec.name": {
-    "message": "Kekec Koda",
-    "description": "Kekec Koda project name"
-  },
-  "projects.kekec.tagline": {
-    "message": "Učenje otrok programiranja skozi ljubljenega slovenskega gorskega junaka",
-    "description": "Kekec Koda tagline"
-  },
-  "projects.kekec.clientContext": {
-    "message": "Stranka je želela izobraževalno igro za programiranje, postavljeno v svet Kekeca — slovenskega nacionalnega lika, gorskega pastirskega fanta — ki uči koncepte programiranja postopoma od preprostih zaporedij do celotnega načrtovanja stroja stanj, brez uporabe abstraktne programske sintakse.",
-    "description": "Kekec Koda client context"
-  },
-  "projects.kekec.whatWeBuilt": {
-    "message": "Tristopenjska izobraževalna igra, kjer vsaka stopnja uči drugačen programski abstrakciji skozi fizične metafore: Sekvencer (5–8 let) uporablja bloke akcij povleci-in-spusti; Obdelovalec Dogodkov (9–12 let) uporablja KO/POVEDI urejevalnik pravil; Arhitekt Stanj (13+ let) uporablja urejevalnik vozliščnega grafa za načrtovanje in testiranje polnih strojev stanj. Vse stopnje delijo alpski zemljevid sveta z 12 živalskimi varuhi.",
-    "description": "Kekec Koda what we built"
-  },
-  "projects.kekec.keyCapability": {
-    "message": "Almadar gradi orodja, ki učijo Almadarjeve lastne koncepte: stroj stanj, ki ga otrok zasnuje v stopnji Arhitekt Stanj, je strukturno identičen Orbitalnim lastnostim, ki poganjajo samo igro.",
-    "description": "Kekec Koda key capability"
-  },
-  "projects.kekec.tech.tiers": {
-    "message": "3 učne stopnje"
-  },
-  "projects.kekec.tech.guardians": {
-    "message": "12 živalskih varuhov"
-  },
-  "projects.kekec.tech.puzzles": {
-    "message": "9 sestavljank"
-  },
-  "projects.kekec.tech.dragdrop": {
-    "message": "Urejevalnik povleci-in-spusti"
-  },
-  "projects.kekec.tech.nodes": {
-    "message": "Urejevalnik vozliščnega grafa"
-  },
-  "projects.iram.name": {
-    "message": "Iram",
-    "description": "Iram project name"
-  },
-  "projects.iram.tagline": {
-    "message": "3D RPG raziskovanje podzemlj, poganjen z Orbitalnim sistemom lastnosti",
-    "description": "Iram tagline"
-  },
-  "projects.iram.clientContext": {
-    "message": "Zgradi RPG za raziskovanje podzemlj v produkcijski kakovosti, kjer so napredovanje likov, boj in pripoved pogonjeni z istim sistemom lastnosti-stroj-stanj, ki poganja podjetniške Almadar aplikacije — dokazuje, da je izvajalni čas splošno namenjen čez domene.",
-    "description": "Iram client context"
-  },
-  "projects.iram.whatWeBuilt": {
-    "message": "Akcijski RPG za raziskovanje podzemlj, postavljen v Dominion Iram. Likovi imajo napredovanje na osnovi lastnosti — sposobnosti so modelirane kot stroji stanj, ki prehajajo na bojne dogodke. Izometrični izrisovalnik obravnava 31+ likovnih in enotnih sprite-ov s smerno animacijo. Sistem rezij prikazuje lokalizirano pripoved čez 22+ zgodbenih sekvenc v arabščini, angleščini in slovenščini.",
-    "description": "Iram what we built"
-  },
-  "projects.iram.keyCapability": {
-    "message": "Isti Orbitalni izvajalni čas, ki obravnava vladni inšpekcijski potek dela, poganja tudi boj v igri v realnem času. Stroji stanj, varovanja in učinki so domen-agnostični — jezik deluje pri kakršni koli ločljivosti.",
-    "description": "Iram key capability"
-  },
-  "projects.iram.tech.sprites": {
-    "message": "31 sprite-ov"
-  },
-  "projects.iram.tech.renderer": {
-    "message": "Izometrični canvas izrisovalnik"
-  },
-  "projects.iram.tech.combat": {
-    "message": "Bojni stroji stanj"
-  },
-  "projects.iram.tech.cutscenes": {
-    "message": "22+ rezijski zaporedja"
-  },
-  "projects.iram.tech.i18n": {
-    "message": "Pripoved v EN/AR/SL"
-  },
-  "projects.trait-wars.name": {
-    "message": "Trait Wars",
-    "description": "Trait Wars project name"
-  },
-  "projects.trait-wars.tagline": {
-    "message": "Strateška igra na poteze, kjer enote opremijo in zamenjajo lastnosti med bitkami",
-    "description": "Trait Wars tagline"
-  },
-  "projects.trait-wars.clientContext": {
-    "message": "Dokaz koncepta, ki prikazuje, da lahko Almadarjev sistem lastnosti modelira polno strateško igro na poteze, kjer imajo enote trajno stanje lastnosti čez bojne kroge in je igralna deska sama Orbital entiteta.",
-    "description": "Trait Wars client context"
-  },
-  "projects.trait-wars.whatWeBuilt": {
-    "message": "Strateška igra na poteze, kjer imajo enote modularne opremljive lastnosti, ki določajo njihove bojne sposobnosti. Lastnosti so zamenljive med bitkami. Arena šefov, srečanja v podzemlju, središčni svet in zaslon za izbiro cone so vsi poganjeni z istim izvajalnikom shem, uporabljajoč hibridni izrisovalnik canvas + DOM.",
-    "description": "Trait Wars what we built"
-  },
-  "projects.trait-wars.keyCapability": {
-    "message": "Modularnost lastnosti v izvajalnem času: enote pridobivajo in izgubljajo lastnosti med igranjem — isti mehanizem, ki upravlja prehode stanja entitet v podjetniških aplikacijah, upravlja obnašanje bojnih enot v strateški igri.",
-    "description": "Trait Wars key capability"
-  },
-  "projects.trait-wars.tech.traits": {
-    "message": "Opremjive reže lastnosti"
-  },
-  "projects.trait-wars.tech.hybrid": {
-    "message": "Hibrid canvas + DOM"
-  },
-  "projects.trait-wars.tech.rendering": {
-    "message": "Izometrično izrisovanje enot"
-  },
-  "projects.trait-wars.tech.screens": {
-    "message": "4 različni zasloni"
-  },
-  "projects.trait-wars.tech.boss": {
-    "message": "Boj v areni šefov"
-  },
-  "showcase.viewDemo": {
-    "message": "View Demo"
-  },
-  "demos.viewStorybook": {
-    "message": "View Storybook"
-  },
-  "demos.jumpTo": {
-    "message": "Jump to project"
   }
 }

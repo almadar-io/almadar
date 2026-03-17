@@ -372,4 +372,4 @@ orbital compile modal-demo.orb --shell typescript
 
 لأن أفضل طريقة لمنع الأخطاء ليست الاختبار — بل جعل كتابتها مستحيلة.
 
-تعرّف على المزيد حول [الـ state machines في Almadar](/docs/traits).
+تعرّف على المزيد حول [الـ state machines في Almadar](https://orb.almadar.io/docs/traits).

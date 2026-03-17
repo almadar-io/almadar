@@ -288,4 +288,4 @@ cd blog-app && npm install && npm run dev
 
 يصبح الـ schema **التوثيق الذي يُنفَّذ**.
 
-هل أنت مستعد لكتابة أول schema الخاص بك؟ اطّلع على [دليل البدء](/docs/getting-started/introduction).
+هل أنت مستعد لكتابة أول schema الخاص بك؟ اطّلع على [دليل البدء](https://orb.almadar.io/docs/getting-started/introduction).

@@ -280,4 +280,4 @@ Almadar's compiler doesn't just check syntax. It checks causality (closed circui
 
 That's not a compiler. That's a code reviewer that never sleeps, never misses a case, and never approves broken code.
 
-Explore the [compiler documentation](/docs/compiler) to learn more.
+Explore the [compiler documentation](https://orb.almadar.io/docs/compiler) to learn more.

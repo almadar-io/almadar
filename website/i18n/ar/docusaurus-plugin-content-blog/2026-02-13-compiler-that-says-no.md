@@ -280,4 +280,4 @@ Error: CIRCUIT_NO_OVERLAY_EXIT
 
 هذا ليس compiler. إنه مراجع كود لا ينام أبدًا، ولا يفوّت حالة أبدًا، ولا يوافق على كود معطوب أبدًا.
 
-استكشف [وثائق الـ compiler](/docs/compiler) لمعرفة المزيد.
+استكشف [وثائق الـ compiler](https://orb.almadar.io/docs/compiler) لمعرفة المزيد.

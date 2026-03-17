@@ -154,4 +154,4 @@ orbital compile invoice-app.orb --shell typescript -o app/
 
 لن يعرف مستخدموك أنهم يستخدمون state machine. سيلاحظون فقط أن الأشياء تعمل.
 
-مستعد لتجربتها؟ اطلع على [دليل البدء](/docs/getting-started/introduction).
+مستعد لتجربتها؟ اطلع على [دليل البدء](https://orb.almadar.io/docs/getting-started/introduction).

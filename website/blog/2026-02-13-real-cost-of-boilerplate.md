@@ -344,4 +344,4 @@ A 120-line schema that generates a 5,000-line application means:
 
 The real question isn't "can I write 5,000 lines?" It's "do I want to maintain them for the next 5 years?"
 
-Start with the [Getting Started guide](/docs/getting-started/introduction) and see the difference yourself.
+Start with the [Getting Started guide](https://orb.almadar.io/docs/getting-started/introduction) and see the difference yourself.

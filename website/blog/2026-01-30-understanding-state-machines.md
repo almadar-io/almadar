@@ -106,4 +106,4 @@ Effects are the side-effects of a transition. Almadar supports:
 
 ## Next Steps
 
-Ready to build with state machines? Check out our [Getting Started guide](/docs/getting-started/introduction).
+Ready to build with state machines? Check out our [Getting Started guide](https://orb.almadar.io/docs/getting-started/introduction).

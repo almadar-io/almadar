@@ -3,7 +3,10 @@ slug: fsm-underused-pattern
 title: "Finite State Machines: The Most Underused Design Pattern in Frontend Development"
 authors: [osamah]
 tags: [architecture, state-machines]
+image: /img/blog/fsm-underused-pattern.png
 ---
+
+![Finite State Machines: The Most Underused Design Pattern](/img/blog/fsm-underused-pattern.png)
 
 If you're using `useState` for complex UI, you're probably doing it wrong. There's a 50-year-old solution you're ignoring.
 
@@ -367,4 +370,4 @@ Finite state machines aren't academic exercises — they're **practical tools** 
 
 Almadar makes state machines the default, not the exception. Because your users deserve predictable software.
 
-Ready to try? [Build your first state machine](/docs/getting-started/introduction).
+Ready to try? [Build your first state machine](https://orb.almadar.io/docs/getting-started/introduction).

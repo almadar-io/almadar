@@ -373,4 +373,4 @@ app.post('/api/orders/:id/approve', async (req, res) => {
 
 توقف عن بعثرة منطق التفويض في أنحاء تطبيقك. عرّفه مرة واحدة، وطبّقه في كل مكان.
 
-تعلم المزيد عن [الـ guards والـ effects](/docs/traits).
+تعلم المزيد عن [الـ guards والـ effects](https://orb.almadar.io/docs/traits).

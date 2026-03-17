@@ -241,7 +241,7 @@ When Delivery emits `DELIVERY_COMPLETE`, Communication listens and sends confirm
 ### For Developers
 
 1. **Download the compiler** — `npm install -g @almadar/cli`
-2. **Read the documentation** — [Getting Started Guide](/docs/getting-started/introduction)
+2. **Read the documentation** — [Getting Started Guide](https://orb.almadar.io/docs/getting-started/introduction)
 3. **Try the example** — Build your first robotic trait
 
 ### For Companies
@@ -271,7 +271,7 @@ Almadar is not just a programming language. It's a new way of thinking about mac
 
 ## In the Next Part
 
-[Part 2: Building an Industrial Robot Controller](/blog/machines-with-traits-part-2) — We'll build a complete robotic arm together using the Almadar language, step by step.
+Part 2: Building an Industrial Robot Controller (coming soon) — We'll build a complete robotic arm together using the Almadar language, step by step.
 
 ---
 

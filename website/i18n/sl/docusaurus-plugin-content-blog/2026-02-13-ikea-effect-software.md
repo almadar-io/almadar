@@ -186,4 +186,4 @@ Almadar želi storiti isto za programsko opremo. Ne z razvijalcem, ki so odveč,
 
 Prihodnost ni mizarstvo za vsako polico. Je vedeti, katere standardne dele kombinirati in kje dodati prilagoditve, ki štejejo.
 
-Pripravljeni sestaviti svojo prvo aplikacijo? [Začnite z CLI](/docs/downloads/cli).
+Pripravljeni sestaviti svojo prvo aplikacijo? [Začnite z CLI](https://orb.almadar.io/docs/downloads/cli).

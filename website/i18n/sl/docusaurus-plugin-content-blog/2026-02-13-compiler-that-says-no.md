@@ -280,4 +280,4 @@ Almadarjev compiler ne preverja samo sintakse. Preverja vzročnost (zaprte kroge
 
 To ni compiler. To je code reviewer, ki nikoli ne spi, nikoli ne zamudi primera in nikoli ne odobri pokvarjene kode.
 
-Raziščite [compiler dokumentacijo](/docs/compiler) za več.
+Raziščite [compiler dokumentacijo](https://orb.almadar.io/docs/compiler) za več.

@@ -437,4 +437,4 @@ One schema. Three models. The right tool for the right job.
 
 Because the goal isn't to run everywhere — it's to run **well** everywhere.
 
-Learn more about [Getting Started](/docs/getting-started/introduction).
+Learn more about [Getting Started](https://orb.almadar.io/docs/getting-started/introduction).

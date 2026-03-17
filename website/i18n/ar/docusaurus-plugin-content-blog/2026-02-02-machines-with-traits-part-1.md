@@ -228,7 +228,7 @@ class RobotArm:
 ### للمطورين
 
 1. **حمّل الـ compiler** — `npm install -g @almadar/cli`
-2. **اقرأ التوثيق** — [دليل البداية](/ar/docs/getting-started/introduction)
+2. **اقرأ التوثيق** — [دليل البداية](https://orb.almadar.io/docs/getting-started/introduction)
 3. **جرّب المثال** — ابنِ أول trait روبوتية
 
 ### للشركات
@@ -260,7 +260,7 @@ Almadar ليس مجرد لغة برمجة. هو طريقة جديدة للتفك
 
 ## في الجزء القادم
 
-[الجزء الثاني: بناء متحكم روبوت صناعي](/ar/blog/machines-with-traits-part-2) — سنبني مع بعض ذراع روبوتية كاملة بـ Almadar، خطوة بخطوة.
+الجزء الثاني: بناء متحكم روبوت صناعي (قريباً) — سنبني مع بعض ذراع روبوتية كاملة بـ Almadar، خطوة بخطوة.
 
 ---
 

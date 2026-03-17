@@ -1,4 +1,530 @@
 {
+  "home.hero.tag": {
+    "message": "منصة أصيلة بالذكاء الاصطناعي"
+  },
+  "home.hero.title": {
+    "message": "فيزياء البرمجيات"
+  },
+  "home.hero.subtitle": {
+    "message": "نماذج عالمية لعصر الوكلاء الأذكياء. نبني اللغة والذكاء والبنية التحتية لبرمجيات تفهم نفسها."
+  },
+  "home.hero.cta1": {
+    "message": "استكشف Studio"
+  },
+  "home.hero.cta2": {
+    "message": "اقرأ التوثيق"
+  },
+  "home.idea.title": {
+    "message": "ما هو النموذج العالمي للبرمجيات؟"
+  },
+  "home.idea.subtitle": {
+    "message": "البرمجة التقليدية تخبر الحاسوب بما يفعله خطوة بخطوة. النموذج العالمي يصف كيف تعمل الأشياء: البيانات والقواعد والسلوكيات. المترجم يحولها إلى أي منصة. النموذج يبقى كما هو."
+  },
+  "home.idea.describe": {
+    "message": "صِف"
+  },
+  "home.idea.describe.text": {
+    "message": "اكتب ما يفعله نظامك بلغة .orb، وهي لغة رسمية لوصف سلوك التطبيقات."
+  },
+  "home.idea.prove": {
+    "message": "أثبِت"
+  },
+  "home.idea.prove.text": {
+    "message": "المترجم يتحقق من صحة كل حالة ممكنة قبل تشغيل أي سطر من الكود."
+  },
+  "home.idea.deploy": {
+    "message": "انشر"
+  },
+  "home.idea.deploy.text": {
+    "message": "نموذج واحد يُترجم إلى الويب أو الهاتف أو أي منصة مستقبلية. النموذج هو المنتج."
+  },
+  "home.pillars.title": {
+    "message": "ثلاثة أركان"
+  },
+  "home.pillars.language.title": {
+    "message": "Orb",
+    "description": "Orb"
+  },
+  "home.pillars.language.desc": {
+    "message": "لغة رسمية لوصف سلوك البرمجيات. مفتوحة المصدر. أصيلة بالذكاء الاصطناعي. مُتحقق منها بالمترجم.",
+    "description": "A formal language for describing how software behaves. Open source. AI-native. Compiler-verified."
+  },
+  "home.pillars.language.link": {
+    "message": "استكشف اللغة",
+    "description": "Explore the Language"
+  },
+  "home.pillars.studio.title": {
+    "message": "Almadar Studio",
+    "description": "Almadar Studio"
+  },
+  "home.pillars.studio.desc": {
+    "message": "بيئة البناء حيث يتعاون البشر ووكلاء الذكاء الاصطناعي لإنشاء البرمجيات. صِف، أنشئ، انشر.",
+    "description": "The builder where humans and AI agents collaborate to create software. Describe, generate, deploy."
+  },
+  "home.pillars.studio.link": {
+    "message": "جرّب Studio",
+    "description": "Try Studio"
+  },
+  "home.pillars.services.title": {
+    "message": "خدمات Almadar",
+    "description": "Almadar Services"
+  },
+  "home.pillars.services.desc": {
+    "message": "بنية تحتية أصيلة بالذكاء الاصطناعي. حوسبة، تخزين، مصادقة، توجيه أحداث. مصممة للوكلاء الأذكياء.",
+    "description": "AI-native infrastructure. Compute, storage, authentication, event routing. Designed for agents."
+  },
+  "home.pillars.services.link": {
+    "message": "عرض الخدمات",
+    "description": "View Services"
+  },
+  "home.proof.title": {
+    "message": "مُثبت في الإنتاج"
+  },
+  "home.stats.behaviors.value": {
+    "message": "129",
+    "description": "129"
+  },
+  "home.stats.behaviors.label": {
+    "message": "سلوك معياري عبر 18 مجالاً",
+    "description": "Standard behaviors across 18 domains"
+  },
+  "home.stats.projects.value": {
+    "message": "7",
+    "description": "7"
+  },
+  "home.stats.projects.label": {
+    "message": "مشاريع إنتاجية منشورة",
+    "description": "Production projects deployed"
+  },
+  "home.stats.cost.value": {
+    "message": "$0.05–$0.35",
+    "description": "$0.05–$0.35"
+  },
+  "home.stats.cost.label": {
+    "message": "تكلفة الحوسبة بالذكاء الاصطناعي لكل تطبيق",
+    "description": "AI compute cost per application"
+  },
+  "home.ai.title": {
+    "message": "نُدرّب نماذجنا الخاصة"
+  },
+  "home.ai.text": {
+    "message": "لسنا شركة تغلّف واجهات LLM وتسميها ذكاءً اصطناعياً. خط أنابيبنا العصبي يفهم بنية البرمجيات كما يفهم محرك الشطرنج أوضاع الرقعة. يتنبأ بالأخطاء ويقيّم الإصلاحات ويُنشئ برمجيات صالحة من الصفر."
+  },
+  "home.ai.text2": {
+    "message": "ما زلنا نستخدم نماذج اللغة الكبيرة لفهم اللغة الطبيعية. لكن الذكاء البنيوي الجوهري ملكنا: نماذج صغيرة متخصصة تكاد لا تكلف شيئاً للتشغيل."
+  },
+  "home.cta.title": {
+    "message": "مستعد للبناء؟"
+  },
+  "home.cta.text": {
+    "message": "ابدأ بلغة Orb. ابنِ مع Studio. انشر على خدمات Almadar."
+  },
+  "home.cta.start": {
+    "message": "ابدأ البناء"
+  },
+  "home.cta.vision": {
+    "message": "اقرأ الرؤية"
+  },
+  "home.meta.title": {
+    "message": "Almadar — فيزياء البرمجيات"
+  },
+  "home.meta.desc": {
+    "message": "Almadar تبني اللغة والذكاء والبنية التحتية لبرمجيات تفهم نفسها."
+  },
+  "platform.hero.title": {
+    "message": "المنصة"
+  },
+  "platform.hero.subtitle": {
+    "message": "ثلاثة أركان، هدف واحد: تحويل الأوصاف الرسمية للبرمجيات إلى تطبيقات عاملة."
+  },
+  "platform.language.title": {
+    "message": "Orb",
+    "description": "Orb"
+  },
+  "platform.language.desc": {
+    "message": "لغة رسمية لوصف سلوك الأنظمة البرمجية. مفتوحة المصدر، مُتحقق منها بالمترجم، أصيلة بالذكاء الاصطناعي. اكتب الكيانات والسمات والصفحات. المترجم يضمن الصحة قبل توليد الكود.",
+    "description": "A formal language for describing how software systems behave. Open source, compiler-verified, AI-native. Write entities, traits, and pages. The compiler guarantees correctness before generating code."
+  },
+  "platform.language.link": {
+    "message": "توثيق اللغة",
+    "description": "Language Docs"
+  },
+  "platform.studio.title": {
+    "message": "Almadar Studio",
+    "description": "Almadar Studio"
+  },
+  "platform.studio.desc": {
+    "message": "بيئة البناء حيث يتعاون البشر والذكاء الاصطناعي. صِف ما تريده بلغة طبيعية، ووكيل الذكاء الاصطناعي يُنشئ برنامج .orb صالحاً. حرّر بصرياً أو بالكود. عاين بالوقت الفعلي. انشر بنقرة واحدة.",
+    "description": "The builder where humans and AI collaborate. Describe what you want in plain language, the AI agent generates a valid .orb program. Edit visually or in code. Preview in real time. Deploy with one click."
+  },
+  "platform.studio.link": {
+    "message": "افتح Studio",
+    "description": "Open Studio"
+  },
+  "platform.services.title": {
+    "message": "خدمات Almadar",
+    "description": "Almadar Services"
+  },
+  "platform.services.desc": {
+    "message": "بنية تحتية أصيلة بالذكاء الاصطناعي لعصر الوكلاء الأذكياء. حوسبة، تخزين، مصادقة، توجيه أحداث، تنسيق LLM، ومراقبة. مصممة لتطبيقات يبنيها الوكلاء ويشغّلونها.",
+    "description": "AI-native infrastructure for the agentic era. Compute, storage, authentication, event routing, LLM orchestration, and observability. Designed for applications that agents build and operate."
+  },
+  "platform.services.link": {
+    "message": "عرض الخدمات",
+    "description": "View Services"
+  },
+  "platform.connect.title": {
+    "message": "كيف تتصل ببعضها"
+  },
+  "platform.connect.step1.title": {
+    "message": "صِف"
+  },
+  "platform.connect.step1.desc": {
+    "message": "يصف المستخدمون ما يحتاجونه في Studio. وكيل الذكاء الاصطناعي يترجم اللغة الطبيعية إلى كود .orb."
+  },
+  "platform.connect.step2.title": {
+    "message": "ترجِم"
+  },
+  "platform.connect.step2.desc": {
+    "message": "مترجم Orb يتحقق من صحة البرنامج ويُنشئ تطبيقاً متكاملاً: واجهة أمامية، خادم خلفي، قاعدة بيانات."
+  },
+  "platform.connect.step3.title": {
+    "message": "شغّل"
+  },
+  "platform.connect.step3.desc": {
+    "message": "خدمات Almadar تستضيف التطبيق مع توجيه الأحداث والتخزين والمصادقة وخدمات الذكاء الاصطناعي المدمجة."
+  },
+  "platform.cta.title": {
+    "message": "ابدأ من أي مكان"
+  },
+  "platform.cta.text": {
+    "message": "تعلّم اللغة، أو جرّب بيئة البناء، أو استكشف البنية التحتية. كل ركن يعمل بمفرده. معاً يشكلون منصة متكاملة."
+  },
+  "platform.cta.studio": {
+    "message": "جرّب Studio"
+  },
+  "platform.cta.docs": {
+    "message": "اقرأ التوثيق"
+  },
+  "platform.meta.title": {
+    "message": "المنصة — اللغة، Studio، الخدمات"
+  },
+  "platform.meta.desc": {
+    "message": "الأركان الثلاثة لمنصة Almadar: Orb و Almadar Studio وخدمات Almadar."
+  },
+  "vision.hero.title": {
+    "message": "واقع رقمي مشترك"
+  },
+  "vision.hero.subtitle": {
+    "message": "برمجيات تتعايش وتتنسق وتتطور معاً."
+  },
+  "vision.coexist.title": {
+    "message": "برمجيات تتعايش"
+  },
+  "vision.coexist.p1": {
+    "message": "اليوم، كل تطبيق جزيرة معزولة. لديه نموذج بياناته الخاص وقواعده الخاصة ولغته الخاصة. نقل المعلومات بين الأنظمة يعني بناء جسور تنكسر كلما تغيّر أي طرف."
+  },
+  "vision.coexist.p2": {
+    "message": "نؤمن بأن البرمجيات يجب أن تتشارك قواعد لغوية موحدة. عندما يصف تطبيقان سلوكهما بلغة Orb، يستطيعان فهم بعضهما بشكل طبيعي. البيانات تتدفق دون طبقات ترجمة. القواعد تتركب دون كود ربط."
+  },
+  "vision.ownership.title": {
+    "message": "المجتمعات تحتفظ بالملكية"
+  },
+  "vision.ownership.p1": {
+    "message": "النموذج الحالي يُركّز السلطة. منصات قليلة تملك الأدوات والبيانات والتوزيع. المجتمعات التي تبني على تلك المنصات تستأجر حضورها الرقمي."
+  },
+  "vision.ownership.p2": {
+    "message": "Almadar تغيّر هذا. Orb مفتوحة المصدر. المكتبة المعيارية مفتوحة المصدر. عندما يصف مجتمع مجاله بلغة Orb، فإنه يملك ذلك الوصف. يمكنه ترجمته لأي منصة واستضافته في أي مكان وتطويره بشروطه الخاصة."
+  },
+  "vision.models.title": {
+    "message": "نماذج عالمية قابلة للتركيب"
+  },
+  "vision.models.p1": {
+    "message": "النموذج العالمي هو وصف رسمي لكيفية عمل مجال ما: ما الموجود، كيف يتغير، ما القواعد. في .orb، نظام جدولة رعاية صحية ومتتبع مخزون كلاهما نموذجان عالميان. يمكن التحقق من كل منهما بشكل مستقل وتركيبهما معاً."
+  },
+  "vision.models.p2": {
+    "message": "هذه هي اللعبة الطويلة. عندما يكون لمجالات كافية نماذج رسمية، تتوقف البرمجيات عن كونها مجموعة برامج معزولة وتصبح واقعاً رقمياً مشتركاً قابلاً للتشغيل المتبادل. كل نموذج لبنة بناء. كل تركيب يخلق شيئاً جديداً."
+  },
+  "vision.cta.title": {
+    "message": "ابنِ معنا"
+  },
+  "vision.cta.text": {
+    "message": "الواقع الرقمي المشترك يبدأ بالنموذج الأول. اكتب نموذجك."
+  },
+  "vision.cta.language": {
+    "message": "استكشف اللغة"
+  },
+  "vision.cta.contact": {
+    "message": "تواصل معنا"
+  },
+  "vision.meta.title": {
+    "message": "الرؤية — واقع رقمي مشترك"
+  },
+  "vision.meta.desc": {
+    "message": "برمجيات تتعايش وتتنسق وتتطور معاً. المجتمعات تحتفظ بالملكية. نماذج عالمية قابلة للتركيب."
+  },
+  "ai.hero.tag": {
+    "message": "ذكاؤنا الاصطناعي"
+  },
+  "ai.hero.title": {
+    "message": "نُدرّب نماذجنا الخاصة"
+  },
+  "ai.hero.subtitle": {
+    "message": "ليست أغلفة حول ذكاء شخص آخر. شبكات عصبية مبنية لغرض محدد تفهم بنية البرمجيات كما يفهم محرك الشطرنج أوضاع الرقعة."
+  },
+  "ai.pipeline.title": {
+    "message": "خط الأنابيب العصبي"
+  },
+  "ai.pipeline.subtitle": {
+    "message": "ستة نماذج متخصصة تعمل معاً. كل نموذج يتقن مهمة واحدة."
+  },
+  "ai.pipeline.mutator.title": {
+    "message": "مُولّد المخططات",
+    "description": "Schema Mutator"
+  },
+  "ai.pipeline.mutator.desc": {
+    "message": "يُنشئ برامج .orb مرشحة من أوصاف عالية المستوى. ينتج نقاط بداية متنوعة وصالحة بنيوياً.",
+    "description": "Generates candidate .orb programs from high-level descriptions. Produces diverse, structurally valid starting points."
+  },
+  "ai.pipeline.classifier.title": {
+    "message": "مُصنّف الجودة",
+    "description": "Quality Classifier"
+  },
+  "ai.pipeline.classifier.desc": {
+    "message": "يُقيّم كل مرشح من حيث الصحة والاكتمال وجودة تجربة المستخدم. يستبعد البرامج التي ستفشل في التحقق.",
+    "description": "Scores each candidate on correctness, completeness, and UX quality. Filters out programs that would fail validation."
+  },
+  "ai.pipeline.graph.title": {
+    "message": "محوّل الرسوم البيانية",
+    "description": "Graph Transformer"
+  },
+  "ai.pipeline.graph.desc": {
+    "message": "يفهم بنية آلة الحالة لبرامج .orb كرسوم بيانية. يكتشف الحالات غير القابلة للوصول والانتقالات المفقودة والدوائر المعطلة.",
+    "description": "Understands the state machine structure of .orb programs as graphs. Detects unreachable states, missing transitions, and broken circuits."
+  },
+  "ai.pipeline.edit.title": {
+    "message": "مُتنبئ التعديلات",
+    "description": "Edit Predictor"
+  },
+  "ai.pipeline.edit.desc": {
+    "message": "بمعطى برنامج وخطأ تحقق، يتنبأ بأقل تعديل يصلحه. مثل الإكمال التلقائي، لكن للإصلاحات البنيوية.",
+    "description": "Given a program and a validation error, predicts the minimal edit that fixes it. Like autocomplete, but for structural repairs."
+  },
+  "ai.pipeline.gflownet.title": {
+    "message": "مُولّد GFlowNet",
+    "description": "GFlowNet Generator"
+  },
+  "ai.pipeline.gflownet.desc": {
+    "message": "يبني برامج .orb خطوة بخطوة، مع أخذ عينات متناسبة مع الجودة. ينتج حلولاً متنوعة بدلاً من الانهيار إلى مخرج واحد.",
+    "description": "Constructs .orb programs step by step, sampling proportionally to quality. Produces diverse solutions rather than collapsing to a single output."
+  },
+  "ai.pipeline.integration.title": {
+    "message": "طبقة التكامل",
+    "description": "Integration Layer"
+  },
+  "ai.pipeline.integration.desc": {
+    "message": "يُنسق خط الأنابيب من البداية إلى النهاية. يجمع بين التنبؤات العصبية والتحقق بالمترجم لضمان الصحة.",
+    "description": "Orchestrates the pipeline end to end. Combines neural predictions with compiler validation to guarantee correctness."
+  },
+  "ai.cost.title": {
+    "message": "ميزة التكلفة"
+  },
+  "ai.cost.p1": {
+    "message": "نماذج اللغة الكبيرة تكلف من 0.50$ إلى 5.00$ لكل عملية توليد معقدة. نماذجنا المتخصصة تكلف من 0.05$ إلى 0.35$ للمهمة ذاتها. هذا تخفيض بمقدار 10 إلى 15 ضعفاً."
+  },
+  "ai.cost.p2": {
+    "message": "التوفير يأتي من التركيز. نموذج اللغة الكبير متنبئ نصوص عام الغرض. نماذجنا تحتاج فقط لفهم بنية برامج .orb، وهي مساحة مشكلة أصغر بكثير. نماذج أصغر، استنتاج أسرع، تكلفة أقل."
+  },
+  "ai.diff.title": {
+    "message": "لسنا أغلفة LLM"
+  },
+  "ai.diff.p1": {
+    "message": "نستخدم نماذج اللغة الكبيرة لفهم اللغة الطبيعية: تفسير ما يريده المستخدمون. لكن الذكاء البنيوي الذي يُنشئ ويتحقق من ويُصلح برامج .orb ملكنا. مُدرّب على بياناتنا ومُحسّن لمجالنا."
+  },
+  "ai.diff.p2": {
+    "message": "هذا يعني أننا نتحكم في تكاليفنا وجودتنا وخارطة طريقنا. لا نعتمد على تسعير واجهات أو تحديثات نماذج شركة أخرى."
+  },
+  "ai.diff.cta": {
+    "message": "شاهد المنصة"
+  },
+  "ai.meta.title": {
+    "message": "الذكاء الاصطناعي — نماذج مُدرّبة لتوليد البرمجيات"
+  },
+  "ai.meta.desc": {
+    "message": "شبكات عصبية مبنية لغرض محدد تفهم بنية البرمجيات. ليست أغلفة LLM."
+  },
+  "about.hero.title": {
+    "message": "عن Almadar"
+  },
+  "about.hero.subtitle": {
+    "message": "فريق صغير يبني فيزياء البرمجيات. مقرّه في ليوبليانا، سلوفينيا."
+  },
+  "about.team.title": {
+    "message": "الفريق"
+  },
+  "about.team.osama.role": {
+    "message": "شريك مؤسس ومدير تقني",
+    "description": "Co-Founder & Technical Lead"
+  },
+  "about.team.osama.bio": {
+    "message": "أكثر من 15 عاماً في بناء أنظمة المؤسسات. صمّم وبنى منصة الفوترة الإلكترونية الوطنية في المملكة العربية السعودية. مهندس لغة Orb البرمجية ومترجم Almadar. يقود خط الأنابيب العصبي والمكتبة المعيارية والبنية التحتية.",
+    "description": "15+ years building enterprise systems. Designed and built Saudi Arabia's national e-invoicing platform. Architect of the Orb programming language and the Almadar compiler. Leads the AI pipeline, standard library, and infrastructure."
+  },
+  "about.team.maja.role": {
+    "message": "شريكة مؤسسة ومديرة برامج",
+    "description": "Co-Founder & Program Manager"
+  },
+  "about.team.maja.bio": {
+    "message": "أكثر من 10 أعوام في تسليم مشاريع المؤسسات وإدارة البرامج. تدير مشاريع العملاء وبوابات الجودة واستراتيجية الإطلاق. تضمن أن كل منتج يُشحن يلبي معايير الإنتاج.",
+    "description": "10+ years in enterprise delivery and program management. Manages client projects, quality gates, and go-to-market strategy. Ensures every shipped product meets production standards."
+  },
+  "about.story.title": {
+    "message": "لماذا نبني هذا"
+  },
+  "about.story.p1": {
+    "message": "تطوير البرمجيات لديه مشكلة جوهرية: الفجوة بين ما يريده شخص ما وما يستطيع بناءه تتسع باستمرار. الأدوات تصبح أقوى لكنها أيضاً أعقد. مساعدو الذكاء الاصطناعي يولّدون الكود أسرع، لكن النهج الأساسي لا يزال نفسه: اكتب كوداً، أتمنّ أن يعمل، أصلح الأخطاء حين لا يعمل."
+  },
+  "about.story.p2": {
+    "message": "بدأنا Almadar بفرضية مختلفة. ماذا لو كان للبرمجيات فيزياء؟ ماذا لو استطعت وصف سلوك نظام بشكل رسمي، ومترجم يستطيع إثبات صحته قبل توليد أي كود؟ ماذا لو فهم الذكاء الاصطناعي بنية البرمجيات بدلاً من مجرد التنبؤ بالرمز التالي؟"
+  },
+  "about.story.p3": {
+    "message": "تلك الفرضية أصبحت Orb ومترجم Almadar وخط الأنابيب العصبي. ما زلنا في البداية. لكن بعد سبعة مشاريع إنتاجية و103 سلوكيات معيارية، الفرضية صامدة."
+  },
+  "about.meta.title": {
+    "message": "عن الفريق — فريق Almadar"
+  },
+  "about.meta.desc": {
+    "message": "فريق صغير في ليوبليانا، سلوفينيا، يبني فيزياء البرمجيات."
+  },
+  "contact.hero.title": {
+    "message": "تواصل معنا"
+  },
+  "contact.hero.subtitle": {
+    "message": "المستثمرون والشراكات واستفسارات المؤسسات."
+  },
+  "contact.investors.title": {
+    "message": "المستثمرون",
+    "description": "Investors"
+  },
+  "contact.investors.desc": {
+    "message": "نبني بنية تحتية أساسية لبرمجيات أصيلة بالذكاء الاصطناعي. إذا كنت تستثمر في أدوات المطورين أو بنية الذكاء الاصطناعي التحتية أو شركات المنصات، نودّ التحدث معك.",
+    "description": "We are building foundational infrastructure for AI-native software. If you invest in developer tools, AI infrastructure, or platform companies, we would like to talk."
+  },
+  "contact.partnerships.title": {
+    "message": "الشراكات",
+    "description": "Partnerships"
+  },
+  "contact.partnerships.desc": {
+    "message": "شركات تكامل الأنظمة والاستشارات والتكنولوجيا التي تريد البناء على منصة Almadar أو بالتعاون معها.",
+    "description": "System integrators, consultancies, and technology companies that want to build on or with the Almadar platform."
+  },
+  "contact.enterprise.title": {
+    "message": "المؤسسات",
+    "description": "Enterprise"
+  },
+  "contact.enterprise.desc": {
+    "message": "نشر مخصص، بنية تحتية مخصصة، ونماذج ذكاء اصطناعي مفصّلة للمؤسسات الكبيرة.",
+    "description": "Custom deployments, dedicated infrastructure, and tailored AI models for large organizations."
+  },
+  "contact.email.title": {
+    "message": "راسلنا"
+  },
+  "contact.email.text": {
+    "message": "لأي استفسار، تواصل معنا مباشرة على:"
+  },
+  "contact.meta.title": {
+    "message": "تواصل — Almadar"
+  },
+  "contact.meta.desc": {
+    "message": "المستثمرون والشراكات واستفسارات المؤسسات. hello@almadar.io"
+  },
+  "chat.thinking": {
+    "message": "Generating your application..."
+  },
+  "chat.writing": {
+    "message": "Writing .orb schema..."
+  },
+  "chat.schemaReady": {
+    "message": "Your application schema is ready:"
+  },
+  "chat.done": {
+    "message": "Done! Open Almadar Studio to see your generated application."
+  },
+  "chat.triggerLabel": {
+    "message": "Ask AI to build something"
+  },
+  "chat.triggerTitle": {
+    "message": "Build with AI"
+  },
+  "chat.title": {
+    "message": "Almadar AI"
+  },
+  "chat.welcome.title": {
+    "message": "Describe the app you want to build"
+  },
+  "chat.welcome.text": {
+    "message": "Our AI agent will generate a complete .orb application schema for you."
+  },
+  "chat.openStudio": {
+    "message": "Open in Studio"
+  },
+  "chat.placeholder": {
+    "message": "Describe what you want to build..."
+  },
+  "chat.send": {
+    "message": "Send"
+  },
+  "home.ai.cta": {
+    "message": "Learn About Our AI"
+  },
+  "hero.viz.appName": {
+    "message": "Order Fulfillment App"
+  },
+  "hero.viz.entityName": {
+    "message": "Order"
+  },
+  "hero.viz.pageName": {
+    "message": "Track Order"
+  },
+  "hero.viz.traitName": {
+    "message": "Fulfillment"
+  },
+  "hero.viz.defaultApp": {
+    "message": "Application"
+  },
+  "hero.viz.appPrefix": {
+    "message": "APP:"
+  },
+  "hero.viz.entityLabel": {
+    "message": "(Entity)"
+  },
+  "hero.viz.traitLabel": {
+    "message": "(Trait)"
+  },
+  "hero.viz.pageLabel": {
+    "message": "(Page)"
+  },
+  "hero.viz.orbitalUnit": {
+    "message": "Orbital Unit = Entity + Traits + Pages"
+  },
+  "blog.recentPosts.oneSchemaTitle": {
+    "message": "One Schema, Six Apps"
+  },
+  "blog.recentPosts.jsonThinksTitle": {
+    "message": "JSON That Thinks: Turing-Complete JSON"
+  },
+  "blog.recentPosts.threeExecutionModelsTitle": {
+    "message": "Three Execution Models, One Source of Truth"
+  },
+  "blog.recentPosts.closedCircuitTitle": {
+    "message": "The Closed Circuit Pattern"
+  },
+  "blog.recentPosts.heading": {
+    "message": "Recent Posts"
+  },
+  "blog.recentPosts.readArticle": {
+    "message": "Read Article →"
+  },
   "theme.ErrorPageContent.title": {
     "message": "هذه الصفحة لا تستجيب.",
     "description": "The title of the fallback page when the page crashed"
@@ -325,1432 +851,5 @@
   "theme.tags.tagsPageTitle": {
     "message": "الوسوم",
     "description": "The title of the tag list page"
-  },
-  "homepage.title": {
-    "message": "فيزياء البرمجيات"
-  },
-  "homepage.subtitle": {
-    "message": "ابنِ تطبيقات متكاملة من خلال schemas تصريحية. حدد الـ entities والسلوكيات وواجهة المستخدم كـ state machines تُترجم إلى كود جاهز للإنتاج."
-  },
-  "homepage.getStarted": {
-    "message": "ابدأ الآن"
-  },
-  "homepage.downloadCLI": {
-    "message": "تحميل CLI",
-    "description": "Download CLI button"
-  },
-  "homepage.features.title": {
-    "message": "ابنِ أسرع، أطلق بثقة",
-    "description": "Features section title"
-  },
-  "homepage.features.subtitle": {
-    "message": "كل ما تحتاجه للانتقال من الفكرة إلى الإنتاج",
-    "description": "Features section subtitle"
-  },
-  "homepage.feature.declarative.title": {
-    "message": "Schemas تصريحية",
-    "description": "Declarative feature title"
-  },
-  "homepage.feature.declarative.description": {
-    "message": "عرّف تطبيقك بالكامل كـ schema. الـ entities والـ traits والصفحات والتكاملات - كلها في مكان واحد.",
-    "description": "Declarative feature description"
-  },
-  "homepage.feature.stateMachines.title": {
-    "message": "State Machines",
-    "description": "State machines feature title"
-  },
-  "homepage.feature.stateMachines.description": {
-    "message": "صمم السلوكيات كـ state machines مع guards و effects. قابلة للتنبؤ والاختبار وآمنة بالتصميم.",
-    "description": "State machines feature description"
-  },
-  "homepage.feature.fullStack.title": {
-    "message": "توليد متكامل",
-    "description": "Full-stack feature title"
-  },
-  "homepage.feature.fullStack.description": {
-    "message": "ترجم إلى واجهة React وخادم Express/FastAPI ونماذج قاعدة البيانات. مخطط واحد، تطبيق كامل.",
-    "description": "Full-stack feature description"
-  },
-  "homepage.feature.integrations.title": {
-    "message": "تكاملات مدمجة",
-    "description": "Integrations feature title"
-  },
-  "homepage.feature.integrations.description": {
-    "message": "اتصل بالخدمات الخارجية مع موصلات جاهزة. Stripe و Twilio و OpenAI والمزيد.",
-    "description": "Integrations feature description"
-  },
-  "homepage.feature.realtime.title": {
-    "message": "الوقت الحقيقي والألعاب",
-    "description": "Realtime feature title"
-  },
-  "homepage.feature.realtime.description": {
-    "message": "ابنِ تطبيقات الوقت الحقيقي والألعاب بنفس النهج التصريحي. دعم WebSocket مُضمن.",
-    "description": "Realtime feature description"
-  },
-  "homepage.feature.aiPowered.title": {
-    "message": "مدعوم بالذكاء الاصطناعي",
-    "description": "AI feature title"
-  },
-  "homepage.feature.aiPowered.description": {
-    "message": "ولّد المخططات من اللغة الطبيعية. دع الذكاء الاصطناعي يتعامل مع الكود المتكرر بينما تركز على المنطق.",
-    "description": "AI feature description"
-  },
-  "homepage.philosophy.tag": {
-    "message": "الفلسفة",
-    "description": "Philosophy tag"
-  },
-  "homepage.philosophy.title": {
-    "message": "تشريح الـ Orbital",
-    "description": "Philosophy title"
-  },
-  "homepage.philosophy.description": {
-    "message": "كما تدور الإلكترونات حول النواة وفق قواعد الكم، تتبع مكونات تطبيقك قواعد الـ state machine. كل orbital هو entity مع traits مرفقة تحدد سلوكه وواجهته وتكاملاته.",
-    "description": "Philosophy description"
-  },
-  "homepage.philosophy.entity": {
-    "message": "الـ Entity (المادة)",
-    "description": "Entity term"
-  },
-  "homepage.philosophy.entity.description": {
-    "message": "النواة الثابتة. الـ entity يحدد شكل بياناتك وجاذبيتها.",
-    "description": "Entity description"
-  },
-  "homepage.philosophy.trait": {
-    "message": "الـ Trait (الطاقة)",
-    "description": "Trait term"
-  },
-  "homepage.philosophy.trait.description": {
-    "message": "المدار الديناميكي. state machine تحدد السلوك والمنطق.",
-    "description": "Trait description"
-  },
-  "homepage.philosophy.page": {
-    "message": "الصفحة (الفضاء)",
-    "description": "Page term"
-  },
-  "homepage.philosophy.page.description": {
-    "message": "الإطار. حاوية المسار حيث يتفاعل المستخدمون مع الـ orbitals.",
-    "description": "Page description"
-  },
-  "homepage.cta.title": {
-    "message": "جاهز للبناء؟"
-  },
-  "homepage.cta.description": {
-    "message": "ثبّت الـ CLI وأنشئ أول orbital schema في ثوانٍ."
-  },
-  "homepage.cta.readDocs": {
-    "message": "اقرأ التوثيق",
-    "description": "Read docs button"
-  },
-  "homepage.cta.viewGithub": {
-    "message": "عرض على GitHub",
-    "description": "View on GitHub button"
-  },
-  "homepage.meta.title": {
-    "message": "فيزياء البرمجيات"
-  },
-  "homepage.meta.description": {
-    "message": "Almadar - تطبيقات متكاملة تصريحية من خلال state machines"
-  },
-  "homepage.effect.set": {
-    "message": "تحديث حقل الـ entity",
-    "description": "Set effect description"
-  },
-  "homepage.effect.increment": {
-    "message": "S-expression math",
-    "description": "S-expression math effect description"
-  },
-  "homepage.effect.renderui": {
-    "message": "عرض pattern في slot",
-    "description": "Render-ui effect description"
-  },
-  "enterprise.tag": {
-    "message": "للمؤسسات"
-  },
-  "enterprise.title": {
-    "message": "Almadar للفرق والمؤسسات"
-  },
-  "enterprise.subtitle": {
-    "message": "وسّع تطويرك مع ميزات مؤسسية، دعم مخصص، وخيارات نشر مرنة."
-  },
-  "enterprise.cta.contact": {
-    "message": "تواصل مع المبيعات"
-  },
-  "enterprise.cta.docs": {
-    "message": "عرض التوثيق"
-  },
-  "enterprise.features.title": {
-    "message": "ميزات المؤسسات"
-  },
-  "enterprise.features.subtitle": {
-    "message": "كل ما تحتاجه للبناء على نطاق واسع"
-  },
-  "enterprise.feature.collaboration.title": {
-    "message": "التعاون الجماعي",
-    "description": "Collaboration feature title"
-  },
-  "enterprise.feature.collaboration.description": {
-    "message": "اعمل مع فريقك على المخططات مع التحكم بالوصول وسجل الإصدارات والتعاون الفوري.",
-    "description": "Collaboration feature description"
-  },
-  "enterprise.feature.deployment.title": {
-    "message": "النشر الخاص",
-    "description": "Deployment feature title"
-  },
-  "enterprise.feature.deployment.description": {
-    "message": "انشر محلياً أو في سحابتك الخاصة. تحكم كامل في بياناتك وبنيتك التحتية.",
-    "description": "Deployment feature description"
-  },
-  "enterprise.feature.security.title": {
-    "message": "أمان المؤسسات",
-    "description": "Security feature title"
-  },
-  "enterprise.feature.security.description": {
-    "message": "تكامل SSO/SAML، سجلات التدقيق، توافق SOC 2، وضوابط أمان متقدمة.",
-    "description": "Security feature description"
-  },
-  "enterprise.feature.support.title": {
-    "message": "دعم أولوية",
-    "description": "Support feature title"
-  },
-  "enterprise.feature.support.description": {
-    "message": "قنوات دعم مخصصة مع أوقات استجابة مضمونة ووصول مباشر لفريقنا الهندسي.",
-    "description": "Support feature description"
-  },
-  "enterprise.feature.training.title": {
-    "message": "تدريب مخصص",
-    "description": "Training feature title"
-  },
-  "enterprise.feature.training.description": {
-    "message": "برامج تأهيل وورش عمل وتدريب مخصص لاحتياجات فريقك.",
-    "description": "Training feature description"
-  },
-  "enterprise.feature.customization.title": {
-    "message": "تكاملات مخصصة",
-    "description": "Customization feature title"
-  },
-  "enterprise.feature.customization.description": {
-    "message": "ابنِ موصلات مخصصة لأنظمتك الداخلية. نساعدك على ربط المدار ببنيتك التحتية.",
-    "description": "Customization feature description"
-  },
-  "enterprise.pricing.title": {
-    "message": "تسعير مرن"
-  },
-  "enterprise.pricing.subtitle": {
-    "message": "خطط تنمو مع مؤسستك"
-  },
-  "enterprise.pricing.team.title": {
-    "message": "فريق"
-  },
-  "enterprise.pricing.team.description": {
-    "message": "للفرق الصغيرة في البداية"
-  },
-  "enterprise.pricing.team.feature1": {
-    "message": "حتى 10 أعضاء"
-  },
-  "enterprise.pricing.team.feature2": {
-    "message": "مخططات مشتركة"
-  },
-  "enterprise.pricing.team.feature3": {
-    "message": "دعم بالبريد"
-  },
-  "enterprise.pricing.team.feature4": {
-    "message": "نشر سحابي"
-  },
-  "enterprise.pricing.popular": {
-    "message": "الأكثر شيوعاً"
-  },
-  "enterprise.pricing.business.title": {
-    "message": "أعمال"
-  },
-  "enterprise.pricing.business.description": {
-    "message": "للمؤسسات النامية"
-  },
-  "enterprise.pricing.business.feature1": {
-    "message": "أعضاء غير محدودين"
-  },
-  "enterprise.pricing.business.feature2": {
-    "message": "تكامل SSO/SAML"
-  },
-  "enterprise.pricing.business.feature3": {
-    "message": "دعم أولوية"
-  },
-  "enterprise.pricing.business.feature4": {
-    "message": "خيار السحابة الخاصة"
-  },
-  "enterprise.pricing.business.feature5": {
-    "message": "سجلات التدقيق"
-  },
-  "enterprise.pricing.enterprise.title": {
-    "message": "مؤسسات"
-  },
-  "enterprise.pricing.enterprise.description": {
-    "message": "للمؤسسات الكبيرة"
-  },
-  "enterprise.pricing.enterprise.feature1": {
-    "message": "نشر محلي"
-  },
-  "enterprise.pricing.enterprise.feature2": {
-    "message": "تكاملات مخصصة"
-  },
-  "enterprise.pricing.enterprise.feature3": {
-    "message": "دعم مخصص"
-  },
-  "enterprise.pricing.enterprise.feature4": {
-    "message": "ضمان SLA"
-  },
-  "enterprise.pricing.enterprise.feature5": {
-    "message": "تدريب مخصص"
-  },
-  "enterprise.pricing.contact": {
-    "message": "تواصل معنا"
-  },
-  "enterprise.contact.title": {
-    "message": "جاهز للبدء؟"
-  },
-  "enterprise.contact.description": {
-    "message": "تواصل مع فريق المبيعات لمناقشة متطلباتك والحصول على عرض أسعار مخصص."
-  },
-  "enterprise.meta.title": {
-    "message": "للمؤسسات"
-  },
-  "enterprise.meta.description": {
-    "message": "Almadar للمؤسسات - وسّع تطويرك مع ميزات مؤسسية"
-  },
-  "demos.tag": {
-    "message": "العروض التوضيحية"
-  },
-  "demos.title": {
-    "message": "عروض تفاعلية"
-  },
-  "demos.description": {
-    "message": "اختبر قوة المدار من خلال قوالب تفاعلية حية."
-  },
-  "demos.cta": {
-    "message": "عرض العروض التوضيحية"
-  },
-  "demos.meta.title": {
-    "message": "العروض التفاعلية"
-  },
-  "demos.meta.description": {
-    "message": "استكشف نظام تصميم المدار والقوالب"
-  },
-  "carousel.title": {
-    "message": "عروض تفاعلية"
-  },
-  "carousel.subtitle": {
-    "message": "استكشف تطبيقات حقيقية مبنية بالمدار."
-  },
-  "carousel.viewAll": {
-    "message": "عرض جميع العروض"
-  },
-  "carousel.exploreDemo": {
-    "message": "استكشف العرض ←"
-  },
-  "demo.category.socialNetwork": {
-    "message": "شبكة اجتماعية",
-    "description": "Demo category: Social Network"
-  },
-  "demo.category.govTech": {
-    "message": "تقنية حكومية",
-    "description": "Demo category: Gov Tech"
-  },
-  "demo.category.fitnessApp": {
-    "message": "تطبيق لياقة",
-    "description": "Demo category: Fitness App"
-  },
-  "demo.category.devTools": {
-    "message": "أدوات تطوير",
-    "description": "Demo category: Dev Tools"
-  },
-  "demo.category.gameTools": {
-    "message": "أدوات ألعاب",
-    "description": "Demo category: Game Tools"
-  },
-  "demo.category.dataViz": {
-    "message": "تصور البيانات",
-    "description": "Demo category: Data Viz"
-  },
-  "demo.executiveDashboard.title": {
-    "message": "لوحة التحكم التنفيذية",
-    "description": "Demo title: Executive Dashboard"
-  },
-  "demo.executiveDashboard.description": {
-    "message": "نظرة شاملة على صحة النظام والتنبيهات والمقاييس الرئيسية مع موجز النشاط الفوري.",
-    "description": "Demo description: Executive Dashboard"
-  },
-  "demo.trustIntelligence.title": {
-    "message": "ذكاء الثقة",
-    "description": "Demo title: Trust Intelligence"
-  },
-  "demo.trustIntelligence.description": {
-    "message": "تحليل مدعوم بالذكاء الاصطناعي لدرجات ثقة الفريق واتجاهات الأداء وأفضل المؤدين.",
-    "description": "Demo description: Trust Intelligence"
-  },
-  "demo.graphIntelligence.title": {
-    "message": "ذكاء الرسم البياني",
-    "description": "Demo title: Graph Intelligence"
-  },
-  "demo.graphIntelligence.description": {
-    "message": "تصور الشبكة مع كشف التجمعات ومقاييس الكثافة وتحليل الاتصالات.",
-    "description": "Demo description: Graph Intelligence"
-  },
-  "demo.userProfile360.title": {
-    "message": "ملف المستخدم ٣٦٠°",
-    "description": "Demo title: User Profile 360"
-  },
-  "demo.userProfile360.description": {
-    "message": "تحليل شامل للمستخدم يشمل سجل النشاط ومقاييس الثقة واستخدام الاتصالات.",
-    "description": "Demo description: User Profile 360"
-  },
-  "demo.inspectionManagement.title": {
-    "message": "إدارة التفتيش",
-    "description": "Demo title: Inspection Management"
-  },
-  "demo.inspectionManagement.description": {
-    "message": "مركز موحد لتتبع فحوصات الامتثال والعمليات الميدانية وحالة التفتيش.",
-    "description": "Demo description: Inspection Management"
-  },
-  "demo.inspectionForm.title": {
-    "message": "نموذج التفتيش",
-    "description": "Demo title: Inspection Form"
-  },
-  "demo.inspectionForm.description": {
-    "message": "نموذج تفتيش متعدد الخطوات مع حقول شرطية ومراجع قانونية ورصد المخالفات.",
-    "description": "Demo description: Inspection Form"
-  },
-  "demo.fitnessTracker.title": {
-    "message": "متتبع اللياقة",
-    "description": "Demo title: Fitness Tracker"
-  },
-  "demo.fitnessTracker.description": {
-    "message": "تسجيل التمارين مع تتبع الأوزان ورسوم التقدم البيانية ومدخلات العافية اليومية.",
-    "description": "Demo description: Fitness Tracker"
-  },
-  "demo.mealPlanDetail.title": {
-    "message": "تفاصيل خطة الوجبات",
-    "description": "Demo title: Meal Plan Detail"
-  },
-  "demo.mealPlanDetail.description": {
-    "message": "خطة تغذية مفصلة مع تحليل العناصر الغذائية وتحليل الذكاء الاصطناعي وروابط قابلة للمشاركة.",
-    "description": "Demo description: Meal Plan Detail"
-  },
-  "demo.trainingSchedule.title": {
-    "message": "جدول التدريب",
-    "description": "Demo title: Training Schedule"
-  },
-  "demo.trainingSchedule.description": {
-    "message": "تقويم تدريبي أسبوعي مع إدارة الجلسات وتتبع الحالة ونظرة عامة على الإنجاز.",
-    "description": "Demo description: Training Schedule"
-  },
-  "demo.almadarStudio.title": {
-    "message": "استوديو المدار",
-    "description": "Demo title: Almadar Studio"
-  },
-  "demo.almadarStudio.description": {
-    "message": "بيئة تطوير مدعومة بالذكاء الاصطناعي لبناء تطبيقات متكاملة من اللغة الطبيعية.",
-    "description": "Demo description: Almadar Studio"
-  },
-  "demo.studioFullView.title": {
-    "message": "العرض الكامل للاستوديو",
-    "description": "Demo title: Studio Full View"
-  },
-  "demo.studioFullView.description": {
-    "message": "تخطيط بيئة التطوير الكامل مع لوحة الوكيل والمفتش ومحرر المخطط والمعاينة الحية.",
-    "description": "Demo description: Studio Full View"
-  },
-  "demo.aiAgentPanel.title": {
-    "message": "لوحة وكيل الذكاء الاصطناعي",
-    "description": "Demo title: AI Agent Panel"
-  },
-  "demo.aiAgentPanel.description": {
-    "message": "مساعد ذكاء اصطناعي فوري مع استدعاءات الأدوات وتتبع المهام وفروقات المخطط.",
-    "description": "Demo description: AI Agent Panel"
-  },
-  "demo.gameMapEditor.title": {
-    "message": "محرر خرائط الألعاب",
-    "description": "Demo title: Game Map Editor"
-  },
-  "demo.gameMapEditor.description": {
-    "message": "محرر إيزومتري تفاعلي لتصميم خرائط الألعاب مع رسم التضاريس ووضع الوحدات وأدوات المناطق.",
-    "description": "Demo description: Game Map Editor"
-  },
-  "demo.interactiveGraph.title": {
-    "message": "رسم بياني تفاعلي",
-    "description": "Demo title: Interactive Graph"
-  },
-  "demo.interactiveGraph.description": {
-    "message": "لوحة رسم بياني موجهة بالقوة مع عُقد قابلة للسحب وتحكم بالتكبير وتخطيطات مجمعة.",
-    "description": "Demo description: Interactive Graph"
-  },
-  "blog.recentPosts.heading": {
-    "message": "أحدث المنشورات"
-  },
-  "blog.recentPosts.readArticle": {
-    "message": "اقرأ المقال ←"
-  },
-  "blog.recentPosts.oneSchemaTitle": {
-    "message": "schema واحد، ستة تطبيقات"
-  },
-  "blog.recentPosts.jsonThinksTitle": {
-    "message": "JSON يُفكّر: Turing-Complete JSON"
-  },
-  "blog.recentPosts.threeExecutionModelsTitle": {
-    "message": "ثلاثة نماذج تنفيذ، حقيقة واحدة"
-  },
-  "blog.recentPosts.closedCircuitTitle": {
-    "message": "الـ Closed Circuit Pattern: لماذا يعلق مستخدموك (وكيف تمنع ذلك)"
-  },
-  "homepage.schema.inYourLanguage": {
-    "message": "بلغتك",
-    "description": "Tab label for the localized schema example on the homepage"
-  },
-  "homepage.animation.title": {
-    "message": "كيف يعمل",
-    "description": "Animation section title"
-  },
-  "homepage.animation.subtitle": {
-    "message": "كل تطبيق في المدار يتكون من وحدات مدارية. الـ Entity يحمل بياناتك، والـ Traits تحدد السلوك كـ state machines، والصفحات تربطها بالمسارات. شاهد البنية وهي تتشكل.",
-    "description": "Animation section subtitle"
-  },
-  "homepage.animation.caption": {
-    "message": "الوحدة المدارية = Entity + Traits + Pages",
-    "description": "Animation section caption"
-  },
-  "hero.viz.appName": {
-    "message": "تطبيق تنفيذ الطلبات"
-  },
-  "hero.viz.entityName": {
-    "message": "طلب"
-  },
-  "hero.viz.pageName": {
-    "message": "تتبع الطلب"
-  },
-  "hero.viz.traitName": {
-    "message": "التنفيذ"
-  },
-  "hero.viz.defaultApp": {
-    "message": "تطبيق"
-  },
-  "hero.viz.appPrefix": {
-    "message": "تطبيق:"
-  },
-  "hero.viz.entityLabel": {
-    "message": "(كيان)"
-  },
-  "hero.viz.traitLabel": {
-    "message": "(سمة)"
-  },
-  "hero.viz.pageLabel": {
-    "message": "(صفحة)"
-  },
-  "hero.viz.orbitalUnit": {
-    "message": "الوحدة المدارية = كيان + سمات + صفحات"
-  },
-  "developers.hero.tag": {
-    "message": "لغة برمجة"
-  },
-  "developers.hero.title": {
-    "message": "لغة المدار"
-  },
-  "developers.hero.subtitle": {
-    "message": "المدار هو لغة مخططات تصريحية لتطبيقات متكاملة. عرّف الـ entities والـ state machines وواجهة المستخدم في ملف .orb واحد — المترجم يولد الباقي."
-  },
-  "developers.hero.getStarted": {
-    "message": "ابدأ الآن"
-  },
-  "developers.hero.viewExamples": {
-    "message": "عرض الأمثلة"
-  },
-  "developers.animation.title": {
-    "message": "كيف يعمل"
-  },
-  "developers.animation.subtitle": {
-    "message": "كل تطبيق في المدار يتكون من وحدات مدارية. الـ Entity يحمل بياناتك، والـ Traits تحدد السلوك كـ state machines، والصفحات تربطها بالمسارات. شاهد البنية وهي تتشكل."
-  },
-  "developers.animation.caption": {
-    "message": "الوحدة المدارية = Entity + Traits + Pages"
-  },
-  "developers.concepts.title": {
-    "message": "المفاهيم الأساسية"
-  },
-  "developers.concepts.subtitle": {
-    "message": "ثلاثة عناصر تبني كل تطبيق في المدار"
-  },
-  "developers.concepts.entity.label": {
-    "message": "الكيان"
-  },
-  "developers.concepts.entity.tagline": {
-    "message": "شكل البيانات"
-  },
-  "developers.concepts.entity.desc": {
-    "message": "تحدد الكيانات نموذج بياناتك. الحقول مكتوبة الأنواع، يمكن أن يكون لها قيم افتراضية، وتدعم ثلاثة أوضاع للحفظ: runtime (في الذاكرة)، persistent (قاعدة البيانات)، وsingleton."
-  },
-  "developers.concepts.trait.label": {
-    "message": "السمة"
-  },
-  "developers.concepts.trait.tagline": {
-    "message": "آلة الحالة + واجهة المستخدم"
-  },
-  "developers.concepts.trait.desc": {
-    "message": "تُنمذج السمات السلوك كآلات حالة تضم حالات وأحداثاً وحراساً وتأثيرات. يمكن للتأثيرات تعيين حقول الكيان أو إرسال الأحداث أو استدعاء الخدمات أو عرض أنماط واجهة المستخدم."
-  },
-  "developers.concepts.page.label": {
-    "message": "الصفحة"
-  },
-  "developers.concepts.page.tagline": {
-    "message": "ربط المسارات"
-  },
-  "developers.concepts.page.desc": {
-    "message": "تربط الصفحات الوحدات المدارية بالمسارات. تحدد عنوان URL والتخطيط والوحدات المدارية (مجموعات Entity + Traits) المُثبّتة. تُولَّد الصفحات كمكونات مسارات React."
-  },
-  "developers.quickstart.inYourLanguage": {
-    "message": "بلغتك"
-  },
-  "developers.quickstart.title": {
-    "message": "أول مخطط في 60 ثانية"
-  },
-  "developers.quickstart.desc": {
-    "message": "ثبّت الأداة، أنشئ أول مخطط، وترجمه إلى تطبيق قيد التشغيل."
-  },
-  "developers.quickstart.step1": {
-    "message": "تثبيت الأداة"
-  },
-  "developers.quickstart.step2": {
-    "message": "تحرير مخطط .orb"
-  },
-  "developers.quickstart.step3": {
-    "message": "شغّل almadar dev my-app.orb للمراقبة والترجمة"
-  },
-  "developers.quickstart.fullGuide": {
-    "message": "دليل البدء الكامل"
-  },
-  "developers.modules.title": {
-    "message": "وحدات المكتبة القياسية"
-  },
-  "developers.modules.subtitle": {
-    "message": "213+ مشغلاً مدمجاً في 9 وحدات — كلها متاحة كـ s-expressions في الحراس والتأثيرات"
-  },
-  "developers.modules.operators": {
-    "message": "مشغل"
-  },
-  "developers.modules.viewAll": {
-    "message": "عرض مرجع المشغلات الكامل"
-  },
-  "developers.tutorials.title": {
-    "message": "مسارات الدروس التعليمية"
-  },
-  "developers.tutorials.subtitle": {
-    "message": "مسارات منظمة من الصفر إلى الإنتاج"
-  },
-  "developers.tutorials.beginner.label": {
-    "message": "مبتدئ"
-  },
-  "developers.tutorials.beginner.desc": {
-    "message": "ابنِ أول وحدة مدارية، افهم آلات الحالة، وانشر تطبيقاً يعمل."
-  },
-  "developers.tutorials.intermediate.label": {
-    "message": "متوسط"
-  },
-  "developers.tutorials.intermediate.desc": {
-    "message": "اعمل مع أنماط واجهة المستخدم، اكتب الحراس بـ s-expressions، وربط وحدات مدارية متعددة."
-  },
-  "developers.tutorials.advanced.label": {
-    "message": "متقدم"
-  },
-  "developers.tutorials.advanced.desc": {
-    "message": "ابنِ تطبيقات إنتاجية مع التكاملات وتوليد الذكاء الاصطناعي والمهارات المخصصة."
-  },
-  "developers.tutorials.start": {
-    "message": "ابدأ المسار"
-  },
-  "developers.playground.title": {
-    "message": "جرّبه في المتصفح"
-  },
-  "developers.playground.subtitle": {
-    "message": "شغّل s-expressions المدار مباشرةً في المتصفح — دون تثبيت"
-  },
-  "playground.loading": {
-    "message": "جاري التحميل..."
-  },
-  "developers.meta.title": {
-    "message": "المطورون — المدار"
-  },
-  "developers.meta.description": {
-    "message": "مركز مطوري المدار — لغة المدار، مرجع المشغلات، الدروس، ودليل البدء السريع."
-  },
-  "enterprise.security.title": {
-    "message": "الأمان والامتثال"
-  },
-  "enterprise.security.subtitle": {
-    "message": "مصمم للصناعات المنظمة من اليوم الأول"
-  },
-  "enterprise.security.auth.title": {
-    "message": "المصادقة والوصول"
-  },
-  "enterprise.security.auth.sso": {
-    "message": "تسجيل الدخول الموحد عبر SAML 2.0 وOIDC"
-  },
-  "enterprise.security.auth.rbac": {
-    "message": "التحكم في الوصول القائم على الأدوار (RBAC)"
-  },
-  "enterprise.security.auth.audit": {
-    "message": "سجلات تدقيق غير قابلة للتغيير لجميع عمليات المخطط"
-  },
-  "enterprise.security.auth.mfa": {
-    "message": "إلزام المصادقة متعددة العوامل"
-  },
-  "enterprise.security.compliance.title": {
-    "message": "الامتثال"
-  },
-  "enterprise.security.compliance.soc2": {
-    "message": "SOC 2 النوع الثاني (قيد التنفيذ)"
-  },
-  "enterprise.security.compliance.gdpr": {
-    "message": "معالجة بيانات متوافقة مع GDPR"
-  },
-  "enterprise.security.compliance.hipaa": {
-    "message": "خيارات نشر جاهزة لـ HIPAA"
-  },
-  "enterprise.security.compliance.gov": {
-    "message": "دعم الحكومة والصناعات المنظمة"
-  },
-  "enterprise.security.ai.title": {
-    "message": "أمان الذكاء الاصطناعي (قريباً)"
-  },
-  "enterprise.security.ai.icagi": {
-    "message": "تكامل IC-AGI للتحقق من المخطط وتطبيق السياسات"
-  },
-  "enterprise.security.ai.sandboxed": {
-    "message": "توليد ذكاء اصطناعي معزول مع بوابات مراجعة المخطط"
-  },
-  "enterprise.security.ai.audit": {
-    "message": "مسار تدقيق قرارات الذكاء الاصطناعي"
-  },
-  "enterprise.security.ai.policy": {
-    "message": "السياسة كرمز للمخططات المُولّدة بالذكاء الاصطناعي"
-  },
-  "enterprise.caseStudies.title": {
-    "message": "مُثبت ميدانياً"
-  },
-  "enterprise.caseStudies.subtitle": {
-    "message": "نشر حقيقي مبني على المدار"
-  },
-  "enterprise.cs.inspection.badge": {
-    "message": "العمليات الميدانية"
-  },
-  "enterprise.cs.inspection.title": {
-    "message": "نظام التفتيش"
-  },
-  "enterprise.cs.inspection.desc": {
-    "message": "500+ تفتيش يومياً، موثوقية مزامنة 99.9%، تخفيض أخطاء الامتثال بنسبة 60%."
-  },
-  "enterprise.cs.readMore": {
-    "message": "اقرأ دراسة الحالة"
-  },
-  "enterprise.cs.trainer.badge": {
-    "message": "الصحة واللياقة"
-  },
-  "enterprise.cs.trainer.title": {
-    "message": "تطبيق المدرب المحترف"
-  },
-  "enterprise.cs.trainer.desc": {
-    "message": "تخفيض وقت الإدارة بنسبة 70%، 3 أضعاف طاقة العملاء لكل مدرب، معدل استبقاء عملاء 95%."
-  },
-  "homepage.talkToSales": {
-    "message": "تحدث مع المبيعات"
-  },
-  "homepage.how.title": {
-    "message": "كيف يعمل المدار"
-  },
-  "homepage.how.subtitle": {
-    "message": "من اللغة الطبيعية إلى تطبيق قيد التشغيل في ثلاث خطوات"
-  },
-  "homepage.how.step1.title": {
-    "message": "صِف بلغتك الطبيعية"
-  },
-  "homepage.how.step1.desc": {
-    "message": "أخبر المدار بما تريد بناؤه. لا كود، لا صياغة مخطط — فقط صِف السلوك والبيانات وواجهة المستخدم بلغة بسيطة."
-  },
-  "homepage.how.step2.title": {
-    "message": "الذكاء الاصطناعي يولّد المخطط"
-  },
-  "homepage.how.step2.desc": {
-    "message": "يترجم DeepAgent وصفك إلى OrbitalSchema منظّم — كيانات وآلات حالة وأنماط واجهة المستخدم ونقاط التكامل."
-  },
-  "homepage.how.step3.title": {
-    "message": "النظام يولّد التطبيق"
-  },
-  "homepage.how.step3.desc": {
-    "message": "يُنتج مُترجم المدار تطبيقاً متكاملاً جاهزاً للإنتاج: واجهة React، وخادم Express، ونماذج قاعدة بيانات، وواجهات برمجية."
-  },
-  "homepage.stats.cost.value": {
-    "message": "87%"
-  },
-  "homepage.stats.cost.label": {
-    "message": "تخفيض في تكاليف التطوير"
-  },
-  "homepage.stats.speed.value": {
-    "message": "60%"
-  },
-  "homepage.stats.speed.label": {
-    "message": "أسرع في وقت التسليم"
-  },
-  "homepage.stats.auto.value": {
-    "message": "70%"
-  },
-  "homepage.stats.auto.label": {
-    "message": "من كود التطبيق يُولَّد تلقائياً"
-  },
-  "homepage.proof.title": {
-    "message": "مُثبت في بيئة الإنتاج"
-  },
-  "homepage.proof.subtitle": {
-    "message": "نتائج حقيقية من فرق انتقلت إلى المدار"
-  },
-  "homepage.proof.caseStudies": {
-    "message": "دراسات الحالة:"
-  },
-  "homepage.proof.cs.inspection": {
-    "message": "نظام التفتيش الحكومي"
-  },
-  "homepage.proof.cs.trainer": {
-    "message": "منصة المدرب بالذكاء الاصطناعي"
-  },
-  "homepage.cta.startBuilding": {
-    "message": "ابدأ البناء"
-  },
-  "homepage.cta.enterprise": {
-    "message": "للمؤسسات"
-  },
-  "playground.running": {
-    "message": "جاري التشغيل..."
-  },
-  "playground.empty": {
-    "message": "اكتب s-expression واضغط تشغيل (أو Ctrl+Enter)"
-  },
-  "playground.error": {
-    "message": "خطأ"
-  },
-  "playground.examples": {
-    "message": "أمثلة"
-  },
-  "playground.copied": {
-    "message": "تم النسخ!"
-  },
-  "playground.share": {
-    "message": "مشاركة"
-  },
-  "playground.run": {
-    "message": "تشغيل"
-  },
-  "playground.meta.title": {
-    "message": "الملعب — المدار"
-  },
-  "playground.meta.description": {
-    "message": "ملعب s-expressions التفاعلي لـ المدار. اكتب وشغّل المشغلات مباشرة في المتصفح."
-  },
-  "playground.title": {
-    "message": "الملعب"
-  },
-  "playground.subtitle": {
-    "message": "شغّل s-expressions المدار في المتصفح. لا حاجة للتثبيت."
-  },
-  "cs.inspection.meta.title": {
-    "message": "نظام التفتيش — دراسة حالة المدار"
-  },
-  "cs.inspection.meta.desc": {
-    "message": "كيف رقّمنا آلاف عمليات التفتيش الورقية بموثوقية كاملة دون اتصال باستخدام Orbitals."
-  },
-  "cs.inspection.badge": {
-    "message": "العمليات الميدانية"
-  },
-  "cs.inspection.title": {
-    "message": "نظام التفتيش"
-  },
-  "cs.inspection.subtitle": {
-    "message": "رقمنة آلاف عمليات التفتيش الورقية بموثوقية كاملة دون اتصال."
-  },
-  "cs.inspection.challenge.label": {
-    "message": "التحدي"
-  },
-  "cs.inspection.challenge.desc": {
-    "message": "احتاج العميل إلى رقمنة عملية التفتيش الورقية. يعمل المفتشون الميدانيون في مواقع نائية ذات اتصال غير مستقر. كانوا بحاجة إلى نظام يعمل دون اتصال ويتزامن بشكل موثوق عند الاتصال مجدداً."
-  },
-  "cs.inspection.solution.label": {
-    "message": "الحل"
-  },
-  "cs.inspection.solution.desc": {
-    "message": "عيّنّا التفتيش كـ Entity ثابت، مُغلّف بـ GeoLocation وSync Orbitals. كل تفتيش يلتقط بيانات الموقع تلقائياً ويتزامن في الخلفية عند استعادة الاتصال."
-  },
-  "cs.inspection.orbital1.name": {
-    "message": "Inspection Entity:"
-  },
-  "cs.inspection.orbital1.desc": {
-    "message": "هيكل البيانات الأساسي لجميع أنواع التفتيش"
-  },
-  "cs.inspection.orbital2.name": {
-    "message": "GeoLocation Orbital:"
-  },
-  "cs.inspection.orbital2.desc": {
-    "message": "التقاط الموقع والتحقق منه تلقائياً"
-  },
-  "cs.inspection.orbital3.name": {
-    "message": "Sync Orbital:"
-  },
-  "cs.inspection.orbital3.desc": {
-    "message": "المزامنة في الخلفية مع حل التعارضات"
-  },
-  "cs.inspection.orbital4.name": {
-    "message": "Approval Orbital:"
-  },
-  "cs.inspection.orbital4.desc": {
-    "message": "سير عمل مراجعة المشرف والموافقة"
-  },
-  "cs.inspection.future.label": {
-    "message": "الاستدامة المستقبلية"
-  },
-  "cs.inspection.future.desc": {
-    "message": "تُضاف قواعد الامتثال الجديدة كـ Orbitals فردية تنتشر فوراً إلى جميع الوحدات الميدانية. عند تغيير اللوائح، نربط Orbital تحقق جديداً فحسب — دون الحاجة لإعادة كتابة منطق التفتيش الأساسي."
-  },
-  "cs.inspection.result.label": {
-    "message": "النتيجة:"
-  },
-  "cs.inspection.result.desc": {
-    "message": "500+ تفتيش يومياً، موثوقية مزامنة 99.9%، تخفيض أخطاء الامتثال بنسبة 60%."
-  },
-  "cs.inspection.cta.title": {
-    "message": "لديك تحدٍّ مماثل؟"
-  },
-  "cs.inspection.cta.desc": {
-    "message": "دعنا نناقش كيف يمكن لـ Orbitals حل تحديات عملياتك الميدانية."
-  },
-  "cs.trainer.meta.title": {
-    "message": "تطبيق المدرب المحترف — دراسة حالة المدار"
-  },
-  "cs.trainer.meta.desc": {
-    "message": "كيف بنينا تطبيق إدارة المدربين الذي يفصل منطق التدريب عن الفوترة باستخدام Orbitals."
-  },
-  "cs.trainer.badge": {
-    "message": "الصحة واللياقة"
-  },
-  "cs.trainer.title": {
-    "message": "تطبيق المدرب المحترف"
-  },
-  "cs.trainer.subtitle": {
-    "message": "أتح للمدربين إدارة العملاء عن بُعد دون إرهاق إداري."
-  },
-  "cs.trainer.challenge.label": {
-    "message": "التحدي"
-  },
-  "cs.trainer.challenge.desc": {
-    "message": "كان المدربون الشخصيون يقضون وقتاً أطول في الإدارة من التدريب. كانوا بحاجة إلى نظام لإدارة خطط التمارين وتتبع تقدم العملاء والتعامل مع الفوترة — كل ذلك في مكان واحد، دون تعقيد."
-  },
-  "cs.trainer.solution.label": {
-    "message": "الحل"
-  },
-  "cs.trainer.solution.desc": {
-    "message": "خطط التمارين هي تركيبات من أنماط التمارين. منطق التدريب منفصل عن الفوترة. كل جانب له Orbital خاص يمكنه التطور باستقلالية."
-  },
-  "cs.trainer.orbital1.name": {
-    "message": "Client Entity:"
-  },
-  "cs.trainer.orbital1.desc": {
-    "message": "الملف الشخصي الأساسي وتتبع الأهداف"
-  },
-  "cs.trainer.orbital2.name": {
-    "message": "Workout Plan Orbital:"
-  },
-  "cs.trainer.orbital2.desc": {
-    "message": "قوالب تمارين قابلة للتركيب"
-  },
-  "cs.trainer.orbital3.name": {
-    "message": "Progress Tracking Orbital:"
-  },
-  "cs.trainer.orbital3.desc": {
-    "message": "المقاييس والصور والقياسات"
-  },
-  "cs.trainer.orbital4.name": {
-    "message": "Billing Orbital:"
-  },
-  "cs.trainer.orbital4.desc": {
-    "message": "إدارة الاشتراكات والمدفوعات"
-  },
-  "cs.trainer.future.label": {
-    "message": "الاستدامة المستقبلية"
-  },
-  "cs.trainer.future.desc": {
-    "message": "مع تطور مقاييس اللياقة، تُربط Orbitals بيانات جديدة دون كسر منطق التطبيق الأساسي. حين أراد العميل إضافة تكامل الأجهزة القابلة للارتداء، ربطنا Wearable Sync Orbital جديداً ببساطة."
-  },
-  "cs.trainer.result.label": {
-    "message": "النتيجة:"
-  },
-  "cs.trainer.result.desc": {
-    "message": "تخفيض وقت الإدارة بنسبة 70%، 3 أضعاف طاقة العملاء لكل مدرب، معدل استبقاء عملاء 95%."
-  },
-  "cs.trainer.cta.title": {
-    "message": "تبني شيئاً مماثلاً؟"
-  },
-  "cs.trainer.cta.desc": {
-    "message": "دعنا نناقش كيف يمكن لـ Orbitals تبسيط عمل خدماتك."
-  },
-  "homepage.why.title": {
-    "message": "لماذا المدار"
-  },
-  "homepage.why.subtitle": {
-    "message": "ما تحصل عليه من الوكالة التقليدية لا يمكنها تقديمه"
-  },
-  "homepage.why.agencyCol": {
-    "message": "الوكالة التقليدية"
-  },
-  "homepage.why.almadarCol": {
-    "message": "المدار"
-  },
-  "homepage.why.agency.team": {
-    "message": "فرق كبيرة (5–10 أشخاص)"
-  },
-  "homepage.why.almadar.team": {
-    "message": "فريق مدمج — خبيران متخصصان"
-  },
-  "homepage.why.agency.timeline": {
-    "message": "أشهر من التطوير"
-  },
-  "homepage.why.almadar.timeline": {
-    "message": "أسابيع حتى الإنتاج"
-  },
-  "homepage.why.agency.cost": {
-    "message": "تكلفة عالية ونطاق غير متوقع"
-  },
-  "homepage.why.almadar.cost": {
-    "message": "سعر ثابت وتسليمات واضحة"
-  },
-  "homepage.why.agency.changes": {
-    "message": "طلبات تغيير مكلفة"
-  },
-  "homepage.why.almadar.changes": {
-    "message": "تغييرات مرنة وفعّالة من حيث التكلفة"
-  },
-  "homepage.why.agency.docs": {
-    "message": "التوثيق كفكرة لاحقة"
-  },
-  "homepage.why.almadar.docs": {
-    "message": "توثيق كامل متضمَّن"
-  },
-  "homepage.why.deliverables.title": {
-    "message": "ما الذي ستحصل عليه"
-  },
-  "homepage.why.deliverables.app": {
-    "message": "تطبيق يعمل ومنشور في الإنتاج"
-  },
-  "homepage.why.deliverables.source": {
-    "message": "كود المصدر الكامل — تقنيات قياسية بدون قيود ملكية"
-  },
-  "homepage.why.deliverables.docs": {
-    "message": "توثيق كامل لفريقك"
-  },
-  "homepage.why.deliverables.support": {
-    "message": "دعم 60 يومًا بعد الإطلاق مدمج"
-  },
-  "homepage.why.deliverables.transfer": {
-    "message": "نقل المعرفة حتى تتمكن من صيانة النظام وتطويره"
-  },
-  "homepage.team.title": {
-    "message": "خبيران. مسؤولية كاملة."
-  },
-  "homepage.team.subtitle": {
-    "message": "اعمل مباشرة مع فريق خبير يصمم تطبيقك. بلا حواجز بينك وبين منتجك."
-  },
-  "homepage.team.osama.name": {
-    "message": "أسامة الغانمي"
-  },
-  "homepage.team.osama.role": {
-    "message": "المؤسس المشارك والمدير التقني"
-  },
-  "homepage.team.osama.bio": {
-    "message": "بنى منصة الفوترة الإلكترونية الوطنية في المملكة العربية السعودية. أكثر من 15 عامًا في أنظمة المؤسسات وتصميم المترجمات والتطوير الشامل."
-  },
-  "homepage.team.maja.name": {
-    "message": "مايا غولوب"
-  },
-  "homepage.team.maja.role": {
-    "message": "المؤسسة المشاركة ومديرة البرامج"
-  },
-  "homepage.team.maja.bio": {
-    "message": "أكثر من 10 سنوات في تسليم مشاريع برمجيات المؤسسات. خبيرة في إدارة أصحاب المصلحة وتخطيط التسليم والفرق متعددة الثقافات."
-  },
-  "homepage.team.experience": {
-    "message": "أكثر من 25 عامًا من الخبرة المشتركة في بناء البرمجيات على نطاق واسع. مقيمان في ليوبليانا، سلوفينيا. نعمل عالميًا."
-  },
-  "homepage.cta.startProject": {
-    "message": "ابدأ مشروعًا"
-  },
-  "homepage.cta.developers": {
-    "message": "وثائق المطورين"
-  },
-  "homepage.startProject": {
-    "message": "ابدأ مشروعًا"
-  },
-  "homepage.enterprise": {
-    "message": "الشركات"
-  },
-  "homepage.work.title": {
-    "message": "أعمالنا"
-  },
-  "homepage.work.subtitle": {
-    "message": "كل مشروع في المدار يُشحن مع نظام تصميم منشور بالكامل."
-  },
-  "homepage.work.viewDesignSystem": {
-    "message": "نظام التصميم"
-  },
-  "homepage.work.openApp": {
-    "message": "فتح التطبيق"
-  },
-  "homepage.work.sectionLabel.clientContext": {
-    "message": "السياق"
-  },
-  "homepage.work.sectionLabel.whatWeBuilt": {
-    "message": "ما بنيناه"
-  },
-  "homepage.work.keyCapability": {
-    "message": "القدرة الأساسية"
-  },
-  "demos.backToPortfolio": {
-    "message": "العودة إلى الأعمال"
-  },
-  "demos.openStorybook": {
-    "message": "فتح Storybook كاملًا"
-  },
-  "demos.openApp": {
-    "message": "فتح التطبيق المباشر"
-  },
-  "demos.openDesignSystem": {
-    "message": "فتح نظام التصميم ↗"
-  },
-  "demos.mobileNote": {
-    "message": "افتح على شاشة أكبر لتصفح نظام التصميم التفاعلي."
-  },
-  "developers.renderUIDemo.tag": {
-    "message": "render-ui"
-  },
-  "developers.renderUIDemo.title": {
-    "message": "معاينة المكونات مباشرة"
-  },
-  "developers.renderUIDemo.subtitle": {
-    "message": "يحوّل render-ui التعبيرَ البرمجي إلى مكوّن حقيقي — بلا JSX ولا ملفات قوالب. عدّل التعبير وشاهد المعاينة تتحدث تلقائيًا."
-  },
-  "developers.renderUIDemo.previewEmpty": {
-    "message": "شغّل التعبير لرؤية الناتج"
-  },
-  "developers.renderUIDemo.noSlots": {
-    "message": "لا توجد استدعاءات render-ui في هذا التعبير"
-  },
-  "showcase.title": {
-    "message": "أعمالنا"
-  },
-  "showcase.subtitle": {
-    "message": "كل مشروع في المدار يُشحن مع نظام تصميم منشور بالكامل. تصفّح القوالب والمكونات والتفاعلات — بدون تثبيت."
-  },
-  "showcase.clientProblem": {
-    "message": "المشكلة"
-  },
-  "showcase.whatWeBuilt": {
-    "message": "ما بنيناه"
-  },
-  "showcase.openApp": {
-    "message": "فتح التطبيق"
-  },
-  "showcase.viewDesignSystem": {
-    "message": "نظام التصميم"
-  },
-  "showcase.openLiveApp": {
-    "message": "فتح التطبيق المباشر"
-  },
-  "projects.builder.name": {
-    "message": "بناء المدار",
-    "description": "Almadar Builder project name"
-  },
-  "projects.builder.tagline": {
-    "message": "بيئة التطوير المعتمدة على المخططات والتي تنشئ كل مشروع في هذا المحفظة",
-    "description": "Almadar Builder tagline"
-  },
-  "projects.builder.clientContext": {
-    "message": "تم بناء كل مشروع عميل في هذا المحفظة باستخدام نفس الأداة: بيئة تطوير تعمل في المتصفح حيث يصف المطورون سلوك التطبيق كمخططات مدارية (ملفات .orb) ويقوم المترجم بتوليد تطبيق TypeScript كامل. احتاج البناء إلى أن يكون ذاتي الاستضافة — بيئة التطوير نفسها هي تطبيق المدار، مبنية بنظام تصميمها الخاص ومترجمة بواسطة خط أنابيبها الخاص.",
-    "description": "Almadar Builder client context"
-  },
-  "projects.builder.whatWeBuilt": {
-    "message": "بيئة تطوير كاملة تعمل في المتصفح لكتابة المخططات المدارية. اللوحة تتيح للمطورين تكوين الكيانات والسمات والصفحات والأحداث بصرياً. المُقَيّم الحي يتحقق من تعبيرات-s أثناء الكتابة. يعمل المترجم في العملية ويبث الكود المولد إلى لوحة المعاينة. العميق الوكيل — مساعد الذكاء الاصطناعي المدمج في البناء — يترجم متطلبات اللغة الطبيعية إلى مخطط .orb صالح باستخدام نفس المُقَيّم تحت الغطاء.",
-    "description": "Almadar Builder what we built"
-  },
-  "projects.builder.keyCapability": {
-    "message": "منصة ذاتية الوصف: واجهة البناء نفسها يتم توليدها من مخطط مداري. آلات الحالة وتعبيرات الحماية وتأثيرات رسم الواجهة التي تشغل لوحات البناء مؤلفة بنفس صيغة .orb التي تستخدمها مشاريع العملاء.",
-    "description": "Almadar Builder key capability"
-  },
-  "projects.builder.tech.canvas": {
-    "message": "محرر لوحة المخططات"
-  },
-  "projects.builder.tech.evaluator": {
-    "message": "مُقَيّم التعبيرات الحي"
-  },
-  "projects.builder.tech.compiler": {
-    "message": "مترجم داخل المتصفح"
-  },
-  "projects.builder.tech.ai": {
-    "message": "مساعد العميق الذكي"
-  },
-  "projects.builder.tech.operators": {
-    "message": "213+ مشغل قياسي"
-  },
-  "projects.kflow.name": {
-    "message": "كيف لو",
-    "description": "KFlow project name"
-  },
-  "projects.kflow.tagline": {
-    "message": "منصة المعرفة عبر المجالات التي تُعلّم من خلال الأحداث الهندسية الحقيقية",
-    "description": "KFlow tagline"
-  },
-  "projects.kflow.clientContext": {
-    "message": "معظم منصات التعلم تعزل المعرفة حسب الموضوع: الفيزياء هنا، التشفير هناك، علم البيئة في مكان آخر. أراد العميل منصة تُظهر الأنماط الهيكلية التي تربط التخصصات الهندسية — يُدرّس من خلال أحداث حقيقية حيث انتقلت الإخفاقات من مجال إلى آخر.",
-    "description": "KFlow client context"
-  },
-  "projects.kflow.whatWeBuilt": {
-    "message": "منصة استكشاف المعرفة حيث يتنقل المتعلمون عبر المفاهيم والقصص والدورات من خلال رسم بياني عبر المجالات. كل قصة هي حدث هندسي حقيقي (\"خلل الـ 125 مليون دولار\"، \"الجسر الذي تمايل\") موضح عبر التخصصات. رسم المعرفة البياني يُظهر كيف ترتبط المفاهيم عبر المجالات. لوحة المعلومات تتتبع الاستمرارية والإتقان والاتساع عبر خريطة مفاهيم المتعلم.",
-    "description": "KFlow what we built"
-  },
-  "projects.kflow.keyCapability": {
-    "message": "نموذج المحتوى كمخطط: كل مفهوم وقصة ودورة هي كيان مداري بسمات تحكم حالة التقدم وحمايات المتطلبات السابقة ومنطق التوصيات. إضافة مجال جديد تعني تأليف مخطط، وليس كتابة خوارزميات التوصية.",
-    "description": "KFlow key capability"
-  },
-  "projects.kflow.tech.graph": {
-    "message": "رسم المعرفة البياني عبر المجالات"
-  },
-  "projects.kflow.tech.stories": {
-    "message": "محرك قصص الأحداث الحقيقية"
-  },
-  "projects.kflow.tech.mastery": {
-    "message": "تتبع إتقان المفاهيم"
-  },
-  "projects.kflow.tech.achievements": {
-    "message": "نظام الاستمرارية والإنجازات"
-  },
-  "projects.kflow.tech.curriculum": {
-    "message": "منهجية متعددة المجالات"
-  },
-  "projects.inspection-system.name": {
-    "message": "نظام التفتيش",
-    "description": "Inspection System project name"
-  },
-  "projects.inspection-system.tagline": {
-    "message": "إدارة التفتيش الميداني للمفتشين الحكوميين في سلوفينيا",
-    "description": "Inspection System tagline"
-  },
-  "projects.inspection-system.clientContext": {
-    "message": "يقوم المفتشون الحكوميون في سلوفينيا بتنفيذ عمليات تفتيش ميدانية معقدة ومرسومة قانونياً مع 50-60 قاعدة شرطية لكل نوع تفتيش، ومراجع قانونية إلى الجريدة الرسمية (Uradni list RS)، ومشاركة متعددة الأطراف، وتوليد مستندات رسمية مع تواقيع إلكترونية. الأدوات الحالية كانت قائمة على الورق أو منشئي نماذج عامة بدون فهم لبنية دورة حياة التفتيش.",
-    "description": "Inspection System client context"
-  },
-  "projects.inspection-system.whatWeBuilt": {
-    "message": "نظام إدارة تفتيش ميداني معتمد على المخططات. دورة الحياة الكاملة المكونة من 5 مراحل (مقدمة ← محتوى ← تحضير ← سجل ← إغلاق) مُرمّزة كآلة حالة في مخطط .orb. الحمايات تفرض شروطاً قانونية مسبقة عند كل انتقال للمرحلة. التأثيرات تطلق تجميع المستندات وإدارة المشاركين وفحص القواعد في اللحظة المناسبة — تلقائياً.",
-    "description": "Inspection System what we built"
-  },
-  "projects.inspection-system.keyCapability": {
-    "message": "التعقيد الشرطي المعتمد على المخططات أولاً: نفس المخطط يتعامل مع أنواع تفتيش متعددة. القواعد تظهر وتختفي بناءً على حالة الكيان، وليس مسارات تفرع الكود. إضافة نوع تفتيش جديد يعني تأليف مخطط، لا إعادة بناء المنطق.",
-    "description": "Inspection System key capability"
-  },
-  "projects.inspection-system.tech.entities": {
-    "message": "14 كيان"
-  },
-  "projects.inspection-system.tech.statemachine": {
-    "message": "آلة حالة من 5 مراحل"
-  },
-  "projects.inspection-system.tech.rules": {
-    "message": "50-60 قاعدة شرطية"
-  },
-  "projects.inspection-system.tech.documents": {
-    "message": "توليد المستندات"
-  },
-  "projects.inspection-system.tech.offline": {
-    "message": "يعمل بدون اتصال"
-  },
-  "projects.winning-11.name": {
-    "message": "الفوز 11",
-    "description": "Winning 11 project name"
-  },
-  "projects.winning-11.tagline": {
-    "message": "ذكاء العلاقات المعتمد على الثقة مبني على رقم دنبار",
-    "description": "Winning 11 tagline"
-  },
-  "projects.winning-11.clientContext": {
-    "message": "منصات التواصل المهني تحسّن لحجم الاتصالات، ليس جودة العلاقات. أراد العميل منصة مبنية على رقم دنبار (150 علاقة ذات معنى كحد أقصى) حيث تكون الاتصالات مقصودة ومقيمة بالثقة ومحافظ عليها بنشاط — ليس مجرد جهات اتصال متراكمة.",
-    "description": "Winning 11 client context"
-  },
-  "projects.winning-11.whatWeBuilt": {
-    "message": "منصة إدارة علاقات ذات عمق نفسي. يكمل المستخدمون تقييم التوافق عند التسجيل. كل اتصال لديه درجة ثقة ديناميكية محسوبة من علم النفس وتاريخ التفاعل والتحقق من الأقران. الفتحات محدودة (150 كحد أقصى) مع غرفة انتظار للزيادة. العلاقات لها حالات صحية (خاملة، تحتاج انتباه، صحية، مزدهرة) تضعف بدون تفاعل.",
-    "description": "Winning 11 what we built"
-  },
-  "projects.winning-11.keyCapability": {
-    "message": "تنسيق آلات حالة متعددة الكيانات: آلة حالة الصحة على كيان الاتصال تدق بشكل مستقل عن آلة حالة المستخدم، مُطلقة أحداثاً تظهر في لوحة المعلومات. سلوك عبر كيانات معقد بدون كود تنسيق مخصص.",
-    "description": "Winning 11 key capability"
-  },
-  "projects.winning-11.tech.entities": {
-    "message": "14 كيان"
-  },
-  "projects.winning-11.tech.statemachines": {
-    "message": "5 آلات حالة"
-  },
-  "projects.winning-11.tech.ai": {
-    "message": "تقييم الثقة بالذكاء الاصطناعي"
-  },
-  "projects.winning-11.tech.pages": {
-    "message": "18 صفحة"
-  },
-  "projects.winning-11.tech.ui": {
-    "message": "واجهة مستخدم باستعارة الحديقة"
-  },
-  "projects.blaz-klemenc.name": {
-    "message": "بلاز كليمنس",
-    "description": "Blaz Klemenc project name"
-  },
-  "projects.blaz-klemenc.tagline": {
-    "message": "منصة مدرب لياقة بدنية مع تحليل وجبات بالذكاء الاصطناعي",
-    "description": "Blaz Klemenc tagline"
-  },
-  "projects.blaz-klemenc.clientContext": {
-    "message": "يحتاج المدربون الشخصيون الذين يديرون متدربين متعددين إلى تتبع تخصيص الجلسات المعتمد على الرصيد وتقدم الرفع الرئيسي وخطط الوجبات ومقاييس العافية اليومية وفحوصات حركة الجسم وجدولة المجموعات — عبر مجموعة مجزأة من جداول البيانات ورسائل واتساب وتطبيقات لياقة عامة.",
-    "description": "Blaz Klemenc client context"
-  },
-  "projects.blaz-klemenc.whatWeBuilt": {
-    "message": "منصة موحدة لإدارة المدرب-المتدرب. يتم شراء الرصيد على شكل كتل وينتهي حسب التاريخ — يتتبع النظام التخصيص والانتهاء تلقائياً. يُدخل المتدربون خطط الوجبات ويحللها خدمة الذكاء الاصطناعي التي تقدر تفصيل المغذيات الكبرى والصغرى. تتبع الرفع يُظهر منحنيات التقدم التاريخية.",
-    "description": "Blaz Klemenc what we built"
-  },
-  "projects.blaz-klemenc.keyCapability": {
-    "message": "تكامل الخدمة من المخطط: تحليل الوجبات بالذكاء الاصطناعي مُعلن كتأثير استدعاء خدمة في السمة. يتعامل المُقَيّم مع الاستدعاء وحالات الخطأ وربط النتيجة — بدون كود غراء غير متزامن مخصص في طبقة التطبيق.",
-    "description": "Blaz Klemenc key capability"
-  },
-  "projects.blaz-klemenc.tech.entities": {
-    "message": "15+ كيان"
-  },
-  "projects.blaz-klemenc.tech.credits": {
-    "message": "آلة حالة انتهاء الرصيد"
-  },
-  "projects.blaz-klemenc.tech.ai": {
-    "message": "تحليل الوجبات بالذكاء الاصطناعي"
-  },
-  "projects.blaz-klemenc.tech.progress": {
-    "message": "تصور التقدم"
-  },
-  "projects.blaz-klemenc.tech.links": {
-    "message": "روابط قابلة للمشاركة"
-  },
-  "projects.kekec.name": {
-    "message": "كيكيك كودا",
-    "description": "Kekec Koda project name"
-  },
-  "projects.kekec.tagline": {
-    "message": "تعليم الأطفال البرمجة من خلال بطل الجبل المحبوب في سلوفينيا",
-    "description": "Kekec Koda tagline"
-  },
-  "projects.kekec.clientContext": {
-    "message": "أراد العميل لعبة تعليم برمجة تدور في عالم كيكيك — شخصية سلوفينيا الوطنية، صبي راعي الجبال — تُعلم مفاهيم البرمجة تدريجياً من التسلسلات البسيطة إلى تصميم آلة الحالة الكاملة، بدون استخدام صيغة برمجة مجردة.",
-    "description": "Kekec Koda client context"
-  },
-  "projects.kekec.whatWeBuilt": {
-    "message": "لعبة تعليمية من ثلاث مستويات حيث يعلّم كل مستوى تجريد برمجة مختلف من خلال استعارات مادية: المُسلسل (5-8 سنوات) يستخدم كتل الإجراءات السحب والإفلات؛ معالج الأحداث (9-12 سنة) يستخدم محرر قواعد عندما/عندئذ؛ مهندس الحالة (13+ سنة) يستخدم محرر رسم عقدي لتصميم واختبار آلات الحالة الكاملة. جميع المستويات تشترك خريطة عالم ألبينية مع 12 حارس حيواني.",
-    "description": "Kekec Koda what we built"
-  },
-  "projects.kekec.keyCapability": {
-    "message": "المدار يبني أدوات تعلّم مفاهيم المدار نفسها: آلة الحالة التي يصممها الطفل في مستوى مهندس الحالة متطابقة هيكلياً مع السمات المدارية التي تشغّل اللعبة نفسها.",
-    "description": "Kekec Koda key capability"
-  },
-  "projects.kekec.tech.tiers": {
-    "message": "3 مستويات تعلم"
-  },
-  "projects.kekec.tech.guardians": {
-    "message": "12 حارس حيواني"
-  },
-  "projects.kekec.tech.puzzles": {
-    "message": "9 ألغاز"
-  },
-  "projects.kekec.tech.dragdrop": {
-    "message": "محرر السحب والإفلات"
-  },
-  "projects.kekec.tech.nodes": {
-    "message": "محرر الرسم العقدي"
-  },
-  "projects.iram.name": {
-    "message": "إرام",
-    "description": "Iram project name"
-  },
-  "projects.iram.tagline": {
-    "message": "لعبة تقمص أدوار استكشاف الزنزانات ثلاثية الأبعاد مدفوعة بنظام سمات المدار",
-    "description": "Iram tagline"
-  },
-  "projects.iram.clientContext": {
-    "message": "ابن لعبة تقمص أدوار استكشاف زنزانات إنتاجية عالية الجودة حيث يكون تطور الشخصية والقتال والسرد مدفوعاً بنفس نظام آلة حالة السمات الذي يشغل تطبيقات المدار المؤسسية — مُثبتاً أن وقت التشغيل عام الأغراض عبر المجالات.",
-    "description": "Iram client context"
-  },
-  "projects.iram.whatWeBuilt": {
-    "message": "لعبة تقمص أدوار استكشاف زنزانات تدور في دominion إرام. الشخصيات لها تقدم معتمد على السمات — القدرات مُنمذجة كآلات حالة تنتقل على أحداث القتال. المُصيّر متساوي القياس يتعامل مع 31+ صورة شخصية ووحدة مع رسوم متحركة اتجاهية. نظام مشاهد سينمائية يُسلّم سرداً مُترجماً عبر 22+ تسلسل لوحي بالعربية والإنجليزية والسلوفينية.",
-    "description": "Iram what we built"
-  },
-  "projects.iram.keyCapability": {
-    "message": "نفس وقت تشغيل المدار الذي يتعامل مع سير عمل تفتيش حكومي يُشغل أيضاً قتال اللعبة في الوقت الفعلي. آلات الحالة والحمايات والتأثيرات غير مخصصة للمجال — اللغة تعمل بأي دقة.",
-    "description": "Iram key capability"
-  },
-  "projects.iram.tech.sprites": {
-    "message": "31 صورة متحركة"
-  },
-  "projects.iram.tech.renderer": {
-    "message": "مُصيّر كانفاس متساوي القياس"
-  },
-  "projects.iram.tech.combat": {
-    "message": "آلات حالة قتالية"
-  },
-  "projects.iram.tech.cutscenes": {
-    "message": "22+ تسلسل مشهد سينمائي"
-  },
-  "projects.iram.tech.i18n": {
-    "message": "سرد بالإنجليزية/العربية/السلوفينية"
-  },
-  "projects.trait-wars.name": {
-    "message": "حروب السمات",
-    "description": "Trait Wars project name"
-  },
-  "projects.trait-wars.tagline": {
-    "message": "استراتيجية بدور حيث تجهّز الوحدات وتبدّل السمات بين المعارك",
-    "description": "Trait Wars tagline"
-  },
-  "projects.trait-wars.clientContext": {
-    "message": "إثبات مفهوم يُظهر أن نظام سمات المدار يمكنه نمذجة لعبة استراتيجية بدور كاملة، حيث تكون للوحدات حالة سمة مستمرة عبر جولات القتال ولوحة اللعبة نفسها كيان مداري.",
-    "description": "Trait Wars client context"
-  },
-  "projects.trait-wars.whatWeBuilt": {
-    "message": "لعبة استراتيجية بدور حيث للوحدات سمات معيارية قابلة للتجهيز تحدد قدراتها القتالية. السمات قابلة للتبديل بين المعارك. ساحة الزعيم ولقاءات الزنزانة والعالم المركزي وشاشة اختيار المنطقة كلها مدفوعة بنفس وقت تشغيل المخطط، باستخدام مُصيّر هجين كانفاس + DOM.",
-    "description": "Trait Wars what we built"
-  },
-  "projects.trait-wars.keyCapability": {
-    "message": "معيارية السمات في وقت التشغيل: تكتسب الوحدات وتفقد سمات أثناء اللعب — نفس الآلية التي تحكم انتقالات حالة الكيان في التطبيقات المؤسسية تحكم سلوك الوحدات القتالية في لعبة استراتيجية.",
-    "description": "Trait Wars key capability"
-  },
-  "projects.trait-wars.tech.traits": {
-    "message": "فتحات سمات قابلة للتجهيز"
-  },
-  "projects.trait-wars.tech.hybrid": {
-    "message": "هجين كانفاس + DOM"
-  },
-  "projects.trait-wars.tech.rendering": {
-    "message": "تصيير الوحدات متساوي القياس"
-  },
-  "projects.trait-wars.tech.screens": {
-    "message": "4 شاشات مميزة"
-  },
-  "projects.trait-wars.tech.boss": {
-    "message": "قتال ساحة الزعيم"
-  },
-  "showcase.viewDemo": {
-    "message": "View Demo"
-  },
-  "demos.viewStorybook": {
-    "message": "View Storybook"
-  },
-  "demos.jumpTo": {
-    "message": "Jump to project"
   }
 }
