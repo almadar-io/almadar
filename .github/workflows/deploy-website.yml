@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   build:
-    name: Build All Sites
+    name: Build Main Site
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -33,9 +33,9 @@ jobs:
         working-directory: website
         run: npm install
 
-      - name: Build all sites
+      - name: Build main site
         working-directory: website
-        run: npm run build:all
+        run: npm run build:main
         env:
           NODE_ENV: production
 
@@ -44,24 +44,6 @@ jobs:
         with:
           name: build-main
           path: website/sites/main/build
-
-      - name: Upload orb build
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-orb
-          path: website/sites/orb/build
-
-      - name: Upload studio build
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-studio
-          path: website/sites/studio/build
-
-      - name: Upload services build
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-services
-          path: website/sites/services/build
 
       - name: Upload main for GitHub Pages
         uses: actions/upload-pages-artifact@v3
@@ -87,24 +69,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download all builds
+      - name: Download main build
         uses: actions/download-artifact@v4
         with:
           path: website/sites
 
-      - name: Move builds to correct locations
+      - name: Move build to correct location
         run: |
-          mkdir -p website/sites/main website/sites/orb website/sites/studio website/sites/services
+          mkdir -p website/sites/main
           mv website/sites/build-main website/sites/main/build
-          mv website/sites/build-orb website/sites/orb/build
-          mv website/sites/build-studio website/sites/studio/build
-          mv website/sites/build-services website/sites/services/build
 
       - name: Authenticate to Firebase
         run: |
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > /tmp/firebase-sa.json
 
-      - name: Deploy all sites to Firebase
+      - name: Deploy main site to Firebase
         working-directory: website
         run: npx firebase-tools deploy --only hosting --project kflow-b3a39
         env:
@@ -113,3 +92,4 @@ jobs:
       - name: Cleanup credentials
         if: always()
         run: rm -f /tmp/firebase-sa.json
+

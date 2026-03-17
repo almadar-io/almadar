@@ -38,7 +38,7 @@ jobs:
       - name: Check if binary exists
         id: check
         run: |
-          BINARY_PATH="cli/dist/${{ matrix.name }}/almadar${{ matrix.ext }}"
+          BINARY_PATH="cli/dist/${{ matrix.name }}/orb${{ matrix.ext }}"
           if [ -f "$BINARY_PATH" ]; then
             echo "exists=true" >> $GITHUB_OUTPUT
             echo "Binary found: $BINARY_PATH"
@@ -53,51 +53,51 @@ jobs:
         if: steps.check.outputs.exists == 'true' && matrix.ext == ''
         run: |
           mkdir -p dist
-          cp "cli/dist/${{ matrix.name }}/almadar" dist/almadar
-          chmod +x dist/almadar
+          cp "cli/dist/${{ matrix.name }}/orb" dist/orb
+          chmod +x dist/orb
           # Bundle shell template alongside binary (try repo-level, fallback to platform dist)
-          if [ -d "cli/shells/almadar-shell" ]; then
+          if [ -d "cli/shells/orb-shell" ]; then
             mkdir -p dist/shells
-            cp -r cli/shells/almadar-shell dist/shells/almadar-shell
-            rm -rf dist/shells/almadar-shell/node_modules
-            rm -rf dist/shells/almadar-shell/.turbo
-          elif [ -d "cli/dist/${{ matrix.name }}/shells/almadar-shell" ]; then
+            cp -r cli/shells/orb-shell dist/shells/orb-shell
+            rm -rf dist/shells/orb-shell/node_modules
+            rm -rf dist/shells/orb-shell/.turbo
+          elif [ -d "cli/dist/${{ matrix.name }}/shells/orb-shell" ]; then
             mkdir -p dist/shells
-            cp -r "cli/dist/${{ matrix.name }}/shells/almadar-shell" dist/shells/almadar-shell
+            cp -r "cli/dist/${{ matrix.name }}/shells/orb-shell" dist/shells/orb-shell
           fi
           cd dist
-          TAR_ARGS="almadar"
+          TAR_ARGS="orb"
           if [ -d "shells" ]; then TAR_ARGS="$TAR_ARGS shells/"; fi
-          tar -czvf "almadar-${{ matrix.name }}.tar.gz" $TAR_ARGS
-          rm -rf almadar shells/
+          tar -czvf "orb-${{ matrix.name }}.tar.gz" $TAR_ARGS
+          rm -rf orb shells/
 
       - name: Package binary (Windows)
         if: steps.check.outputs.exists == 'true' && matrix.ext == '.exe'
         run: |
           mkdir -p dist
-          cp "cli/dist/${{ matrix.name }}/almadar.exe" dist/almadar.exe
+          cp "cli/dist/${{ matrix.name }}/orb.exe" dist/orb.exe
           # Bundle shell template alongside binary (try repo-level, fallback to platform dist)
-          if [ -d "cli/shells/almadar-shell" ]; then
+          if [ -d "cli/shells/orb-shell" ]; then
             mkdir -p dist/shells
-            cp -r cli/shells/almadar-shell dist/shells/almadar-shell
-            rm -rf dist/shells/almadar-shell/node_modules
-            rm -rf dist/shells/almadar-shell/.turbo
-          elif [ -d "cli/dist/${{ matrix.name }}/shells/almadar-shell" ]; then
+            cp -r cli/shells/orb-shell dist/shells/orb-shell
+            rm -rf dist/shells/orb-shell/node_modules
+            rm -rf dist/shells/orb-shell/.turbo
+          elif [ -d "cli/dist/${{ matrix.name }}/shells/orb-shell" ]; then
             mkdir -p dist/shells
-            cp -r "cli/dist/${{ matrix.name }}/shells/almadar-shell" dist/shells/almadar-shell
+            cp -r "cli/dist/${{ matrix.name }}/shells/orb-shell" dist/shells/orb-shell
           fi
           cd dist
-          ZIP_ARGS="almadar.exe"
+          ZIP_ARGS="orb.exe"
           if [ -d "shells" ]; then ZIP_ARGS="$ZIP_ARGS shells/"; fi
-          zip -r "almadar-${{ matrix.name }}.zip" $ZIP_ARGS
-          rm -rf almadar.exe shells/
+          zip -r "orb-${{ matrix.name }}.zip" $ZIP_ARGS
+          rm -rf orb.exe shells/
 
       - name: Upload artifact
         if: steps.check.outputs.exists == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: almadar-${{ matrix.name }}
-          path: dist/almadar-${{ matrix.name }}.*
+          name: orb-${{ matrix.name }}
+          path: dist/orb-${{ matrix.name }}.*
 
   release:
     name: Create Release
@@ -136,18 +136,18 @@ jobs:
           VERSION="${{ steps.version.outputs.version }}"
 
           BODY=$(cat <<'BODY_EOF'
-          ## Almadar VERSION_PLACEHOLDER
+          ## Orb VERSION_PLACEHOLDER
 
           ### Installation
 
           #### Install Script (macOS/Linux)
           ```bash
-          curl -fsSL https://almadar.io/install.sh | sh
+          curl -fsSL https://orb.almadar.io/install.sh | sh
           ```
 
           #### Install Script (Windows PowerShell)
           ```powershell
-          irm https://almadar.io/install.ps1 | iex
+          irm https://orb.almadar.io/install.ps1 | iex
           ```
 
           #### Direct Download
@@ -155,30 +155,30 @@ jobs:
 
           | Platform | Architecture | File |
           |----------|-------------|------|
-          | Linux | x64 | `almadar-linux-x64.tar.gz` |
-          | Linux | ARM64 | `almadar-linux-arm64.tar.gz` |
-          | macOS | Intel | `almadar-darwin-x64.tar.gz` |
-          | macOS | Apple Silicon | `almadar-darwin-arm64.tar.gz` |
-          | Windows | x64 | `almadar-windows-x64.zip` |
+          | Linux | x64 | `orb-linux-x64.tar.gz` |
+          | Linux | ARM64 | `orb-linux-arm64.tar.gz` |
+          | macOS | Intel | `orb-darwin-x64.tar.gz` |
+          | macOS | Apple Silicon | `orb-darwin-arm64.tar.gz` |
+          | Windows | x64 | `orb-windows-x64.zip` |
 
           ### Quick Start
 
           ```bash
           # Validate a schema
-          almadar validate my-app.orb
+          orb validate my-app.orb
 
           # Compile to TypeScript
-          almadar compile my-app.orb --shell typescript
+          orb compile my-app.orb --shell typescript
 
           # Start development server
-          almadar dev my-app.orb
+          orb dev my-app.orb
           ```
 
           ### Documentation
 
-          - [Getting Started](https://almadar.io/docs/en/getting-started/introduction)
-          - [Standard Library](https://almadar.io/stdlib.html)
-          - [API Reference](https://almadar.io/docs/en/api)
+          - [Getting Started](https://orb.almadar.io/docs/getting-started/introduction)
+          - [Standard Library](https://orb.almadar.io/stdlib)
+          - [Downloads](https://orb.almadar.io/downloads)
           BODY_EOF
           )
 
@@ -191,7 +191,7 @@ jobs:
           else
             echo "Creating release $VERSION..."
             gh release create "$VERSION" release/* \
-              --title "Almadar $VERSION" \
+              --title "Orb $VERSION" \
               --notes "$BODY" \
               --latest \
               --generate-notes
@@ -245,27 +245,27 @@ jobs:
           for platform in "${!PLATFORMS[@]}"; do
             read os cpu <<< "${PLATFORMS[$platform]}"
 
-            ARTIFACT_DIR="${ROOT_DIR}/artifacts/almadar-${platform}"
+            ARTIFACT_DIR="${ROOT_DIR}/artifacts/orb-${platform}"
             if [ ! -d "$ARTIFACT_DIR" ]; then
               echo "Skipping $platform - no artifact directory"
               continue
             fi
 
-            PKG_DIR="${ROOT_DIR}/npm-packages/@almadar/cli-${platform}"
+            PKG_DIR="${ROOT_DIR}/npm-packages/@almadar/orb-${platform}"
             mkdir -p "$PKG_DIR"
             cd "$PKG_DIR"
 
             if [[ "$platform" == windows* ]]; then
-              unzip "${ARTIFACT_DIR}/almadar-${platform}.zip" || echo "Failed to extract $platform"
+              unzip "${ARTIFACT_DIR}/orb-${platform}.zip" || echo "Failed to extract $platform"
             else
-              tar -xzf "${ARTIFACT_DIR}/almadar-${platform}.tar.gz" || echo "Failed to extract $platform"
+              tar -xzf "${ARTIFACT_DIR}/orb-${platform}.tar.gz" || echo "Failed to extract $platform"
             fi
 
             cat > package.json << EOF
           {
-            "name": "@almadar/cli-${platform}",
+            "name": "@almadar/orb-${platform}",
             "version": "${VERSION}",
-            "description": "Almadar CLI binary for ${platform}",
+            "description": "Orb CLI binary for ${platform}",
             "license": "MIT",
             "repository": { "type": "git", "url": "https://github.com/almadar-io/almadar.git" },
             "os": ["${os}"],
@@ -273,14 +273,14 @@ jobs:
           }
           EOF
 
-            echo "Publishing @almadar/cli-${platform}..."
-            npm publish --access public || echo "Failed to publish @almadar/cli-${platform}"
+            echo "Publishing @almadar/orb-${platform}..."
+            npm publish --access public || echo "Failed to publish @almadar/orb-${platform}"
             cd "$ROOT_DIR"
           done
 
           # Main package
           if [ -d "cli/npm" ]; then
-            PKG_DIR="${ROOT_DIR}/npm-packages/@almadar/cli"
+            PKG_DIR="${ROOT_DIR}/npm-packages/@almadar/orb"
             mkdir -p "$PKG_DIR"
             cp -r cli/npm/* "$PKG_DIR/"
 
@@ -300,8 +300,8 @@ jobs:
 
             cd "$PKG_DIR"
             jq --arg v "$VERSION" '.version = $v | .optionalDependencies |= with_entries(.value = $v)' package.json > tmp.json && mv tmp.json package.json
-            echo "Publishing @almadar/cli..."
-            npm publish --access public || echo "Failed to publish @almadar/cli"
+            echo "Publishing @almadar/orb..."
+            npm publish --access public || echo "Failed to publish @almadar/orb"
           fi
 
   update-homebrew:
@@ -328,8 +328,8 @@ jobs:
           BASE_URL="https://github.com/almadar-io/almadar/releases/download/${VERSION}"
 
           for platform in darwin-x64 darwin-arm64 linux-x64 linux-arm64; do
-            if curl -fsSL "${BASE_URL}/almadar-${platform}.tar.gz" -o "almadar-${platform}.tar.gz" 2>/dev/null; then
-              SHA=$(sha256sum "almadar-${platform}.tar.gz" | cut -d' ' -f1)
+            if curl -fsSL "${BASE_URL}/orb-${platform}.tar.gz" -o "orb-${platform}.tar.gz" 2>/dev/null; then
+              SHA=$(sha256sum "orb-${platform}.tar.gz" | cut -d' ' -f1)
               echo "${platform}=${SHA}" >> $GITHUB_OUTPUT
             else
               echo "${platform}=MISSING" >> $GITHUB_OUTPUT
@@ -343,43 +343,43 @@ jobs:
 
           git clone https://x-access-token:${{ secrets.HOMEBREW_TAP_TOKEN }}@github.com/almadar-io/homebrew-tap.git tap || exit 0
 
-          cat > tap/Formula/almadar.rb << EOF
-          class Almadar < Formula
-            desc "Compile Almadar schemas to full-stack applications"
-            homepage "https://almadar.io"
+          cat > tap/Formula/orb.rb << EOF
+          class Orb < Formula
+            desc "Compile Orbital schemas to full-stack applications"
+            homepage "https://orb.almadar.io"
             version "${VERSION_NUM}"
             license "MIT"
 
             on_macos do
               on_intel do
-                url "https://github.com/almadar-io/almadar/releases/download/${VERSION}/almadar-darwin-x64.tar.gz"
+                url "https://github.com/almadar-io/almadar/releases/download/${VERSION}/orb-darwin-x64.tar.gz"
                 sha256 "${{ steps.sha.outputs.darwin-x64 }}"
               end
               on_arm do
-                url "https://github.com/almadar-io/almadar/releases/download/${VERSION}/almadar-darwin-arm64.tar.gz"
+                url "https://github.com/almadar-io/almadar/releases/download/${VERSION}/orb-darwin-arm64.tar.gz"
                 sha256 "${{ steps.sha.outputs.darwin-arm64 }}"
               end
             end
 
             on_linux do
               on_intel do
-                url "https://github.com/almadar-io/almadar/releases/download/${VERSION}/almadar-linux-x64.tar.gz"
+                url "https://github.com/almadar-io/almadar/releases/download/${VERSION}/orb-linux-x64.tar.gz"
                 sha256 "${{ steps.sha.outputs.linux-x64 }}"
               end
               on_arm do
-                url "https://github.com/almadar-io/almadar/releases/download/${VERSION}/almadar-linux-arm64.tar.gz"
+                url "https://github.com/almadar-io/almadar/releases/download/${VERSION}/orb-linux-arm64.tar.gz"
                 sha256 "${{ steps.sha.outputs.linux-arm64 }}"
               end
             end
 
             def install
-              bin.install "almadar"
+              bin.install "orb"
               # Install shell templates
-              (lib/"almadar/shells").install Dir["shells/*"] if Dir.exist?("shells")
+              (lib/"orb/shells").install Dir["shells/*"] if Dir.exist?("shells")
             end
 
             test do
-              assert_match "almadar", shell_output("#{bin}/almadar --help")
+              assert_match "orb", shell_output("#{bin}/orb --help")
             end
           end
           EOF
@@ -387,6 +387,19 @@ jobs:
           cd tap
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add Formula/almadar.rb
-          git diff --staged --quiet || git commit -m "Update almadar to ${VERSION}"
+          git add Formula/orb.rb
+          git diff --staged --quiet || git commit -m "Update orb to ${VERSION}"
           git push || echo "Could not push"
+
+  sync-orb-repo:
+    name: Sync Orb Repo
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger orb repo deploy
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api repos/almadar-io/orb/dispatches \
+            -f event_type=orb-release \
+            -f "client_payload[version]=${{ needs.release.outputs.version || github.ref_name }}" || echo "Could not trigger orb repo dispatch"

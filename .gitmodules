@@ -4,3 +4,9 @@
 [submodule "website/sites/orb"]
 	path = orb
 	url = https://github.com/almadar-io/orb.git
+[submodule "studio"]
+	path = studio
+	url = https://github.com/almadar-io/studio.git
+[submodule "services"]
+	path = services
+	url = https://github.com/almadar-io/services.git

@@ -5,11 +5,9 @@
   "targets": {
     "kflow-b3a39": {
       "hosting": {
-        "main": ["almadar-main"],
-        "orb": ["almadar-orb"],
-        "studio": ["almadar-studio-web"],
-        "services": ["almadar-services"]
+        "main": ["almadar-main"]
       }
     }
   }
 }
+

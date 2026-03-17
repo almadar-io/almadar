@@ -1,14 +1,14 @@
 #!/bin/sh
-# Almadar CLI Installer
-# https://almadar.io
+# Orb CLI Installer
+# https://orb.almadar.io
 #
 # Usage:
-#   curl -fsSL https://almadar.io/install.sh | sh
-#   curl -fsSL https://almadar.io/install.sh | sh -s -- --version v1.0.0
+#   curl -fsSL https://orb.almadar.io/install.sh | sh
+#   curl -fsSL https://orb.almadar.io/install.sh | sh -s -- --version v1.0.0
 #
 # Environment variables:
-#   ALMADAR_INSTALL_DIR - Installation directory (default: ~/.almadar/bin)
-#   ALMADAR_VERSION     - Version to install (default: latest)
+#   ORB_INSTALL_DIR - Installation directory (default: ~/.orb/bin)
+#   ORB_VERSION     - Version to install (default: latest)
 
 set -e
 
@@ -20,8 +20,8 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Default values
-INSTALL_DIR="${ALMADAR_INSTALL_DIR:-$HOME/.almadar/bin}"
-VERSION="${ALMADAR_VERSION:-latest}"
+INSTALL_DIR="${ORB_INSTALL_DIR:-$HOME/.orb/bin}"
+VERSION="${ORB_VERSION:-latest}"
 GITHUB_REPO="almadar-io/almadar"
 
 # Parse arguments
@@ -36,13 +36,13 @@ while [ $# -gt 0 ]; do
       shift 2
       ;;
     --help)
-      echo "Almadar CLI Installer"
+      echo "Orb CLI Installer"
       echo ""
       echo "Usage: install.sh [options]"
       echo ""
       echo "Options:"
       echo "  --version <version>     Version to install (default: latest)"
-      echo "  --install-dir <dir>     Installation directory (default: ~/.almadar/bin)"
+      echo "  --install-dir <dir>     Installation directory (default: ~/.orb/bin)"
       echo "  --help                  Show this help message"
       exit 0
       ;;
@@ -106,7 +106,7 @@ get_latest_version() {
 install() {
   PLATFORM_ARCH=$(detect_platform)
 
-  echo "${BLUE}Almadar CLI Installer${NC}"
+  echo "${BLUE}Orb CLI Installer${NC}"
   echo ""
 
   # Get version
@@ -126,9 +126,9 @@ install() {
 
   # Construct download URL
   if [ "$PLATFORM" = "windows" ]; then
-    FILENAME="almadar-${PLATFORM_ARCH}.zip"
+    FILENAME="orb-${PLATFORM_ARCH}.zip"
   else
-    FILENAME="almadar-${PLATFORM_ARCH}.tar.gz"
+    FILENAME="orb-${PLATFORM_ARCH}.tar.gz"
   fi
 
   DOWNLOAD_URL="https://github.com/${GITHUB_REPO}/releases/download/${VERSION}/${FILENAME}"
@@ -164,27 +164,27 @@ install() {
   mkdir -p "$INSTALL_DIR"
 
   if [ "$PLATFORM" = "windows" ]; then
-    mv almadar.exe "$INSTALL_DIR/"
+    mv orb.exe "$INSTALL_DIR/"
   else
-    mv almadar "$INSTALL_DIR/"
-    chmod +x "$INSTALL_DIR/almadar"
+    mv orb "$INSTALL_DIR/"
+    chmod +x "$INSTALL_DIR/orb"
   fi
 
   echo ""
-  echo "${GREEN}Almadar CLI installed successfully!${NC}"
+  echo "${GREEN}Orb CLI installed successfully!${NC}"
   echo ""
 
   # Check if in PATH
   case ":$PATH:" in
     *":$INSTALL_DIR:"*)
-      echo "Run 'almadar --help' to get started."
+      echo "Run 'orb --help' to get started."
       ;;
     *)
       echo "${YELLOW}Add the following to your shell profile (~/.bashrc, ~/.zshrc, etc.):${NC}"
       echo ""
       echo "  export PATH=\"\$PATH:$INSTALL_DIR\""
       echo ""
-      echo "Then run 'almadar --help' to get started."
+      echo "Then run 'orb --help' to get started."
       ;;
   esac
 }

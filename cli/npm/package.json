@@ -1,19 +1,19 @@
 {
-  "name": "@almadar/cli",
+  "name": "@almadar/orb",
   "version": "1.0.0",
-  "description": "Almadar CLI - Compile Almadar schemas to full-stack applications",
+  "description": "Orb CLI - Compile Orbital schemas to full-stack applications",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/almadar-io/almadar.git",
     "directory": "cli/npm"
   },
-  "homepage": "https://almadar.io",
+  "homepage": "https://orb.almadar.io",
   "bugs": {
     "url": "https://github.com/almadar-io/almadar/issues"
   },
   "keywords": [
-    "almadar",
+    "orb",
     "orbital",
     "cli",
     "compiler",
@@ -25,7 +25,7 @@
     "fastapi"
   ],
   "bin": {
-    "almadar": "bin/almadar"
+    "orb": "bin/orb"
   },
   "files": [
     "bin",
@@ -49,10 +49,10 @@
     "node": ">=16.0.0"
   },
   "optionalDependencies": {
-    "@almadar/cli-darwin-x64": "1.0.0",
-    "@almadar/cli-darwin-arm64": "1.0.0",
-    "@almadar/cli-linux-x64": "1.0.0",
-    "@almadar/cli-linux-arm64": "1.0.0",
-    "@almadar/cli-windows-x64": "1.0.0"
+    "@almadar/orb-darwin-x64": "1.0.0",
+    "@almadar/orb-darwin-arm64": "1.0.0",
+    "@almadar/orb-linux-x64": "1.0.0",
+    "@almadar/orb-linux-arm64": "1.0.0",
+    "@almadar/orb-windows-x64": "1.0.0"
   }
 }

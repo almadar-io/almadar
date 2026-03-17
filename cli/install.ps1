@@ -1,19 +1,19 @@
-# Almadar CLI Installer for Windows
-# https://almadar.io
+# Orb CLI Installer for Windows
+# https://orb.almadar.io
 #
 # Usage:
-#   irm https://almadar.io/install.ps1 | iex
-#   $env:ALMADAR_VERSION = "v1.0.0"; irm https://almadar.io/install.ps1 | iex
+#   irm https://orb.almadar.io/install.ps1 | iex
+#   $env:ORB_VERSION = "v1.0.0"; irm https://orb.almadar.io/install.ps1 | iex
 #
 # Environment variables:
-#   ALMADAR_INSTALL_DIR - Installation directory (default: $HOME\.almadar\bin)
-#   ALMADAR_VERSION     - Version to install (default: latest)
+#   ORB_INSTALL_DIR - Installation directory (default: $HOME\.orb\bin)
+#   ORB_VERSION     - Version to install (default: latest)
 
 $ErrorActionPreference = 'Stop'
 
 # Default values
-$InstallDir = if ($env:ALMADAR_INSTALL_DIR) { $env:ALMADAR_INSTALL_DIR } else { "$HOME\.almadar\bin" }
-$Version = if ($env:ALMADAR_VERSION) { $env:ALMADAR_VERSION } else { "latest" }
+$InstallDir = if ($env:ORB_INSTALL_DIR) { $env:ORB_INSTALL_DIR } else { "$HOME\.orb\bin" }
+$Version = if ($env:ORB_VERSION) { $env:ORB_VERSION } else { "latest" }
 $GitHubRepo = "almadar-io/almadar"
 
 function Write-ColorOutput($ForegroundColor) {
@@ -38,14 +38,14 @@ function Get-Platform {
 }
 
 function Get-LatestVersion {
-    $response = Invoke-RestMethod -Uri "https://api.github.com/repos/$GitHubRepo/releases/latest" -Headers @{ "User-Agent" = "Almadar-Installer" }
+    $response = Invoke-RestMethod -Uri "https://api.github.com/repos/$GitHubRepo/releases/latest" -Headers @{ "User-Agent" = "Orb-Installer" }
     return $response.tag_name
 }
 
-function Install-AlmadarCLI {
+function Install-OrbCLI {
     $Platform = Get-Platform
 
-    Write-ColorOutput Blue "Almadar CLI Installer"
+    Write-ColorOutput Blue "Orb CLI Installer"
     Write-Output ""
 
     # Get version
@@ -65,7 +65,7 @@ function Install-AlmadarCLI {
     Write-Output ""
 
     # Construct download URL
-    $Filename = "almadar-$Platform.zip"
+    $Filename = "orb-$Platform.zip"
     $DownloadUrl = "https://github.com/$GitHubRepo/releases/download/$Version/$Filename"
 
     # Create temp directory
@@ -87,22 +87,22 @@ function Install-AlmadarCLI {
             New-Item -ItemType Directory -Path $InstallDir -Force | Out-Null
         }
 
-        $ExePath = Join-Path $TempDir "almadar.exe"
+        $ExePath = Join-Path $TempDir "orb.exe"
         if (Test-Path $ExePath) {
             Copy-Item $ExePath -Destination $InstallDir -Force
         } else {
             # Try to find it in subdirectory
-            $ExePath = Get-ChildItem -Path $TempDir -Filter "almadar.exe" -Recurse | Select-Object -First 1
+            $ExePath = Get-ChildItem -Path $TempDir -Filter "orb.exe" -Recurse | Select-Object -First 1
             if ($ExePath) {
                 Copy-Item $ExePath.FullName -Destination $InstallDir -Force
             } else {
-                Write-ColorOutput Red "Could not find almadar.exe in downloaded archive"
+                Write-ColorOutput Red "Could not find orb.exe in downloaded archive"
                 exit 1
             }
         }
 
         Write-Output ""
-        Write-ColorOutput Green "Almadar CLI installed successfully!"
+        Write-ColorOutput Green "Orb CLI installed successfully!"
         Write-Output ""
 
         # Check if in PATH
@@ -118,7 +118,7 @@ function Install-AlmadarCLI {
             Write-Output ""
         }
 
-        Write-Output "Then run 'almadar --help' to get started."
+        Write-Output "Then run 'orb --help' to get started."
     }
     finally {
         # Cleanup
@@ -126,4 +126,4 @@ function Install-AlmadarCLI {
     }
 }
 
-Install-AlmadarCLI
+Install-OrbCLI
