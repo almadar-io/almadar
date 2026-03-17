@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import Heading from '@theme/Heading';
 import Link from '@docusaurus/Link';
 import Translate, { translate } from '@docusaurus/Translate';
-import HeroSection from '../components/HeroSection';
-import { ScreenshotGallery } from '../components/ScreenshotGallery';
-import styles from './demos.module.css';
+import HeroSection from './HeroSection';
+import { ScreenshotGallery } from './ScreenshotGallery';
+import styles from '../pages/demos.module.css';
 import { useProjects, PROJECTS, type ProjectEntry } from '../data/projects';
 
 // ─── Screenshot Manifest Types ───────────────────────────────────────────────

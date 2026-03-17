@@ -4,7 +4,7 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
 import { translate } from '@docusaurus/Translate';
 
 // Lazy-load the actual content to avoid importing browser-only modules during SSG
-const DemosContent = React.lazy(() => import('./demos-content'));
+const DemosContent = React.lazy(() => import('../components/DemosContent'));
 
 export default function Demos(): React.JSX.Element {
   return (
