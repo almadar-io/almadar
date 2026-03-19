@@ -1,389 +1,118 @@
 # Almadar
 
-> **فيزياء البرمجيات** — The Physics of Software
+> Building tools for formally verifiable, AI-native software development.
 
-Just as physics lets us predict how the physical world behaves, Almadar lets us predict how software systems behave.
-
-Almadar (المدار) is a **world modeling language** — a semantic layer above programming languages that describes *how systems work*, not just *what they do*. Write a formal world model once, and AI agents generate valid implementations, the compiler validates correctness deterministically, and you can observe every possible state before a single line of code runs.
-
-```
-World Model (.orb) → Compiler → Valid System
-        ▲                              │
-        │                              ▼
-   Natural Language              Observable
-   (Human or AI)                 Behavior
-```
-
-**Built for the AI age:** Token-efficient representations that agents can generate and reason about. Deterministic validation that catches errors before runtime. Observable state spaces that let you prove correctness.
+Almadar builds developer tools that treat software behavior as a first-class, formally verifiable artifact. We combine programming language design, compiler engineering, and AI agent systems to make software that's correct by construction.
 
 ---
 
-## Quick Start
+## Products
+
+### [Orb](https://github.com/almadar-io/orb) - Programming Language
+
+A formal language for describing how software behaves. Write a world model, the compiler proves it correct, AI agents generate valid implementations.
+
+```
+World Model (.orb) --> Compiler --> Valid System
+```
+
+- Turing-complete language for state machines, effects, and UI
+- Deterministic compiler (Rust) with TypeScript and Python shells
+- 129 standard behaviors across 18 domains
+- Open source
+
+### [Almadar Studio](https://studio.almadar.io) - Builder IDE
+
+Visual builder where humans and AI agents collaborate to create software. Describe what you want in natural language, the agent generates a valid .orb program, the compiler produces a deployable app.
+
+### [Almadar Services](https://services.almadar.io) - Infrastructure
+
+AI-native infrastructure: compute, storage, authentication, event routing. Designed for agent-built applications.
+
+### [KFlow Academy](https://kflow.academy) - Learning Platform
+
+Interactive courses on software engineering, from fundamentals to AI-powered development.
+
+---
+
+## Architecture
+
+```
+Natural Language --> AI Agent --> .orb Program --> Rust Compiler --> Deployable App
+                                     |                  |
+                              Standard Library     Deterministic
+                              (129 behaviors)      Validation
+```
+
+The core pipeline: a user (or AI agent) writes a `.orb` program describing system behavior. The Rust compiler validates it deterministically and generates a full-stack application (TypeScript frontend + Express backend). No runtime interpretation needed in production.
+
+---
+
+## Repositories
+
+| Repository | Description |
+|------------|-------------|
+| [orb](https://github.com/almadar-io/orb) | The Orb programming language: compiler, standard library, CLI |
+| [almadar-ui](https://github.com/almadar-io/almadar-ui) | React component library and design system |
+| [almadar-core](https://github.com/almadar-io/almadar-core) | Core schema types and definitions |
+| [almadar-std](https://github.com/almadar-io/almadar-std) | Standard library: 129 reusable behaviors |
+| [almadar-agent](https://github.com/almadar-io/almadar-agent) | AI agent infrastructure (LangGraph, JEPA planner) |
+| [almadar-llm](https://github.com/almadar-io/almadar-llm) | Multi-provider LLM client (Anthropic, DeepSeek, OpenRouter) |
+| [zed-orbital](https://github.com/almadar-io/zed-orbital) | Zed editor extension for .orb files |
+
+---
+
+## For Developers
+
+### Quick Start
 
 ```bash
-# Install CLI globally
+# Install the Orb compiler
 npm install -g @almadar/cli
 
-# Create a new project
-almadar new my-app
-cd my-app
+# Create and validate a schema
+orbital validate my-app.orb
 
-# Install dependencies
-npm install
+# Compile to TypeScript
+orbital compile my-app.orb --shell typescript
 
 # Start development server
-almadar dev
+orbital dev my-app.orb
 ```
 
----
+### Published Packages (npm)
 
-## Core Philosophy
+**Core**: `@almadar/core`, `@almadar/std`, `@almadar/evaluator`, `@almadar/patterns`, `@almadar/validation`
 
-### Model the World, Not Just the Code
+**Runtime**: `@almadar/runtime`, `@almadar/server`, `@almadar/ui`, `@almadar/integrations`
 
-Traditional programming languages tell computers *what to do*. Almadar describes *how things work*:
+**AI**: `@almadar/agent`, `@almadar/llm`, `@almadar/skills`
 
-- **Entities** — What exists in your system (User, Order, Task)
-- **Traits** — How those things behave and change over time
-- **Pages** — How the world is observed and interacted with
+### Key Design Decisions
 
-This world model is a formal specification that both humans and AI can reason about.
+- **Schema first**: Edit the .orb program, recompile. Never edit generated code.
+- **Deterministic validation**: The compiler catches errors before runtime. No flaky tests.
+- **Closed circuit**: Every user action flows through Event --> Guard --> State Machine --> Effects --> UI. No hidden mutations.
+- **AI-native**: Token-efficient representations that agents generate and reason about reliably.
 
-### The Orbital Formula
+### Documentation
 
-```
-World Unit = Entity + Traits + Pages
-System     = Σ(World Units)
-```
-
-Each orbital is a self-contained world model describing a domain of your system. Compose them to build complex, observable applications.
-
-### Observable by Design
-
-Because Almadar models behavior formally, you can:
-- **Validate deterministically** — The compiler proves your model is valid before runtime
-- **Exhaustively test** — Examine all possible states to ensure correctness
-- **Generate efficiently** — AI agents produce valid systems from natural language
-- **Reason precisely** — Both humans and machines understand the same model
-
-### Closed Circuit Pattern
-
-Every interaction flows through a predictable path:
-
-```
-User Action → Event → State Machine → Effects → World Update → (loop)
-```
-
-No hidden state mutations. No side effects you can't trace. Observable causality throughout.
-
----
-
-## Architecture Overview
-
-### High-Level System Flow
-
-```
-Natural Language ──┐
-(Human or AI)      │
-                   │
-Human-written ─────┼──► ┌─────────────────┐
-.orb Schema        │    │  Builder IDE    │  Generates/Edits
-                   │    │  (LLM Agent)    │  .orb schema
-                   └──► └────────┬────────┘
-                                  │
-                                  ▼
-                         ┌─────────────────┐
-                         │ Rust Compiler   │  Parse → Validate → Resolve → Generate
-                         │ (orbital-rust)  │
-                         └────────┬────────┘
-                                  │
-                             ┌────┴────┐
-                             ▼         ▼
-                          TypeScript  Python
-                             Shell     Shell
-                          
-                          (Rust shell coming soon)
-```
-
-### Three Execution Models
-
-| Model | Use Case | Technology |
-|-------|----------|------------|
-| **TypeScript Runtime** | Preview, development | `packages/almadar-runtime/` |
-| **Rust Runtime** | Standalone apps, CLI | `orbital-rust/crates/orbital-server/` |
-| **Compiled Code** | Production deployment | Generated TS/Python (Rust coming soon) |
-
----
-
-## Why Almadar?
-
-### For AI-Generated Systems
-Traditional code generation produces brittle outputs that break when requirements change. Almadar's world models are **token-efficient** and **structurally valid** — AI agents can generate, modify, and reason about them reliably.
-
-### For Guaranteed Correctness
-Deterministic validation catches errors at compile time, not runtime. Exhaustive state space analysis lets you prove your system behaves correctly before deploying.
-
-### For Observable Behavior
-State machines make causality explicit. Every effect traces back to an event. Every guard is visible. The system's behavior is inspectable and predictable.
-
-### For Complex Rules
-Encode business logic, compliance requirements, or game mechanics in a formal model that can be validated, tested, and reasoned about — not buried in imperative code.
-
----
-
-## Key Concepts
-
-### 1. Entities
-
-Define your data models:
-
-```json
-{
-  "entity": {
-    "name": "Task",
-    "collection": "tasks",
-    "fields": [
-      { "name": "id", "type": "string", "primaryKey": true },
-      { "name": "title", "type": "string", "required": true },
-      { "name": "status", "type": "enum", "values": ["pending", "done"] }
-    ]
-  }
-}
-```
-
-📚 [Entity Documentation](https://almadar.io/docs/en/core-concepts/entities)
-
-### 2. Traits (State Machines)
-
-Define behavior with states, events, and transitions:
-
-```json
-{
-  "trait": {
-    "name": "TaskBrowser",
-    "linkedEntity": "Task",
-    "stateMachine": {
-      "states": [
-        { "name": "Browsing", "isInitial": true },
-        { "name": "Creating" }
-      ],
-      "events": ["INIT", "CREATE", "SAVE", "CANCEL"],
-      "transitions": [
-        {
-          "from": "Browsing",
-          "to": "Browsing",
-          "event": "INIT",
-          "effects": [
-            ["render-ui", "main", { "type": "entity-table", "entity": "Task" }]
-          ]
-        }
-      ]
-    }
-  }
-}
-```
-
-📚 [Trait Documentation](https://almadar.io/docs/en/core-concepts/traits) | [Closed Circuit](https://almadar.io/docs/en/core-concepts/closed-circuit)
-
-### 3. Patterns & UI
-
-Patterns bridge schemas to UI components:
-
-```json
-["render-ui", "main", {
-  "type": "entity-table",
-  "entity": "Task",
-  "columns": ["title", "status"]
-}]
-```
-
-📚 [Patterns Documentation](https://almadar.io/docs/en/core-concepts/patterns)
-
-### 4. Standard Library
-
-Reuse pre-built behaviors:
-
-```json
-{
-  "uses": [{ "from": "std/behaviors/crud", "as": "CRUD" }],
-  "traits": [{ "name": "TaskCRUD", "uses": ["CRUD"] }]
-}
-```
-
-📚 [Standard Library](https://almadar.io/docs/en/core-concepts/standard-library)
-
----
-
-## Installation
-
-### NPM Packages
-
-```bash
-# Core packages
-npm install @almadar/core @almadar/validation @almadar/evaluator
-
-# Standard library
-npm install @almadar/std
-
-# UI patterns and components
-npm install @almadar/patterns @almadar/ui
-
-# Runtime
-npm install @almadar/runtime @almadar/server
-
-# AI agent infrastructure
-npm install @almadar/agent @almadar/llm @almadar/skills
-```
-
-### CLI Installation
-
-```bash
-# npm (recommended)
-npm install -g @almadar/cli
-
-# Or use npx
-npx @almadar/cli validate schema.orb
-```
-
----
-
-## Published Packages
-
-All `@almadar` packages are published to [npm](https://www.npmjs.com/org/almadar).
-
-### Core
-
-| Package | Description |
-|---------|-------------|
-| `@almadar/core` | Core schema types and definitions |
-| `@almadar/validation` | Schema validation rules |
-| `@almadar/evaluator` | S-expression evaluator |
-| `@almadar/std` | Standard library operators |
-| `@almadar/patterns` | Pattern registry and component mappings |
-
-### Runtime
-
-| Package | Description |
-|---------|-------------|
-| `@almadar/runtime` | Interpreted runtime for orbital applications |
-| `@almadar/server` | Server infrastructure (Express middleware) |
-| `@almadar/ui` | React UI components, hooks, and providers |
-| `@almadar/integrations` | External service integrations |
-
-### AI & Agent
-
-| Package | Description |
-|---------|-------------|
-| `@almadar/agent` | AI agent infrastructure |
-| `@almadar/llm` | Multi-provider LLM client |
-| `@almadar/skills` | AI skill generators and prompts |
-
-### Tooling
-
-| Package | Description |
-|---------|-------------|
-| `@almadar/cli` | Almadar CLI (validate, compile, dev) |
-| `@almadar/extensions` | Editor extensions (VSCode, Zed) |
-
----
-
-## Development Workflow
-
-### The Fix Priority Rule
-
-When something breaks, follow this order:
-
-1. **Fix schema first** — 99% of issues are schema problems
-2. **Update shell components** — Component bugs
-3. **Modify compiler** — LAST RESORT (ask first!)
-
-### Typical Flow
-
-```
-1. Edit Schema (.orb)
-        ↓
-2. Validate: orbital validate schema.orb
-        ↓
-3. Compile: orbital compile schema.orb --shell typescript
-        ↓
-4. Test generated code
-        ↓
-5. Iterate
-```
-
-📚 [Developer Guide](https://almadar.io/docs/en) | [Projects Guide](https://almadar.io/docs/en)
-
----
-
-## Documentation
-
-Full documentation is available at [almadar.io/docs](https://almadar.io/docs/en):
-
-### Core Concepts
-
-| Document | Purpose |
-|----------|---------|
-| [Entities](https://almadar.io/docs/en/core-concepts/entities) | Data models, field types, persistence |
-| [Traits](https://almadar.io/docs/en/core-concepts/traits) | State machines, guards, effects |
-| [Pages](https://almadar.io/docs/en/core-concepts/pages) | Routes, URL patterns, trait bindings |
-| [Closed Circuit](https://almadar.io/docs/en/core-concepts/closed-circuit) | Event flow pattern |
-| [Patterns](https://almadar.io/docs/en/core-concepts/patterns) | UI patterns and components |
-| [Standard Library](https://almadar.io/docs/en/core-concepts/standard-library) | Reusable behaviors and operators |
-
-### Tutorials
-
-| Level | Topic |
-|-------|-------|
-| Beginner | [Your First Schema](https://almadar.io/docs/en/tutorials/beginner/complete-orbital) |
-| Intermediate | [UI Patterns](https://almadar.io/docs/en/tutorials/intermediate/ui-patterns), [Guards](https://almadar.io/docs/en/tutorials/intermediate/guards) |
-| Advanced | [Full App](https://almadar.io/docs/en/tutorials/advanced/full-app) |
-
-### Full Documentation
-
-Visit [almadar.io/docs](https://almadar.io/docs/en) for complete documentation.
-
----
-
-## Repository Structure
-
-```
-almadar/
-├── examples/          # Example schemas
-├── templates/         # Shell templates for compilation
-├── website/           # Documentation website
-├── extensions/        # Editor extensions
-├── cli/               # CLI source
-├── skills/            # AI skill definitions
-└── tests/             # Test suites
-```
-
-
+- [Orb Language Docs](https://orb.almadar.io/docs/getting-started/introduction)
+- [API Reference](https://almadar.io/docs)
 
 ---
 
 ## Community
 
-- [Discord](https://discord.gg/almadar)
-- [Twitter](https://twitter.com/AlmadarLang)
+- [Discord](https://discord.gg/q83VjPJx)
 - [GitHub Discussions](https://github.com/almadar-io/almadar/discussions)
 
 ---
 
-## Contributing
+## Team
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
-
----
+Built by [Almadar](https://almadar.io) in Ljubljana, Slovenia.
 
 ## License
 
-BSL 1.1 (Business Source License) - See [LICENSE](./LICENSE)
-
-- Source code: BSL 1.1 (converts to Apache 2.0 on 2030-02-01)
-- Documentation: CC BY 4.0
-- Non-production use: Free
-- Production use: Requires license (contact licensing@almadar.io)
-
----
-
-Built with ❤️ by [Almadar](https://almadar.io)
+BSL 1.1 (Business Source License). Converts to Apache 2.0 on 2030-02-01. Non-production use is free.

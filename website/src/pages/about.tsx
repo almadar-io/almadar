@@ -24,7 +24,8 @@ function Hero() {
 
 const TEAM = [
   {
-    name: "Osama",
+    name: "Osama Alghanmi",
+    nameAr: "\u0623\u0633\u0627\u0645\u0629 \u0627\u0644\u063A\u0627\u0646\u0645\u064A",
     roleId: "about.team.osama.role",
     roleDefault: "Co-Founder & Technical Lead",
     bioId: "about.team.osama.bio",
@@ -55,6 +56,9 @@ function TeamSection() {
                 <div key={member.name} className={styles.teamCard}>
                   <div className={styles.avatar}>{member.name.charAt(0)}</div>
                   <h3>{member.name}</h3>
+                  {"nameAr" in member && member.nameAr && (
+                    <p style={{ fontSize: "0.95rem", color: "var(--ifm-color-emphasis-600)", margin: "-0.5rem 0 0.5rem", direction: "rtl" }}>{member.nameAr}</p>
+                  )}
                   <span className={styles.role}>
                     <Translate id={member.roleId}>{member.roleDefault}</Translate>
                   </span>
