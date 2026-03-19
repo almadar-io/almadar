@@ -35,6 +35,7 @@ const PRODUCT_SITES = [
   { site: 'studio' as const, label: "Studio", href: "https://studio.almadar.io", description: "Build apps with AI" },
   { site: 'services' as const, label: "Services", href: "https://services.almadar.io", description: "Cloud infrastructure" },
   { site: 'orb' as const, label: "Orb", href: "https://orb.almadar.io", description: "A programming language" },
+  { site: 'masar' as const, label: "Masar", href: "https://masar.almadar.io", description: "AI world model" },
 ];
 
 function buildProductsDropdown(currentSite: string) {
@@ -207,6 +208,7 @@ export function createConfig(opts: SiteConfig): Config {
               { label: "Studio", href: "https://studio.almadar.io" },
               { label: "Services", href: "https://services.almadar.io" },
               { label: "Orb", href: "https://orb.almadar.io" },
+              { label: "Masar", href: "https://masar.almadar.io" },
             ],
           },
           {

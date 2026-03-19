@@ -4,6 +4,7 @@ import Link from "@docusaurus/Link";
 import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
+import { Target, ShieldCheck, Database, Zap, Brain, Layers } from "lucide-react";
 import styles from "./ai.module.css";
 
 function Hero() {
@@ -11,136 +12,183 @@ function Hero() {
     <header className={styles.hero}>
       <div className="container">
         <span className={styles.tag}>
-          <Translate id="ai.hero.tag">Our AI</Translate>
+          <Translate id="ai.hero.tag">Masar</Translate>
         </span>
         <Heading as="h1" className={styles.heroTitle}>
-          <Translate id="ai.hero.title">We Train Our Own Models</Translate>
+          <Translate id="ai.hero.title">System 2 for AI Agents</Translate>
         </Heading>
         <p className={styles.heroSubtitle}>
           <Translate id="ai.hero.subtitle">
-            Purpose-built neural networks that understand how applications work. Not wrappers around someone else's intelligence.
+            Your LLM is fast and intuitive but cannot plan, verify, or remember. Masar gives it a world model: structured planning, instant verification, and experience-based memory.
           </Translate>
         </p>
+        <div className={styles.heroButtons}>
+          <Link className="button button--primary button--lg" href="https://masar.almadar.io/docs/getting-started/quickstart">
+            <Translate id="ai.hero.cta1">Get Started</Translate>
+          </Link>
+          <Link className="button button--secondary button--lg" href="https://masar.almadar.io/docs/api-reference/planning">
+            <Translate id="ai.hero.cta2">View API</Translate>
+          </Link>
+        </div>
       </div>
     </header>
   );
 }
 
+const CAPABILITIES = [
+  {
+    icon: <Target size={28} strokeWidth={1.5} />,
+    titleId: "ai.caps.plan.title", title: "Planning",
+    descId: "ai.caps.plan.desc",
+    desc: "Masar knows 129 behavioral patterns across 18 domains. Given a partial result and a goal, it produces dependency-ordered instructions with exact parameters. The LLM does not guess what to build. Masar tells it.",
+  },
+  {
+    icon: <ShieldCheck size={28} strokeWidth={1.5} />,
+    titleId: "ai.caps.verify.title", title: "Verification",
+    descId: "ai.caps.verify.desc",
+    desc: "Predicts validity in under 5ms without running the compiler. Catches 20 categories of structural errors. When something fails, beam search finds the optimal repair sequence entirely in latent space.",
+  },
+  {
+    icon: <Database size={28} strokeWidth={1.5} />,
+    titleId: "ai.caps.memory.title", title: "Memory",
+    descId: "ai.caps.memory.desc",
+    desc: "Stores agent experiences as structured episodes. Clusters similar episodes into reusable patterns over time. Your agent builds expertise from its own work, without retraining.",
+  },
+];
+
+function CapabilitiesSection() {
+  return (
+    <section className={styles.section}>
+      <div className="container">
+        <div className={styles.sectionHeader}>
+          <Heading as="h2">
+            <Translate id="ai.caps.title">Three Capabilities LLMs Lack</Translate>
+          </Heading>
+          <p className={styles.sectionSubtitle}>
+            <Translate id="ai.caps.subtitle">
+              LLMs generate text. Masar understands structure.
+            </Translate>
+          </p>
+        </div>
+        <div className={styles.capGrid}>
+          {CAPABILITIES.map((c) => (
+            <div key={c.titleId} className={styles.capCard}>
+              <div className={styles.capIcon}>{c.icon}</div>
+              <h3><Translate id={c.titleId}>{c.title}</Translate></h3>
+              <p><Translate id={c.descId}>{c.desc}</Translate></p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 const PIPELINE_STEPS = [
   {
-    titleId: "ai.pipeline.mutator.title", title: "Generation",
-    descId: "ai.pipeline.mutator.desc", desc: "Creates candidate application designs from your description. Produces multiple structurally valid starting points.",
+    num: "1", titleId: "ai.pipe.embed.title", title: "Embed",
+    descId: "ai.pipe.embed.desc", desc: "Masar converts the current state into a compact representation that captures structural topology. Similar problems land in the same region of the representation space.",
   },
   {
-    titleId: "ai.pipeline.classifier.title", title: "Quality Scoring",
-    descId: "ai.pipeline.classifier.desc", desc: "Evaluates each candidate on correctness, completeness, and user experience quality. Filters out anything that would not pass verification.",
+    num: "2", titleId: "ai.pipe.match.title", title: "Match",
+    descId: "ai.pipe.match.desc", desc: "Finds the closest known pattern from the library. 129 patterns across e-commerce, healthcare, CRM, project management, games, and 12 more domains.",
   },
   {
-    titleId: "ai.pipeline.graph.title", title: "Structure Analysis",
-    descId: "ai.pipeline.graph.desc", desc: "Understands the application logic as a graph. Detects dead ends, missing workflows, and broken interaction paths.",
+    num: "3", titleId: "ai.pipe.plan.title", title: "Plan",
+    descId: "ai.pipe.plan.desc", desc: "Computes the structural difference between where you are and where you need to be. Decomposes it into 7 dependency levels of parameterized instructions.",
   },
   {
-    titleId: "ai.pipeline.edit.title", title: "Error Repair",
-    descId: "ai.pipeline.edit.desc", desc: "When something is wrong, predicts the smallest fix that resolves it. Like autocomplete, but for application logic.",
+    num: "4", titleId: "ai.pipe.verify.title", title: "Verify",
+    descId: "ai.pipe.verify.desc", desc: "After each step, predicts validity and error categories. Catches problems before the LLM compounds them. When errors occur, beam search finds the shortest repair path.",
   },
   {
-    titleId: "ai.pipeline.gflownet.title", title: "Diverse Solutions",
-    descId: "ai.pipeline.gflownet.desc", desc: "Builds applications step by step, exploring multiple approaches. Produces diverse solutions instead of collapsing to one output.",
-  },
-  {
-    titleId: "ai.pipeline.integration.title", title: "Verification",
-    descId: "ai.pipeline.integration.desc", desc: "Combines neural predictions with compiler verification to guarantee correctness. Every generated application passes formal checks.",
+    num: "5", titleId: "ai.pipe.remember.title", title: "Remember",
+    descId: "ai.pipe.remember.desc", desc: "Stores the completed result as an episode. Over time, episodes cluster into new patterns. The 129 hand-authored patterns are just the seed. The library grows from experience.",
   },
 ];
 
 function PipelineSection() {
   return (
-    <section className={styles.section}>
-      <div className="container">
-        <div className="row align-items--center">
-          <div className="col col--7">
-            <div className={styles.sectionHeader} style={{ textAlign: "left", marginBottom: "2rem" }}>
-              <Heading as="h2">
-                <Translate id="ai.pipeline.title">Six Specialized Models</Translate>
-              </Heading>
-              <p className={styles.sectionSubtitle} style={{ margin: "1rem 0" }}>
-                <Translate id="ai.pipeline.subtitle">
-                  Each model does one thing well. Together, they generate verified applications from descriptions.
-                </Translate>
-              </p>
-            </div>
-            <div className={styles.pipelineGrid}>
-              {PIPELINE_STEPS.map((step) => (
-                <div key={step.titleId} className={styles.pipelineCard}>
-                  <h3><Translate id={step.titleId}>{step.title}</Translate></h3>
-                  <p><Translate id={step.descId}>{step.desc}</Translate></p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="col col--5">
-            <img src="/img/ai-pipeline.png" alt="Neural pipeline" className={styles.sectionImage} loading="lazy" style={{ margin: 0, maxWidth: "100%", display: "block" }} />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function CostSection() {
-  return (
     <section className={`${styles.section} ${styles.sectionAlt}`}>
       <div className="container">
-        <div className="row align-items--center">
-          <div className="col col--6">
-            <div className={styles.sectionHeader} style={{ textAlign: "left", marginBottom: "2rem" }}>
-              <Heading as="h2">
-                <Translate id="ai.cost.title">10x Cheaper Than LLMs</Translate>
-              </Heading>
+        <div className={styles.sectionHeader}>
+          <Heading as="h2">
+            <Translate id="ai.pipe.title">How Masar Works</Translate>
+          </Heading>
+        </div>
+        <div className={styles.stepsGrid}>
+          {PIPELINE_STEPS.map((step) => (
+            <div key={step.num} className={styles.stepCard}>
+              <span className={styles.stepNum}>{step.num}</span>
+              <h3><Translate id={step.titleId}>{step.title}</Translate></h3>
+              <p><Translate id={step.descId}>{step.desc}</Translate></p>
             </div>
-            <div className={styles.costContent}>
-              <p>
-                <Translate id="ai.cost.p1">
-                  General-purpose LLMs cost $0.50 to $5.00 per complex generation. Our specialized models cost $0.05 to $0.35 for the same task. That is a 10x to 15x reduction.
-                </Translate>
-              </p>
-              <p>
-                <Translate id="ai.cost.p2">
-                  The savings come from focus. An LLM has to know everything about everything. Our models only need to understand application structure, a much smaller problem. Smaller models, faster inference, lower cost.
-                </Translate>
-              </p>
-            </div>
-          </div>
-          <div className="col col--6">
-            <img src="/img/ai-cost.png" alt="Cost comparison" className={styles.sectionImage} loading="lazy" style={{ margin: 0 }} />
-          </div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-function DifferenceSection() {
+const STATS = [
+  { value: "< 5ms", label: "Planning latency" },
+  { value: "94%", label: "Validity prediction accuracy" },
+  { value: "129", label: "Built-in behavioral patterns" },
+  { value: "18", label: "Domains covered" },
+  { value: "20", label: "Error categories detected" },
+  { value: "6", label: "API endpoints" },
+];
+
+function StatsSection() {
+  return (
+    <section className={styles.section}>
+      <div className="container">
+        <div className={styles.sectionHeader}>
+          <Heading as="h2">
+            <Translate id="ai.stats.title">By the Numbers</Translate>
+          </Heading>
+        </div>
+        <div className={styles.statsGrid}>
+          {STATS.map((s) => (
+            <div key={s.label} className={styles.statCard}>
+              <span className={styles.statValue}>{s.value}</span>
+              <span className={styles.statLabel}>{s.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function System2Section() {
   return (
     <section className={`${styles.section} ${styles.sectionDark}`}>
       <div className="container">
         <div className={styles.differenceContent}>
           <Heading as="h2" className={styles.lightTitle}>
-            <Translate id="ai.diff.title">We Own Our Intelligence</Translate>
+            <Translate id="ai.sys2.title">Thinking, Fast and Slow</Translate>
           </Heading>
           <p>
-            <Translate id="ai.diff.p1">
-              We use LLMs for understanding what you say. But the intelligence that designs, verifies, and fixes applications is ours. Trained on our data, optimized for our domain.
+            <Translate id="ai.sys2.p1">
+              Daniel Kahneman's research showed that human cognition has two systems. System 1 is fast, intuitive, and associative. System 2 is slow, deliberate, and structural. You need both to make good decisions.
             </Translate>
           </p>
           <p>
-            <Translate id="ai.diff.p2">
-              That means we control our costs, our quality, and our roadmap. We do not depend on another company's pricing or model updates.
+            <Translate id="ai.sys2.p2">
+              LLMs are System 1. They respond instantly, pattern-match from training data, and generate fluent text. But they cannot plan multi-step processes, verify structural correctness, or learn from their own experience. That is System 2.
             </Translate>
           </p>
-          <Link className="button button--primary button--lg" to="/platform">
-            <Translate id="ai.diff.cta">See the Platform</Translate>
-          </Link>
+          <p>
+            <Translate id="ai.sys2.p3">
+              Masar is System 2 for any LLM agent. It handles the deliberate, structural thinking that language models cannot do. The LLM handles language and generation. Masar handles planning, verification, and memory. Together, they form a complete agent.
+            </Translate>
+          </p>
+          <div style={{ marginTop: "2rem" }}>
+            <Link className="button button--primary button--lg" href="https://masar.almadar.io">
+              <Translate id="ai.sys2.cta">Explore Masar</Translate>
+            </Link>
+          </div>
         </div>
       </div>
     </section>
@@ -150,14 +198,15 @@ function DifferenceSection() {
 export default function AI(): ReactNode {
   return (
     <Layout
-      title={translate({ id: "ai.meta.title", message: "AI \u2014 Our Own Models for Software Generation" })}
-      description={translate({ id: "ai.meta.desc", message: "Purpose-built neural networks that understand application structure. 10x cheaper than general-purpose LLMs." })}
+      title={translate({ id: "ai.meta.title", message: "AI \u2014 Masar: System 2 for AI Agents" })}
+      description={translate({ id: "ai.meta.desc", message: "Masar gives AI agents structured planning, instant verification, and experience-based memory. The world model that makes any LLM agent smarter." })}
     >
       <Hero />
       <main>
+        <CapabilitiesSection />
         <PipelineSection />
-        <CostSection />
-        <DifferenceSection />
+        <StatsSection />
+        <System2Section />
       </main>
     </Layout>
   );

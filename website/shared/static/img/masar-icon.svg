@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64" height="64" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="masarGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fbbf24" />
+            <stop offset="100%" stop-color="#d97706" />
+        </linearGradient>
+        <linearGradient id="masarAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#a78bfa" />
+            <stop offset="100%" stop-color="#7c3aed" />
+        </linearGradient>
+        <!-- dxy cloverleaf: 4 lobes at 45-degree angles -->
+        <g id="lobe" stroke="url(#masarGradient)">
+            <ellipse cx="50" cy="26" rx="14" ry="18" fill="none" stroke-width="3" />
+            <ellipse cx="50" cy="30" rx="9" ry="12" fill="none" stroke-width="2" opacity="0.6" />
+            <ellipse cx="50" cy="74" rx="14" ry="18" fill="none" stroke-width="3" />
+            <ellipse cx="50" cy="70" rx="9" ry="12" fill="none" stroke-width="2" opacity="0.6" />
+        </g>
+    </defs>
+
+    <!-- Four-lobe cloverleaf: dxy orbital -->
+    <use href="#lobe" transform="rotate(0 50 50)" />
+    <use href="#lobe" transform="rotate(90 50 50)" />
+
+    <!-- Orbital path rings (trajectory / مسار) -->
+    <ellipse cx="50" cy="50" rx="38" ry="16" fill="none" stroke="url(#masarAccent)" stroke-width="1.5" opacity="0.4" transform="rotate(-30 50 50)" />
+    <ellipse cx="50" cy="50" rx="38" ry="16" fill="none" stroke="url(#masarAccent)" stroke-width="1.5" opacity="0.4" transform="rotate(30 50 50)" />
+
+    <!-- Center nucleus -->
+    <circle cx="50" cy="50" r="7" fill="url(#masarGradient)" />
+    <circle cx="50" cy="50" r="4" fill="url(#masarAccent)" />
+</svg>

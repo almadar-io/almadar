@@ -6,7 +6,7 @@ import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
 import styles from "./index.module.css";
-import { PenLine, Check, Rocket, Code2, Palette, Cloud, GraduationCap } from "lucide-react";
+import { PenLine, Check, Rocket, Code2, Palette, Cloud, Brain, GraduationCap } from "lucide-react";
 
 const AlmadarChat = React.lazy(() => import("@shared/AlmadarChat"));
 
@@ -113,6 +113,16 @@ const PILLARS = [
     href: "https://services.almadar.io",
     linkId: "home.pillars.services.link",
     linkDefault: "View Services",
+  },
+  {
+    icon: <Brain size={32} strokeWidth={1.5} />,
+    titleId: "home.pillars.masar.title",
+    titleDefault: "Masar",
+    descId: "home.pillars.masar.desc",
+    descDefault: "AI world model for agents. Planning, verification, and memory that makes any LLM agent smarter.",
+    href: "https://masar.almadar.io",
+    linkId: "home.pillars.masar.link",
+    linkDefault: "Explore Masar",
   },
   {
     icon: <GraduationCap size={32} strokeWidth={1.5} />,
