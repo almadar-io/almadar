@@ -1,9 +1,9 @@
 {
-  "name": "@almadar/orb-linux-x64",
+  "name": "@almadar/orb-darwin-arm64",
   "version": "4.0.0",
-  "description": "Orb CLI binary for linux-x64",
+  "description": "Orb CLI binary for darwin-arm64",
   "license": "MIT",
   "repository": { "type": "git", "url": "https://github.com/almadar-io/almadar.git" },
-  "os": ["linux"],
-  "cpu": ["x64"]
+  "os": ["darwin"],
+  "cpu": ["arm64"]
 }
