@@ -142,7 +142,7 @@ function PillarsSection() {
       <div className="container">
         <div className={styles.sectionHeader}>
           <Heading as="h2">
-            <Translate id="home.pillars.title">Three Pillars</Translate>
+            <Translate id="home.pillars.title">Our Products</Translate>
           </Heading>
         </div>
         <div className={styles.pillarsGrid}>
