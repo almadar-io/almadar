@@ -1,6 +1,6 @@
 {
   "name": "@almadar/orb-linux-arm64",
-  "version": "1.9.4",
+  "version": "1.9.5",
   "description": "Orb CLI binary for linux-arm64",
   "license": "MIT",
   "repository": { "type": "git", "url": "https://github.com/almadar-io/almadar.git" },

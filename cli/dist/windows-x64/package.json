@@ -1,6 +1,6 @@
 {
   "name": "@almadar/orb-windows-x64",
-  "version": "1.9.4",
+  "version": "1.9.5",
   "description": "Orb CLI binary for windows-x64",
   "license": "MIT",
   "repository": { "type": "git", "url": "https://github.com/almadar-io/almadar.git" },
