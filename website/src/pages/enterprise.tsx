@@ -2,453 +2,235 @@ import React from "react";
 import type { ReactNode } from "react";
 import Link from "@docusaurus/Link";
 import Layout from "@theme/Layout";
-import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
-import HeroSection from "../components/HeroSection";
 import {
-  TeamIcon,
-  DeploymentIcon,
-  SecurityIcon,
-  SupportIcon,
-  TrainingIcon,
-  CustomizationIcon,
-} from "../components/FeatureIcons";
+  HeroSection as AlmadarHeroSection,
+  ContentSection,
+  FeatureGrid,
+  PricingGrid,
+  CTABanner,
+  VStack,
+  Typography,
+  Box,
+  Card,
+  Icon,
+} from "@almadar/ui/marketing";
+import { CaseStudyCard } from "@almadar/ui/marketing";
 
-import styles from "./enterprise.module.css";
-
-function EnterpriseHero() {
-  return (
-    <HeroSection
-      tag={<Translate id="enterprise.tag">Enterprise</Translate>}
-      title={
-        <Translate id="enterprise.title">
-          Almadar for Teams & Organizations
-        </Translate>
-      }
-      subtitle={
-        <Translate id="enterprise.subtitle">
-          Scale your development with enterprise-grade features, dedicated support, and custom deployment options.
-        </Translate>
-      }
-      buttons={
-        <>
-          <Link className="button button--primary button--lg" to="#contact">
-            <Translate id="enterprise.cta.contact">Contact Sales</Translate>
-          </Link>
-          <Link className="button button--secondary button--lg" to="/developers">
-            <Translate id="enterprise.cta.docs">View Documentation</Translate>
-          </Link>
-        </>
-      }
-    />
-  );
-}
-
-const features = [
+const FEATURES = [
   {
-    IconComponent: TeamIcon,
-    titleId: "enterprise.feature.collaboration.title",
-    titleDefault: "Team Collaboration",
-    descriptionId: "enterprise.feature.collaboration.description",
-    descriptionDefault:
-      "Work together on schemas with role-based access control, version history, and real-time collaboration.",
+    icon: "users",
+    title: translate({ id: "enterprise.feature.collaboration.title", message: "Team Collaboration" }),
+    description: translate({ id: "enterprise.feature.collaboration.description", message: "Work together on schemas with role-based access control, version history, and real-time collaboration." }),
   },
   {
-    IconComponent: DeploymentIcon,
-    titleId: "enterprise.feature.deployment.title",
-    titleDefault: "Private Deployments",
-    descriptionId: "enterprise.feature.deployment.description",
-    descriptionDefault:
-      "Deploy on-premise or in your private cloud. Full control over your data and infrastructure.",
+    icon: "server",
+    title: translate({ id: "enterprise.feature.deployment.title", message: "Private Deployments" }),
+    description: translate({ id: "enterprise.feature.deployment.description", message: "Deploy on-premise or in your private cloud. Full control over your data and infrastructure." }),
   },
   {
-    IconComponent: SecurityIcon,
-    titleId: "enterprise.feature.security.title",
-    titleDefault: "Enterprise Security",
-    descriptionId: "enterprise.feature.security.description",
-    descriptionDefault:
-      "SSO/SAML integration, audit logs, SOC 2 compliance, and advanced security controls.",
+    icon: "shield",
+    title: translate({ id: "enterprise.feature.security.title", message: "Enterprise Security" }),
+    description: translate({ id: "enterprise.feature.security.description", message: "SSO/SAML integration, audit logs, SOC 2 compliance, and advanced security controls." }),
   },
   {
-    IconComponent: SupportIcon,
-    titleId: "enterprise.feature.support.title",
-    titleDefault: "Priority Support",
-    descriptionId: "enterprise.feature.support.description",
-    descriptionDefault:
-      "Dedicated support channels with guaranteed response times and direct access to our engineering team.",
+    icon: "headphones",
+    title: translate({ id: "enterprise.feature.support.title", message: "Priority Support" }),
+    description: translate({ id: "enterprise.feature.support.description", message: "Dedicated support channels with guaranteed response times and direct access to our engineering team." }),
   },
   {
-    IconComponent: TrainingIcon,
-    titleId: "enterprise.feature.training.title",
-    titleDefault: "Custom Training",
-    descriptionId: "enterprise.feature.training.description",
-    descriptionDefault:
-      "Onboarding programs, workshops, and custom training tailored to your team's needs.",
+    icon: "graduation-cap",
+    title: translate({ id: "enterprise.feature.training.title", message: "Custom Training" }),
+    description: translate({ id: "enterprise.feature.training.description", message: "Onboarding programs, workshops, and custom training tailored to your team's needs." }),
   },
   {
-    IconComponent: CustomizationIcon,
-    titleId: "enterprise.feature.customization.title",
-    titleDefault: "Custom Integrations",
-    descriptionId: "enterprise.feature.customization.description",
-    descriptionDefault:
-      "Build custom integrators for your internal systems. We help you connect Almadar to your existing infrastructure.",
+    icon: "puzzle",
+    title: translate({ id: "enterprise.feature.customization.title", message: "Custom Integrations" }),
+    description: translate({ id: "enterprise.feature.customization.description", message: "Build custom integrators for your internal systems. We help you connect Almadar to your existing infrastructure." }),
   },
 ];
 
-function EnterpriseFeatures() {
-  return (
-    <section className={styles.features}>
-      <div className="container">
-        <div className={styles.sectionHeader}>
-          <Heading as="h2">
-            <Translate id="enterprise.features.title">
-              Enterprise Features
-            </Translate>
-          </Heading>
-          <p>
-            <Translate id="enterprise.features.subtitle">
-              Everything you need to build at scale
-            </Translate>
-          </p>
-        </div>
-        <div className={styles.featureGrid}>
-          {features.map((feature, idx) => (
-            <div key={idx} className={styles.featureCard}>
-              <div className={styles.featureIcon}>
-                <feature.IconComponent size={48} />
-              </div>
-              <Heading as="h3">
-                <Translate id={feature.titleId}>{feature.titleDefault}</Translate>
-              </Heading>
-              <p>
-                <Translate id={feature.descriptionId}>
-                  {feature.descriptionDefault}
-                </Translate>
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+const SECURITY_CARDS = [
+  {
+    title: translate({ id: "enterprise.security.auth.title", message: "Authentication & Access" }),
+    items: [
+      translate({ id: "enterprise.security.auth.sso", message: "SSO via SAML 2.0 and OIDC" }),
+      translate({ id: "enterprise.security.auth.rbac", message: "Role-based access control (RBAC)" }),
+      translate({ id: "enterprise.security.auth.audit", message: "Immutable audit logs for all schema operations" }),
+      translate({ id: "enterprise.security.auth.mfa", message: "Multi-factor authentication enforcement" }),
+    ],
+  },
+  {
+    title: translate({ id: "enterprise.security.compliance.title", message: "Compliance" }),
+    items: [
+      translate({ id: "enterprise.security.compliance.soc2", message: "SOC 2 Type II (in progress)" }),
+      translate({ id: "enterprise.security.compliance.gdpr", message: "GDPR-compliant data handling" }),
+      translate({ id: "enterprise.security.compliance.hipaa", message: "HIPAA-ready deployment options" }),
+      translate({ id: "enterprise.security.compliance.gov", message: "Government and regulated industry support" }),
+    ],
+  },
+  {
+    title: translate({ id: "enterprise.security.ai.title", message: "AI Security (Upcoming)" }),
+    items: [
+      translate({ id: "enterprise.security.ai.icagi", message: "IC-AGI integration for schema validation and policy enforcement" }),
+      translate({ id: "enterprise.security.ai.sandboxed", message: "Sandboxed AI generation with schema review gates" }),
+      translate({ id: "enterprise.security.ai.audit", message: "AI decision audit trail" }),
+      translate({ id: "enterprise.security.ai.policy", message: "Policy-as-code for AI-generated schemas" }),
+    ],
+  },
+];
 
-function EnterpriseSecurityCompliance() {
-  return (
-    <section className={styles.securitySection}>
-      <div className="container">
-        <div className={styles.sectionHeader}>
-          <Heading as="h2">
-            <Translate id="enterprise.security.title">
-              Security & Compliance
-            </Translate>
-          </Heading>
-          <p>
-            <Translate id="enterprise.security.subtitle">
-              Built for regulated industries from day one
-            </Translate>
-          </p>
-        </div>
-        <div className={styles.securityGrid}>
-          <div className={styles.securityCard}>
-            <span className={styles.securityIcon}>🔐</span>
-            <Heading as="h3">
-              <Translate id="enterprise.security.auth.title">
-                Authentication & Access
-              </Translate>
-            </Heading>
-            <ul className={styles.securityList}>
-              <li>
-                <Translate id="enterprise.security.auth.sso">
-                  SSO via SAML 2.0 and OIDC
-                </Translate>
-              </li>
-              <li>
-                <Translate id="enterprise.security.auth.rbac">
-                  Role-based access control (RBAC)
-                </Translate>
-              </li>
-              <li>
-                <Translate id="enterprise.security.auth.audit">
-                  Immutable audit logs for all schema operations
-                </Translate>
-              </li>
-              <li>
-                <Translate id="enterprise.security.auth.mfa">
-                  Multi-factor authentication enforcement
-                </Translate>
-              </li>
-            </ul>
-          </div>
-          <div className={styles.securityCard}>
-            <span className={styles.securityIcon}>🏛️</span>
-            <Heading as="h3">
-              <Translate id="enterprise.security.compliance.title">
-                Compliance
-              </Translate>
-            </Heading>
-            <ul className={styles.securityList}>
-              <li>
-                <Translate id="enterprise.security.compliance.soc2">
-                  SOC 2 Type II (in progress)
-                </Translate>
-              </li>
-              <li>
-                <Translate id="enterprise.security.compliance.gdpr">
-                  GDPR-compliant data handling
-                </Translate>
-              </li>
-              <li>
-                <Translate id="enterprise.security.compliance.hipaa">
-                  HIPAA-ready deployment options
-                </Translate>
-              </li>
-              <li>
-                <Translate id="enterprise.security.compliance.gov">
-                  Government and regulated industry support
-                </Translate>
-              </li>
-            </ul>
-          </div>
-          <div className={styles.securityCard}>
-            <span className={styles.securityIcon}>🤖</span>
-            <Heading as="h3">
-              <Translate id="enterprise.security.ai.title">
-                AI Security (Upcoming)
-              </Translate>
-            </Heading>
-            <ul className={styles.securityList}>
-              <li>
-                <Translate id="enterprise.security.ai.icagi">
-                  IC-AGI integration for schema validation and policy enforcement
-                </Translate>
-              </li>
-              <li>
-                <Translate id="enterprise.security.ai.sandboxed">
-                  Sandboxed AI generation with schema review gates
-                </Translate>
-              </li>
-              <li>
-                <Translate id="enterprise.security.ai.audit">
-                  AI decision audit trail
-                </Translate>
-              </li>
-              <li>
-                <Translate id="enterprise.security.ai.policy">
-                  Policy-as-code for AI-generated schemas
-                </Translate>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+const PRICING_PLANS = [
+  {
+    name: translate({ id: "enterprise.pricing.team.title", message: "Team" }),
+    price: translate({ id: "enterprise.pricing.contact", message: "Contact Us" }),
+    description: translate({ id: "enterprise.pricing.team.description", message: "For small teams getting started" }),
+    features: [
+      translate({ id: "enterprise.pricing.team.feature1", message: "Up to 10 team members" }),
+      translate({ id: "enterprise.pricing.team.feature2", message: "Shared schemas" }),
+      translate({ id: "enterprise.pricing.team.feature3", message: "Email support" }),
+      translate({ id: "enterprise.pricing.team.feature4", message: "Cloud deployment" }),
+    ],
+    action: { label: translate({ id: "enterprise.pricing.contact", message: "Contact Us" }), href: "#contact" },
+    highlighted: false,
+  },
+  {
+    name: translate({ id: "enterprise.pricing.business.title", message: "Business" }),
+    price: translate({ id: "enterprise.pricing.contact", message: "Contact Us" }),
+    description: translate({ id: "enterprise.pricing.business.description", message: "For growing organizations" }),
+    features: [
+      translate({ id: "enterprise.pricing.business.feature1", message: "Unlimited team members" }),
+      translate({ id: "enterprise.pricing.business.feature2", message: "SSO/SAML integration" }),
+      translate({ id: "enterprise.pricing.business.feature3", message: "Priority support" }),
+      translate({ id: "enterprise.pricing.business.feature4", message: "Private cloud option" }),
+      translate({ id: "enterprise.pricing.business.feature5", message: "Audit logs" }),
+    ],
+    action: { label: translate({ id: "enterprise.pricing.contact", message: "Contact Us" }), href: "#contact" },
+    highlighted: true,
+    badge: translate({ id: "enterprise.pricing.popular", message: "Most Popular" }),
+  },
+  {
+    name: translate({ id: "enterprise.pricing.enterprise.title", message: "Enterprise" }),
+    price: translate({ id: "enterprise.pricing.contact", message: "Contact Us" }),
+    description: translate({ id: "enterprise.pricing.enterprise.description", message: "For large organizations" }),
+    features: [
+      translate({ id: "enterprise.pricing.enterprise.feature1", message: "On-premise deployment" }),
+      translate({ id: "enterprise.pricing.enterprise.feature2", message: "Custom integrations" }),
+      translate({ id: "enterprise.pricing.enterprise.feature3", message: "Dedicated support" }),
+      translate({ id: "enterprise.pricing.enterprise.feature4", message: "SLA guarantee" }),
+      translate({ id: "enterprise.pricing.enterprise.feature5", message: "Custom training" }),
+    ],
+    action: { label: translate({ id: "enterprise.pricing.contact", message: "Contact Us" }), href: "#contact" },
+    highlighted: false,
+  },
+];
 
-function EnterprisePricing() {
-  return (
-    <section className={styles.pricing}>
-      <div className="container">
-        <div className={styles.sectionHeader}>
-          <Heading as="h2">
-            <Translate id="enterprise.pricing.title">
-              Flexible Pricing
-            </Translate>
-          </Heading>
-          <p>
-            <Translate id="enterprise.pricing.subtitle">
-              Plans that grow with your organization
-            </Translate>
-          </p>
-        </div>
-        <div className={styles.pricingGrid}>
-          <div className={styles.pricingCard}>
-            <div className={styles.pricingHeader}>
-              <Heading as="h3">
-                <Translate id="enterprise.pricing.team.title">Team</Translate>
-              </Heading>
-              <p className={styles.pricingDescription}>
-                <Translate id="enterprise.pricing.team.description">
-                  For small teams getting started
-                </Translate>
-              </p>
-            </div>
-            <ul className={styles.pricingFeatures}>
-              <li><Translate id="enterprise.pricing.team.feature1">Up to 10 team members</Translate></li>
-              <li><Translate id="enterprise.pricing.team.feature2">Shared schemas</Translate></li>
-              <li><Translate id="enterprise.pricing.team.feature3">Email support</Translate></li>
-              <li><Translate id="enterprise.pricing.team.feature4">Cloud deployment</Translate></li>
-            </ul>
-            <Link className="button button--secondary button--lg button--block" to="#contact">
-              <Translate id="enterprise.pricing.contact">Contact Us</Translate>
-            </Link>
-          </div>
-          <div className={`${styles.pricingCard} ${styles.pricingCardFeatured}`}>
-            <div className={styles.pricingBadge}>
-              <Translate id="enterprise.pricing.popular">Most Popular</Translate>
-            </div>
-            <div className={styles.pricingHeader}>
-              <Heading as="h3">
-                <Translate id="enterprise.pricing.business.title">Business</Translate>
-              </Heading>
-              <p className={styles.pricingDescription}>
-                <Translate id="enterprise.pricing.business.description">
-                  For growing organizations
-                </Translate>
-              </p>
-            </div>
-            <ul className={styles.pricingFeatures}>
-              <li><Translate id="enterprise.pricing.business.feature1">Unlimited team members</Translate></li>
-              <li><Translate id="enterprise.pricing.business.feature2">SSO/SAML integration</Translate></li>
-              <li><Translate id="enterprise.pricing.business.feature3">Priority support</Translate></li>
-              <li><Translate id="enterprise.pricing.business.feature4">Private cloud option</Translate></li>
-              <li><Translate id="enterprise.pricing.business.feature5">Audit logs</Translate></li>
-            </ul>
-            <Link className="button button--primary button--lg button--block" to="#contact">
-              <Translate id="enterprise.pricing.contact">Contact Us</Translate>
-            </Link>
-          </div>
-          <div className={styles.pricingCard}>
-            <div className={styles.pricingHeader}>
-              <Heading as="h3">
-                <Translate id="enterprise.pricing.enterprise.title">Enterprise</Translate>
-              </Heading>
-              <p className={styles.pricingDescription}>
-                <Translate id="enterprise.pricing.enterprise.description">
-                  For large organizations
-                </Translate>
-              </p>
-            </div>
-            <ul className={styles.pricingFeatures}>
-              <li><Translate id="enterprise.pricing.enterprise.feature1">On-premise deployment</Translate></li>
-              <li><Translate id="enterprise.pricing.enterprise.feature2">Custom integrations</Translate></li>
-              <li><Translate id="enterprise.pricing.enterprise.feature3">Dedicated support</Translate></li>
-              <li><Translate id="enterprise.pricing.enterprise.feature4">SLA guarantee</Translate></li>
-              <li><Translate id="enterprise.pricing.enterprise.feature5">Custom training</Translate></li>
-            </ul>
-            <Link className="button button--secondary button--lg button--block" to="#contact">
-              <Translate id="enterprise.pricing.contact">Contact Us</Translate>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function EnterpriseCaseStudies() {
-  return (
-    <section className={styles.caseStudies}>
-      <div className="container">
-        <div className={styles.caseStudiesHeader}>
-          <Heading as="h2" className={styles.caseStudiesTitle}>
-            <Translate id="enterprise.caseStudies.title">
-              Proven in the Field
-            </Translate>
-          </Heading>
-          <p className={styles.caseStudiesSubtitle}>
-            <Translate id="enterprise.caseStudies.subtitle">
-              Real deployments built on Almadar
-            </Translate>
-          </p>
-        </div>
-        <div className={styles.caseStudiesGrid}>
-          <Link to="/case-studies/inspection" className={styles.caseStudyCard}>
-            <span
-              className={styles.caseStudyBadge}
-              style={{ background: "rgba(249,115,22,0.1)", color: "#fb923c" }}
-            >
-              <Translate id="enterprise.cs.inspection.badge">Field Ops</Translate>
-            </span>
-            <Heading as="h3">
-              <Translate id="enterprise.cs.inspection.title">
-                Inspection System
-              </Translate>
-            </Heading>
-            <p>
-              <Translate id="enterprise.cs.inspection.desc">
-                500+ inspections per day, 99.9% sync reliability, 60% reduction
-                in compliance errors.
-              </Translate>
-            </p>
-            <span className={styles.caseStudyLink}>
-              <Translate id="enterprise.cs.readMore">Read case study</Translate>{" "}
-              →
-            </span>
-          </Link>
-          <Link to="/case-studies/trainer" className={styles.caseStudyCard}>
-            <span
-              className={styles.caseStudyBadge}
-              style={{ background: "rgba(16,185,129,0.1)", color: "#34d399" }}
-            >
-              <Translate id="enterprise.cs.trainer.badge">
-                Health & Fitness
-              </Translate>
-            </span>
-            <Heading as="h3">
-              <Translate id="enterprise.cs.trainer.title">
-                Pro Trainer App
-              </Translate>
-            </Heading>
-            <p>
-              <Translate id="enterprise.cs.trainer.desc">
-                70% reduction in admin time, 3x client capacity per trainer,
-                95% client retention rate.
-              </Translate>
-            </p>
-            <span className={styles.caseStudyLink}>
-              <Translate id="enterprise.cs.readMore">Read case study</Translate>{" "}
-              →
-            </span>
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function EnterpriseContact() {
-  return (
-    <section id="contact" className={styles.contact}>
-      <div className="container">
-        <div className={styles.contactCard}>
-          <Heading as="h2">
-            <Translate id="enterprise.contact.title">
-              Ready to get started?
-            </Translate>
-          </Heading>
-          <p>
-            <Translate id="enterprise.contact.description">
-              Contact our sales team to discuss your requirements and get a custom quote.
-            </Translate>
-          </p>
-          <a href="mailto:hello@almadar.io" className="button button--primary button--lg">
-            hello@almadar.io
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
+const CASE_STUDIES = [
+  {
+    title: translate({ id: "enterprise.cs.inspection.title", message: "Inspection System" }),
+    description: translate({ id: "enterprise.cs.inspection.desc", message: "500+ inspections per day, 99.9% sync reliability, 60% reduction in compliance errors." }),
+    category: translate({ id: "enterprise.cs.inspection.badge", message: "Field Ops" }),
+    categoryColor: "#fb923c",
+    href: "/case-studies/inspection",
+    linkLabel: translate({ id: "enterprise.cs.readMore", message: "Read case study" }),
+  },
+  {
+    title: translate({ id: "enterprise.cs.trainer.title", message: "Pro Trainer App" }),
+    description: translate({ id: "enterprise.cs.trainer.desc", message: "70% reduction in admin time, 3x client capacity per trainer, 95% client retention rate." }),
+    category: translate({ id: "enterprise.cs.trainer.badge", message: "Health & Fitness" }),
+    categoryColor: "#34d399",
+    href: "/case-studies/trainer",
+    linkLabel: translate({ id: "enterprise.cs.readMore", message: "Read case study" }),
+  },
+];
 
 export default function Enterprise(): ReactNode {
   return (
     <Layout
       title={translate({ id: "enterprise.meta.title", message: "Enterprise" })}
-      description={translate({
-        id: "enterprise.meta.description",
-        message: "Almadar Enterprise - Scale your development with enterprise-grade features",
-      })}
+      description={translate({ id: "enterprise.meta.description", message: "Almadar Enterprise - Scale your development with enterprise-grade features" })}
     >
-      <EnterpriseHero />
-      <main>
-        <EnterpriseFeatures />
-        <EnterpriseSecurityCompliance />
-        <EnterprisePricing />
-        <EnterpriseCaseStudies />
-        <EnterpriseContact />
-      </main>
+      <AlmadarHeroSection
+        tag={translate({ id: "enterprise.tag", message: "Enterprise" })}
+        title={translate({ id: "enterprise.title", message: "Almadar for Teams & Organizations" })}
+        subtitle={translate({ id: "enterprise.subtitle", message: "Scale your development with enterprise-grade features, dedicated support, and custom deployment options." })}
+        primaryAction={{ label: translate({ id: "enterprise.cta.contact", message: "Contact Sales" }), href: "#contact" }}
+        secondaryAction={{ label: translate({ id: "enterprise.cta.docs", message: "View Documentation" }), href: "/developers" }}
+      />
+
+      <ContentSection>
+        <VStack gap="lg" align="center" className="container">
+          <VStack gap="sm" align="center">
+            <Typography variant="h2">
+              <Translate id="enterprise.features.title">Enterprise Features</Translate>
+            </Typography>
+            <Typography variant="body" color="muted">
+              <Translate id="enterprise.features.subtitle">Everything you need to build at scale</Translate>
+            </Typography>
+          </VStack>
+          <FeatureGrid items={FEATURES} columns={3} />
+        </VStack>
+      </ContentSection>
+
+      <ContentSection background="alt">
+        <VStack gap="lg" align="center" className="container">
+          <VStack gap="sm" align="center">
+            <Typography variant="h2">
+              <Translate id="enterprise.security.title">Security & Compliance</Translate>
+            </Typography>
+            <Typography variant="body" color="muted">
+              <Translate id="enterprise.security.subtitle">Built for regulated industries from day one</Translate>
+            </Typography>
+          </VStack>
+          <FeatureGrid
+            items={SECURITY_CARDS.map((card) => ({
+              title: card.title,
+              description: card.items.join(" | "),
+              variant: "bordered" as const,
+            }))}
+            columns={3}
+          />
+        </VStack>
+      </ContentSection>
+
+      <ContentSection>
+        <VStack gap="lg" align="center" className="container">
+          <VStack gap="sm" align="center">
+            <Typography variant="h2">
+              <Translate id="enterprise.pricing.title">Flexible Pricing</Translate>
+            </Typography>
+            <Typography variant="body" color="muted">
+              <Translate id="enterprise.pricing.subtitle">Plans that grow with your organization</Translate>
+            </Typography>
+          </VStack>
+          <PricingGrid plans={PRICING_PLANS} />
+        </VStack>
+      </ContentSection>
+
+      <ContentSection background="dark">
+        <VStack gap="lg" align="center" className="container">
+          <VStack gap="sm" align="center">
+            <Typography variant="h2" className="text-[var(--color-background)]">
+              <Translate id="enterprise.caseStudies.title">Proven in the Field</Translate>
+            </Typography>
+            <Typography variant="body" className="text-[var(--color-background)]/60">
+              <Translate id="enterprise.caseStudies.subtitle">Real deployments built on Almadar</Translate>
+            </Typography>
+          </VStack>
+          <Box className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+            {CASE_STUDIES.map((cs) => (
+              <CaseStudyCard key={cs.href} {...cs} />
+            ))}
+          </Box>
+        </VStack>
+      </ContentSection>
+
+      <CTABanner
+        title={translate({ id: "enterprise.contact.title", message: "Ready to get started?" })}
+        subtitle={translate({ id: "enterprise.contact.description", message: "Contact our sales team to discuss your requirements and get a custom quote." })}
+        primaryAction={{ label: "hello@almadar.io", href: "mailto:hello@almadar.io" }}
+        background="primary"
+      />
     </Layout>
   );
 }

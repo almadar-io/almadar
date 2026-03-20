@@ -2,10 +2,24 @@
 @import './variables.css';
 @import '../../shared/css/components.css';
 
+/* @almadar/ui theme: almadar (flagship teal brand identity) */
+@import './almadar-theme.css';
+
 @tailwind components;
 @tailwind utilities;
 
 [data-theme="dark"] .card {
     background-color: #1e293b; /* Slate 800 - lighter than #0f172a bg */
     border-color: #334155;
+}
+
+/* Reset Docusaurus footer wrapper so MarketingFooter controls all styling */
+.footer,
+.footer.footer--dark,
+.theme-layout-footer {
+  background: none !important;
+  background-color: transparent !important;
+  border-top: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }

@@ -1,61 +1,29 @@
 import React from "react";
 import Layout from "@theme/Layout";
 import Link from "@docusaurus/Link";
-
-const containerStyle: React.CSSProperties = {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  minHeight: "60vh",
-  textAlign: "center",
-  padding: "2rem",
-};
-
-const headingStyle: React.CSSProperties = {
-  fontSize: "4rem",
-  fontWeight: 800,
-  marginBottom: "0.5rem",
-  color: "var(--ifm-color-primary)",
-};
-
-const subtitleStyle: React.CSSProperties = {
-  fontSize: "1.5rem",
-  fontWeight: 600,
-  marginBottom: "1rem",
-};
-
-const messageStyle: React.CSSProperties = {
-  fontSize: "1.1rem",
-  color: "var(--ifm-color-emphasis-600)",
-  marginBottom: "2rem",
-  maxWidth: "480px",
-};
-
-const buttonStyle: React.CSSProperties = {
-  padding: "0.75rem 2rem",
-  fontSize: "1rem",
-};
+import { ContentSection, VStack, Typography, Button } from "@almadar/ui/marketing";
 
 export default function NotFound(): React.ReactNode {
   return (
     <Layout title="Page not found">
-      <main style={containerStyle}>
-        <img 
-          src="/img/404-illustration.png" 
-          alt="404 Illustration" 
-          style={{ width: "100%", maxWidth: "400px", marginBottom: "1.5rem" }} 
-        />
-        <div style={headingStyle}>404</div>
-        <div style={subtitleStyle}>Page not found</div>
-        <p style={messageStyle}>
-          The page you were looking for doesn't exist or has been moved.
-          Let's get you back on track.
-        </p>
-        <Link className="button button--primary button--lg" to="/" style={buttonStyle}>
-          Back to Almadar
-        </Link>
-      </main>
+      <ContentSection padding="lg">
+        <VStack gap="md" align="center" className="min-h-[60vh] justify-center">
+          <img
+            src="/img/404-illustration.png"
+            alt="404 Illustration"
+            style={{ width: "100%", maxWidth: "400px", marginBottom: "1.5rem" }}
+          />
+          <Typography variant="h1" color="primary">404</Typography>
+          <Typography variant="h3">Page not found</Typography>
+          <Typography variant="body" color="muted" className="max-w-[480px] text-center">
+            The page you were looking for doesn't exist or has been moved.
+            Let's get you back on track.
+          </Typography>
+          <Link to="/">
+            <Button variant="primary" size="lg">Back to Almadar</Button>
+          </Link>
+        </VStack>
+      </ContentSection>
     </Layout>
   );
 }

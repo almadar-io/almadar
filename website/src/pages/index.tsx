@@ -3,265 +3,169 @@ import type { ReactNode } from "react";
 import Link from "@docusaurus/Link";
 import BrowserOnly from "@docusaurus/BrowserOnly";
 import Layout from "@theme/Layout";
-import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
-import styles from "./index.module.css";
-import { PenLine, Check, Rocket, Code2, Palette, Cloud, Brain, GraduationCap } from "lucide-react";
+import {
+  HeroSection,
+  ContentSection,
+  FeatureGrid,
+  StatsGrid,
+  CTABanner,
+  ArticleSection,
+  VStack,
+  Typography,
+  Box,
+  Button,
+} from "@almadar/ui/marketing";
 
 const AlmadarChat = React.lazy(() => import("@shared/AlmadarChat"));
 
-function Hero() {
-  return (
-    <header className={styles.hero}>
-      <div className="container">
-        <div className={styles.heroText}>
-          <span className={styles.tag}>
-            <Translate id="home.hero.tag">AI-Native Platform</Translate>
-          </span>
-          <Heading as="h1" className={styles.heroTitle}>
-            <Translate id="home.hero.title">The Physics of Software</Translate>
-          </Heading>
-          <p className={styles.heroSubtitle}>
-            <Translate id="home.hero.subtitle">
-              World models for the agentic era. We build the language, intelligence, and infrastructure for software that understands itself.
-            </Translate>
-          </p>
-          <BrowserOnly fallback={null}>
-            {() => (
-              <React.Suspense fallback={null}>
-                <AlmadarChat mode="inline" />
-              </React.Suspense>
-            )}
-          </BrowserOnly>
-          <div className={styles.buttons}>
-            <Link className="button button--primary button--lg" href="https://studio.almadar.io">
-              <Translate id="home.hero.cta1">Explore Studio</Translate>
-            </Link>
-            <Link className="button button--secondary button--lg" to="/vision">
-              <Translate id="home.hero.cta2">Read the Vision</Translate>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </header>
-  );
-}
-
-function WorldModelSection() {
-  return (
-    <section className={styles.section}>
-      <div className="container">
-        <div className={styles.sectionHeader}>
-          <Heading as="h2">
-            <Translate id="home.idea.title">What is a World Model of Software?</Translate>
-          </Heading>
-          <p className={styles.sectionSubtitle}>
-            <Translate id="home.idea.subtitle">
-              Traditional programming tells computers what to do, step by step. A world model describes how things work: the data, the rules, the behaviors. The compiler turns it into any platform. The model stays the same.
-            </Translate>
-          </p>
-        </div>
-        <div className={styles.ideaGrid}>
-          <div className={styles.ideaCard}>
-            <div className={styles.ideaIcon}><PenLine size={32} strokeWidth={1.5} /></div>
-            <h3><Translate id="home.idea.describe">Describe</Translate></h3>
-            <p><Translate id="home.idea.describe.text">Write what your system does in Orb, a formal language for application behavior.</Translate></p>
-          </div>
-          <div className={styles.ideaCard}>
-            <div className={styles.ideaIcon}><Check size={32} strokeWidth={1.5} /></div>
-            <h3><Translate id="home.idea.prove">Prove</Translate></h3>
-            <p><Translate id="home.idea.prove.text">The compiler validates every possible state before a single line of code runs.</Translate></p>
-          </div>
-          <div className={styles.ideaCard}>
-            <div className={styles.ideaIcon}><Rocket size={32} strokeWidth={1.5} /></div>
-            <h3><Translate id="home.idea.deploy">Deploy</Translate></h3>
-            <p><Translate id="home.idea.deploy.text">One model compiles to web, mobile, or any future platform. The model is the product.</Translate></p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+const WORLD_MODEL_FEATURES = [
+  {
+    icon: "pen-line",
+    title: translate({ id: "home.idea.describe", message: "Describe" }),
+    description: translate({ id: "home.idea.describe.text", message: "Write what your system does in Orb, a formal language for application behavior." }),
+  },
+  {
+    icon: "check",
+    title: translate({ id: "home.idea.prove", message: "Prove" }),
+    description: translate({ id: "home.idea.prove.text", message: "The compiler validates every possible state before a single line of code runs." }),
+  },
+  {
+    icon: "rocket",
+    title: translate({ id: "home.idea.deploy", message: "Deploy" }),
+    description: translate({ id: "home.idea.deploy.text", message: "One model compiles to web, mobile, or any future platform. The model is the product." }),
+  },
+];
 
 const PILLARS = [
   {
-    icon: <Code2 size={32} strokeWidth={1.5} />,
-    titleId: "home.pillars.language.title",
-    titleDefault: "Orb",
-    descId: "home.pillars.language.desc",
-    descDefault: "A formal language for describing how software behaves. Open source. AI-native. Compiler-verified.",
+    icon: "code-2",
+    title: translate({ id: "home.pillars.language.title", message: "Orb" }),
+    description: translate({ id: "home.pillars.language.desc", message: "A formal language for describing how software behaves. Open source. AI-native. Compiler-verified." }),
     href: "https://orb.almadar.io",
-    linkId: "home.pillars.language.link",
-    linkDefault: "Explore the Language",
+    linkLabel: translate({ id: "home.pillars.language.link", message: "Explore the Language" }),
+    variant: "interactive" as const,
   },
   {
-    icon: <Palette size={32} strokeWidth={1.5} />,
-    titleId: "home.pillars.studio.title",
-    titleDefault: "Almadar Studio",
-    descId: "home.pillars.studio.desc",
-    descDefault: "The builder where humans and AI agents collaborate to create software. Describe, generate, deploy.",
+    icon: "palette",
+    title: translate({ id: "home.pillars.studio.title", message: "Almadar Studio" }),
+    description: translate({ id: "home.pillars.studio.desc", message: "The builder where humans and AI agents collaborate to create software. Describe, generate, deploy." }),
     href: "https://studio.almadar.io",
-    linkId: "home.pillars.studio.link",
-    linkDefault: "Try Studio",
+    linkLabel: translate({ id: "home.pillars.studio.link", message: "Try Studio" }),
+    variant: "interactive" as const,
   },
   {
-    icon: <Cloud size={32} strokeWidth={1.5} />,
-    titleId: "home.pillars.services.title",
-    titleDefault: "Almadar Services",
-    descId: "home.pillars.services.desc",
-    descDefault: "AI-native infrastructure. Compute, storage, authentication, event routing. Designed for agents.",
+    icon: "cloud",
+    title: translate({ id: "home.pillars.services.title", message: "Almadar Services" }),
+    description: translate({ id: "home.pillars.services.desc", message: "AI-native infrastructure. Compute, storage, authentication, event routing. Designed for agents." }),
     href: "https://services.almadar.io",
-    linkId: "home.pillars.services.link",
-    linkDefault: "View Services",
+    linkLabel: translate({ id: "home.pillars.services.link", message: "View Services" }),
+    variant: "interactive" as const,
   },
   {
-    icon: <Brain size={32} strokeWidth={1.5} />,
-    titleId: "home.pillars.masar.title",
-    titleDefault: "Masar",
-    descId: "home.pillars.masar.desc",
-    descDefault: "AI world model for agents. Planning, verification, and memory that makes any LLM agent smarter.",
+    icon: "brain",
+    title: translate({ id: "home.pillars.masar.title", message: "Masar" }),
+    description: translate({ id: "home.pillars.masar.desc", message: "AI world model for agents. Planning, verification, and memory that makes any LLM agent smarter." }),
     href: "https://masar.almadar.io",
-    linkId: "home.pillars.masar.link",
-    linkDefault: "Explore Masar",
+    linkLabel: translate({ id: "home.pillars.masar.link", message: "Explore Masar" }),
+    variant: "interactive" as const,
   },
   {
-    icon: <GraduationCap size={32} strokeWidth={1.5} />,
-    titleId: "home.pillars.academy.title",
-    titleDefault: "KFlow Academy",
-    descId: "home.pillars.academy.desc",
-    descDefault: "Learn software engineering through interactive courses. From fundamentals to AI-powered development.",
+    icon: "graduation-cap",
+    title: translate({ id: "home.pillars.academy.title", message: "KFlow Academy" }),
+    description: translate({ id: "home.pillars.academy.desc", message: "Learn software engineering through interactive courses. From fundamentals to AI-powered development." }),
     href: "https://kflow.academy",
-    linkId: "home.pillars.academy.link",
-    linkDefault: "Start Learning",
+    linkLabel: translate({ id: "home.pillars.academy.link", message: "Start Learning" }),
+    variant: "interactive" as const,
   },
 ];
-
-function PillarsSection() {
-  return (
-    <section className={`${styles.section} ${styles.sectionAlt}`}>
-      <div className="container">
-        <div className={styles.sectionHeader}>
-          <Heading as="h2">
-            <Translate id="home.pillars.title">Our Products</Translate>
-          </Heading>
-        </div>
-        <div className={styles.pillarsGrid}>
-          {PILLARS.map((p) => (
-            <div key={p.titleId} className={styles.pillarCard}>
-              <div style={{ marginBottom: "1rem" }}>{p.icon}</div>
-              <h3><Translate id={p.titleId}>{p.titleDefault}</Translate></h3>
-              <p><Translate id={p.descId}>{p.descDefault}</Translate></p>
-              <Link href={p.href} className={styles.pillarLink}>
-                <Translate id={p.linkId}>{p.linkDefault}</Translate> &rarr;
-              </Link>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 const STATS = [
-  { valueId: "home.stats.behaviors.value", value: "93", labelId: "home.stats.behaviors.label", label: "Standard behaviors across 18 domains" },
-  { valueId: "home.stats.projects.value", value: "7", labelId: "home.stats.projects.label", label: "Production projects deployed" },
-  { valueId: "home.stats.cost.value", value: "$0.05\u2013$0.35", labelId: "home.stats.cost.label", label: "AI compute cost per application" },
+  { value: translate({ id: "home.stats.behaviors.value", message: "93" }), label: translate({ id: "home.stats.behaviors.label", message: "Standard behaviors across 18 domains" }) },
+  { value: translate({ id: "home.stats.projects.value", message: "7" }), label: translate({ id: "home.stats.projects.label", message: "Production projects deployed" }) },
+  { value: translate({ id: "home.stats.cost.value", message: "$0.05-$0.35" }), label: translate({ id: "home.stats.cost.label", message: "AI compute cost per application" }) },
 ];
-
-function ProofSection() {
-  return (
-    <section className={styles.section}>
-      <div className="container">
-        <div className={styles.sectionHeader}>
-          <Heading as="h2">
-            <Translate id="home.proof.title">Proven in Production</Translate>
-          </Heading>
-        </div>
-        <div className={styles.statsGrid}>
-          {STATS.map((s) => (
-            <div key={s.valueId} className={styles.statCard}>
-              <span className={styles.statValue}>
-                <Translate id={s.valueId}>{s.value}</Translate>
-              </span>
-              <span className={styles.statLabel}>
-                <Translate id={s.labelId}>{s.label}</Translate>
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function AISection() {
-  return (
-    <section className={`${styles.section} ${styles.sectionDark}`}>
-      <div className="container">
-        <div className={styles.aiContent}>
-          <Heading as="h2" className={styles.aiTitle}>
-            <Translate id="home.ai.title">We Train Our Own Models</Translate>
-          </Heading>
-          <p className={styles.aiText}>
-            <Translate id="home.ai.text">
-              We are not a company that wraps LLM APIs and calls it AI. Our neural pipeline understands software structure the way a chess engine understands board positions. It predicts errors, evaluates fixes, and generates valid software from scratch.
-            </Translate>
-          </p>
-          <p className={styles.aiText}>
-            <Translate id="home.ai.text2">
-              We still use LLMs for natural language understanding. But the core structural intelligence is ours: small, specialized models that cost almost nothing to run.
-            </Translate>
-          </p>
-          <Link className="button button--primary button--lg" to="/ai">
-            <Translate id="home.ai.cta">Learn About Our AI</Translate>
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function CTASection() {
-  return (
-    <section className={styles.section}>
-      <div className="container">
-        <div className={styles.ctaCard}>
-          <Heading as="h2">
-            <Translate id="home.cta.title">Ready to build?</Translate>
-          </Heading>
-          <p>
-            <Translate id="home.cta.text">
-              Start with Orb. Build with Studio. Deploy on Almadar Services.
-            </Translate>
-          </p>
-          <div className={styles.buttons}>
-            <Link className="button button--primary button--lg" href="https://studio.almadar.io">
-              <Translate id="home.cta.start">Start Building</Translate>
-            </Link>
-            <Link className="button button--secondary button--lg" to="/vision">
-              <Translate id="home.cta.vision">Read the Vision</Translate>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 export default function Home(): ReactNode {
   return (
     <Layout
-      title={translate({ id: "home.meta.title", message: "Almadar \u2014 The Physics of Software" })}
+      title={translate({ id: "home.meta.title", message: "Almadar -- The Physics of Software" })}
       description={translate({ id: "home.meta.desc", message: "Almadar builds the language, intelligence, and infrastructure for software that understands itself." })}
     >
-      <Hero />
-      <main>
-        <WorldModelSection />
-        <PillarsSection />
-        <ProofSection />
-        <AISection />
-        <CTASection />
-      </main>
+      <HeroSection
+        tag={translate({ id: "home.hero.tag", message: "AI-Native Platform" })}
+        title={translate({ id: "home.hero.title", message: "The Physics of Software" })}
+        subtitle={translate({ id: "home.hero.subtitle", message: "World models for the agentic era. We build the language, intelligence, and infrastructure for software that understands itself." })}
+        primaryAction={{ label: translate({ id: "home.hero.cta1", message: "Explore Studio" }), href: "https://studio.almadar.io" }}
+        secondaryAction={{ label: translate({ id: "home.hero.cta2", message: "Read the Vision" }), href: "/vision" }}
+      >
+        <BrowserOnly fallback={null}>
+          {() => (
+            <React.Suspense fallback={null}>
+              <AlmadarChat mode="inline" />
+            </React.Suspense>
+          )}
+        </BrowserOnly>
+      </HeroSection>
+
+      <ContentSection>
+        <VStack gap="lg" align="center" className="container">
+          <VStack gap="sm" align="center">
+            <Typography variant="h2">
+              <Translate id="home.idea.title">What is a World Model of Software?</Translate>
+            </Typography>
+            <Typography variant="body" color="muted">
+              <Translate id="home.idea.subtitle">Traditional programming tells computers what to do, step by step. A world model describes how things work: the data, the rules, the behaviors. The compiler turns it into any platform. The model stays the same.</Translate>
+            </Typography>
+          </VStack>
+          <FeatureGrid items={WORLD_MODEL_FEATURES} columns={3} />
+        </VStack>
+      </ContentSection>
+
+      <ContentSection background="alt">
+        <VStack gap="lg" align="center" className="container">
+          <Typography variant="h2">
+            <Translate id="home.pillars.title">Our Products</Translate>
+          </Typography>
+          <FeatureGrid items={PILLARS} columns={3} />
+        </VStack>
+      </ContentSection>
+
+      <ContentSection>
+        <VStack gap="lg" align="center" className="container">
+          <Typography variant="h2">
+            <Translate id="home.proof.title">Proven in Production</Translate>
+          </Typography>
+          <StatsGrid stats={STATS} columns={3} />
+        </VStack>
+      </ContentSection>
+
+      <ContentSection background="dark">
+        <ArticleSection title={translate({ id: "home.ai.title", message: "We Train Our Own Models" })} maxWidth="md">
+          <Typography variant="body" className="text-[var(--color-background)]/80">
+            <Translate id="home.ai.text">
+              We are not a company that wraps LLM APIs and calls it AI. Our neural pipeline understands software structure the way a chess engine understands board positions. It predicts errors, evaluates fixes, and generates valid software from scratch.
+            </Translate>
+          </Typography>
+          <Typography variant="body" className="text-[var(--color-background)]/80">
+            <Translate id="home.ai.text2">
+              We still use LLMs for natural language understanding. But the core structural intelligence is ours: small, specialized models that cost almost nothing to run.
+            </Translate>
+          </Typography>
+          <Link to="/ai">
+            <Button variant="primary" size="lg">
+              <Translate id="home.ai.cta">Learn About Our AI</Translate>
+            </Button>
+          </Link>
+        </ArticleSection>
+      </ContentSection>
+
+      <CTABanner
+        title={translate({ id: "home.cta.title", message: "Ready to build?" })}
+        subtitle={translate({ id: "home.cta.text", message: "Start with Orb. Build with Studio. Deploy on Almadar Services." })}
+        primaryAction={{ label: translate({ id: "home.cta.start", message: "Start Building" }), href: "https://studio.almadar.io" }}
+        secondaryAction={{ label: translate({ id: "home.cta.vision", message: "Read the Vision" }), href: "/vision" }}
+      />
     </Layout>
   );
 }

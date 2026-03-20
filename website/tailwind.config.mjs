@@ -9,8 +9,11 @@
  */
 
 import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
 import path from 'path';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
+const almadarPreset = require('@almadar/ui/tailwind-preset');
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -91,5 +94,6 @@ export default {
       },
     },
   },
+  presets: [almadarPreset],
   plugins: [],
 };

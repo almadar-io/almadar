@@ -7,10 +7,19 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
-import HeroSection from "../components/HeroSection";
 import HeroSchemaAnimation from "../components/HeroSchemaAnimation";
 import JsonHighlight from "../components/JsonHighlight";
 import RenderUIDemo from "../components/RenderUIDemo";
+import {
+  HeroSection,
+  ContentSection,
+  InstallBox,
+  StepFlow,
+  FeatureGrid,
+  VStack,
+  Typography,
+  Box,
+} from "@almadar/ui/marketing";
 import styles from "./developers.module.css";
 import playgroundStyles from "./playground.module.css";
 import { PlaygroundCore } from "./playground";
@@ -30,70 +39,7 @@ function resolveRaw(content: unknown): string {
     : String(content);
 }
 
-// ─── Hero ──────────────────────────────────────────────────────────────────
-
-function DevelopersHero() {
-  return (
-    <HeroSection
-      tag={
-        <Translate id="developers.hero.tag">Programming Language</Translate>
-      }
-      title={
-        <Translate id="developers.hero.title">The Orbital Language</Translate>
-      }
-      subtitle={translate({
-        id: "developers.hero.subtitle",
-        message: "Almadar is a declarative schema language for full-stack applications. Define entities, state machines, and UI in a single .orb file — the compiler generates the rest.",
-      })}
-      buttons={
-        <>
-          <Link
-            className="button button--primary button--lg"
-            to="/docs/getting-started/introduction"
-          >
-            <Translate id="developers.hero.getStarted">Get Started</Translate>
-          </Link>
-          <Link className="button button--secondary button--lg" to="/demos">
-            <Translate id="developers.hero.viewExamples">
-              View Examples
-            </Translate>
-          </Link>
-        </>
-      }
-    />
-  );
-}
-
-// ─── How It Works / Schema Animation ──────────────────────────────────────
-
-function DevelopersAnimation() {
-  return (
-    <section className={styles.animationSection}>
-      <div className="container">
-        <div className={styles.animationHeader}>
-          <Heading as="h2" className={styles.sectionTitle}>
-            <Translate id="developers.animation.title">How It Works</Translate>
-          </Heading>
-          <p className={styles.sectionSubtitle}>
-            <Translate id="developers.animation.subtitle">
-              Every Almadar application is composed of Orbital Units. An Entity
-              holds your data, Traits define behavior as state machines, and
-              Pages bind them to routes. Watch the architecture assemble itself.
-            </Translate>
-          </p>
-        </div>
-        <HeroSchemaAnimation />
-        <p className={styles.animationCaption}>
-          <Translate id="developers.animation.caption">
-            Orbital Unit = Entity + Traits + Pages
-          </Translate>
-        </p>
-      </div>
-    </section>
-  );
-}
-
-// ─── Core Concepts ─────────────────────────────────────────────────────────
+// ─── Core Concepts (interactive, kept as-is) ───────────────────────────────
 
 const ENTITY_SNIPPET = `{
   "name": "Task",
@@ -220,18 +166,16 @@ function CoreConceptCard({
 function CoreConcepts() {
   const [active, setActive] = useState<string>("entity");
   return (
-    <section className={styles.conceptsSection}>
-      <div className="container">
-        <div className={styles.sectionHeader}>
-          <Heading as="h2" className={styles.sectionTitle}>
+    <ContentSection>
+      <VStack gap="lg" align="center" className="container">
+        <VStack gap="sm" align="center">
+          <Typography variant="h2">
             <Translate id="developers.concepts.title">Core Concepts</Translate>
-          </Heading>
-          <p className={styles.sectionSubtitle}>
-            <Translate id="developers.concepts.subtitle">
-              Three building blocks compose every Almadar application
-            </Translate>
-          </p>
-        </div>
+          </Typography>
+          <Typography variant="body" color="muted">
+            <Translate id="developers.concepts.subtitle">Three building blocks compose every Almadar application</Translate>
+          </Typography>
+        </VStack>
         <div className={styles.conceptsGrid}>
           {CONCEPTS.map((c) => (
             <CoreConceptCard
@@ -242,8 +186,8 @@ function CoreConcepts() {
             />
           ))}
         </div>
-      </div>
-    </section>
+      </VStack>
+    </ContentSection>
   );
 }
 
@@ -272,24 +216,16 @@ function LocalizedSchema() {
     <div>
       <div className={styles.schemaTabs}>
         <button
-          className={clsx(
-            styles.schemaTab,
-            activeTab === "en" && styles.schemaTabActive
-          )}
+          className={clsx(styles.schemaTab, activeTab === "en" && styles.schemaTabActive)}
           onClick={() => setActiveTab("en")}
         >
           English
         </button>
         <button
-          className={clsx(
-            styles.schemaTab,
-            activeTab === "local" && styles.schemaTabActive
-          )}
+          className={clsx(styles.schemaTab, activeTab === "local" && styles.schemaTabActive)}
           onClick={() => setActiveTab("local")}
         >
-          <Translate id="developers.quickstart.inYourLanguage">
-            In Your Language
-          </Translate>
+          <Translate id="developers.quickstart.inYourLanguage">In Your Language</Translate>
         </button>
       </div>
       <JsonHighlight
@@ -301,69 +237,40 @@ function LocalizedSchema() {
   );
 }
 
+const QUICKSTART_STEPS = [
+  { title: translate({ id: "developers.quickstart.step1", message: "Install the CLI" }), description: "" },
+  { title: translate({ id: "developers.quickstart.step2", message: "Edit your .orb schema" }), description: "" },
+  { title: translate({ id: "developers.quickstart.step3", message: "Run almadar dev my-app.orb to watch and compile" }), description: "" },
+];
+
 function QuickStart() {
   return (
-    <section className={styles.quickstartSection}>
+    <ContentSection background="alt">
       <div className="container">
         <div className={styles.quickstartLayout}>
-          <div className={styles.quickstartText}>
-            <Heading as="h2" className={styles.sectionTitle}>
-              <Translate id="developers.quickstart.title">
-                First Schema in 60 Seconds
-              </Translate>
-            </Heading>
-            <p className={styles.quickstartDesc}>
-              <Translate id="developers.quickstart.desc">
-                Install the CLI, create your first schema, and compile it to a
-                running application.
-              </Translate>
-            </p>
-            <div className={styles.installBlock}>
-              <code className={styles.installCmd}>
-                npx @almadar/cli new my-app
-              </code>
-            </div>
-            <div className={styles.quickstartSteps}>
-              <div className={styles.step}>
-                <span className={styles.stepNum}>1</span>
-                <span>
-                  <Translate id="developers.quickstart.step1">
-                    Install the CLI
-                  </Translate>
-                </span>
-              </div>
-              <div className={styles.step}>
-                <span className={styles.stepNum}>2</span>
-                <span>
-                  {translate({ id: "developers.quickstart.step2", message: "Edit your .orb schema" })}
-                </span>
-              </div>
-              <div className={styles.step}>
-                <span className={styles.stepNum}>3</span>
-                <span>
-                  {translate({ id: "developers.quickstart.step3", message: "Run almadar dev my-app.orb to watch and compile" })}
-                </span>
-              </div>
-            </div>
-            <Link
-              className="button button--primary"
-              to="/docs/getting-started/introduction"
-            >
-              <Translate id="developers.quickstart.fullGuide">
-                Full Getting Started Guide
-              </Translate>
+          <VStack gap="md">
+            <Typography variant="h2">
+              <Translate id="developers.quickstart.title">First Schema in 60 Seconds</Translate>
+            </Typography>
+            <Typography variant="body" color="muted">
+              <Translate id="developers.quickstart.desc">Install the CLI, create your first schema, and compile it to a running application.</Translate>
+            </Typography>
+            <InstallBox command="npx @almadar/cli new my-app" />
+            <StepFlow steps={QUICKSTART_STEPS} orientation="vertical" />
+            <Link className="button button--primary" to="/docs/getting-started/introduction">
+              <Translate id="developers.quickstart.fullGuide">Full Getting Started Guide</Translate>
             </Link>
-          </div>
+          </VStack>
           <div className={styles.quickstartCode}>
             <LocalizedSchema />
           </div>
         </div>
       </div>
-    </section>
+    </ContentSection>
   );
 }
 
-// ─── Operator Modules ──────────────────────────────────────────────────────
+// ─── Operator Modules (interactive table, kept) ───────────────────────────
 
 type StdlibModuleEntry = {
   id: string;
@@ -380,28 +287,25 @@ const PROB_MODULE = {
   displayName: "Probabilistic Programming",
   description:
     "Distribution sampling (Gaussian, Beta, Poisson), Bayesian inference via rejection sampling, and statistical summaries.",
-  icon: "🎲",
+  icon: "\uD83C\uDFB2",
   operatorCount: 16,
 };
 
 function OperatorModules() {
   const modules = (stdlibModules as { modules: StdlibModuleEntry[] }).modules;
   return (
-    <section className={styles.modulesSection}>
+    <ContentSection>
       <div className="container">
-        <div className={styles.sectionHeader}>
-          <Heading as="h2" className={styles.sectionTitle}>
-            <Translate id="developers.modules.title">
-              Standard Library Modules
-            </Translate>
-          </Heading>
-          <p className={styles.sectionSubtitle}>
-            <Translate id="developers.modules.subtitle">
-              213+ built-in operators across 9 modules — all available as
-              s-expressions in guards and effects
-            </Translate>
-          </p>
-        </div>
+        <VStack gap="lg" align="center">
+          <VStack gap="sm" align="center">
+            <Typography variant="h2">
+              <Translate id="developers.modules.title">Standard Library Modules</Translate>
+            </Typography>
+            <Typography variant="body" color="muted">
+              <Translate id="developers.modules.subtitle">213+ built-in operators across 9 modules -- all available as s-expressions in guards and effects</Translate>
+            </Typography>
+          </VStack>
+        </VStack>
         <div className={styles.modulesTable}>
           {modules.map((mod) => (
             <Link
@@ -413,17 +317,12 @@ function OperatorModules() {
               <span className={styles.moduleName}>{mod.name}</span>
               <span className={styles.moduleCount}>
                 {mod.operators.length}{" "}
-                <Translate id="developers.modules.operators">
-                  operators
-                </Translate>
+                <Translate id="developers.modules.operators">operators</Translate>
               </span>
               <span className={styles.moduleDesc}>{mod.description}</span>
             </Link>
           ))}
-          <Link
-            to="/docs/reference/operators/prob"
-            className={styles.moduleRow}
-          >
+          <Link to="/docs/reference/operators/prob" className={styles.moduleRow}>
             <span className={styles.moduleIcon}>{PROB_MODULE.icon}</span>
             <span className={styles.moduleName}>{PROB_MODULE.name}</span>
             <span className={styles.moduleCount}>
@@ -435,18 +334,16 @@ function OperatorModules() {
         </div>
         <div className={styles.modulesFooter}>
           <Link to="/docs/reference/operators" className={styles.allOperatorsLink}>
-            <Translate id="developers.modules.viewAll">
-              View full operator reference
-            </Translate>{" "}
-            →
+            <Translate id="developers.modules.viewAll">View full operator reference</Translate>{" "}
+            &rarr;
           </Link>
         </div>
       </div>
-    </section>
+    </ContentSection>
   );
 }
 
-// ─── Tutorials ─────────────────────────────────────────────────────────────
+// ─── Tutorials ──────────────────────────────────────────────────────────────
 
 const TUTORIAL_TRACKS = [
   {
@@ -454,8 +351,7 @@ const TUTORIAL_TRACKS = [
     labelId: "developers.tutorials.beginner.label",
     labelDefault: "Beginner",
     descId: "developers.tutorials.beginner.desc",
-    descDefault:
-      "Build your first Orbital Unit, understand state machines, and deploy a working application.",
+    descDefault: "Build your first Orbital Unit, understand state machines, and deploy a working application.",
     items: ["Your first Orbital", "Task Manager from Scratch"],
     to: "/docs/tutorials/beginner/complete-orbital",
     color: "#22c55e",
@@ -465,8 +361,7 @@ const TUTORIAL_TRACKS = [
     labelId: "developers.tutorials.intermediate.label",
     labelDefault: "Intermediate",
     descId: "developers.tutorials.intermediate.desc",
-    descDefault:
-      "Work with UI patterns, write guards with s-expressions, and connect multiple Orbitals.",
+    descDefault: "Work with UI patterns, write guards with s-expressions, and connect multiple Orbitals.",
     items: ["UI Patterns in Depth", "Guard Expressions", "Cross-Orbital Events"],
     to: "/docs/tutorials/intermediate/ui-patterns",
     color: "#f59e0b",
@@ -476,8 +371,7 @@ const TUTORIAL_TRACKS = [
     labelId: "developers.tutorials.advanced.label",
     labelDefault: "Advanced",
     descId: "developers.tutorials.advanced.desc",
-    descDefault:
-      "Build production apps with integrations, AI generation, and custom skills.",
+    descDefault: "Build production apps with integrations, AI generation, and custom skills.",
     items: ["Full Production App", "AI Schema Generation"],
     to: "/docs/tutorials/advanced/full-app",
     color: "#ef4444",
@@ -486,20 +380,18 @@ const TUTORIAL_TRACKS = [
 
 function Tutorials() {
   return (
-    <section className={styles.tutorialsSection}>
+    <ContentSection background="alt">
       <div className="container">
-        <div className={styles.sectionHeader}>
-          <Heading as="h2" className={styles.sectionTitle}>
-            <Translate id="developers.tutorials.title">
-              Tutorial Tracks
-            </Translate>
-          </Heading>
-          <p className={styles.sectionSubtitle}>
-            <Translate id="developers.tutorials.subtitle">
-              Structured paths from zero to production
-            </Translate>
-          </p>
-        </div>
+        <VStack gap="lg" align="center">
+          <VStack gap="sm" align="center">
+            <Typography variant="h2">
+              <Translate id="developers.tutorials.title">Tutorial Tracks</Translate>
+            </Typography>
+            <Typography variant="body" color="muted">
+              <Translate id="developers.tutorials.subtitle">Structured paths from zero to production</Translate>
+            </Typography>
+          </VStack>
+        </VStack>
         <div className={styles.tutorialsGrid}>
           {TUTORIAL_TRACKS.map((track) => (
             <Link key={track.key} to={track.to} className={styles.tutorialCard}>
@@ -518,78 +410,82 @@ function Tutorials() {
                 ))}
               </ul>
               <span className={styles.tutorialCta}>
-                <Translate id="developers.tutorials.start">
-                  Start Track
-                </Translate>{" "}
-                →
+                <Translate id="developers.tutorials.start">Start Track</Translate>{" "}
+                &rarr;
               </span>
             </Link>
           ))}
         </div>
       </div>
-    </section>
+    </ContentSection>
   );
 }
 
-// ─── Playground Section ────────────────────────────────────────────────────
-
-function DevelopersPlayground() {
-  return (
-    <section className={styles.playgroundSection}>
-      <div className="container">
-        <div className={styles.sectionHeader}>
-          <Heading as="h2" className={styles.sectionTitle}>
-            <Translate id="developers.playground.title">
-              Try It in the Browser
-            </Translate>
-          </Heading>
-          <p className={styles.sectionSubtitle}>
-            <Translate id="developers.playground.subtitle">
-              Run Almadar s-expressions live — no installation needed
-            </Translate>
-          </p>
-        </div>
-      </div>
-      <div className={styles.playgroundEmbed}>
-        <BrowserOnly
-          fallback={
-            <div className={playgroundStyles.loadingFallback}>
-              <Translate id="playground.loading">Loading playground...</Translate>
-            </div>
-          }
-        >
-          {() => <PlaygroundCore />}
-        </BrowserOnly>
-      </div>
-    </section>
-  );
-}
-
-// ─── Page ─────────────────────────────────────────────────────────────────
+// ─── Page ──────────────────────────────────────────────────────────────────
 
 export default function Developers(): ReactNode {
   return (
     <Layout
-      title={translate({
-        id: "developers.meta.title",
-        message: "Developers — Almadar",
-      })}
-      description={translate({
-        id: "developers.meta.description",
-        message:
-          "Almadar developer hub — the Orbital Language, operator reference, tutorials, and quick start guide.",
-      })}
+      title={translate({ id: "developers.meta.title", message: "Developers — Almadar" })}
+      description={translate({ id: "developers.meta.description", message: "Almadar developer hub — the Orbital Language, operator reference, tutorials, and quick start guide." })}
     >
-      <DevelopersHero />
-      <main>
-        <DevelopersAnimation />
-        <CoreConcepts />
-        <QuickStart />
-        <OperatorModules />
-        <RenderUIDemo />
-        <DevelopersPlayground />
-        <Tutorials />
-      </main>
+      <HeroSection
+        tag={translate({ id: "developers.hero.tag", message: "Programming Language" })}
+        title={translate({ id: "developers.hero.title", message: "The Orbital Language" })}
+        subtitle={translate({ id: "developers.hero.subtitle", message: "Almadar is a declarative schema language for full-stack applications. Define entities, state machines, and UI in a single .orb file — the compiler generates the rest." })}
+        primaryAction={{ label: translate({ id: "developers.hero.getStarted", message: "Get Started" }), href: "/docs/getting-started/introduction" }}
+        secondaryAction={{ label: translate({ id: "developers.hero.viewExamples", message: "View Examples" }), href: "/demos" }}
+      />
+
+      <ContentSection>
+        <VStack gap="lg" align="center" className="container">
+          <VStack gap="sm" align="center">
+            <Typography variant="h2">
+              <Translate id="developers.animation.title">How It Works</Translate>
+            </Typography>
+            <Typography variant="body" color="muted">
+              <Translate id="developers.animation.subtitle">
+                Every Almadar application is composed of Orbital Units. An Entity holds your data, Traits define behavior as state machines, and Pages bind them to routes. Watch the architecture assemble itself.
+              </Translate>
+            </Typography>
+          </VStack>
+          <HeroSchemaAnimation />
+          <Typography variant="body" color="muted">
+            <Translate id="developers.animation.caption">Orbital Unit = Entity + Traits + Pages</Translate>
+          </Typography>
+        </VStack>
+      </ContentSection>
+
+      <CoreConcepts />
+      <QuickStart />
+      <OperatorModules />
+      <RenderUIDemo />
+
+      <ContentSection>
+        <VStack gap="lg" align="center" className="container">
+          <VStack gap="sm" align="center">
+            <Typography variant="h2">
+              <Translate id="developers.playground.title">Try It in the Browser</Translate>
+            </Typography>
+            <Typography variant="body" color="muted">
+              <Translate id="developers.playground.subtitle">Run Almadar s-expressions live -- no installation needed</Translate>
+            </Typography>
+          </VStack>
+        </VStack>
+        <div className={styles.playgroundEmbed}>
+          <BrowserOnly
+            fallback={
+              <div className={playgroundStyles.loadingFallback}>
+                <Translate id="playground.loading">Loading playground...</Translate>
+              </div>
+            }
+          >
+            {() => <PlaygroundCore />}
+          </BrowserOnly>
+        </div>
+      </ContentSection>
+
+      <Tutorials />
     </Layout>
   );
 }
