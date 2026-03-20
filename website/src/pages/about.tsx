@@ -98,7 +98,7 @@ function StorySection() {
           </p>
           <p>
             <Translate id="about.story.p3">
-              That premise became Orb, the Almadar compiler, and the neural pipeline. It is still early. But seven production projects and 103 standard behaviors later, the premise holds.
+              That premise became Orb, the Almadar compiler, and the neural pipeline. It is still early. But seven production projects and 93 standard behaviors later, the premise holds.
             </Translate>
           </p>
         </article>

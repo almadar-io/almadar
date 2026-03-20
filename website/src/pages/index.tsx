@@ -163,7 +163,7 @@ function PillarsSection() {
 }
 
 const STATS = [
-  { valueId: "home.stats.behaviors.value", value: "129", labelId: "home.stats.behaviors.label", label: "Standard behaviors across 18 domains" },
+  { valueId: "home.stats.behaviors.value", value: "93", labelId: "home.stats.behaviors.label", label: "Standard behaviors across 18 domains" },
   { valueId: "home.stats.projects.value", value: "7", labelId: "home.stats.projects.label", label: "Production projects deployed" },
   { valueId: "home.stats.cost.value", value: "$0.05\u2013$0.35", labelId: "home.stats.cost.label", label: "AI compute cost per application" },
 ];

@@ -40,7 +40,7 @@ const CAPABILITIES = [
     icon: <Target size={28} strokeWidth={1.5} />,
     titleId: "ai.caps.plan.title", title: "Planning",
     descId: "ai.caps.plan.desc",
-    desc: "Masar knows 129 behavioral patterns across 18 domains. Given a partial result and a goal, it produces dependency-ordered instructions with exact parameters. The LLM does not guess what to build. Masar tells it.",
+    desc: "Masar knows 93 behavioral patterns across 18 domains. Given a partial result and a goal, it produces dependency-ordered instructions with exact parameters. The LLM does not guess what to build. Masar tells it.",
   },
   {
     icon: <ShieldCheck size={28} strokeWidth={1.5} />,
@@ -91,7 +91,7 @@ const PIPELINE_STEPS = [
   },
   {
     num: "2", titleId: "ai.pipe.match.title", title: "Match",
-    descId: "ai.pipe.match.desc", desc: "Finds the closest known pattern from the library. 129 patterns across e-commerce, healthcare, CRM, project management, games, and 12 more domains.",
+    descId: "ai.pipe.match.desc", desc: "Finds the closest known pattern from the library. 93 behaviors across e-commerce, healthcare, CRM, project management, games, and 12 more domains.",
   },
   {
     num: "3", titleId: "ai.pipe.plan.title", title: "Plan",
@@ -103,7 +103,7 @@ const PIPELINE_STEPS = [
   },
   {
     num: "5", titleId: "ai.pipe.remember.title", title: "Remember",
-    descId: "ai.pipe.remember.desc", desc: "Stores the completed result as an episode. Over time, episodes cluster into new patterns. The 129 hand-authored patterns are just the seed. The library grows from experience.",
+    descId: "ai.pipe.remember.desc", desc: "Stores the completed result as an episode. Over time, episodes cluster into new patterns. The 93 hand-authored behaviors are just the seed. The library grows from experience.",
   },
 ];
 
@@ -133,7 +133,7 @@ function PipelineSection() {
 const STATS = [
   { value: "< 5ms", label: "Planning latency" },
   { value: "94%", label: "Validity prediction accuracy" },
-  { value: "129", label: "Built-in behavioral patterns" },
+  { value: "93", label: "Built-in behavioral patterns" },
   { value: "18", label: "Domains covered" },
   { value: "20", label: "Error categories detected" },
   { value: "6", label: "API endpoints" },
