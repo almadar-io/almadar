@@ -177,7 +177,6 @@ function CoreConcepts() {
             <Translate id="developers.concepts.subtitle">Three building blocks compose every Almadar application</Translate>
           </Typography>
         </VStack>
-        <Box className="flex justify-center py-8 opacity-80"><ClosedCircuit className="w-full max-w-2xl" /></Box>
         <div className={styles.conceptsGrid}>
           {CONCEPTS.map((c) => (
             <CoreConceptCard
@@ -432,11 +431,13 @@ export default function Developers(): ReactNode {
       description={translate({ id: "developers.meta.description", message: "Almadar developer hub — the Orbital Language, operator reference, tutorials, and quick start guide." })}
     >
       <HeroSection
+        align="left"
         tag={translate({ id: "developers.hero.tag", message: "Programming Language" })}
         title={translate({ id: "developers.hero.title", message: "The Orbital Language" })}
         subtitle={translate({ id: "developers.hero.subtitle", message: "Almadar is a declarative schema language for full-stack applications. Define entities, state machines, and UI in a single .orb file — the compiler generates the rest." })}
         primaryAction={{ label: translate({ id: "developers.hero.getStarted", message: "Get Started" }), href: "/docs/getting-started/introduction" }}
         secondaryAction={{ label: translate({ id: "developers.hero.viewExamples", message: "View Examples" }), href: "/demos" }}
+        backgroundElement={<Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] opacity-50 pointer-events-none hidden lg:block"><ClosedCircuit className="w-full" animated /></Box>}
       />
 
       <ContentSection>

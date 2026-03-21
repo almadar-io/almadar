@@ -60,13 +60,14 @@ export default function Platform(): ReactNode {
       description={translate({ id: "platform.meta.desc", message: "Three products that turn descriptions into running applications: Studio, Services, and Orb." })}
     >
       <HeroSection
+        align="left"
         title={translate({ id: "platform.hero.title", message: "The Platform" })}
         subtitle={translate({ id: "platform.hero.subtitle", message: "Three pillars, one goal: turn formal descriptions of software into running applications." })}
+        backgroundElement={<Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] opacity-50 pointer-events-none hidden lg:block"><ServiceLayers className="w-full" animated /></Box>}
       />
       <ContentSection>
         <VStack gap="lg" align="center" className="container">
           <FeatureGrid items={PILLARS} columns={3} />
-          <Box className="flex justify-center py-8 opacity-80"><ServiceLayers className="w-full max-w-2xl" /></Box>
         </VStack>
       </ContentSection>
       <ContentSection background="alt">

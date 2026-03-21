@@ -22,8 +22,10 @@ export default function Vision(): ReactNode {
       description={translate({ id: "vision.meta.desc", message: "Software that coexists, coordinates, and evolves together. Communities keeping ownership. Composable world models." })}
     >
       <HeroSection
+        align="left"
         title={translate({ id: "vision.hero.title", message: "A Shared Digital Reality" })}
         subtitle={translate({ id: "vision.hero.subtitle", message: "Software that coexists, coordinates, and evolves together." })}
+        backgroundElement={<Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] opacity-50 pointer-events-none hidden lg:block"><ComposableModels className="w-full" animated /></Box>}
       />
 
       <ContentSection>
@@ -41,7 +43,6 @@ export default function Vision(): ReactNode {
           <PullQuote>
             {translate({ id: "vision.coexist.pullquote", message: "Domain knowledge translates directly into code. No translation layers. No glue code." })}
           </PullQuote>
-          <Box className="flex justify-center py-8 opacity-80"><ComposableModels className="w-full max-w-2xl" /></Box>
         </ArticleSection>
       </ContentSection>
 
@@ -62,7 +63,6 @@ export default function Vision(): ReactNode {
           <PullQuote>
             {translate({ id: "vision.ownership.pullquote", message: "Communities build lightweight models they own. Compile to any platform. Evolve on their own terms." })}
           </PullQuote>
-          <Box className="flex justify-center py-8 opacity-80"><CommunityOwnership className="w-full max-w-2xl" /></Box>
         </ArticleSection>
       </ContentSection>
 
@@ -85,7 +85,7 @@ export default function Vision(): ReactNode {
           }
           imagePosition="right"
         >
-          <Box className="flex justify-center py-8 opacity-80"><WorldModel className="w-full max-w-2xl" /></Box>
+          <Box className="w-full"><WorldModel className="w-full" /></Box>
         </SplitSection>
       </ContentSection>
 

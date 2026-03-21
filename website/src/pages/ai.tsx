@@ -59,11 +59,13 @@ export default function AI(): ReactNode {
       description={translate({ id: "ai.meta.desc", message: "Masar gives AI agents structured planning, instant verification, and experience-based memory. The world model that makes any LLM agent smarter." })}
     >
       <HeroSection
+        align="left"
         tag={translate({ id: "ai.hero.tag", message: "Masar" })}
         title={translate({ id: "ai.hero.title", message: "System 2 for AI Agents" })}
         subtitle={translate({ id: "ai.hero.subtitle", message: "Your LLM is fast and intuitive but cannot plan, verify, or remember. Masar gives it a world model: structured planning, instant verification, and experience-based memory." })}
         primaryAction={{ label: translate({ id: "ai.hero.cta1", message: "Get Started" }), href: "https://masar.almadar.io/docs/getting-started/quickstart" }}
         secondaryAction={{ label: translate({ id: "ai.hero.cta2", message: "View API" }), href: "https://masar.almadar.io/docs/api-reference/planning" }}
+        backgroundElement={<Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] opacity-50 pointer-events-none hidden lg:block"><AIGenerates className="w-full" animated /></Box>}
       />
 
       <ContentSection>
@@ -76,7 +78,6 @@ export default function AI(): ReactNode {
               <Translate id="ai.caps.subtitle">LLMs generate text. Masar understands structure.</Translate>
             </Typography>
           </VStack>
-          <Box className="flex justify-center py-8 opacity-80"><AIGenerates className="w-full max-w-2xl" /></Box>
           <FeatureGrid items={CAPABILITIES} columns={3} />
         </VStack>
       </ContentSection>
