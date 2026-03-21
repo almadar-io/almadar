@@ -16,6 +16,7 @@ import {
   Icon,
 } from "@almadar/ui/marketing";
 import { CaseStudyCard } from "@almadar/ui/marketing";
+import { AvlApplication, AvlOrbital, AvlEntity } from "@almadar/ui/illustrations";
 
 const FEATURES = [
   {
@@ -156,6 +157,19 @@ export default function Enterprise(): ReactNode {
         subtitle={translate({ id: "enterprise.subtitle", message: "Scale your development with enterprise-grade features, dedicated support, and custom deployment options." })}
         primaryAction={{ label: translate({ id: "enterprise.cta.contact", message: "Contact Sales" }), href: "#contact" }}
         secondaryAction={{ label: translate({ id: "enterprise.cta.docs", message: "View Documentation" }), href: "/developers" }}
+        backgroundElement={
+          <Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] max-h-[80%] opacity-30 pointer-events-none hidden lg:flex items-center">
+            <svg viewBox="0 0 600 400" fill="none" className="w-full">
+              <AvlApplication x={20} y={20} width={560} height={360} label="Enterprise" />
+              <AvlOrbital cx={150} cy={200} r={80} label="Tenant A" />
+              <AvlEntity x={150} y={200} r={25} fieldCount={4} />
+              <AvlOrbital cx={300} cy={140} r={70} label="Tenant B" />
+              <AvlEntity x={300} y={140} r={20} fieldCount={3} />
+              <AvlOrbital cx={450} cy={220} r={75} label="Tenant C" />
+              <AvlEntity x={450} y={220} r={22} fieldCount={5} />
+            </svg>
+          </Box>
+        }
       />
 
       <ContentSection>

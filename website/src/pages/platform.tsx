@@ -12,7 +12,7 @@ import {
   VStack,
   Typography,
 } from "@almadar/ui/marketing";
-import { ServiceLayers } from "@almadar/ui/illustrations";
+import { AvlOrbital, AvlEntity, AvlBinding } from "@almadar/ui/illustrations";
 
 const PILLARS = [
   {
@@ -63,7 +63,20 @@ export default function Platform(): ReactNode {
         align="left"
         title={translate({ id: "platform.hero.title", message: "The Platform" })}
         subtitle={translate({ id: "platform.hero.subtitle", message: "Three pillars, one goal: turn formal descriptions of software into running applications." })}
-        backgroundElement={<Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] max-h-[80%] opacity-50 pointer-events-none hidden lg:flex items-center"><ServiceLayers className="w-full" animated /></Box>}
+        backgroundElement={
+          <Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] max-h-[80%] opacity-50 pointer-events-none hidden lg:flex items-center">
+            <svg viewBox="0 0 600 200" fill="none" className="w-full">
+              <AvlOrbital cx={100} cy={100} r={70} label="Orb" />
+              <AvlEntity x={100} y={100} r={20} fieldCount={4} />
+              <AvlBinding x1={170} y1={100} x2={230} y2={100} />
+              <AvlOrbital cx={300} cy={100} r={70} label="Studio" />
+              <AvlEntity x={300} y={100} r={20} fieldCount={3} />
+              <AvlBinding x1={370} y1={100} x2={430} y2={100} />
+              <AvlOrbital cx={500} cy={100} r={70} label="Services" />
+              <AvlEntity x={500} y={100} r={20} fieldCount={5} />
+            </svg>
+          </Box>
+        }
       />
       <ContentSection>
         <VStack gap="lg" align="center" className="container">

@@ -13,7 +13,7 @@ import {
   GradientDivider,
   Box,
 } from "@almadar/ui/marketing";
-import { ComposableModels, CommunityOwnership, WorldModel } from "@almadar/ui/illustrations";
+import { AvlOrbitalUnit, AvlEmitListen } from "@almadar/ui/illustrations";
 
 export default function Vision(): ReactNode {
   return (
@@ -25,7 +25,7 @@ export default function Vision(): ReactNode {
         align="left"
         title={translate({ id: "vision.hero.title", message: "A Shared Digital Reality" })}
         subtitle={translate({ id: "vision.hero.subtitle", message: "Software that coexists, coordinates, and evolves together." })}
-        backgroundElement={<Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] max-h-[80%] opacity-50 pointer-events-none hidden lg:flex items-center"><ComposableModels className="w-full" animated /></Box>}
+        backgroundElement={<Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] max-h-[80%] opacity-50 pointer-events-none hidden lg:flex items-center"><AvlOrbitalUnit className="w-full" animated entityName="Domain" fields={5} traits={[{ name: "Lifecycle" }, { name: "Validation" }]} pages={[{ name: "/list" }, { name: "/detail" }]} /></Box>}
       />
 
       <ContentSection>
@@ -85,7 +85,7 @@ export default function Vision(): ReactNode {
           }
           imagePosition="right"
         >
-          <Box className="w-full"><WorldModel className="w-full" /></Box>
+          <Box className="w-full"><AvlEmitListen className="w-full" emitter={{ name: "Orders", fields: 4 }} listener={{ name: "Inventory", fields: 3 }} eventName="ORDER_PLACED" /></Box>
         </SplitSection>
       </ContentSection>
 
