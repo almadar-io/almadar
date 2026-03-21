@@ -7,7 +7,7 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
-import HeroSchemaAnimation from "../components/HeroSchemaAnimation";
+const HeroSchemaAnimation = React.lazy(() => import("../components/HeroSchemaAnimation"));
 import JsonHighlight from "../components/JsonHighlight";
 import RenderUIDemo from "../components/RenderUIDemo";
 import {
@@ -453,7 +453,11 @@ export default function Developers(): ReactNode {
             </Typography>
           </VStack>
           <BrowserOnly fallback={<div style={{ height: 400 }} />}>
-            {() => <HeroSchemaAnimation />}
+            {() => (
+              <React.Suspense fallback={<div style={{ height: 400 }} />}>
+                <HeroSchemaAnimation />
+              </React.Suspense>
+            )}
           </BrowserOnly>
           <Typography variant="body" color="muted">
             <Translate id="developers.animation.caption">Orbital Unit = Entity + Traits + Pages</Translate>
