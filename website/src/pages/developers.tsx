@@ -8,7 +8,9 @@ import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
 import JsonHighlight from "../components/JsonHighlight";
-import RenderUIDemo from "../components/RenderUIDemo";
+// RenderUIDemo imports @almadar/ui which accesses window at module scope.
+// Lazy-load it inside BrowserOnly to prevent SSG failure.
+// import RenderUIDemo from "../components/RenderUIDemo";
 import {
   HeroSection,
   ContentSection,
@@ -466,7 +468,12 @@ export default function Developers(): ReactNode {
       <CoreConcepts />
       <QuickStart />
       <OperatorModules />
-      <RenderUIDemo />
+      <BrowserOnly fallback={<div style={{ minHeight: 400 }} />}>
+        {() => {
+          const RenderUIDemo = require("../components/RenderUIDemo").default;
+          return <RenderUIDemo />;
+        }}
+      </BrowserOnly>
 
       <ContentSection>
         <VStack gap="lg" align="center" className="container">
