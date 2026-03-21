@@ -452,7 +452,9 @@ export default function Developers(): ReactNode {
               </Translate>
             </Typography>
           </VStack>
-          <HeroSchemaAnimation />
+          <BrowserOnly fallback={<div style={{ height: 400 }} />}>
+            {() => <HeroSchemaAnimation />}
+          </BrowserOnly>
           <Typography variant="body" color="muted">
             <Translate id="developers.animation.caption">Orbital Unit = Entity + Traits + Pages</Translate>
           </Typography>
