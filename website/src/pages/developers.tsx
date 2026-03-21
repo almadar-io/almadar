@@ -20,6 +20,7 @@ import {
   Typography,
   Box,
 } from "@almadar/ui/marketing";
+import { ClosedCircuit } from "@almadar/ui/illustrations";
 import styles from "./developers.module.css";
 import playgroundStyles from "./playground.module.css";
 import { PlaygroundCore } from "./playground";
@@ -176,6 +177,7 @@ function CoreConcepts() {
             <Translate id="developers.concepts.subtitle">Three building blocks compose every Almadar application</Translate>
           </Typography>
         </VStack>
+        <Box className="flex justify-center py-8"><ClosedCircuit className="w-full max-w-md" /></Box>
         <div className={styles.conceptsGrid}>
           {CONCEPTS.map((c) => (
             <CoreConceptCard

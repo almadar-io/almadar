@@ -8,7 +8,11 @@ import {
   FeatureGrid,
   StepFlow,
   CTABanner,
+  Box,
+  VStack,
+  Typography,
 } from "@almadar/ui/marketing";
+import { ServiceLayers } from "@almadar/ui/illustrations";
 
 const PILLARS = [
   {
@@ -60,7 +64,10 @@ export default function Platform(): ReactNode {
         subtitle={translate({ id: "platform.hero.subtitle", message: "Three pillars, one goal: turn formal descriptions of software into running applications." })}
       />
       <ContentSection>
-        <FeatureGrid items={PILLARS} columns={3} />
+        <VStack gap="lg" align="center" className="container">
+          <FeatureGrid items={PILLARS} columns={3} />
+          <Box className="flex justify-center py-8"><ServiceLayers className="w-full max-w-md" /></Box>
+        </VStack>
       </ContentSection>
       <ContentSection background="alt">
         <StepFlow steps={STEPS} orientation="horizontal" showConnectors />

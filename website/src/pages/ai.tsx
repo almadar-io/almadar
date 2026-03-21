@@ -13,7 +13,9 @@ import {
   VStack,
   Typography,
   Button,
+  Box,
 } from "@almadar/ui/marketing";
+import { AIGenerates } from "@almadar/ui/illustrations";
 
 const CAPABILITIES = [
   {
@@ -74,6 +76,7 @@ export default function AI(): ReactNode {
               <Translate id="ai.caps.subtitle">LLMs generate text. Masar understands structure.</Translate>
             </Typography>
           </VStack>
+          <Box className="flex justify-center py-8"><AIGenerates className="w-full max-w-md" /></Box>
           <FeatureGrid items={CAPABILITIES} columns={3} />
         </VStack>
       </ContentSection>

@@ -11,7 +11,9 @@ import {
   Typography,
   PullQuote,
   GradientDivider,
+  Box,
 } from "@almadar/ui/marketing";
+import { ComposableModels, CommunityOwnership, WorldModel } from "@almadar/ui/illustrations";
 
 export default function Vision(): ReactNode {
   return (
@@ -39,6 +41,7 @@ export default function Vision(): ReactNode {
           <PullQuote>
             {translate({ id: "vision.coexist.pullquote", message: "Domain knowledge translates directly into code. No translation layers. No glue code." })}
           </PullQuote>
+          <Box className="flex justify-center py-8"><ComposableModels className="w-full max-w-md" /></Box>
         </ArticleSection>
       </ContentSection>
 
@@ -59,6 +62,7 @@ export default function Vision(): ReactNode {
           <PullQuote>
             {translate({ id: "vision.ownership.pullquote", message: "Communities build lightweight models they own. Compile to any platform. Evolve on their own terms." })}
           </PullQuote>
+          <Box className="flex justify-center py-8"><CommunityOwnership className="w-full max-w-md" /></Box>
         </ArticleSection>
       </ContentSection>
 
@@ -67,15 +71,21 @@ export default function Vision(): ReactNode {
       <ContentSection>
         <SplitSection
           title={translate({ id: "vision.models.title", message: "Composable World Models" })}
-          description={translate({ id: "vision.models.p1", message: "A world model is a formal description of how a domain works: what exists, how it changes, what the rules are. In .orb, a healthcare scheduling system and an inventory tracker are both world models. They can be validated independently and composed together." })}
-          image={{ src: "/img/vision-composable.png", alt: "Composable world models" }}
+          description={
+            <>
+              <Typography variant="body" color="muted">
+                <Translate id="vision.models.p1">A world model is a formal description of how a domain works: what exists, how it changes, what the rules are. In .orb, a healthcare scheduling system and an inventory tracker are both world models. They can be validated independently and composed together.</Translate>
+              </Typography>
+              <Typography variant="body">
+                <Translate id="vision.models.p2">
+                  This is the long game. When enough domains have formal models, software stops being a collection of isolated programs and becomes a shared, interoperable digital reality. Each model is a building block. Each composition creates something new.
+                </Translate>
+              </Typography>
+            </>
+          }
           imagePosition="right"
         >
-          <Typography variant="body">
-            <Translate id="vision.models.p2">
-              This is the long game. When enough domains have formal models, software stops being a collection of isolated programs and becomes a shared, interoperable digital reality. Each model is a building block. Each composition creates something new.
-            </Translate>
-          </Typography>
+          <Box className="flex justify-center py-8"><WorldModel className="w-full max-w-md" /></Box>
         </SplitSection>
       </ContentSection>
 
