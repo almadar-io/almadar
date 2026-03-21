@@ -43,7 +43,7 @@
     --color-warning-foreground: #000000;
     --color-info: #0ea5e9;
     --color-info-foreground: #ffffff;
-    --font-family:
+    --font-family: "Inter", system-ui, sans-serif;
     --font-weight-normal: 400;
     --font-weight-medium: 500;
     --font-weight-bold: 600;
@@ -108,7 +108,7 @@
     --color-warning-foreground: #000000;
     --color-info: #38bdf8;
     --color-info-foreground: #000000;
-    --font-family:
+    --font-family: "Inter", system-ui, sans-serif;
     --font-weight-normal: 400;
     --font-weight-medium: 500;
     --font-weight-bold: 600;

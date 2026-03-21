@@ -25,17 +25,17 @@ interface SiteConfig {
 }
 
 const SITE_ICONS: Record<string, { logo: string; favicon: string }> = {
-  main: { logo: "img/almadar-icon-512.png", favicon: "img/favicon.ico" },
-  orb: { logo: "img/orb-icon-512.png", favicon: "img/favicon.ico" },
-  studio: { logo: "img/studio-icon.svg", favicon: "img/favicon.ico" },
-  services: { logo: "img/services-icon.svg", favicon: "img/favicon.ico" },
+  main: { logo: "img/almadar-icon-transparent.svg", favicon: "img/almadar-icon-transparent.svg" },
+  orb: { logo: "img/orb-icon-transparent.svg", favicon: "img/orb-icon-transparent.svg" },
+  studio: { logo: "img/studio-icon-transparent.svg", favicon: "img/studio-icon-transparent.svg" },
+  services: { logo: "img/services-icon-transparent.svg", favicon: "img/services-icon-transparent.svg" },
+  masar: { logo: "img/masar-icon.svg", favicon: "img/masar-icon.svg" },
 };
 
 const PRODUCT_SITES = [
   { site: 'studio' as const, label: "Studio", href: "https://studio.almadar.io", description: "Build apps with AI" },
   { site: 'services' as const, label: "Services", href: "https://services.almadar.io", description: "Cloud infrastructure" },
   { site: 'orb' as const, label: "Orb", href: "https://orb.almadar.io", description: "A programming language" },
-  { site: 'masar' as const, label: "Masar", href: "https://masar.almadar.io", description: "AI world model" },
 ];
 
 function buildProductsDropdown(currentSite: string) {
@@ -52,7 +52,7 @@ function buildProductsDropdown(currentSite: string) {
 }
 
 export function createConfig(opts: SiteConfig): Config {
-  // Site root is two levels up from shared/config/
+  // In the standalone repo, the site root is two levels up from shared/config/
   const siteDir = path.resolve(__dirname, '../..');
 
   return {
@@ -62,7 +62,7 @@ export function createConfig(opts: SiteConfig): Config {
     url: opts.url,
     baseUrl: opts.baseUrl || "/",
     organizationName: "almadar-io",
-    projectName: "almadar",
+    projectName: "services",
     onBrokenLinks: "warn",
     onBrokenAnchors: "warn",
     markdown: { hooks: { onBrokenMarkdownLinks: "warn", onBrokenMarkdownImages: "warn" } },
@@ -109,12 +109,10 @@ export function createConfig(opts: SiteConfig): Config {
                 alias: {
                   // Shared components accessible from all sites
                   '@shared': path.resolve(__dirname, '../components'),
-                  // Resolve @almadar/std from local monorepo (not published to npm)
-                  '@almadar/std': path.resolve(__dirname, '../../../packages/almadar-std'),
-                  // Deduplicate react-router: force all imports to the website's
+                  // Deduplicate react-router: force all imports to a
                   // single v5 copy so Router context is shared across the bundle.
-                  'react-router': path.resolve(__dirname, '../../node_modules/react-router'),
-                  'react-router-dom': path.resolve(__dirname, '../../node_modules/react-router-dom'),
+                  'react-router': path.dirname(require.resolve('react-router/package.json')),
+                  'react-router-dom': path.dirname(require.resolve('react-router-dom/package.json')),
                 },
                 // Node core modules are not available in the browser; stub them out
                 // (almadar-runtime pulls in fs/path for its Node-side external loader)
@@ -152,7 +150,6 @@ export function createConfig(opts: SiteConfig): Config {
                     test: /\.js$/,
                     include: [
                       /node_modules\/(react-markdown|unified|bail|extend-error|is-plain-obj|trough|vfile|vfile-message|unist-util-|hast-util-|hast-to-hyperscript|mdast-util-|remark-|rehype-|micromark)/,
-                      /packages\/almadar-std\/dist/,
                       /node_modules\/@almadar\/patterns/,
                       /node_modules\/@almadar\/ui/,
                     ],
@@ -195,7 +192,7 @@ export function createConfig(opts: SiteConfig): Config {
         items: [
           ...(opts.navbarItems || []),
           buildProductsDropdown(opts.site),
-          { href: "https://github.com/almadar-io/almadar", label: "GitHub", position: "right" as const },
+          { href: "https://github.com/almadar-io/services", label: "GitHub", position: "right" as const },
           { href: "https://discord.gg/q83VjPJx", label: "Discord", position: "right" as const },
           { type: "localeDropdown" as const, position: "right" as const },
         ],
@@ -209,14 +206,13 @@ export function createConfig(opts: SiteConfig): Config {
               { label: "Studio", href: "https://studio.almadar.io" },
               { label: "Services", href: "https://services.almadar.io" },
               { label: "Orb", href: "https://orb.almadar.io" },
-              { label: "Masar", href: "https://masar.almadar.io" },
             ],
           },
           {
             title: "Community",
             items: [
               { label: "Discord", href: "https://discord.gg/q83VjPJx" },
-              { label: "GitHub", href: "https://github.com/almadar-io/almadar" },
+              { label: "GitHub", href: "https://github.com/almadar-io/services" },
               { label: "LinkedIn", href: "https://www.linkedin.com/company/almadar-io" },
             ],
           },

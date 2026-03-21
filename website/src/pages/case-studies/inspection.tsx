@@ -6,10 +6,12 @@ import {
   HeroSection,
   ContentSection,
   ArticleSection,
-  StatsGrid,
   CTABanner,
   Typography,
   VStack,
+  GradientDivider,
+  AnimatedCounter,
+  SimpleGrid,
 } from "@almadar/ui/marketing";
 
 const RESULTS = [
@@ -79,8 +81,14 @@ export default function InspectionCaseStudy(): ReactNode {
         </ArticleSection>
       </ContentSection>
 
-      <ContentSection background="alt">
-        <StatsGrid stats={RESULTS} columns={3} />
+      <GradientDivider />
+
+      <ContentSection background="alt" padding="lg">
+        <SimpleGrid cols={3} gap="lg" className="w-full">
+          {RESULTS.map((stat) => (
+            <AnimatedCounter key={stat.label} value={stat.value} label={stat.label} />
+          ))}
+        </SimpleGrid>
       </ContentSection>
 
       <CTABanner

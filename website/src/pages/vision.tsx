@@ -9,6 +9,8 @@ import {
   CTABanner,
   ContentSection,
   Typography,
+  PullQuote,
+  GradientDivider,
 } from "@almadar/ui/marketing";
 
 export default function Vision(): ReactNode {
@@ -36,8 +38,13 @@ export default function Vision(): ReactNode {
               We believe software should share a common grammar. The idea flows seamlessly: a nurse identifies a need on the floor, and that domain knowledge translates directly into .orb. Data flows without translation layers. Rules compose without glue code.
             </Translate>
           </Typography>
+          <PullQuote>
+            {translate({ id: "vision.coexist.pullquote", message: "Domain knowledge translates directly into code. No translation layers. No glue code." })}
+          </PullQuote>
         </ArticleSection>
       </ContentSection>
+
+      <GradientDivider />
 
       <ContentSection background="alt">
         <ArticleSection title={translate({ id: "vision.ownership.title", message: "Communities Keep Ownership" })}>
@@ -51,8 +58,13 @@ export default function Vision(): ReactNode {
               Almadar changes this with an efficiency-first, "Go Green" philosophy. Orb is open source. The standard library is open source. When a community describes their domain in Orb, they build lightweight, efficient models that they own. They can compile it to any platform, host it sustainably anywhere, and evolve it on their own terms.
             </Translate>
           </Typography>
+          <PullQuote>
+            {translate({ id: "vision.ownership.pullquote", message: "Communities build lightweight models they own. Compile to any platform. Evolve on their own terms." })}
+          </PullQuote>
         </ArticleSection>
       </ContentSection>
+
+      <GradientDivider />
 
       <ContentSection>
         <SplitSection
