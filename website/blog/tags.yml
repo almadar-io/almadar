@@ -6,10 +6,6 @@ release:
   label: Release
   description: New releases and updates
 
-tutorial:
-  label: Tutorial
-  description: Guides and how-tos
-
 architecture:
   label: Architecture
   description: Deep dives into Almadar's architecture
@@ -17,10 +13,6 @@ architecture:
 community:
   label: Community
   description: Community news and contributions
-
-state-machines:
-  label: State Machines
-  description: Posts about state machine patterns and concepts
 
 ai:
   label: AI & Machine Learning
@@ -34,17 +26,9 @@ story:
   label: Story
   description: Origin stories and personal narratives from the team
 
-robotics:
-  label: Robotics
-  description: Robotics and autonomous systems
-
 vision:
   label: Vision
   description: Long-term vision and future directions
-
-automation:
-  label: Automation
-  description: Automated systems and workflows
 
 enterprise:
   label: Enterprise
@@ -54,57 +38,9 @@ compliance:
   label: Compliance
   description: Regulatory compliance and standards
 
-compiler:
-  label: Compiler
-  description: Compiler design and implementation
-
-rust:
-  label: Rust
-  description: Rust programming language
-
-engineering:
-  label: Engineering
-  description: Software engineering practices
-
-gaming:
-  label: Gaming
-  description: Game development and design
-
-composition:
-  label: Composition
-  description: Compositional patterns and architecture
-
-case-study:
-  label: Case Study
-  description: Real-world case studies and examples
-
-startups:
-  label: Startups
-  description: Startup journey and lessons learned
-
-productivity:
-  label: Productivity
-  description: Developer productivity and tools
-
-language-design:
-  label: Language Design
-  description: Programming language design and theory
-
-game-design:
-  label: Game Design
-  description: Game design principles and patterns
-
 business:
   label: Business
   description: Business strategy and operations
-
-ai-safety:
-  label: AI Safety
-  description: AI safety and responsible development
-
-orbital:
-  label: Orbital
-  description: Orbital architecture and patterns
 
 sovereignty:
   label: Sovereignty
