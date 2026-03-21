@@ -63,7 +63,7 @@ export default function Platform(): ReactNode {
         align="left"
         title={translate({ id: "platform.hero.title", message: "The Platform" })}
         subtitle={translate({ id: "platform.hero.subtitle", message: "Three pillars, one goal: turn formal descriptions of software into running applications." })}
-        backgroundElement={<Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] opacity-50 pointer-events-none hidden lg:block"><ServiceLayers className="w-full" animated /></Box>}
+        backgroundElement={<Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] max-h-[80%] opacity-50 pointer-events-none hidden lg:flex items-center"><ServiceLayers className="w-full" animated /></Box>}
       />
       <ContentSection>
         <VStack gap="lg" align="center" className="container">

@@ -25,7 +25,7 @@ export default function Vision(): ReactNode {
         align="left"
         title={translate({ id: "vision.hero.title", message: "A Shared Digital Reality" })}
         subtitle={translate({ id: "vision.hero.subtitle", message: "Software that coexists, coordinates, and evolves together." })}
-        backgroundElement={<Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] opacity-50 pointer-events-none hidden lg:block"><ComposableModels className="w-full" animated /></Box>}
+        backgroundElement={<Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] max-h-[80%] opacity-50 pointer-events-none hidden lg:flex items-center"><ComposableModels className="w-full" animated /></Box>}
       />
 
       <ContentSection>

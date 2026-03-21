@@ -437,7 +437,7 @@ export default function Developers(): ReactNode {
         subtitle={translate({ id: "developers.hero.subtitle", message: "Almadar is a declarative schema language for full-stack applications. Define entities, state machines, and UI in a single .orb file — the compiler generates the rest." })}
         primaryAction={{ label: translate({ id: "developers.hero.getStarted", message: "Get Started" }), href: "/docs/getting-started/introduction" }}
         secondaryAction={{ label: translate({ id: "developers.hero.viewExamples", message: "View Examples" }), href: "/demos" }}
-        backgroundElement={<Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] opacity-50 pointer-events-none hidden lg:block"><ClosedCircuit className="w-full" animated /></Box>}
+        backgroundElement={<Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] max-h-[80%] opacity-50 pointer-events-none hidden lg:flex items-center"><ClosedCircuit className="w-full" animated /></Box>}
       />
 
       <ContentSection>
