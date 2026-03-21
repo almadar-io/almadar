@@ -5,6 +5,14 @@
  * Keeps var(--almadar-sand-gold), var(--almadar-midnight*), var(--almadar-parchment*) as shared constants.
  */
 
+/* === Hide Docusaurus default search bar across all sites === */
+.navbar .DocSearch,
+.navbar .navbar__search,
+.navbar [class*="searchBar"],
+.navbar [class*="SearchBar"] {
+    display: none !important;
+}
+
 /* === Gold Utilities (shared brand constant) === */
 :root {
     --almadar-sand-gold: #c9a227;
