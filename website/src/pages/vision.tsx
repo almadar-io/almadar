@@ -22,8 +22,6 @@ export default function Vision(): ReactNode {
       <HeroSection
         title={translate({ id: "vision.hero.title", message: "A Shared Digital Reality" })}
         subtitle={translate({ id: "vision.hero.subtitle", message: "Software that coexists, coordinates, and evolves together." })}
-        image={{ src: "/img/vision-hero.png", alt: "" }}
-        imagePosition="below"
       />
 
       <ContentSection>
