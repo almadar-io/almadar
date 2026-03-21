@@ -1,7 +1,0 @@
-/**
- * Theme index - exports all theme CSS files
- */
-
-@import "./kflow.css";
-@import "./kflow-playful.css";
-@import "./trait-wars.css";

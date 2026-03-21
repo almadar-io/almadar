@@ -18,6 +18,7 @@ import {
 } from "@almadar/ui/marketing";
 
 const AlmadarChat = React.lazy(() => import("@shared/AlmadarChat"));
+import { OrbitalHeroBackground } from "../components/OrbitalHeroBackground";
 
 const WORLD_MODEL_FEATURES = [
   {
@@ -98,6 +99,7 @@ export default function Home(): ReactNode {
         subtitle={translate({ id: "home.hero.subtitle", message: "World models for the agentic era. We build the language, intelligence, and infrastructure for software that understands itself." })}
         primaryAction={{ label: translate({ id: "home.hero.cta1", message: "Explore Studio" }), href: "https://studio.almadar.io" }}
         secondaryAction={{ label: translate({ id: "home.hero.cta2", message: "Read the Vision" }), href: "/vision" }}
+        backgroundElement={<OrbitalHeroBackground intensity="full" />}
       >
         <BrowserOnly fallback={null}>
           {() => (
