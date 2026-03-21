@@ -177,7 +177,7 @@ function CoreConcepts() {
             <Translate id="developers.concepts.subtitle">Three building blocks compose every Almadar application</Translate>
           </Typography>
         </VStack>
-        <Box className="flex justify-center py-8"><ClosedCircuit className="w-full max-w-md" /></Box>
+        <Box className="flex justify-center py-8 opacity-80"><ClosedCircuit className="w-full max-w-2xl" /></Box>
         <div className={styles.conceptsGrid}>
           {CONCEPTS.map((c) => (
             <CoreConceptCard

@@ -41,7 +41,7 @@ export default function Vision(): ReactNode {
           <PullQuote>
             {translate({ id: "vision.coexist.pullquote", message: "Domain knowledge translates directly into code. No translation layers. No glue code." })}
           </PullQuote>
-          <Box className="flex justify-center py-8"><ComposableModels className="w-full max-w-md" /></Box>
+          <Box className="flex justify-center py-8 opacity-80"><ComposableModels className="w-full max-w-2xl" /></Box>
         </ArticleSection>
       </ContentSection>
 
@@ -62,7 +62,7 @@ export default function Vision(): ReactNode {
           <PullQuote>
             {translate({ id: "vision.ownership.pullquote", message: "Communities build lightweight models they own. Compile to any platform. Evolve on their own terms." })}
           </PullQuote>
-          <Box className="flex justify-center py-8"><CommunityOwnership className="w-full max-w-md" /></Box>
+          <Box className="flex justify-center py-8 opacity-80"><CommunityOwnership className="w-full max-w-2xl" /></Box>
         </ArticleSection>
       </ContentSection>
 
@@ -85,7 +85,7 @@ export default function Vision(): ReactNode {
           }
           imagePosition="right"
         >
-          <Box className="flex justify-center py-8"><WorldModel className="w-full max-w-md" /></Box>
+          <Box className="flex justify-center py-8 opacity-80"><WorldModel className="w-full max-w-2xl" /></Box>
         </SplitSection>
       </ContentSection>
 

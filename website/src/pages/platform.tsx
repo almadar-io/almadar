@@ -66,7 +66,7 @@ export default function Platform(): ReactNode {
       <ContentSection>
         <VStack gap="lg" align="center" className="container">
           <FeatureGrid items={PILLARS} columns={3} />
-          <Box className="flex justify-center py-8"><ServiceLayers className="w-full max-w-md" /></Box>
+          <Box className="flex justify-center py-8 opacity-80"><ServiceLayers className="w-full max-w-2xl" /></Box>
         </VStack>
       </ContentSection>
       <ContentSection background="alt">

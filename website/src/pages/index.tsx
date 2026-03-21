@@ -16,7 +16,6 @@ import {
   Box,
   Button,
 } from "@almadar/ui/marketing";
-import { OrbitalUnit } from "@almadar/ui/illustrations";
 
 const AlmadarChat = React.lazy(() => import("@shared/AlmadarChat"));
 import { OrbitalHeroBackground } from "../components/OrbitalHeroBackground";
@@ -121,7 +120,6 @@ export default function Home(): ReactNode {
               <Translate id="home.idea.subtitle">Traditional programming tells computers what to do, step by step. A world model describes how things work: the data, the rules, the behaviors. The compiler turns it into any platform. The model stays the same.</Translate>
             </Typography>
           </VStack>
-          <Box className="flex justify-center py-8"><OrbitalUnit className="w-full max-w-md" /></Box>
           <FeatureGrid items={WORLD_MODEL_FEATURES} columns={3} />
         </VStack>
       </ContentSection>

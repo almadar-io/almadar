@@ -76,7 +76,7 @@ export default function AI(): ReactNode {
               <Translate id="ai.caps.subtitle">LLMs generate text. Masar understands structure.</Translate>
             </Typography>
           </VStack>
-          <Box className="flex justify-center py-8"><AIGenerates className="w-full max-w-md" /></Box>
+          <Box className="flex justify-center py-8 opacity-80"><AIGenerates className="w-full max-w-2xl" /></Box>
           <FeatureGrid items={CAPABILITIES} columns={3} />
         </VStack>
       </ContentSection>
