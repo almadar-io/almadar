@@ -97,8 +97,7 @@ export default function Home(): ReactNode {
         tag={translate({ id: "home.hero.tag", message: "AI-Native Platform" })}
         title={translate({ id: "home.hero.title", message: "The Physics of Software" })}
         subtitle={translate({ id: "home.hero.subtitle", message: "World models for the agentic era. We build the language, intelligence, and infrastructure for software that understands itself." })}
-        primaryAction={{ label: translate({ id: "home.hero.cta1", message: "Explore Studio" }), href: "https://studio.almadar.io" }}
-        secondaryAction={{ label: translate({ id: "home.hero.cta2", message: "Read the Vision" }), href: "/vision" }}
+        primaryAction={{ label: translate({ id: "home.hero.cta1", message: "Read the Vision" }), href: "/vision" }}
         backgroundElement={<OrbitalHeroBackground intensity="full" />}
       >
         <BrowserOnly fallback={null}>
