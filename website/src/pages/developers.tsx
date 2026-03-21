@@ -21,7 +21,7 @@ import {
   Typography,
   Box,
 } from "@almadar/ui/marketing";
-import { ClosedCircuit } from "@almadar/ui/illustrations";
+import { AvlClosedCircuit } from "@almadar/ui/illustrations";
 import styles from "./developers.module.css";
 import playgroundStyles from "./playground.module.css";
 import { PlaygroundCore } from "./playground";
@@ -438,7 +438,7 @@ export default function Developers(): ReactNode {
         subtitle={translate({ id: "developers.hero.subtitle", message: "Almadar is a declarative schema language for full-stack applications. Define entities, state machines, and UI in a single .orb file — the compiler generates the rest." })}
         primaryAction={{ label: translate({ id: "developers.hero.getStarted", message: "Get Started" }), href: "/docs/getting-started/introduction" }}
         secondaryAction={{ label: translate({ id: "developers.hero.viewExamples", message: "View Examples" }), href: "/demos" }}
-        backgroundElement={<Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] max-h-[80%] opacity-50 pointer-events-none hidden lg:flex items-center"><ClosedCircuit className="w-full" animated /></Box>}
+        backgroundElement={<Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] max-h-[80%] opacity-50 pointer-events-none hidden lg:flex items-center"><AvlClosedCircuit className="w-full" animated states={[{ name: "Event" }, { name: "Guard" }, { name: "Transition" }, { name: "Effects" }, { name: "UI" }]} transitions={[{ from: "Event", to: "Guard", event: "trigger" }, { from: "Guard", to: "Transition", guard: "check" }, { from: "Transition", to: "Effects" }, { from: "Effects", to: "UI", effects: ["render-ui"] }, { from: "UI", to: "Event", event: "user-action" }]} /></Box>}
       />
 
       <ContentSection>

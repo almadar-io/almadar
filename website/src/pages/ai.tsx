@@ -15,7 +15,7 @@ import {
   Button,
   Box,
 } from "@almadar/ui/marketing";
-import { AIGenerates } from "@almadar/ui/illustrations";
+import { AvlOrbitalUnit } from "@almadar/ui/illustrations";
 
 const CAPABILITIES = [
   {
@@ -65,7 +65,7 @@ export default function AI(): ReactNode {
         subtitle={translate({ id: "ai.hero.subtitle", message: "Your LLM is fast and intuitive but cannot plan, verify, or remember. Masar gives it a world model: structured planning, instant verification, and experience-based memory." })}
         primaryAction={{ label: translate({ id: "ai.hero.cta1", message: "Get Started" }), href: "https://masar.almadar.io/docs/getting-started/quickstart" }}
         secondaryAction={{ label: translate({ id: "ai.hero.cta2", message: "View API" }), href: "https://masar.almadar.io/docs/api-reference/planning" }}
-        backgroundElement={<Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] max-h-[80%] opacity-50 pointer-events-none hidden lg:flex items-center"><AIGenerates className="w-full" animated /></Box>}
+        backgroundElement={<Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] max-h-[80%] opacity-50 pointer-events-none hidden lg:flex items-center"><AvlOrbitalUnit className="w-full" animated entityName="Generated" fields={6} traits={[{ name: "AI-Lifecycle" }, { name: "Validation" }, { name: "Persistence" }]} pages={[{ name: "/dashboard" }, { name: "/detail" }]} /></Box>}
       />
 
       <ContentSection>
