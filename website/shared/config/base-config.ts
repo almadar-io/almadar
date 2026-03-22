@@ -91,6 +91,11 @@ export function createConfig(opts: SiteConfig): Config {
       ...(opts.staticDirectories || []),
     ],
 
+    // Register Orb syntax highlighting with Prism on client load
+    clientModules: [
+      path.resolve(__dirname, '../theme/register-orb-prism.ts'),
+    ],
+
     plugins: [
       // Tailwind CSS
       function tailwindPlugin() {
