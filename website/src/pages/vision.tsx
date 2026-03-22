@@ -25,7 +25,8 @@ export default function Vision(): ReactNode {
         align="left"
         title={translate({ id: "vision.hero.title", message: "A Shared Digital Reality" })}
         subtitle={translate({ id: "vision.hero.subtitle", message: "Software that coexists, coordinates, and evolves together." })}
-        backgroundElement={<Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] max-h-[80%] opacity-50 pointer-events-none hidden lg:flex items-center"><AvlOrbitalUnit className="w-full" animated entityName="Domain" fields={5} traits={[{ name: "Lifecycle" }, { name: "Validation" }]} pages={[{ name: "/list" }, { name: "/detail" }]} /></Box>}
+        className="!overflow-visible"
+        backgroundElement={<Box className="absolute right-8 top-[15%] w-[40%] opacity-50 pointer-events-none hidden lg:flex items-start"><AvlOrbitalUnit className="w-full" animated entityName="Domain" fields={5} traits={[{ name: "Lifecycle" }, { name: "Validation" }]} pages={[{ name: "/list" }, { name: "/detail" }]} /></Box>}
       />
 
       <ContentSection>
