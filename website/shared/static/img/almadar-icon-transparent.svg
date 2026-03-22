@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="64" height="64" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="64" height="64" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <linearGradient id="almadarGradient" x1="50%" y1="0%" x2="50%" y2="100%">
-            <stop offset="0%" stop-color="#5eead4" />
-            <stop offset="50%" stop-color="#2dd4bf" />
-            <stop offset="100%" stop-color="#14b8a6" />
+            <stop offset="0%" stop-color="#67e8f9" />
+            <stop offset="40%" stop-color="#2dd4bf" />
+            <stop offset="100%" stop-color="#0d9488" />
         </linearGradient>
     </defs>
-    <!-- Upper lobe -->
-    <ellipse cx="50" cy="30" rx="20" ry="24" fill="none" stroke="url(#almadarGradient)" stroke-width="4" />
-    <ellipse cx="50" cy="33" rx="14" ry="17" fill="none" stroke="url(#almadarGradient)" stroke-width="3" opacity="0.6" />
-    <ellipse cx="50" cy="36" rx="8" ry="10" fill="none" stroke="url(#almadarGradient)" stroke-width="2.5" opacity="0.4" />
-    <!-- Lower lobe -->
-    <ellipse cx="50" cy="70" rx="20" ry="24" fill="none" stroke="url(#almadarGradient)" stroke-width="4" />
-    <ellipse cx="50" cy="67" rx="14" ry="17" fill="none" stroke="url(#almadarGradient)" stroke-width="3" opacity="0.6" />
-    <ellipse cx="50" cy="64" rx="8" ry="10" fill="none" stroke="url(#almadarGradient)" stroke-width="2.5" opacity="0.4" />
+    <!-- Upper lobe: 3 concentric ellipses, tilted inward -->
+    <ellipse cx="256" cy="155" rx="115" ry="140" fill="none" stroke="url(#almadarGradient)" stroke-width="22" stroke-linecap="round" />
+    <ellipse cx="256" cy="170" rx="78" ry="100" fill="none" stroke="url(#almadarGradient)" stroke-width="16" opacity="0.55" stroke-linecap="round" />
+    <ellipse cx="256" cy="182" rx="45" ry="62" fill="none" stroke="url(#almadarGradient)" stroke-width="13" opacity="0.35" stroke-linecap="round" />
+    <!-- Lower lobe: 3 concentric ellipses, tilted inward -->
+    <ellipse cx="256" cy="357" rx="115" ry="140" fill="none" stroke="url(#almadarGradient)" stroke-width="22" stroke-linecap="round" />
+    <ellipse cx="256" cy="342" rx="78" ry="100" fill="none" stroke="url(#almadarGradient)" stroke-width="16" opacity="0.55" stroke-linecap="round" />
+    <ellipse cx="256" cy="330" rx="45" ry="62" fill="none" stroke="url(#almadarGradient)" stroke-width="13" opacity="0.35" stroke-linecap="round" />
     <!-- Center pinch -->
-    <circle cx="50" cy="50" r="4" fill="url(#almadarGradient)" />
+    <circle cx="256" cy="256" r="16" fill="url(#almadarGradient)" />
 </svg>
