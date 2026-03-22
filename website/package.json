@@ -29,7 +29,7 @@
     "@almadar/patterns": "^2.6.3",
     "@almadar/runtime": "^2.0.4",
     "@almadar/std": "^2.7.1",
-    "@almadar/syntax": "^1.0.0",
+    "@almadar/syntax": "^1.0.1",
     "@almadar/ui": "^2.20.0",
     "@docusaurus/core": "^3.9.2",
     "@docusaurus/plugin-google-gtag": "^3.9.2",
