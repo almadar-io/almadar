@@ -3,22 +3,19 @@
     "message": "منصة أصيلة بالذكاء الاصطناعي"
   },
   "home.hero.title": {
-    "message": "فيزياء البرمجيات"
+    "message": "ذكاء اصطناعي يبني برمجيات يمكنك الوثوق بها."
   },
   "home.hero.subtitle": {
-    "message": "نماذج عالمية لعصر الوكلاء الأذكياء. نبني اللغة والذكاء والبنية التحتية لبرمجيات تفهم نفسها."
+    "message": "من اللغة الطبيعية إلى تطبيقات منشورة ومُتحقق منها. Studio وOrb وMasar يعملون معاً لتصف مرة واحدة وتنشر في كل مكان."
   },
   "home.hero.cta1": {
-    "message": "استكشف Studio"
+    "message": "جرّب Studio"
   },
   "home.hero.cta2": {
     "message": "اقرأ التوثيق"
   },
   "home.idea.title": {
-    "message": "ما هو النموذج العالمي للبرمجيات؟"
-  },
-  "home.idea.subtitle": {
-    "message": "البرمجة التقليدية تخبر الحاسوب بما يفعله خطوة بخطوة. النموذج العالمي يصف كيف تعمل الأشياء: البيانات والقواعد والسلوكيات. المترجم يحولها إلى أي منصة. النموذج يبقى كما هو."
+    "message": "كيف يعمل"
   },
   "home.idea.describe": {
     "message": "صِف"
@@ -30,7 +27,7 @@
     "message": "أثبِت"
   },
   "home.idea.prove.text": {
-    "message": "المترجم يتحقق من صحة كل حالة ممكنة قبل تشغيل أي سطر من الكود."
+    "message": "المترجم يتحقق من كل شاشة يمكن لتطبيقك الوصول إليها، فلا يواجه المستخدمون أبداً صفحة معطلة أو مفقودة."
   },
   "home.idea.deploy": {
     "message": "انشر"
@@ -39,7 +36,7 @@
     "message": "نموذج واحد يُترجم إلى الويب أو الهاتف أو أي منصة مستقبلية. النموذج هو المنتج."
   },
   "home.pillars.title": {
-    "message": "ثلاثة أركان"
+    "message": "منتجاتنا"
   },
   "home.pillars.language.title": {
     "message": "Orb",
@@ -77,41 +74,50 @@
     "message": "عرض الخدمات",
     "description": "View Services"
   },
+  "home.pillars.masar.title": {
+    "message": "Masar",
+    "description": "Masar"
+  },
+  "home.pillars.masar.desc": {
+    "message": "النظام 2 لوكلاء الذكاء الاصطناعي. تخطيط وتحقق وذاكرة تجعل أي نموذج لغوي كبير أذكى.",
+    "description": "System 2 for AI agents. Planning, verification, and memory that makes any LLM smarter."
+  },
+  "home.pillars.masar.link": {
+    "message": "استكشف Masar",
+    "description": "Explore Masar"
+  },
   "home.proof.title": {
     "message": "مُثبت في الإنتاج"
   },
   "home.stats.behaviors.value": {
-    "message": "129",
-    "description": "129"
+    "message": "93",
+    "description": "93"
   },
   "home.stats.behaviors.label": {
-    "message": "سلوك معياري عبر 18 مجالاً",
-    "description": "Standard behaviors across 18 domains"
+    "message": "سلوك قابل لإعادة الاستخدام عبر النماذج والتجارة الإلكترونية والألعاب وإدارة المحتوى و14 مجالاً آخر",
+    "description": "Reusable behaviors across forms, e-commerce, gaming, CMS, and 14 more domains"
   },
   "home.stats.projects.value": {
     "message": "7",
     "description": "7"
   },
   "home.stats.projects.label": {
-    "message": "مشاريع إنتاجية منشورة",
-    "description": "Production projects deployed"
+    "message": "مشاريع إنتاجية منشورة عبر SaaS والألعاب والمؤسسات",
+    "description": "Production projects deployed across SaaS, gaming, and enterprise"
   },
   "home.stats.cost.value": {
     "message": "$0.05–$0.35",
     "description": "$0.05–$0.35"
   },
   "home.stats.cost.label": {
-    "message": "تكلفة الحوسبة بالذكاء الاصطناعي لكل تطبيق",
-    "description": "AI compute cost per application"
+    "message": "تكلفة الحوسبة بالذكاء الاصطناعي لكل جلسة توليد",
+    "description": "AI compute cost per generation session"
   },
   "home.ai.title": {
-    "message": "نُدرّب نماذجنا الخاصة"
+    "message": "مبني على نماذجنا العصبية الخاصة"
   },
   "home.ai.text": {
-    "message": "لسنا شركة تغلّف واجهات LLM وتسميها ذكاءً اصطناعياً. خط أنابيبنا العصبي يفهم بنية البرمجيات كما يفهم محرك الشطرنج أوضاع الرقعة. يتنبأ بالأخطاء ويقيّم الإصلاحات ويُنشئ برمجيات صالحة من الصفر."
-  },
-  "home.ai.text2": {
-    "message": "ما زلنا نستخدم نماذج اللغة الكبيرة لفهم اللغة الطبيعية. لكن الذكاء البنيوي الجوهري ملكنا: نماذج صغيرة متخصصة تكاد لا تكلف شيئاً للتشغيل."
+    "message": "خط أنابيبنا العصبي يفهم بنية البرمجيات كما يفهم محرك الشطرنج أوضاع الرقعة. نماذج صغيرة متخصصة تتنبأ بالأخطاء وتقيّم الإصلاحات وتُنشئ برمجيات صالحة من الصفر. نماذج اللغة الكبيرة تتعامل مع اللغة الطبيعية، ونماذجنا تتعامل مع الصحة."
   },
   "home.cta.title": {
     "message": "مستعد للبناء؟"
@@ -120,16 +126,16 @@
     "message": "ابدأ بلغة Orb. ابنِ مع Studio. انشر على خدمات Almadar."
   },
   "home.cta.start": {
-    "message": "ابدأ البناء"
+    "message": "جرّب Studio"
   },
   "home.cta.vision": {
     "message": "اقرأ الرؤية"
   },
   "home.meta.title": {
-    "message": "Almadar — فيزياء البرمجيات"
+    "message": "Almadar — ذكاء اصطناعي يبني برمجيات يمكنك الوثوق بها."
   },
   "home.meta.desc": {
-    "message": "Almadar تبني اللغة والذكاء والبنية التحتية لبرمجيات تفهم نفسها."
+    "message": "من اللغة الطبيعية إلى تطبيقات منشورة ومُتحقق منها. Studio وOrb وMasar يعملون معاً لتصف مرة واحدة وتنشر في كل مكان."
   },
   "platform.hero.title": {
     "message": "المنصة"
@@ -475,7 +481,7 @@
     "message": "Send"
   },
   "home.ai.cta": {
-    "message": "Learn About Our AI"
+    "message": "استكشف Masar"
   },
   "hero.viz.appName": {
     "message": "Order Fulfillment App"

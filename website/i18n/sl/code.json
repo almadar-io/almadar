@@ -3,22 +3,19 @@
     "message": "Platforma z vgrajeno umetno inteligenco"
   },
   "home.hero.title": {
-    "message": "Fizika programske opreme"
+    "message": "UI, ki gradi programsko opremo, ki ji lahko zaupate."
   },
   "home.hero.subtitle": {
-    "message": "Svetovni modeli za dobo agentov. Gradimo jezik, inteligenco in infrastrukturo za programsko opremo, ki razume samo sebe."
+    "message": "Od naravnega jezika do nameščenih in preverjenih aplikacij. Studio, Orb in Masar delujejo skupaj, da opišete enkrat in namestite povsod."
   },
   "home.hero.cta1": {
-    "message": "Raziščite Studio"
+    "message": "Preizkusite Studio"
   },
   "home.hero.cta2": {
     "message": "Preberite dokumentacijo"
   },
   "home.idea.title": {
-    "message": "Kaj je svetovni model programske opreme?"
-  },
-  "home.idea.subtitle": {
-    "message": "Tradicionalno programiranje računalniku pove, kaj naj naredi, korak za korakom. Svetovni model opisuje, kako stvari delujejo: podatke, pravila, vedenja. Prevajalnik ga pretvori v katero koli platformo. Model ostane enak."
+    "message": "Kako deluje"
   },
   "home.idea.describe": {
     "message": "Opiši"
@@ -30,7 +27,7 @@
     "message": "Dokaži"
   },
   "home.idea.prove.text": {
-    "message": "Prevajalnik preveri vsako možno stanje, preden se izvede ena sama vrstica kode."
+    "message": "Prevajalnik preveri vsak možen zaslon vaše aplikacije, tako da uporabniki nikoli ne naletijo na pokvarjeno ali manjkajočo stran."
   },
   "home.idea.deploy": {
     "message": "Namesti"
@@ -39,7 +36,7 @@
     "message": "En model se prevede v spletno, mobilno ali katero koli prihodnjo platformo. Model je izdelek."
   },
   "home.pillars.title": {
-    "message": "Trije stebri"
+    "message": "Naši izdelki"
   },
   "home.pillars.language.title": {
     "message": "Orb",
@@ -77,41 +74,50 @@
     "message": "Oglejte si storitve",
     "description": "View Services"
   },
+  "home.pillars.masar.title": {
+    "message": "Masar",
+    "description": "Masar"
+  },
+  "home.pillars.masar.desc": {
+    "message": "Sistem 2 za agente umetne inteligence. Načrtovanje, preverjanje in spomin, ki naredi katerikoli veliki jezikovni model pametnejši.",
+    "description": "System 2 for AI agents. Planning, verification, and memory that makes any LLM smarter."
+  },
+  "home.pillars.masar.link": {
+    "message": "Raziščite Masar",
+    "description": "Explore Masar"
+  },
   "home.proof.title": {
     "message": "Dokazano v produkciji"
   },
   "home.stats.behaviors.value": {
-    "message": "129",
-    "description": "129"
+    "message": "93",
+    "description": "93"
   },
   "home.stats.behaviors.label": {
-    "message": "Standardnih vedenj v 18 domenah",
-    "description": "Standard behaviors across 18 domains"
+    "message": "Vedenj za ponovno uporabo v obrazcih, e-trgovini, igrah, CMS in 14 drugih domenah",
+    "description": "Reusable behaviors across forms, e-commerce, gaming, CMS, and 14 more domains"
   },
   "home.stats.projects.value": {
     "message": "7",
     "description": "7"
   },
   "home.stats.projects.label": {
-    "message": "Produkcijskih projektov v uporabi",
-    "description": "Production projects deployed"
+    "message": "Produkcijskih projektov v uporabi v SaaS, igrah in podjetjih",
+    "description": "Production projects deployed across SaaS, gaming, and enterprise"
   },
   "home.stats.cost.value": {
     "message": "$0,05–$0,35",
     "description": "$0.05–$0.35"
   },
   "home.stats.cost.label": {
-    "message": "Strošek AI računanja na aplikacijo",
-    "description": "AI compute cost per application"
+    "message": "Strošek AI računanja na sejo generiranja",
+    "description": "AI compute cost per generation session"
   },
   "home.ai.title": {
-    "message": "Treniramo lastne modele"
+    "message": "Zgrajeno na lastnih nevronskih modelih"
   },
   "home.ai.text": {
-    "message": "Nismo podjetje, ki ovije API-je velikih jezikovnih modelov in temu reče umetna inteligenca. Naš nevronski cevovod razume strukturo programske opreme tako, kot šahovski motor razume pozicije na plošči. Napoveduje napake, ocenjuje popravke in generira veljavno programsko opremo iz nič."
-  },
-  "home.ai.text2": {
-    "message": "Za razumevanje naravnega jezika še vedno uporabljamo velike jezikovne modele. Toda jedro strukturne inteligence je naše: majhni, specializirani modeli, ki jih je skoraj brezplačno poganjati."
+    "message": "Naš nevronski cevovod razume strukturo programske opreme tako, kot šahovski motor razume pozicije na plošči. Majhni, specializirani modeli, ki napovedujejo napake, ocenjujejo popravke in generirajo veljavno programsko opremo iz nič. Veliki jezikovni modeli obdelujejo naravni jezik, naši modeli obdelujejo pravilnost."
   },
   "home.cta.title": {
     "message": "Pripravljeni na gradnjo?"
@@ -120,16 +126,16 @@
     "message": "Začnite z Orb. Gradite s Studio. Namestite na Almadar Services."
   },
   "home.cta.start": {
-    "message": "Začnite graditi"
+    "message": "Preizkusite Studio"
   },
   "home.cta.vision": {
     "message": "Preberite vizijo"
   },
   "home.meta.title": {
-    "message": "Almadar — Fizika programske opreme"
+    "message": "Almadar — UI, ki gradi programsko opremo, ki ji lahko zaupate."
   },
   "home.meta.desc": {
-    "message": "Almadar gradi jezik, inteligenco in infrastrukturo za programsko opremo, ki razume samo sebe."
+    "message": "Od naravnega jezika do nameščenih in preverjenih aplikacij. Studio, Orb in Masar delujejo skupaj, da opišete enkrat in namestite povsod."
   },
   "platform.hero.title": {
     "message": "Platforma"
@@ -475,7 +481,7 @@
     "message": "Send"
   },
   "home.ai.cta": {
-    "message": "Learn About Our AI"
+    "message": "Raziščite Masar"
   },
   "hero.viz.appName": {
     "message": "Order Fulfillment App"

@@ -24,6 +24,13 @@ interface SiteConfig {
   staticDirectories?: string[];
 }
 
+const GITHUB_LINKS: Record<string, string> = {
+  main: 'https://github.com/almadar-io',
+  orb: 'https://github.com/almadar-io/almadar',
+  studio: 'https://github.com/almadar-io/almadar-studio',
+  services: 'https://github.com/almadar-io/services',
+};
+
 const SITE_ICONS: Record<string, { logo: string; favicon: string }> = {
   main: { logo: "img/almadar-icon-transparent.svg", favicon: "img/almadar-icon-transparent.svg" },
   orb: { logo: "img/orb-icon-transparent.svg", favicon: "img/orb-icon-transparent.svg" },
@@ -192,7 +199,7 @@ export function createConfig(opts: SiteConfig): Config {
         items: [
           ...(opts.navbarItems || []),
           buildProductsDropdown(opts.site),
-          { href: "https://github.com/almadar-io/services", label: "GitHub", position: "right" as const },
+          { href: GITHUB_LINKS[opts.site] ?? GITHUB_LINKS.main, label: "GitHub", position: "right" as const },
           { href: "https://discord.gg/q83VjPJx", label: "Discord", position: "right" as const },
           { type: "localeDropdown" as const, position: "right" as const },
         ],
