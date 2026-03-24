@@ -15,8 +15,8 @@ import {
   Button,
   Box,
 } from "@almadar/ui/marketing";
-import { AvlOrbitalUnit } from "@almadar/ui/illustrations";
-
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 const CAPABILITIES = [
   {
     icon: "target",
@@ -66,7 +66,16 @@ export default function AI(): ReactNode {
         primaryAction={{ label: translate({ id: "ai.hero.cta1", message: "Get Started" }), href: "https://masar.almadar.io/docs/getting-started/quickstart" }}
         secondaryAction={{ label: translate({ id: "ai.hero.cta2", message: "View API" }), href: "https://masar.almadar.io/docs/api-reference/planning" }}
         className="!overflow-visible"
-        backgroundElement={<Box className="absolute right-8 top-[15%] w-[40%] opacity-50 pointer-events-none hidden lg:flex items-start"><AvlOrbitalUnit className="w-full" animated entityName="Generated" fields={6} traits={[{ name: "AI-Lifecycle" }, { name: "Validation" }, { name: "Persistence" }]} pages={[{ name: "/dashboard" }, { name: "/detail" }]} /></Box>}
+        backgroundElement={<Box className="absolute right-8 top-[15%] w-full max-w-[360px] pointer-events-none hidden lg:flex items-start">
+          <ThemedImage
+            alt="AI SExpr Topology"
+            sources={{
+              light: useBaseUrl('/img/illustrations/SExpr-light.svg'),
+              dark: useBaseUrl('/img/illustrations/SExpr-dark.svg'),
+            }}
+            className="w-full opacity-90 drop-shadow-2xl "
+          />
+        </Box>}
       />
 
       <ContentSection>

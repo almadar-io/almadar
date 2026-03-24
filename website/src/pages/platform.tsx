@@ -12,8 +12,8 @@ import {
   VStack,
   Typography,
 } from "@almadar/ui/marketing";
-import { AvlOrbital, AvlEntity, AvlTrait, AvlPage, AvlBinding } from "@almadar/ui/illustrations";
-
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 const PILLARS = [
   {
     title: translate({ id: "platform.language.title", message: "Orb" }),
@@ -65,35 +65,15 @@ export default function Platform(): ReactNode {
         subtitle={translate({ id: "platform.hero.subtitle", message: "Three pillars, one goal: turn formal descriptions of software into running applications." })}
         className="!overflow-visible"
         backgroundElement={
-          <Box className="absolute right-8 top-[15%] w-[50%] opacity-40 pointer-events-none hidden lg:flex items-start">
-            <svg viewBox="0 0 700 200" fill="none" className="w-full">
-              {/* Orb: black (#000000) - language orbital */}
-              <AvlOrbital cx={100} cy={100} r={70} label="Orb" color="#000000" />
-              <AvlTrait cx={100} cy={100} rx={40} ry={18} rotation={-30} label="Entity" opacity={0.6} color="#000000" />
-              <AvlTrait cx={100} cy={100} rx={50} ry={22} rotation={30} label="Trait" opacity={0.6} color="#000000" />
-              <AvlTrait cx={100} cy={100} rx={60} ry={26} rotation={90} label="Page" opacity={0.6} color="#000000" />
-              <AvlEntity x={100} y={100} r={16} fieldCount={4} color="#000000" />
-
-              <AvlBinding x1={175} y1={100} x2={225} y2={100} />
-
-              {/* Studio: blue (#0096c7) - builder orbital */}
-              <AvlOrbital cx={300} cy={100} r={70} label="Studio" color="#0096c7" />
-              <AvlTrait cx={300} cy={100} rx={45} ry={20} rotation={0} label="Agent" opacity={0.6} color="#0096c7" />
-              <AvlTrait cx={300} cy={100} rx={55} ry={24} rotation={45} label="Editor" opacity={0.6} color="#0096c7" />
-              <AvlTrait cx={300} cy={100} rx={45} ry={20} rotation={90} label="Preview" opacity={0.6} color="#0096c7" />
-              <AvlTrait cx={300} cy={100} rx={55} ry={24} rotation={135} label="Deploy" opacity={0.6} color="#0096c7" />
-              <AvlEntity x={300} y={100} r={16} fieldCount={3} color="#0096c7" />
-
-              <AvlBinding x1={375} y1={100} x2={425} y2={100} />
-
-              {/* Services: indigo (#4f46e5) - infra orbital */}
-              <AvlOrbital cx={500} cy={100} r={70} label="Services" color="#4f46e5" />
-              <AvlTrait cx={500} cy={100} rx={50} ry={22} rotation={-45} label="Brains" opacity={0.6} color="#4f46e5" />
-              <AvlTrait cx={500} cy={100} rx={50} ry={22} rotation={45} label="Metal" opacity={0.6} color="#4f46e5" />
-              <AvlEntity x={500} y={100} r={18} fieldCount={5} color="#4f46e5" />
-              <AvlPage x={560} y={55} label="/api" color="#4f46e5" />
-              <AvlPage x={560} y={145} label="/events" color="#4f46e5" />
-            </svg>
+          <Box className="absolute right-8 top-[15%] w-full max-w-[400px] pointer-events-none hidden lg:flex items-start">
+            <ThemedImage
+              alt="Application Topology"
+              sources={{
+                light: useBaseUrl('/img/illustrations/Application-light.svg'),
+                dark: useBaseUrl('/img/illustrations/Application-dark.svg'),
+              }}
+              className="w-full opacity-90 drop-shadow-2xl "
+            />
           </Box>
         }
       />

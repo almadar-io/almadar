@@ -12,7 +12,8 @@ import {
   Typography,
   Box,
 } from "@almadar/ui/marketing";
-
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 export default function About(): ReactNode {
   return (
     <Layout
@@ -22,6 +23,19 @@ export default function About(): ReactNode {
       <HeroSection
         title={translate({ id: "about.hero.title", message: "About Almadar" })}
         subtitle={translate({ id: "about.hero.subtitle", message: "A small team building the physics of software. Based in Ljubljana, Slovenia." })}
+        className="!overflow-visible"
+        backgroundElement={
+          <Box className="absolute right-8 top-[10%] w-full max-w-[380px] pointer-events-none hidden lg:flex items-start">
+            <ThemedImage
+              alt="Almadar Entity"
+              sources={{
+                light: useBaseUrl('/img/illustrations/Entity-light.svg'),
+                dark: useBaseUrl('/img/illustrations/Entity-dark.svg'),
+              }}
+              className="w-full max-w-[500px] opacity-90 drop-shadow-2xl "
+            />
+          </Box>
+        }
       />
 
       <ContentSection>

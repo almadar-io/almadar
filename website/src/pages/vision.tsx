@@ -13,8 +13,8 @@ import {
   GradientDivider,
   Box,
 } from "@almadar/ui/marketing";
-import { AvlOrbitalUnit, AvlEmitListen } from "@almadar/ui/illustrations";
-
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 export default function Vision(): ReactNode {
   return (
     <Layout
@@ -26,7 +26,16 @@ export default function Vision(): ReactNode {
         title={translate({ id: "vision.hero.title", message: "A Shared Digital Reality" })}
         subtitle={translate({ id: "vision.hero.subtitle", message: "Software that coexists, coordinates, and evolves together." })}
         className="!overflow-visible"
-        backgroundElement={<Box className="absolute right-8 top-[15%] w-[40%] opacity-50 pointer-events-none hidden lg:flex items-start"><AvlOrbitalUnit className="w-full" animated entityName="Domain" fields={5} traits={[{ name: "Lifecycle" }, { name: "Validation" }]} pages={[{ name: "/list" }, { name: "/detail" }]} /></Box>}
+        backgroundElement={<Box className="absolute right-8 top-0 w-full max-w-[420px] pointer-events-none hidden lg:flex items-start">
+          <ThemedImage
+            alt="Vision Composite Orbital"
+            sources={{
+              light: useBaseUrl('/img/illustrations/Composite_Orbital-light.svg'),
+              dark: useBaseUrl('/img/illustrations/Composite_Orbital-dark.svg'),
+            }}
+            className="w-full opacity-90 drop-shadow-2xl "
+          />
+        </Box>}
       />
 
       <ContentSection>
@@ -86,7 +95,16 @@ export default function Vision(): ReactNode {
           }
           imagePosition="right"
         >
-          <Box className="w-full"><AvlEmitListen className="w-full" emitter={{ name: "Orders", fields: 4 }} listener={{ name: "Inventory", fields: 3 }} eventName="ORDER_PLACED" /></Box>
+          <Box className="w-full">
+            <ThemedImage
+              alt="Systems Emitting and Listening"
+              sources={{
+                light: useBaseUrl('/img/illustrations/Entity-light.svg'),
+                dark: useBaseUrl('/img/illustrations/Entity-dark.svg'),
+              }}
+              className="w-full max-w-[400px] mx-auto opacity-90"
+            />
+          </Box>
         </SplitSection>
       </ContentSection>
 
