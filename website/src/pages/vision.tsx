@@ -8,7 +8,6 @@ import {
   HStack,
   Typography,
   Button,
-  Divider,
 } from "@almadar/ui/marketing";
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
@@ -19,23 +18,13 @@ export default function Vision(): ReactNode {
       title={translate({ id: "vision.meta.title", message: "Vision — A Shared Digital Reality" })}
       description={translate({ id: "vision.meta.desc", message: "Software that coexists, coordinates, and evolves together. Communities keeping ownership. Composable world models." })}
     >
-      <Box as="header" className="w-full min-h-[60vh] flex items-center relative overflow-hidden">
-        <Box className="absolute right-8 top-0 w-full max-w-[420px] pointer-events-none hidden lg:flex items-start">
-          <ThemedImage
-            alt="Vision Composite Orbital"
-            sources={{
-              light: useBaseUrl('/img/illustrations/Composite_Orbital-light.svg'),
-              dark: useBaseUrl('/img/illustrations/Composite_Orbital-dark.svg'),
-            }}
-            className="w-full opacity-90 drop-shadow-2xl"
-          />
-        </Box>
-        <Box className="site-container py-20 relative z-10">
+      <Box as="header" className="w-full flex items-center">
+        <Box className="site-container py-20">
           <VStack gap="lg" align="start">
             <Typography variant="h1">
               {translate({ id: "vision.hero.title", message: "A Shared Digital Reality" })}
             </Typography>
-            <Typography variant="body1" color="muted">
+            <Typography variant="body1" color="muted" className="max-w-2xl">
               {translate({ id: "vision.hero.subtitle", message: "Software that coexists, coordinates, and evolves together." })}
             </Typography>
           </VStack>
@@ -44,57 +33,81 @@ export default function Vision(): ReactNode {
 
       <Box className="w-full py-24">
         <Box className="site-container">
-          <VStack gap="lg">
-            <Typography variant="h2">
-              {translate({ id: "vision.coexist.title", message: "Software That Coexists" })}
-            </Typography>
-            <Typography variant="body">
-              <Translate id="vision.coexist.p1">
-                Today, every application is an island. It has its own data model, its own rules, its own language. Moving information between systems means building bridges that break every time either side changes.
-              </Translate>
-            </Typography>
-            <Typography variant="body">
-              <Translate id="vision.coexist.p2">
-                We believe software should share a common grammar. The idea flows seamlessly: a nurse identifies a need on the floor, and that domain knowledge translates directly into .orb. Data flows without translation layers. Rules compose without glue code.
-              </Translate>
-            </Typography>
-            <Box className="border-l-4 border-[var(--color-primary)] pl-6 py-2">
-              <Typography variant="body" color="muted">
-                {translate({ id: "vision.coexist.pullquote", message: "Domain knowledge translates directly into code. No translation layers. No glue code." })}
+          <HStack gap="xl" align="center" responsive>
+            <VStack gap="lg" className="flex-1">
+              <Typography variant="h2">
+                {translate({ id: "vision.coexist.title", message: "Software That Coexists" })}
               </Typography>
+              <Typography variant="body" className="max-w-prose">
+                <Translate id="vision.coexist.p1">
+                  Today, every application is an island. It has its own data model, its own rules, its own language. Moving information between systems means building bridges that break every time either side changes.
+                </Translate>
+              </Typography>
+              <Typography variant="body" className="max-w-prose">
+                <Translate id="vision.coexist.p2">
+                  We believe software should share a common grammar. The idea flows seamlessly: a nurse identifies a need on the floor, and that domain knowledge translates directly into .orb. Data flows without translation layers. Rules compose without glue code.
+                </Translate>
+              </Typography>
+              <Box className="border-l-[4px] border-[var(--color-primary)] bg-[var(--color-accent)]/5 p-4 rounded-r-[var(--radius-md)]">
+                <Typography variant="body1" color="muted" className="italic">
+                  {translate({ id: "vision.coexist.pullquote", message: "Domain knowledge translates directly into code. No translation layers. No glue code." })}
+                </Typography>
+              </Box>
+            </VStack>
+            <Box className="flex-1 max-w-[280px]">
+              <ThemedImage
+                alt="Vision Composite Orbital"
+                sources={{
+                  light: useBaseUrl('/img/illustrations/Composite_Orbital-light.svg'),
+                  dark: useBaseUrl('/img/illustrations/Composite_Orbital-dark.svg'),
+                }}
+                className="w-full opacity-90"
+              />
             </Box>
-          </VStack>
+          </HStack>
         </Box>
       </Box>
 
-      <Divider />
+      <Box className="w-full h-px bg-gradient-to-r from-transparent via-[var(--color-border)] to-transparent" />
 
       <Box className="w-full bg-[var(--color-surface)] py-24">
         <Box className="site-container">
-          <VStack gap="lg">
-            <Typography variant="h2">
-              {translate({ id: "vision.ownership.title", message: "Communities Keep Ownership" })}
-            </Typography>
-            <Typography variant="body">
-              <Translate id="vision.ownership.p1">
-                The current model concentrates power and wastes immense resources. A few platforms own the tools, the data, and the distribution, creating heavy, inefficient silos. Communities that build on those platforms rent their digital presence at a high cost, both financially and ecologically.
-              </Translate>
-            </Typography>
-            <Typography variant="body">
-              <Translate id="vision.ownership.p2">
-                Almadar changes this with an efficiency-first, "Go Green" philosophy. Orb is open source. The standard library is open source. When a community describes their domain in Orb, they build lightweight, efficient models that they own. They can compile it to any platform, host it sustainably anywhere, and evolve it on their own terms.
-              </Translate>
-            </Typography>
-            <Box className="border-l-4 border-[var(--color-primary)] pl-6 py-2">
-              <Typography variant="body" color="muted">
-                {translate({ id: "vision.ownership.pullquote", message: "Communities build lightweight models they own. Compile to any platform. Evolve on their own terms." })}
-              </Typography>
+          <HStack gap="xl" align="center" responsive>
+            <Box className="flex-1 max-w-[280px] lg:pl-8">
+              <ThemedImage
+                alt="Vision Application"
+                sources={{
+                  light: useBaseUrl('/img/illustrations/Application-light.svg'),
+                  dark: useBaseUrl('/img/illustrations/Application-dark.svg'),
+                }}
+                className="w-full opacity-90"
+              />
             </Box>
-          </VStack>
+            <VStack gap="lg" className="flex-1">
+              <Typography variant="h2">
+                {translate({ id: "vision.ownership.title", message: "Communities Keep Ownership" })}
+              </Typography>
+              <Typography variant="body" className="max-w-prose">
+                <Translate id="vision.ownership.p1">
+                  The current model concentrates power and wastes immense resources. A few platforms own the tools, the data, and the distribution, creating heavy, inefficient silos. Communities that build on those platforms rent their digital presence at a high cost, both financially and ecologically.
+                </Translate>
+              </Typography>
+              <Typography variant="body" className="max-w-prose">
+                <Translate id="vision.ownership.p2">
+                  Almadar changes this with an efficiency-first, "Go Green" philosophy. Orb is open source. The standard library is open source. When a community describes their domain in Orb, they build lightweight, efficient models that they own. They can compile it to any platform, host it sustainably anywhere, and evolve it on their own terms.
+                </Translate>
+              </Typography>
+              <Box className="border-l-[4px] border-[var(--color-primary)] bg-[var(--color-accent)]/5 p-4 rounded-r-[var(--radius-md)]">
+                <Typography variant="body1" color="muted" className="italic">
+                  {translate({ id: "vision.ownership.pullquote", message: "Communities build lightweight models they own. Compile to any platform. Evolve on their own terms." })}
+                </Typography>
+              </Box>
+            </VStack>
+          </HStack>
         </Box>
       </Box>
 
-      <Divider />
+      <Box className="w-full h-px bg-gradient-to-r from-transparent via-[var(--color-border)] to-transparent" />
 
       <Box className="w-full py-24">
         <Box className="site-container">
@@ -103,10 +116,10 @@ export default function Vision(): ReactNode {
               <Typography variant="h2">
                 {translate({ id: "vision.models.title", message: "Composable World Models" })}
               </Typography>
-              <Typography variant="body" color="muted">
+              <Typography variant="body" color="muted" className="max-w-prose">
                 <Translate id="vision.models.p1">A world model is a formal description of how a domain works: what exists, how it changes, what the rules are. In .orb, a healthcare scheduling system and an inventory tracker are both world models. They can be validated independently and composed together.</Translate>
               </Typography>
-              <Typography variant="body">
+              <Typography variant="body" className="max-w-prose">
                 <Translate id="vision.models.p2">
                   This is the long game. When enough domains have formal models, software stops being a collection of isolated programs and becomes a shared, interoperable digital reality. Each model is a building block. Each composition creates something new.
                 </Translate>

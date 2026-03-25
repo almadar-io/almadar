@@ -16,18 +16,21 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 const PILLARS = [
   {
+    logo: "/img/orb-icon-transparent.svg",
     title: translate({ id: "platform.language.title", message: "Orb" }),
     description: translate({ id: "platform.language.desc", message: "A formal language for describing how software systems behave. Open source, compiler-verified, AI-native. Write entities, traits, and pages. The compiler guarantees correctness before generating code." }),
     href: "https://orb.almadar.io",
     linkLabel: translate({ id: "platform.language.link", message: "Language Docs" }),
   },
   {
+    logo: "/img/studio-icon.svg",
     title: translate({ id: "platform.studio.title", message: "Almadar Studio" }),
     description: translate({ id: "platform.studio.desc", message: "The builder where humans and AI collaborate. Describe what you want in plain language, the AI agent generates a valid program. Edit visually or in code. Preview in real time. Deploy with one click." }),
     href: "https://kflow-builder-app.web.app/",
     linkLabel: translate({ id: "platform.studio.link", message: "Open Studio" }),
   },
   {
+    logo: "/img/services-icon-transparent.svg",
     title: translate({ id: "platform.services.title", message: "Almadar Services" }),
     description: translate({ id: "platform.services.desc", message: "AI-native infrastructure for the agentic era. Compute, storage, authentication, event routing, LLM orchestration, and observability. Designed for applications that agents build and operate." }),
     href: "https://services.almadar.io",
@@ -72,7 +75,7 @@ export default function Platform(): ReactNode {
             <Typography variant="h1">
               {translate({ id: "platform.hero.title", message: "The Platform" })}
             </Typography>
-            <Typography variant="body1" color="muted">
+            <Typography variant="body1" color="muted" className="max-w-2xl">
               {translate({ id: "platform.hero.subtitle", message: "Three pillars, one goal: turn formal descriptions of software into running applications." })}
             </Typography>
           </VStack>
@@ -86,6 +89,7 @@ export default function Platform(): ReactNode {
               {PILLARS.map((item) => (
                 <Card key={item.title} className="p-6">
                   <VStack gap="md">
+                    <img src={item.logo} alt={item.title} className="w-8 h-8" />
                     <Typography variant="h4">{item.title}</Typography>
                     <Typography variant="body" color="muted">{item.description}</Typography>
                     <a href={item.href}>
@@ -104,8 +108,8 @@ export default function Platform(): ReactNode {
           <SimpleGrid cols={3} gap="lg">
             {STEPS.map((step, i) => (
               <VStack key={step.title} gap="sm" align="center">
-                <Box className="w-10 h-10 rounded-full bg-[var(--color-primary)] flex items-center justify-center">
-                  <Typography variant="body" className="text-white font-bold">{i + 1}</Typography>
+                <Box className="w-10 h-10 rounded-full bg-[var(--color-primary)] flex items-center justify-center shrink-0">
+                  <span className="text-white font-bold text-sm leading-none">{i + 1}</span>
                 </Box>
                 <Typography variant="h4" align="center">{step.title}</Typography>
                 <Typography variant="body" color="muted" align="center">{step.description}</Typography>

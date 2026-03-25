@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- D Orbital: 4 lobes in a clover pattern (90° spacing) -->
+<svg width="64" height="64" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="studioGrad" x1="50%" y1="0%" x2="50%" y2="100%">
+            <stop offset="0%" stop-color="#48cae4" />
+            <stop offset="50%" stop-color="#0096c7" />
+            <stop offset="100%" stop-color="#0077b6" />
+        </linearGradient>
+    </defs>
+    <!-- Lobe pair 1: vertical -->
+    <ellipse cx="50" cy="26" rx="14" ry="20" fill="none" stroke="url(#studioGrad)" stroke-width="3" />
+    <ellipse cx="50" cy="74" rx="14" ry="20" fill="none" stroke="url(#studioGrad)" stroke-width="3" />
+    <ellipse cx="50" cy="30" rx="9" ry="13" fill="none" stroke="url(#studioGrad)" stroke-width="2" opacity="0.5" />
+    <ellipse cx="50" cy="70" rx="9" ry="13" fill="none" stroke="url(#studioGrad)" stroke-width="2" opacity="0.5" />
+    <!-- Lobe pair 2: horizontal -->
+    <ellipse cx="26" cy="50" rx="20" ry="14" fill="none" stroke="url(#studioGrad)" stroke-width="3" />
+    <ellipse cx="74" cy="50" rx="20" ry="14" fill="none" stroke="url(#studioGrad)" stroke-width="3" />
+    <ellipse cx="30" cy="50" rx="13" ry="9" fill="none" stroke="url(#studioGrad)" stroke-width="2" opacity="0.5" />
+    <ellipse cx="70" cy="50" rx="13" ry="9" fill="none" stroke="url(#studioGrad)" stroke-width="2" opacity="0.5" />
+    <!-- Center nucleus -->
+    <circle cx="50" cy="50" r="4" fill="url(#studioGrad)" />
+</svg>

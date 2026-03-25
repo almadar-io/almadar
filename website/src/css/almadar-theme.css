@@ -111,7 +111,7 @@
     /* Colors - midnight blue base (per brand) */
     --color-primary: #14b8a6;
     --color-primary-hover: #2dd4bf;
-    --color-primary-foreground: #042f2e;
+    --color-primary-foreground: #ffffff;
     --color-secondary: #1e293b;
     --color-secondary-hover: #334155;
     --color-secondary-foreground: #f1f5f9;
@@ -124,8 +124,8 @@
     --color-card: #1e293b;
     --color-card-foreground: #f8fafc;
     --color-surface: #1e293b;
-    --color-border: #334155;
-    --color-input: #334155;
+    --color-border: #475569;
+    --color-input: #475569;
     --color-ring: #14b8a6;
 
     /* Semantic colors - brighter for dark mode */

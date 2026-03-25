@@ -75,7 +75,7 @@ export default function AI(): ReactNode {
             <Typography variant="h1">
               {translate({ id: "ai.hero.title", message: "System 2 for AI Agents" })}
             </Typography>
-            <Typography variant="body1" color="muted">
+            <Typography variant="body1" color="muted" className="max-w-2xl">
               {translate({ id: "ai.hero.subtitle", message: "Your LLM is fast and intuitive but cannot plan, verify, or remember. Masar gives it a world model: structured planning, instant verification, and experience-based memory." })}
             </Typography>
             <HStack gap="md">
@@ -121,8 +121,8 @@ export default function AI(): ReactNode {
             <SimpleGrid cols={5} gap="md">
               {PIPELINE_STEPS.map((step, i) => (
                 <VStack key={step.title} gap="sm" align="center">
-                  <Box className="w-10 h-10 rounded-full bg-[var(--color-primary)] flex items-center justify-center">
-                    <Typography variant="body" className="text-white font-bold">{i + 1}</Typography>
+                  <Box className="w-10 h-10 rounded-full bg-[var(--color-primary)] flex items-center justify-center shrink-0">
+                    <span className="text-white font-bold text-sm leading-none">{i + 1}</span>
                   </Box>
                   <Typography variant="h4" align="center">{step.title}</Typography>
                   <Typography variant="body" color="muted" align="center">{step.description}</Typography>
@@ -151,23 +151,23 @@ export default function AI(): ReactNode {
         </Box>
       </Box>
 
-      <Box className="w-full bg-[var(--color-foreground)] py-24">
+      <Box className="w-full bg-[var(--color-surface)] py-24">
         <Box className="site-container">
           <VStack gap="lg" align="center" className="max-w-[640px] mx-auto">
-            <Typography variant="h2" className="text-[var(--color-background)]">
+            <Typography variant="h2">
               {translate({ id: "ai.sys2.title", message: "Thinking, Fast and Slow" })}
             </Typography>
-            <Typography variant="body" className="text-[var(--color-background)]/80">
+            <Typography variant="body" color="muted">
               <Translate id="ai.sys2.p1">
                 Daniel Kahneman's research showed that human cognition has two systems. System 1 is fast, intuitive, and associative. System 2 is slow, deliberate, and structural. You need both to make good decisions.
               </Translate>
             </Typography>
-            <Typography variant="body" className="text-[var(--color-background)]/80">
+            <Typography variant="body" color="muted">
               <Translate id="ai.sys2.p2">
                 LLMs are System 1. They respond instantly, pattern-match from training data, and generate fluent text. But they cannot plan multi-step processes, verify structural correctness, or learn from their own experience. That is System 2.
               </Translate>
             </Typography>
-            <Typography variant="body" className="text-[var(--color-background)]/80">
+            <Typography variant="body" color="muted">
               <Translate id="ai.sys2.p3">
                 Masar is System 2 for any LLM agent. It handles the deliberate, structural thinking that language models cannot do. The LLM handles language and generation. Masar handles planning, verification, and memory. Together, they form a complete agent.
               </Translate>

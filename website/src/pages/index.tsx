@@ -36,28 +36,28 @@ const HOW_IT_WORKS = [
 
 const PRODUCTS = [
   {
-    icon: "palette",
+    logo: "/img/studio-icon.svg",
     title: translate({ id: "home.pillars.studio.title", message: "Almadar Studio" }),
     description: translate({ id: "home.pillars.studio.desc", message: "The builder where humans and AI agents collaborate to create software. Describe, generate, deploy." }),
     href: "https://studio.almadar.io",
     linkLabel: translate({ id: "home.pillars.studio.link", message: "Try Studio" }),
   },
   {
-    icon: "code-2",
+    logo: "/img/orb-icon-transparent.svg",
     title: translate({ id: "home.pillars.language.title", message: "Orb" }),
     description: translate({ id: "home.pillars.language.desc", message: "A formal language for describing how software behaves. Open source. AI-native. Compiler-verified." }),
     href: "https://orb.almadar.io",
     linkLabel: translate({ id: "home.pillars.language.link", message: "Explore the Language" }),
   },
   {
-    icon: "cloud",
+    logo: "/img/services-icon-transparent.svg",
     title: translate({ id: "home.pillars.services.title", message: "Almadar Services" }),
     description: translate({ id: "home.pillars.services.desc", message: "AI-native infrastructure. Compute, storage, authentication, event routing. Designed for agents." }),
     href: "https://services.almadar.io",
     linkLabel: translate({ id: "home.pillars.services.link", message: "View Services" }),
   },
   {
-    icon: "brain",
+    logo: "/img/masar-icon.svg",
     title: translate({ id: "home.pillars.masar.title", message: "Masar" }),
     description: translate({ id: "home.pillars.masar.desc", message: "System 2 for AI agents. Planning, verification, and memory that makes any LLM smarter." }),
     href: "https://masar.almadar.io",
@@ -85,7 +85,7 @@ export default function Home(): ReactNode {
             <Typography variant="h1" align="center">
               {translate({ id: "home.hero.title", message: "AI that builds software you can trust." })}
             </Typography>
-            <Typography variant="body1" color="muted" align="center">
+            <Typography variant="body1" color="muted" align="center" className="max-w-2xl">
               {translate({ id: "home.hero.subtitle", message: "From natural language to deployed, verified applications. Studio, Orb, and Masar work together so you describe once and ship everywhere." })}
             </Typography>
             <HStack gap="md">
@@ -127,7 +127,7 @@ export default function Home(): ReactNode {
               {PRODUCTS.map((item) => (
                 <Card key={item.title} className="p-6">
                   <VStack gap="md">
-                    <Icon name={item.icon} size={24} />
+                    <img src={item.logo} alt={item.title} className="w-8 h-8" />
                     <Typography variant="h4">{item.title}</Typography>
                     <Typography variant="body" color="muted">{item.description}</Typography>
                     <a href={item.href}>
