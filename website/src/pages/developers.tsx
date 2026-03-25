@@ -5,21 +5,21 @@ import BrowserOnly from "@docusaurus/BrowserOnly";
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
-import Heading from "@theme/Heading";
 import Translate, { translate } from "@docusaurus/Translate";
 import JsonHighlight from "../components/JsonHighlight";
 // RenderUIDemo imports @almadar/ui which accesses window at module scope.
 // Lazy-load it inside BrowserOnly to prevent SSG failure.
 // import RenderUIDemo from "../components/RenderUIDemo";
 import {
-  HeroSection,
-  ContentSection,
-  InstallBox,
-  StepFlow,
-  FeatureGrid,
-  VStack,
-  Typography,
   Box,
+  VStack,
+  HStack,
+  Typography,
+  Badge,
+  Button,
+  InstallBox,
+  Card,
+  SimpleGrid,
 } from "@almadar/ui/marketing";
 import { AvlClosedCircuit } from "@almadar/ui/illustrations";
 import styles from "./developers.module.css";
@@ -41,7 +41,7 @@ function resolveRaw(content: unknown): string {
     : String(content);
 }
 
-// ─── Core Concepts (interactive, kept as-is) ───────────────────────────────
+// --- Core Concepts (interactive, kept as-is) ---
 
 const ENTITY_SNIPPET = `{
   "name": "Task",
@@ -168,32 +168,34 @@ function CoreConceptCard({
 function CoreConcepts() {
   const [active, setActive] = useState<string>("entity");
   return (
-    <ContentSection>
-      <VStack gap="lg" align="center" className="container">
-        <VStack gap="sm" align="center">
-          <Typography variant="h2">
-            <Translate id="developers.concepts.title">Core Concepts</Translate>
-          </Typography>
-          <Typography variant="body" color="muted">
-            <Translate id="developers.concepts.subtitle">Three building blocks compose every Almadar application</Translate>
-          </Typography>
+    <Box className="w-full py-24">
+      <Box className="site-container">
+        <VStack gap="lg" align="center" className="w-full">
+          <VStack gap="sm" align="center">
+            <Typography variant="h2">
+              <Translate id="developers.concepts.title">Core Concepts</Translate>
+            </Typography>
+            <Typography variant="body" color="muted">
+              <Translate id="developers.concepts.subtitle">Three building blocks compose every Almadar application</Translate>
+            </Typography>
+          </VStack>
+          <div className={styles.conceptsGrid}>
+            {CONCEPTS.map((c) => (
+              <CoreConceptCard
+                key={c.key}
+                {...c}
+                isActive={active === c.key}
+                onClick={() => setActive(c.key)}
+              />
+            ))}
+          </div>
         </VStack>
-        <div className={styles.conceptsGrid}>
-          {CONCEPTS.map((c) => (
-            <CoreConceptCard
-              key={c.key}
-              {...c}
-              isActive={active === c.key}
-              onClick={() => setActive(c.key)}
-            />
-          ))}
-        </div>
-      </VStack>
-    </ContentSection>
+      </Box>
+    </Box>
   );
 }
 
-// ─── Quick Start ───────────────────────────────────────────────────────────
+// --- Quick Start ---
 
 function LocalizedSchema() {
   const context = useDocusaurusContext();
@@ -240,15 +242,15 @@ function LocalizedSchema() {
 }
 
 const QUICKSTART_STEPS = [
-  { title: translate({ id: "developers.quickstart.step1", message: "Install the CLI" }), description: "" },
-  { title: translate({ id: "developers.quickstart.step2", message: "Edit your .orb schema" }), description: "" },
-  { title: translate({ id: "developers.quickstart.step3", message: "Run almadar dev my-app.orb to watch and compile" }), description: "" },
+  { title: translate({ id: "developers.quickstart.step1", message: "Install the CLI" }) },
+  { title: translate({ id: "developers.quickstart.step2", message: "Edit your .orb schema" }) },
+  { title: translate({ id: "developers.quickstart.step3", message: "Run almadar dev my-app.orb to watch and compile" }) },
 ];
 
 function QuickStart() {
   return (
-    <ContentSection background="alt">
-      <div className="container">
+    <Box className="w-full bg-[var(--color-surface)] py-24">
+      <Box className="site-container">
         <div className={styles.quickstartLayout}>
           <VStack gap="md">
             <Typography variant="h2">
@@ -258,7 +260,16 @@ function QuickStart() {
               <Translate id="developers.quickstart.desc">Install the CLI, create your first schema, and compile it to a running application.</Translate>
             </Typography>
             <InstallBox command="npx @almadar/cli new my-app" />
-            <StepFlow steps={QUICKSTART_STEPS} orientation="vertical" />
+            <VStack gap="sm">
+              {QUICKSTART_STEPS.map((step, i) => (
+                <HStack key={step.title} gap="sm" align="center">
+                  <Box className="w-7 h-7 rounded-full bg-[var(--color-primary)] flex items-center justify-center flex-shrink-0">
+                    <Typography variant="body" className="text-white font-bold text-sm">{i + 1}</Typography>
+                  </Box>
+                  <Typography variant="body">{step.title}</Typography>
+                </HStack>
+              ))}
+            </VStack>
             <Link className="button button--primary" to="/docs/getting-started/introduction">
               <Translate id="developers.quickstart.fullGuide">Full Getting Started Guide</Translate>
             </Link>
@@ -267,12 +278,12 @@ function QuickStart() {
             <LocalizedSchema />
           </div>
         </div>
-      </div>
-    </ContentSection>
+      </Box>
+    </Box>
   );
 }
 
-// ─── Operator Modules (interactive table, kept) ───────────────────────────
+// --- Operator Modules (interactive table, kept) ---
 
 type StdlibModuleEntry = {
   id: string;
@@ -296,8 +307,8 @@ const PROB_MODULE = {
 function OperatorModules() {
   const modules = (stdlibModules as { modules: StdlibModuleEntry[] }).modules;
   return (
-    <ContentSection>
-      <div className="container">
+    <Box className="w-full py-24">
+      <Box className="site-container">
         <VStack gap="lg" align="center">
           <VStack gap="sm" align="center">
             <Typography variant="h2">
@@ -340,12 +351,12 @@ function OperatorModules() {
             &rarr;
           </Link>
         </div>
-      </div>
-    </ContentSection>
+      </Box>
+    </Box>
   );
 }
 
-// ─── Tutorials ──────────────────────────────────────────────────────────────
+// --- Tutorials ---
 
 const TUTORIAL_TRACKS = [
   {
@@ -382,8 +393,8 @@ const TUTORIAL_TRACKS = [
 
 function Tutorials() {
   return (
-    <ContentSection background="alt">
-      <div className="container">
+    <Box className="w-full bg-[var(--color-surface)] py-24">
+      <Box className="site-container">
         <VStack gap="lg" align="center">
           <VStack gap="sm" align="center">
             <Typography variant="h2">
@@ -418,12 +429,12 @@ function Tutorials() {
             </Link>
           ))}
         </div>
-      </div>
-    </ContentSection>
+      </Box>
+    </Box>
   );
 }
 
-// ─── Page ──────────────────────────────────────────────────────────────────
+// --- Page ---
 
 export default function Developers(): ReactNode {
   return (
@@ -431,39 +442,52 @@ export default function Developers(): ReactNode {
       title={translate({ id: "developers.meta.title", message: "Developers — Almadar" })}
       description={translate({ id: "developers.meta.description", message: "Almadar developer hub — the Orbital Language, operator reference, tutorials, and quick start guide." })}
     >
-      <HeroSection
-        align="left"
-        tag={translate({ id: "developers.hero.tag", message: "Programming Language" })}
-        title={translate({ id: "developers.hero.title", message: "The Orbital Language" })}
-        subtitle={translate({ id: "developers.hero.subtitle", message: "Almadar is a declarative schema language for full-stack applications. Define entities, state machines, and UI in a single .orb file — the compiler generates the rest." })}
-        primaryAction={{ label: translate({ id: "developers.hero.getStarted", message: "Get Started" }), href: "/docs/getting-started/introduction" }}
-        secondaryAction={{ label: translate({ id: "developers.hero.viewExamples", message: "View Examples" }), href: "/demos" }}
-        backgroundElement={<Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] max-h-[80%] opacity-50 pointer-events-none hidden lg:flex items-center"><AvlClosedCircuit className="w-full" animated states={[{ name: "Event" }, { name: "Guard" }, { name: "Transition" }, { name: "Effects" }, { name: "UI" }]} transitions={[{ from: "Event", to: "Guard", event: "trigger" }, { from: "Guard", to: "Transition", guard: "check" }, { from: "Transition", to: "Effects" }, { from: "Effects", to: "UI", effects: ["render-ui"] }, { from: "UI", to: "Event", event: "user-action" }]} /></Box>}
-      />
-
-      <ContentSection>
-        <VStack gap="lg" align="center" className="container">
-          <VStack gap="sm" align="center">
-            <Typography variant="h2">
-              <Translate id="developers.animation.title">How It Works</Translate>
+      <Box as="header" className="w-full min-h-[60vh] flex items-center relative overflow-hidden">
+        <Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] max-h-[80%] opacity-50 pointer-events-none hidden lg:flex items-center">
+          <AvlClosedCircuit className="w-full" animated states={[{ name: "Event" }, { name: "Guard" }, { name: "Transition" }, { name: "Effects" }, { name: "UI" }]} transitions={[{ from: "Event", to: "Guard", event: "trigger" }, { from: "Guard", to: "Transition", guard: "check" }, { from: "Transition", to: "Effects" }, { from: "Effects", to: "UI", effects: ["render-ui"] }, { from: "UI", to: "Event", event: "user-action" }]} />
+        </Box>
+        <Box className="site-container py-20 relative z-10">
+          <VStack gap="lg" align="start">
+            <Badge variant="primary">{translate({ id: "developers.hero.tag", message: "Programming Language" })}</Badge>
+            <Typography variant="h1">
+              {translate({ id: "developers.hero.title", message: "The Orbital Language" })}
             </Typography>
+            <Typography variant="body1" color="muted">
+              {translate({ id: "developers.hero.subtitle", message: "Almadar is a declarative schema language for full-stack applications. Define entities, state machines, and UI in a single .orb file — the compiler generates the rest." })}
+            </Typography>
+            <HStack gap="md">
+              <a href="/docs/getting-started/introduction"><Button variant="primary" size="lg">{translate({ id: "developers.hero.getStarted", message: "Get Started" })}</Button></a>
+              <a href="/demos"><Button variant="secondary" size="lg">{translate({ id: "developers.hero.viewExamples", message: "View Examples" })}</Button></a>
+            </HStack>
+          </VStack>
+        </Box>
+      </Box>
+
+      <Box className="w-full py-24">
+        <Box className="site-container">
+          <VStack gap="lg" align="center" className="w-full">
+            <VStack gap="sm" align="center">
+              <Typography variant="h2">
+                <Translate id="developers.animation.title">How It Works</Translate>
+              </Typography>
+              <Typography variant="body" color="muted">
+                <Translate id="developers.animation.subtitle">
+                  Every Almadar application is composed of Orbital Units. An Entity holds your data, Traits define behavior as state machines, and Pages bind them to routes. Watch the architecture assemble itself.
+                </Translate>
+              </Typography>
+            </VStack>
+            <BrowserOnly fallback={<div style={{ height: 400 }} />}>
+              {() => {
+                const HeroSchemaAnimation = require("../components/HeroSchemaAnimation").default;
+                return <HeroSchemaAnimation />;
+              }}
+            </BrowserOnly>
             <Typography variant="body" color="muted">
-              <Translate id="developers.animation.subtitle">
-                Every Almadar application is composed of Orbital Units. An Entity holds your data, Traits define behavior as state machines, and Pages bind them to routes. Watch the architecture assemble itself.
-              </Translate>
+              <Translate id="developers.animation.caption">Orbital Unit = Entity + Traits + Pages</Translate>
             </Typography>
           </VStack>
-          <BrowserOnly fallback={<div style={{ height: 400 }} />}>
-            {() => {
-              const HeroSchemaAnimation = require("../components/HeroSchemaAnimation").default;
-              return <HeroSchemaAnimation />;
-            }}
-          </BrowserOnly>
-          <Typography variant="body" color="muted">
-            <Translate id="developers.animation.caption">Orbital Unit = Entity + Traits + Pages</Translate>
-          </Typography>
-        </VStack>
-      </ContentSection>
+        </Box>
+      </Box>
 
       <CoreConcepts />
       <QuickStart />
@@ -475,29 +499,31 @@ export default function Developers(): ReactNode {
         }}
       </BrowserOnly>
 
-      <ContentSection>
-        <VStack gap="lg" align="center" className="container">
-          <VStack gap="sm" align="center">
-            <Typography variant="h2">
-              <Translate id="developers.playground.title">Try It in the Browser</Translate>
-            </Typography>
-            <Typography variant="body" color="muted">
-              <Translate id="developers.playground.subtitle">Run Almadar s-expressions live -- no installation needed</Translate>
-            </Typography>
+      <Box className="w-full py-24">
+        <Box className="site-container">
+          <VStack gap="lg" align="center" className="w-full">
+            <VStack gap="sm" align="center">
+              <Typography variant="h2">
+                <Translate id="developers.playground.title">Try It in the Browser</Translate>
+              </Typography>
+              <Typography variant="body" color="muted">
+                <Translate id="developers.playground.subtitle">Run Almadar s-expressions live -- no installation needed</Translate>
+              </Typography>
+            </VStack>
           </VStack>
-        </VStack>
-        <div className={styles.playgroundEmbed}>
-          <BrowserOnly
-            fallback={
-              <div className={playgroundStyles.loadingFallback}>
-                <Translate id="playground.loading">Loading playground...</Translate>
-              </div>
-            }
-          >
-            {() => <PlaygroundCore />}
-          </BrowserOnly>
-        </div>
-      </ContentSection>
+          <div className={styles.playgroundEmbed}>
+            <BrowserOnly
+              fallback={
+                <div className={playgroundStyles.loadingFallback}>
+                  <Translate id="playground.loading">Loading playground...</Translate>
+                </div>
+              }
+            >
+              {() => <PlaygroundCore />}
+            </BrowserOnly>
+          </div>
+        </Box>
+      </Box>
 
       <Tutorials />
     </Layout>

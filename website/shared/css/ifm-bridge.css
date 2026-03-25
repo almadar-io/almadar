@@ -49,6 +49,19 @@ html[lang="ar"], html[dir="rtl"] {
     --ifm-heading-font-family: "IBM Plex Sans Arabic", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+/* Site-wide content container — the ONLY width constraint */
+.site-container {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    width: 100%;
+}
+@media (min-width: 640px) {
+    .site-container { padding-left: 2rem; padding-right: 2rem; }
+}
+
 /* Base styling */
 html { scroll-behavior: smooth; }
 body {
@@ -82,12 +95,17 @@ body {
 }
 
 .navbar__link--active {
-    color: var(--color-primary);
+    color: var(--color-accent);
+}
+
+/* Dark mode: subtle tertiary navbar border */
+[data-theme="dark"] .navbar {
+    border-bottom: 1px solid rgba(201, 162, 39, 0.15);
 }
 
 /* Sidebar active state */
 .menu__link--active:not(.menu__link--sublist) {
-    color: var(--color-primary);
+    color: var(--color-accent);
 }
 
 /* Footer reset (MarketingFooter handles all styling) */
@@ -107,13 +125,22 @@ pre, code, .prism-code {
     text-align: left !important;
 }
 
-/* Selection color from theme */
+/* Selection color - tertiary accent */
 ::selection {
-    background-color: rgba(var(--color-primary), 0.3);
+    background-color: rgba(201, 162, 39, 0.15);
+    color: var(--color-foreground);
 }
 
 /* Focus states from theme */
 :focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
+}
+
+/* Feature card icons + stat numbers: accent color */
+svg.text-\[var\(--color-primary\)\] {
+    color: var(--color-accent) !important;
+}
+h2.font-bold.text-\[var\(--color-primary\)\] {
+    color: var(--color-accent) !important;
 }

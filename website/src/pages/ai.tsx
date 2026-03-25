@@ -4,19 +4,19 @@ import Link from "@docusaurus/Link";
 import Layout from "@theme/Layout";
 import Translate, { translate } from "@docusaurus/Translate";
 import {
-  HeroSection,
-  ContentSection,
-  FeatureGrid,
-  StepFlow,
-  StatsGrid,
-  ArticleSection,
-  VStack,
-  Typography,
-  Button,
   Box,
+  VStack,
+  HStack,
+  Typography,
+  Badge,
+  Button,
+  Icon,
+  Card,
+  SimpleGrid,
 } from "@almadar/ui/marketing";
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+
 const CAPABILITIES = [
   {
     icon: "target",
@@ -58,82 +58,128 @@ export default function AI(): ReactNode {
       title={translate({ id: "ai.meta.title", message: "AI -- Masar: System 2 for AI Agents" })}
       description={translate({ id: "ai.meta.desc", message: "Masar gives AI agents structured planning, instant verification, and experience-based memory. The world model that makes any LLM agent smarter." })}
     >
-      <HeroSection
-        align="left"
-        tag={translate({ id: "ai.hero.tag", message: "Masar" })}
-        title={translate({ id: "ai.hero.title", message: "System 2 for AI Agents" })}
-        subtitle={translate({ id: "ai.hero.subtitle", message: "Your LLM is fast and intuitive but cannot plan, verify, or remember. Masar gives it a world model: structured planning, instant verification, and experience-based memory." })}
-        primaryAction={{ label: translate({ id: "ai.hero.cta1", message: "Get Started" }), href: "https://masar.almadar.io/docs/getting-started/quickstart" }}
-        secondaryAction={{ label: translate({ id: "ai.hero.cta2", message: "View API" }), href: "https://masar.almadar.io/docs/api-reference/planning" }}
-        className="!overflow-visible"
-        backgroundElement={<Box className="absolute right-8 top-[15%] w-full max-w-[360px] pointer-events-none hidden lg:flex items-start">
+      <Box as="header" className="w-full min-h-[60vh] flex items-center relative overflow-hidden">
+        <Box className="absolute right-8 top-[15%] w-full max-w-[360px] pointer-events-none hidden lg:flex items-start">
           <ThemedImage
             alt="AI SExpr Topology"
             sources={{
               light: useBaseUrl('/img/illustrations/SExpr-light.svg'),
               dark: useBaseUrl('/img/illustrations/SExpr-dark.svg'),
             }}
-            className="w-full opacity-90 drop-shadow-2xl "
+            className="w-full opacity-90 drop-shadow-2xl"
           />
-        </Box>}
-      />
-
-      <ContentSection>
-        <VStack gap="lg" align="center" className="container">
-          <VStack gap="sm" align="center">
-            <Typography variant="h2">
-              <Translate id="ai.caps.title">Three Capabilities LLMs Lack</Translate>
+        </Box>
+        <Box className="site-container py-20 relative z-10">
+          <VStack gap="lg" align="start">
+            <Badge variant="primary">{translate({ id: "ai.hero.tag", message: "Masar" })}</Badge>
+            <Typography variant="h1">
+              {translate({ id: "ai.hero.title", message: "System 2 for AI Agents" })}
             </Typography>
-            <Typography variant="body" color="muted">
-              <Translate id="ai.caps.subtitle">LLMs generate text. Masar understands structure.</Translate>
+            <Typography variant="body1" color="muted">
+              {translate({ id: "ai.hero.subtitle", message: "Your LLM is fast and intuitive but cannot plan, verify, or remember. Masar gives it a world model: structured planning, instant verification, and experience-based memory." })}
             </Typography>
+            <HStack gap="md">
+              <a href="https://masar.almadar.io/docs/getting-started/quickstart"><Button variant="primary" size="lg">{translate({ id: "ai.hero.cta1", message: "Get Started" })}</Button></a>
+              <a href="https://masar.almadar.io/docs/api-reference/planning"><Button variant="secondary" size="lg">{translate({ id: "ai.hero.cta2", message: "View API" })}</Button></a>
+            </HStack>
           </VStack>
-          <FeatureGrid items={CAPABILITIES} columns={3} />
-        </VStack>
-      </ContentSection>
+        </Box>
+      </Box>
 
-      <ContentSection background="alt">
-        <VStack gap="lg" align="center" className="container">
-          <Typography variant="h2">
-            <Translate id="ai.pipe.title">How Masar Works</Translate>
-          </Typography>
-          <StepFlow steps={PIPELINE_STEPS} orientation="horizontal" showConnectors />
-        </VStack>
-      </ContentSection>
+      <Box className="w-full py-24">
+        <Box className="site-container">
+          <VStack gap="lg" align="center">
+            <VStack gap="sm" align="center">
+              <Typography variant="h2">
+                <Translate id="ai.caps.title">Three Capabilities LLMs Lack</Translate>
+              </Typography>
+              <Typography variant="body" color="muted">
+                <Translate id="ai.caps.subtitle">LLMs generate text. Masar understands structure.</Translate>
+              </Typography>
+            </VStack>
+            <SimpleGrid cols={3} gap="lg">
+              {CAPABILITIES.map((item) => (
+                <Card key={item.title} className="p-6">
+                  <VStack gap="md">
+                    <Icon name={item.icon} size={24} />
+                    <Typography variant="h4">{item.title}</Typography>
+                    <Typography variant="body" color="muted">{item.description}</Typography>
+                  </VStack>
+                </Card>
+              ))}
+            </SimpleGrid>
+          </VStack>
+        </Box>
+      </Box>
 
-      <ContentSection>
-        <VStack gap="lg" align="center" className="container">
-          <Typography variant="h2">
-            <Translate id="ai.stats.title">By the Numbers</Translate>
-          </Typography>
-          <StatsGrid stats={STATS} columns={3} />
-        </VStack>
-      </ContentSection>
+      <Box className="w-full bg-[var(--color-surface)] py-24">
+        <Box className="site-container">
+          <VStack gap="lg" align="center">
+            <Typography variant="h2">
+              <Translate id="ai.pipe.title">How Masar Works</Translate>
+            </Typography>
+            <SimpleGrid cols={5} gap="md">
+              {PIPELINE_STEPS.map((step, i) => (
+                <VStack key={step.title} gap="sm" align="center">
+                  <Box className="w-10 h-10 rounded-full bg-[var(--color-primary)] flex items-center justify-center">
+                    <Typography variant="body" className="text-white font-bold">{i + 1}</Typography>
+                  </Box>
+                  <Typography variant="h4" align="center">{step.title}</Typography>
+                  <Typography variant="body" color="muted" align="center">{step.description}</Typography>
+                </VStack>
+              ))}
+            </SimpleGrid>
+          </VStack>
+        </Box>
+      </Box>
 
-      <ContentSection background="dark">
-        <ArticleSection title={translate({ id: "ai.sys2.title", message: "Thinking, Fast and Slow" })} maxWidth="md">
-          <Typography variant="body" className="text-[var(--color-background)]/80">
-            <Translate id="ai.sys2.p1">
-              Daniel Kahneman's research showed that human cognition has two systems. System 1 is fast, intuitive, and associative. System 2 is slow, deliberate, and structural. You need both to make good decisions.
-            </Translate>
-          </Typography>
-          <Typography variant="body" className="text-[var(--color-background)]/80">
-            <Translate id="ai.sys2.p2">
-              LLMs are System 1. They respond instantly, pattern-match from training data, and generate fluent text. But they cannot plan multi-step processes, verify structural correctness, or learn from their own experience. That is System 2.
-            </Translate>
-          </Typography>
-          <Typography variant="body" className="text-[var(--color-background)]/80">
-            <Translate id="ai.sys2.p3">
-              Masar is System 2 for any LLM agent. It handles the deliberate, structural thinking that language models cannot do. The LLM handles language and generation. Masar handles planning, verification, and memory. Together, they form a complete agent.
-            </Translate>
-          </Typography>
-          <Link href="https://masar.almadar.io">
-            <Button variant="primary" size="lg">
-              <Translate id="ai.sys2.cta">Explore Masar</Translate>
-            </Button>
-          </Link>
-        </ArticleSection>
-      </ContentSection>
+      <Box className="w-full py-24">
+        <Box className="site-container">
+          <VStack gap="lg" align="center">
+            <Typography variant="h2">
+              <Translate id="ai.stats.title">By the Numbers</Translate>
+            </Typography>
+            <SimpleGrid cols={3} gap="lg">
+              {STATS.map((stat) => (
+                <VStack key={stat.label} gap="sm" align="center">
+                  <Typography variant="h2" color="primary">{stat.value}</Typography>
+                  <Typography variant="body" color="muted" align="center">{stat.label}</Typography>
+                </VStack>
+              ))}
+            </SimpleGrid>
+          </VStack>
+        </Box>
+      </Box>
+
+      <Box className="w-full bg-[var(--color-foreground)] py-24">
+        <Box className="site-container">
+          <VStack gap="lg" align="center" className="max-w-[640px] mx-auto">
+            <Typography variant="h2" className="text-[var(--color-background)]">
+              {translate({ id: "ai.sys2.title", message: "Thinking, Fast and Slow" })}
+            </Typography>
+            <Typography variant="body" className="text-[var(--color-background)]/80">
+              <Translate id="ai.sys2.p1">
+                Daniel Kahneman's research showed that human cognition has two systems. System 1 is fast, intuitive, and associative. System 2 is slow, deliberate, and structural. You need both to make good decisions.
+              </Translate>
+            </Typography>
+            <Typography variant="body" className="text-[var(--color-background)]/80">
+              <Translate id="ai.sys2.p2">
+                LLMs are System 1. They respond instantly, pattern-match from training data, and generate fluent text. But they cannot plan multi-step processes, verify structural correctness, or learn from their own experience. That is System 2.
+              </Translate>
+            </Typography>
+            <Typography variant="body" className="text-[var(--color-background)]/80">
+              <Translate id="ai.sys2.p3">
+                Masar is System 2 for any LLM agent. It handles the deliberate, structural thinking that language models cannot do. The LLM handles language and generation. Masar handles planning, verification, and memory. Together, they form a complete agent.
+              </Translate>
+            </Typography>
+            <Link href="https://masar.almadar.io">
+              <Button variant="primary" size="lg">
+                <Translate id="ai.sys2.cta">Explore Masar</Translate>
+              </Button>
+            </Link>
+          </VStack>
+        </Box>
+      </Box>
     </Layout>
   );
 }

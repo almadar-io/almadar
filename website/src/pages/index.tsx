@@ -1,18 +1,17 @@
 import React from "react";
 import type { ReactNode } from "react";
-import Link from "@docusaurus/Link";
 import Layout from "@theme/Layout";
 import Translate, { translate } from "@docusaurus/Translate";
 import {
-  HeroSection,
-  ContentSection,
-  FeatureGrid,
-  StatsGrid,
-  CTABanner,
-  ArticleSection,
+  Box,
   VStack,
+  HStack,
   Typography,
+  Badge,
   Button,
+  Icon,
+  Card,
+  SimpleGrid,
 } from "@almadar/ui/marketing";
 
 import { OrbitalHeroBackground } from "../components/OrbitalHeroBackground";
@@ -42,7 +41,6 @@ const PRODUCTS = [
     description: translate({ id: "home.pillars.studio.desc", message: "The builder where humans and AI agents collaborate to create software. Describe, generate, deploy." }),
     href: "https://studio.almadar.io",
     linkLabel: translate({ id: "home.pillars.studio.link", message: "Try Studio" }),
-    variant: "interactive" as const,
   },
   {
     icon: "code-2",
@@ -50,7 +48,6 @@ const PRODUCTS = [
     description: translate({ id: "home.pillars.language.desc", message: "A formal language for describing how software behaves. Open source. AI-native. Compiler-verified." }),
     href: "https://orb.almadar.io",
     linkLabel: translate({ id: "home.pillars.language.link", message: "Explore the Language" }),
-    variant: "interactive" as const,
   },
   {
     icon: "cloud",
@@ -58,7 +55,6 @@ const PRODUCTS = [
     description: translate({ id: "home.pillars.services.desc", message: "AI-native infrastructure. Compute, storage, authentication, event routing. Designed for agents." }),
     href: "https://services.almadar.io",
     linkLabel: translate({ id: "home.pillars.services.link", message: "View Services" }),
-    variant: "interactive" as const,
   },
   {
     icon: "brain",
@@ -66,7 +62,6 @@ const PRODUCTS = [
     description: translate({ id: "home.pillars.masar.desc", message: "System 2 for AI agents. Planning, verification, and memory that makes any LLM smarter." }),
     href: "https://masar.almadar.io",
     linkLabel: translate({ id: "home.pillars.masar.link", message: "Explore Masar" }),
-    variant: "interactive" as const,
   },
 ];
 
@@ -82,63 +77,104 @@ export default function Home(): ReactNode {
       title={translate({ id: "home.meta.title", message: "Almadar -- AI that builds software you can trust." })}
       description={translate({ id: "home.meta.desc", message: "From natural language to deployed, verified applications. Studio, Orb, and Masar work together so you describe once and ship everywhere." })}
     >
-      <HeroSection
-        tag={translate({ id: "home.hero.tag", message: "AI-Native Platform" })}
-        title={translate({ id: "home.hero.title", message: "AI that builds software you can trust." })}
-        subtitle={translate({ id: "home.hero.subtitle", message: "From natural language to deployed, verified applications. Studio, Orb, and Masar work together so you describe once and ship everywhere." })}
-        primaryAction={{ label: translate({ id: "home.hero.cta1", message: "Try Studio" }), href: "https://studio.almadar.io" }}
-        secondaryAction={{ label: translate({ id: "home.hero.cta2", message: "Read the Docs" }), href: "https://orb.almadar.io/docs" }}
-        backgroundElement={<OrbitalHeroBackground intensity="full" />}
-      />
+      <Box as="header" className="w-full min-h-[60vh] flex items-center relative overflow-hidden">
+        <OrbitalHeroBackground intensity="full" />
+        <Box className="site-container py-20 relative z-10">
+          <VStack gap="lg" align="center">
+            <Badge variant="primary">{translate({ id: "home.hero.tag", message: "AI-Native Platform" })}</Badge>
+            <Typography variant="h1" align="center">
+              {translate({ id: "home.hero.title", message: "AI that builds software you can trust." })}
+            </Typography>
+            <Typography variant="body1" color="muted" align="center">
+              {translate({ id: "home.hero.subtitle", message: "From natural language to deployed, verified applications. Studio, Orb, and Masar work together so you describe once and ship everywhere." })}
+            </Typography>
+            <HStack gap="md">
+              <a href="https://studio.almadar.io"><Button variant="primary" size="lg">{translate({ id: "home.hero.cta1", message: "Try Studio" })}</Button></a>
+              <a href="https://orb.almadar.io/docs"><Button variant="secondary" size="lg">{translate({ id: "home.hero.cta2", message: "Read the Docs" })}</Button></a>
+            </HStack>
+          </VStack>
+        </Box>
+      </Box>
 
-      <ContentSection>
-        <VStack gap="lg" align="center" className="container">
-          <Typography variant="h2">
-            <Translate id="home.idea.title">How It Works</Translate>
-          </Typography>
-          <FeatureGrid items={HOW_IT_WORKS} columns={3} />
-        </VStack>
-      </ContentSection>
+      <Box className="w-full py-24">
+        <Box className="site-container">
+          <VStack gap="lg" align="center">
+            <Typography variant="h2">
+              <Translate id="home.idea.title">How It Works</Translate>
+            </Typography>
+            <SimpleGrid cols={3} gap="lg">
+              {HOW_IT_WORKS.map((item) => (
+                <Card key={item.title} className="p-6">
+                  <VStack gap="md">
+                    <Icon name={item.icon} size={24} />
+                    <Typography variant="h4">{item.title}</Typography>
+                    <Typography variant="body" color="muted">{item.description}</Typography>
+                  </VStack>
+                </Card>
+              ))}
+            </SimpleGrid>
+          </VStack>
+        </Box>
+      </Box>
 
-      <ContentSection background="alt">
-        <VStack gap="lg" align="center" className="container">
-          <Typography variant="h2">
-            <Translate id="home.pillars.title">Our Products</Translate>
-          </Typography>
-          <FeatureGrid items={PRODUCTS} columns={2} />
-        </VStack>
-      </ContentSection>
+      <Box className="w-full bg-[var(--color-surface)] py-24">
+        <Box className="site-container">
+          <VStack gap="lg" align="center">
+            <Typography variant="h2">
+              <Translate id="home.pillars.title">Our Products</Translate>
+            </Typography>
+            <SimpleGrid cols={2} gap="lg">
+              {PRODUCTS.map((item) => (
+                <Card key={item.title} className="p-6">
+                  <VStack gap="md">
+                    <Icon name={item.icon} size={24} />
+                    <Typography variant="h4">{item.title}</Typography>
+                    <Typography variant="body" color="muted">{item.description}</Typography>
+                    <a href={item.href}>
+                      <Button variant="secondary" size="sm">{item.linkLabel}</Button>
+                    </a>
+                  </VStack>
+                </Card>
+              ))}
+            </SimpleGrid>
+          </VStack>
+        </Box>
+      </Box>
 
-      <ContentSection>
-        <VStack gap="lg" align="center" className="container">
-          <Typography variant="h2">
-            <Translate id="home.proof.title">Proven in Production</Translate>
-          </Typography>
-          <StatsGrid stats={STATS} columns={3} />
-        </VStack>
-      </ContentSection>
+      <Box className="w-full py-24">
+        <Box className="site-container">
+          <VStack gap="lg" align="center">
+            <Typography variant="h2">
+              <Translate id="home.proof.title">Proven in Production</Translate>
+            </Typography>
+            <SimpleGrid cols={3} gap="lg">
+              {STATS.map((stat) => (
+                <VStack key={stat.label} gap="sm" align="center">
+                  <Typography variant="h2" color="primary">{stat.value}</Typography>
+                  <Typography variant="body" color="muted" align="center">{stat.label}</Typography>
+                </VStack>
+              ))}
+            </SimpleGrid>
+          </VStack>
+        </Box>
+      </Box>
 
-      <ContentSection background="dark">
-        <ArticleSection title={translate({ id: "home.ai.title", message: "Built on Our Own Neural Models" })} maxWidth="md">
-          <Typography variant="body" className="text-[var(--color-background)]/80">
-            <Translate id="home.ai.text">
-              Our neural pipeline understands software structure the way a chess engine understands board positions. Small, specialized models that predict errors, evaluate fixes, and generate valid software from scratch. LLMs handle natural language; our models handle correctness.
-            </Translate>
-          </Typography>
-          <Link to="https://masar.almadar.io">
-            <Button variant="primary" size="lg">
-              <Translate id="home.ai.cta">Explore Masar</Translate>
-            </Button>
-          </Link>
-        </ArticleSection>
-      </ContentSection>
-
-      <CTABanner
-        title={translate({ id: "home.cta.title", message: "Ready to build?" })}
-        subtitle={translate({ id: "home.cta.text", message: "Start with Orb. Build with Studio. Deploy on Almadar Services." })}
-        primaryAction={{ label: translate({ id: "home.cta.start", message: "Try Studio" }), href: "https://studio.almadar.io" }}
-        secondaryAction={{ label: translate({ id: "home.cta.vision", message: "Read the Vision" }), href: "/vision" }}
-      />
+      <Box className="w-full bg-[var(--color-surface)] py-16">
+        <Box className="site-container">
+          <VStack gap="lg" align="center">
+            <Typography variant="h2" align="center">
+              {translate({ id: "home.cta.title", message: "Ready to build?" })}
+            </Typography>
+            <Typography variant="body" color="muted" align="center">
+              {translate({ id: "home.cta.text", message: "Start with Orb. Build with Studio. Deploy on Almadar Services." })}
+            </Typography>
+            <HStack gap="md">
+              <a href="https://studio.almadar.io"><Button variant="primary" size="lg">{translate({ id: "home.cta.start", message: "Try Studio" })}</Button></a>
+              <a href="/vision"><Button variant="secondary" size="lg">{translate({ id: "home.cta.vision", message: "Read the Vision" })}</Button></a>
+            </HStack>
+          </VStack>
+        </Box>
+      </Box>
     </Layout>
   );
 }

@@ -379,7 +379,7 @@ export default function Playground(): ReactNode {
       })}
     >
       <div className={styles.pageHeader}>
-        <div className="container">
+        <div className="w-full">
           <Heading as="h1" className={styles.pageTitle}>
             <Translate id="playground.title">Playground</Translate>
           </Heading>

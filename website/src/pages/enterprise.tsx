@@ -1,21 +1,18 @@
 import React from "react";
 import type { ReactNode } from "react";
-import Link from "@docusaurus/Link";
 import Layout from "@theme/Layout";
 import Translate, { translate } from "@docusaurus/Translate";
 import {
-  HeroSection as AlmadarHeroSection,
-  ContentSection,
-  FeatureGrid,
-  PricingGrid,
-  CTABanner,
-  VStack,
-  Typography,
   Box,
-  Card,
+  VStack,
+  HStack,
+  Typography,
+  Badge,
+  Button,
   Icon,
+  Card,
+  SimpleGrid,
 } from "@almadar/ui/marketing";
-import { CaseStudyCard } from "@almadar/ui/marketing";
 import { AvlApplication, AvlOrbital, AvlEntity } from "@almadar/ui/illustrations";
 
 const FEATURES = [
@@ -92,7 +89,7 @@ const PRICING_PLANS = [
       translate({ id: "enterprise.pricing.team.feature3", message: "Email support" }),
       translate({ id: "enterprise.pricing.team.feature4", message: "Cloud deployment" }),
     ],
-    action: { label: translate({ id: "enterprise.pricing.contact", message: "Contact Us" }), href: "#contact" },
+    href: "#contact",
     highlighted: false,
   },
   {
@@ -106,7 +103,7 @@ const PRICING_PLANS = [
       translate({ id: "enterprise.pricing.business.feature4", message: "Private cloud option" }),
       translate({ id: "enterprise.pricing.business.feature5", message: "Audit logs" }),
     ],
-    action: { label: translate({ id: "enterprise.pricing.contact", message: "Contact Us" }), href: "#contact" },
+    href: "#contact",
     highlighted: true,
     badge: translate({ id: "enterprise.pricing.popular", message: "Most Popular" }),
   },
@@ -121,7 +118,7 @@ const PRICING_PLANS = [
       translate({ id: "enterprise.pricing.enterprise.feature4", message: "SLA guarantee" }),
       translate({ id: "enterprise.pricing.enterprise.feature5", message: "Custom training" }),
     ],
-    action: { label: translate({ id: "enterprise.pricing.contact", message: "Contact Us" }), href: "#contact" },
+    href: "#contact",
     highlighted: false,
   },
 ];
@@ -151,100 +148,176 @@ export default function Enterprise(): ReactNode {
       title={translate({ id: "enterprise.meta.title", message: "Enterprise" })}
       description={translate({ id: "enterprise.meta.description", message: "Almadar Enterprise - Scale your development with enterprise-grade features" })}
     >
-      <AlmadarHeroSection
-        tag={translate({ id: "enterprise.tag", message: "Enterprise" })}
-        title={translate({ id: "enterprise.title", message: "Almadar for Teams & Organizations" })}
-        subtitle={translate({ id: "enterprise.subtitle", message: "Scale your development with enterprise-grade features, dedicated support, and custom deployment options." })}
-        primaryAction={{ label: translate({ id: "enterprise.cta.contact", message: "Contact Sales" }), href: "#contact" }}
-        secondaryAction={{ label: translate({ id: "enterprise.cta.docs", message: "View Documentation" }), href: "/developers" }}
-        backgroundElement={
-          <Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] max-h-[80%] opacity-30 pointer-events-none hidden lg:flex items-center">
-            <svg viewBox="0 0 600 400" fill="none" className="w-full">
-              <AvlApplication x={20} y={20} width={560} height={360} label="Enterprise" />
-              <AvlOrbital cx={150} cy={200} r={80} label="Tenant A" />
-              <AvlEntity x={150} y={200} r={25} fieldCount={4} />
-              <AvlOrbital cx={300} cy={140} r={70} label="Tenant B" />
-              <AvlEntity x={300} y={140} r={20} fieldCount={3} />
-              <AvlOrbital cx={450} cy={220} r={75} label="Tenant C" />
-              <AvlEntity x={450} y={220} r={22} fieldCount={5} />
-            </svg>
-          </Box>
-        }
-      />
-
-      <ContentSection>
-        <VStack gap="lg" align="center" className="container">
-          <VStack gap="sm" align="center">
-            <Typography variant="h2">
-              <Translate id="enterprise.features.title">Enterprise Features</Translate>
+      <Box as="header" className="w-full min-h-[60vh] flex items-center relative overflow-hidden">
+        <Box className="absolute right-8 top-1/2 -translate-y-1/2 w-[45%] max-h-[80%] opacity-30 pointer-events-none hidden lg:flex items-center">
+          <svg viewBox="0 0 600 400" fill="none" className="w-full">
+            <AvlApplication x={20} y={20} width={560} height={360} label="Enterprise" />
+            <AvlOrbital cx={150} cy={200} r={80} label="Tenant A" />
+            <AvlEntity x={150} y={200} r={25} fieldCount={4} />
+            <AvlOrbital cx={300} cy={140} r={70} label="Tenant B" />
+            <AvlEntity x={300} y={140} r={20} fieldCount={3} />
+            <AvlOrbital cx={450} cy={220} r={75} label="Tenant C" />
+            <AvlEntity x={450} y={220} r={22} fieldCount={5} />
+          </svg>
+        </Box>
+        <Box className="site-container py-20 relative z-10">
+          <VStack gap="lg" align="center">
+            <Badge variant="primary">{translate({ id: "enterprise.tag", message: "Enterprise" })}</Badge>
+            <Typography variant="h1" align="center">
+              {translate({ id: "enterprise.title", message: "Almadar for Teams & Organizations" })}
             </Typography>
-            <Typography variant="body" color="muted">
-              <Translate id="enterprise.features.subtitle">Everything you need to build at scale</Translate>
+            <Typography variant="body1" color="muted" align="center">
+              {translate({ id: "enterprise.subtitle", message: "Scale your development with enterprise-grade features, dedicated support, and custom deployment options." })}
             </Typography>
+            <HStack gap="md">
+              <a href="#contact"><Button variant="primary" size="lg">{translate({ id: "enterprise.cta.contact", message: "Contact Sales" })}</Button></a>
+              <a href="/developers"><Button variant="secondary" size="lg">{translate({ id: "enterprise.cta.docs", message: "View Documentation" })}</Button></a>
+            </HStack>
           </VStack>
-          <FeatureGrid items={FEATURES} columns={3} />
-        </VStack>
-      </ContentSection>
+        </Box>
+      </Box>
 
-      <ContentSection background="alt">
-        <VStack gap="lg" align="center" className="container">
-          <VStack gap="sm" align="center">
-            <Typography variant="h2">
-              <Translate id="enterprise.security.title">Security & Compliance</Translate>
-            </Typography>
-            <Typography variant="body" color="muted">
-              <Translate id="enterprise.security.subtitle">Built for regulated industries from day one</Translate>
-            </Typography>
+      <Box className="w-full py-24">
+        <Box className="site-container">
+          <VStack gap="lg" align="center">
+            <VStack gap="sm" align="center">
+              <Typography variant="h2">
+                <Translate id="enterprise.features.title">Enterprise Features</Translate>
+              </Typography>
+              <Typography variant="body" color="muted">
+                <Translate id="enterprise.features.subtitle">Everything you need to build at scale</Translate>
+              </Typography>
+            </VStack>
+            <SimpleGrid cols={3} gap="lg">
+              {FEATURES.map((item) => (
+                <Card key={item.title} className="p-6">
+                  <VStack gap="md">
+                    <Icon name={item.icon} size={24} />
+                    <Typography variant="h4">{item.title}</Typography>
+                    <Typography variant="body" color="muted">{item.description}</Typography>
+                  </VStack>
+                </Card>
+              ))}
+            </SimpleGrid>
           </VStack>
-          <FeatureGrid
-            items={SECURITY_CARDS.map((card) => ({
-              title: card.title,
-              description: card.items.join(" | "),
-              variant: "bordered" as const,
-            }))}
-            columns={3}
-          />
-        </VStack>
-      </ContentSection>
+        </Box>
+      </Box>
 
-      <ContentSection>
-        <VStack gap="lg" align="center" className="container">
-          <VStack gap="sm" align="center">
-            <Typography variant="h2">
-              <Translate id="enterprise.pricing.title">Flexible Pricing</Translate>
-            </Typography>
-            <Typography variant="body" color="muted">
-              <Translate id="enterprise.pricing.subtitle">Plans that grow with your organization</Translate>
-            </Typography>
+      <Box className="w-full bg-[var(--color-surface)] py-24">
+        <Box className="site-container">
+          <VStack gap="lg" align="center">
+            <VStack gap="sm" align="center">
+              <Typography variant="h2">
+                <Translate id="enterprise.security.title">Security & Compliance</Translate>
+              </Typography>
+              <Typography variant="body" color="muted">
+                <Translate id="enterprise.security.subtitle">Built for regulated industries from day one</Translate>
+              </Typography>
+            </VStack>
+            <SimpleGrid cols={3} gap="lg">
+              {SECURITY_CARDS.map((card) => (
+                <Card key={card.title} className="p-6 border border-[var(--color-border)]">
+                  <VStack gap="md">
+                    <Typography variant="h4">{card.title}</Typography>
+                    <VStack gap="xs">
+                      {card.items.map((item) => (
+                        <Typography key={item} variant="body" color="muted">{item}</Typography>
+                      ))}
+                    </VStack>
+                  </VStack>
+                </Card>
+              ))}
+            </SimpleGrid>
           </VStack>
-          <PricingGrid plans={PRICING_PLANS} />
-        </VStack>
-      </ContentSection>
+        </Box>
+      </Box>
 
-      <ContentSection background="dark">
-        <VStack gap="lg" align="center" className="container">
-          <VStack gap="sm" align="center">
-            <Typography variant="h2" className="text-[var(--color-background)]">
-              <Translate id="enterprise.caseStudies.title">Proven in the Field</Translate>
-            </Typography>
-            <Typography variant="body" className="text-[var(--color-background)]/60">
-              <Translate id="enterprise.caseStudies.subtitle">Real deployments built on Almadar</Translate>
-            </Typography>
+      <Box className="w-full py-24">
+        <Box className="site-container">
+          <VStack gap="lg" align="center">
+            <VStack gap="sm" align="center">
+              <Typography variant="h2">
+                <Translate id="enterprise.pricing.title">Flexible Pricing</Translate>
+              </Typography>
+              <Typography variant="body" color="muted">
+                <Translate id="enterprise.pricing.subtitle">Plans that grow with your organization</Translate>
+              </Typography>
+            </VStack>
+            <SimpleGrid cols={3} gap="lg">
+              {PRICING_PLANS.map((plan) => (
+                <Card key={plan.name} className={`p-6 ${plan.highlighted ? 'border-2 border-[var(--color-primary)]' : ''}`}>
+                  <VStack gap="md">
+                    <HStack gap="sm" align="center">
+                      <Typography variant="h4">{plan.name}</Typography>
+                      {plan.badge && <Badge variant="primary">{plan.badge}</Badge>}
+                    </HStack>
+                    <Typography variant="h3" color="primary">{plan.price}</Typography>
+                    <Typography variant="body" color="muted">{plan.description}</Typography>
+                    <VStack gap="xs">
+                      {plan.features.map((feature) => (
+                        <HStack key={feature} gap="sm" align="center">
+                          <Icon name="check" size={16} />
+                          <Typography variant="body">{feature}</Typography>
+                        </HStack>
+                      ))}
+                    </VStack>
+                    <a href={plan.href}>
+                      <Button variant={plan.highlighted ? "primary" : "secondary"} className="w-full">
+                        {translate({ id: "enterprise.pricing.contact", message: "Contact Us" })}
+                      </Button>
+                    </a>
+                  </VStack>
+                </Card>
+              ))}
+            </SimpleGrid>
           </VStack>
-          <Box className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-            {CASE_STUDIES.map((cs) => (
-              <CaseStudyCard key={cs.href} {...cs} />
-            ))}
-          </Box>
-        </VStack>
-      </ContentSection>
+        </Box>
+      </Box>
 
-      <CTABanner
-        title={translate({ id: "enterprise.contact.title", message: "Ready to get started?" })}
-        subtitle={translate({ id: "enterprise.contact.description", message: "Contact our sales team to discuss your requirements and get a custom quote." })}
-        primaryAction={{ label: "hello@almadar.io", href: "mailto:hello@almadar.io" }}
-        background="primary"
-      />
+      <Box className="w-full bg-[var(--color-foreground)] py-24">
+        <Box className="site-container">
+          <VStack gap="lg" align="center">
+            <VStack gap="sm" align="center">
+              <Typography variant="h2" className="text-[var(--color-background)]">
+                <Translate id="enterprise.caseStudies.title">Proven in the Field</Translate>
+              </Typography>
+              <Typography variant="body" className="text-[var(--color-background)]/60">
+                <Translate id="enterprise.caseStudies.subtitle">Real deployments built on Almadar</Translate>
+              </Typography>
+            </VStack>
+            <SimpleGrid cols={2} gap="lg">
+              {CASE_STUDIES.map((cs) => (
+                <Card key={cs.href} className="p-6 bg-[var(--color-background)]/10">
+                  <VStack gap="md">
+                    <Badge className={`bg-[${cs.categoryColor}]/20 text-[${cs.categoryColor}]`}>{cs.category}</Badge>
+                    <Typography variant="h4" className="text-[var(--color-background)]">{cs.title}</Typography>
+                    <Typography variant="body" className="text-[var(--color-background)]/70">{cs.description}</Typography>
+                    <a href={cs.href}>
+                      <Typography variant="body" color="primary">{cs.linkLabel}</Typography>
+                    </a>
+                  </VStack>
+                </Card>
+              ))}
+            </SimpleGrid>
+          </VStack>
+        </Box>
+      </Box>
+
+      <Box id="contact" className="w-full bg-[var(--color-primary)] py-16">
+        <Box className="site-container">
+          <VStack gap="lg" align="center">
+            <Typography variant="h2" align="center" className="text-white">
+              {translate({ id: "enterprise.contact.title", message: "Ready to get started?" })}
+            </Typography>
+            <Typography variant="body" align="center" className="text-white/80">
+              {translate({ id: "enterprise.contact.description", message: "Contact our sales team to discuss your requirements and get a custom quote." })}
+            </Typography>
+            <a href="mailto:hello@almadar.io">
+              <Button variant="secondary" size="lg">hello@almadar.io</Button>
+            </a>
+          </VStack>
+        </Box>
+      </Box>
     </Layout>
   );
 }
