@@ -12,6 +12,7 @@ import {
   Icon,
   Card,
   SimpleGrid,
+  AnimatedReveal,
 } from "@almadar/ui/marketing";
 
 import { OrbitalHeroBackground } from "../components/OrbitalHeroBackground";
@@ -99,18 +100,22 @@ export default function Home(): ReactNode {
       <Box className="w-full py-24">
         <Box className="site-container">
           <VStack gap="lg" align="center">
-            <Typography variant="h2">
-              <Translate id="home.idea.title">How It Works</Translate>
-            </Typography>
+            <AnimatedReveal animation="fade-in">
+              <Typography variant="h2">
+                <Translate id="home.idea.title">How It Works</Translate>
+              </Typography>
+            </AnimatedReveal>
             <SimpleGrid cols={3} gap="lg">
-              {HOW_IT_WORKS.map((item) => (
-                <Card key={item.title} className="p-6">
-                  <VStack gap="md">
-                    <Icon name={item.icon} size={24} />
-                    <Typography variant="h4">{item.title}</Typography>
-                    <Typography variant="body" color="muted">{item.description}</Typography>
-                  </VStack>
-                </Card>
+              {HOW_IT_WORKS.map((item, i) => (
+                <AnimatedReveal key={item.title} animation="fade-up" delay={i * 100} className="h-full">
+                  <Card className="p-6 h-full">
+                    <VStack gap="md">
+                      <Icon name={item.icon} size={24} />
+                      <Typography variant="h4">{item.title}</Typography>
+                      <Typography variant="body" color="muted">{item.description}</Typography>
+                    </VStack>
+                  </Card>
+                </AnimatedReveal>
               ))}
             </SimpleGrid>
           </VStack>
@@ -120,21 +125,25 @@ export default function Home(): ReactNode {
       <Box className="w-full bg-[var(--color-surface)] py-24">
         <Box className="site-container">
           <VStack gap="lg" align="center">
-            <Typography variant="h2">
-              <Translate id="home.pillars.title">Our Products</Translate>
-            </Typography>
+            <AnimatedReveal animation="fade-in">
+              <Typography variant="h2">
+                <Translate id="home.pillars.title">Our Products</Translate>
+              </Typography>
+            </AnimatedReveal>
             <SimpleGrid cols={2} gap="lg">
-              {PRODUCTS.map((item) => (
-                <Card key={item.title} className="p-6">
-                  <VStack gap="md">
-                    <img src={item.logo} alt={item.title} className="w-8 h-8" />
-                    <Typography variant="h4">{item.title}</Typography>
-                    <Typography variant="body" color="muted">{item.description}</Typography>
-                    <a href={item.href}>
-                      <Button variant="secondary" size="sm">{item.linkLabel}</Button>
-                    </a>
-                  </VStack>
-                </Card>
+              {PRODUCTS.map((item, i) => (
+                <AnimatedReveal key={item.title} animation="fade-up" delay={i * 100} className="h-full">
+                  <Card className="p-6 h-full">
+                    <VStack gap="md">
+                      <img src={item.logo} alt={item.title} className="w-8 h-8" />
+                      <Typography variant="h4">{item.title}</Typography>
+                      <Typography variant="body" color="muted">{item.description}</Typography>
+                      <a href={item.href}>
+                        <Button variant="secondary" size="sm">{item.linkLabel}</Button>
+                      </a>
+                    </VStack>
+                  </Card>
+                </AnimatedReveal>
               ))}
             </SimpleGrid>
           </VStack>
@@ -144,37 +153,43 @@ export default function Home(): ReactNode {
       <Box className="w-full py-24">
         <Box className="site-container">
           <VStack gap="lg" align="center">
-            <Typography variant="h2">
-              <Translate id="home.proof.title">Proven in Production</Translate>
-            </Typography>
+            <AnimatedReveal animation="fade-in">
+              <Typography variant="h2">
+                <Translate id="home.proof.title">Proven in Production</Translate>
+              </Typography>
+            </AnimatedReveal>
             <SimpleGrid cols={3} gap="lg">
-              {STATS.map((stat) => (
-                <VStack key={stat.label} gap="sm" align="center">
-                  <Typography variant="h2" color="primary">{stat.value}</Typography>
-                  <Typography variant="body" color="muted" align="center">{stat.label}</Typography>
-                </VStack>
+              {STATS.map((stat, i) => (
+                <AnimatedReveal key={stat.label} animation="scale-up" delay={i * 100}>
+                  <VStack gap="sm" align="center">
+                    <Typography variant="h2" color="primary">{stat.value}</Typography>
+                    <Typography variant="body" color="muted" align="center">{stat.label}</Typography>
+                  </VStack>
+                </AnimatedReveal>
               ))}
             </SimpleGrid>
           </VStack>
         </Box>
       </Box>
 
-      <Box className="w-full bg-[var(--color-surface)] py-16">
-        <Box className="site-container">
-          <VStack gap="lg" align="center">
-            <Typography variant="h2" align="center">
-              {translate({ id: "home.cta.title", message: "Ready to build?" })}
-            </Typography>
-            <Typography variant="body" color="muted" align="center">
-              {translate({ id: "home.cta.text", message: "Start with Orb. Build with Studio. Deploy on Almadar Services." })}
-            </Typography>
-            <HStack gap="md">
-              <a href="https://studio.almadar.io"><Button variant="primary" size="lg">{translate({ id: "home.cta.start", message: "Try Studio" })}</Button></a>
-              <a href="/vision"><Button variant="secondary" size="lg">{translate({ id: "home.cta.vision", message: "Read the Vision" })}</Button></a>
-            </HStack>
-          </VStack>
+      <AnimatedReveal animation="fade-in">
+        <Box className="w-full bg-[var(--color-surface)] py-16">
+          <Box className="site-container">
+            <VStack gap="lg" align="center">
+              <Typography variant="h2" align="center">
+                {translate({ id: "home.cta.title", message: "Ready to build?" })}
+              </Typography>
+              <Typography variant="body" color="muted" align="center">
+                {translate({ id: "home.cta.text", message: "Start with Orb. Build with Studio. Deploy on Almadar Services." })}
+              </Typography>
+              <HStack gap="md">
+                <a href="https://studio.almadar.io"><Button variant="primary" size="lg">{translate({ id: "home.cta.start", message: "Try Studio" })}</Button></a>
+                <a href="/vision"><Button variant="secondary" size="lg">{translate({ id: "home.cta.vision", message: "Read the Vision" })}</Button></a>
+              </HStack>
+            </VStack>
+          </Box>
         </Box>
-      </Box>
+      </AnimatedReveal>
     </Layout>
   );
 }

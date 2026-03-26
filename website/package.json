@@ -28,7 +28,7 @@
     "@almadar/runtime": "^2.0.4",
     "@almadar/std": "^3.3.5",
     "@almadar/syntax": "^1.0.1",
-    "@almadar/ui": "^2.26.0",
+    "@almadar/ui": "^2.27.0",
     "@docusaurus/core": "^3.9.2",
     "@docusaurus/plugin-google-gtag": "^3.9.2",
     "@docusaurus/preset-classic": "^3.9.2",
