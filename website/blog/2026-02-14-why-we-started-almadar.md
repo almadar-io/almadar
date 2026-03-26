@@ -3,7 +3,10 @@ slug: why-we-started-almadar
 title: "Why We Started Almadar"
 authors: [osamah]
 tags: [philosophy, story]
+image: /img/blog/why-we-started-almadar.svg
 ---
+
+![](/img/blog/why-we-started-almadar.svg)
 
 I have built the same application at least a dozen times. Different companies, different industries, different logos on the login screen, but underneath, the same patterns over and over again. User management. CRUD forms. Data tables. Dashboards. State handling. The same architecture decisions, the same boilerplate, the same bugs in the same places.
 

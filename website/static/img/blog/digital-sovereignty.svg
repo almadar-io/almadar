@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <style>
+      .light-variant { display: block; }
+      .dark-variant { display: none; }
+      @media (prefers-color-scheme: dark) {
+        .light-variant { display: none; }
+        .dark-variant { display: block; }
+      }
+    </style>
+  </defs>
+  <g class="light-variant">
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  
+    <rect x="0" y="0" width="800" height="600" fill="#f8fafc"/>
+    <!-- Globe outline -->
+    <circle cx="400" cy="300" r="180" fill="#f1f5f9" stroke="#14b8a6" stroke-width="3"/>
+    <ellipse cx="400" cy="300" rx="180" ry="60" fill="none" stroke="rgba(20, 184, 166, 0.3)" stroke-width="1" opacity="0.3"/>
+    <ellipse cx="400" cy="300" rx="60" ry="180" fill="none" stroke="rgba(20, 184, 166, 0.3)" stroke-width="1" opacity="0.3"/>
+    <ellipse cx="400" cy="300" rx="120" ry="180" fill="none" stroke="rgba(20, 184, 166, 0.3)" stroke-width="1" opacity="0.2"/>
+    <!-- Distributed nodes on globe surface -->
+    <circle cx="300" cy="210" r="14" fill="#f1f5f9" stroke="#06b6d4" stroke-width="2.5"/>
+    <circle cx="300" cy="210" r="5" fill="#06b6d4"/>
+    <circle cx="500" cy="230" r="12" fill="#f1f5f9" stroke="#14b8a6" stroke-width="2.5"/>
+    <circle cx="500" cy="230" r="4" fill="#14b8a6"/>
+    <circle cx="350" cy="380" r="14" fill="#f1f5f9" stroke="#06b6d4" stroke-width="2.5"/>
+    <circle cx="350" cy="380" r="5" fill="#06b6d4"/>
+    <circle cx="480" cy="350" r="10" fill="#f1f5f9" stroke="#14b8a6" stroke-width="2"/>
+    <circle cx="480" cy="350" r="4" fill="#14b8a6"/>
+    <circle cx="400" cy="160" r="12" fill="#f1f5f9" stroke="#14b8a6" stroke-width="2.5"/>
+    <circle cx="400" cy="160" r="4" fill="#14b8a6"/>
+    <circle cx="330" cy="300" r="10" fill="#f1f5f9" stroke="#06b6d4" stroke-width="2"/>
+    <circle cx="330" cy="300" r="4" fill="#06b6d4"/>
+    <!-- Network connections between nodes -->
+    <line x1="300" y1="210" x2="500" y2="230" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.4"/>
+    <line x1="300" y1="210" x2="350" y2="380" stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.4"/>
+    <line x1="500" y1="230" x2="480" y2="350" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.4"/>
+    <line x1="350" y1="380" x2="480" y2="350" stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.4"/>
+    <line x1="400" y1="160" x2="300" y2="210" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.3"/>
+    <line x1="400" y1="160" x2="500" y2="230" stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.3"/>
+    <line x1="330" y1="300" x2="300" y2="210" stroke="#06b6d4" stroke-width="1" opacity="0.3"/>
+    <line x1="330" y1="300" x2="350" y2="380" stroke="#14b8a6" stroke-width="1" opacity="0.3"/>
+    <!-- Central glow -->
+    <circle cx="400" cy="300" r="25" fill="#06b6d4" opacity="0.1" filter="url(#glow)"/>
+  
+</g>
+  <g class="dark-variant">
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  
+    <rect x="0" y="0" width="800" height="600" fill="#0f172a"/>
+    <!-- Globe outline -->
+    <circle cx="400" cy="300" r="180" fill="#1e293b" stroke="#14b8a6" stroke-width="3"/>
+    <ellipse cx="400" cy="300" rx="180" ry="60" fill="none" stroke="rgba(20, 184, 166, 0.25)" stroke-width="1" opacity="0.3"/>
+    <ellipse cx="400" cy="300" rx="60" ry="180" fill="none" stroke="rgba(20, 184, 166, 0.25)" stroke-width="1" opacity="0.3"/>
+    <ellipse cx="400" cy="300" rx="120" ry="180" fill="none" stroke="rgba(20, 184, 166, 0.25)" stroke-width="1" opacity="0.2"/>
+    <!-- Distributed nodes on globe surface -->
+    <circle cx="300" cy="210" r="14" fill="#1e293b" stroke="#06b6d4" stroke-width="2.5"/>
+    <circle cx="300" cy="210" r="5" fill="#06b6d4"/>
+    <circle cx="500" cy="230" r="12" fill="#1e293b" stroke="#14b8a6" stroke-width="2.5"/>
+    <circle cx="500" cy="230" r="4" fill="#14b8a6"/>
+    <circle cx="350" cy="380" r="14" fill="#1e293b" stroke="#06b6d4" stroke-width="2.5"/>
+    <circle cx="350" cy="380" r="5" fill="#06b6d4"/>
+    <circle cx="480" cy="350" r="10" fill="#1e293b" stroke="#14b8a6" stroke-width="2"/>
+    <circle cx="480" cy="350" r="4" fill="#14b8a6"/>
+    <circle cx="400" cy="160" r="12" fill="#1e293b" stroke="#14b8a6" stroke-width="2.5"/>
+    <circle cx="400" cy="160" r="4" fill="#14b8a6"/>
+    <circle cx="330" cy="300" r="10" fill="#1e293b" stroke="#06b6d4" stroke-width="2"/>
+    <circle cx="330" cy="300" r="4" fill="#06b6d4"/>
+    <!-- Network connections between nodes -->
+    <line x1="300" y1="210" x2="500" y2="230" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.4"/>
+    <line x1="300" y1="210" x2="350" y2="380" stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.4"/>
+    <line x1="500" y1="230" x2="480" y2="350" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.4"/>
+    <line x1="350" y1="380" x2="480" y2="350" stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.4"/>
+    <line x1="400" y1="160" x2="300" y2="210" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.3"/>
+    <line x1="400" y1="160" x2="500" y2="230" stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.3"/>
+    <line x1="330" y1="300" x2="300" y2="210" stroke="#06b6d4" stroke-width="1" opacity="0.3"/>
+    <line x1="330" y1="300" x2="350" y2="380" stroke="#14b8a6" stroke-width="1" opacity="0.3"/>
+    <!-- Central glow -->
+    <circle cx="400" cy="300" r="25" fill="#06b6d4" opacity="0.1" filter="url(#glow)"/>
+  
+</g>
+</svg>

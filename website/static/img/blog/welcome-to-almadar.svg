@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <style>
+      .light-variant { display: block; }
+      .dark-variant { display: none; }
+      @media (prefers-color-scheme: dark) {
+        .light-variant { display: none; }
+        .dark-variant { display: block; }
+      }
+    </style>
+  </defs>
+  <g class="light-variant">
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  
+    <rect x="0" y="0" width="800" height="600" fill="#f8fafc"/>
+    <!-- Radiating circles outward -->
+    <circle cx="400" cy="300" r="220" fill="none" stroke="#14b8a6" stroke-width="1" opacity="0.15"/>
+    <circle cx="400" cy="300" r="180" fill="none" stroke="#14b8a6" stroke-width="1.5" opacity="0.2"/>
+    <circle cx="400" cy="300" r="140" fill="none" stroke="#06b6d4" stroke-width="1.5" opacity="0.25"/>
+    <circle cx="400" cy="300" r="100" fill="none" stroke="#14b8a6" stroke-width="2" opacity="0.35"/>
+    <!-- Central orbital hexagon -->
+    <polygon points="400,230 460,265 460,335 400,370 340,335 340,265" fill="#f1f5f9" stroke="#14b8a6" stroke-width="4" filter="url(#glow)"/>
+    <polygon points="400,255 435,275 435,325 400,345 365,325 365,275" fill="#f1f5f9" stroke="#06b6d4" stroke-width="2" opacity="0.8"/>
+    <circle cx="400" cy="300" r="20" fill="#06b6d4" filter="url(#soft-glow)"/>
+    <circle cx="400" cy="300" r="8" fill="#f1f5f9"/>
+    <!-- Orbital dots on rings -->
+    <circle cx="400" cy="80" r="6" fill="#06b6d4" filter="url(#soft-glow)"/>
+    <circle cx="580" cy="200" r="5" fill="#14b8a6" opacity="0.6"/>
+    <circle cx="580" cy="400" r="7" fill="#06b6d4" opacity="0.5"/>
+    <circle cx="220" cy="200" r="5" fill="#14b8a6" opacity="0.6"/>
+    <circle cx="220" cy="400" r="4" fill="#06b6d4" opacity="0.5"/>
+    <circle cx="400" cy="520" r="6" fill="#14b8a6" opacity="0.5"/>
+  
+</g>
+  <g class="dark-variant">
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  
+    <rect x="0" y="0" width="800" height="600" fill="#0f172a"/>
+    <!-- Radiating circles outward -->
+    <circle cx="400" cy="300" r="220" fill="none" stroke="#14b8a6" stroke-width="1" opacity="0.15"/>
+    <circle cx="400" cy="300" r="180" fill="none" stroke="#14b8a6" stroke-width="1.5" opacity="0.2"/>
+    <circle cx="400" cy="300" r="140" fill="none" stroke="#06b6d4" stroke-width="1.5" opacity="0.25"/>
+    <circle cx="400" cy="300" r="100" fill="none" stroke="#14b8a6" stroke-width="2" opacity="0.35"/>
+    <!-- Central orbital hexagon -->
+    <polygon points="400,230 460,265 460,335 400,370 340,335 340,265" fill="#1e293b" stroke="#14b8a6" stroke-width="4" filter="url(#glow)"/>
+    <polygon points="400,255 435,275 435,325 400,345 365,325 365,275" fill="#1e293b" stroke="#06b6d4" stroke-width="2" opacity="0.8"/>
+    <circle cx="400" cy="300" r="20" fill="#06b6d4" filter="url(#soft-glow)"/>
+    <circle cx="400" cy="300" r="8" fill="#1e293b"/>
+    <!-- Orbital dots on rings -->
+    <circle cx="400" cy="80" r="6" fill="#06b6d4" filter="url(#soft-glow)"/>
+    <circle cx="580" cy="200" r="5" fill="#14b8a6" opacity="0.6"/>
+    <circle cx="580" cy="400" r="7" fill="#06b6d4" opacity="0.5"/>
+    <circle cx="220" cy="200" r="5" fill="#14b8a6" opacity="0.6"/>
+    <circle cx="220" cy="400" r="4" fill="#06b6d4" opacity="0.5"/>
+    <circle cx="400" cy="520" r="6" fill="#14b8a6" opacity="0.5"/>
+  
+</g>
+</svg>

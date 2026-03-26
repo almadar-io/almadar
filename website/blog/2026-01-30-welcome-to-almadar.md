@@ -3,7 +3,10 @@ slug: welcome-to-almadar
 title: Welcome to Almadar
 authors: [almadar]
 tags: [announcement]
+image: /img/blog/welcome-to-almadar.svg
 ---
+
+![](/img/blog/welcome-to-almadar.svg)
 
 We're excited to introduce **Almadar** - The Physics of Software.
 

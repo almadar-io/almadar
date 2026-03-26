@@ -14,6 +14,31 @@
         <feMergeNode in="SourceGraphic" />
       </feMerge>
     </filter>
+    <style>
+      .light-variant { display: block; }
+      .dark-variant { display: none; }
+      @media (prefers-color-scheme: dark) {
+        .light-variant { display: none; }
+        .dark-variant { display: block; }
+      }
+    </style>
+  </defs>
+  <g class="light-variant">
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
   </defs>
   
     <rect x="0" y="0" width="800" height="600" fill="#f8fafc"/>
@@ -39,4 +64,47 @@
       <circle cx="35" cy="50" r="8" fill="#06b6d4" filter="url(#soft-glow)"/>
     </g>
   
+</g>
+  <g class="dark-variant">
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  
+    <rect x="0" y="0" width="800" height="600" fill="#0f172a"/>
+    <!-- Scattered blocks (left) -->
+    <rect x="80" y="350" width="70" height="50" rx="6" fill="#1e293b" stroke="#14b8a6" stroke-width="2" transform="rotate(-15 115 375)"/>
+    <rect x="100" y="220" width="60" height="45" rx="6" fill="#1e293b" stroke="#06b6d4" stroke-width="2" transform="rotate(10 130 242)"/>
+    <rect x="180" y="280" width="55" height="55" rx="6" fill="#1e293b" stroke="#14b8a6" stroke-width="2" transform="rotate(-8 207 307)"/>
+    <rect x="130" y="420" width="65" height="40" rx="6" fill="#1e293b" stroke="rgba(20, 184, 166, 0.25)" stroke-width="2" transform="rotate(5 162 440)"/>
+    <!-- Assembly arrow -->
+    <path d="M280 310 C 330 310, 370 310, 420 310" fill="none" stroke="#06b6d4" stroke-width="3" stroke-dasharray="8 4"/>
+    <polygon points="415,300 430,310 415,320" fill="#06b6d4"/>
+    <!-- Assembled structure (right) -->
+    <g transform="translate(550, 180)">
+      <!-- Bottom row -->
+      <rect x="-80" y="180" width="70" height="50" rx="6" fill="#1e293b" stroke="#14b8a6" stroke-width="2.5"/>
+      <rect x="0" y="180" width="70" height="50" rx="6" fill="#1e293b" stroke="#14b8a6" stroke-width="2.5"/>
+      <!-- Middle row -->
+      <rect x="-40" y="120" width="70" height="50" rx="6" fill="#1e293b" stroke="#06b6d4" stroke-width="2.5"/>
+      <rect x="40" y="120" width="70" height="50" rx="6" fill="#1e293b" stroke="#06b6d4" stroke-width="2.5"/>
+      <!-- Top block -->
+      <rect x="0" y="60" width="70" height="50" rx="6" fill="#1e293b" stroke="#14b8a6" stroke-width="2.5" filter="url(#glow)"/>
+      <!-- Accent dot at peak -->
+      <circle cx="35" cy="50" r="8" fill="#06b6d4" filter="url(#soft-glow)"/>
+    </g>
+  
+</g>
 </svg>

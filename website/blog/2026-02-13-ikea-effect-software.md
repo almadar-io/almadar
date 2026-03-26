@@ -5,6 +5,8 @@ authors: [osamah]
 tags: [architecture, philosophy]
 image: /img/blog/ikea-effect-software.svg
 ---
+![](/img/blog/ikea-effect-software.svg)
+
 
 IKEA revolutionized furniture by making it composable, flat-packed, and assembly-friendly. What if software worked the same way?
 

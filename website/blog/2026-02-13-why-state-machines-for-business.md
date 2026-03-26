@@ -3,7 +3,10 @@ slug: why-state-machines-for-business
 title: "Why Your Next App Should Be a State Machine"
 authors: [osamah]
 tags: [business, architecture]
+image: /img/blog/why-state-machines-for-business.svg
 ---
+
+![](/img/blog/why-state-machines-for-business.svg)
 
 Your development team ships features fast. But bugs keep coming back. Deployments break on Fridays. The codebase grows, and so does the fear of touching it.
 

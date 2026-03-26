@@ -3,7 +3,10 @@ slug: what-if-software-could-build-itself
 title: "What If Software Could Build Itself?"
 authors: [osamah]
 tags: [philosophy, business]
+image: /img/blog/what-if-software-could-build-itself.svg
 ---
+
+![](/img/blog/what-if-software-could-build-itself.svg)
 
 Imagine you could sit down, describe exactly what you want an application to do — in plain language — and it just... builds itself. Not a rough prototype. Not a demo that falls apart when you poke it. A real, production-ready application that works on day one.
 

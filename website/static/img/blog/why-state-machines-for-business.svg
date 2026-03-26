@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <style>
+      .light-variant { display: block; }
+      .dark-variant { display: none; }
+      @media (prefers-color-scheme: dark) {
+        .light-variant { display: none; }
+        .dark-variant { display: block; }
+      }
+    </style>
+  </defs>
+  <g class="light-variant">
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  
+    <rect x="0" y="0" width="800" height="600" fill="#f8fafc"/>
+    <!-- State 1: Draft -->
+    <rect x="80" y="260" width="150" height="70" rx="14" fill="#f1f5f9" stroke="#14b8a6" stroke-width="3"/>
+    <rect x="110" y="282" width="60" height="8" rx="3" fill="#14b8a6" opacity="0.7"/>
+    <rect x="110" y="298" width="90" height="6" rx="3" fill="#0f172a" opacity="0.3"/>
+    <!-- Arrow Draft -> Review -->
+    <line x1="230" y1="295" x2="310" y2="295" stroke="#0f172a" stroke-width="2.5"/>
+    <polygon points="306,288 318,295 306,302" fill="#0f172a"/>
+    <rect x="250" y="268" width="50" height="6" rx="2" fill="#06b6d4" opacity="0.5"/>
+    <!-- State 2: Review -->
+    <rect x="325" y="260" width="150" height="70" rx="14" fill="#f1f5f9" stroke="#06b6d4" stroke-width="3" filter="url(#glow)"/>
+    <rect x="355" y="282" width="70" height="8" rx="3" fill="#06b6d4" opacity="0.7"/>
+    <rect x="355" y="298" width="50" height="6" rx="3" fill="#0f172a" opacity="0.3"/>
+    <!-- Arrow Review -> Published -->
+    <line x1="475" y1="295" x2="555" y2="295" stroke="#0f172a" stroke-width="2.5"/>
+    <polygon points="551,288 563,295 551,302" fill="#0f172a"/>
+    <rect x="495" y="268" width="50" height="6" rx="2" fill="#06b6d4" opacity="0.5"/>
+    <!-- State 3: Published -->
+    <rect x="570" y="260" width="150" height="70" rx="14" fill="#f1f5f9" stroke="#14b8a6" stroke-width="3"/>
+    <rect x="600" y="282" width="80" height="8" rx="3" fill="#14b8a6" opacity="0.7"/>
+    <rect x="600" y="298" width="60" height="6" rx="3" fill="#0f172a" opacity="0.3"/>
+    <!-- Entry indicator -->
+    <line x1="30" y1="295" x2="75" y2="295" stroke="#06b6d4" stroke-width="2.5"/>
+    <polygon points="72,288 82,295 72,302" fill="#06b6d4"/>
+    <!-- Terminal indicator (double border) -->
+    <rect x="566" y="256" width="158" height="78" rx="17" fill="none" stroke="#14b8a6" stroke-width="1.5" opacity="0.4"/>
+  
+</g>
+  <g class="dark-variant">
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  
+    <rect x="0" y="0" width="800" height="600" fill="#0f172a"/>
+    <!-- State 1: Draft -->
+    <rect x="80" y="260" width="150" height="70" rx="14" fill="#1e293b" stroke="#14b8a6" stroke-width="3"/>
+    <rect x="110" y="282" width="60" height="8" rx="3" fill="#14b8a6" opacity="0.7"/>
+    <rect x="110" y="298" width="90" height="6" rx="3" fill="#f1f5f9" opacity="0.3"/>
+    <!-- Arrow Draft -> Review -->
+    <line x1="230" y1="295" x2="310" y2="295" stroke="#f1f5f9" stroke-width="2.5"/>
+    <polygon points="306,288 318,295 306,302" fill="#f1f5f9"/>
+    <rect x="250" y="268" width="50" height="6" rx="2" fill="#06b6d4" opacity="0.5"/>
+    <!-- State 2: Review -->
+    <rect x="325" y="260" width="150" height="70" rx="14" fill="#1e293b" stroke="#06b6d4" stroke-width="3" filter="url(#glow)"/>
+    <rect x="355" y="282" width="70" height="8" rx="3" fill="#06b6d4" opacity="0.7"/>
+    <rect x="355" y="298" width="50" height="6" rx="3" fill="#f1f5f9" opacity="0.3"/>
+    <!-- Arrow Review -> Published -->
+    <line x1="475" y1="295" x2="555" y2="295" stroke="#f1f5f9" stroke-width="2.5"/>
+    <polygon points="551,288 563,295 551,302" fill="#f1f5f9"/>
+    <rect x="495" y="268" width="50" height="6" rx="2" fill="#06b6d4" opacity="0.5"/>
+    <!-- State 3: Published -->
+    <rect x="570" y="260" width="150" height="70" rx="14" fill="#1e293b" stroke="#14b8a6" stroke-width="3"/>
+    <rect x="600" y="282" width="80" height="8" rx="3" fill="#14b8a6" opacity="0.7"/>
+    <rect x="600" y="298" width="60" height="6" rx="3" fill="#f1f5f9" opacity="0.3"/>
+    <!-- Entry indicator -->
+    <line x1="30" y1="295" x2="75" y2="295" stroke="#06b6d4" stroke-width="2.5"/>
+    <polygon points="72,288 82,295 72,302" fill="#06b6d4"/>
+    <!-- Terminal indicator (double border) -->
+    <rect x="566" y="256" width="158" height="78" rx="17" fill="none" stroke="#14b8a6" stroke-width="1.5" opacity="0.4"/>
+  
+</g>
+</svg>

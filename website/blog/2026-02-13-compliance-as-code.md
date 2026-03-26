@@ -3,7 +3,10 @@ slug: compliance-as-code
 title: "Compliance as Code: When Your Architecture Enforces the Law"
 authors: [osamah]
 tags: [enterprise, compliance, architecture]
+image: /img/blog/compliance-as-code.svg
 ---
+
+![](/img/blog/compliance-as-code.svg)
 
 Checklists don't work. Training doesn't stick. Audits find problems months after they happen.
 

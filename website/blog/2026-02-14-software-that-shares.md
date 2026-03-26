@@ -3,7 +3,10 @@ slug: software-that-shares
 title: "Software That Shares: A New Way to Build"
 authors: [osamah]
 tags: [philosophy, vision]
+image: /img/blog/software-that-shares.svg
 ---
+
+![](/img/blog/software-that-shares.svg)
 
 There is a street in my neighborhood where three different utility companies dug up the same stretch of pavement in the same month. First the water company. Then the gas company. Then the internet provider. Each one cut into the ground, laid their pipes, filled it back in. None of them talked to each other. None of them shared a trench.
 

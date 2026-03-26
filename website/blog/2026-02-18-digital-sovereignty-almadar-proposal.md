@@ -3,7 +3,10 @@ slug: digital-sovereignty-almadar-proposal
 title: "Digital Sovereignty: The Almadar Proposal"
 authors: [almadar]
 tags: [sovereignty, ai, infrastructure, vision]
+image: /img/blog/digital-sovereignty.svg
 ---
+
+![](/img/blog/digital-sovereignty.svg)
 
 # Digital Sovereignty: The Almadar Proposal
 
