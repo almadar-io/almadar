@@ -3,7 +3,7 @@ slug: ikea-effect-software
 title: "The IKEA Effect for Software: Why We Built Apps from Flat-Packs"
 authors: [osamah]
 tags: [architecture, philosophy]
-image: /img/blog/ikea-effect-software.png
+image: /img/blog/ikea-effect-software.svg
 ---
 
 IKEA revolutionized furniture by making it composable, flat-packed, and assembly-friendly. What if software worked the same way?
@@ -12,7 +12,7 @@ IKEA revolutionized furniture by making it composable, flat-packed, and assembly
 
 <OrbitalDiagram />
 
-![The IKEA Effect in Software: Why We Love What We Build (And Why That's Dangerous)](/img/blog/ikea-effect-software.png)
+![The IKEA Effect in Software: Why We Love What We Build (And Why That's Dangerous)](/img/blog/ikea-effect-software.svg)
 
 We overvalue code we write ourselves. Almadar's component architecture forces us to assemble, not invent.
 

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  
+    <rect x="0" y="0" width="800" height="600" fill="#f8fafc"/>
+    <!-- Browser window left -->
+    <rect x="80" y="140" width="260" height="320" rx="10" fill="#f1f5f9" stroke="rgba(20, 184, 166, 0.3)" stroke-width="2"/>
+    <rect x="80" y="140" width="260" height="30" rx="10" fill="#14b8a6" opacity="0.15"/>
+    <circle cx="100" cy="155" r="5" fill="#06b6d4" opacity="0.6"/>
+    <circle cx="115" cy="155" r="5" fill="#14b8a6" opacity="0.4"/>
+    <circle cx="130" cy="155" r="5" fill="rgba(20, 184, 166, 0.3)" opacity="0.4"/>
+    <rect x="155" y="149" width="160" height="12" rx="6" fill="#f1f5f9" stroke="rgba(20, 184, 166, 0.3)" stroke-width="1"/>
+    <!-- Content bars left -->
+    <rect x="100" y="195" width="120" height="10" rx="3" fill="#14b8a6" opacity="0.6"/>
+    <rect x="100" y="215" width="200" height="8" rx="3" fill="rgba(20, 184, 166, 0.3)" opacity="0.3"/>
+    <rect x="100" y="233" width="160" height="8" rx="3" fill="rgba(20, 184, 166, 0.3)" opacity="0.3"/>
+    <rect x="100" y="260" width="180" height="40" rx="6" fill="#06b6d4" opacity="0.15" stroke="#06b6d4" stroke-width="1"/>
+    <rect x="100" y="320" width="100" height="8" rx="3" fill="#14b8a6" opacity="0.4"/>
+    <rect x="100" y="338" width="140" height="8" rx="3" fill="rgba(20, 184, 166, 0.3)" opacity="0.3"/>
+
+    <!-- Browser window right -->
+    <rect x="460" y="140" width="260" height="320" rx="10" fill="#f1f5f9" stroke="rgba(20, 184, 166, 0.3)" stroke-width="2"/>
+    <rect x="460" y="140" width="260" height="30" rx="10" fill="#14b8a6" opacity="0.15"/>
+    <circle cx="480" cy="155" r="5" fill="#06b6d4" opacity="0.6"/>
+    <circle cx="495" cy="155" r="5" fill="#14b8a6" opacity="0.4"/>
+    <circle cx="510" cy="155" r="5" fill="rgba(20, 184, 166, 0.3)" opacity="0.4"/>
+    <rect x="535" y="149" width="160" height="12" rx="6" fill="#f1f5f9" stroke="rgba(20, 184, 166, 0.3)" stroke-width="1"/>
+    <!-- Content bars right (mirrored) -->
+    <rect x="480" y="195" width="120" height="10" rx="3" fill="#14b8a6" opacity="0.6"/>
+    <rect x="480" y="215" width="200" height="8" rx="3" fill="rgba(20, 184, 166, 0.3)" opacity="0.3"/>
+    <rect x="480" y="233" width="160" height="8" rx="3" fill="rgba(20, 184, 166, 0.3)" opacity="0.3"/>
+    <rect x="480" y="260" width="180" height="40" rx="6" fill="#06b6d4" opacity="0.15" stroke="#06b6d4" stroke-width="1"/>
+    <rect x="480" y="320" width="100" height="8" rx="3" fill="#14b8a6" opacity="0.4"/>
+    <rect x="480" y="338" width="140" height="8" rx="3" fill="rgba(20, 184, 166, 0.3)" opacity="0.3"/>
+
+    <!-- Sync arrows between windows -->
+    <path d="M350 260 C 390 240, 410 240, 450 260" fill="none" stroke="#06b6d4" stroke-width="2.5"/>
+    <polygon points="445,254 455,260 445,266" fill="#06b6d4"/>
+    <path d="M450 310 C 410 330, 390 330, 350 310" fill="none" stroke="#14b8a6" stroke-width="2.5"/>
+    <polygon points="355,304 345,310 355,316" fill="#14b8a6"/>
+    <!-- Central sync icon -->
+    <circle cx="400" cy="285" r="14" fill="#f1f5f9" stroke="#06b6d4" stroke-width="2" filter="url(#soft-glow)"/>
+    <path d="M394 285 L406 285 M400 279 L400 291" stroke="#06b6d4" stroke-width="2"/>
+  
+</svg>

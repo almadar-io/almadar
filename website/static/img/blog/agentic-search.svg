@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  
+    <rect x="0" y="0" width="800" height="600" fill="#f8fafc"/>
+    <!-- Radiating search paths -->
+    <line x1="400" y1="300" x2="560" y2="300" stroke="rgba(20, 184, 166, 0.3)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.4"/><line x1="400" y1="300" x2="499" y2="399" stroke="rgba(20, 184, 166, 0.3)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.4"/><line x1="400" y1="300" x2="400" y2="480" stroke="rgba(20, 184, 166, 0.3)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.4"/><line x1="400" y1="300" x2="294" y2="406" stroke="rgba(20, 184, 166, 0.3)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.4"/><line x1="400" y1="300" x2="230" y2="300" stroke="rgba(20, 184, 166, 0.3)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.4"/><line x1="400" y1="300" x2="308" y2="208" stroke="rgba(20, 184, 166, 0.3)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.4"/><line x1="400" y1="300" x2="400" y2="140" stroke="rgba(20, 184, 166, 0.3)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.4"/><line x1="400" y1="300" x2="503" y2="197" stroke="rgba(20, 184, 166, 0.3)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.4"/>
+    <!-- Central search hub -->
+    <circle cx="400" cy="300" r="50" fill="#f1f5f9" stroke="#14b8a6" stroke-width="4" filter="url(#glow)"/>
+    <circle cx="400" cy="300" r="20" fill="#06b6d4"/>
+    <!-- Outer search nodes -->
+    <circle cx="560" cy="300" r="10" fill="#14b8a6" opacity="0.50"/><circle cx="499" cy="399" r="16" fill="#06b6d4" opacity="0.56"/><circle cx="400" cy="480" r="22" fill="#14b8a6" opacity="0.62"/><circle cx="294" cy="406" r="10" fill="#06b6d4" opacity="0.68"/><circle cx="230" cy="300" r="16" fill="#14b8a6" opacity="0.74"/><circle cx="308" cy="208" r="22" fill="#06b6d4" opacity="0.80"/><circle cx="400" cy="140" r="10" fill="#14b8a6" opacity="0.86"/><circle cx="503" cy="197" r="16" fill="#06b6d4" opacity="0.92"/>
+    <!-- Secondary connections between outer nodes -->
+    <path d="M560 300 Q 500 200 499 399" fill="none" stroke="#06b6d4" stroke-width="1" opacity="0.3"/>
+    <path d="M230 300 Q 300 400 308 208" fill="none" stroke="#14b8a6" stroke-width="1" opacity="0.3"/>
+  
+</svg>
