@@ -75,19 +75,19 @@ const STATS = [
 export default function Home(): ReactNode {
   return (
     <Layout
-      title={translate({ id: "home.meta.title", message: "Almadar -- AI that builds software you can trust." })}
-      description={translate({ id: "home.meta.desc", message: "From natural language to deployed, verified applications. Studio, Orb, and Masar work together so you describe once and ship everywhere." })}
+      title={translate({ id: "home.meta.title", message: "Software you control. Results you can verify." })}
+      description={translate({ id: "home.meta.desc", message: "Almadar is a software development platform that replaces traditional and AI-assisted coding with a single, formal product definition called an Orb. Teams own their generated source code, choose their own AI models, and avoid vendor lock-in. Less code. More Orb." })}
     >
       <Box as="header" className="w-full min-h-[60vh] flex items-center relative overflow-hidden">
         <OrbitalHeroBackground intensity="full" />
         <Box className="site-container py-20 relative z-10">
           <VStack gap="lg" align="center">
-            <Badge variant="primary">{translate({ id: "home.hero.tag", message: "AI-Native Platform" })}</Badge>
+            <Badge variant="primary">{translate({ id: "home.hero.tag", message: "Formal. Verified. Yours." })}</Badge>
             <Typography variant="h1" align="center">
-              {translate({ id: "home.hero.title", message: "AI that builds software you can trust." })}
+              {translate({ id: "home.hero.title", message: "Software you control. Results you can verify." })}
             </Typography>
             <Typography variant="body1" color="muted" align="center" className="max-w-2xl">
-              {translate({ id: "home.hero.subtitle", message: "From natural language to deployed, verified applications. Studio, Orb, and Masar work together so you describe once and ship everywhere." })}
+              {translate({ id: "home.hero.subtitle", message: "Define your product once in an Orb. Get testable, auditable, production-ready applications. Own the code. Choose your models. Keep full control." })}
             </Typography>
             <HStack gap="md">
               <a href="https://studio.almadar.io"><Button variant="primary" size="lg">{translate({ id: "home.hero.cta1", message: "Try Studio" })}</Button></a>
@@ -177,10 +177,10 @@ export default function Home(): ReactNode {
           <Box className="site-container">
             <VStack gap="lg" align="center">
               <Typography variant="h2" align="center">
-                {translate({ id: "home.cta.title", message: "Ready to build?" })}
+                {translate({ id: "home.cta.title", message: "Less code. More Orb." })}
               </Typography>
-              <Typography variant="body" color="muted" align="center">
-                {translate({ id: "home.cta.text", message: "Start with Orb. Build with Studio. Deploy on Almadar Services." })}
+              <Typography variant="body" color="muted" align="center" className="max-w-2xl">
+                {translate({ id: "home.cta.text", message: "Your entire team works from one living definition that evolves with your business. You own the code, choose your AI models, and keep full control. Launch in weeks, not months." })}
               </Typography>
               <HStack gap="md">
                 <a href="https://studio.almadar.io"><Button variant="primary" size="lg">{translate({ id: "home.cta.start", message: "Try Studio" })}</Button></a>
