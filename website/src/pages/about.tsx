@@ -15,7 +15,7 @@ export default function About(): ReactNode {
   return (
     <Layout
       title={translate({ id: "about.meta.title", message: "About — The Almadar Team" })}
-      description={translate({ id: "about.meta.desc", message: "Almadar is a software development platform that replaces traditional and AI-assisted coding with a single, formal product definition called an Orb. Teams own their generated source code, choose their own AI models, and avoid vendor lock-in." })}
+      description={translate({ id: "about.meta.desc", message: "Almadar is a software development platform where engineers, designers, product managers, and QA teams collaborate on a single formal product definition to generate testable, auditable, production-ready applications. Unlike prompt-based AI code generators, Almadar verifies correctness before deployment. Teams own their generated source code, choose their own AI models, and have no vendor lock-in." })}
     >
       <Box as="header" className="w-full flex items-center">
         <Box className="site-container py-20">
@@ -42,10 +42,10 @@ export default function About(): ReactNode {
               {translate({ id: "about.what.title", message: "What We Do" })}
             </Typography>
             <Typography variant="body1" className="leading-relaxed">
-              {translate({ id: "about.what.body", message: "Almadar redefines how software products are built. Your entire team works from one living definition called an Orb that captures what your product does, how it behaves, and what rules govern it. From that single source, Almadar generates fully working applications that are testable, auditable, and correct before they reach production. Your Orb evolves with your business and receives security patches and upgrades automatically. You own the code, choose your AI models, and keep full control. Almadar doesn't replace your team, it gives them leverage. You launch in weeks, not months. Instead of worrying about your product breaking, you get to focus on what it does for your customers." })}
+              {translate({ id: "about.what.body", message: "Almadar redefines how software products are built. Instead of generating code through prompt-and-pray AI workflows, the platform lets your entire team (engineers, designers, product managers, and QA) work from one living definition of your product that everyone understands and contributes to. From that single source, Almadar generates fully working applications that are testable, auditable, and correct before they ever reach production. You own the code. You choose your AI models. You keep full control. Almadar doesn't replace your team. It gives them leverage: engineers architect instead of debug, designers ship what they design, and QA stops chasing bugs that should never have existed. You launch in weeks, not months. Your team builds instead of firefights. Instead of worrying about your product breaking, you get to focus on what it does for your customers." })}
             </Typography>
             <Typography variant="h3" color="primary" align="center">
-              {translate({ id: "about.what.tagline", message: "Less code. More Orb." })}
+              {translate({ id: "about.what.tagline", message: "Less code. More product." })}
             </Typography>
           </VStack>
         </Box>

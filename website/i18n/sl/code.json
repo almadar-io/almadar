@@ -1,12 +1,12 @@
 {
   "home.hero.tag": {
-    "message": "Platforma z vgrajeno umetno inteligenco"
+    "message": "Formalno. Preverjeno. Vaše."
   },
   "home.hero.title": {
-    "message": "UI, ki gradi programsko opremo, ki ji lahko zaupate."
+    "message": "Programska oprema, ki jo nadzorujete. Rezultati, ki jih lahko preverite."
   },
   "home.hero.subtitle": {
-    "message": "Od naravnega jezika do nameščenih in preverjenih aplikacij. Studio, Orb in Masar delujejo skupaj, da opišete enkrat in namestite povsod."
+    "message": "Definirajte svoj produkt enkrat. Dobite aplikacije, pripravljene za produkcijo, ki so preverljive in revizijske. Lastite si kodo. Izberite svoje modele. Ohranite popoln nadzor."
   },
   "home.hero.cta1": {
     "message": "Preizkusite Studio"
@@ -21,7 +21,7 @@
     "message": "Opiši"
   },
   "home.idea.describe.text": {
-    "message": "Zapišite, kaj vaš sistem počne, v jeziku .orb, formalnem jeziku za vedenje aplikacij."
+    "message": "Povejte Studiu, kaj vaš produkt počne. Agent z umetno inteligenco zgradi formalno definicijo, ali pa preklopite na ročni način za popoln nadzor."
   },
   "home.idea.prove": {
     "message": "Dokaži"
@@ -120,10 +120,10 @@
     "message": "Naš nevronski cevovod razume strukturo programske opreme tako, kot šahovski motor razume pozicije na plošči. Majhni, specializirani modeli, ki napovedujejo napake, ocenjujejo popravke in generirajo veljavno programsko opremo iz nič. Veliki jezikovni modeli obdelujejo naravni jezik, naši modeli obdelujejo pravilnost."
   },
   "home.cta.title": {
-    "message": "Pripravljeni na gradnjo?"
+    "message": "Manj kode. Več produkta."
   },
   "home.cta.text": {
-    "message": "Začnite z Orb. Gradite s Studio. Namestite na Almadar Services."
+    "message": "Celotna ekipa dela iz ene žive definicije, ki se razvija z vašim poslom. Lastite si kodo, izberete svoje modele umetne inteligence in ohranite popoln nadzor. Lansiranje v tednih, ne mesecih."
   },
   "home.cta.start": {
     "message": "Preizkusite Studio"
@@ -132,10 +132,10 @@
     "message": "Preberite vizijo"
   },
   "home.meta.title": {
-    "message": "Almadar — UI, ki gradi programsko opremo, ki ji lahko zaupate."
+    "message": "Programska oprema, ki jo nadzorujete. Rezultati, ki jih lahko preverite."
   },
   "home.meta.desc": {
-    "message": "Od naravnega jezika do nameščenih in preverjenih aplikacij. Studio, Orb in Masar delujejo skupaj, da opišete enkrat in namestite povsod."
+    "message": "Almadar je platforma za razvoj programske opreme, kjer inženirji, oblikovalci, produktni vodje in ekipe za zagotavljanje kakovosti sodelujejo na eni formalni definiciji produkta za generiranje preverljivih, revizijskih aplikacij, pripravljenih za produkcijo. Ekipe lastijo svojo generirano izvorno kodo, izberejo svoje modele umetne inteligence in nimajo vezanosti na ponudnika."
   },
   "platform.hero.title": {
     "message": "Platforma"
@@ -148,8 +148,8 @@
     "description": "Orb"
   },
   "platform.language.desc": {
-    "message": "Formalni jezik za opis vedenja programskih sistemov. Odprtokoden, preverjen s prevajalnikom, z vgrajeno umetno inteligenco.",
-    "description": "A formal language for describing how software systems behave. Open source, compiler-verified, AI-native."
+    "message": "Formalni jezik za opis vedenja programskih sistemov. Odprtokoden in preverjen s prevajalnikom. Definirajte podatke, vedenje in strani. Prevajalnik zagotovi pravilnost pred generiranjem kode.",
+    "description": "A formal language for describing how software systems behave. Open source and compiler-verified. Define your data, behavior, and pages. The compiler guarantees correctness before generating code."
   },
   "platform.language.link": {
     "message": "Dokumentacija jezika",
@@ -231,7 +231,7 @@
     "message": "Danes je vsaka aplikacija otok. Ima svoj podatkovni model, svoja pravila, svoj jezik. Prenašanje informacij med sistemi pomeni gradnjo mostov, ki se zlomijo vsakič, ko se katera koli stran spremeni."
   },
   "vision.coexist.p2": {
-    "message": "Verjamemo, da bi morala programska oprema deliti skupno slovnico. Ko dve aplikaciji opišeta svoje vedenje v Orb, se lahko izvorno razumeta."
+    "message": "Verjamemo, da bi morala programska oprema deliti skupno slovnico. Ideja teče brezhibno: medicinska sestra prepozna potrebo na terenu in to strokovno znanje se neposredno prevede v formalno definicijo produkta. Podatki tečejo brez prevajalnih plasti. Pravila se sestavljajo brez veznega koda."
   },
   "vision.ownership.title": {
     "message": "Skupnosti ohranijo lastništvo"
@@ -240,7 +240,7 @@
     "message": "Trenutni model koncentrira moč. Nekaj platform obvladuje orodja, podatke in distribucijo."
   },
   "vision.ownership.p2": {
-    "message": "Almadar to spreminja. Orb je odprtokoden. Standardna knjižnica je odprtokodna."
+    "message": "Almadar to spreminja s filozofijo učinkovitosti na prvem mestu. Ko skupnost formalno opiše svojo domeno, gradi lahke, učinkovite modele, ki jih ima v lasti. Lahko jih prevede na katero koli platformo, trajnostno gosti kjer koli in razvija po svojih pogojih."
   },
   "vision.models.title": {
     "message": "Sestavljivi svetovni modeli"
@@ -255,7 +255,7 @@
     "message": "Gradite z nami"
   },
   "vision.cta.text": {
-    "message": "Skupna digitalna resničnost se začne s prvim modelom. Napišite svojega."
+    "message": "Skupna digitalna resničnost se začne s prvim modelom. Zgradite svojega."
   },
   "vision.cta.language": {
     "message": "Raziščite jezik"
@@ -354,7 +354,7 @@
     "message": "Oglejte si platformo"
   },
   "ai.meta.title": {
-    "message": "Umetna inteligenca — Trenirani modeli za generiranje programske opreme"
+    "message": "Masar: Sistem 2 za agente umetne inteligence"
   },
   "ai.meta.desc": {
     "message": "Namensko grajene nevronske mreže, ki razumejo strukturo programske opreme."
@@ -400,7 +400,7 @@
     "message": "O nas — Ekipa Almadar"
   },
   "about.meta.desc": {
-    "message": "Majhna ekipa v Ljubljani, Slovenija, ki gradi fiziko programske opreme."
+    "message": "Almadar je platforma za razvoj programske opreme, kjer inženirji, oblikovalci, produktni vodje in ekipe za zagotavljanje kakovosti sodelujejo na eni formalni definiciji produkta za generiranje preverljivih, revizijskih aplikacij, pripravljenih za produkcijo."
   },
   "contact.hero.title": {
     "message": "Stopite v stik"

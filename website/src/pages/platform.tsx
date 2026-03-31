@@ -18,7 +18,7 @@ const PILLARS = [
   {
     logo: "/img/orb-icon-transparent.svg",
     title: translate({ id: "platform.language.title", message: "Orb" }),
-    description: translate({ id: "platform.language.desc", message: "A formal language for describing how software systems behave. Open source, compiler-verified, AI-native. Write entities, traits, and pages. The compiler guarantees correctness before generating code." }),
+    description: translate({ id: "platform.language.desc", message: "A formal language for describing how software systems behave. Open source and compiler-verified. Define your data, behavior, and pages. The compiler guarantees correctness before generating code." }),
     href: "https://orb.almadar.io",
     linkLabel: translate({ id: "platform.language.link", message: "Language Docs" }),
   },
@@ -56,7 +56,7 @@ const STEPS = [
 export default function Platform(): ReactNode {
   return (
     <Layout
-      title={translate({ id: "platform.meta.title", message: "Platform -- Studio, Services, Orb" })}
+      title={translate({ id: "platform.meta.title", message: "Platform: Studio, Services, and Orb" })}
       description={translate({ id: "platform.meta.desc", message: "Three products that turn descriptions into running applications: Studio, Services, and Orb." })}
     >
       <Box as="header" className="w-full min-h-[60vh] flex items-center relative overflow-hidden">
@@ -126,7 +126,7 @@ export default function Platform(): ReactNode {
               {translate({ id: "platform.cta.title", message: "Start Anywhere" })}
             </Typography>
             <Typography variant="body" color="muted" align="center">
-              {translate({ id: "platform.cta.text", message: "Try the builder, explore the infrastructure, or dive into the language. Each product works on its own. Together, they form a complete platform." })}
+              {translate({ id: "platform.cta.text", message: "Try the builder, explore the infrastructure, or learn the language. Each product works on its own. Together, they form a complete platform." })}
             </Typography>
             <HStack gap="md">
               <a href="https://studio.almadar.io"><Button variant="primary" size="lg">{translate({ id: "platform.cta.studio", message: "Try Studio" })}</Button></a>

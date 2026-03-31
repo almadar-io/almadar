@@ -45,7 +45,7 @@ export default function Vision(): ReactNode {
               </Typography>
               <Typography variant="body" className="max-w-prose">
                 <Translate id="vision.coexist.p2">
-                  We believe software should share a common grammar. The idea flows seamlessly: a nurse identifies a need on the floor, and that domain knowledge translates directly into .orb. Data flows without translation layers. Rules compose without glue code.
+                  We believe software should share a common grammar. The idea flows seamlessly: a nurse identifies a need on the floor, and that domain knowledge translates directly into a formal product definition. Data flows without translation layers. Rules compose without glue code.
                 </Translate>
               </Typography>
               <Box className="border-l-[4px] border-[var(--color-primary)] bg-[var(--color-accent)]/5 p-4 rounded-r-[var(--radius-md)]">
@@ -94,7 +94,7 @@ export default function Vision(): ReactNode {
               </Typography>
               <Typography variant="body" className="max-w-prose">
                 <Translate id="vision.ownership.p2">
-                  Almadar changes this with an efficiency-first, "Go Green" philosophy. Orb is open source. The standard library is open source. When a community describes their domain in Orb, they build lightweight, efficient models that they own. They can compile it to any platform, host it sustainably anywhere, and evolve it on their own terms.
+                  Almadar changes this with an efficiency-first, "Go Green" philosophy. Orb is open source. The standard library is open source. When a community describes their domain formally, they build lightweight, efficient models that they own. They can compile to any platform, host sustainably anywhere, and evolve on their own terms.
                 </Translate>
               </Typography>
               <Box className="border-l-[4px] border-[var(--color-primary)] bg-[var(--color-accent)]/5 p-4 rounded-r-[var(--radius-md)]">
@@ -117,7 +117,7 @@ export default function Vision(): ReactNode {
                 {translate({ id: "vision.models.title", message: "Composable World Models" })}
               </Typography>
               <Typography variant="body" color="muted" className="max-w-prose">
-                <Translate id="vision.models.p1">A world model is a formal description of how a domain works: what exists, how it changes, what the rules are. In .orb, a healthcare scheduling system and an inventory tracker are both world models. They can be validated independently and composed together.</Translate>
+                <Translate id="vision.models.p1">A world model is a formal description of how a domain works: what exists, how it changes, what the rules are. A healthcare scheduling system and an inventory tracker are both world models. They can be validated independently and composed together.</Translate>
               </Typography>
               <Typography variant="body" className="max-w-prose">
                 <Translate id="vision.models.p2">
@@ -146,7 +146,7 @@ export default function Vision(): ReactNode {
               {translate({ id: "vision.cta.title", message: "Build With Us" })}
             </Typography>
             <Typography variant="body" color="muted" align="center">
-              {translate({ id: "vision.cta.text", message: "The shared digital reality starts with the first model. Write yours." })}
+              {translate({ id: "vision.cta.text", message: "The shared digital reality starts with the first model. Build yours." })}
             </Typography>
             <HStack gap="md">
               <a href="https://orb.almadar.io"><Button variant="primary" size="lg">{translate({ id: "vision.cta.language", message: "Explore the Language" })}</Button></a>

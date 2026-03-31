@@ -55,7 +55,7 @@ const STATS = [
 export default function AI(): ReactNode {
   return (
     <Layout
-      title={translate({ id: "ai.meta.title", message: "AI -- Masar: System 2 for AI Agents" })}
+      title={translate({ id: "ai.meta.title", message: "Masar: System 2 for AI Agents" })}
       description={translate({ id: "ai.meta.desc", message: "Masar gives AI agents structured planning, instant verification, and experience-based memory. The world model that makes any LLM agent smarter." })}
     >
       <Box as="header" className="w-full min-h-[60vh] flex items-center relative overflow-hidden">

@@ -21,7 +21,7 @@ const HOW_IT_WORKS = [
   {
     icon: "pen-line",
     title: translate({ id: "home.idea.describe", message: "Describe" }),
-    description: translate({ id: "home.idea.describe.text", message: "Write what your system does in Orb, a formal language for application behavior." }),
+    description: translate({ id: "home.idea.describe.text", message: "Tell Studio what your product does. The AI agent builds the formal definition, or switch to manual mode for full control." }),
   },
   {
     icon: "check",
@@ -76,7 +76,7 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title={translate({ id: "home.meta.title", message: "Software you control. Results you can verify." })}
-      description={translate({ id: "home.meta.desc", message: "Almadar is a software development platform that replaces traditional and AI-assisted coding with a single, formal product definition called an Orb. Teams own their generated source code, choose their own AI models, and avoid vendor lock-in. Less code. More Orb." })}
+      description={translate({ id: "home.meta.desc", message: "Almadar is a software development platform where engineers, designers, product managers, and QA teams collaborate on a single formal product definition to generate testable, auditable, production-ready applications. Unlike prompt-based AI code generators, Almadar verifies correctness before deployment. Teams own their generated source code, choose their own AI models, and have no vendor lock-in. The platform enhances existing roles rather than replacing them. Almadar reduces software launch timelines from months to weeks while guaranteeing testability, auditability, and formal verification at every stage." })}
     >
       <Box as="header" className="w-full min-h-[60vh] flex items-center relative overflow-hidden">
         <OrbitalHeroBackground intensity="full" />
@@ -87,7 +87,7 @@ export default function Home(): ReactNode {
               {translate({ id: "home.hero.title", message: "Software you control. Results you can verify." })}
             </Typography>
             <Typography variant="body1" color="muted" align="center" className="max-w-2xl">
-              {translate({ id: "home.hero.subtitle", message: "Define your product once in an Orb. Get testable, auditable, production-ready applications. Own the code. Choose your models. Keep full control." })}
+              {translate({ id: "home.hero.subtitle", message: "Define your product once. Get testable, auditable, production-ready applications. Own the code. Choose your models. Keep full control." })}
             </Typography>
             <HStack gap="md">
               <a href="https://studio.almadar.io"><Button variant="primary" size="lg">{translate({ id: "home.hero.cta1", message: "Try Studio" })}</Button></a>
