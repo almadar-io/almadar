@@ -75,7 +75,7 @@ const STATS = [
 export default function Home(): ReactNode {
   return (
     <Layout
-      title={translate({ id: "home.meta.title", message: "Software you control. Results you can verify." })}
+      title={translate({ id: "home.meta.title", message: "Blueprints for your AI" })}
       description={translate({ id: "home.meta.desc", message: "Almadar is a software development platform where engineers, designers, product managers, and QA teams collaborate on a single formal product definition to generate testable, auditable, production-ready applications. Unlike prompt-based AI code generators, Almadar verifies correctness before deployment. Teams own their generated source code, choose their own AI models, and have no vendor lock-in. The platform enhances existing roles rather than replacing them. Almadar reduces software launch timelines from months to weeks while guaranteeing testability, auditability, and formal verification at every stage." })}
     >
       <Box as="header" className="w-full min-h-[60vh] flex items-center relative overflow-hidden">
@@ -84,10 +84,10 @@ export default function Home(): ReactNode {
           <VStack gap="lg" align="center">
             <Badge variant="primary">{translate({ id: "home.hero.tag", message: "Formal. Verified. Yours." })}</Badge>
             <Typography variant="h1" align="center">
-              {translate({ id: "home.hero.title", message: "Software you control. Results you can verify." })}
+              {translate({ id: "home.hero.title", message: "Blueprints for your AI" })}
             </Typography>
             <Typography variant="body1" color="muted" align="center" className="max-w-2xl">
-              {translate({ id: "home.hero.subtitle", message: "Define your product once. Get testable, auditable, production-ready applications. Own the code. Choose your models. Keep full control." })}
+              {translate({ id: "home.hero.subtitle", message: "One builder. Every role. Ship with confidence." })}
             </Typography>
             <HStack gap="md">
               <a href="https://studio.almadar.io"><Button variant="primary" size="lg">{translate({ id: "home.hero.cta1", message: "Try Studio" })}</Button></a>
