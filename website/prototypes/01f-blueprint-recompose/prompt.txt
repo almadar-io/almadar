@@ -1,0 +1,65 @@
+CONCEPT: "Decompose and Recompose"
+A three-act story told left to right across the hero. Act 1 (left): A complete, polished application shown as a laptop/phone screen. Act 2 (center): The same app shatters apart into its orbital units, each floating independently as a self-contained card showing its own mini screen, state machine, and entity. Act 3 (right): The orbital units snap back together into a DIFFERENT application, showing that the same pieces can build something new. The message: applications are not monoliths, they're compositions of reusable orbital units.
+
+LAYOUT:
+- Full-width hero, three-act horizontal narrative
+- ACT 1 - "Existing App" (left third):
+  - A polished e-commerce app mockup (laptop screen). Sidebar with categories, product grid with cards showing images/prices/ratings, a cart icon with badge count in the top bar, search bar. Dark theme with teal accents. Clean, real-looking UI.
+  - Small label below: "Your application"
+  - Thin teal decomposition arrows radiating outward from the screen toward center
+
+- ACT 2 - "Orbital Units" (center third):
+  - 5-6 orbital unit cards floating in space, each one a self-contained piece:
+    - PRODUCT UNIT: Mini card showing a tiny product list view at top, a small state machine below (states: browsing > viewing > filtering), entity fields at bottom (name, price, category, image)
+    - CART UNIT: Mini cart view at top, state machine (empty > has-items > checkout), entity (cartItem: productId, quantity, price)
+    - AUTH UNIT: Mini login screen at top, state machine (logged-out > authenticating > logged-in > error), entity (user: email, role, token)
+    - SEARCH UNIT: Mini search bar + results at top, state machine (idle > searching > results > no-results), entity (query: term, filters, page)
+    - ORDER UNIT: Mini order confirmation at top, state machine (pending > processing > shipped > delivered), entity (order: items, total, status, tracking)
+  - Each unit card has three layers visible: a tiny app screen (top), a small state diagram (middle), entity fields (bottom)
+  - Units float with slight rotation and depth, arranged in a loose cloud
+  - Subtle teal glow connecting lines between units that share data (cart connects to product, order connects to cart)
+
+- ACT 3 - "New App" (right third):
+  - A DIFFERENT application assembled from the same units: an inventory management dashboard. Same building blocks (product, auth, search), different arrangement. Table view instead of grid, admin sidebar, stock levels instead of prices.
+  - Small label below: "A different application"
+  - Thin teal composition arrows flowing inward from the orbital units into this new screen
+
+- FLOW INDICATORS:
+  - Between Act 1 and Act 2: Curved arrows labeled "decompose" in teal
+  - Between Act 2 and Act 3: Curved arrows labeled "recompose" in gold (#c9a227)
+
+- Title "Blueprints for your AI" centered above, spanning all three acts
+- Subtitle below: "Your product, defined and verified. Take back control."
+
+COLOR PALETTE:
+- Background: Deep midnight blue (#0f172a), darker at edges (#050810)
+- Act 1 app screen: Dark app theme, teal accents, white text, product images as colored placeholder rectangles
+- Orbital unit cards: Dark slate (#1e293b), teal left border, slight drop shadow. Each card approximately 200x280px equivalent.
+- Mini screens within units: Darker background (#0a0f1a), simplified wireframe of the actual view
+- State machine nodes: Teal (#14b8a6) filled circles (8px), white transition arrows, active state slightly larger
+- Entity fields: White monospace text (9px), field types in muted gray
+- Act 3 app screen: Same dark theme but different layout/arrangement, showing reuse
+- Decompose arrows: Teal (#14b8a6), dashed, with slight spread effect
+- Recompose arrows: Gold (#c9a227), solid, with convergence effect
+- Connection lines between units: Very faint teal at 15%, dashed
+
+TYPOGRAPHY:
+- Title: 52px bold white, centered
+- Subtitle: 18px muted gray (#94a3b8)
+- "decompose" / "recompose" labels: 14px italic, teal and gold respectively
+- "Your application" / "A different application": 13px, muted gray, below each app screen
+- Orbital unit titles: 11px bold, teal, at top of each unit card (e.g., "ProductUnit", "CartUnit")
+- State names in diagrams: 8px monospace, white
+- Entity fields: 9px monospace, white for name, gray for type
+- Mini screen wireframe labels: 8px, white at 60% opacity
+
+STYLE NOTES:
+- The three-act structure reads like a comic strip or storyboard: beginning, transformation, result
+- Act 2 (center) should feel like an explosion in slow motion, pieces frozen mid-flight
+- The orbital units should each feel complete and self-contained, like lego bricks you could pick up
+- The fact that Act 3 is a DIFFERENT app from Act 1 is the key insight: same pieces, different product
+- Each unit's mini screen should be recognizable as a simplified version of its corresponding part in Act 1
+- The state machines should be simple (3-5 states) and readable at a glance
+- Slight perspective on the floating units (some closer/larger, some further/smaller) gives depth
+- The decompose arrows feel like things flying apart; the recompose arrows feel like things snapping together
+- Light mode variant: White background, light gray unit cards, dark text, same teal/gold accents

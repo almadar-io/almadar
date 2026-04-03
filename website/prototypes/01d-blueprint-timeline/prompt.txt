@@ -1,0 +1,43 @@
+CONCEPT: "Blueprint Decomposition - Construction Timeline"
+The hero shows the application being built step by step, left to right, like a time-lapse of construction. On the far left: an empty canvas. Moving right: entities appear first (the foundation), then traits stack on top (the structure), then pages snap into place (the rooms), then UI patterns fill in (the furniture). On the far right: the complete, running application. Each phase is a snapshot, and you see the app gaining complexity and completeness as your eye moves across.
+
+LAYOUT:
+- Full-width hero
+- A horizontal timeline strip across the center, showing 5 construction phases:
+  1. EMPTY: A blank dark rectangle, labeled "Start". Just a cursor blinking.
+  2. ENTITIES: The rectangle now has data tables/blocks appearing. Entity cards with field names. Foundation being laid. Label: "+Entities"
+  3. TRAITS: State machine diagrams appear above the entities. Circles connected by arrows, showing behavior logic being added. Label: "+Traits"
+  4. PAGES: Route cards snap into a navigation structure. A sidebar wireframe forms. The layout takes shape. Label: "+Pages"
+  5. COMPLETE: The full, polished app. Colors fill in, real data appears, everything is alive. Label: "Verified. Shipped."
+- Each phase is connected by a forward arrow (teal, with motion blur effect)
+- Below the timeline: A progress bar showing completion (0% to 100%), with the "Verified" label at the end
+- Title above the timeline
+- Subtitle below
+
+COLOR PALETTE:
+- Background: Midnight blue (#0f172a)
+- Timeline phases: Dark slate cards (#1e293b) with subtle teal border that gets brighter in each successive phase
+- Phase 1 (empty): Nearly invisible, just a faint outline
+- Phase 2 (entities): 25% opacity content, teal outlines
+- Phase 3 (traits): 50% opacity, more detail visible
+- Phase 4 (pages): 75% opacity, layout forming
+- Phase 5 (complete): Full opacity, full color, polished
+- Forward arrows: Teal gradient with motion blur
+- Progress bar: Teal fill on dark track
+- Gold (#c9a227): The final "Verified" checkmark at 100%
+
+TYPOGRAPHY:
+- Title: 52px bold white
+- Subtitle: 18px muted gray
+- Phase labels: 14px bold, teal, below each phase card
+- "Verified. Shipped.": 16px bold, gold (#c9a227)
+- Progress percentage: 12px monospace, teal
+
+STYLE NOTES:
+- The left-to-right progression should feel inevitable and satisfying, like watching something being built
+- Each phase should be recognizably "more complete" than the previous one
+- The opacity gradient across phases reinforces the construction metaphor
+- The final phase should be noticeably more polished and colorful than the others
+- Subtle animation suggestion: each phase could fade in sequentially on page load
+- The progress bar anchors the bottom and adds a data-driven feel
+- Light mode: White background, light gray phase cards gaining color/detail progressively

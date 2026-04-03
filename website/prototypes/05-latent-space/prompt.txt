@@ -1,0 +1,41 @@
+CONCEPT: "Latent Space Navigation"
+The hero visualizes Masar's JEPA architecture as a 2D/3D point cloud in embedding space. Each point represents a schema (an app). The current schema is one glowing point, the target (goal app) is another, and Masar draws the path between them. Along the path, small icons show the structural operations: "add entity", "add trait", "add 3 states", "add page". The visual metaphor is GPS navigation but for software construction: you are here, you want to be there, here is the verified route.
+
+LAYOUT:
+- Full-width hero, dark background
+- Center: A 2D scatter plot or point cloud visualization
+  - 50-100 small dots scattered across the space, each representing a known schema/behavior (faint, muted teal dots)
+  - One bright dot on the left labeled "Your schema" (pulsing, gold #c9a227)
+  - One bright dot on the right labeled "Target app" (pulsing, teal #14b8a6)
+  - A glowing path between them (teal line with gradient), with 5-6 waypoints
+  - Each waypoint has a tiny label: "+Entity: Product", "+Trait: CartFlow (5 states)", "+Page: /checkout", "+Pattern: data-grid"
+  - Nearby dots in the cloud are labeled with behavior names: "e-commerce", "cms", "dashboard", "game"
+- Above the visualization: "Blueprints for your AI"
+- Below: "Your product, defined and verified. Take back control."
+- Bottom caption: "2.1M parameters. 64 dimensions. Your app as a point in space."
+
+COLOR PALETTE:
+- Background: Deep black (#050810) with subtle noise texture
+- Point cloud dots: Teal (#14b8a6) at 30% opacity, varying sizes (3-8px)
+- Current schema dot: Gold (#c9a227), larger (16px), pulsing glow
+- Target dot: Bright teal (#14b8a6), larger (16px), pulsing glow
+- Path line: Teal gradient, 3px width, slight glow/bloom effect
+- Waypoint markers: Small teal circles (8px) with white labels
+- Cluster labels: White at 40% opacity, 10px
+
+TYPOGRAPHY:
+- Title: 52px bold white
+- Subtitle: 18px muted gray
+- Bottom caption: 14px monospace, teal
+- Waypoint labels: 10px monospace, white
+- Cluster/behavior labels: 11px, white at 40%
+- "Your schema" / "Target app" labels: 12px bold, gold and teal respectively
+
+STYLE NOTES:
+- This should feel like looking at a research visualization or a map of all possible software
+- The point cloud gives a sense of scale: there's a vast space of possible apps, and Masar knows how to navigate it
+- The path should feel intentional and precise, not random
+- Subtle animated particles drifting in the background
+- The gold-to-teal color transition along the path represents the transformation from current to goal
+- This design appeals to technical audiences who understand embeddings and latent spaces
+- Light mode: Light gray background (#f0f4f8), darker dots, same teal/gold accents, path line darker

@@ -1,0 +1,36 @@
+CONCEPT: "Blueprint Decomposition - Digital Mashrabiya"
+The decomposition is framed within a geometric pattern inspired by modern Saudi architecture (KAFD district) and Mashrabiya lattice screens. The blueprint pieces (entities, traits, pages) are arranged within the cells of a large geometric lattice pattern. The lattice itself IS the architecture of the application: each geometric cell contains a formal piece, and together the pattern forms a coherent whole. The visual metaphor is: software architecture has the same elegance and precision as architectural geometry.
+
+LAYOUT:
+- Full-width hero
+- Background: A large, clean geometric lattice pattern filling the hero area. The pattern is inspired by Mashrabiya screens but rendered in flat, modern tech lines. Think: interlocking hexagons, octagons, or star patterns, but with clean straight lines (not ornate).
+- Within the lattice cells, different formal pieces are visible:
+  - Some cells contain entity field lists (small monospace text)
+  - Some cells contain mini state machine diagrams (3 circles, 2 arrows)
+  - Some cells contain page route labels
+  - Some cells contain UI pattern wireframes (a tiny form, a tiny data grid)
+  - Some cells are empty or have subtle teal fill (negative space)
+- The lattice fades to transparent at the edges (vignette effect)
+- Center: Title and subtitle overlaid on a subtle frosted dark panel
+- The geometric pattern should feel structural, not decorative
+
+COLOR PALETTE:
+- Background: Midnight blue (#0f172a)
+- Lattice lines: Teal (#14b8a6) at 40% opacity for the grid, brighter (80%) where a cell is "active"
+- Cell contents: White monospace text, teal diagram lines
+- Frosted overlay panel: Dark (#0f172a at 85%) with subtle border
+- Gold (#c9a227): One thin horizontal line at the bottom of the lattice, like a horizon or foundation line
+- Active/highlighted cells: Slightly brighter background (#1a2a3a), full-opacity teal border
+
+TYPOGRAPHY:
+- Title: 56px bold white, centered
+- Subtitle: 18px muted gray
+- Cell contents: 8-10px monospace, white or teal (intentionally small, the pattern matters more than readability of individual cells)
+
+STYLE NOTES:
+- The lattice geometry should reference modern deconstructivist architecture, NOT traditional Islamic ornamentation. Clean, angular, flat.
+- Think KAFD Riyadh, not Alhambra. Tech precision, not decoration.
+- The cells should feel like they could be zoomed into, each revealing more detail
+- The overall impression should be: "this is what software structure looks like when it's designed with the rigor of architecture"
+- The lattice subtly suggests that every piece has a place and every place has a piece
+- Light mode: White background (#f8fafc), midnight blue lattice lines, same teal highlights

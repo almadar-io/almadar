@@ -1,0 +1,39 @@
+CONCEPT: "Blueprint Decomposition - X-Ray View"
+A single polished application (phone or laptop mockup) is shown center-screen, but with an X-ray effect: the left half shows the finished UI, the right half shows the internal structure (state machines, entities, bindings). Like a medical scan of software. One side is what the user sees, the other is what Almadar built underneath. A clean vertical dividing line separates the two halves.
+
+LAYOUT:
+- Full-width hero, single centered device mockup
+- A laptop or large phone screen displayed at center, slightly angled
+- LEFT HALF of the screen: The polished app UI. A dashboard with a sidebar, cards showing stats, a data table, action buttons. Clean, modern, colorful (teal accents on dark background).
+- RIGHT HALF of the screen (same device, same layout positions): The "skeleton" view. Instead of UI components:
+  - Where the sidebar was: A list of page routes in monospace
+  - Where the stat cards were: Entity field definitions
+  - Where the data table was: A state machine diagram (states + transitions)
+  - Where buttons were: Event labels ("SUBMIT", "DELETE", "APPROVE")
+- A thin vertical line (teal, glowing slightly) divides the two halves exactly
+- The title sits above the device
+- Subtitle below
+- Small label on left half: "What users see" / Right half: "What Almadar builds"
+
+COLOR PALETTE:
+- Background: Gradient from #0a0f1a to #0f172a
+- Device frame: Dark silver/gray (#374151)
+- Left half (UI): Dark app theme with teal accents, white text, subtle color in charts
+- Right half (skeleton): Darker background (#0a0f1a), teal wireframe lines, white monospace text, state machine nodes as teal circles
+- Dividing line: Bright teal (#14b8a6), 2px, subtle glow
+- Gold (#c9a227): Used for event labels on the skeleton side
+
+TYPOGRAPHY:
+- Title: 52px bold white
+- Subtitle: 18px muted gray
+- "What users see" / "What Almadar builds": 12px uppercase, teal, positioned at top of each half
+- Skeleton-side text: 10px monospace, white and teal
+- UI-side text: Normal app typography (14px sans-serif)
+
+STYLE NOTES:
+- The power of this concept is the 1:1 spatial mapping: every UI element has a corresponding formal definition in exactly the same position
+- The viewer should be able to trace: "that button there maps to this event here"
+- The device mockup should be high-quality and realistic
+- The x-ray half should feel precise and technical, like looking at circuit board traces
+- Subtle scan-line effect on the skeleton half (very faint horizontal lines) to reinforce the x-ray metaphor
+- Light mode: White background, lighter device frame, same split concept with light UI on left and blueprint-style right half

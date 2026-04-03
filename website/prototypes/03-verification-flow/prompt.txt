@@ -1,0 +1,38 @@
+CONCEPT: "Verification Pipeline"
+The hero visualizes the Almadar pipeline as a horizontal flow: Description (natural language) flows into a Schema (formal .orb definition) flows into Compilation (code generation) flows into Verification (every path checked) flows into a Deployed App. Each stage is represented as a distinct visual block connected by flowing arrows. The key differentiator is the Verification stage, which is highlighted and enlarged, showing a state machine being walked with checkmarks on every transition.
+
+LAYOUT:
+- Full-width hero section
+- Horizontal pipeline flow across the center of the screen, left to right:
+  1. INPUT (left): A speech bubble or text block with natural language: "I need an e-commerce app with cart, checkout, and order tracking"
+  2. SCHEMA: A code block showing .orb syntax (entity, trait, state machine). Rendered as a dark card with monospace text, syntax highlighted in teal and gold.
+  3. COMPILE: A gear/compiler icon with arrows pointing to multiple outputs (web, mobile, API). Small platform icons.
+  4. VERIFY (enlarged, hero of the flow): A state machine diagram with 6 states and transitions. Each transition has a green checkmark. A progress bar reading "100% transitions covered". This block is 1.5x the size of others and has a teal glow border.
+  5. SHIP (right): A live app screenshot, polished and complete, with a "deployed" badge.
+- Flowing arrows between each stage, animated with teal gradient
+- Title "Blueprints for your AI" above the pipeline
+- Subtitle below
+
+COLOR PALETTE:
+- Background: Dark gradient from #0a0f1a (left) to #0f172a (right)
+- Pipeline arrows: Teal (#14b8a6) gradient flow, like data streaming
+- Stage cards: Dark slate (#1e293b) with rounded corners
+- Verification block: Teal border glow, slightly brighter background (#1a2a3a)
+- Checkmarks: Bright green (#22c55e)
+- Code syntax: Teal for keywords, gold (#c9a227) for strings, white for identifiers
+- "100%" text: Large, bold, teal
+
+TYPOGRAPHY:
+- Title: 52px bold white, centered
+- Subtitle: 18px muted gray
+- Natural language input: 14px serif or handwriting-style font (to contrast with the formal output)
+- Code blocks: 11px monospace (JetBrains Mono or similar)
+- Stage labels: 14px bold, teal, uppercase, below each block
+- "100% transitions covered": 24px bold teal
+
+STYLE NOTES:
+- The visual story is transformation: messy human language becomes formal definition becomes verified software
+- The contrast between the informal input (left) and the precise output (right) should be striking
+- The verification block being larger than the others communicates that this is the differentiator
+- Subtle grid pattern in background, very faint, like graph paper
+- Light mode: White background, dark blue stage cards, same teal/green accents

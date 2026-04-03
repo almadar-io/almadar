@@ -1,0 +1,31 @@
+CONCEPT: "Blueprint Decomposition"
+The hero shows a finished application (a mobile app or dashboard mockup) on the right side, and on the left side the same application is exploded into its formal pieces: entity blocks, trait state machines, page routes, and pattern components. Thin teal connection lines (#14b8a6) link each piece back to the part of the app it generates. The visual metaphor is an architectural blueprint being assembled in real time.
+
+LAYOUT:
+- Full-width hero section, split composition
+- Left 50%: Exploded blueprint view. Floating cards/blocks representing: Entity (data shape), Trait (state machine with states and arrows), Page (route URL), Pattern (UI component outline). Each block has a subtle blueprint grid background with thin white lines on midnight blue (#0f172a).
+- Right 50%: A polished, complete application screenshot or mockup (dashboard with cards, charts, sidebar). Clean and modern.
+- Between them: Animated teal (#14b8a6) connection lines flowing from blueprint pieces into the finished app, like assembly instructions.
+- Center overlay text: "Blueprints for your AI" in bold white, large.
+- Below: "Your product, defined and verified. Take back control." in lighter gray.
+- Two CTA buttons: "Try Studio" (teal filled), "Read the Docs" (teal outlined).
+
+COLOR PALETTE:
+- Background: Deep midnight blue (#0f172a) or near-black (#0a0f1a)
+- Primary accent: Teal (#14b8a6)
+- Text: White (#ffffff) and muted gray (#94a3b8)
+- Blueprint grid lines: Very subtle teal at 10% opacity
+- Card surfaces: Dark slate (#1e293b) with teal border accents
+- Gold accent sparingly: Sand gold (#c9a227) on one connecting line or highlight
+
+TYPOGRAPHY:
+- Title: Bold, modern sans-serif (Inter or similar), 48-64px
+- Subtitle: Regular weight, 18-20px, muted gray
+- Blueprint labels: Monospace font, small (12px), teal colored
+
+STYLE NOTES:
+- The overall feel should be technical but beautiful, like looking at an engineer's desk with perfectly organized components
+- The blueprint pieces should look like they could snap together
+- Subtle particle effects or small floating dots in the background
+- The orbital ring from the current site can appear faintly in the background
+- Light mode variant: White background (#f8fafc), midnight blue text, same teal accents, blueprint blocks on white with subtle gray grid lines

@@ -1,0 +1,35 @@
+CONCEPT: "Orbital Exploded View"
+The hero visualizes an Orbital Unit as a 3D exploded diagram. At the center is the Entity (the data nucleus), orbiting around it are Trait state machines (rings with state nodes connected by transition arrows), and at the outer ring are Pages (route cards). The visual metaphor is a solar system or atom where each layer has a distinct purpose. When assembled, it forms a complete application.
+
+LAYOUT:
+- Full-width hero, centered composition
+- Center: A glowing teal nucleus representing the Entity, with field names faintly visible inside (id, name, status, etc.)
+- Middle ring: 3-4 Trait state machines floating in orbit. Each trait is a small state diagram (3-5 circles connected by arrows) with state names like "idle", "editing", "submitted". Rendered as teal outlines on dark background.
+- Outer ring: Page cards (small rectangles with route paths like "/dashboard", "/settings", "/profile") orbiting at the widest radius
+- Thin orbital path lines connecting the rings, slightly animated or with a gradient glow
+- Title "Blueprints for your AI" positioned above the orbital diagram
+- Subtitle below the diagram
+- The whole composition should feel like you're looking at the internal structure of software
+
+COLOR PALETTE:
+- Background: Deep space black (#0a0f1a) with subtle star-field dots
+- Nucleus glow: Teal (#14b8a6) with radial gradient fade
+- Trait state circles: Teal outlines, transitions as thin white arrows
+- Page cards: Dark slate (#1e293b) with teal left border
+- Orbital path lines: Very subtle teal at 20% opacity, dashed
+- Active state in each trait: Filled teal circle (not just outline)
+- Sand gold (#c9a227) used for one "active transition" arrow to draw the eye
+
+TYPOGRAPHY:
+- Title: 56px, bold, white, centered above the orbital
+- Subtitle: 18px, muted gray (#94a3b8), centered below
+- State names inside traits: 10px monospace, teal
+- Entity field names: 9px monospace, white at 50% opacity
+- Page routes: 11px monospace, white
+
+STYLE NOTES:
+- This should feel like a technical visualization you'd see in a physics textbook, but for software
+- The orbital rings should have a slight perspective tilt (isometric feel)
+- Subtle pulse animation on the nucleus
+- The diagram should be visually dense but organized, showing that a complex app is built from simple, composable pieces
+- Light mode variant: White background, dark blue text and outlines, teal accents remain, orbital paths in light gray

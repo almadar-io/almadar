@@ -1,0 +1,42 @@
+CONCEPT: "Blueprint Decomposition - Peeling Layers"
+A single app screen is shown at center, and layers are peeling away from it like pages of a book or layers of an onion. Each peeled layer reveals a different formal dimension beneath. The top layer is the UI (what users see), peel it back and you see the state machines (how it behaves), peel again and you see the entities (what data it holds), peel once more and you see the .orb source (the single definition). The deepest layer is the simplest: just text.
+
+LAYOUT:
+- Full-width hero, centered
+- Center: A stack of 4 layers, with the top layers curling/peeling to the upper-right, revealing layers beneath:
+  - LAYER 1 (top, partially peeled): The finished app UI. A complete dashboard screen. This layer curls at the upper-right corner, lifting to reveal Layer 2 beneath.
+  - LAYER 2 (visible where Layer 1 peeled): State machine diagrams. Multiple trait flows rendered as connected nodes. The behavioral logic of the app.
+  - LAYER 3 (visible where Layer 2 peeled): Entity definitions. Clean data structures with field names and types, like database schema cards.
+  - LAYER 4 (deepest, visible at the peeled corner): Raw .orb code. A few lines of monospace text showing the actual schema definition. The single source of truth.
+- Each layer is slightly offset, creating a stacked-paper effect
+- Title positioned to the left or above the stack
+- Subtitle below
+- A small annotation arrow from the deepest layer labeled: "One definition generates everything above"
+
+COLOR PALETTE:
+- Background: Midnight blue (#0f172a)
+- Layer 1 (UI): Full color app, dark theme with teal accents
+- Layer 2 (state machines): Darker, more technical. Teal (#14b8a6) node outlines, white arrows
+- Layer 3 (entities): Even darker. White monospace field definitions on near-black
+- Layer 4 (source code): Darkest. Code with syntax highlighting: teal keywords, gold (#c9a227) strings, white identifiers
+- Layer edges (where they peel): Subtle shadow and slight paper-texture effect
+- Annotation arrow: Gold (#c9a227), thin, with small text
+
+TYPOGRAPHY:
+- Title: 52px bold white
+- Subtitle: 18px muted gray
+- UI layer: Normal app text (14px sans-serif)
+- State machine labels: 10px monospace, teal
+- Entity fields: 11px monospace, white
+- .orb code: 11px monospace, syntax colored
+- Annotation: 12px italic, gold
+
+STYLE NOTES:
+- The peeling effect should look physical, like pages of a technical manual being turned
+- Each layer should be progressively simpler and more fundamental
+- The message is: beneath every complex app is a simple, formal definition
+- The depth creates intrigue: what's underneath? How deep does it go?
+- The .orb code at the deepest layer is the punchline: it all starts from this
+- Subtle paper shadow on each layer edge for realism
+- The peeling direction (upper-right) draws the eye diagonally, creating dynamic movement
+- Light mode: White/cream layers, darker text, same teal/gold accents, more visible paper texture

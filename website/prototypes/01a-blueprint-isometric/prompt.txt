@@ -1,0 +1,37 @@
+CONCEPT: "Blueprint Decomposition - Isometric Stack"
+Same decomposition idea but rendered as an isometric 3D stack. The finished app sits at the top as a flat screen, and below it the layers peel apart: Page layer, Trait layer, Entity layer. Each layer is a translucent isometric plane showing its contents. You're looking at the anatomy of an application from a 45-degree angle, like peeling apart a sandwich to see every ingredient.
+
+LAYOUT:
+- Full-width hero, centered composition
+- Center: An isometric stack of 4 translucent layers, separated vertically with space between them:
+  - TOP LAYER (highest): A finished app screen (dashboard UI, cards, sidebar) rendered as an isometric flat panel
+  - LAYER 2: Page routes. Isometric plane with route cards ("/dashboard", "/settings", "/users") connected by navigation arrows
+  - LAYER 3: Trait state machines. Isometric plane with 3-4 small state diagrams (circles + arrows), each labeled ("AuthFlow", "CartManager", "TaskLifecycle")
+  - BOTTOM LAYER: Entity data shapes. Isometric plane with table-like blocks showing field names and types (User: name, email, role)
+- Thin vertical dashed lines connecting elements across layers (e.g., a page connects down to the trait it renders, which connects down to the entity it manages)
+- Title "Blueprints for your AI" positioned top-left or centered above the stack
+- Subtitle below the stack
+
+COLOR PALETTE:
+- Background: Deep midnight blue (#0f172a)
+- Layer planes: Semi-transparent dark slate (#1e293b at 80% opacity) with teal (#14b8a6) edge outlines
+- Top app layer: Slightly brighter, more opaque, to show the finished product
+- Vertical connection lines: Teal dashed, thin
+- Entity fields: White monospace text
+- State machine nodes: Teal circles with white labels
+- Page route cards: Dark with teal left accent border
+- Gold (#c9a227): Used for the "active" or "current state" indicator in one trait
+
+TYPOGRAPHY:
+- Title: 52px bold white
+- Subtitle: 18px muted gray (#94a3b8)
+- Layer labels (on the left side, labeling each plane): 14px uppercase, teal, monospace
+- Content within layers: 10-11px monospace, white or teal
+
+STYLE NOTES:
+- The isometric angle should be consistent (true isometric: 30 degrees)
+- Each layer should have a subtle shadow beneath it to emphasize the separation
+- The transparency of lower layers gives a sense of depth without clutter
+- The finished app on top should be the most visually rich and polished
+- Subtle glow where vertical connection lines pass through each layer
+- Light mode: White/light gray layers, dark text, same teal accents

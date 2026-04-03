@@ -1,0 +1,40 @@
+CONCEPT: "Behavior Mosaic"
+The hero shows a mosaic grid of behavior tiles, each representing a reusable building block: cart, form, authentication, search, notification, map, chat, dashboard, CRUD list, file upload, etc. Each tile is a small, iconic representation of that behavior (a mini shopping cart, a form with fields, a login screen, a map pin, etc.). When you zoom out, the tiles collectively form the shape of an application. The message: your app is assembled from proven, verified behaviors, not generated from scratch.
+
+LAYOUT:
+- Full-width hero
+- Background: A large mosaic grid of 30-40 small behavior tiles (6-8 columns, 5-6 rows), slightly perspective-tilted (isometric)
+- Each tile is a small card (roughly 120x80px equivalent) showing:
+  - A tiny icon or wireframe of the behavior (cart icon, form fields, chart, map, etc.)
+  - Behavior name in small text below: "std-cart", "std-form", "std-auth", "std-search"
+  - A small green checkmark badge (verified)
+- Some tiles glow brighter (teal border) to suggest they're "selected" for this particular app
+- The selected tiles have teal connection lines between them, showing how they compose together
+- Center overlay: Large frosted glass/blur card with the title and subtitle text
+- Title: "Blueprints for your AI"
+- Below title: "93 behaviors. 14 domains. Zero hallucination."
+- Subtitle: "Your product, defined and verified. Take back control."
+
+COLOR PALETTE:
+- Background: Midnight blue (#0f172a)
+- Tile cards: Dark slate (#1e293b) with subtle border (#2d3748)
+- Selected/active tiles: Teal border (#14b8a6), slightly brighter background
+- Unselected tiles: Dimmed at 40% opacity
+- Tile icons: White outlines, simple wireframe style
+- Checkmarks: Green (#22c55e), small, top-right corner of each tile
+- Connection lines between selected tiles: Teal, dashed
+- Frosted overlay: Dark with backdrop blur, 80% opacity
+
+TYPOGRAPHY:
+- Title: 56px bold white
+- "93 behaviors..." line: 16px, teal, monospace feel
+- Subtitle: 18px muted gray
+- Behavior names on tiles: 9px monospace, muted gray
+- Domain category labels (if grouped): 11px uppercase, teal
+
+STYLE NOTES:
+- The mosaic should feel like a component library or pattern catalog
+- The message is abundance and reliability: look at all these proven pieces you can use
+- The perspective tilt gives depth without being distracting
+- Some tiles could show tiny state machine diagrams instead of icons (for variety)
+- Light mode: White background, light gray tile cards, same teal accents, dark text
