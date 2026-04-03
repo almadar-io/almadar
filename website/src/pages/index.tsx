@@ -87,7 +87,7 @@ export default function Home(): ReactNode {
               {translate({ id: "home.hero.title", message: "Blueprints for your AI" })}
             </Typography>
             <Typography variant="body1" color="muted" align="center" className="max-w-2xl">
-              {translate({ id: "home.hero.subtitle", message: "One builder. Every role. Ship with confidence." })}
+              {translate({ id: "home.hero.subtitle", message: "Your product, defined and verified. Take back control." })}
             </Typography>
             <HStack gap="md">
               <a href="https://studio.almadar.io"><Button variant="primary" size="lg">{translate({ id: "home.hero.cta1", message: "Try Studio" })}</Button></a>
