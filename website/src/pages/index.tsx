@@ -49,6 +49,12 @@ const PILLARS = [
     description: translate({ id: "home.pillar.verify.desc", message: "Before your app goes live, Almadar checks every possible screen your app can reach and every path a user could take. Then it launches the actual app, clicks through every interaction, fills every form, and screenshots every screen. Errors, missing pages, broken flows: all caught automatically and surfaced to both you and the AI." }),
     products: [
       {
+        logo: "/img/studio-icon.svg",
+        name: translate({ id: "home.pillar.verify.studio", message: "Studio" }),
+        role: translate({ id: "home.pillar.verify.studio.role", message: "Shows verification results in real time as the AI builds. You and the AI see the same proof." }),
+        href: "https://studio.almadar.io",
+      },
+      {
         logo: "/img/orb-icon-transparent.svg",
         name: translate({ id: "home.pillar.verify.orb", message: "Orb" }),
         role: translate({ id: "home.pillar.verify.orb.role", message: "The language your product is written in. The compiler proves every screen and path is valid." }),
@@ -74,12 +80,12 @@ const PILLARS = [
     icon: "lock-open",
     title: translate({ id: "home.pillar.lockin.title", message: "No Lock-in" }),
     subtitle: translate({ id: "home.pillar.lockin.subtitle", message: "Bring your own AI model or use ours." }),
-    description: translate({ id: "home.pillar.lockin.desc", message: "You own the generated code. Deploy anywhere you want. Take your code and leave anytime. Almadar enhances your team, it doesn't trap them." }),
+    description: translate({ id: "home.pillar.lockin.desc", message: "You own the generated code. Use our cloud services or your own. Deploy anywhere you want. Take your code and leave anytime. Almadar enhances your team, it doesn't trap them." }),
     products: [
       {
         logo: "/img/services-icon-transparent.svg",
         name: translate({ id: "home.pillar.lockin.services", message: "Services" }),
-        role: translate({ id: "home.pillar.lockin.services.role", message: "Managed infrastructure if you want it. Your own servers if you don't." }),
+        role: translate({ id: "home.pillar.lockin.services.role", message: "Use our managed infrastructure or deploy to your own servers." }),
         href: "https://services.almadar.io",
       },
     ],
