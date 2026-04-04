@@ -26,7 +26,6 @@ interface PhaseItem {
 
 interface Phase {
   id: string;
-  number: string;
   title: string;
   timeline: string;
   status: "active" | "upcoming" | "future";
@@ -37,71 +36,64 @@ interface Phase {
 const PHASES: Phase[] = [
   {
     id: "p1",
-    number: "1",
     title: translate({ id: "roadmap.p1.title", message: "Studio V2 Ecosystem" }),
     timeline: translate({ id: "roadmap.p1.timeline", message: "April 2026" }),
     status: "active",
     tagline: translate({ id: "roadmap.p1.tagline", message: "Ship the builder and its full ecosystem." }),
     items: [
-      { title: translate({ id: "roadmap.p1.masar", message: "Masar in Studio" }), description: translate({ id: "roadmap.p1.masar.desc", message: "Live JEPA gap diagnosis during building. Beam repair visualization when validation fails." }), icon: "brain" },
-      { title: translate({ id: "roadmap.p1.extension", message: "Chrome Extension" }), description: translate({ id: "roadmap.p1.extension.desc", message: "UI capture, console debugging, deployment verification, interaction recording." }), icon: "chrome" },
-      { title: translate({ id: "roadmap.p1.converter", message: "Converter Pipeline" }), description: translate({ id: "roadmap.p1.converter.desc", message: "Reverse-engineer existing apps into .orb programs. Tree-sitter AST extraction, Playwright crawling." }), icon: "refresh-cw" },
-      { title: translate({ id: "roadmap.p1.cli", message: "Orb CLI V2" }), description: translate({ id: "roadmap.p1.cli.desc", message: "Production-ready serve and dev commands. Local LLM fallback. Template library." }), icon: "terminal" },
-      { title: translate({ id: "roadmap.p1.verify", message: "Verification V2" }), description: translate({ id: "roadmap.p1.verify.desc", message: "Visual regression testing. Performance baselines. AI-assisted test generation." }), icon: "shield-check" },
+      { title: translate({ id: "roadmap.p1.masar", message: "AI-Guided Building" }), description: translate({ id: "roadmap.p1.masar.desc", message: "The AI diagnoses what's missing in your product and suggests exactly what to add next." }), icon: "brain" },
+      { title: translate({ id: "roadmap.p1.extension", message: "Browser Companion" }), description: translate({ id: "roadmap.p1.extension.desc", message: "Capture any existing UI, verify your deployed app, and record user interactions from your browser." }), icon: "globe" },
+      { title: translate({ id: "roadmap.p1.converter", message: "Import Existing Apps" }), description: translate({ id: "roadmap.p1.converter.desc", message: "Point at any existing website or codebase and convert it into a verified product definition." }), icon: "refresh-cw" },
+      { title: translate({ id: "roadmap.p1.cli", message: "Developer CLI" }), description: translate({ id: "roadmap.p1.cli.desc", message: "Build from your terminal. Local development server, project templates, and offline AI support." }), icon: "terminal" },
+      { title: translate({ id: "roadmap.p1.verify", message: "Automated Testing" }), description: translate({ id: "roadmap.p1.verify.desc", message: "Visual regression testing, performance tracking, and AI-generated test cases for every product change." }), icon: "shield-check" },
     ],
   },
   {
     id: "p2",
-    number: "2",
-    title: translate({ id: "roadmap.p2.title", message: "Platform Gaps" }),
+    title: translate({ id: "roadmap.p2.title", message: "Every Platform" }),
     timeline: translate({ id: "roadmap.p2.timeline", message: "June - August 2026" }),
     status: "upcoming",
-    tagline: translate({ id: "roadmap.p2.tagline", message: "Close gaps, harden the platform, go mobile." }),
+    tagline: translate({ id: "roadmap.p2.tagline", message: "One product definition. Web, mobile, and beyond." }),
     items: [
-      { title: translate({ id: "roadmap.p2.entity", message: "Entity Binding V2" }), description: translate({ id: "roadmap.p2.entity.desc", message: "Explicit bindings, lambda render props, backward compatibility." }), icon: "database" },
-      { title: translate({ id: "roadmap.p2.mobile", message: "Mobile (React Native)" }), description: translate({ id: "roadmap.p2.mobile.desc", message: "Native mobile component library. Same definition, native output." }), icon: "smartphone" },
-      { title: translate({ id: "roadmap.p2.games", message: "Game Components" }), description: translate({ id: "roadmap.p2.games.desc", message: "16 game atoms, 19 game molecules. Canvas and DOM hybrid rendering." }), icon: "gamepad-2" },
-      { title: translate({ id: "roadmap.p2.parity", message: "Cross-Shell Parity" }), description: translate({ id: "roadmap.p2.parity.desc", message: "TypeScript, Python, Rust, Android, Swift shells produce identical behavior." }), icon: "git-compare" },
+      { title: translate({ id: "roadmap.p2.mobile", message: "Native Mobile Apps" }), description: translate({ id: "roadmap.p2.mobile.desc", message: "Your product definition compiles to native iOS and Android. Same definition, native experience." }), icon: "smartphone" },
+      { title: translate({ id: "roadmap.p2.games", message: "Interactive Experiences" }), description: translate({ id: "roadmap.p2.games.desc", message: "Games, simulations, and rich interactive content from the same builder." }), icon: "gamepad-2" },
+      { title: translate({ id: "roadmap.p2.parity", message: "Multi-Platform Parity" }), description: translate({ id: "roadmap.p2.parity.desc", message: "Web, mobile, Python, Rust, and Swift targets all produce identical verified behavior." }), icon: "git-compare" },
     ],
   },
   {
     id: "p3",
-    number: "3",
-    title: translate({ id: "roadmap.p3.title", message: "Agent Trace" }),
+    title: translate({ id: "roadmap.p3.title", message: "Agent Monitoring" }),
     timeline: translate({ id: "roadmap.p3.timeline", message: "August - October 2026" }),
     status: "upcoming",
-    tagline: translate({ id: "roadmap.p3.tagline", message: "Enterprise-grade agent monitoring as a standalone product." }),
+    tagline: translate({ id: "roadmap.p3.tagline", message: "See exactly what your AI agents are doing and why." }),
     items: [
-      { title: translate({ id: "roadmap.p3.standalone", message: "Standalone Package" }), description: translate({ id: "roadmap.p3.standalone.desc", message: "Extract agent-trace into its own product. Multi-tenant, team workspaces." }), icon: "package" },
-      { title: translate({ id: "roadmap.p3.monitoring", message: "Enterprise Monitoring" }), description: translate({ id: "roadmap.p3.monitoring.desc", message: "Real-time chain-of-thought, tool call timeline, cost tracking, gate progress." }), icon: "activity" },
-      { title: translate({ id: "roadmap.p3.replay", message: "Replay + Analytics" }), description: translate({ id: "roadmap.p3.replay.desc", message: "Re-run agent sessions. Cost trends, success rates, failure patterns." }), icon: "history" },
-      { title: translate({ id: "roadmap.p3.pricing", message: "Tiered Pricing" }), description: translate({ id: "roadmap.p3.pricing.desc", message: "Free, Team, and Enterprise tiers. SSO, audit logs, custom retention." }), icon: "credit-card" },
+      { title: translate({ id: "roadmap.p3.monitoring", message: "Live Agent Dashboard" }), description: translate({ id: "roadmap.p3.monitoring.desc", message: "Watch your AI agents think and act in real time. Full visibility into every decision and tool call." }), icon: "activity" },
+      { title: translate({ id: "roadmap.p3.replay", message: "Session Replay" }), description: translate({ id: "roadmap.p3.replay.desc", message: "Replay any agent session. Understand what worked, what failed, and how much it cost." }), icon: "history" },
+      { title: translate({ id: "roadmap.p3.teams", message: "Team Workspaces" }), description: translate({ id: "roadmap.p3.teams.desc", message: "Multi-user access, role-based permissions, and shared agent monitoring across your organization." }), icon: "users" },
     ],
   },
   {
     id: "p4",
-    number: "4",
-    title: translate({ id: "roadmap.p4.title", message: "ML/AI Ecosystem" }),
+    title: translate({ id: "roadmap.p4.title", message: "AI/ML Studio" }),
     timeline: translate({ id: "roadmap.p4.timeline", message: "August - October 2026" }),
     status: "upcoming",
-    tagline: translate({ id: "roadmap.p4.tagline", message: "Train and deploy custom ML models from Studio." }),
+    tagline: translate({ id: "roadmap.p4.tagline", message: "Train and deploy custom AI models from Studio." }),
     items: [
-      { title: translate({ id: "roadmap.p4.python", message: "Python Shell Production" }), description: translate({ id: "roadmap.p4.python.desc", message: "Production deployment pipeline for Python-compiled orbitals with PyTorch." }), icon: "code" },
-      { title: translate({ id: "roadmap.p4.mlops", message: "ML Operators" }), description: translate({ id: "roadmap.p4.mlops.desc", message: "nn/*, tensor/*, train/*, data/* operators as first-class citizens." }), icon: "cpu" },
-      { title: translate({ id: "roadmap.p4.composer", message: "Studio ML Composer" }), description: translate({ id: "roadmap.p4.composer.desc", message: "Visual ML behavior composition. Training dashboards. Dataset management." }), icon: "layers" },
-      { title: translate({ id: "roadmap.p4.registry", message: "Model Registry" }), description: translate({ id: "roadmap.p4.registry.desc", message: "Trained models versioned alongside their definitions. One-click deploy." }), icon: "archive" },
+      { title: translate({ id: "roadmap.p4.composer", message: "Visual ML Builder" }), description: translate({ id: "roadmap.p4.composer.desc", message: "Compose AI behaviors visually. Connect data sources, training pipelines, and deployment targets." }), icon: "layers" },
+      { title: translate({ id: "roadmap.p4.training", message: "Training Dashboard" }), description: translate({ id: "roadmap.p4.training.desc", message: "Monitor training progress, compare model versions, and deploy the best model with one click." }), icon: "bar-chart" },
+      { title: translate({ id: "roadmap.p4.registry", message: "Model Marketplace" }), description: translate({ id: "roadmap.p4.registry.desc", message: "Share and reuse trained models across projects. Version control for AI models." }), icon: "archive" },
     ],
   },
 ];
 
 const FUTURE_PHASES = [
-  { number: "5", title: translate({ id: "roadmap.p5.title", message: "Embedded + OS" }), description: translate({ id: "roadmap.p5.desc", message: "Rust embedded shell, no_std runtime for microcontrollers, hardware trait machines, IPC effects." }), icon: "cpu" },
-  { number: "6", title: translate({ id: "roadmap.p6.title", message: "OrbOS" }), description: translate({ id: "roadmap.p6.desc", message: "Linux-based OS where Orb is the native programming model. System services as orbitals." }), icon: "monitor" },
-  { number: "7", title: translate({ id: "roadmap.p7.title", message: "Robotics" }), description: translate({ id: "roadmap.p7.desc", message: "Real-time trait machines for physical control. Sensor fusion, safety verification, multi-robot coordination." }), icon: "bot" },
+  { title: translate({ id: "roadmap.p5.title", message: "Embedded Devices" }), description: translate({ id: "roadmap.p5.desc", message: "Run your product on microcontrollers and embedded hardware. Same definition, smallest footprint." }), icon: "cpu" },
+  { title: translate({ id: "roadmap.p6.title", message: "OrbOS" }), description: translate({ id: "roadmap.p6.desc", message: "An operating system where every service is a verified product definition. System-level control." }), icon: "monitor" },
+  { title: translate({ id: "roadmap.p7.title", message: "Robotics" }), description: translate({ id: "roadmap.p7.desc", message: "Control physical robots with verified behavior. Sensor integration, safety guarantees, fleet management." }), icon: "bot" },
 ];
 
 // ---------------------------------------------------------------------------
-// Timeline node component (SSR-safe, mirrors Timeline organism visuals)
+// Timeline component
 // ---------------------------------------------------------------------------
 
 function TimelinePhase({ phase, isLast }: { phase: Phase; isLast: boolean }) {
@@ -112,13 +104,11 @@ function TimelinePhase({ phase, isLast }: { phase: Phase; isLast: boolean }) {
   return (
     <AnimatedReveal animation="fade-up">
       <Box className="flex flex-row gap-6">
-        {/* Track: dot + vertical line */}
         <Box className="flex flex-col items-center flex-shrink-0" style={{ width: 24 }}>
           <Box className={`w-3 h-3 rounded-full ${dotColor} flex-shrink-0 mt-2`} />
           {!isLast && <Box className={`w-0.5 flex-1 ${lineColor}`} style={{ minHeight: 40 }} />}
         </Box>
 
-        {/* Content */}
         <VStack gap="md" className="flex-1 pb-12">
           <VStack gap="xs">
             <HStack gap="sm">
@@ -161,7 +151,6 @@ export default function Roadmap(): ReactNode {
       title={translate({ id: "roadmap.meta.title", message: "Roadmap" })}
       description={translate({ id: "roadmap.meta.desc", message: "One definition. Every platform. Proven correct. See what's next for Almadar." })}
     >
-      {/* Hero */}
       <Box as="header" className="w-full flex items-center">
         <Box className="site-container py-20">
           <VStack gap="lg" align="start">
@@ -178,7 +167,6 @@ export default function Roadmap(): ReactNode {
 
       <Box className="w-full h-px bg-gradient-to-r from-transparent via-[var(--color-border)] to-transparent" />
 
-      {/* Timeline */}
       <Box className="w-full py-16">
         <Box className="site-container">
           {PHASES.map((phase, i) => (
@@ -189,7 +177,6 @@ export default function Roadmap(): ReactNode {
 
       <Box className="w-full h-px bg-gradient-to-r from-transparent via-[var(--color-border)] to-transparent" />
 
-      {/* Future */}
       <Box className="w-full bg-[var(--color-surface)] py-24">
         <Box className="site-container">
           <VStack gap="lg" align="center">
@@ -200,7 +187,7 @@ export default function Roadmap(): ReactNode {
                 </Typography>
                 <Typography variant="body" color="muted" className="max-w-xl text-center">
                   <Translate id="roadmap.future.subtitle">
-                    The language stays the same. The compiler adds shells. The verification expands scope.
+                    Same builder. New platforms. Expanding what verified software can do.
                   </Translate>
                 </Typography>
               </VStack>
@@ -223,7 +210,6 @@ export default function Roadmap(): ReactNode {
         </Box>
       </Box>
 
-      {/* CTA */}
       <AnimatedReveal animation="fade-in">
         <Box className="w-full py-16">
           <Box className="site-container">
