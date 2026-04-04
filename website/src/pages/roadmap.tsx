@@ -8,6 +8,7 @@ import {
   HStack,
   Typography,
   Badge,
+  Button,
   Card,
   SimpleGrid,
   AnimatedReveal,
@@ -106,7 +107,7 @@ const PHASES: Phase[] = [
     title: translate({ id: "roadmap.p3.title", message: "Agent Trace" }),
     timeline: translate({ id: "roadmap.p3.timeline", message: "August - October 2026" }),
     status: "upcoming",
-    tagline: translate({ id: "roadmap.p3.tagline", message: "First revenue product. Enterprise agent monitoring." }),
+    tagline: translate({ id: "roadmap.p3.tagline", message: "Enterprise-grade agent monitoring as a standalone product." }),
     items: [
       {
         title: translate({ id: "roadmap.p3.standalone", message: "Standalone Package" }),

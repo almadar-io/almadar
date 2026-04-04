@@ -893,7 +893,7 @@
   "roadmap.p2.parity.desc": { "message": "TypeScript و Python و Rust و Android و Swift تنتج سلوكاً متطابقاً." },
   "roadmap.p3.title": { "message": "Agent Trace" },
   "roadmap.p3.timeline": { "message": "أغسطس - أكتوبر 2026" },
-  "roadmap.p3.tagline": { "message": "أول منتج إيرادات. مراقبة وكلاء المؤسسات." },
+  "roadmap.p3.tagline": { "message": "مراقبة وكلاء بمستوى المؤسسات كمنتج مستقل." },
   "roadmap.p3.standalone": { "message": "حزمة مستقلة" },
   "roadmap.p3.standalone.desc": { "message": "استخراج agent-trace كمنتج مستقل. متعدد المستأجرين." },
   "roadmap.p3.monitoring": { "message": "مراقبة المؤسسات" },

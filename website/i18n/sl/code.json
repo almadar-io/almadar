@@ -893,7 +893,7 @@
   "roadmap.p2.parity.desc": { "message": "TypeScript, Python, Rust, Android, Swift lupine proizvajajo enako vedenje." },
   "roadmap.p3.title": { "message": "Agent Trace" },
   "roadmap.p3.timeline": { "message": "Avgust - Oktober 2026" },
-  "roadmap.p3.tagline": { "message": "Prvi prihodkovni produkt. Nadzor agentov za podjetja." },
+  "roadmap.p3.tagline": { "message": "Podjetniški nadzor agentov kot samostojen produkt." },
   "roadmap.p3.standalone": { "message": "Samostojni paket" },
   "roadmap.p3.standalone.desc": { "message": "Izvleček agent-trace kot samostojen produkt. Večnajemniški." },
   "roadmap.p3.monitoring": { "message": "Podjetniški nadzor" },
