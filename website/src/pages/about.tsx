@@ -37,22 +37,6 @@ export default function About(): ReactNode {
 
       <Box className="w-full py-24">
         <Box className="site-container">
-          <VStack gap="lg" align="center" className="max-w-3xl mx-auto">
-            <Typography variant="h2">
-              {translate({ id: "about.what.title", message: "What We Do" })}
-            </Typography>
-            <Typography variant="body1" className="leading-relaxed">
-              {translate({ id: "about.what.body", message: "Almadar redefines how software products are built. Instead of generating code through prompt-and-pray AI workflows, the platform lets your entire team (engineers, designers, product managers, and QA) work from one living definition of your product that everyone understands and contributes to. From that single source, Almadar generates fully working applications that are testable, auditable, and correct before they ever reach production. You own the code. You choose your AI models. You keep full control. Almadar doesn't replace your team. It gives them leverage: engineers architect instead of debug, designers ship what they design, and QA stops chasing bugs that should never have existed. You launch in weeks, not months. Your team builds instead of firefights. Instead of worrying about your product breaking, you get to focus on what it does for your customers." })}
-            </Typography>
-            <Typography variant="h3" color="primary" align="center">
-              {translate({ id: "about.what.tagline", message: "Less code. More product." })}
-            </Typography>
-          </VStack>
-        </Box>
-      </Box>
-
-      <Box className="w-full py-24">
-        <Box className="site-container">
           <VStack gap="lg" align="center">
             <Typography variant="h2">
               {translate({ id: "about.team.title", message: "The Team" })}
