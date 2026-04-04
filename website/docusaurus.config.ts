@@ -16,6 +16,7 @@ export default createConfig({
     { to: "/ai", label: "AI", position: "left" },
     { to: "/platform", label: "Platform", position: "left" },
     { to: "/blog", label: "Blog", position: "left" },
+    { to: "/roadmap", label: "Roadmap", position: "left" },
     { to: "/about", label: "About", position: "left" },
   ],
 });
