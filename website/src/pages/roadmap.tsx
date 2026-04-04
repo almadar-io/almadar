@@ -9,14 +9,13 @@ import {
   Typography,
   Badge,
   Button,
-  Card,
   SimpleGrid,
   AnimatedReveal,
-  Icon,
+  FeatureCard,
 } from "@almadar/ui/marketing";
 
 // ---------------------------------------------------------------------------
-// Phase data
+// Data
 // ---------------------------------------------------------------------------
 
 interface PhaseItem {
@@ -44,31 +43,11 @@ const PHASES: Phase[] = [
     status: "active",
     tagline: translate({ id: "roadmap.p1.tagline", message: "Ship the builder and its full ecosystem." }),
     items: [
-      {
-        title: translate({ id: "roadmap.p1.masar", message: "Masar in Studio" }),
-        description: translate({ id: "roadmap.p1.masar.desc", message: "Live JEPA gap diagnosis during building. Beam repair visualization when validation fails." }),
-        icon: "brain",
-      },
-      {
-        title: translate({ id: "roadmap.p1.extension", message: "Chrome Extension" }),
-        description: translate({ id: "roadmap.p1.extension.desc", message: "UI capture, console debugging, deployment verification, interaction recording." }),
-        icon: "chrome",
-      },
-      {
-        title: translate({ id: "roadmap.p1.converter", message: "Converter Pipeline" }),
-        description: translate({ id: "roadmap.p1.converter.desc", message: "Reverse-engineer existing apps into .orb programs. Tree-sitter AST extraction, Playwright crawling." }),
-        icon: "refresh-cw",
-      },
-      {
-        title: translate({ id: "roadmap.p1.cli", message: "Orb CLI V2" }),
-        description: translate({ id: "roadmap.p1.cli.desc", message: "Production-ready serve and dev commands. Local LLM fallback. Template library." }),
-        icon: "terminal",
-      },
-      {
-        title: translate({ id: "roadmap.p1.verify", message: "Verification V2" }),
-        description: translate({ id: "roadmap.p1.verify.desc", message: "Visual regression testing. Performance baselines. AI-assisted test generation." }),
-        icon: "shield-check",
-      },
+      { title: translate({ id: "roadmap.p1.masar", message: "Masar in Studio" }), description: translate({ id: "roadmap.p1.masar.desc", message: "Live JEPA gap diagnosis during building. Beam repair visualization when validation fails." }), icon: "brain" },
+      { title: translate({ id: "roadmap.p1.extension", message: "Chrome Extension" }), description: translate({ id: "roadmap.p1.extension.desc", message: "UI capture, console debugging, deployment verification, interaction recording." }), icon: "chrome" },
+      { title: translate({ id: "roadmap.p1.converter", message: "Converter Pipeline" }), description: translate({ id: "roadmap.p1.converter.desc", message: "Reverse-engineer existing apps into .orb programs. Tree-sitter AST extraction, Playwright crawling." }), icon: "refresh-cw" },
+      { title: translate({ id: "roadmap.p1.cli", message: "Orb CLI V2" }), description: translate({ id: "roadmap.p1.cli.desc", message: "Production-ready serve and dev commands. Local LLM fallback. Template library." }), icon: "terminal" },
+      { title: translate({ id: "roadmap.p1.verify", message: "Verification V2" }), description: translate({ id: "roadmap.p1.verify.desc", message: "Visual regression testing. Performance baselines. AI-assisted test generation." }), icon: "shield-check" },
     ],
   },
   {
@@ -79,26 +58,10 @@ const PHASES: Phase[] = [
     status: "upcoming",
     tagline: translate({ id: "roadmap.p2.tagline", message: "Close gaps, harden the platform, go mobile." }),
     items: [
-      {
-        title: translate({ id: "roadmap.p2.entity", message: "Entity Binding V2" }),
-        description: translate({ id: "roadmap.p2.entity.desc", message: "Explicit bindings, lambda render props, backward compatibility." }),
-        icon: "database",
-      },
-      {
-        title: translate({ id: "roadmap.p2.mobile", message: "Mobile (React Native)" }),
-        description: translate({ id: "roadmap.p2.mobile.desc", message: "Native mobile component library. Same .orb, native output." }),
-        icon: "smartphone",
-      },
-      {
-        title: translate({ id: "roadmap.p2.games", message: "Game Components" }),
-        description: translate({ id: "roadmap.p2.games.desc", message: "16 game atoms, 19 game molecules. Canvas and DOM hybrid rendering." }),
-        icon: "gamepad-2",
-      },
-      {
-        title: translate({ id: "roadmap.p2.parity", message: "Cross-Shell Parity" }),
-        description: translate({ id: "roadmap.p2.parity.desc", message: "TypeScript, Python, Rust, Android, Swift shells produce identical behavior." }),
-        icon: "git-compare",
-      },
+      { title: translate({ id: "roadmap.p2.entity", message: "Entity Binding V2" }), description: translate({ id: "roadmap.p2.entity.desc", message: "Explicit bindings, lambda render props, backward compatibility." }), icon: "database" },
+      { title: translate({ id: "roadmap.p2.mobile", message: "Mobile (React Native)" }), description: translate({ id: "roadmap.p2.mobile.desc", message: "Native mobile component library. Same definition, native output." }), icon: "smartphone" },
+      { title: translate({ id: "roadmap.p2.games", message: "Game Components" }), description: translate({ id: "roadmap.p2.games.desc", message: "16 game atoms, 19 game molecules. Canvas and DOM hybrid rendering." }), icon: "gamepad-2" },
+      { title: translate({ id: "roadmap.p2.parity", message: "Cross-Shell Parity" }), description: translate({ id: "roadmap.p2.parity.desc", message: "TypeScript, Python, Rust, Android, Swift shells produce identical behavior." }), icon: "git-compare" },
     ],
   },
   {
@@ -109,26 +72,10 @@ const PHASES: Phase[] = [
     status: "upcoming",
     tagline: translate({ id: "roadmap.p3.tagline", message: "Enterprise-grade agent monitoring as a standalone product." }),
     items: [
-      {
-        title: translate({ id: "roadmap.p3.standalone", message: "Standalone Package" }),
-        description: translate({ id: "roadmap.p3.standalone.desc", message: "Extract agent-trace into its own product. Multi-tenant, team workspaces." }),
-        icon: "package",
-      },
-      {
-        title: translate({ id: "roadmap.p3.monitoring", message: "Enterprise Monitoring" }),
-        description: translate({ id: "roadmap.p3.monitoring.desc", message: "Real-time chain-of-thought, tool call timeline, cost tracking, gate progress." }),
-        icon: "activity",
-      },
-      {
-        title: translate({ id: "roadmap.p3.replay", message: "Replay + Analytics" }),
-        description: translate({ id: "roadmap.p3.replay.desc", message: "Re-run agent sessions. Cost trends, success rates, failure patterns." }),
-        icon: "history",
-      },
-      {
-        title: translate({ id: "roadmap.p3.pricing", message: "Tiered Pricing" }),
-        description: translate({ id: "roadmap.p3.pricing.desc", message: "Free, Team, and Enterprise tiers. SSO, audit logs, custom retention." }),
-        icon: "credit-card",
-      },
+      { title: translate({ id: "roadmap.p3.standalone", message: "Standalone Package" }), description: translate({ id: "roadmap.p3.standalone.desc", message: "Extract agent-trace into its own product. Multi-tenant, team workspaces." }), icon: "package" },
+      { title: translate({ id: "roadmap.p3.monitoring", message: "Enterprise Monitoring" }), description: translate({ id: "roadmap.p3.monitoring.desc", message: "Real-time chain-of-thought, tool call timeline, cost tracking, gate progress." }), icon: "activity" },
+      { title: translate({ id: "roadmap.p3.replay", message: "Replay + Analytics" }), description: translate({ id: "roadmap.p3.replay.desc", message: "Re-run agent sessions. Cost trends, success rates, failure patterns." }), icon: "history" },
+      { title: translate({ id: "roadmap.p3.pricing", message: "Tiered Pricing" }), description: translate({ id: "roadmap.p3.pricing.desc", message: "Free, Team, and Enterprise tiers. SSO, audit logs, custom retention." }), icon: "credit-card" },
     ],
   },
   {
@@ -139,111 +86,67 @@ const PHASES: Phase[] = [
     status: "upcoming",
     tagline: translate({ id: "roadmap.p4.tagline", message: "Train and deploy custom ML models from Studio." }),
     items: [
-      {
-        title: translate({ id: "roadmap.p4.python", message: "Python Shell Production" }),
-        description: translate({ id: "roadmap.p4.python.desc", message: "Production deployment pipeline for Python-compiled orbitals with PyTorch." }),
-        icon: "code",
-      },
-      {
-        title: translate({ id: "roadmap.p4.mlops", message: "ML Operators" }),
-        description: translate({ id: "roadmap.p4.mlops.desc", message: "nn/*, tensor/*, train/*, data/* operators as first-class citizens." }),
-        icon: "cpu",
-      },
-      {
-        title: translate({ id: "roadmap.p4.composer", message: "Studio ML Composer" }),
-        description: translate({ id: "roadmap.p4.composer.desc", message: "Visual ML behavior composition. Training dashboards. Dataset management." }),
-        icon: "layers",
-      },
-      {
-        title: translate({ id: "roadmap.p4.registry", message: "Model Registry" }),
-        description: translate({ id: "roadmap.p4.registry.desc", message: "Trained models versioned alongside their .orb definitions. One-click deploy." }),
-        icon: "archive",
-      },
+      { title: translate({ id: "roadmap.p4.python", message: "Python Shell Production" }), description: translate({ id: "roadmap.p4.python.desc", message: "Production deployment pipeline for Python-compiled orbitals with PyTorch." }), icon: "code" },
+      { title: translate({ id: "roadmap.p4.mlops", message: "ML Operators" }), description: translate({ id: "roadmap.p4.mlops.desc", message: "nn/*, tensor/*, train/*, data/* operators as first-class citizens." }), icon: "cpu" },
+      { title: translate({ id: "roadmap.p4.composer", message: "Studio ML Composer" }), description: translate({ id: "roadmap.p4.composer.desc", message: "Visual ML behavior composition. Training dashboards. Dataset management." }), icon: "layers" },
+      { title: translate({ id: "roadmap.p4.registry", message: "Model Registry" }), description: translate({ id: "roadmap.p4.registry.desc", message: "Trained models versioned alongside their definitions. One-click deploy." }), icon: "archive" },
     ],
   },
 ];
 
 const FUTURE_PHASES = [
-  {
-    number: "5",
-    title: translate({ id: "roadmap.p5.title", message: "Embedded + OS" }),
-    description: translate({ id: "roadmap.p5.desc", message: "Rust embedded shell, no_std runtime for microcontrollers, hardware trait machines, IPC effects." }),
-    icon: "cpu",
-  },
-  {
-    number: "6",
-    title: translate({ id: "roadmap.p6.title", message: "OrbOS" }),
-    description: translate({ id: "roadmap.p6.desc", message: "Linux-based OS where Orb is the native programming model. System services as orbitals." }),
-    icon: "monitor",
-  },
-  {
-    number: "7",
-    title: translate({ id: "roadmap.p7.title", message: "Robotics" }),
-    description: translate({ id: "roadmap.p7.desc", message: "Real-time trait machines for physical control. Sensor fusion, safety verification, multi-robot coordination." }),
-    icon: "bot",
-  },
+  { number: "5", title: translate({ id: "roadmap.p5.title", message: "Embedded + OS" }), description: translate({ id: "roadmap.p5.desc", message: "Rust embedded shell, no_std runtime for microcontrollers, hardware trait machines, IPC effects." }), icon: "cpu" },
+  { number: "6", title: translate({ id: "roadmap.p6.title", message: "OrbOS" }), description: translate({ id: "roadmap.p6.desc", message: "Linux-based OS where Orb is the native programming model. System services as orbitals." }), icon: "monitor" },
+  { number: "7", title: translate({ id: "roadmap.p7.title", message: "Robotics" }), description: translate({ id: "roadmap.p7.desc", message: "Real-time trait machines for physical control. Sensor fusion, safety verification, multi-robot coordination." }), icon: "bot" },
 ];
 
 // ---------------------------------------------------------------------------
-// Components
+// Timeline node component (SSR-safe, mirrors Timeline organism visuals)
 // ---------------------------------------------------------------------------
 
-function StatusBadge({ status }: { status: Phase["status"] }) {
-  const variant = status === "active" ? "primary" : "neutral";
-  const label =
-    status === "active"
-      ? translate({ id: "roadmap.status.active", message: "In Progress" })
-      : status === "upcoming"
-        ? translate({ id: "roadmap.status.upcoming", message: "Upcoming" })
-        : translate({ id: "roadmap.status.future", message: "Future" });
-  return <Badge variant={variant} size="sm">{label}</Badge>;
-}
-
-function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
+function TimelinePhase({ phase, isLast }: { phase: Phase; isLast: boolean }) {
   const isActive = phase.status === "active";
+  const dotColor = isActive ? "bg-[var(--color-primary)]" : "bg-[var(--color-border)]";
+  const lineColor = isActive ? "bg-[var(--color-primary)] opacity-30" : "bg-[var(--color-border)] opacity-40";
+
   return (
-    <AnimatedReveal animation="fade-up" delay={index * 100}>
-      <VStack gap="lg" className="py-12">
-        <HStack gap="md" align="center">
-          <Box
-            className={[
-              "w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0",
-              isActive
-                ? "bg-[var(--color-primary)] text-white"
-                : "bg-[var(--color-surface)] text-[var(--color-muted-foreground)] border border-[var(--color-border)]",
-            ].join(" ")}
-          >
-            {phase.number}
-          </Box>
+    <AnimatedReveal animation="fade-up">
+      <Box className="flex flex-row gap-6">
+        {/* Track: dot + vertical line */}
+        <Box className="flex flex-col items-center flex-shrink-0" style={{ width: 24 }}>
+          <Box className={`w-3 h-3 rounded-full ${dotColor} flex-shrink-0 mt-2`} />
+          {!isLast && <Box className={`w-0.5 flex-1 ${lineColor}`} style={{ minHeight: 40 }} />}
+        </Box>
+
+        {/* Content */}
+        <VStack gap="md" className="flex-1 pb-12">
           <VStack gap="xs">
-            <HStack gap="sm" align="center">
-              <Typography variant="h3">{phase.title}</Typography>
-              <StatusBadge status={phase.status} />
+            <HStack gap="sm">
+              <Typography variant="small" color="muted">{phase.timeline}</Typography>
+              <Badge variant={isActive ? "primary" : "neutral"} size="sm">
+                {isActive
+                  ? translate({ id: "roadmap.status.active", message: "In Progress" })
+                  : translate({ id: "roadmap.status.upcoming", message: "Upcoming" })}
+              </Badge>
             </HStack>
-            <Typography variant="small" color="muted">{phase.timeline}</Typography>
+            <Typography variant="h3">{phase.title}</Typography>
+            <Typography variant="body" color="muted">{phase.tagline}</Typography>
           </VStack>
-        </HStack>
 
-        <Typography variant="body1" color="muted" className="max-w-2xl pl-14">
-          {phase.tagline}
-        </Typography>
-
-        <SimpleGrid cols={2} gap="md" className="pl-14">
-          {phase.items.map((item, i) => (
-            <AnimatedReveal key={item.title} animation="fade-up" delay={index * 100 + i * 50} className="h-full">
-              <Card className="p-5 h-full">
-                <VStack gap="sm">
-                  <HStack gap="sm" align="center">
-                    <Icon name={item.icon} size={18} />
-                    <Typography variant="h4">{item.title}</Typography>
-                  </HStack>
-                  <Typography variant="body" color="muted">{item.description}</Typography>
-                </VStack>
-              </Card>
-            </AnimatedReveal>
-          ))}
-        </SimpleGrid>
-      </VStack>
+          <SimpleGrid cols={2} gap="md">
+            {phase.items.map((item) => (
+              <FeatureCard
+                key={item.title}
+                icon={item.icon}
+                title={item.title}
+                description={item.description}
+                variant="bordered"
+                size="sm"
+              />
+            ))}
+          </SimpleGrid>
+        </VStack>
+      </Box>
     </AnimatedReveal>
   );
 }
@@ -276,49 +179,17 @@ export default function Roadmap(): ReactNode {
       <Box className="w-full h-px bg-gradient-to-r from-transparent via-[var(--color-border)] to-transparent" />
 
       {/* Timeline */}
-      <Box className="w-full py-8">
+      <Box className="w-full py-16">
         <Box className="site-container">
-          {/* Phase timeline bar */}
-          <AnimatedReveal animation="fade-in">
-            <HStack gap="none" className="overflow-x-auto pb-4">
-              {PHASES.map((phase, i) => (
-                <HStack key={phase.id} gap="none" align="center" className="flex-shrink-0">
-                  <Box
-                    className={[
-                      "px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap",
-                      phase.status === "active"
-                        ? "bg-[var(--color-primary)] text-white"
-                        : "bg-[var(--color-surface)] text-[var(--color-muted-foreground)] border border-[var(--color-border)]",
-                    ].join(" ")}
-                  >
-                    {phase.timeline}
-                  </Box>
-                  {i < PHASES.length - 1 && (
-                    <Box className="w-8 h-px bg-[var(--color-border)] mx-1" />
-                  )}
-                </HStack>
-              ))}
-              <HStack gap="none" align="center" className="flex-shrink-0">
-                <Box className="w-8 h-px bg-[var(--color-border)] mx-1" />
-                <Box className="px-4 py-2 rounded-full text-sm bg-[var(--color-surface)] text-[var(--color-muted-foreground)] border border-[var(--color-border)] border-dashed whitespace-nowrap">
-                  {translate({ id: "roadmap.beyond", message: "2027+" })}
-                </Box>
-              </HStack>
-            </HStack>
-          </AnimatedReveal>
-
-          {/* Phase details */}
-          <VStack gap="none" className="divide-y divide-[var(--color-border)]">
-            {PHASES.map((phase, i) => (
-              <PhaseCard key={phase.id} phase={phase} index={i} />
-            ))}
-          </VStack>
+          {PHASES.map((phase, i) => (
+            <TimelinePhase key={phase.id} phase={phase} isLast={i === PHASES.length - 1} />
+          ))}
         </Box>
       </Box>
 
       <Box className="w-full h-px bg-gradient-to-r from-transparent via-[var(--color-border)] to-transparent" />
 
-      {/* Future phases */}
+      {/* Future */}
       <Box className="w-full bg-[var(--color-surface)] py-24">
         <Box className="site-container">
           <VStack gap="lg" align="center">
@@ -338,17 +209,13 @@ export default function Roadmap(): ReactNode {
             <SimpleGrid cols={3} gap="lg">
               {FUTURE_PHASES.map((phase, i) => (
                 <AnimatedReveal key={phase.title} animation="fade-up" delay={i * 100} className="h-full">
-                  <Card className="p-6 h-full">
-                    <VStack gap="md">
-                      <HStack gap="sm" align="center">
-                        <Box className="w-8 h-8 rounded-full bg-[var(--color-surface)] border border-[var(--color-border)] flex items-center justify-center text-sm font-bold text-[var(--color-muted-foreground)]">
-                          {phase.number}
-                        </Box>
-                        <Typography variant="h4">{phase.title}</Typography>
-                      </HStack>
-                      <Typography variant="body" color="muted">{phase.description}</Typography>
-                    </VStack>
-                  </Card>
+                  <FeatureCard
+                    icon={phase.icon}
+                    title={phase.title}
+                    description={phase.description}
+                    variant="bordered"
+                    className="h-full"
+                  />
                 </AnimatedReveal>
               ))}
             </SimpleGrid>
@@ -365,7 +232,7 @@ export default function Roadmap(): ReactNode {
                 {translate({ id: "roadmap.cta.title", message: "Start building today." })}
               </Typography>
               <Typography variant="body" color="muted" align="center" className="max-w-xl">
-                {translate({ id: "roadmap.cta.text", message: "Everything on this roadmap builds on the same foundation: one .orb definition that compiles to every platform. The best way to understand it is to try it." })}
+                {translate({ id: "roadmap.cta.text", message: "Everything on this roadmap builds on the same foundation: one definition that compiles to every platform. The best way to understand it is to try it." })}
               </Typography>
               <HStack gap="md">
                 <a href="https://studio.almadar.io"><Button variant="primary" size="lg">{translate({ id: "roadmap.cta.studio", message: "Try Studio" })}</Button></a>

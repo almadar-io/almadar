@@ -31,7 +31,30 @@ const HOW_IT_WORKS = [
   {
     icon: "rocket",
     title: translate({ id: "home.idea.deploy", message: "Deploy" }),
-    description: translate({ id: "home.idea.deploy.text", message: "One model compiles to web, mobile, or any future platform. The model is the product." }),
+    description: translate({ id: "home.idea.deploy.text", message: "One definition compiles to web, mobile, or any future platform. You own the generated code. You keep full control." }),
+  },
+];
+
+const BELIEFS = [
+  {
+    icon: "share-2",
+    title: translate({ id: "home.beliefs.shared.title", message: "Shared, not siloed" }),
+    description: translate({ id: "home.beliefs.shared.desc", message: "Software should coexist and coordinate across teams and organizations. One formal definition that everyone contributes to." }),
+  },
+  {
+    icon: "bot",
+    title: translate({ id: "home.beliefs.ai.title", message: "AI builds software, not just assists" }),
+    description: translate({ id: "home.beliefs.ai.desc", message: "AI agents that build, deploy, and operate systems autonomously. Software designed from the ground up for machines to understand." }),
+  },
+  {
+    icon: "shield-check",
+    title: translate({ id: "home.beliefs.correct.title", message: "Correctness guaranteed" }),
+    description: translate({ id: "home.beliefs.correct.desc", message: "If it compiles, it works. The compiler proves every possible state is valid before a single line of code runs." }),
+  },
+  {
+    icon: "users",
+    title: translate({ id: "home.beliefs.team.title", message: "One product, whole team" }),
+    description: translate({ id: "home.beliefs.team.desc", message: "Engineers, designers, PMs, and QA work from one living definition. Everyone contributes. Everyone understands. No translation layers." }),
   },
 ];
 
@@ -39,37 +62,37 @@ const PRODUCTS = [
   {
     logo: "/img/studio-icon.svg",
     title: translate({ id: "home.pillars.studio.title", message: "Almadar Studio" }),
-    description: translate({ id: "home.pillars.studio.desc", message: "The builder where humans and AI agents collaborate to create software. Describe, generate, deploy." }),
+    description: translate({ id: "home.pillars.studio.desc", message: "Where humans and AI agents collaborate to create software. Every project is a Git repository. Every change is a commit. The AI is the developer. Git is the history." }),
     href: "https://studio.almadar.io",
     linkLabel: translate({ id: "home.pillars.studio.link", message: "Try Studio" }),
   },
   {
     logo: "/img/orb-icon-transparent.svg",
-    title: translate({ id: "home.pillars.language.title", message: "Orb" }),
-    description: translate({ id: "home.pillars.language.desc", message: "A formal language for describing how software behaves. Open source. AI-native. Compiler-verified." }),
+    title: translate({ id: "home.pillars.language.title", message: "Verified Compilation" }),
+    description: translate({ id: "home.pillars.language.desc", message: "Your product definition compiles to web, mobile, or any future platform. The compiler proves every state is valid before a single line of code runs." }),
     href: "https://orb.almadar.io",
-    linkLabel: translate({ id: "home.pillars.language.link", message: "Explore the Language" }),
+    linkLabel: translate({ id: "home.pillars.language.link", message: "Learn More" }),
   },
   {
     logo: "/img/services-icon-transparent.svg",
     title: translate({ id: "home.pillars.services.title", message: "Almadar Services" }),
-    description: translate({ id: "home.pillars.services.desc", message: "AI-native infrastructure. Compute, storage, authentication, event routing. Designed for agents." }),
+    description: translate({ id: "home.pillars.services.desc", message: "AI-native infrastructure. Agents discover, understand, and provision services programmatically. Compute, storage, authentication, event routing. Humans get dashboards too." }),
     href: "https://services.almadar.io",
     linkLabel: translate({ id: "home.pillars.services.link", message: "View Services" }),
   },
   {
     logo: "/img/masar-icon.svg",
     title: translate({ id: "home.pillars.masar.title", message: "Masar" }),
-    description: translate({ id: "home.pillars.masar.desc", message: "System 2 for AI agents. Planning, verification, and memory that makes any LLM smarter." }),
+    description: translate({ id: "home.pillars.masar.desc", message: "Our own trained neural models. 2M parameters that predict errors, evaluate repairs, and generate valid software structures. Not LLM wrappers." }),
     href: "https://masar.almadar.io",
     linkLabel: translate({ id: "home.pillars.masar.link", message: "Explore Masar" }),
   },
 ];
 
 const STATS = [
-  { value: translate({ id: "home.stats.behaviors.value", message: "93" }), label: translate({ id: "home.stats.behaviors.label", message: "Reusable behaviors across forms, e-commerce, gaming, CMS, and 14 more domains" }) },
-  { value: translate({ id: "home.stats.projects.value", message: "7" }), label: translate({ id: "home.stats.projects.label", message: "Production projects deployed across SaaS, gaming, and enterprise" }) },
-  { value: translate({ id: "home.stats.cost.value", message: "$0.05-$0.35" }), label: translate({ id: "home.stats.cost.label", message: "AI compute cost per generation session" }) },
+  { value: translate({ id: "home.stats.behaviors.value", message: "116" }), label: translate({ id: "home.stats.behaviors.label", message: "Verified behaviors across 18 domains, from e-commerce to robotics" }) },
+  { value: translate({ id: "home.stats.coverage.value", message: "100%" }), label: translate({ id: "home.stats.coverage.label", message: "State machine transition coverage verified before deployment" }) },
+  { value: translate({ id: "home.stats.shells.value", message: "6" }), label: translate({ id: "home.stats.shells.label", message: "Target platforms from one definition: Web today, Mobile and Python underway, Rust, Kotlin, and Swift in the pipeline" }) },
 ];
 
 export default function Home(): ReactNode {
@@ -127,6 +150,31 @@ export default function Home(): ReactNode {
           <VStack gap="lg" align="center">
             <AnimatedReveal animation="fade-in">
               <Typography variant="h2">
+                <Translate id="home.beliefs.title">What We Believe</Translate>
+              </Typography>
+            </AnimatedReveal>
+            <SimpleGrid cols={2} gap="lg">
+              {BELIEFS.map((item, i) => (
+                <AnimatedReveal key={item.title} animation="fade-up" delay={i * 100} className="h-full">
+                  <Card className="p-6 h-full">
+                    <VStack gap="md">
+                      <Icon name={item.icon} size={24} />
+                      <Typography variant="h4">{item.title}</Typography>
+                      <Typography variant="body" color="muted">{item.description}</Typography>
+                    </VStack>
+                  </Card>
+                </AnimatedReveal>
+              ))}
+            </SimpleGrid>
+          </VStack>
+        </Box>
+      </Box>
+
+      <Box className="w-full py-24">
+        <Box className="site-container">
+          <VStack gap="lg" align="center">
+            <AnimatedReveal animation="fade-in">
+              <Typography variant="h2">
                 <Translate id="home.pillars.title">Our Products</Translate>
               </Typography>
             </AnimatedReveal>
@@ -177,10 +225,10 @@ export default function Home(): ReactNode {
           <Box className="site-container">
             <VStack gap="lg" align="center">
               <Typography variant="h2" align="center">
-                {translate({ id: "home.cta.title", message: "Less code. More Orb." })}
+                {translate({ id: "home.cta.title", message: "You own the code. You choose the models. You keep full control." })}
               </Typography>
               <Typography variant="body" color="muted" align="center" className="max-w-2xl">
-                {translate({ id: "home.cta.text", message: "Your entire team works from one living definition that evolves with your business. You own the code, choose your AI models, and keep full control. Launch in weeks, not months." })}
+                {translate({ id: "home.cta.text", message: "Your entire team works from one living definition that evolves with your business. Engineers architect instead of debug. Designers ship what they design. Launch in weeks, not months." })}
               </Typography>
               <HStack gap="md">
                 <a href="https://studio.almadar.io"><Button variant="primary" size="lg">{translate({ id: "home.cta.start", message: "Try Studio" })}</Button></a>

@@ -134,6 +134,15 @@
   "home.meta.title": {
     "message": "Načrti za vašo umetno inteligenco"
   },
+  "home.beliefs.title": { "message": "V kaj verjamemo" },
+  "home.beliefs.shared.title": { "message": "Deljeno, ne izolirano" },
+  "home.beliefs.shared.desc": { "message": "Programska oprema naj bi soobstajala in se usklajevala med ekipami in organizacijami. Ena formalna definicija, h kateri prispevajo vsi." },
+  "home.beliefs.ai.title": { "message": "UI gradi programsko opremo, ne samo pomaga" },
+  "home.beliefs.ai.desc": { "message": "Agenti UI, ki gradijo, nameščajo in upravljajo sisteme avtonomno. Programska oprema, zasnovana od temeljev za razumevanje strojev." },
+  "home.beliefs.correct.title": { "message": "Zagotovljena pravilnost" },
+  "home.beliefs.correct.desc": { "message": "Če se prevede, deluje. Prevajalnik dokaže, da je vsako možno stanje veljavno, preden se požene ena vrstica kode." },
+  "home.beliefs.team.title": { "message": "En produkt, celotna ekipa" },
+  "home.beliefs.team.desc": { "message": "Inženirji, oblikovalci, produktni vodje in QA delajo iz ene žive definicije. Vsi prispevajo. Vsi razumejo. Brez prevajalnih plasti." },
   "home.meta.desc": {
     "message": "Almadar je platforma za razvoj programske opreme, kjer inženirji, oblikovalci, produktni vodje in ekipe za zagotavljanje kakovosti sodelujejo na eni formalni definiciji produkta za generiranje preverljivih, revizijskih aplikacij, pripravljenih za produkcijo. Ekipe lastijo svojo generirano izvorno kodo, izberejo svoje modele umetne inteligence in nimajo vezanosti na ponudnika."
   },
