@@ -68,7 +68,7 @@ const PRODUCTS = [
   },
   {
     logo: "/img/orb-icon-transparent.svg",
-    title: translate({ id: "home.pillars.language.title", message: "Verified Compilation" }),
+    title: translate({ id: "home.pillars.language.title", message: "Orb" }),
     description: translate({ id: "home.pillars.language.desc", message: "Your product definition compiles to web, mobile, or any future platform. The compiler proves every state is valid before a single line of code runs." }),
     href: "https://orb.almadar.io",
     linkLabel: translate({ id: "home.pillars.language.link", message: "Learn More" }),
