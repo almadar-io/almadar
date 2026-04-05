@@ -12,8 +12,8 @@ export default createConfig({
     feedOptions: { type: ['rss', 'atom'], xslt: true },
   },
   navbarItems: [
-    { to: "/about", label: "About", position: "left" },
     { to: "/vision", label: "Vision", position: "left" },
+    { to: "/about", label: "About", position: "left" },
     { to: "/roadmap", label: "Roadmap", position: "left" },
     { to: "/blog", label: "Blog", position: "left" },
   ],
