@@ -28,6 +28,23 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+
+      # Cache Docusaurus build artifacts: webpack5's filesystem cache
+      # (website/node_modules/.cache/webpack) and Docusaurus's plugin
+      # output (website/.docusaurus). On a warm hit webpack reuses
+      # ~95% of compiled modules, dropping a long build down to a few
+      # minutes.
+      - name: Cache Docusaurus build artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            website/.docusaurus
+            website/node_modules/.cache
+          key: docusaurus-${{ runner.os }}-${{ hashFiles('website/package-lock.json', 'website/docusaurus.config.ts', 'website/shared/**', 'website/docs/**', 'website/blog/**', 'website/src/**', 'website/static/**') }}
+          restore-keys: |
+            docusaurus-${{ runner.os }}-
 
       - name: Install dependencies
         working-directory: website
