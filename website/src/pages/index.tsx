@@ -67,6 +67,16 @@ const CAPABILITIES = [
 
 const PERSONAS = [
   {
+    title: translate({ id: "home.persona.builder.title", message: "PMs & Founders" }),
+    description: translate({
+      id: "home.persona.builder.desc",
+      message: "Type what you want to build. Watch the AI compose your product orbital by orbital. Hit deploy when it's ready. No code, no handoff, no waiting on a sprint.",
+    }),
+    image: { src: "/img/studio-flows/sahar-home.png", alt: "Builder Home with prompt input and product suggestion chips" },
+    badge: translate({ id: "home.persona.builder.badge", message: "Prompt to product" }),
+    href: STUDIO_URL,
+  },
+  {
     title: translate({ id: "home.persona.designer.title", message: "Designers" }),
     description: translate({
       id: "home.persona.designer.desc",
@@ -77,23 +87,13 @@ const PERSONAS = [
     href: STUDIO_URL,
   },
   {
-    title: translate({ id: "home.persona.architect.title", message: "Architects & PMs" }),
+    title: translate({ id: "home.persona.engineer.title", message: "Engineers" }),
     description: translate({
-      id: "home.persona.architect.desc",
-      message: "Validation results, payload contracts, JEPA predictions. Every release is proven before it leaves the workspace.",
+      id: "home.persona.engineer.desc",
+      message: "Write guards, wire events between orbitals, review JEPA validation, ship the compiled TypeScript. Every release is proven before it leaves the workspace.",
     }),
     image: { src: "/img/studio-flows/tarek-validation.png", alt: "Studio validation panel with JEPA predictions" },
-    badge: translate({ id: "home.persona.architect.badge", message: "Verified by default" }),
-    href: STUDIO_URL,
-  },
-  {
-    title: translate({ id: "home.persona.contributor.title", message: "Engineers" }),
-    description: translate({
-      id: "home.persona.contributor.desc",
-      message: "Browse 116 ready-made behaviors, compose your own, share them across projects. The library compounds with every shipped feature.",
-    }),
-    image: { src: "/img/studio-flows/rami-library.png", alt: "Studio behavior library with categories and previews" },
-    badge: translate({ id: "home.persona.contributor.badge", message: "Compose, don't rewrite" }),
+    badge: translate({ id: "home.persona.engineer.badge", message: "Verified by default" }),
     href: STUDIO_URL,
   },
 ];

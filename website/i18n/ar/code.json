@@ -86,6 +86,15 @@
   "home.persona.title": {
     "message": "مساحة عمل واحدة. كل دور في شركتك الناشئة."
   },
+  "home.persona.builder.title": {
+    "message": "مديرو المنتج والمؤسسون"
+  },
+  "home.persona.builder.desc": {
+    "message": "اكتب ما تريد بناءه. شاهد الذكاء الاصطناعي يجمّع منتجك مدارياً تلو الآخر. اضغط نشر عندما يكون جاهزاً. بدون كود، بدون تسليم، بدون انتظار دورة تطوير."
+  },
+  "home.persona.builder.badge": {
+    "message": "من المطالبة إلى المنتج"
+  },
   "home.persona.designer.title": {
     "message": "المصممون"
   },
@@ -95,23 +104,14 @@
   "home.persona.designer.badge": {
     "message": "توسع سريع"
   },
-  "home.persona.architect.title": {
-    "message": "المعماريون ومديرو المنتج"
-  },
-  "home.persona.architect.desc": {
-    "message": "نتائج التحقق، عقود الحمولات، تنبؤات JEPA. كل إصدار مُثبت قبل أن يغادر مساحة العمل."
-  },
-  "home.persona.architect.badge": {
-    "message": "مُتحقَّق منه افتراضياً"
-  },
-  "home.persona.contributor.title": {
+  "home.persona.engineer.title": {
     "message": "المهندسون"
   },
-  "home.persona.contributor.desc": {
-    "message": "تصفّح 116 سلوكاً جاهزاً، اصنع سلوكك الخاص، شاركه عبر المشاريع. المكتبة تنمو مع كل ميزة تُطلقها."
+  "home.persona.engineer.desc": {
+    "message": "اكتب الحراس، اربط الأحداث بين المداريات، راجع تحقق JEPA، أطلق TypeScript المُجمَّع. كل إصدار مُثبت قبل أن يغادر مساحة العمل."
   },
-  "home.persona.contributor.badge": {
-    "message": "ركّب، لا تعيد الكتابة"
+  "home.persona.engineer.badge": {
+    "message": "مُتحقَّق منه افتراضياً"
   },
   "home.stage.kicker": {
     "message": "مبني لرحلة الشركات الناشئة بأكملها"

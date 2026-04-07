@@ -86,6 +86,15 @@
   "home.persona.title": {
     "message": "En delovni prostor. Vsaka vloga v vašem startupu."
   },
+  "home.persona.builder.title": {
+    "message": "Produktni vodje in ustanovitelji"
+  },
+  "home.persona.builder.desc": {
+    "message": "Vtipkajte, kaj želite zgraditi. Opazujte, kako UI sestavlja vaš produkt orbitalo za orbitalo. Pritisnite namesti, ko je pripravljen. Brez kode, brez predaje, brez čakanja na sprint."
+  },
+  "home.persona.builder.badge": {
+    "message": "Od poziva do produkta"
+  },
   "home.persona.designer.title": {
     "message": "Oblikovalci"
   },
@@ -95,23 +104,14 @@
   "home.persona.designer.badge": {
     "message": "Hitra rast"
   },
-  "home.persona.architect.title": {
-    "message": "Arhitekti in produktni vodje"
-  },
-  "home.persona.architect.desc": {
-    "message": "Rezultati preverjanja, pogodbe za podatke, napovedi JEPA. Vsaka različica je dokazana, preden zapusti delovni prostor."
-  },
-  "home.persona.architect.badge": {
-    "message": "Privzeto preverjeno"
-  },
-  "home.persona.contributor.title": {
+  "home.persona.engineer.title": {
     "message": "Inženirji"
   },
-  "home.persona.contributor.desc": {
-    "message": "Brskajte 116 pripravljenih vedenj, sestavite svoje, delite jih po projektih. Knjižnica raste z vsako poslano funkcijo."
+  "home.persona.engineer.desc": {
+    "message": "Pišite varovala, povežite dogodke med orbitalami, preglejte JEPA preverjanje, pošljite prevedeni TypeScript. Vsaka različica je dokazana, preden zapusti delovni prostor."
   },
-  "home.persona.contributor.badge": {
-    "message": "Sestavljaj, ne piši znova"
+  "home.persona.engineer.badge": {
+    "message": "Privzeto preverjeno"
   },
   "home.stage.kicker": {
     "message": "Zgrajeno za celotno pot startupa"
