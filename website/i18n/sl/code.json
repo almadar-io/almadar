@@ -1,18 +1,144 @@
 {
   "home.hero.tag": {
-    "message": "Formalno. Preverjeno. Vaše."
+    "message": "Zgrajeno za startupe"
   },
   "home.hero.title": {
-    "message": "Načrti za vašo umetno inteligenco"
+    "message": "Pošiljajte prave produkte. Absurdno hitro."
   },
   "home.hero.subtitle": {
-    "message": "Vaš produkt, definiran in preverjen. Prevzemite nadzor."
+    "message": "Od nič do produkta. Od produkta do rasti."
   },
   "home.hero.cta1": {
-    "message": "Preizkusite Studio"
+    "message": "Odprite Studio"
   },
   "home.hero.cta2": {
-    "message": "Preberite dokumentacijo"
+    "message": "Poglejte, kako deluje"
+  },
+  "home.cap.kicker": {
+    "message": "Kaj vam ponuja Studio"
+  },
+  "home.cap.title": {
+    "message": "Hitrost brez kompromisov, ki jih ustanovitelji običajno sprejmejo."
+  },
+  "home.cap.control.title": {
+    "message": "Nadzor"
+  },
+  "home.cap.control.desc": {
+    "message": "Studio sestavi vaš produkt iz 116 pripravljenih funkcij namesto da ugiba kodo iz pozivov. Vi vodite UI: ustvarjalen pri vmesniku in besedilu, natančen pri podatkih in poteku dela."
+  },
+  "home.cap.verify.title": {
+    "message": "Preverjanje"
+  },
+  "home.cap.verify.desc": {
+    "message": "Vsak zaslon, vsak tok, vsaka interakcija je preverjena, preden objavite. Studio požene dejansko aplikacijo, klikne vsak gumb in v realnem času pokaže pokvarjene poti vam in UI."
+  },
+  "home.cap.lockin.title": {
+    "message": "Brez vezave na ponudnika"
+  },
+  "home.cap.lockin.desc": {
+    "message": "Lastite si generirano kodo. Prinesite svoj UI model ali uporabite našega. Namestite v naš oblak ali svojega. Vzemite svoj produkt in odidite kadarkoli. Studio krepi vašo ekipo, je ne ujame."
+  },
+  "home.cap.link": {
+    "message": "Odprite Studio"
+  },
+  "home.decon.kicker": {
+    "message": "Hitra rast"
+  },
+  "home.decon.title": {
+    "message": "Povlecite pravi produkt v Studio. Preoblikujte ga. Pošljite naslednjo različico ta teden."
+  },
+  "home.decon.subtitle": {
+    "message": "Studio ne nadomesti tega, kar ste zgradili. Razstavi ga na koščke, ki jih lahko zgrabite, uredite in znova sestavite s hitrostjo startupa."
+  },
+  "home.decon.step1.label": {
+    "message": "Kateri koli produkt, v kateri koli fazi"
+  },
+  "home.decon.step1.desc": {
+    "message": "Ideja na prtičku, polovično dokončan MVP ali živa aplikacija, ki potrebuje naslednje poglavje."
+  },
+  "home.decon.step2.label": {
+    "message": "Razdeljen na gradnike"
+  },
+  "home.decon.step2.desc": {
+    "message": "Studio ga razčleni v orbitalne enote: vsak zaslon, entiteta in tok kot kos, ki ga lahko zgrabite."
+  },
+  "home.decon.step3.label": {
+    "message": "Znova sestavljen v Studiu"
+  },
+  "home.decon.step3.desc": {
+    "message": "Spustite nove kose noter, znova povežite tok, pošljite novo različico. Isto platno, hitrejši ritem."
+  },
+  "home.decon.cap.blocks": {
+    "message": "Gradniki"
+  },
+  "home.decon.cap.blocks.desc": {
+    "message": "Vsak zaslon, entiteta in tok postane svoja orbitalna enota, pripravljena za zajem."
+  },
+  "home.decon.cap.canvas": {
+    "message": "Znova sestavljen v Studiu"
+  },
+  "home.decon.cap.canvas.desc": {
+    "message": "Povlecite nove kose, znova povežite tok, opazujte preverjanje v realnem času."
+  },
+  "home.persona.kicker": {
+    "message": "Zgrajeno za celotno ekipo"
+  },
+  "home.persona.title": {
+    "message": "En delovni prostor. Vsaka vloga v vašem startupu."
+  },
+  "home.persona.designer.title": {
+    "message": "Oblikovalci"
+  },
+  "home.persona.designer.desc": {
+    "message": "Spustite nove vzorce na živo platno, uredite lastnosti v inšpektorju, pošljite spremembo. Brez predaje, brez ponovne gradnje."
+  },
+  "home.persona.designer.badge": {
+    "message": "Hitra rast"
+  },
+  "home.persona.architect.title": {
+    "message": "Arhitekti in produktni vodje"
+  },
+  "home.persona.architect.desc": {
+    "message": "Rezultati preverjanja, pogodbe za podatke, napovedi JEPA. Vsaka različica je dokazana, preden zapusti delovni prostor."
+  },
+  "home.persona.architect.badge": {
+    "message": "Privzeto preverjeno"
+  },
+  "home.persona.contributor.title": {
+    "message": "Inženirji"
+  },
+  "home.persona.contributor.desc": {
+    "message": "Brskajte 116 pripravljenih vedenj, sestavite svoje, delite jih po projektih. Knjižnica raste z vsako poslano funkcijo."
+  },
+  "home.persona.contributor.badge": {
+    "message": "Sestavljaj, ne piši znova"
+  },
+  "home.stage.kicker": {
+    "message": "Zgrajeno za celotno pot startupa"
+  },
+  "home.stage.title": {
+    "message": "Ne glede na to, ali iščete ustreznost ali rastete naprej."
+  },
+  "home.stage.zero.label": {
+    "message": "Od nič do produkta"
+  },
+  "home.stage.zero.title": {
+    "message": "Preverite, preden zažgete sredstva."
+  },
+  "home.stage.zero.desc": {
+    "message": "Studio idejo spremeni v delujoč produkt dovolj hitro, da ga ta teden testirate s pravimi uporabniki, ne naslednje četrtletje. Iterirajte, ubijte, obrnite smer brez prepisovanja od začetka."
+  },
+  "home.stage.scale.label": {
+    "message": "Od produkta do rasti"
+  },
+  "home.stage.scale.title": {
+    "message": "Razširite, ne da bi pokvarili tisto, kar deluje."
+  },
+  "home.stage.scale.desc": {
+    "message": "Ko vas trg potegne, Studio omogoči vaši ekipi, da v dneh doda funkcije, površine in platforme. Preverjanje vsako izdajo ohranja pripravljeno za pošiljanje, ne glede na hitrost."
+  },
+  "home.stage.cta": {
+    "message": "Začnite v Studiu"
   },
   "home.idea.title": {
     "message": "Kako deluje"
@@ -120,19 +246,19 @@
     "message": "Naš nevronski cevovod razume strukturo programske opreme tako, kot šahovski motor razume pozicije na plošči. Majhni, specializirani modeli, ki napovedujejo napake, ocenjujejo popravke in generirajo veljavno programsko opremo iz nič. Veliki jezikovni modeli obdelujejo naravni jezik, naši modeli obdelujejo pravilnost."
   },
   "home.cta.title": {
-    "message": "Manj kode. Več produkta."
+    "message": "Nehajte prototipirati. Začnite pošiljati."
   },
   "home.cta.text": {
-    "message": "Celotna ekipa dela iz ene žive definicije, ki se razvija z vašim poslom. Lastite si kodo, izberete svoje modele umetne inteligence in ohranite popoln nadzor. Lansiranje v tednih, ne mesecih."
+    "message": "Odprite Studio, opišite, kar želite zgraditi, in opazujte, kako nastaja pravi, preverjen produkt. Ostanete v nadzoru. Obdržite kodo. Premikate se s hitrostjo startupa."
   },
   "home.cta.start": {
-    "message": "Preizkusite Studio"
+    "message": "Odprite Studio"
   },
   "home.cta.vision": {
     "message": "Preberite vizijo"
   },
   "home.meta.title": {
-    "message": "Načrti za vašo umetno inteligenco"
+    "message": "Pošiljajte prave produkte. Absurdno hitro."
   },
   "home.beliefs.title": { "message": "V kaj verjamemo" },
   "home.beliefs.shared.title": { "message": "Deljeno, ne izolirano" },
@@ -144,7 +270,7 @@
   "home.beliefs.team.title": { "message": "En produkt, celotna ekipa" },
   "home.beliefs.team.desc": { "message": "Inženirji, oblikovalci, produktni vodje in QA delajo iz ene žive definicije. Vsi prispevajo. Vsi razumejo. Brez prevajalnih plasti." },
   "home.meta.desc": {
-    "message": "Almadar je platforma za razvoj programske opreme, kjer inženirji, oblikovalci, produktni vodje in ekipe za zagotavljanje kakovosti sodelujejo na eni formalni definiciji produkta za generiranje preverljivih, revizijskih aplikacij, pripravljenih za produkcijo. Ekipe lastijo svojo generirano izvorno kodo, izberejo svoje modele umetne inteligence in nimajo vezanosti na ponudnika."
+    "message": "Almadar Studio je delovni prostor za razvoj produktov za startupe. Pojdite od nič do produkta, nato od produkta do rasti, s preverjenimi izdajami, popolnim nadzorom in brez vezave na ponudnika."
   },
   "platform.hero.title": {
     "message": "Platforma"
