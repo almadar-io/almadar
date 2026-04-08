@@ -1,234 +1,174 @@
-# Download Almadar CLI
+# Download Orbital CLI
 
-The Almadar CLI (`almadar`) is the command-line tool for validating, compiling, and working with Almadar schemas.
-
-## Quick Install
-
-### npm (Recommended)
-
-```bash
-npm install -g @almadar/cli
-```
-
-### Homebrew (macOS/Linux)
-
-```bash
-brew install almadar/tap/almadar
-```
-
-### Cargo (Rust developers)
-
-```bash
-cargo install almadar-cli
-```
+The Orbital compiler is your local gateway for building applications from `.orb` programs. Download the precompiled binary for your platform.
 
 ## Platform-Specific Downloads
 
-### Linux
-
-| Architecture | Format | Download |
-|-------------|--------|----------|
-| x86_64 | tar.gz | [almadar-linux-x86_64.tar.gz](#) |
-| x86_64 | deb | [almadar_x86_64.deb](#) |
-| x86_64 | rpm | [almadar-x86_64.rpm](#) |
-| ARM64 | tar.gz | [almadar-linux-aarch64.tar.gz](#) |
-
-**Installation (tar.gz):**
-
-```bash
-tar -xzf almadar-linux-x86_64.tar.gz
-sudo mv almadar /usr/local/bin/
-```
-
-**Installation (deb):**
-
-```bash
-sudo dpkg -i almadar_x86_64.deb
-```
+Latest release: [GitHub Releases](https://github.com/almadar-io/almadar/releases)
 
 ### macOS
 
-| Architecture | Format | Download |
-|-------------|--------|----------|
-| Intel (x86_64) | tar.gz | [almadar-macos-x86_64.tar.gz](#) |
-| Apple Silicon (ARM64) | tar.gz | [almadar-macos-aarch64.tar.gz](#) |
-| Universal | pkg | [almadar-macos.pkg](#) |
+```bash
+# Apple Silicon (ARM64)
+curl -fsSL https://github.com/almadar-io/almadar/releases/latest/download/orbital-Darwin-aarch64 -o /usr/local/bin/orbital
+chmod +x /usr/local/bin/orbital
 
-**Installation (tar.gz):**
+# Intel (x86_64)
+curl -fsSL https://github.com/almadar-io/almadar/releases/latest/download/orbital-Darwin-x86_64 -o /usr/local/bin/orbital
+chmod +x /usr/local/bin/orbital
+```
+
+### Linux
 
 ```bash
-tar -xzf almadar-macos-aarch64.tar.gz
-sudo mv almadar /usr/local/bin/
+# x86_64
+curl -fsSL https://github.com/almadar-io/almadar/releases/latest/download/orbital-Linux-x86_64 -o /usr/local/bin/orbital
+chmod +x /usr/local/bin/orbital
+
+# ARM64
+curl -fsSL https://github.com/almadar-io/almadar/releases/latest/download/orbital-Linux-aarch64 -o /usr/local/bin/orbital
+chmod +x /usr/local/bin/orbital
 ```
 
 ### Windows
 
-| Architecture | Format | Download |
-|-------------|--------|----------|
-| x86_64 | zip | [almadar-windows-x86_64.zip](#) |
-| x86_64 | msi | [almadar-windows-x86_64.msi](#) |
+Download from [GitHub Releases](https://github.com/almadar-io/almadar/releases):
+- `orbital-Windows-x86_64.exe`
 
-**Installation (winget):**
-
+Or use command line:
 ```powershell
-winget install Almadar.CLI
+curl -fsSL "https://github.com/almadar-io/almadar/releases/latest/download/orbital-Windows-x86_64.exe" -o "%LOCALAPPDATA%\Programs\orbital.exe"
 ```
-
-**Installation (zip):**
-
-1. Extract `almadar-windows-x86_64.zip`
-2. Add the extracted folder to your PATH
-3. Restart your terminal
 
 ## Verify Installation
 
 ```bash
-almadar --version
-# Almadar CLI v1.0.0
-
-almadar --help
-# Almadar - The Physics of Software
-# 
-# USAGE:
-#     almadar <COMMAND>
-# 
-# COMMANDS:
-#     validate   Validate an Almadar schema
-#     compile    Compile schema to target shell
-#     format     Format an Almadar schema
-#     dev        Start development server
-#     test       Run state machine tests
-#     new        Create a new project
-#     help       Print this message
+orbital --version
+orbital --help
 ```
 
-## Basic Usage
+## Core Commands
 
-### Validate a Schema
+### `orbital validate`
+
+Validate an `.orb` schema for correctness:
 
 ```bash
-almadar validate my-app.orb
-# ✓ Schema is valid
-# ✓ 3 orbitals, 5 traits, 8 entities
+orbital validate my-app.orb
+orbital validate my-app.orb --simulate       # Trace all reachable states
+orbital validate my-app.orb --json           # JSON output for CI
 ```
 
-### Compile to TypeScript
+### `orbital compile`
+
+Generate production-ready code:
 
 ```bash
-almadar compile my-app.orb --shell typescript --output ./generated
-# ✓ Generated 24 files
-# ✓ Output: ./generated
+orbital compile my-app.orb -o ./output                        # TypeScript (default)
+orbital compile my-app.orb -s python -o ./output              # Python + FastAPI
+orbital compile my-app.orb -s mobile -o ./output              # React Native
+orbital compile my-app.orb --shell typescript --server hono   # Use Hono backend
 ```
 
-### Start Development Server
+### `orbital serve`
+
+Compile and serve with zero dependencies (uses bundled Hono + Bun):
 
 ```bash
-almadar dev my-app.orb
-# Starting Almadar dev server...
-# ✓ Schema loaded: my-app.orb
-# ✓ Server: http://localhost:3000
-# ✓ Client: http://localhost:5173
-# 
-# Watching for changes...
+orbital serve my-app.orb                # http://localhost:3030
+orbital serve my-app.orb -p 8000        # Custom port
+orbital serve my-app.orb --open         # Auto-open browser
 ```
 
-### Run Tests
+### `orbital test`
+
+Run exhaustive state machine tests:
 
 ```bash
-almadar test my-app.orb
-# Running state machine tests...
-# ✓ TaskLifecycle: 12 transitions tested
-# ✓ UserAuth: 8 transitions tested
-# ✓ All guards evaluated
-# 
-# Tests: 20 passed, 0 failed
+orbital test my-app.orb
 ```
 
-### Create New Project
+### `orbital format`
+
+Pretty-print and normalize `.orb` files:
 
 ```bash
-almadar new my-app
-# ✓ Created my-app/
-# ✓ Created my-app/schema.orb
-# ✓ Created my-app/almadar.config.json
-# 
-# Get started:
-#   cd my-app
-#   almadar dev
+orbital format my-app.orb
+orbital format my-app.orb > my-app.orb  # Overwrite in-place
 ```
 
-## Configuration
+### `orbital parse`
 
-Create an `almadar.config.json` in your project root:
-
-```json
-{
-  "$schema": "https://almadar.io/schemas/config.json",
-  "schema": "./schema/my-app.orb",
-  "output": "./src/generated",
-  "shell": "typescript",
-  "locale": "en",
-  "features": {
-    "hotReload": true,
-    "generateTypes": true,
-    "generateDocs": true
-  }
-}
-```
-
-Then simply run:
+Display schema structure:
 
 ```bash
-almadar compile
-# Uses settings from almadar.config.json
+orbital parse my-app.orb
 ```
 
-## Locale Support
+### `orbital new`
 
-Almadar supports multiple languages for error messages and operator aliases:
+Create new project scaffold:
 
 ```bash
-# English (default)
-almadar validate schema.orb --locale en
-
-# Arabic
-almadar validate schema.orb --locale ar
-# ✓ المخطط صالح
-# ✓ ٣ مدارات، ٥ سمات، ٨ كيانات
+orbital new my-app
 ```
 
-## Next Steps
+### `orbital convert`
 
-- [Build a Task Manager](/docs/tutorials/beginner/task-manager) - Build something!
-- [Operator Reference](/docs/reference/operators/) - Complete operator reference
-- [Guards & Business Rules](/docs/tutorials/intermediate/guards) - S-expressions in practice
+Convert existing project to `.orb`:
 
----
+```bash
+orbital convert ./my-react-project
+```
+
+## Interactive Agent Mode
+
+Run the AI agent with natural language:
+
+```bash
+orbital "Build a todo app with categories"
+orbital --resume                    # Resume session
+orbital --last                      # Most recent session
+```
+
+## Global Options
+
+```bash
+--provider <NAME>                   # LLM provider (claude, gpt-4, etc)
+--autonomy <LEVEL>                  # Agent behavior: full, balanced, cautious
+--budget <USD>                      # Cost limit for agent runs
+--resume [ID]                       # Resume previous session
+--last                              # Resume most recent
+```
+
+## Quick Start
+
+```bash
+# Create and run
+orbital new my-app
+cd my-app
+orbital serve my-app.orb --open
+
+# Or compile and deploy
+orbital compile my-app.orb -o ./output
+cd output && npm install && npm run build
+```
 
 ## Troubleshooting
 
 ### "Command not found"
 
-Ensure the binary is in your PATH:
-
+Add to PATH:
 ```bash
-# Check where almadar is installed
-which almadar
-
-# Add to PATH if needed (add to ~/.bashrc or ~/.zshrc)
-export PATH="$PATH:/path/to/almadar"
+export PATH="$PATH:/usr/local/bin"
 ```
 
-### Permission Denied (Linux/macOS)
+### Permission Denied (macOS/Linux)
 
 ```bash
-chmod +x /usr/local/bin/almadar
+chmod +x /usr/local/bin/orbital
 ```
-
-### Windows Defender Warning
-
-The almadar.exe binary is signed but may trigger Windows Defender on first run. Click "More info" → "Run anyway" or add an exception.
 
 ---
 
-*Need help? Join our [Discord](https://discord.gg/almadar) or open an [issue](https://github.com/almadar-io/almadar/issues).*
+*Questions? Open an [issue](https://github.com/almadar-io/almadar/issues) or see the [documentation](/).*

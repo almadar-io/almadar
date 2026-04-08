@@ -1,207 +1,174 @@
-# تحميل أداة المدار
+# تحميل مجمع Orbital
 
-أداة المدار (`almadar`) هي أداة سطر الأوامر للتحقق من صحة مخططات المدار وتصريفها والعمل معها.
-
-## التثبيت السريع
-
-### npm (موصى به)
-
-```bash
-npm install -g @almadar/cli
-```
-
-### Homebrew (macOS/Linux)
-
-```bash
-brew install almadar/tap/almadar
-```
-
-### Cargo (لمطوري Rust)
-
-```bash
-cargo install almadar-cli
-```
+مجمع Orbital هو بوابتك المحلية لبناء التطبيقات من برامج `.orb`. حمّل الملف التنفيذي المترجم لمنصتك.
 
 ## التحميل حسب المنصة
 
-### Linux
-
-| المعمارية | الصيغة | التحميل |
-|----------|--------|---------|
-| x86_64 | tar.gz | [almadar-linux-x86_64.tar.gz](#) |
-| x86_64 | deb | [almadar_x86_64.deb](#) |
-| x86_64 | rpm | [almadar-x86_64.rpm](#) |
-| ARM64 | tar.gz | [almadar-linux-aarch64.tar.gz](#) |
-
-**التثبيت (tar.gz):**
-
-```bash
-tar -xzf almadar-linux-x86_64.tar.gz
-sudo mv almadar /usr/local/bin/
-```
+أحدث إصدار: [GitHub Releases](https://github.com/almadar-io/almadar/releases)
 
 ### macOS
 
-| المعمارية | الصيغة | التحميل |
-|----------|--------|---------|
-| Intel (x86_64) | tar.gz | [almadar-macos-x86_64.tar.gz](#) |
-| Apple Silicon (ARM64) | tar.gz | [almadar-macos-aarch64.tar.gz](#) |
-| Universal | pkg | [almadar-macos.pkg](#) |
+```bash
+# Apple Silicon (ARM64)
+curl -fsSL https://github.com/almadar-io/almadar/releases/latest/download/orbital-Darwin-aarch64 -o /usr/local/bin/orbital
+chmod +x /usr/local/bin/orbital
+
+# Intel (x86_64)
+curl -fsSL https://github.com/almadar-io/almadar/releases/latest/download/orbital-Darwin-x86_64 -o /usr/local/bin/orbital
+chmod +x /usr/local/bin/orbital
+```
+
+### Linux
+
+```bash
+# x86_64
+curl -fsSL https://github.com/almadar-io/almadar/releases/latest/download/orbital-Linux-x86_64 -o /usr/local/bin/orbital
+chmod +x /usr/local/bin/orbital
+
+# ARM64
+curl -fsSL https://github.com/almadar-io/almadar/releases/latest/download/orbital-Linux-aarch64 -o /usr/local/bin/orbital
+chmod +x /usr/local/bin/orbital
+```
 
 ### Windows
 
-| المعمارية | الصيغة | التحميل |
-|----------|--------|---------|
-| x86_64 | zip | [almadar-windows-x86_64.zip](#) |
-| x86_64 | msi | [almadar-windows-x86_64.msi](#) |
+حمّل من [GitHub Releases](https://github.com/almadar-io/almadar/releases):
+- `orbital-Windows-x86_64.exe`
 
-**التثبيت (winget):**
-
+أو من سطر الأوامر:
 ```powershell
-winget install Almadar.CLI
+curl -fsSL "https://github.com/almadar-io/almadar/releases/latest/download/orbital-Windows-x86_64.exe" -o "%LOCALAPPDATA%\Programs\orbital.exe"
 ```
 
 ## التحقق من التثبيت
 
 ```bash
-almadar --version
-# Almadar CLI v1.0.0
-
-almadar --help
-# المدار - فيزياء البرمجيات
-# 
-# الاستخدام:
-#     almadar <أمر>
-# 
-# الأوامر:
-#     validate   التحقق من صحة مخطط المدار
-#     compile    تصريف المخطط إلى الهدف
-#     format     تنسيق مخطط المدار
-#     dev        تشغيل خادم التطوير
-#     test       تشغيل اختبارات آلة الحالة
-#     new        إنشاء مشروع جديد
-#     help       طباعة هذه الرسالة
+orbital --version
+orbital --help
 ```
 
-## الاستخدام الأساسي
+## الأوامر الأساسية
 
-### التحقق من المخطط
+### `orbital validate`
+
+التحقق من صحة ملف `.orb`:
 
 ```bash
-almadar validate my-app.orb
-# ✓ المخطط صالح
-# ✓ ٣ مدارات، ٥ سمات، ٨ كيانات
+orbital validate my-app.orb
+orbital validate my-app.orb --simulate       # تتبع جميع الحالات المتاحة
+orbital validate my-app.orb --json           # مخرجات JSON للـ CI
 ```
 
-### التصريف إلى TypeScript
+### `orbital compile`
+
+توليد أكواد جاهزة للإنتاج:
 
 ```bash
-almadar compile my-app.orb --shell typescript --output ./generated
-# ✓ تم توليد ٢٤ ملف
-# ✓ المخرجات: ./generated
+orbital compile my-app.orb -o ./output                        # TypeScript (الافتراضي)
+orbital compile my-app.orb -s python -o ./output              # Python + FastAPI
+orbital compile my-app.orb -s mobile -o ./output              # React Native
+orbital compile my-app.orb --shell typescript --server hono   # استخدام Hono
 ```
 
-### تشغيل خادم التطوير
+### `orbital serve`
+
+التصريف والخدمة بدون تبعيات (يستخدم Hono + Bun المجمع):
 
 ```bash
-almadar dev my-app.orb
-# جاري تشغيل خادم تطوير المدار...
-# ✓ تم تحميل المخطط: my-app.orb
-# ✓ الخادم: http://localhost:3000
-# ✓ العميل: http://localhost:5173
-# 
-# جاري مراقبة التغييرات...
+orbital serve my-app.orb                # http://localhost:3030
+orbital serve my-app.orb -p 8000        # منفذ مخصص
+orbital serve my-app.orb --open         # فتح المتصفح تلقائياً
 ```
 
-### تشغيل الاختبارات
+### `orbital test`
+
+تشغيل اختبارات آلة الحالة الشاملة:
 
 ```bash
-almadar test my-app.orb
-# جاري تشغيل اختبارات آلة الحالة...
-# ✓ TaskLifecycle: ١٢ انتقال تم اختباره
-# ✓ UserAuth: ٨ انتقالات تم اختبارها
-# ✓ تم تقييم جميع الحراس
-# 
-# الاختبارات: ٢٠ نجحت، ٠ فشلت
+orbital test my-app.orb
 ```
 
-### إنشاء مشروع جديد
+### `orbital format`
+
+تنسيق وتطبيع ملفات `.orb`:
 
 ```bash
-almadar new my-app
-# ✓ تم إنشاء my-app/
-# ✓ تم إنشاء my-app/schema.orb
-# ✓ تم إنشاء my-app/almadar.config.json
-# 
-# ابدأ الآن:
-#   cd my-app
-#   almadar dev
+orbital format my-app.orb
+orbital format my-app.orb > my-app.orb  # الكتابة فوق الملف الأصلي
 ```
 
-## الإعدادات
+### `orbital parse`
 
-أنشئ ملف `almadar.config.json` في جذر مشروعك:
-
-```json
-{
-  "$schema": "https://almadar.io/schemas/config.json",
-  "schema": "./schema/my-app.orb",
-  "output": "./src/generated",
-  "shell": "typescript",
-  "locale": "ar",
-  "features": {
-    "hotReload": true,
-    "generateTypes": true,
-    "generateDocs": true
-  }
-}
-```
-
-ثم قم بتشغيل:
+عرض بنية المخطط:
 
 ```bash
-almadar compile
-# يستخدم الإعدادات من almadar.config.json
+orbital parse my-app.orb
 ```
 
-## دعم اللغة العربية
+### `orbital new`
 
-المدار يدعم اللغة العربية بشكل كامل لرسائل الخطأ والمخرجات:
+إنشاء مشروع جديد:
 
 ```bash
-almadar validate schema.orb --locale ar
-# ✓ المخطط صالح
-# ✓ ٣ مدارات، ٥ سمات، ٨ كيانات
+orbital new my-app
 ```
 
-## الخطوات التالية
+### `orbital convert`
 
-- [بناء مدير المهام](/docs/tutorials/beginner/task-manager) - ابنِ شيئاً!
-- [مرجع المشغلات](/docs/reference/operators/) - مرجع كامل للمشغلات
-- [الحراس والقواعد](/docs/tutorials/intermediate/guards) - S-expressions عملياً
+تحويل مشروع موجود إلى `.orb`:
 
----
+```bash
+orbital convert ./my-react-project
+```
+
+## نمط الوكيل التفاعلي
+
+تشغيل وكيل الذكاء الاصطناعي باللغة الطبيعية:
+
+```bash
+orbital "بناء تطبيق قائمة المهام مع الفئات"
+orbital --resume                    # استئناف الجلسة
+orbital --last                      # أحدث جلسة
+```
+
+## الخيارات العامة
+
+```bash
+--provider <NAME>                   # مزود LLM (claude, gpt-4, إلخ)
+--autonomy <LEVEL>                  # سلوك الوكيل: full, balanced, cautious
+--budget <USD>                      # حد التكلفة لتشغيل الوكيل
+--resume [ID]                       # استئناف جلسة سابقة
+--last                              # استئناف أحدث جلسة
+```
+
+## البدء السريع
+
+```bash
+# الإنشاء والتشغيل
+orbital new my-app
+cd my-app
+orbital serve my-app.orb --open
+
+# أو التصريف والنشر
+orbital compile my-app.orb -o ./output
+cd output && npm install && npm run build
+```
 
 ## استكشاف الأخطاء
 
 ### "الأمر غير موجود"
 
-تأكد من أن الملف التنفيذي في مسار PATH:
-
+أضف إلى PATH:
 ```bash
-# تحقق من مكان تثبيت almadar
-which almadar
-
-# أضف إلى PATH إذا لزم الأمر (أضف إلى ~/.bashrc أو ~/.zshrc)
-export PATH="$PATH:/path/to/almadar"
+export PATH="$PATH:/usr/local/bin"
 ```
 
-### رفض الصلاحيات (Linux/macOS)
+### رفض الصلاحيات (macOS/Linux)
 
 ```bash
-chmod +x /usr/local/bin/almadar
+chmod +x /usr/local/bin/orbital
 ```
 
 ---
 
-*تحتاج مساعدة؟ انضم إلى [Discord](https://discord.gg/almadar) أو افتح [مشكلة](https://github.com/almadar-io/almadar/issues).*
+*هل لديك أسئلة؟ افتح [مشكلة](https://github.com/almadar-io/almadar/issues) أو اقرأ [التوثيق](/).*
