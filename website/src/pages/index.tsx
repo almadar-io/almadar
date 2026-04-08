@@ -22,7 +22,7 @@ import {
 import { OrbitalHeroBackground } from "../components/OrbitalHeroBackground";
 
 const STUDIO_URL = "https://studio.almadar.io";
-const STUDIO_DOCS_URL = "https://studio.almadar.io/docs";
+const STUDIO_FEATURES_URL = "https://studio.almadar.io/features";
 
 // ---------------------------------------------------------------------------
 // What Studio gives you
@@ -295,7 +295,7 @@ export default function Home(): ReactNode {
                   {translate({ id: "home.hero.cta1", message: "Open Studio" })}
                 </Button>
               </a>
-              <a href={STUDIO_DOCS_URL}>
+              <a href={STUDIO_FEATURES_URL}>
                 <Button variant="secondary" size="lg">
                   {translate({ id: "home.hero.cta2", message: "See how it works" })}
                 </Button>
