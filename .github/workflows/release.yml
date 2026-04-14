@@ -197,11 +197,14 @@ jobs:
               --generate-notes
           fi
 
+  # DEPRECATED: npm publishing moved to almadar-io/orb repo (publish-npm.yml).
+  # Triggered via repository_dispatch from kflow.ai's build-almadar-cli workflow.
+  # This job is kept disabled — remove entirely once orb publish is verified.
   publish-npm:
-    name: Publish to npm
+    name: Publish to npm (DEPRECATED — use orb repo)
     needs: release
     runs-on: ubuntu-latest
-    if: ${{ vars.PUBLISH_NPM == 'true' }}
+    if: false
     steps:
       - uses: actions/checkout@v4
 
@@ -278,17 +281,28 @@ jobs:
             cd "$ROOT_DIR"
           done
 
-          # Main package
-          if [ -d "cli/npm" ]; then
+          # Main package — source of truth is orb/cli/npm (submodule: almadar-io/orb)
+          # cli/npm is deprecated — do NOT publish from there
+          NPM_SRC=""
+          if [ -d "orb/cli/npm" ]; then
+            NPM_SRC="orb/cli/npm"
+          elif [ -d "cli/npm" ]; then
+            echo "WARNING: falling back to cli/npm — orb submodule not checked out"
+            NPM_SRC="cli/npm"
+          fi
+
+          if [ -n "$NPM_SRC" ]; then
             PKG_DIR="${ROOT_DIR}/npm-packages/@almadar/orb"
             mkdir -p "$PKG_DIR"
-            cp -r cli/npm/* "$PKG_DIR/"
+            cp -r "$NPM_SRC"/* "$PKG_DIR/"
 
             # Copy shell templates (excluding node_modules, .git, generated)
-            if [ -d "cli/shells" ]; then
-              echo "Copying shell templates..."
+            SHELLS_DIR=""
+            if [ -d "orb/cli/shells" ]; then SHELLS_DIR="orb/cli/shells"; elif [ -d "cli/shells" ]; then SHELLS_DIR="cli/shells"; fi
+            if [ -n "$SHELLS_DIR" ]; then
+              echo "Copying shell templates from $SHELLS_DIR..."
               mkdir -p "$PKG_DIR/shells"
-              for shell_dir in cli/shells/*/; do
+              for shell_dir in "$SHELLS_DIR"/*/; do
                 shell_name=$(basename "$shell_dir")
                 echo "  Copying $shell_name..."
                 mkdir -p "$PKG_DIR/shells/$shell_name"
