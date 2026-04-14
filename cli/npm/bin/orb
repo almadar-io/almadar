@@ -1,0 +1,101 @@
+#!/usr/bin/env node
+
+const { execFileSync } = require('child_process');
+const path = require('path');
+const fs = require('fs');
+
+const BINARY_NAME = process.platform === 'win32' ? 'orb.exe' : 'orb';
+
+function getBinaryPath() {
+  const platform = process.platform;
+  const arch = process.arch;
+
+  const platformMap = {
+    'darwin-x64': '@almadar/orb-darwin-x64',
+    'darwin-arm64': '@almadar/orb-darwin-arm64',
+    'linux-x64': '@almadar/orb-linux-x64',
+    'linux-arm64': '@almadar/orb-linux-arm64',
+    'win32-x64': '@almadar/orb-windows-x64',
+  };
+
+  const key = `${platform}-${arch}`;
+  const packageName = platformMap[key];
+
+  if (!packageName) {
+    console.error(`Unsupported platform: ${platform}-${arch}`);
+    console.error('Supported: darwin-x64, darwin-arm64, linux-x64, linux-arm64, win32-x64');
+    process.exit(1);
+  }
+
+  const possiblePaths = [
+    path.join(__dirname, '..', 'node_modules', packageName, BINARY_NAME),
+    path.join(__dirname, '..', '..', packageName, BINARY_NAME),
+    path.join(__dirname, '..', '..', '..', packageName, BINARY_NAME),
+  ];
+
+  for (const binaryPath of possiblePaths) {
+    if (fs.existsSync(binaryPath)) {
+      return { binaryPath, platformDir: path.dirname(binaryPath) };
+    }
+  }
+
+  console.error(`Could not find Orb binary for ${platform}-${arch}`);
+  console.error('Try reinstalling: npm install -g @almadar/orb');
+  process.exit(1);
+}
+
+function getShellsDir() {
+  if (process.env.ORBITAL_SHELLS_DIR) {
+    return process.env.ORBITAL_SHELLS_DIR;
+  }
+
+  const possiblePaths = [
+    path.join(__dirname, '..', 'shells'),
+    path.join(__dirname, '..', '..', '@almadar', 'orb', 'shells'),
+  ];
+
+  for (const shellsPath of possiblePaths) {
+    if (fs.existsSync(shellsPath) && (
+      fs.existsSync(path.join(shellsPath, 'almadar-shell')) ||
+      fs.existsSync(path.join(shellsPath, 'typescript-shell'))
+    )) {
+      return shellsPath;
+    }
+  }
+
+  return null;
+}
+
+const { binaryPath, platformDir } = getBinaryPath();
+const shellsDir = getShellsDir();
+
+const env = { ...process.env };
+
+if (shellsDir) {
+  env.ORBITAL_SHELLS_DIR = shellsDir;
+}
+
+// Bun runtime (sibling to Rust binary in platform package)
+const bunName = process.platform === 'win32' ? 'bun.exe' : 'bun';
+const bunPath = path.join(platformDir, bunName);
+if (fs.existsSync(bunPath)) {
+  env.ORB_BUN_PATH = bunPath;
+}
+
+// Agent dist (agent/ directory in platform package)
+const agentDir = path.join(platformDir, 'agent');
+if (fs.existsSync(agentDir)) {
+  env.ORB_AGENT_DIR = agentDir;
+}
+
+try {
+  execFileSync(binaryPath, process.argv.slice(2), {
+    stdio: 'inherit',
+    env: env,
+  });
+} catch (error) {
+  if (error.status !== undefined) {
+    process.exit(error.status);
+  }
+  throw error;
+}
