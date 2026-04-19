@@ -58,7 +58,6 @@ The core pipeline: a user (or AI agent) writes a `.orb` program describing syste
 | [almadar-std](https://github.com/almadar-io/almadar-std) | Standard library: 129 reusable behaviors |
 | [almadar-agent](https://github.com/almadar-io/almadar-agent) | AI agent infrastructure (LangGraph, JEPA planner) |
 | [almadar-llm](https://github.com/almadar-io/almadar-llm) | Multi-provider LLM client (Anthropic, DeepSeek, OpenRouter) |
-| [zed-orbital](https://github.com/almadar-io/zed-orbital) | Zed editor extension for .orb files |
 
 ---
 
