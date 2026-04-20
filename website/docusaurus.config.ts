@@ -13,7 +13,6 @@ export default createConfig({
   },
   navbarItems: [
     { to: "/vision", label: "Vision", position: "left" },
-    { to: "/about", label: "About", position: "left" },
     { to: "/roadmap", label: "Roadmap", position: "left" },
     { to: "/blog", label: "Blog", position: "left" },
   ],

@@ -244,7 +244,6 @@ export function createConfig(opts: SiteConfig): Config {
           {
             title: "Company",
             items: [
-              { label: "About", href: "https://almadar.io/about" },
               { label: "Blog", href: "https://almadar.io/blog" },
               { label: "Contact", href: "mailto:hello@almadar.io" },
             ],
