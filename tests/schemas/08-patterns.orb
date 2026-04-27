@@ -10,12 +10,34 @@
         "persistence": "persistent",
         "collection": "products",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "name", "type": "string", "required": true },
-          { "name": "description", "type": "string" },
-          { "name": "price", "type": "number", "required": true },
-          { "name": "stock", "type": "number", "default": 0 },
-          { "name": "category", "type": "string" }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "type": "number",
+            "required": true
+          },
+          {
+            "name": "stock",
+            "type": "number",
+            "default": 0
+          },
+          {
+            "name": "category",
+            "type": "string"
+          }
         ]
       },
       "traits": [
@@ -25,24 +47,67 @@
           "category": "interaction",
           "stateMachine": {
             "states": [
-              { "name": "listing", "isInitial": true },
-              { "name": "viewing" },
-              { "name": "editing" },
-              { "name": "creating" }
+              {
+                "name": "listing",
+                "isInitial": true
+              },
+              {
+                "name": "viewing"
+              },
+              {
+                "name": "editing"
+              },
+              {
+                "name": "creating"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "VIEW", "name": "View Product", "payload": [
-                { "name": "id", "type": "string", "required": true }
-              ]},
-              { "key": "EDIT", "name": "Edit Product" },
-              { "key": "CREATE", "name": "Create Product" },
-              { "key": "SAVE", "name": "Save" },
-              { "key": "CANCEL", "name": "Cancel" },
-              { "key": "BACK", "name": "Back to List" },
-              { "key": "DELETE", "name": "Delete Product", "payload": [
-                { "name": "id", "type": "string", "required": true }
-              ]}
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "VIEW",
+                "name": "View Product",
+                "payloadSchema": [
+                  {
+                    "name": "id",
+                    "type": "string",
+                    "required": true
+                  }
+                ]
+              },
+              {
+                "key": "EDIT",
+                "name": "Edit Product"
+              },
+              {
+                "key": "CREATE",
+                "name": "Create Product"
+              },
+              {
+                "key": "SAVE",
+                "name": "Save"
+              },
+              {
+                "key": "CANCEL",
+                "name": "Cancel"
+              },
+              {
+                "key": "BACK",
+                "name": "Back to List"
+              },
+              {
+                "key": "DELETE",
+                "name": "Delete Product",
+                "payloadSchema": [
+                  {
+                    "name": "id",
+                    "type": "string",
+                    "required": true
+                  }
+                ]
+              }
             ],
             "transitions": [
               {
@@ -50,17 +115,38 @@
                 "event": "INIT",
                 "to": "listing",
                 "effects": [
-                  ["fetch", "Product"],
-                  ["render-ui", "main", {
-                    "type": "entity-table",
-                    "entity": "Product",
-                    "columns": ["name", "price", "stock", "category"],
-                    "itemActions": [
-                      { "event": "VIEW", "label": "View" },
-                      { "event": "EDIT", "label": "Edit" },
-                      { "event": "DELETE", "label": "Delete" }
-                    ]
-                  }]
+                  [
+                    "fetch",
+                    "Product"
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "entity-table",
+                      "entity": "Product",
+                      "columns": [
+                        "name",
+                        "price",
+                        "stock",
+                        "category"
+                      ],
+                      "itemActions": [
+                        {
+                          "event": "VIEW",
+                          "label": "View"
+                        },
+                        {
+                          "event": "EDIT",
+                          "label": "Edit"
+                        },
+                        {
+                          "event": "DELETE",
+                          "label": "Delete"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -68,12 +154,26 @@
                 "event": "VIEW",
                 "to": "viewing",
                 "effects": [
-                  ["fetch", "Product", "@payload.id"],
-                  ["render-ui", "main", {
-                    "type": "entity-detail",
-                    "entity": "Product",
-                    "fields": ["name", "description", "price", "stock", "category"]
-                  }]
+                  [
+                    "fetch",
+                    "Product",
+                    "@payload.id"
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "entity-detail",
+                      "entity": "Product",
+                      "fields": [
+                        "name",
+                        "description",
+                        "price",
+                        "stock",
+                        "category"
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -81,17 +181,41 @@
                 "event": "CREATE",
                 "to": "creating",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "form",
-                    "entity": "Product",
-                    "fields": [
-                      { "name": "name", "label": "Product Name", "required": true },
-                      { "name": "description", "label": "Description", "type": "textarea" },
-                      { "name": "price", "label": "Price", "type": "number", "required": true },
-                      { "name": "stock", "label": "Stock", "type": "number" },
-                      { "name": "category", "label": "Category" }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "form",
+                      "entity": "Product",
+                      "fields": [
+                        {
+                          "name": "name",
+                          "label": "Product Name",
+                          "required": true
+                        },
+                        {
+                          "name": "description",
+                          "label": "Description",
+                          "type": "textarea"
+                        },
+                        {
+                          "name": "price",
+                          "label": "Price",
+                          "type": "number",
+                          "required": true
+                        },
+                        {
+                          "name": "stock",
+                          "label": "Stock",
+                          "type": "number"
+                        },
+                        {
+                          "name": "category",
+                          "label": "Category"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -99,11 +223,15 @@
                 "event": "EDIT",
                 "to": "editing",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "form",
-                    "entity": "Product",
-                    "mode": "edit"
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "form",
+                      "entity": "Product",
+                      "mode": "edit"
+                    }
+                  ]
                 ]
               },
               {
@@ -111,7 +239,10 @@
                 "event": "BACK",
                 "to": "listing",
                 "effects": [
-                  ["navigate", "/products"]
+                  [
+                    "navigate",
+                    "/products"
+                  ]
                 ]
               },
               {
@@ -119,8 +250,17 @@
                 "event": "SAVE",
                 "to": "viewing",
                 "effects": [
-                  ["persist", "update", "Product", "@entity"],
-                  ["notify", "success", "Product saved successfully"]
+                  [
+                    "persist",
+                    "update",
+                    "Product",
+                    "@entity"
+                  ],
+                  [
+                    "notify",
+                    "success",
+                    "Product saved successfully"
+                  ]
                 ]
               },
               {
@@ -133,9 +273,21 @@
                 "event": "SAVE",
                 "to": "listing",
                 "effects": [
-                  ["persist", "update", "Product", "@entity"],
-                  ["notify", "success", "Product created successfully"],
-                  ["navigate", "/products"]
+                  [
+                    "persist",
+                    "update",
+                    "Product",
+                    "@entity"
+                  ],
+                  [
+                    "notify",
+                    "success",
+                    "Product created successfully"
+                  ],
+                  [
+                    "navigate",
+                    "/products"
+                  ]
                 ]
               },
               {
@@ -143,7 +295,10 @@
                 "event": "CANCEL",
                 "to": "listing",
                 "effects": [
-                  ["navigate", "/products"]
+                  [
+                    "navigate",
+                    "/products"
+                  ]
                 ]
               },
               {
@@ -151,8 +306,17 @@
                 "event": "DELETE",
                 "to": "listing",
                 "effects": [
-                  ["persist", "delete", "Product", "@payload.id"],
-                  ["notify", "info", "Product deleted"]
+                  [
+                    "persist",
+                    "delete",
+                    "Product",
+                    "@payload.id"
+                  ],
+                  [
+                    "notify",
+                    "info",
+                    "Product deleted"
+                  ]
                 ]
               }
             ]
@@ -164,14 +328,20 @@
           "name": "ProductListPage",
           "path": "/products",
           "traits": [
-            { "ref": "ProductCRUD", "linkedEntity": "Product" }
+            {
+              "ref": "ProductCRUD",
+              "linkedEntity": "Product"
+            }
           ]
         },
         {
           "name": "ProductDetailPage",
           "path": "/products/:id",
           "traits": [
-            { "ref": "ProductCRUD", "linkedEntity": "Product" }
+            {
+              "ref": "ProductCRUD",
+              "linkedEntity": "Product"
+            }
           ]
         }
       ]

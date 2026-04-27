@@ -9,9 +9,21 @@
         "name": "Cart",
         "persistence": "runtime",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "itemCount", "type": "number", "default": 0 },
-          { "name": "total", "type": "number", "default": 0 }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "itemCount",
+            "type": "number",
+            "default": 0
+          },
+          {
+            "name": "total",
+            "type": "number",
+            "default": 0
+          }
         ]
       },
       "traits": [
@@ -24,31 +36,62 @@
               "event": "ITEM_ADDED",
               "scope": "external",
               "description": "Emitted when an item is added to cart",
-              "payload": [
-                { "name": "itemCount", "type": "number", "required": true },
-                { "name": "total", "type": "number", "required": true }
+              "payloadSchema": [
+                {
+                  "name": "itemCount",
+                  "type": "number",
+                  "required": true
+                },
+                {
+                  "name": "total",
+                  "type": "number",
+                  "required": true
+                }
               ]
             },
             {
               "event": "CART_CLEARED",
               "scope": "external",
               "description": "Emitted when cart is cleared",
-              "payload": [
-                { "name": "timestamp", "type": "number", "required": true }
+              "payloadSchema": [
+                {
+                  "name": "timestamp",
+                  "type": "number",
+                  "required": true
+                }
               ]
             }
           ],
           "stateMachine": {
             "states": [
-              { "name": "empty", "isInitial": true },
-              { "name": "hasItems" }
+              {
+                "name": "empty",
+                "isInitial": true
+              },
+              {
+                "name": "hasItems"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "ADD_ITEM", "name": "Add Item", "payload": [
-                { "name": "price", "type": "number", "required": true }
-              ]},
-              { "key": "CLEAR", "name": "Clear Cart" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "ADD_ITEM",
+                "name": "Add Item",
+                "payloadSchema": [
+                  {
+                    "name": "price",
+                    "type": "number",
+                    "required": true
+                  }
+                ]
+              },
+              {
+                "key": "CLEAR",
+                "name": "Clear Cart"
+              }
             ],
             "transitions": [
               {
@@ -56,15 +99,22 @@
                 "event": "INIT",
                 "to": "empty",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "stats",
-                    "title": "Shopping Cart",
-                    "value": "@entity.itemCount",
-                    "subtitle": "Total: $@entity.total",
-                    "actions": [
-                      { "event": "ADD_ITEM", "label": "Add Item" }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "stats",
+                      "title": "Shopping Cart",
+                      "value": "@entity.itemCount",
+                      "subtitle": "Total: $@entity.total",
+                      "actions": [
+                        {
+                          "event": "ADD_ITEM",
+                          "label": "Add Item"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -72,9 +122,28 @@
                 "event": "ADD_ITEM",
                 "to": "hasItems",
                 "effects": [
-                  ["increment", "@entity.itemCount", 1],
-                  ["set", "@entity.total", ["+", "@entity.total", "@payload.price"]],
-                  ["emit", "ITEM_ADDED", { "itemCount": "@entity.itemCount", "total": "@entity.total" }]
+                  [
+                    "increment",
+                    "@entity.itemCount",
+                    1
+                  ],
+                  [
+                    "set",
+                    "@entity.total",
+                    [
+                      "+",
+                      "@entity.total",
+                      "@payload.price"
+                    ]
+                  ],
+                  [
+                    "emit",
+                    "ITEM_ADDED",
+                    {
+                      "itemCount": "@entity.itemCount",
+                      "total": "@entity.total"
+                    }
+                  ]
                 ]
               },
               {
@@ -82,9 +151,28 @@
                 "event": "ADD_ITEM",
                 "to": "hasItems",
                 "effects": [
-                  ["increment", "@entity.itemCount", 1],
-                  ["set", "@entity.total", ["+", "@entity.total", "@payload.price"]],
-                  ["emit", "ITEM_ADDED", { "itemCount": "@entity.itemCount", "total": "@entity.total" }]
+                  [
+                    "increment",
+                    "@entity.itemCount",
+                    1
+                  ],
+                  [
+                    "set",
+                    "@entity.total",
+                    [
+                      "+",
+                      "@entity.total",
+                      "@payload.price"
+                    ]
+                  ],
+                  [
+                    "emit",
+                    "ITEM_ADDED",
+                    {
+                      "itemCount": "@entity.itemCount",
+                      "total": "@entity.total"
+                    }
+                  ]
                 ]
               },
               {
@@ -92,9 +180,23 @@
                 "event": "CLEAR",
                 "to": "empty",
                 "effects": [
-                  ["set", "@entity.itemCount", 0],
-                  ["set", "@entity.total", 0],
-                  ["emit", "CART_CLEARED", { "timestamp": "@now" }]
+                  [
+                    "set",
+                    "@entity.itemCount",
+                    0
+                  ],
+                  [
+                    "set",
+                    "@entity.total",
+                    0
+                  ],
+                  [
+                    "emit",
+                    "CART_CLEARED",
+                    {
+                      "timestamp": "@now"
+                    }
+                  ]
                 ]
               }
             ]
@@ -106,11 +208,17 @@
           "name": "CartPage",
           "path": "/cart",
           "traits": [
-            { "ref": "CartActions", "linkedEntity": "Cart" }
+            {
+              "ref": "CartActions",
+              "linkedEntity": "Cart"
+            }
           ]
         }
       ],
-      "emits": ["ITEM_ADDED", "CART_CLEARED"]
+      "emits": [
+        "ITEM_ADDED",
+        "CART_CLEARED"
+      ]
     },
     {
       "name": "NotificationManager",
@@ -118,9 +226,20 @@
         "name": "Notification",
         "persistence": "runtime",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "message", "type": "string" },
-          { "name": "count", "type": "number", "default": 0 }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "message",
+            "type": "string"
+          },
+          {
+            "name": "count",
+            "type": "number",
+            "default": 0
+          }
         ]
       },
       "traits": [
@@ -130,13 +249,27 @@
           "category": "interaction",
           "stateMachine": {
             "states": [
-              { "name": "idle", "isInitial": true },
-              { "name": "notified" }
+              {
+                "name": "idle",
+                "isInitial": true
+              },
+              {
+                "name": "notified"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "ITEM_ADDED", "name": "Item Added" },
-              { "key": "CART_CLEARED", "name": "Cart Cleared" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "ITEM_ADDED",
+                "name": "Item Added"
+              },
+              {
+                "key": "CART_CLEARED",
+                "name": "Cart Cleared"
+              }
             ],
             "transitions": [
               {
@@ -144,12 +277,16 @@
                 "event": "INIT",
                 "to": "idle",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "stats",
-                    "title": "Notifications",
-                    "value": "@entity.count",
-                    "subtitle": "@entity.message"
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "stats",
+                      "title": "Notifications",
+                      "value": "@entity.count",
+                      "subtitle": "@entity.message"
+                    }
+                  ]
                 ]
               },
               {
@@ -157,8 +294,16 @@
                 "event": "ITEM_ADDED",
                 "to": "notified",
                 "effects": [
-                  ["increment", "@entity.count", 1],
-                  ["set", "@entity.message", "Item added to cart"]
+                  [
+                    "increment",
+                    "@entity.count",
+                    1
+                  ],
+                  [
+                    "set",
+                    "@entity.message",
+                    "Item added to cart"
+                  ]
                 ]
               },
               {
@@ -166,7 +311,11 @@
                 "event": "ITEM_ADDED",
                 "to": "notified",
                 "effects": [
-                  ["increment", "@entity.count", 1]
+                  [
+                    "increment",
+                    "@entity.count",
+                    1
+                  ]
                 ]
               },
               {
@@ -174,15 +323,29 @@
                 "event": "CART_CLEARED",
                 "to": "idle",
                 "effects": [
-                  ["set", "@entity.message", "Cart cleared"],
-                  ["set", "@entity.count", 0]
+                  [
+                    "set",
+                    "@entity.message",
+                    "Cart cleared"
+                  ],
+                  [
+                    "set",
+                    "@entity.count",
+                    0
+                  ]
                 ]
               }
             ]
           },
           "listens": [
-            { "event": "ITEM_ADDED", "scope": "external" },
-            { "event": "CART_CLEARED", "scope": "external" }
+            {
+              "event": "ITEM_ADDED",
+              "scope": "external"
+            },
+            {
+              "event": "CART_CLEARED",
+              "scope": "external"
+            }
           ]
         }
       ],
@@ -191,13 +354,22 @@
           "name": "NotificationsPage",
           "path": "/notifications",
           "traits": [
-            { "ref": "NotificationHandler", "linkedEntity": "Notification" }
+            {
+              "ref": "NotificationHandler",
+              "linkedEntity": "Notification"
+            }
           ]
         }
       ],
       "listens": [
-        { "event": "ITEM_ADDED", "from": "CartManager" },
-        { "event": "CART_CLEARED", "from": "CartManager" }
+        {
+          "event": "ITEM_ADDED",
+          "from": "CartManager"
+        },
+        {
+          "event": "CART_CLEARED",
+          "from": "CartManager"
+        }
       ]
     }
   ]

@@ -10,9 +10,21 @@
         "persistence": "persistent",
         "collection": "orders",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "customerName", "type": "string", "required": true },
-          { "name": "total", "type": "number", "default": 0 }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "customerName",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "total",
+            "type": "number",
+            "default": 0
+          }
         ]
       },
       "traits": [
@@ -22,21 +34,59 @@
           "category": "interaction",
           "stateMachine": {
             "states": [
-              { "name": "pending", "isInitial": true },
-              { "name": "confirmed" },
-              { "name": "shipped" },
-              { "name": "delivered", "isTerminal": true, "description": "Terminal state - order complete" },
-              { "name": "cancelled", "isTerminal": true, "description": "Terminal state - order cancelled" }
+              {
+                "name": "pending",
+                "isInitial": true
+              },
+              {
+                "name": "confirmed"
+              },
+              {
+                "name": "shipped"
+              },
+              {
+                "name": "delivered",
+                "isTerminal": true,
+                "description": "Terminal state - order complete"
+              },
+              {
+                "name": "cancelled",
+                "isTerminal": true,
+                "description": "Terminal state - order cancelled"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "VIEW", "name": "View Order", "payload": [
-                { "name": "id", "type": "string", "required": true }
-              ]},
-              { "key": "CONFIRM", "name": "Confirm Order" },
-              { "key": "SHIP", "name": "Ship Order" },
-              { "key": "DELIVER", "name": "Mark Delivered" },
-              { "key": "CANCEL", "name": "Cancel Order" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "VIEW",
+                "name": "View Order",
+                "payloadSchema": [
+                  {
+                    "name": "id",
+                    "type": "string",
+                    "required": true
+                  }
+                ]
+              },
+              {
+                "key": "CONFIRM",
+                "name": "Confirm Order"
+              },
+              {
+                "key": "SHIP",
+                "name": "Ship Order"
+              },
+              {
+                "key": "DELIVER",
+                "name": "Mark Delivered"
+              },
+              {
+                "key": "CANCEL",
+                "name": "Cancel Order"
+              }
             ],
             "transitions": [
               {
@@ -44,16 +94,32 @@
                 "event": "INIT",
                 "to": "pending",
                 "effects": [
-                  ["fetch", "Order"],
-                  ["render-ui", "main", {
-                    "type": "entity-table",
-                    "entity": "Order",
-                    "columns": ["customerName", "total"],
-                    "itemActions": [
-                      { "event": "CONFIRM", "label": "Confirm" },
-                      { "event": "VIEW", "label": "View" }
-                    ]
-                  }]
+                  [
+                    "fetch",
+                    "Order"
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "entity-table",
+                      "entity": "Order",
+                      "columns": [
+                        "customerName",
+                        "total"
+                      ],
+                      "itemActions": [
+                        {
+                          "event": "CONFIRM",
+                          "label": "Confirm"
+                        },
+                        {
+                          "event": "VIEW",
+                          "label": "View"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -61,14 +127,37 @@
                 "event": "VIEW",
                 "to": "pending",
                 "effects": [
-                  ["navigate", "/orders/@payload.id"]
+                  [
+                    "navigate",
+                    "/orders/@payload.id"
+                  ]
                 ]
               },
-              { "from": "pending", "event": "CONFIRM", "to": "confirmed" },
-              { "from": "confirmed", "event": "SHIP", "to": "shipped" },
-              { "from": "shipped", "event": "DELIVER", "to": "delivered" },
-              { "from": "pending", "event": "CANCEL", "to": "cancelled" },
-              { "from": "confirmed", "event": "CANCEL", "to": "cancelled" }
+              {
+                "from": "pending",
+                "event": "CONFIRM",
+                "to": "confirmed"
+              },
+              {
+                "from": "confirmed",
+                "event": "SHIP",
+                "to": "shipped"
+              },
+              {
+                "from": "shipped",
+                "event": "DELIVER",
+                "to": "delivered"
+              },
+              {
+                "from": "pending",
+                "event": "CANCEL",
+                "to": "cancelled"
+              },
+              {
+                "from": "confirmed",
+                "event": "CANCEL",
+                "to": "cancelled"
+              }
             ]
           }
         }
@@ -78,7 +167,10 @@
           "name": "OrderListPage",
           "path": "/orders",
           "traits": [
-            { "ref": "OrderLifecycle", "linkedEntity": "Order" }
+            {
+              "ref": "OrderLifecycle",
+              "linkedEntity": "Order"
+            }
           ]
         }
       ]

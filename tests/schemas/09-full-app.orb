@@ -10,13 +10,42 @@
         "persistence": "persistent",
         "collection": "tasks",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "title", "type": "string", "required": true },
-          { "name": "description", "type": "string" },
-          { "name": "priority", "type": "enum", "values": ["low", "medium", "high"], "default": "medium" },
-          { "name": "dueDate", "type": "date" },
-          { "name": "assigneeId", "type": "string" },
-          { "name": "projectId", "type": "string" }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "priority",
+            "type": "enum",
+            "values": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "default": "medium"
+          },
+          {
+            "name": "dueDate",
+            "type": "date"
+          },
+          {
+            "name": "assigneeId",
+            "type": "string"
+          },
+          {
+            "name": "projectId",
+            "type": "string"
+          }
         ]
       },
       "traits": [
@@ -29,26 +58,63 @@
               "event": "TASK_COMPLETED",
               "scope": "external",
               "description": "Emitted when a task is completed",
-              "payload": [
-                { "name": "taskId", "type": "string", "required": true },
-                { "name": "projectId", "type": "string", "required": false }
+              "payloadSchema": [
+                {
+                  "name": "taskId",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "projectId",
+                  "type": "string",
+                  "required": false
+                }
               ]
             }
           ],
           "stateMachine": {
             "states": [
-              { "name": "todo", "isInitial": true },
-              { "name": "inProgress" },
-              { "name": "review" },
-              { "name": "done", "isTerminal": true, "description": "Task completed" }
+              {
+                "name": "todo",
+                "isInitial": true
+              },
+              {
+                "name": "inProgress"
+              },
+              {
+                "name": "review"
+              },
+              {
+                "name": "done",
+                "isTerminal": true,
+                "description": "Task completed"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "START", "name": "Start Task" },
-              { "key": "SUBMIT_FOR_REVIEW", "name": "Submit for Review" },
-              { "key": "APPROVE", "name": "Approve" },
-              { "key": "REJECT", "name": "Request Changes" },
-              { "key": "COMPLETE", "name": "Complete" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "START",
+                "name": "Start Task"
+              },
+              {
+                "key": "SUBMIT_FOR_REVIEW",
+                "name": "Submit for Review"
+              },
+              {
+                "key": "APPROVE",
+                "name": "Approve"
+              },
+              {
+                "key": "REJECT",
+                "name": "Request Changes"
+              },
+              {
+                "key": "COMPLETE",
+                "name": "Complete"
+              }
             ],
             "transitions": [
               {
@@ -56,26 +122,78 @@
                 "event": "INIT",
                 "to": "todo",
                 "effects": [
-                  ["fetch", "Task"],
-                  ["render-ui", "main", {
-                    "type": "stats",
-                    "items": [
-                      { "label": "Todo", "value": "@entity.todo" },
-                      { "label": "In Progress", "value": "@entity.inProgress" },
-                      { "label": "Done", "value": "@entity.done" }
-                    ]
-                  }]
+                  [
+                    "fetch",
+                    "Task"
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "stats",
+                      "items": [
+                        {
+                          "label": "Todo",
+                          "value": "@entity.todo"
+                        },
+                        {
+                          "label": "In Progress",
+                          "value": "@entity.inProgress"
+                        },
+                        {
+                          "label": "Done",
+                          "value": "@entity.done"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
-              { "from": "todo", "event": "START", "to": "inProgress" },
-              { "from": "inProgress", "event": "SUBMIT_FOR_REVIEW", "to": "review" },
-              { "from": "review", "event": "APPROVE", "to": "done", "effects": [
-                ["emit", "TASK_COMPLETED", { "taskId": "@entity.id", "projectId": "@entity.projectId" }]
-              ]},
-              { "from": "review", "event": "REJECT", "to": "inProgress" },
-              { "from": "inProgress", "event": "COMPLETE", "to": "done", "effects": [
-                ["emit", "TASK_COMPLETED", { "taskId": "@entity.id", "projectId": "@entity.projectId" }]
-              ]}
+              {
+                "from": "todo",
+                "event": "START",
+                "to": "inProgress"
+              },
+              {
+                "from": "inProgress",
+                "event": "SUBMIT_FOR_REVIEW",
+                "to": "review"
+              },
+              {
+                "from": "review",
+                "event": "APPROVE",
+                "to": "done",
+                "effects": [
+                  [
+                    "emit",
+                    "TASK_COMPLETED",
+                    {
+                      "taskId": "@entity.id",
+                      "projectId": "@entity.projectId"
+                    }
+                  ]
+                ]
+              },
+              {
+                "from": "review",
+                "event": "REJECT",
+                "to": "inProgress"
+              },
+              {
+                "from": "inProgress",
+                "event": "COMPLETE",
+                "to": "done",
+                "effects": [
+                  [
+                    "emit",
+                    "TASK_COMPLETED",
+                    {
+                      "taskId": "@entity.id",
+                      "projectId": "@entity.projectId"
+                    }
+                  ]
+                ]
+              }
             ]
           }
         },
@@ -88,28 +206,69 @@
               "event": "TASK_CREATED",
               "scope": "external",
               "description": "Emitted when a new task is created",
-              "payload": [
-                { "name": "taskId", "type": "string", "required": true },
-                { "name": "projectId", "type": "string", "required": false }
+              "payloadSchema": [
+                {
+                  "name": "taskId",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "projectId",
+                  "type": "string",
+                  "required": false
+                }
               ]
             }
           ],
           "stateMachine": {
             "states": [
-              { "name": "listing", "isInitial": true },
-              { "name": "creating" },
-              { "name": "editing" }
+              {
+                "name": "listing",
+                "isInitial": true
+              },
+              {
+                "name": "creating"
+              },
+              {
+                "name": "editing"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "VIEW", "name": "View Task", "payload": [
-                { "name": "id", "type": "string", "required": true }
-              ]},
-              { "key": "CREATE", "name": "Create Task" },
-              { "key": "EDIT", "name": "Edit Task" },
-              { "key": "SAVE", "name": "Save" },
-              { "key": "CANCEL", "name": "Cancel" },
-              { "key": "DELETE", "name": "Delete Task" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "VIEW",
+                "name": "View Task",
+                "payloadSchema": [
+                  {
+                    "name": "id",
+                    "type": "string",
+                    "required": true
+                  }
+                ]
+              },
+              {
+                "key": "CREATE",
+                "name": "Create Task"
+              },
+              {
+                "key": "EDIT",
+                "name": "Edit Task"
+              },
+              {
+                "key": "SAVE",
+                "name": "Save"
+              },
+              {
+                "key": "CANCEL",
+                "name": "Cancel"
+              },
+              {
+                "key": "DELETE",
+                "name": "Delete Task"
+              }
             ],
             "transitions": [
               {
@@ -117,17 +276,37 @@
                 "event": "INIT",
                 "to": "listing",
                 "effects": [
-                  ["fetch", "Task"],
-                  ["render-ui", "main", {
-                    "type": "entity-table",
-                    "entity": "Task",
-                    "columns": ["title", "priority", "dueDate"],
-                    "itemActions": [
-                      { "event": "VIEW", "label": "View" },
-                      { "event": "EDIT", "label": "Edit" },
-                      { "event": "DELETE", "label": "Delete" }
-                    ]
-                  }]
+                  [
+                    "fetch",
+                    "Task"
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "entity-table",
+                      "entity": "Task",
+                      "columns": [
+                        "title",
+                        "priority",
+                        "dueDate"
+                      ],
+                      "itemActions": [
+                        {
+                          "event": "VIEW",
+                          "label": "View"
+                        },
+                        {
+                          "event": "EDIT",
+                          "label": "Edit"
+                        },
+                        {
+                          "event": "DELETE",
+                          "label": "Delete"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -135,10 +314,14 @@
                 "event": "CREATE",
                 "to": "creating",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "form",
-                    "entity": "Task"
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "form",
+                      "entity": "Task"
+                    }
+                  ]
                 ]
               },
               {
@@ -146,12 +329,32 @@
                 "event": "SAVE",
                 "to": "listing",
                 "effects": [
-                  ["persist", "update", "Task", "@entity"],
-                  ["emit", "TASK_CREATED", { "taskId": "@entity.id", "projectId": "@entity.projectId" }],
-                  ["notify", "success", "Task created"]
+                  [
+                    "persist",
+                    "update",
+                    "Task",
+                    "@entity"
+                  ],
+                  [
+                    "emit",
+                    "TASK_CREATED",
+                    {
+                      "taskId": "@entity.id",
+                      "projectId": "@entity.projectId"
+                    }
+                  ],
+                  [
+                    "notify",
+                    "success",
+                    "Task created"
+                  ]
                 ]
               },
-              { "from": "creating", "event": "CANCEL", "to": "listing" },
+              {
+                "from": "creating",
+                "event": "CANCEL",
+                "to": "listing"
+              },
               {
                 "from": "listing",
                 "event": "EDIT",
@@ -162,17 +365,35 @@
                 "event": "SAVE",
                 "to": "listing",
                 "effects": [
-                  ["persist", "update", "Task", "@entity"]
+                  [
+                    "persist",
+                    "update",
+                    "Task",
+                    "@entity"
+                  ]
                 ]
               },
-              { "from": "editing", "event": "CANCEL", "to": "listing" },
+              {
+                "from": "editing",
+                "event": "CANCEL",
+                "to": "listing"
+              },
               {
                 "from": "listing",
                 "event": "DELETE",
                 "to": "listing",
                 "effects": [
-                  ["persist", "delete", "Task", "@entity.id"],
-                  ["notify", "info", "Task deleted"]
+                  [
+                    "persist",
+                    "delete",
+                    "Task",
+                    "@entity.id"
+                  ],
+                  [
+                    "notify",
+                    "info",
+                    "Task deleted"
+                  ]
                 ]
               },
               {
@@ -180,7 +401,10 @@
                 "event": "VIEW",
                 "to": "listing",
                 "effects": [
-                  ["navigate", "/tasks/@payload.id"]
+                  [
+                    "navigate",
+                    "/tasks/@payload.id"
+                  ]
                 ]
               }
             ]
@@ -192,11 +416,17 @@
           "name": "TaskListPage",
           "path": "/tasks",
           "traits": [
-            { "ref": "TaskCRUD", "linkedEntity": "Task" }
+            {
+              "ref": "TaskCRUD",
+              "linkedEntity": "Task"
+            }
           ]
         }
       ],
-      "emits": ["TASK_COMPLETED", "TASK_CREATED"]
+      "emits": [
+        "TASK_COMPLETED",
+        "TASK_CREATED"
+      ]
     },
     {
       "name": "ProjectManager",
@@ -205,11 +435,30 @@
         "persistence": "persistent",
         "collection": "projects",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "name", "type": "string", "required": true },
-          { "name": "description", "type": "string" },
-          { "name": "taskCount", "type": "number", "default": 0 },
-          { "name": "completedCount", "type": "number", "default": 0 }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "taskCount",
+            "type": "number",
+            "default": 0
+          },
+          {
+            "name": "completedCount",
+            "type": "number",
+            "default": 0
+          }
         ]
       },
       "traits": [
@@ -219,12 +468,24 @@
           "category": "interaction",
           "stateMachine": {
             "states": [
-              { "name": "idle", "isInitial": true }
+              {
+                "name": "idle",
+                "isInitial": true
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "TASK_COMPLETED", "name": "Task Completed" },
-              { "key": "TASK_CREATED", "name": "Task Created" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "TASK_COMPLETED",
+                "name": "Task Completed"
+              },
+              {
+                "key": "TASK_CREATED",
+                "name": "Task Created"
+              }
             ],
             "transitions": [
               {
@@ -232,14 +493,27 @@
                 "event": "INIT",
                 "to": "idle",
                 "effects": [
-                  ["fetch", "Project"],
-                  ["render-ui", "main", {
-                    "type": "stats",
-                    "items": [
-                      { "label": "Total Tasks", "value": "@entity.taskCount" },
-                      { "label": "Completed", "value": "@entity.completedCount" }
-                    ]
-                  }]
+                  [
+                    "fetch",
+                    "Project"
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "stats",
+                      "items": [
+                        {
+                          "label": "Total Tasks",
+                          "value": "@entity.taskCount"
+                        },
+                        {
+                          "label": "Completed",
+                          "value": "@entity.completedCount"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -247,7 +521,11 @@
                 "event": "TASK_CREATED",
                 "to": "idle",
                 "effects": [
-                  ["increment", "@entity.taskCount", 1]
+                  [
+                    "increment",
+                    "@entity.taskCount",
+                    1
+                  ]
                 ]
               },
               {
@@ -255,14 +533,24 @@
                 "event": "TASK_COMPLETED",
                 "to": "idle",
                 "effects": [
-                  ["increment", "@entity.completedCount", 1]
+                  [
+                    "increment",
+                    "@entity.completedCount",
+                    1
+                  ]
                 ]
               }
             ]
           },
           "listens": [
-            { "event": "TASK_COMPLETED", "scope": "external" },
-            { "event": "TASK_CREATED", "scope": "external" }
+            {
+              "event": "TASK_COMPLETED",
+              "scope": "external"
+            },
+            {
+              "event": "TASK_CREATED",
+              "scope": "external"
+            }
           ]
         }
       ],
@@ -271,13 +559,22 @@
           "name": "ProjectListPage",
           "path": "/projects",
           "traits": [
-            { "ref": "ProjectStats", "linkedEntity": "Project" }
+            {
+              "ref": "ProjectStats",
+              "linkedEntity": "Project"
+            }
           ]
         }
       ],
       "listens": [
-        { "event": "TASK_COMPLETED", "from": "TaskManager" },
-        { "event": "TASK_CREATED", "from": "TaskManager" }
+        {
+          "event": "TASK_COMPLETED",
+          "from": "TaskManager"
+        },
+        {
+          "event": "TASK_CREATED",
+          "from": "TaskManager"
+        }
       ]
     },
     {
@@ -287,10 +584,31 @@
         "persistence": "persistent",
         "collection": "users",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "name", "type": "string", "required": true },
-          { "name": "email", "type": "string", "required": true },
-          { "name": "role", "type": "enum", "values": ["admin", "member", "guest"], "default": "member" }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "email",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "role",
+            "type": "enum",
+            "values": [
+              "admin",
+              "member",
+              "guest"
+            ],
+            "default": "member"
+          }
         ]
       },
       "traits": [
@@ -299,12 +617,28 @@
           "linkedEntity": "User",
           "category": "interaction",
           "stateMachine": {
-            "states": [{ "name": "browsing", "isInitial": true }],
+            "states": [
+              {
+                "name": "browsing",
+                "isInitial": true
+              }
+            ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "VIEW", "name": "View User", "payload": [
-                { "name": "id", "type": "string", "required": true }
-              ]}
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "VIEW",
+                "name": "View User",
+                "payloadSchema": [
+                  {
+                    "name": "id",
+                    "type": "string",
+                    "required": true
+                  }
+                ]
+              }
             ],
             "transitions": [
               {
@@ -312,13 +646,29 @@
                 "event": "INIT",
                 "to": "browsing",
                 "effects": [
-                  ["fetch", "User"],
-                  ["render-ui", "main", {
-                    "type": "entity-table",
-                    "entity": "User",
-                    "columns": ["name", "email", "role"],
-                    "itemActions": [{ "event": "VIEW", "label": "View" }]
-                  }]
+                  [
+                    "fetch",
+                    "User"
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "entity-table",
+                      "entity": "User",
+                      "columns": [
+                        "name",
+                        "email",
+                        "role"
+                      ],
+                      "itemActions": [
+                        {
+                          "event": "VIEW",
+                          "label": "View"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -326,7 +676,10 @@
                 "event": "VIEW",
                 "to": "browsing",
                 "effects": [
-                  ["navigate", "/users/@payload.id"]
+                  [
+                    "navigate",
+                    "/users/@payload.id"
+                  ]
                 ]
               }
             ]
@@ -337,7 +690,12 @@
         {
           "name": "UserListPage",
           "path": "/users",
-          "traits": [{ "ref": "UserBrowser", "linkedEntity": "User" }]
+          "traits": [
+            {
+              "ref": "UserBrowser",
+              "linkedEntity": "User"
+            }
+          ]
         }
       ]
     }

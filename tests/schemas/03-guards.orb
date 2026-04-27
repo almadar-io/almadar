@@ -10,9 +10,21 @@
         "persistence": "persistent",
         "collection": "accounts",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "balance", "type": "number", "default": 0 },
-          { "name": "isVerified", "type": "boolean", "default": false }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "balance",
+            "type": "number",
+            "default": 0
+          },
+          {
+            "name": "isVerified",
+            "type": "boolean",
+            "default": false
+          }
         ]
       },
       "traits": [
@@ -22,16 +34,38 @@
           "category": "interaction",
           "stateMachine": {
             "states": [
-              { "name": "active", "isInitial": true },
-              { "name": "frozen" }
+              {
+                "name": "active",
+                "isInitial": true
+              },
+              {
+                "name": "frozen"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "WITHDRAW", "name": "Withdraw Funds", "payload": [
-                { "name": "amount", "type": "number", "required": true }
-              ]},
-              { "key": "FREEZE", "name": "Freeze Account" },
-              { "key": "UNFREEZE", "name": "Unfreeze Account" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "WITHDRAW",
+                "name": "Withdraw Funds",
+                "payloadSchema": [
+                  {
+                    "name": "amount",
+                    "type": "number",
+                    "required": true
+                  }
+                ]
+              },
+              {
+                "key": "FREEZE",
+                "name": "Freeze Account"
+              },
+              {
+                "key": "UNFREEZE",
+                "name": "Unfreeze Account"
+              }
             ],
             "transitions": [
               {
@@ -39,28 +73,61 @@
                 "event": "INIT",
                 "to": "active",
                 "effects": [
-                  ["fetch", "Account"],
-                  ["render-ui", "main", {
-                    "type": "entity-table",
-                    "entity": "Account",
-                    "columns": ["balance", "isVerified"],
-                    "itemActions": [
-                      { "event": "WITHDRAW", "label": "Withdraw" },
-                      { "event": "FREEZE", "label": "Freeze" }
-                    ]
-                  }]
+                  [
+                    "fetch",
+                    "Account"
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "entity-table",
+                      "entity": "Account",
+                      "columns": [
+                        "balance",
+                        "isVerified"
+                      ],
+                      "itemActions": [
+                        {
+                          "event": "WITHDRAW",
+                          "label": "Withdraw"
+                        },
+                        {
+                          "event": "FREEZE",
+                          "label": "Freeze"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
                 "from": "active",
                 "event": "WITHDRAW",
                 "to": "active",
-                "guard": ["and",
-                  [">=", "@entity.balance", "@payload.amount"],
-                  ["=", "@entity.isVerified", true]
+                "guard": [
+                  "and",
+                  [
+                    ">=",
+                    "@entity.balance",
+                    "@payload.amount"
+                  ],
+                  [
+                    "=",
+                    "@entity.isVerified",
+                    true
+                  ]
                 ],
                 "effects": [
-                  ["set", "@entity.balance", ["-", "@entity.balance", "@payload.amount"]]
+                  [
+                    "set",
+                    "@entity.balance",
+                    [
+                      "-",
+                      "@entity.balance",
+                      "@payload.amount"
+                    ]
+                  ]
                 ]
               },
               {
@@ -82,7 +149,10 @@
           "name": "AccountListPage",
           "path": "/accounts",
           "traits": [
-            { "ref": "AccountActions", "linkedEntity": "Account" }
+            {
+              "ref": "AccountActions",
+              "linkedEntity": "Account"
+            }
           ]
         }
       ]

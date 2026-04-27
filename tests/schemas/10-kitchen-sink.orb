@@ -78,11 +78,35 @@
         "name": "AtomDemo",
         "persistence": "runtime",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "label", "type": "string", "required": true },
-          { "name": "variant", "type": "string" },
-          { "name": "size", "type": "enum", "values": ["sm", "md", "lg"], "default": "md" },
-          { "name": "isDisabled", "type": "boolean", "default": false }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "variant",
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "type": "enum",
+            "values": [
+              "sm",
+              "md",
+              "lg"
+            ],
+            "default": "md"
+          },
+          {
+            "name": "isDisabled",
+            "type": "boolean",
+            "default": false
+          }
         ]
       },
       "traits": [
@@ -92,13 +116,27 @@
           "linkedEntity": "AtomDemo",
           "stateMachine": {
             "states": [
-              { "name": "viewing", "isInitial": true },
-              { "name": "alertShown" }
+              {
+                "name": "viewing",
+                "isInitial": true
+              },
+              {
+                "name": "alertShown"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "SHOW_ALERT", "name": "Show Alert" },
-              { "key": "DISMISS", "name": "Dismiss" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "SHOW_ALERT",
+                "name": "Show Alert"
+              },
+              {
+                "key": "DISMISS",
+                "name": "Dismiss"
+              }
             ],
             "transitions": [
               {
@@ -106,175 +144,327 @@
                 "event": "INIT",
                 "to": "viewing",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "Atoms Showcase",
-                    "subtitle": "Basic building blocks: buttons, badges, inputs, icons, avatars",
-                    "actions": [
-                      { "label": "Show Alert", "event": "SHOW_ALERT", "variant": "secondary" }
-                    ]
-                  }],
-                  ["render-ui", "sidebar", {
-                    "type": "vstack",
-                    "gap": "md",
-                    "children": [
-                      {
-                        "type": "heading",
-                        "content": "Button Variants",
-                        "level": 3
-                      },
-                      {
-                        "type": "hstack",
-                        "gap": "sm",
-                        "children": [
-                          { "type": "button", "label": "Primary", "variant": "primary" },
-                          { "type": "button", "label": "Secondary", "variant": "secondary" },
-                          { "type": "button", "label": "Ghost", "variant": "ghost" }
-                        ]
-                      },
-                      {
-                        "type": "divider",
-                        "orientation": "horizontal"
-                      },
-                      {
-                        "type": "heading",
-                        "content": "Badge Examples",
-                        "level": 3
-                      },
-                      {
-                        "type": "hstack",
-                        "gap": "sm",
-                        "children": [
-                          { "type": "badge", "label": "Active", "variant": "success" },
-                          { "type": "badge", "label": "Pending", "variant": "warning" },
-                          { "type": "badge", "label": "Inactive", "variant": "default" }
-                        ]
-                      },
-                      {
-                        "type": "divider",
-                        "orientation": "horizontal"
-                      },
-                      {
-                        "type": "heading",
-                        "content": "Avatar Sizes",
-                        "level": 3
-                      },
-                      {
-                        "type": "hstack",
-                        "gap": "sm",
-                        "align": "center",
-                        "children": [
-                          { "type": "avatar", "name": "John Doe", "size": "sm" },
-                          { "type": "avatar", "name": "Jane Smith", "size": "md" },
-                          { "type": "avatar", "name": "Bob Wilson", "size": "lg" }
-                        ]
-                      },
-                      {
-                        "type": "divider",
-                        "orientation": "horizontal"
-                      },
-                      {
-                        "type": "heading",
-                        "content": "Icons",
-                        "level": 3
-                      },
-                      {
-                        "type": "hstack",
-                        "gap": "md",
-                        "children": [
-                          { "type": "icon", "name": "home", "size": "md" },
-                          { "type": "icon", "name": "settings", "size": "md" },
-                          { "type": "icon", "name": "user", "size": "md" },
-                          { "type": "icon", "name": "search", "size": "md" },
-                          { "type": "icon", "name": "bell", "size": "md" }
-                        ]
-                      },
-                      {
-                        "type": "divider",
-                        "orientation": "horizontal"
-                      },
-                      {
-                        "type": "heading",
-                        "content": "Progress & Spinner",
-                        "level": 3
-                      },
-                      {
-                        "type": "vstack",
-                        "gap": "sm",
-                        "children": [
-                          { "type": "progress-bar", "value": 65, "variant": "primary", "showLabel": true },
-                          { "type": "hstack", "gap": "md", "align": "center", "children": [
-                            { "type": "spinner", "size": "sm" },
-                            { "type": "text", "content": "Loading...", "color": "muted" }
-                          ]}
-                        ]
-                      }
-                    ]
-                  }],
-                  ["render-ui", "main", {
-                    "type": "vstack",
-                    "gap": "md",
-                    "children": [
-                      {
-                        "type": "heading",
-                        "content": "Form Inputs",
-                        "level": 3
-                      },
-                      {
-                        "type": "vstack",
-                        "gap": "sm",
-                        "children": [
-                          { "type": "input", "placeholder": "Text input example", "type": "text" },
-                          { "type": "textarea", "placeholder": "Textarea for longer content...", "rows": 3 },
-                          { "type": "select", "placeholder": "Select an option", "options": [
-                            { "value": "opt1", "label": "Option 1" },
-                            { "value": "opt2", "label": "Option 2" },
-                            { "value": "opt3", "label": "Option 3" }
-                          ]}
-                        ]
-                      },
-                      {
-                        "type": "divider",
-                        "orientation": "horizontal"
-                      },
-                      {
-                        "type": "heading",
-                        "content": "Checkbox & Radio & Switch",
-                        "level": 3
-                      },
-                      {
-                        "type": "vstack",
-                        "gap": "sm",
-                        "children": [
-                          { "type": "checkbox", "label": "Accept terms and conditions", "checked": true },
-                          { "type": "checkbox", "label": "Subscribe to newsletter", "checked": false },
-                          { "type": "radio", "label": "Option A", "name": "demo-radio", "checked": true },
-                          { "type": "radio", "label": "Option B", "name": "demo-radio", "checked": false },
-                          { "type": "switch", "label": "Enable notifications", "checked": true }
-                        ]
-                      },
-                      {
-                        "type": "divider",
-                        "orientation": "horizontal"
-                      },
-                      {
-                        "type": "heading",
-                        "content": "Typography",
-                        "level": 3
-                      },
-                      {
-                        "type": "vstack",
-                        "gap": "xs",
-                        "children": [
-                          { "type": "heading", "content": "Heading 1", "level": 1 },
-                          { "type": "heading", "content": "Heading 2", "level": 2 },
-                          { "type": "heading", "content": "Heading 3", "level": 3 },
-                          { "type": "text", "content": "Body text with default styling.", "variant": "body" },
-                          { "type": "text", "content": "Caption text in muted color.", "variant": "caption", "color": "muted" }
-                        ]
-                      }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "Atoms Showcase",
+                      "subtitle": "Basic building blocks: buttons, badges, inputs, icons, avatars",
+                      "actions": [
+                        {
+                          "label": "Show Alert",
+                          "event": "SHOW_ALERT",
+                          "variant": "secondary"
+                        }
+                      ]
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "sidebar",
+                    {
+                      "type": "vstack",
+                      "gap": "md",
+                      "children": [
+                        {
+                          "type": "heading",
+                          "content": "Button Variants",
+                          "level": 3
+                        },
+                        {
+                          "type": "hstack",
+                          "gap": "sm",
+                          "children": [
+                            {
+                              "type": "button",
+                              "label": "Primary",
+                              "variant": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "label": "Secondary",
+                              "variant": "secondary"
+                            },
+                            {
+                              "type": "button",
+                              "label": "Ghost",
+                              "variant": "ghost"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "divider",
+                          "orientation": "horizontal"
+                        },
+                        {
+                          "type": "heading",
+                          "content": "Badge Examples",
+                          "level": 3
+                        },
+                        {
+                          "type": "hstack",
+                          "gap": "sm",
+                          "children": [
+                            {
+                              "type": "badge",
+                              "label": "Active",
+                              "variant": "success"
+                            },
+                            {
+                              "type": "badge",
+                              "label": "Pending",
+                              "variant": "warning"
+                            },
+                            {
+                              "type": "badge",
+                              "label": "Inactive",
+                              "variant": "default"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "divider",
+                          "orientation": "horizontal"
+                        },
+                        {
+                          "type": "heading",
+                          "content": "Avatar Sizes",
+                          "level": 3
+                        },
+                        {
+                          "type": "hstack",
+                          "gap": "sm",
+                          "align": "center",
+                          "children": [
+                            {
+                              "type": "avatar",
+                              "name": "John Doe",
+                              "size": "sm"
+                            },
+                            {
+                              "type": "avatar",
+                              "name": "Jane Smith",
+                              "size": "md"
+                            },
+                            {
+                              "type": "avatar",
+                              "name": "Bob Wilson",
+                              "size": "lg"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "divider",
+                          "orientation": "horizontal"
+                        },
+                        {
+                          "type": "heading",
+                          "content": "Icons",
+                          "level": 3
+                        },
+                        {
+                          "type": "hstack",
+                          "gap": "md",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "name": "home",
+                              "size": "md"
+                            },
+                            {
+                              "type": "icon",
+                              "name": "settings",
+                              "size": "md"
+                            },
+                            {
+                              "type": "icon",
+                              "name": "user",
+                              "size": "md"
+                            },
+                            {
+                              "type": "icon",
+                              "name": "search",
+                              "size": "md"
+                            },
+                            {
+                              "type": "icon",
+                              "name": "bell",
+                              "size": "md"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "divider",
+                          "orientation": "horizontal"
+                        },
+                        {
+                          "type": "heading",
+                          "content": "Progress & Spinner",
+                          "level": 3
+                        },
+                        {
+                          "type": "vstack",
+                          "gap": "sm",
+                          "children": [
+                            {
+                              "type": "progress-bar",
+                              "value": 65,
+                              "variant": "primary",
+                              "showLabel": true
+                            },
+                            {
+                              "type": "hstack",
+                              "gap": "md",
+                              "align": "center",
+                              "children": [
+                                {
+                                  "type": "spinner",
+                                  "size": "sm"
+                                },
+                                {
+                                  "type": "text",
+                                  "content": "Loading...",
+                                  "color": "muted"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "vstack",
+                      "gap": "md",
+                      "children": [
+                        {
+                          "type": "heading",
+                          "content": "Form Inputs",
+                          "level": 3
+                        },
+                        {
+                          "type": "vstack",
+                          "gap": "sm",
+                          "children": [
+                            {
+                              "type": "text",
+                              "placeholder": "Text input example"
+                            },
+                            {
+                              "type": "textarea",
+                              "placeholder": "Textarea for longer content...",
+                              "rows": 3
+                            },
+                            {
+                              "type": "select",
+                              "placeholder": "Select an option",
+                              "options": [
+                                {
+                                  "value": "opt1",
+                                  "label": "Option 1"
+                                },
+                                {
+                                  "value": "opt2",
+                                  "label": "Option 2"
+                                },
+                                {
+                                  "value": "opt3",
+                                  "label": "Option 3"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "divider",
+                          "orientation": "horizontal"
+                        },
+                        {
+                          "type": "heading",
+                          "content": "Checkbox & Radio & Switch",
+                          "level": 3
+                        },
+                        {
+                          "type": "vstack",
+                          "gap": "sm",
+                          "children": [
+                            {
+                              "type": "checkbox",
+                              "label": "Accept terms and conditions",
+                              "checked": true
+                            },
+                            {
+                              "type": "checkbox",
+                              "label": "Subscribe to newsletter",
+                              "checked": false
+                            },
+                            {
+                              "type": "radio",
+                              "label": "Option A",
+                              "name": "demo-radio",
+                              "checked": true
+                            },
+                            {
+                              "type": "radio",
+                              "label": "Option B",
+                              "name": "demo-radio",
+                              "checked": false
+                            },
+                            {
+                              "type": "switch",
+                              "label": "Enable notifications",
+                              "checked": true
+                            }
+                          ]
+                        },
+                        {
+                          "type": "divider",
+                          "orientation": "horizontal"
+                        },
+                        {
+                          "type": "heading",
+                          "content": "Typography",
+                          "level": 3
+                        },
+                        {
+                          "type": "vstack",
+                          "gap": "xs",
+                          "children": [
+                            {
+                              "type": "heading",
+                              "content": "Heading 1",
+                              "level": 1
+                            },
+                            {
+                              "type": "heading",
+                              "content": "Heading 2",
+                              "level": 2
+                            },
+                            {
+                              "type": "heading",
+                              "content": "Heading 3",
+                              "level": 3
+                            },
+                            {
+                              "type": "text",
+                              "content": "Body text with default styling.",
+                              "variant": "body"
+                            },
+                            {
+                              "type": "text",
+                              "content": "Caption text in muted color.",
+                              "variant": "caption",
+                              "color": "muted"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -282,12 +472,16 @@
                 "event": "SHOW_ALERT",
                 "to": "alertShown",
                 "effects": [
-                  ["render-ui", "toast", {
-                    "type": "alert",
-                    "variant": "info",
-                    "title": "Information",
-                    "message": "This is an alert component demonstration."
-                  }]
+                  [
+                    "render-ui",
+                    "toast",
+                    {
+                      "type": "alert",
+                      "variant": "info",
+                      "title": "Information",
+                      "message": "This is an alert component demonstration."
+                    }
+                  ]
                 ]
               },
               {
@@ -304,7 +498,10 @@
           "name": "AtomsPage",
           "path": "/atoms",
           "traits": [
-            { "ref": "AtomsViewer", "linkedEntity": "AtomDemo" }
+            {
+              "ref": "AtomsViewer",
+              "linkedEntity": "AtomDemo"
+            }
           ]
         }
       ]
@@ -315,10 +512,24 @@
         "name": "MoleculeDemo",
         "persistence": "runtime",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "name", "type": "string", "required": true },
-          { "name": "category", "type": "string" },
-          { "name": "searchTerm", "type": "string" }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "category",
+            "type": "string"
+          },
+          {
+            "name": "searchTerm",
+            "type": "string"
+          }
         ]
       },
       "traits": [
@@ -328,18 +539,64 @@
           "linkedEntity": "MoleculeDemo",
           "stateMachine": {
             "states": [
-              { "name": "viewing", "isInitial": true },
-              { "name": "searching" },
-              { "name": "modalOpen" }
+              {
+                "name": "viewing",
+                "isInitial": true
+              },
+              {
+                "name": "searching"
+              },
+              {
+                "name": "modalOpen"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "SEARCH", "name": "Search", "payload": [{ "name": "term", "type": "string" }] },
-              { "key": "CLEAR", "name": "Clear Search" },
-              { "key": "OPEN_MODAL", "name": "Open Modal" },
-              { "key": "CLOSE", "name": "Close" },
-              { "key": "TAB_CHANGE", "name": "Tab Change", "payload": [{ "name": "tabId", "type": "string" }] },
-              { "key": "TOGGLE", "name": "Toggle Section", "payload": [{ "name": "id", "type": "string" }] }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "SEARCH",
+                "name": "Search",
+                "payloadSchema": [
+                  {
+                    "name": "term",
+                    "type": "string"
+                  }
+                ]
+              },
+              {
+                "key": "CLEAR",
+                "name": "Clear Search"
+              },
+              {
+                "key": "OPEN_MODAL",
+                "name": "Open Modal"
+              },
+              {
+                "key": "CLOSE",
+                "name": "Close"
+              },
+              {
+                "key": "TAB_CHANGE",
+                "name": "Tab Change",
+                "payloadSchema": [
+                  {
+                    "name": "tabId",
+                    "type": "string"
+                  }
+                ]
+              },
+              {
+                "key": "TOGGLE",
+                "name": "Toggle Section",
+                "payloadSchema": [
+                  {
+                    "name": "id",
+                    "type": "string"
+                  }
+                ]
+              }
             ],
             "transitions": [
               {
@@ -347,139 +604,216 @@
                 "event": "INIT",
                 "to": "viewing",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "Molecules Showcase",
-                    "subtitle": "Composite components built from atoms",
-                    "actions": [
-                      { "label": "Open Modal", "event": "OPEN_MODAL", "variant": "primary" }
-                    ]
-                  }],
-                  ["render-ui", "sidebar", {
-                    "type": "vstack",
-                    "gap": "lg",
-                    "children": [
-                      {
-                        "type": "heading",
-                        "content": "Search Input",
-                        "level": 3
-                      },
-                      {
-                        "type": "search-input",
-                        "placeholder": "Search molecules...",
-                        "clearable": true
-                      },
-                      {
-                        "type": "divider",
-                        "orientation": "horizontal"
-                      },
-                      {
-                        "type": "heading",
-                        "content": "Tabs Navigation",
-                        "level": 3
-                      },
-                      {
-                        "type": "tabs",
-                        "items": [
-                          { "id": "overview", "label": "Overview" },
-                          { "id": "details", "label": "Details" },
-                          { "id": "settings", "label": "Settings" }
-                        ],
-                        "activeTab": "overview"
-                      },
-                      {
-                        "type": "divider",
-                        "orientation": "horizontal"
-                      },
-                      {
-                        "type": "heading",
-                        "content": "Breadcrumb",
-                        "level": 3
-                      },
-                      {
-                        "type": "breadcrumb",
-                        "items": [
-                          { "label": "Home", "href": "/" },
-                          { "label": "Components", "href": "/components" },
-                          { "label": "Molecules" }
-                        ]
-                      },
-                      {
-                        "type": "divider",
-                        "orientation": "horizontal"
-                      },
-                      {
-                        "type": "heading",
-                        "content": "Pagination",
-                        "level": 3
-                      },
-                      {
-                        "type": "pagination",
-                        "currentPage": 3,
-                        "totalPages": 10,
-                        "showTotal": true,
-                        "totalItems": 95
-                      }
-                    ]
-                  }],
-                  ["render-ui", "main", {
-                    "type": "vstack",
-                    "gap": "lg",
-                    "children": [
-                      {
-                        "type": "heading",
-                        "content": "Accordion",
-                        "level": 3
-                      },
-                      {
-                        "type": "accordion",
-                        "items": [
-                          { "id": "acc1", "title": "What are molecules?", "content": "Molecules are composite UI components built from atoms. They combine simple elements to create more complex, reusable patterns." },
-                          { "id": "acc2", "title": "When to use molecules?", "content": "Use molecules when you need to combine multiple atoms into a cohesive unit that serves a specific purpose, like a search bar or filter group." },
-                          { "id": "acc3", "title": "Examples of molecules", "content": "SearchInput, FilterGroup, Tabs, Breadcrumb, Pagination, Accordion, Modal, Drawer, Toast, and Tooltip." }
-                        ],
-                        "multiple": true
-                      },
-                      {
-                        "type": "divider",
-                        "orientation": "horizontal"
-                      },
-                      {
-                        "type": "heading",
-                        "content": "Alerts",
-                        "level": 3
-                      },
-                      {
-                        "type": "vstack",
-                        "gap": "sm",
-                        "children": [
-                          { "type": "alert", "variant": "info", "title": "Information", "message": "This is an informational alert." },
-                          { "type": "alert", "variant": "success", "title": "Success", "message": "Operation completed successfully!" },
-                          { "type": "alert", "variant": "warning", "title": "Warning", "message": "Please review before proceeding." },
-                          { "type": "alert", "variant": "error", "title": "Error", "message": "Something went wrong." }
-                        ]
-                      },
-                      {
-                        "type": "divider",
-                        "orientation": "horizontal"
-                      },
-                      {
-                        "type": "heading",
-                        "content": "Wizard Progress",
-                        "level": 3
-                      },
-                      {
-                        "type": "wizard-progress",
-                        "steps": [
-                          { "id": "step1", "title": "Account" },
-                          { "id": "step2", "title": "Profile" },
-                          { "id": "step3", "title": "Review" },
-                          { "id": "step4", "title": "Complete" }
-                        ],
-                        "currentStep": 1
-                      }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "Molecules Showcase",
+                      "subtitle": "Composite components built from atoms",
+                      "actions": [
+                        {
+                          "label": "Open Modal",
+                          "event": "OPEN_MODAL",
+                          "variant": "primary"
+                        }
+                      ]
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "sidebar",
+                    {
+                      "type": "vstack",
+                      "gap": "lg",
+                      "children": [
+                        {
+                          "type": "heading",
+                          "content": "Search Input",
+                          "level": 3
+                        },
+                        {
+                          "type": "search-input",
+                          "placeholder": "Search molecules...",
+                          "clearable": true
+                        },
+                        {
+                          "type": "divider",
+                          "orientation": "horizontal"
+                        },
+                        {
+                          "type": "heading",
+                          "content": "Tabs Navigation",
+                          "level": 3
+                        },
+                        {
+                          "type": "tabs",
+                          "items": [
+                            {
+                              "id": "overview",
+                              "label": "Overview"
+                            },
+                            {
+                              "id": "details",
+                              "label": "Details"
+                            },
+                            {
+                              "id": "settings",
+                              "label": "Settings"
+                            }
+                          ],
+                          "activeTab": "overview"
+                        },
+                        {
+                          "type": "divider",
+                          "orientation": "horizontal"
+                        },
+                        {
+                          "type": "heading",
+                          "content": "Breadcrumb",
+                          "level": 3
+                        },
+                        {
+                          "type": "breadcrumb",
+                          "items": [
+                            {
+                              "label": "Home",
+                              "href": "/"
+                            },
+                            {
+                              "label": "Components",
+                              "href": "/components"
+                            },
+                            {
+                              "label": "Molecules"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "divider",
+                          "orientation": "horizontal"
+                        },
+                        {
+                          "type": "heading",
+                          "content": "Pagination",
+                          "level": 3
+                        },
+                        {
+                          "type": "pagination",
+                          "currentPage": 3,
+                          "totalPages": 10,
+                          "showTotal": true,
+                          "totalItems": 95
+                        }
+                      ]
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "vstack",
+                      "gap": "lg",
+                      "children": [
+                        {
+                          "type": "heading",
+                          "content": "Accordion",
+                          "level": 3
+                        },
+                        {
+                          "type": "accordion",
+                          "items": [
+                            {
+                              "id": "acc1",
+                              "title": "What are molecules?",
+                              "content": "Molecules are composite UI components built from atoms. They combine simple elements to create more complex, reusable patterns."
+                            },
+                            {
+                              "id": "acc2",
+                              "title": "When to use molecules?",
+                              "content": "Use molecules when you need to combine multiple atoms into a cohesive unit that serves a specific purpose, like a search bar or filter group."
+                            },
+                            {
+                              "id": "acc3",
+                              "title": "Examples of molecules",
+                              "content": "SearchInput, FilterGroup, Tabs, Breadcrumb, Pagination, Accordion, Modal, Drawer, Toast, and Tooltip."
+                            }
+                          ],
+                          "multiple": true
+                        },
+                        {
+                          "type": "divider",
+                          "orientation": "horizontal"
+                        },
+                        {
+                          "type": "heading",
+                          "content": "Alerts",
+                          "level": 3
+                        },
+                        {
+                          "type": "vstack",
+                          "gap": "sm",
+                          "children": [
+                            {
+                              "type": "alert",
+                              "variant": "info",
+                              "title": "Information",
+                              "message": "This is an informational alert."
+                            },
+                            {
+                              "type": "alert",
+                              "variant": "success",
+                              "title": "Success",
+                              "message": "Operation completed successfully!"
+                            },
+                            {
+                              "type": "alert",
+                              "variant": "warning",
+                              "title": "Warning",
+                              "message": "Please review before proceeding."
+                            },
+                            {
+                              "type": "alert",
+                              "variant": "error",
+                              "title": "Error",
+                              "message": "Something went wrong."
+                            }
+                          ]
+                        },
+                        {
+                          "type": "divider",
+                          "orientation": "horizontal"
+                        },
+                        {
+                          "type": "heading",
+                          "content": "Wizard Progress",
+                          "level": 3
+                        },
+                        {
+                          "type": "wizard-progress",
+                          "steps": [
+                            {
+                              "id": "step1",
+                              "title": "Account"
+                            },
+                            {
+                              "id": "step2",
+                              "title": "Profile"
+                            },
+                            {
+                              "id": "step3",
+                              "title": "Review"
+                            },
+                            {
+                              "id": "step4",
+                              "title": "Complete"
+                            }
+                          ],
+                          "currentStep": 1
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -497,14 +831,25 @@
                 "event": "OPEN_MODAL",
                 "to": "modalOpen",
                 "effects": [
-                  ["render-ui", "modal", {
-                    "type": "vstack",
-                    "gap": "md",
-                    "children": [
-                      { "type": "heading", "content": "Modal Example", "level": 3 },
-                      { "type": "text", "content": "This is modal content rendered via the closed circuit pattern. Click outside or press Escape to close." }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "modal",
+                    {
+                      "type": "vstack",
+                      "gap": "md",
+                      "children": [
+                        {
+                          "type": "heading",
+                          "content": "Modal Example",
+                          "level": 3
+                        },
+                        {
+                          "type": "text",
+                          "content": "This is modal content rendered via the closed circuit pattern. Click outside or press Escape to close."
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -512,7 +857,11 @@
                 "event": "CLOSE",
                 "to": "viewing",
                 "effects": [
-                  ["render-ui", "modal", null]
+                  [
+                    "render-ui",
+                    "modal",
+                    null
+                  ]
                 ]
               },
               {
@@ -534,7 +883,10 @@
           "name": "MoleculesPage",
           "path": "/molecules",
           "traits": [
-            { "ref": "MoleculesViewer", "linkedEntity": "MoleculeDemo" }
+            {
+              "ref": "MoleculesViewer",
+              "linkedEntity": "MoleculeDemo"
+            }
           ]
         }
       ]
@@ -546,14 +898,55 @@
         "persistence": "persistent",
         "collection": "products",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "name", "type": "string", "required": true },
-          { "name": "description", "type": "string" },
-          { "name": "price", "type": "number", "required": true },
-          { "name": "stock", "type": "number", "default": 0 },
-          { "name": "category", "type": "enum", "values": ["electronics", "clothing", "food", "other"], "default": "other" },
-          { "name": "status", "type": "enum", "values": ["active", "draft", "archived"], "default": "draft" },
-          { "name": "createdAt", "type": "timestamp" }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "type": "number",
+            "required": true
+          },
+          {
+            "name": "stock",
+            "type": "number",
+            "default": 0
+          },
+          {
+            "name": "category",
+            "type": "enum",
+            "values": [
+              "electronics",
+              "clothing",
+              "food",
+              "other"
+            ],
+            "default": "other"
+          },
+          {
+            "name": "status",
+            "type": "enum",
+            "values": [
+              "active",
+              "draft",
+              "archived"
+            ],
+            "default": "draft"
+          },
+          {
+            "name": "createdAt",
+            "type": "timestamp"
+          }
         ]
       },
       "traits": [
@@ -563,20 +956,67 @@
           "linkedEntity": "Product",
           "stateMachine": {
             "states": [
-              { "name": "listing", "isInitial": true },
-              { "name": "viewing" },
-              { "name": "creating" },
-              { "name": "editing" }
+              {
+                "name": "listing",
+                "isInitial": true
+              },
+              {
+                "name": "viewing"
+              },
+              {
+                "name": "creating"
+              },
+              {
+                "name": "editing"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "VIEW", "name": "View Product", "payload": [{ "name": "id", "type": "string", "required": true }] },
-              { "key": "CREATE", "name": "Create Product" },
-              { "key": "EDIT", "name": "Edit Product" },
-              { "key": "SAVE", "name": "Save" },
-              { "key": "CANCEL", "name": "Cancel" },
-              { "key": "BACK", "name": "Go Back" },
-              { "key": "DELETE", "name": "Delete Product", "payload": [{ "name": "id", "type": "string", "required": true }] }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "VIEW",
+                "name": "View Product",
+                "payloadSchema": [
+                  {
+                    "name": "id",
+                    "type": "string",
+                    "required": true
+                  }
+                ]
+              },
+              {
+                "key": "CREATE",
+                "name": "Create Product"
+              },
+              {
+                "key": "EDIT",
+                "name": "Edit Product"
+              },
+              {
+                "key": "SAVE",
+                "name": "Save"
+              },
+              {
+                "key": "CANCEL",
+                "name": "Cancel"
+              },
+              {
+                "key": "BACK",
+                "name": "Go Back"
+              },
+              {
+                "key": "DELETE",
+                "name": "Delete Product",
+                "payloadSchema": [
+                  {
+                    "name": "id",
+                    "type": "string",
+                    "required": true
+                  }
+                ]
+              }
             ],
             "transitions": [
               {
@@ -584,17 +1024,39 @@
                 "event": "INIT",
                 "to": "listing",
                 "effects": [
-                  ["fetch", "Product"],
-                  ["render-ui", "main", {
-                    "type": "entity-table",
-                    "entity": "Product",
-                    "columns": ["name", "price", "stock", "category", "status"],
-                    "itemActions": [
-                      { "event": "VIEW", "label": "View" },
-                      { "event": "EDIT", "label": "Edit" },
-                      { "event": "DELETE", "label": "Delete" }
-                    ]
-                  }]
+                  [
+                    "fetch",
+                    "Product"
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "entity-table",
+                      "entity": "Product",
+                      "columns": [
+                        "name",
+                        "price",
+                        "stock",
+                        "category",
+                        "status"
+                      ],
+                      "itemActions": [
+                        {
+                          "event": "VIEW",
+                          "label": "View"
+                        },
+                        {
+                          "event": "EDIT",
+                          "label": "Edit"
+                        },
+                        {
+                          "event": "DELETE",
+                          "label": "Delete"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -602,12 +1064,27 @@
                 "event": "VIEW",
                 "to": "viewing",
                 "effects": [
-                  ["fetch", "Product", "@payload.id"],
-                  ["render-ui", "main", {
-                    "type": "entity-detail",
-                    "entity": "Product",
-                    "fields": ["name", "description", "price", "stock", "category", "status"]
-                  }]
+                  [
+                    "fetch",
+                    "Product",
+                    "@payload.id"
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "entity-detail",
+                      "entity": "Product",
+                      "fields": [
+                        "name",
+                        "description",
+                        "price",
+                        "stock",
+                        "category",
+                        "status"
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -615,27 +1092,79 @@
                 "event": "CREATE",
                 "to": "creating",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "form",
-                    "entity": "Product",
-                    "fields": [
-                      { "name": "name", "label": "Product Name", "required": true },
-                      { "name": "description", "label": "Description", "type": "textarea" },
-                      { "name": "price", "label": "Price", "type": "number", "required": true },
-                      { "name": "stock", "label": "Stock", "type": "number" },
-                      { "name": "category", "label": "Category", "type": "select", "options": [
-                        { "value": "electronics", "label": "Electronics" },
-                        { "value": "clothing", "label": "Clothing" },
-                        { "value": "food", "label": "Food" },
-                        { "value": "other", "label": "Other" }
-                      ]},
-                      { "name": "status", "label": "Status", "type": "select", "options": [
-                        { "value": "active", "label": "Active" },
-                        { "value": "draft", "label": "Draft" },
-                        { "value": "archived", "label": "Archived" }
-                      ]}
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "form",
+                      "entity": "Product",
+                      "fields": [
+                        {
+                          "name": "name",
+                          "label": "Product Name",
+                          "required": true
+                        },
+                        {
+                          "name": "description",
+                          "label": "Description",
+                          "type": "textarea"
+                        },
+                        {
+                          "name": "price",
+                          "label": "Price",
+                          "type": "number",
+                          "required": true
+                        },
+                        {
+                          "name": "stock",
+                          "label": "Stock",
+                          "type": "number"
+                        },
+                        {
+                          "name": "category",
+                          "label": "Category",
+                          "type": "select",
+                          "options": [
+                            {
+                              "value": "electronics",
+                              "label": "Electronics"
+                            },
+                            {
+                              "value": "clothing",
+                              "label": "Clothing"
+                            },
+                            {
+                              "value": "food",
+                              "label": "Food"
+                            },
+                            {
+                              "value": "other",
+                              "label": "Other"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "status",
+                          "label": "Status",
+                          "type": "select",
+                          "options": [
+                            {
+                              "value": "active",
+                              "label": "Active"
+                            },
+                            {
+                              "value": "draft",
+                              "label": "Draft"
+                            },
+                            {
+                              "value": "archived",
+                              "label": "Archived"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -643,8 +1172,17 @@
                 "event": "SAVE",
                 "to": "listing",
                 "effects": [
-                  ["persist", "create", "Product", "@entity"],
-                  ["notify", "success", "Product created successfully"]
+                  [
+                    "persist",
+                    "create",
+                    "Product",
+                    "@entity"
+                  ],
+                  [
+                    "notify",
+                    "success",
+                    "Product created successfully"
+                  ]
                 ]
               },
               {
@@ -657,28 +1195,80 @@
                 "event": "EDIT",
                 "to": "editing",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "form",
-                    "entity": "Product",
-                    "mode": "edit",
-                    "fields": [
-                      { "name": "name", "label": "Product Name", "required": true },
-                      { "name": "description", "label": "Description", "type": "textarea" },
-                      { "name": "price", "label": "Price", "type": "number", "required": true },
-                      { "name": "stock", "label": "Stock", "type": "number" },
-                      { "name": "category", "label": "Category", "type": "select", "options": [
-                        { "value": "electronics", "label": "Electronics" },
-                        { "value": "clothing", "label": "Clothing" },
-                        { "value": "food", "label": "Food" },
-                        { "value": "other", "label": "Other" }
-                      ]},
-                      { "name": "status", "label": "Status", "type": "select", "options": [
-                        { "value": "active", "label": "Active" },
-                        { "value": "draft", "label": "Draft" },
-                        { "value": "archived", "label": "Archived" }
-                      ]}
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "form",
+                      "entity": "Product",
+                      "mode": "edit",
+                      "fields": [
+                        {
+                          "name": "name",
+                          "label": "Product Name",
+                          "required": true
+                        },
+                        {
+                          "name": "description",
+                          "label": "Description",
+                          "type": "textarea"
+                        },
+                        {
+                          "name": "price",
+                          "label": "Price",
+                          "type": "number",
+                          "required": true
+                        },
+                        {
+                          "name": "stock",
+                          "label": "Stock",
+                          "type": "number"
+                        },
+                        {
+                          "name": "category",
+                          "label": "Category",
+                          "type": "select",
+                          "options": [
+                            {
+                              "value": "electronics",
+                              "label": "Electronics"
+                            },
+                            {
+                              "value": "clothing",
+                              "label": "Clothing"
+                            },
+                            {
+                              "value": "food",
+                              "label": "Food"
+                            },
+                            {
+                              "value": "other",
+                              "label": "Other"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "status",
+                          "label": "Status",
+                          "type": "select",
+                          "options": [
+                            {
+                              "value": "active",
+                              "label": "Active"
+                            },
+                            {
+                              "value": "draft",
+                              "label": "Draft"
+                            },
+                            {
+                              "value": "archived",
+                              "label": "Archived"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -686,8 +1276,17 @@
                 "event": "SAVE",
                 "to": "viewing",
                 "effects": [
-                  ["persist", "update", "Product", "@entity"],
-                  ["notify", "success", "Product updated successfully"]
+                  [
+                    "persist",
+                    "update",
+                    "Product",
+                    "@entity"
+                  ],
+                  [
+                    "notify",
+                    "success",
+                    "Product updated successfully"
+                  ]
                 ]
               },
               {
@@ -700,7 +1299,10 @@
                 "event": "BACK",
                 "to": "listing",
                 "effects": [
-                  ["navigate", "/organisms"]
+                  [
+                    "navigate",
+                    "/organisms"
+                  ]
                 ]
               },
               {
@@ -708,8 +1310,17 @@
                 "event": "DELETE",
                 "to": "listing",
                 "effects": [
-                  ["persist", "delete", "Product", "@payload.id"],
-                  ["notify", "info", "Product deleted"]
+                  [
+                    "persist",
+                    "delete",
+                    "Product",
+                    "@payload.id"
+                  ],
+                  [
+                    "notify",
+                    "info",
+                    "Product deleted"
+                  ]
                 ]
               }
             ]
@@ -721,13 +1332,34 @@
           "linkedEntity": "Product",
           "stateMachine": {
             "states": [
-              { "name": "grid", "isInitial": true },
-              { "name": "detail" }
+              {
+                "name": "grid",
+                "isInitial": true
+              },
+              {
+                "name": "detail"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "SELECT", "name": "Select Item", "payload": [{ "name": "id", "type": "string", "required": true }] },
-              { "key": "BACK", "name": "Go Back" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "SELECT",
+                "name": "Select Item",
+                "payloadSchema": [
+                  {
+                    "name": "id",
+                    "type": "string",
+                    "required": true
+                  }
+                ]
+              },
+              {
+                "key": "BACK",
+                "name": "Go Back"
+              }
             ],
             "transitions": [
               {
@@ -735,20 +1367,38 @@
                 "event": "INIT",
                 "to": "grid",
                 "effects": [
-                  ["fetch", "Product"],
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "Organisms - CardGrid",
-                    "subtitle": "Visual card-based display of entities"
-                  }],
-                  ["render-ui", "sidebar", {
-                    "type": "entity-cards",
-                    "entity": "Product",
-                    "fieldNames": ["name", "price", "category"],
-                    "itemActions": [
-                      { "event": "SELECT", "label": "View" }
-                    ]
-                  }]
+                  [
+                    "fetch",
+                    "Product"
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "Organisms - CardGrid",
+                      "subtitle": "Visual card-based display of entities"
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "sidebar",
+                    {
+                      "type": "entity-cards",
+                      "entity": "Product",
+                      "fieldNames": [
+                        "name",
+                        "price",
+                        "category"
+                      ],
+                      "itemActions": [
+                        {
+                          "event": "SELECT",
+                          "label": "View"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -756,17 +1406,36 @@
                 "event": "SELECT",
                 "to": "detail",
                 "effects": [
-                  ["fetch", "Product", "@payload.id"],
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "Product Detail",
-                    "showBack": true
-                  }],
-                  ["render-ui", "sidebar", {
-                    "type": "entity-detail",
-                    "entity": "Product",
-                    "fields": ["name", "description", "price", "stock", "category", "status"]
-                  }]
+                  [
+                    "fetch",
+                    "Product",
+                    "@payload.id"
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "Product Detail",
+                      "showBack": true
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "sidebar",
+                    {
+                      "type": "entity-detail",
+                      "entity": "Product",
+                      "fields": [
+                        "name",
+                        "description",
+                        "price",
+                        "stock",
+                        "category",
+                        "status"
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -774,7 +1443,10 @@
                 "event": "BACK",
                 "to": "grid",
                 "effects": [
-                  ["navigate", "/organisms/cards"]
+                  [
+                    "navigate",
+                    "/organisms/cards"
+                  ]
                 ]
               }
             ]
@@ -786,14 +1458,20 @@
           "name": "OrganismsTablePage",
           "path": "/organisms",
           "traits": [
-            { "ref": "ProductCRUD", "linkedEntity": "Product" }
+            {
+              "ref": "ProductCRUD",
+              "linkedEntity": "Product"
+            }
           ]
         },
         {
           "name": "OrganismsCardsPage",
           "path": "/organisms/cards",
           "traits": [
-            { "ref": "CardGridViewer", "linkedEntity": "Product" }
+            {
+              "ref": "CardGridViewer",
+              "linkedEntity": "Product"
+            }
           ]
         }
       ]
@@ -805,15 +1483,52 @@
         "persistence": "persistent",
         "collection": "projects",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "name", "type": "string", "required": true },
-          { "name": "description", "type": "string" },
-          { "name": "status", "type": "enum", "values": ["planning", "active", "completed", "on-hold"], "default": "planning" },
-          { "name": "progress", "type": "number", "default": 0 },
-          { "name": "budget", "type": "number" },
-          { "name": "startDate", "type": "date" },
-          { "name": "endDate", "type": "date" },
-          { "name": "teamSize", "type": "number" }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "type": "enum",
+            "values": [
+              "planning",
+              "active",
+              "completed",
+              "on-hold"
+            ],
+            "default": "planning"
+          },
+          {
+            "name": "progress",
+            "type": "number",
+            "default": 0
+          },
+          {
+            "name": "budget",
+            "type": "number"
+          },
+          {
+            "name": "startDate",
+            "type": "date"
+          },
+          {
+            "name": "endDate",
+            "type": "date"
+          },
+          {
+            "name": "teamSize",
+            "type": "number"
+          }
         ]
       },
       "traits": [
@@ -823,13 +1538,34 @@
           "linkedEntity": "Project",
           "stateMachine": {
             "states": [
-              { "name": "overview", "isInitial": true },
-              { "name": "detail" }
+              {
+                "name": "overview",
+                "isInitial": true
+              },
+              {
+                "name": "detail"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "VIEW", "name": "View Project", "payload": [{ "name": "id", "type": "string", "required": true }] },
-              { "key": "BACK", "name": "Go Back" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "VIEW",
+                "name": "View Project",
+                "payloadSchema": [
+                  {
+                    "name": "id",
+                    "type": "string",
+                    "required": true
+                  }
+                ]
+              },
+              {
+                "key": "BACK",
+                "name": "Go Back"
+              }
             ],
             "transitions": [
               {
@@ -837,29 +1573,68 @@
                 "event": "INIT",
                 "to": "overview",
                 "effects": [
-                  ["fetch", "Project"],
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "Templates - Dashboard",
-                    "subtitle": "Dashboard layout with stats cards and data overview"
-                  }],
-                  ["render-ui", "sidebar", {
-                    "type": "stats",
-                    "metrics": [
-                      { "label": "Total Projects", "value": "24", "icon": "folder" },
-                      { "label": "Active", "value": "12", "icon": "activity" },
-                      { "label": "Completed", "value": "10", "icon": "check-circle" },
-                      { "label": "On Hold", "value": "2", "icon": "circle-pause" }
-                    ]
-                  }],
-                  ["render-ui", "main", {
-                    "type": "entity-table",
-                    "entity": "Project",
-                    "columns": ["name", "status", "progress", "budget"],
-                    "itemActions": [
-                      { "event": "VIEW", "label": "View" }
-                    ]
-                  }]
+                  [
+                    "fetch",
+                    "Project"
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "Templates - Dashboard",
+                      "subtitle": "Dashboard layout with stats cards and data overview"
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "sidebar",
+                    {
+                      "type": "stats",
+                      "metrics": [
+                        {
+                          "label": "Total Projects",
+                          "value": "24",
+                          "icon": "folder"
+                        },
+                        {
+                          "label": "Active",
+                          "value": "12",
+                          "icon": "activity"
+                        },
+                        {
+                          "label": "Completed",
+                          "value": "10",
+                          "icon": "check-circle"
+                        },
+                        {
+                          "label": "On Hold",
+                          "value": "2",
+                          "icon": "circle-pause"
+                        }
+                      ]
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "entity-table",
+                      "entity": "Project",
+                      "columns": [
+                        "name",
+                        "status",
+                        "progress",
+                        "budget"
+                      ],
+                      "itemActions": [
+                        {
+                          "event": "VIEW",
+                          "label": "View"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -867,17 +1642,38 @@
                 "event": "VIEW",
                 "to": "detail",
                 "effects": [
-                  ["fetch", "Project", "@payload.id"],
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "Project Details",
-                    "showBack": true
-                  }],
-                  ["render-ui", "main", {
-                    "type": "entity-detail",
-                    "entity": "Project",
-                    "fields": ["name", "description", "status", "progress", "budget", "startDate", "endDate", "teamSize"]
-                  }]
+                  [
+                    "fetch",
+                    "Project",
+                    "@payload.id"
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "Project Details",
+                      "showBack": true
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "entity-detail",
+                      "entity": "Project",
+                      "fields": [
+                        "name",
+                        "description",
+                        "status",
+                        "progress",
+                        "budget",
+                        "startDate",
+                        "endDate",
+                        "teamSize"
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -885,7 +1681,10 @@
                 "event": "BACK",
                 "to": "overview",
                 "effects": [
-                  ["navigate", "/templates"]
+                  [
+                    "navigate",
+                    "/templates"
+                  ]
                 ]
               }
             ]
@@ -897,14 +1696,38 @@
           "linkedEntity": "Project",
           "stateMachine": {
             "states": [
-              { "name": "browsing", "isInitial": true },
-              { "name": "selected" }
+              {
+                "name": "browsing",
+                "isInitial": true
+              },
+              {
+                "name": "selected"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "SELECT", "name": "Select Project", "payload": [{ "name": "id", "type": "string", "required": true }] },
-              { "key": "DESELECT", "name": "Deselect" },
-              { "key": "CLOSE", "name": "Close" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "SELECT",
+                "name": "Select Project",
+                "payloadSchema": [
+                  {
+                    "name": "id",
+                    "type": "string",
+                    "required": true
+                  }
+                ]
+              },
+              {
+                "key": "DESELECT",
+                "name": "Deselect"
+              },
+              {
+                "key": "CLOSE",
+                "name": "Close"
+              }
             ],
             "transitions": [
               {
@@ -912,20 +1735,37 @@
                 "event": "INIT",
                 "to": "browsing",
                 "effects": [
-                  ["fetch", "Project"],
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "Templates - Master Detail",
-                    "subtitle": "Side-by-side list and detail panel layout"
-                  }],
-                  ["render-ui", "sidebar", {
-                    "type": "entity-list",
-                    "entity": "Project",
-                    "fieldNames": ["name", "status"],
-                    "itemActions": [
-                      { "event": "SELECT", "label": "Select" }
-                    ]
-                  }]
+                  [
+                    "fetch",
+                    "Project"
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "Templates - Master Detail",
+                      "subtitle": "Side-by-side list and detail panel layout"
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "sidebar",
+                    {
+                      "type": "entity-list",
+                      "entity": "Project",
+                      "fieldNames": [
+                        "name",
+                        "status"
+                      ],
+                      "itemActions": [
+                        {
+                          "event": "SELECT",
+                          "label": "Select"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -933,15 +1773,34 @@
                 "event": "SELECT",
                 "to": "selected",
                 "effects": [
-                  ["fetch", "Project", "@payload.id"],
-                  ["render-ui", "drawer", {
-                    "type": "detail-panel",
-                    "entity": "Project",
-                    "fields": ["name", "description", "status", "progress", "budget", "startDate", "endDate"],
-                    "actions": [
-                      { "label": "Close", "event": "DESELECT" }
-                    ]
-                  }]
+                  [
+                    "fetch",
+                    "Project",
+                    "@payload.id"
+                  ],
+                  [
+                    "render-ui",
+                    "drawer",
+                    {
+                      "type": "detail-panel",
+                      "entity": "Project",
+                      "fields": [
+                        "name",
+                        "description",
+                        "status",
+                        "progress",
+                        "budget",
+                        "startDate",
+                        "endDate"
+                      ],
+                      "actions": [
+                        {
+                          "label": "Close",
+                          "event": "DESELECT"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -949,15 +1808,34 @@
                 "event": "SELECT",
                 "to": "selected",
                 "effects": [
-                  ["fetch", "Project", "@payload.id"],
-                  ["render-ui", "drawer", {
-                    "type": "detail-panel",
-                    "entity": "Project",
-                    "fields": ["name", "description", "status", "progress", "budget", "startDate", "endDate"],
-                    "actions": [
-                      { "label": "Close", "event": "DESELECT" }
-                    ]
-                  }]
+                  [
+                    "fetch",
+                    "Project",
+                    "@payload.id"
+                  ],
+                  [
+                    "render-ui",
+                    "drawer",
+                    {
+                      "type": "detail-panel",
+                      "entity": "Project",
+                      "fields": [
+                        "name",
+                        "description",
+                        "status",
+                        "progress",
+                        "budget",
+                        "startDate",
+                        "endDate"
+                      ],
+                      "actions": [
+                        {
+                          "label": "Close",
+                          "event": "DESELECT"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -965,7 +1843,11 @@
                 "event": "DESELECT",
                 "to": "browsing",
                 "effects": [
-                  ["render-ui", "drawer", null]
+                  [
+                    "render-ui",
+                    "drawer",
+                    null
+                  ]
                 ]
               },
               {
@@ -973,7 +1855,11 @@
                 "event": "CLOSE",
                 "to": "browsing",
                 "effects": [
-                  ["render-ui", "drawer", null]
+                  [
+                    "render-ui",
+                    "drawer",
+                    null
+                  ]
                 ]
               }
             ]
@@ -985,14 +1871,20 @@
           "name": "DashboardPage",
           "path": "/templates",
           "traits": [
-            { "ref": "DashboardViewer", "linkedEntity": "Project" }
+            {
+              "ref": "DashboardViewer",
+              "linkedEntity": "Project"
+            }
           ]
         },
         {
           "name": "MasterDetailPage",
           "path": "/templates/master-detail",
           "traits": [
-            { "ref": "MasterDetailViewer", "linkedEntity": "Project" }
+            {
+              "ref": "MasterDetailViewer",
+              "linkedEntity": "Project"
+            }
           ]
         }
       ]
@@ -1003,11 +1895,42 @@
         "name": "SearchableItem",
         "persistence": "runtime",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "title", "type": "string", "required": true },
-          { "name": "category", "type": "enum", "values": ["tech", "design", "marketing", "sales"], "default": "tech" },
-          { "name": "priority", "type": "enum", "values": ["low", "medium", "high"], "default": "medium" },
-          { "name": "isActive", "type": "boolean", "default": true }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "category",
+            "type": "enum",
+            "values": [
+              "tech",
+              "design",
+              "marketing",
+              "sales"
+            ],
+            "default": "tech"
+          },
+          {
+            "name": "priority",
+            "type": "enum",
+            "values": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "default": "medium"
+          },
+          {
+            "name": "isActive",
+            "type": "boolean",
+            "default": true
+          }
         ]
       },
       "traits": [
@@ -1017,15 +1940,50 @@
           "linkedEntity": "SearchableItem",
           "stateMachine": {
             "states": [
-              { "name": "idle", "isInitial": true },
-              { "name": "searching" },
-              { "name": "filtered" }
+              {
+                "name": "idle",
+                "isInitial": true
+              },
+              {
+                "name": "searching"
+              },
+              {
+                "name": "filtered"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "SEARCH", "name": "Search", "payload": [{ "name": "term", "type": "string" }] },
-              { "key": "FILTER", "name": "Apply Filter", "payload": [{ "name": "field", "type": "string" }, { "name": "value", "type": "string" }] },
-              { "key": "CLEAR", "name": "Clear Filters" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "SEARCH",
+                "name": "Search",
+                "payloadSchema": [
+                  {
+                    "name": "term",
+                    "type": "string"
+                  }
+                ]
+              },
+              {
+                "key": "FILTER",
+                "name": "Apply Filter",
+                "payloadSchema": [
+                  {
+                    "name": "field",
+                    "type": "string"
+                  },
+                  {
+                    "name": "value",
+                    "type": "string"
+                  }
+                ]
+              },
+              {
+                "key": "CLEAR",
+                "name": "Clear Filters"
+              }
             ],
             "transitions": [
               {
@@ -1033,24 +1991,55 @@
                 "event": "INIT",
                 "to": "idle",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "Filter Patterns",
-                    "subtitle": "Search and filter components"
-                  }],
-                  ["render-ui", "sidebar", {
-                    "type": "search-input",
-                    "placeholder": "Search items...",
-                    "entity": "SearchableItem"
-                  }],
-                  ["render-ui", "main", {
-                    "type": "filter-group",
-                    "entity": "SearchableItem",
-                    "filters": [
-                      { "field": "category", "label": "Category", "filterType": "select", "options": ["tech", "design", "marketing", "sales"] },
-                      { "field": "priority", "label": "Priority", "filterType": "select", "options": ["low", "medium", "high"] }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "Filter Patterns",
+                      "subtitle": "Search and filter components"
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "sidebar",
+                    {
+                      "type": "search-input",
+                      "placeholder": "Search items...",
+                      "entity": "SearchableItem"
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "filter-group",
+                      "entity": "SearchableItem",
+                      "filters": [
+                        {
+                          "field": "category",
+                          "label": "Category",
+                          "filterType": "select",
+                          "options": [
+                            "tech",
+                            "design",
+                            "marketing",
+                            "sales"
+                          ]
+                        },
+                        {
+                          "field": "priority",
+                          "label": "Priority",
+                          "filterType": "select",
+                          "options": [
+                            "low",
+                            "medium",
+                            "high"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -1082,7 +2071,10 @@
           "name": "FilterPage",
           "path": "/filters",
           "traits": [
-            { "ref": "SearchFilterDemo", "linkedEntity": "SearchableItem" }
+            {
+              "ref": "SearchFilterDemo",
+              "linkedEntity": "SearchableItem"
+            }
           ]
         }
       ]
@@ -1093,10 +2085,24 @@
         "name": "NavItem",
         "persistence": "runtime",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "label", "type": "string", "required": true },
-          { "name": "path", "type": "string" },
-          { "name": "icon", "type": "string" }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "path",
+            "type": "string"
+          },
+          {
+            "name": "icon",
+            "type": "string"
+          }
         ]
       },
       "traits": [
@@ -1106,13 +2112,32 @@
           "linkedEntity": "NavItem",
           "stateMachine": {
             "states": [
-              { "name": "tab1", "isInitial": true },
-              { "name": "tab2" },
-              { "name": "tab3" }
+              {
+                "name": "tab1",
+                "isInitial": true
+              },
+              {
+                "name": "tab2"
+              },
+              {
+                "name": "tab3"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "TAB_CHANGE", "name": "Change Tab", "payload": [{ "name": "tabId", "type": "string" }] }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "TAB_CHANGE",
+                "name": "Change Tab",
+                "payloadSchema": [
+                  {
+                    "name": "tabId",
+                    "type": "string"
+                  }
+                ]
+              }
             ],
             "transitions": [
               {
@@ -1120,20 +2145,37 @@
                 "event": "INIT",
                 "to": "tab1",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "Navigation - Tabs",
-                    "subtitle": "Tab navigation patterns"
-                  }],
-                  ["render-ui", "sidebar", {
-                    "type": "tabs",
-                    "items": [
-                      { "id": "tab1", "label": "Overview" },
-                      { "id": "tab2", "label": "Details" },
-                      { "id": "tab3", "label": "Settings" }
-                    ],
-                    "activeTab": "tab1"
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "Navigation - Tabs",
+                      "subtitle": "Tab navigation patterns"
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "sidebar",
+                    {
+                      "type": "tabs",
+                      "items": [
+                        {
+                          "id": "tab1",
+                          "label": "Overview"
+                        },
+                        {
+                          "id": "tab2",
+                          "label": "Details"
+                        },
+                        {
+                          "id": "tab3",
+                          "label": "Settings"
+                        }
+                      ],
+                      "activeTab": "tab1"
+                    }
+                  ]
                 ]
               },
               {
@@ -1160,10 +2202,16 @@
           "linkedEntity": "NavItem",
           "stateMachine": {
             "states": [
-              { "name": "viewing", "isInitial": true }
+              {
+                "name": "viewing",
+                "isInitial": true
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              }
             ],
             "transitions": [
               {
@@ -1171,19 +2219,35 @@
                 "event": "INIT",
                 "to": "viewing",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "Navigation - Breadcrumb",
-                    "subtitle": "Breadcrumb navigation pattern"
-                  }],
-                  ["render-ui", "sidebar", {
-                    "type": "breadcrumb",
-                    "items": [
-                      { "label": "Home", "href": "/" },
-                      { "label": "Navigation", "href": "/navigation" },
-                      { "label": "Breadcrumb" }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "Navigation - Breadcrumb",
+                      "subtitle": "Breadcrumb navigation pattern"
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "sidebar",
+                    {
+                      "type": "breadcrumb",
+                      "items": [
+                        {
+                          "label": "Home",
+                          "href": "/"
+                        },
+                        {
+                          "label": "Navigation",
+                          "href": "/navigation"
+                        },
+                        {
+                          "label": "Breadcrumb"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               }
             ]
@@ -1195,11 +2259,26 @@
           "linkedEntity": "NavItem",
           "stateMachine": {
             "states": [
-              { "name": "page1", "isInitial": true }
+              {
+                "name": "page1",
+                "isInitial": true
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "PAGE_CHANGE", "name": "Change Page", "payload": [{ "name": "page", "type": "number" }] }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "PAGE_CHANGE",
+                "name": "Change Page",
+                "payloadSchema": [
+                  {
+                    "name": "page",
+                    "type": "number"
+                  }
+                ]
+              }
             ],
             "transitions": [
               {
@@ -1207,18 +2286,26 @@
                 "event": "INIT",
                 "to": "page1",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "Navigation - Pagination",
-                    "subtitle": "Pagination controls"
-                  }],
-                  ["render-ui", "sidebar", {
-                    "type": "pagination",
-                    "currentPage": 1,
-                    "totalPages": 10,
-                    "showTotal": true,
-                    "totalItems": 100
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "Navigation - Pagination",
+                      "subtitle": "Pagination controls"
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "sidebar",
+                    {
+                      "type": "pagination",
+                      "currentPage": 1,
+                      "totalPages": 10,
+                      "showTotal": true,
+                      "totalItems": 100
+                    }
+                  ]
                 ]
               },
               {
@@ -1235,21 +2322,30 @@
           "name": "TabsPage",
           "path": "/navigation/tabs",
           "traits": [
-            { "ref": "TabsDemo", "linkedEntity": "NavItem" }
+            {
+              "ref": "TabsDemo",
+              "linkedEntity": "NavItem"
+            }
           ]
         },
         {
           "name": "BreadcrumbPage",
           "path": "/navigation/breadcrumb",
           "traits": [
-            { "ref": "BreadcrumbDemo", "linkedEntity": "NavItem" }
+            {
+              "ref": "BreadcrumbDemo",
+              "linkedEntity": "NavItem"
+            }
           ]
         },
         {
           "name": "PaginationPage",
           "path": "/navigation/pagination",
           "traits": [
-            { "ref": "PaginationDemo", "linkedEntity": "NavItem" }
+            {
+              "ref": "PaginationDemo",
+              "linkedEntity": "NavItem"
+            }
           ]
         }
       ]
@@ -1260,11 +2356,28 @@
         "name": "WizardData",
         "persistence": "runtime",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "step1Data", "type": "string" },
-          { "name": "step2Data", "type": "string" },
-          { "name": "step3Data", "type": "string" },
-          { "name": "currentStep", "type": "number", "default": 0 }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "step1Data",
+            "type": "string"
+          },
+          {
+            "name": "step2Data",
+            "type": "string"
+          },
+          {
+            "name": "step3Data",
+            "type": "string"
+          },
+          {
+            "name": "currentStep",
+            "type": "number",
+            "default": 0
+          }
         ]
       },
       "traits": [
@@ -1274,16 +2387,38 @@
           "linkedEntity": "WizardData",
           "stateMachine": {
             "states": [
-              { "name": "step1", "isInitial": true },
-              { "name": "step2" },
-              { "name": "step3" },
-              { "name": "complete", "isTerminal": true }
+              {
+                "name": "step1",
+                "isInitial": true
+              },
+              {
+                "name": "step2"
+              },
+              {
+                "name": "step3"
+              },
+              {
+                "name": "complete",
+                "isTerminal": true
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "NEXT", "name": "Next Step" },
-              { "key": "BACK", "name": "Previous Step" },
-              { "key": "COMPLETE", "name": "Complete Wizard" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "NEXT",
+                "name": "Next Step"
+              },
+              {
+                "key": "BACK",
+                "name": "Previous Step"
+              },
+              {
+                "key": "COMPLETE",
+                "name": "Complete Wizard"
+              }
             ],
             "transitions": [
               {
@@ -1291,27 +2426,52 @@
                 "event": "INIT",
                 "to": "step1",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "Wizard Pattern",
-                    "subtitle": "Multi-step form wizard"
-                  }],
-                  ["render-ui", "sidebar", {
-                    "type": "wizard-progress",
-                    "steps": [
-                      { "id": "step1", "title": "Basic Info" },
-                      { "id": "step2", "title": "Details" },
-                      { "id": "step3", "title": "Review" }
-                    ],
-                    "currentStep": 0
-                  }],
-                  ["render-ui", "main", {
-                    "type": "form",
-                    "entity": "WizardData",
-                    "fields": [
-                      { "name": "step1Data", "label": "Step 1 Data", "required": true }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "Wizard Pattern",
+                      "subtitle": "Multi-step form wizard"
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "sidebar",
+                    {
+                      "type": "wizard-progress",
+                      "steps": [
+                        {
+                          "id": "step1",
+                          "title": "Basic Info"
+                        },
+                        {
+                          "id": "step2",
+                          "title": "Details"
+                        },
+                        {
+                          "id": "step3",
+                          "title": "Review"
+                        }
+                      ],
+                      "currentStep": 0
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "form",
+                      "entity": "WizardData",
+                      "fields": [
+                        {
+                          "name": "step1Data",
+                          "label": "Step 1 Data",
+                          "required": true
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -1319,22 +2479,43 @@
                 "event": "NEXT",
                 "to": "step2",
                 "effects": [
-                  ["render-ui", "sidebar", {
-                    "type": "wizard-progress",
-                    "steps": [
-                      { "id": "step1", "title": "Basic Info" },
-                      { "id": "step2", "title": "Details" },
-                      { "id": "step3", "title": "Review" }
-                    ],
-                    "currentStep": 1
-                  }],
-                  ["render-ui", "main", {
-                    "type": "form",
-                    "entity": "WizardData",
-                    "fields": [
-                      { "name": "step2Data", "label": "Step 2 Data", "required": true }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "sidebar",
+                    {
+                      "type": "wizard-progress",
+                      "steps": [
+                        {
+                          "id": "step1",
+                          "title": "Basic Info"
+                        },
+                        {
+                          "id": "step2",
+                          "title": "Details"
+                        },
+                        {
+                          "id": "step3",
+                          "title": "Review"
+                        }
+                      ],
+                      "currentStep": 1
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "form",
+                      "entity": "WizardData",
+                      "fields": [
+                        {
+                          "name": "step2Data",
+                          "label": "Step 2 Data",
+                          "required": true
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -1342,22 +2523,42 @@
                 "event": "NEXT",
                 "to": "step3",
                 "effects": [
-                  ["render-ui", "sidebar", {
-                    "type": "wizard-progress",
-                    "steps": [
-                      { "id": "step1", "title": "Basic Info" },
-                      { "id": "step2", "title": "Details" },
-                      { "id": "step3", "title": "Review" }
-                    ],
-                    "currentStep": 2
-                  }],
-                  ["render-ui", "main", {
-                    "type": "form",
-                    "entity": "WizardData",
-                    "fields": [
-                      { "name": "step3Data", "label": "Step 3 Data" }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "sidebar",
+                    {
+                      "type": "wizard-progress",
+                      "steps": [
+                        {
+                          "id": "step1",
+                          "title": "Basic Info"
+                        },
+                        {
+                          "id": "step2",
+                          "title": "Details"
+                        },
+                        {
+                          "id": "step3",
+                          "title": "Review"
+                        }
+                      ],
+                      "currentStep": 2
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "form",
+                      "entity": "WizardData",
+                      "fields": [
+                        {
+                          "name": "step3Data",
+                          "label": "Step 3 Data"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -1375,7 +2576,11 @@
                 "event": "COMPLETE",
                 "to": "complete",
                 "effects": [
-                  ["notify", "success", "Wizard completed!"]
+                  [
+                    "notify",
+                    "success",
+                    "Wizard completed!"
+                  ]
                 ]
               }
             ]
@@ -1387,7 +2592,10 @@
           "name": "WizardPage",
           "path": "/wizard",
           "traits": [
-            { "ref": "WizardDemo", "linkedEntity": "WizardData" }
+            {
+              "ref": "WizardDemo",
+              "linkedEntity": "WizardData"
+            }
           ]
         }
       ]
@@ -1398,8 +2606,22 @@
         "name": "StateDemo",
         "persistence": "runtime",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "currentState", "type": "enum", "values": ["loading", "empty", "error", "success"], "default": "loading" }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "currentState",
+            "type": "enum",
+            "values": [
+              "loading",
+              "empty",
+              "error",
+              "success"
+            ],
+            "default": "loading"
+          }
         ]
       },
       "traits": [
@@ -1409,12 +2631,24 @@
           "linkedEntity": "StateDemo",
           "stateMachine": {
             "states": [
-              { "name": "loading", "isInitial": true },
-              { "name": "loaded", "isTerminal": true }
+              {
+                "name": "loading",
+                "isInitial": true
+              },
+              {
+                "name": "loaded",
+                "isTerminal": true
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "LOADED", "name": "Data Loaded" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "LOADED",
+                "name": "Data Loaded"
+              }
             ],
             "transitions": [
               {
@@ -1422,15 +2656,23 @@
                 "event": "INIT",
                 "to": "loading",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "State - Loading",
-                    "subtitle": "Loading state pattern"
-                  }],
-                  ["render-ui", "main", {
-                    "type": "loading-state",
-                    "message": "Loading data..."
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "State - Loading",
+                      "subtitle": "Loading state pattern"
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "loading-state",
+                      "message": "Loading data..."
+                    }
+                  ]
                 ]
               },
               {
@@ -1447,11 +2689,20 @@
           "linkedEntity": "StateDemo",
           "stateMachine": {
             "states": [
-              { "name": "empty", "isInitial": true }
+              {
+                "name": "empty",
+                "isInitial": true
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "CREATE", "name": "Create Item" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "CREATE",
+                "name": "Create Item"
+              }
             ],
             "transitions": [
               {
@@ -1459,17 +2710,25 @@
                 "event": "INIT",
                 "to": "empty",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "State - Empty",
-                    "subtitle": "Empty state pattern"
-                  }],
-                  ["render-ui", "main", {
-                    "type": "empty-state",
-                    "title": "No items yet",
-                    "description": "Get started by creating your first item.",
-                    "icon": "mail"
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "State - Empty",
+                      "subtitle": "Empty state pattern"
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "empty-state",
+                      "title": "No items yet",
+                      "description": "Get started by creating your first item.",
+                      "icon": "mail"
+                    }
+                  ]
                 ]
               },
               {
@@ -1486,11 +2745,20 @@
           "linkedEntity": "StateDemo",
           "stateMachine": {
             "states": [
-              { "name": "error", "isInitial": true }
+              {
+                "name": "error",
+                "isInitial": true
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "RETRY", "name": "Retry" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "RETRY",
+                "name": "Retry"
+              }
             ],
             "transitions": [
               {
@@ -1498,16 +2766,24 @@
                 "event": "INIT",
                 "to": "error",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "State - Error",
-                    "subtitle": "Error state pattern"
-                  }],
-                  ["render-ui", "main", {
-                    "type": "error-state",
-                    "title": "Something went wrong",
-                    "message": "We couldn't load the data. Please try again."
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "State - Error",
+                      "subtitle": "Error state pattern"
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "error-state",
+                      "title": "Something went wrong",
+                      "message": "We couldn't load the data. Please try again."
+                    }
+                  ]
                 ]
               },
               {
@@ -1524,21 +2800,30 @@
           "name": "LoadingStatePage",
           "path": "/states/loading",
           "traits": [
-            { "ref": "LoadingStateDemo", "linkedEntity": "StateDemo" }
+            {
+              "ref": "LoadingStateDemo",
+              "linkedEntity": "StateDemo"
+            }
           ]
         },
         {
           "name": "EmptyStatePage",
           "path": "/states/empty",
           "traits": [
-            { "ref": "EmptyStateDemo", "linkedEntity": "StateDemo" }
+            {
+              "ref": "EmptyStateDemo",
+              "linkedEntity": "StateDemo"
+            }
           ]
         },
         {
           "name": "ErrorStatePage",
           "path": "/states/error",
           "traits": [
-            { "ref": "ErrorStateDemo", "linkedEntity": "StateDemo" }
+            {
+              "ref": "ErrorStateDemo",
+              "linkedEntity": "StateDemo"
+            }
           ]
         }
       ]
@@ -1549,9 +2834,20 @@
         "name": "ModalItem",
         "persistence": "runtime",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "title", "type": "string", "required": true },
-          { "name": "content", "type": "string" }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "content",
+            "type": "string"
+          }
         ]
       },
       "traits": [
@@ -1561,14 +2857,31 @@
           "linkedEntity": "ModalItem",
           "stateMachine": {
             "states": [
-              { "name": "closed", "isInitial": true },
-              { "name": "open" }
+              {
+                "name": "closed",
+                "isInitial": true
+              },
+              {
+                "name": "open"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "OPEN", "name": "Open Modal" },
-              { "key": "CLOSE", "name": "Close Modal" },
-              { "key": "CONFIRM", "name": "Confirm" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "OPEN",
+                "name": "Open Modal"
+              },
+              {
+                "key": "CLOSE",
+                "name": "Close Modal"
+              },
+              {
+                "key": "CONFIRM",
+                "name": "Confirm"
+              }
             ],
             "transitions": [
               {
@@ -1576,14 +2889,22 @@
                 "event": "INIT",
                 "to": "closed",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "Modal Pattern",
-                    "subtitle": "Modal dialog demonstration",
-                    "actions": [
-                      { "label": "Open Modal", "event": "OPEN", "variant": "primary" }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "Modal Pattern",
+                      "subtitle": "Modal dialog demonstration",
+                      "actions": [
+                        {
+                          "label": "Open Modal",
+                          "event": "OPEN",
+                          "variant": "primary"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -1591,13 +2912,17 @@
                 "event": "OPEN",
                 "to": "open",
                 "effects": [
-                  ["render-ui", "modal", {
-                    "type": "confirm-dialog",
-                    "title": "Confirm Action",
-                    "message": "Are you sure you want to proceed with this action?",
-                    "confirmText": "Confirm",
-                    "cancelText": "Cancel"
-                  }]
+                  [
+                    "render-ui",
+                    "modal",
+                    {
+                      "type": "confirm-dialog",
+                      "title": "Confirm Action",
+                      "message": "Are you sure you want to proceed with this action?",
+                      "confirmText": "Confirm",
+                      "cancelText": "Cancel"
+                    }
+                  ]
                 ]
               },
               {
@@ -1605,7 +2930,11 @@
                 "event": "CLOSE",
                 "to": "closed",
                 "effects": [
-                  ["render-ui", "modal", null]
+                  [
+                    "render-ui",
+                    "modal",
+                    null
+                  ]
                 ]
               },
               {
@@ -1613,8 +2942,16 @@
                 "event": "CONFIRM",
                 "to": "closed",
                 "effects": [
-                  ["render-ui", "modal", null],
-                  ["notify", "success", "Action confirmed!"]
+                  [
+                    "render-ui",
+                    "modal",
+                    null
+                  ],
+                  [
+                    "notify",
+                    "success",
+                    "Action confirmed!"
+                  ]
                 ]
               }
             ]
@@ -1626,13 +2963,27 @@
           "linkedEntity": "ModalItem",
           "stateMachine": {
             "states": [
-              { "name": "closed", "isInitial": true },
-              { "name": "open" }
+              {
+                "name": "closed",
+                "isInitial": true
+              },
+              {
+                "name": "open"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "OPEN", "name": "Open Drawer" },
-              { "key": "CLOSE", "name": "Close Drawer" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "OPEN",
+                "name": "Open Drawer"
+              },
+              {
+                "key": "CLOSE",
+                "name": "Close Drawer"
+              }
             ],
             "transitions": [
               {
@@ -1640,14 +2991,22 @@
                 "event": "INIT",
                 "to": "closed",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "Drawer Pattern",
-                    "subtitle": "Slide-out drawer demonstration",
-                    "actions": [
-                      { "label": "Open Drawer", "event": "OPEN", "variant": "primary" }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "Drawer Pattern",
+                      "subtitle": "Slide-out drawer demonstration",
+                      "actions": [
+                        {
+                          "label": "Open Drawer",
+                          "event": "OPEN",
+                          "variant": "primary"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -1655,15 +3014,25 @@
                 "event": "OPEN",
                 "to": "open",
                 "effects": [
-                  ["render-ui", "drawer", {
-                    "type": "detail-panel",
-                    "title": "Drawer Content",
-                    "entity": "ModalItem",
-                    "fields": ["title", "content"],
-                    "actions": [
-                      { "label": "Close", "event": "CLOSE" }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "drawer",
+                    {
+                      "type": "detail-panel",
+                      "title": "Drawer Content",
+                      "entity": "ModalItem",
+                      "fields": [
+                        "title",
+                        "content"
+                      ],
+                      "actions": [
+                        {
+                          "label": "Close",
+                          "event": "CLOSE"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -1671,7 +3040,11 @@
                 "event": "CLOSE",
                 "to": "closed",
                 "effects": [
-                  ["render-ui", "drawer", null]
+                  [
+                    "render-ui",
+                    "drawer",
+                    null
+                  ]
                 ]
               }
             ]
@@ -1683,14 +3056,20 @@
           "name": "ModalPage",
           "path": "/modals/modal",
           "traits": [
-            { "ref": "ModalDemo", "linkedEntity": "ModalItem" }
+            {
+              "ref": "ModalDemo",
+              "linkedEntity": "ModalItem"
+            }
           ]
         },
         {
           "name": "DrawerPage",
           "path": "/modals/drawer",
           "traits": [
-            { "ref": "DrawerDemo", "linkedEntity": "ModalItem" }
+            {
+              "ref": "DrawerDemo",
+              "linkedEntity": "ModalItem"
+            }
           ]
         }
       ]
@@ -1701,10 +3080,25 @@
         "name": "ContentItem",
         "persistence": "runtime",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "title", "type": "string", "required": true },
-          { "name": "content", "type": "string" },
-          { "name": "isExpanded", "type": "boolean", "default": false }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "content",
+            "type": "string"
+          },
+          {
+            "name": "isExpanded",
+            "type": "boolean",
+            "default": false
+          }
         ]
       },
       "traits": [
@@ -1714,11 +3108,26 @@
           "linkedEntity": "ContentItem",
           "stateMachine": {
             "states": [
-              { "name": "viewing", "isInitial": true }
+              {
+                "name": "viewing",
+                "isInitial": true
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "TOGGLE", "name": "Toggle Section", "payload": [{ "name": "id", "type": "string" }] }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "TOGGLE",
+                "name": "Toggle Section",
+                "payloadSchema": [
+                  {
+                    "name": "id",
+                    "type": "string"
+                  }
+                ]
+              }
             ],
             "transitions": [
               {
@@ -1726,19 +3135,39 @@
                 "event": "INIT",
                 "to": "viewing",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "Accordion Pattern",
-                    "subtitle": "Collapsible content sections"
-                  }],
-                  ["render-ui", "main", {
-                    "type": "accordion",
-                    "items": [
-                      { "id": "section1", "title": "Section 1", "content": "Content for section 1" },
-                      { "id": "section2", "title": "Section 2", "content": "Content for section 2" },
-                      { "id": "section3", "title": "Section 3", "content": "Content for section 3" }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "Accordion Pattern",
+                      "subtitle": "Collapsible content sections"
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "accordion",
+                      "items": [
+                        {
+                          "id": "section1",
+                          "title": "Section 1",
+                          "content": "Content for section 1"
+                        },
+                        {
+                          "id": "section2",
+                          "title": "Section 2",
+                          "content": "Content for section 2"
+                        },
+                        {
+                          "id": "section3",
+                          "title": "Section 3",
+                          "content": "Content for section 3"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -1755,11 +3184,20 @@
           "linkedEntity": "ContentItem",
           "stateMachine": {
             "states": [
-              { "name": "viewing", "isInitial": true }
+              {
+                "name": "viewing",
+                "isInitial": true
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "DISMISS", "name": "Dismiss Alert" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "DISMISS",
+                "name": "Dismiss Alert"
+              }
             ],
             "transitions": [
               {
@@ -1767,17 +3205,25 @@
                 "event": "INIT",
                 "to": "viewing",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "Alert Pattern",
-                    "subtitle": "Alert message components"
-                  }],
-                  ["render-ui", "main", {
-                    "type": "alert",
-                    "variant": "info",
-                    "title": "Information",
-                    "message": "This is an informational alert message."
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "Alert Pattern",
+                      "subtitle": "Alert message components"
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "alert",
+                      "variant": "info",
+                      "title": "Information",
+                      "message": "This is an informational alert message."
+                    }
+                  ]
                 ]
               },
               {
@@ -1794,14 +3240,20 @@
           "name": "AccordionPage",
           "path": "/molecules/accordion",
           "traits": [
-            { "ref": "AccordionDemo", "linkedEntity": "ContentItem" }
+            {
+              "ref": "AccordionDemo",
+              "linkedEntity": "ContentItem"
+            }
           ]
         },
         {
           "name": "AlertPage",
           "path": "/molecules/alert",
           "traits": [
-            { "ref": "AlertDemo", "linkedEntity": "ContentItem" }
+            {
+              "ref": "AlertDemo",
+              "linkedEntity": "ContentItem"
+            }
           ]
         }
       ]
@@ -1812,12 +3264,36 @@
         "name": "GameState",
         "persistence": "runtime",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "score", "type": "number", "default": 0 },
-          { "name": "lives", "type": "number", "default": 3 },
-          { "name": "level", "type": "number", "default": 1 },
-          { "name": "isPaused", "type": "boolean", "default": false },
-          { "name": "isGameOver", "type": "boolean", "default": false }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "score",
+            "type": "number",
+            "default": 0
+          },
+          {
+            "name": "lives",
+            "type": "number",
+            "default": 3
+          },
+          {
+            "name": "level",
+            "type": "number",
+            "default": 1
+          },
+          {
+            "name": "isPaused",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "isGameOver",
+            "type": "boolean",
+            "default": false
+          }
         ]
       },
       "traits": [
@@ -1827,18 +3303,45 @@
           "linkedEntity": "GameState",
           "stateMachine": {
             "states": [
-              { "name": "menu", "isInitial": true },
-              { "name": "playing" },
-              { "name": "paused" },
-              { "name": "gameOver" }
+              {
+                "name": "menu",
+                "isInitial": true
+              },
+              {
+                "name": "playing"
+              },
+              {
+                "name": "paused"
+              },
+              {
+                "name": "gameOver"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "START", "name": "Start Game" },
-              { "key": "PAUSE", "name": "Pause Game" },
-              { "key": "RESUME", "name": "Resume Game" },
-              { "key": "GAME_OVER", "name": "Game Over" },
-              { "key": "RESTART", "name": "Restart Game" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "START",
+                "name": "Start Game"
+              },
+              {
+                "key": "PAUSE",
+                "name": "Pause Game"
+              },
+              {
+                "key": "RESUME",
+                "name": "Resume Game"
+              },
+              {
+                "key": "GAME_OVER",
+                "name": "Game Over"
+              },
+              {
+                "key": "RESTART",
+                "name": "Restart Game"
+              }
             ],
             "transitions": [
               {
@@ -1846,14 +3349,24 @@
                 "event": "INIT",
                 "to": "menu",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "game-menu",
-                    "title": "Game Patterns Demo",
-                    "options": [
-                      { "label": "Start Game", "event": "START" },
-                      { "label": "Settings", "event": "SETTINGS" }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "game-menu",
+                      "title": "Game Patterns Demo",
+                      "options": [
+                        {
+                          "label": "Start Game",
+                          "event": "START"
+                        },
+                        {
+                          "label": "Settings",
+                          "event": "SETTINGS"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -1861,30 +3374,67 @@
                 "event": "START",
                 "to": "playing",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "game-canvas",
-                    "width": 800,
-                    "height": 600
-                  }],
-                  ["render-ui", "hud-top", {
-                    "type": "game-hud",
-                    "stats": [
-                      { "label": "Score", "value": "@entity.score" },
-                      { "label": "Lives", "value": "@entity.lives" },
-                      { "label": "Level", "value": "@entity.level" }
-                    ]
-                  }],
-                  ["render-ui", "hud-bottom", {
-                    "type": "game-controls",
-                    "layout": "buttons",
-                    "position": "bottom-center",
-                    "controls": [
-                      { "id": "left", "label": "Left", "event": "MOVE_LEFT" },
-                      { "id": "right", "label": "Right", "event": "MOVE_RIGHT" },
-                      { "id": "jump", "label": "Jump", "event": "JUMP" },
-                      { "id": "pause", "label": "Pause", "event": "PAUSE" }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "game-canvas",
+                      "width": 800,
+                      "height": 600
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "hud-top",
+                    {
+                      "type": "game-hud",
+                      "stats": [
+                        {
+                          "label": "Score",
+                          "value": "@entity.score"
+                        },
+                        {
+                          "label": "Lives",
+                          "value": "@entity.lives"
+                        },
+                        {
+                          "label": "Level",
+                          "value": "@entity.level"
+                        }
+                      ]
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "hud-bottom",
+                    {
+                      "type": "game-controls",
+                      "layout": "buttons",
+                      "position": "bottom-center",
+                      "controls": [
+                        {
+                          "id": "left",
+                          "label": "Left",
+                          "event": "MOVE_LEFT"
+                        },
+                        {
+                          "id": "right",
+                          "label": "Right",
+                          "event": "MOVE_RIGHT"
+                        },
+                        {
+                          "id": "jump",
+                          "label": "Jump",
+                          "event": "JUMP"
+                        },
+                        {
+                          "id": "pause",
+                          "label": "Pause",
+                          "event": "PAUSE"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -1892,15 +3442,28 @@
                 "event": "PAUSE",
                 "to": "paused",
                 "effects": [
-                  ["render-ui", "overlay", {
-                    "type": "game-pause-overlay",
-                    "title": "Paused",
-                    "options": [
-                      { "label": "Resume", "event": "RESUME" },
-                      { "label": "Restart", "event": "RESTART" },
-                      { "label": "Quit", "event": "INIT" }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "overlay",
+                    {
+                      "type": "game-pause-overlay",
+                      "title": "Paused",
+                      "options": [
+                        {
+                          "label": "Resume",
+                          "event": "RESUME"
+                        },
+                        {
+                          "label": "Restart",
+                          "event": "RESTART"
+                        },
+                        {
+                          "label": "Quit",
+                          "event": "INIT"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -1913,15 +3476,25 @@
                 "event": "GAME_OVER",
                 "to": "gameOver",
                 "effects": [
-                  ["render-ui", "overlay", {
-                    "type": "game-over-screen",
-                    "title": "Game Over",
-                    "currentScore": "@entity.score",
-                    "actions": [
-                      { "label": "Play Again", "event": "RESTART" },
-                      { "label": "Main Menu", "event": "INIT" }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "overlay",
+                    {
+                      "type": "game-over-screen",
+                      "title": "Game Over",
+                      "currentScore": "@entity.score",
+                      "actions": [
+                        {
+                          "label": "Play Again",
+                          "event": "RESTART"
+                        },
+                        {
+                          "label": "Main Menu",
+                          "event": "INIT"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -1943,7 +3516,10 @@
           "name": "GamePage",
           "path": "/game",
           "traits": [
-            { "ref": "GameDemo", "linkedEntity": "GameState" }
+            {
+              "ref": "GameDemo",
+              "linkedEntity": "GameState"
+            }
           ]
         }
       ]
@@ -1954,8 +3530,22 @@
         "name": "LayoutDemo",
         "persistence": "runtime",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "layoutType", "type": "enum", "values": ["split", "grid", "flex", "box"], "default": "flex" }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "layoutType",
+            "type": "enum",
+            "values": [
+              "split",
+              "grid",
+              "flex",
+              "box"
+            ],
+            "default": "flex"
+          }
         ]
       },
       "traits": [
@@ -1965,10 +3555,16 @@
           "linkedEntity": "LayoutDemo",
           "stateMachine": {
             "states": [
-              { "name": "viewing", "isInitial": true }
+              {
+                "name": "viewing",
+                "isInitial": true
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              }
             ],
             "transitions": [
               {
@@ -1976,161 +3572,347 @@
                 "event": "INIT",
                 "to": "viewing",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "Layout Patterns",
-                    "subtitle": "Flexible layout primitives for building UIs"
-                  }],
-                  ["render-ui", "sidebar", {
-                    "type": "vstack",
-                    "gap": "lg",
-                    "children": [
-                      {
-                        "type": "heading",
-                        "content": "VStack (Vertical)",
-                        "level": 3
-                      },
-                      {
-                        "type": "box",
-                        "p": "md",
-                        "bg": "surface",
-                        "border": "default",
-                        "radius": "md",
-                        "children": [
-                          {
-                            "type": "vstack",
-                            "gap": "sm",
-                            "children": [
-                              { "type": "box", "p": "sm", "bg": "primary", "children": [{ "type": "text", "content": "Item 1" }] },
-                              { "type": "box", "p": "sm", "bg": "primary", "children": [{ "type": "text", "content": "Item 2" }] },
-                              { "type": "box", "p": "sm", "bg": "primary", "children": [{ "type": "text", "content": "Item 3" }] }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "divider",
-                        "orientation": "horizontal"
-                      },
-                      {
-                        "type": "heading",
-                        "content": "HStack (Horizontal)",
-                        "level": 3
-                      },
-                      {
-                        "type": "box",
-                        "p": "md",
-                        "bg": "surface",
-                        "border": "default",
-                        "radius": "md",
-                        "children": [
-                          {
-                            "type": "hstack",
-                            "gap": "sm",
-                            "children": [
-                              { "type": "box", "p": "sm", "bg": "secondary", "children": [{ "type": "text", "content": "A" }] },
-                              { "type": "box", "p": "sm", "bg": "secondary", "children": [{ "type": "text", "content": "B" }] },
-                              { "type": "box", "p": "sm", "bg": "secondary", "children": [{ "type": "text", "content": "C" }] }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "divider",
-                        "orientation": "horizontal"
-                      },
-                      {
-                        "type": "heading",
-                        "content": "Center",
-                        "level": 3
-                      },
-                      {
-                        "type": "box",
-                        "p": "md",
-                        "bg": "surface",
-                        "border": "default",
-                        "radius": "md",
-                        "children": [
-                          {
-                            "type": "center",
-                            "minHeight": "100px",
-                            "children": [
-                              { "type": "text", "content": "Centered Content", "weight": "bold" }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }],
-                  ["render-ui", "main", {
-                    "type": "vstack",
-                    "gap": "lg",
-                    "children": [
-                      {
-                        "type": "heading",
-                        "content": "Grid Layout",
-                        "level": 3
-                      },
-                      {
-                        "type": "grid",
-                        "cols": 3,
-                        "gap": "md",
-                        "children": [
-                          { "type": "card", "title": "Card 1", "padding": "md", "children": [{ "type": "text", "content": "Grid cell 1" }] },
-                          { "type": "card", "title": "Card 2", "padding": "md", "children": [{ "type": "text", "content": "Grid cell 2" }] },
-                          { "type": "card", "title": "Card 3", "padding": "md", "children": [{ "type": "text", "content": "Grid cell 3" }] },
-                          { "type": "card", "title": "Card 4", "padding": "md", "children": [{ "type": "text", "content": "Grid cell 4" }] },
-                          { "type": "card", "title": "Card 5", "padding": "md", "children": [{ "type": "text", "content": "Grid cell 5" }] },
-                          { "type": "card", "title": "Card 6", "padding": "md", "children": [{ "type": "text", "content": "Grid cell 6" }] }
-                        ]
-                      },
-                      {
-                        "type": "divider",
-                        "orientation": "horizontal"
-                      },
-                      {
-                        "type": "heading",
-                        "content": "Box with Styling",
-                        "level": 3
-                      },
-                      {
-                        "type": "hstack",
-                        "gap": "md",
-                        "children": [
-                          { "type": "box", "p": "lg", "bg": "surface", "border": "default", "shadow": "sm", "radius": "md", "children": [{ "type": "text", "content": "Surface Box" }] },
-                          { "type": "box", "p": "lg", "bg": "muted", "border": "default", "shadow": "md", "radius": "lg", "children": [{ "type": "text", "content": "Muted Box" }] },
-                          { "type": "box", "p": "lg", "bg": "card", "border": "default", "shadow": "lg", "radius": "xl", "children": [{ "type": "text", "content": "Card Box" }] }
-                        ]
-                      },
-                      {
-                        "type": "divider",
-                        "orientation": "horizontal"
-                      },
-                      {
-                        "type": "heading",
-                        "content": "Spacer Demo",
-                        "level": 3
-                      },
-                      {
-                        "type": "box",
-                        "p": "md",
-                        "bg": "surface",
-                        "border": "default",
-                        "radius": "md",
-                        "children": [
-                          {
-                            "type": "hstack",
-                            "gap": "sm",
-                            "children": [
-                              { "type": "button", "label": "Left", "variant": "primary" },
-                              { "type": "spacer", "size": "flex" },
-                              { "type": "button", "label": "Right", "variant": "secondary" }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "Layout Patterns",
+                      "subtitle": "Flexible layout primitives for building UIs"
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "sidebar",
+                    {
+                      "type": "vstack",
+                      "gap": "lg",
+                      "children": [
+                        {
+                          "type": "heading",
+                          "content": "VStack (Vertical)",
+                          "level": 3
+                        },
+                        {
+                          "type": "box",
+                          "p": "md",
+                          "bg": "surface",
+                          "border": "default",
+                          "radius": "md",
+                          "children": [
+                            {
+                              "type": "vstack",
+                              "gap": "sm",
+                              "children": [
+                                {
+                                  "type": "box",
+                                  "p": "sm",
+                                  "bg": "primary",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "content": "Item 1"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "box",
+                                  "p": "sm",
+                                  "bg": "primary",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "content": "Item 2"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "box",
+                                  "p": "sm",
+                                  "bg": "primary",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "content": "Item 3"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "divider",
+                          "orientation": "horizontal"
+                        },
+                        {
+                          "type": "heading",
+                          "content": "HStack (Horizontal)",
+                          "level": 3
+                        },
+                        {
+                          "type": "box",
+                          "p": "md",
+                          "bg": "surface",
+                          "border": "default",
+                          "radius": "md",
+                          "children": [
+                            {
+                              "type": "hstack",
+                              "gap": "sm",
+                              "children": [
+                                {
+                                  "type": "box",
+                                  "p": "sm",
+                                  "bg": "secondary",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "content": "A"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "box",
+                                  "p": "sm",
+                                  "bg": "secondary",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "content": "B"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "box",
+                                  "p": "sm",
+                                  "bg": "secondary",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "content": "C"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "divider",
+                          "orientation": "horizontal"
+                        },
+                        {
+                          "type": "heading",
+                          "content": "Center",
+                          "level": 3
+                        },
+                        {
+                          "type": "box",
+                          "p": "md",
+                          "bg": "surface",
+                          "border": "default",
+                          "radius": "md",
+                          "children": [
+                            {
+                              "type": "center",
+                              "minHeight": "100px",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "content": "Centered Content",
+                                  "weight": "bold"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "vstack",
+                      "gap": "lg",
+                      "children": [
+                        {
+                          "type": "heading",
+                          "content": "Grid Layout",
+                          "level": 3
+                        },
+                        {
+                          "type": "grid",
+                          "cols": 3,
+                          "gap": "md",
+                          "children": [
+                            {
+                              "type": "card",
+                              "title": "Card 1",
+                              "padding": "md",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "content": "Grid cell 1"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "card",
+                              "title": "Card 2",
+                              "padding": "md",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "content": "Grid cell 2"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "card",
+                              "title": "Card 3",
+                              "padding": "md",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "content": "Grid cell 3"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "card",
+                              "title": "Card 4",
+                              "padding": "md",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "content": "Grid cell 4"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "card",
+                              "title": "Card 5",
+                              "padding": "md",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "content": "Grid cell 5"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "card",
+                              "title": "Card 6",
+                              "padding": "md",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "content": "Grid cell 6"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "divider",
+                          "orientation": "horizontal"
+                        },
+                        {
+                          "type": "heading",
+                          "content": "Box with Styling",
+                          "level": 3
+                        },
+                        {
+                          "type": "hstack",
+                          "gap": "md",
+                          "children": [
+                            {
+                              "type": "box",
+                              "p": "lg",
+                              "bg": "surface",
+                              "border": "default",
+                              "shadow": "sm",
+                              "radius": "md",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "content": "Surface Box"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "box",
+                              "p": "lg",
+                              "bg": "muted",
+                              "border": "default",
+                              "shadow": "md",
+                              "radius": "lg",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "content": "Muted Box"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "box",
+                              "p": "lg",
+                              "bg": "card",
+                              "border": "default",
+                              "shadow": "lg",
+                              "radius": "xl",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "content": "Card Box"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "divider",
+                          "orientation": "horizontal"
+                        },
+                        {
+                          "type": "heading",
+                          "content": "Spacer Demo",
+                          "level": 3
+                        },
+                        {
+                          "type": "box",
+                          "p": "md",
+                          "bg": "surface",
+                          "border": "default",
+                          "radius": "md",
+                          "children": [
+                            {
+                              "type": "hstack",
+                              "gap": "sm",
+                              "children": [
+                                {
+                                  "type": "button",
+                                  "label": "Left",
+                                  "variant": "primary"
+                                },
+                                {
+                                  "type": "spacer",
+                                  "size": "flex"
+                                },
+                                {
+                                  "type": "button",
+                                  "label": "Right",
+                                  "variant": "secondary"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
                 ]
               }
             ]
@@ -2142,7 +3924,10 @@
           "name": "LayoutPage",
           "path": "/layouts",
           "traits": [
-            { "ref": "LayoutViewer", "linkedEntity": "LayoutDemo" }
+            {
+              "ref": "LayoutViewer",
+              "linkedEntity": "LayoutDemo"
+            }
           ]
         }
       ]
@@ -2153,8 +3938,16 @@
         "name": "ContainerDemo",
         "persistence": "runtime",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "isOpen", "type": "boolean", "default": false }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "isOpen",
+            "type": "boolean",
+            "default": false
+          }
         ]
       },
       "traits": [
@@ -2164,17 +3957,42 @@
           "linkedEntity": "ContainerDemo",
           "stateMachine": {
             "states": [
-              { "name": "viewing", "isInitial": true },
-              { "name": "modalOpen" },
-              { "name": "drawerOpen" }
+              {
+                "name": "viewing",
+                "isInitial": true
+              },
+              {
+                "name": "modalOpen"
+              },
+              {
+                "name": "drawerOpen"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "OPEN_MODAL", "name": "Open Modal" },
-              { "key": "OPEN_DRAWER", "name": "Open Drawer" },
-              { "key": "CLOSE", "name": "Close" },
-              { "key": "CONFIRM", "name": "Confirm" },
-              { "key": "CANCEL", "name": "Cancel" }
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "OPEN_MODAL",
+                "name": "Open Modal"
+              },
+              {
+                "key": "OPEN_DRAWER",
+                "name": "Open Drawer"
+              },
+              {
+                "key": "CLOSE",
+                "name": "Close"
+              },
+              {
+                "key": "CONFIRM",
+                "name": "Confirm"
+              },
+              {
+                "key": "CANCEL",
+                "name": "Cancel"
+              }
             ],
             "transitions": [
               {
@@ -2182,68 +4000,97 @@
                 "event": "INIT",
                 "to": "viewing",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "page-header",
-                    "title": "Container Patterns",
-                    "subtitle": "Modal, Drawer, and Container components",
-                    "actions": [
-                      { "label": "Open Modal", "event": "OPEN_MODAL", "variant": "primary" },
-                      { "label": "Open Drawer", "event": "OPEN_DRAWER", "variant": "secondary" }
-                    ]
-                  }],
-                  ["render-ui", "main", {
-                    "type": "vstack",
-                    "gap": "lg",
-                    "children": [
-                      {
-                        "type": "heading",
-                        "content": "Container Patterns",
-                        "level": 3
-                      },
-                      {
-                        "type": "text",
-                        "content": "Click the buttons above to see Modal and Drawer containers in action."
-                      },
-                      {
-                        "type": "divider",
-                        "orientation": "horizontal"
-                      },
-                      {
-                        "type": "heading",
-                        "content": "Card Container",
-                        "level": 3
-                      },
-                      {
-                        "type": "card",
-                        "title": "Card Container Example",
-                        "subtitle": "With header and footer",
-                        "padding": "lg",
-                        "shadow": "md",
-                        "children": [
-                          { "type": "text", "content": "This is the card body content. Cards are great for grouping related information together." }
-                        ]
-                      },
-                      {
-                        "type": "divider",
-                        "orientation": "horizontal"
-                      },
-                      {
-                        "type": "heading",
-                        "content": "Max-Width Container",
-                        "level": 3
-                      },
-                      {
-                        "type": "container",
-                        "maxWidth": "md",
-                        "padding": "lg",
-                        "children": [
-                          { "type": "box", "p": "md", "bg": "surface", "border": "default", "radius": "md", "children": [
-                            { "type": "text", "content": "This content is constrained to a medium max-width container." }
-                          ]}
-                        ]
-                      }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "page-header",
+                      "title": "Container Patterns",
+                      "subtitle": "Modal, Drawer, and Container components",
+                      "actions": [
+                        {
+                          "label": "Open Modal",
+                          "event": "OPEN_MODAL",
+                          "variant": "primary"
+                        },
+                        {
+                          "label": "Open Drawer",
+                          "event": "OPEN_DRAWER",
+                          "variant": "secondary"
+                        }
+                      ]
+                    }
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "vstack",
+                      "gap": "lg",
+                      "children": [
+                        {
+                          "type": "heading",
+                          "content": "Container Patterns",
+                          "level": 3
+                        },
+                        {
+                          "type": "text",
+                          "content": "Click the buttons above to see Modal and Drawer containers in action."
+                        },
+                        {
+                          "type": "divider",
+                          "orientation": "horizontal"
+                        },
+                        {
+                          "type": "heading",
+                          "content": "Card Container",
+                          "level": 3
+                        },
+                        {
+                          "type": "card",
+                          "title": "Card Container Example",
+                          "subtitle": "With header and footer",
+                          "padding": "lg",
+                          "shadow": "md",
+                          "children": [
+                            {
+                              "type": "text",
+                              "content": "This is the card body content. Cards are great for grouping related information together."
+                            }
+                          ]
+                        },
+                        {
+                          "type": "divider",
+                          "orientation": "horizontal"
+                        },
+                        {
+                          "type": "heading",
+                          "content": "Max-Width Container",
+                          "level": 3
+                        },
+                        {
+                          "type": "container",
+                          "maxWidth": "md",
+                          "padding": "lg",
+                          "children": [
+                            {
+                              "type": "box",
+                              "p": "md",
+                              "bg": "surface",
+                              "border": "default",
+                              "radius": "md",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "content": "This content is constrained to a medium max-width container."
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -2251,14 +4098,18 @@
                 "event": "OPEN_MODAL",
                 "to": "modalOpen",
                 "effects": [
-                  ["render-ui", "modal", {
-                    "type": "confirm-dialog",
-                    "title": "Confirm Action",
-                    "message": "This is a modal dialog. Do you want to proceed?",
-                    "confirmText": "Yes, Proceed",
-                    "cancelText": "Cancel",
-                    "variant": "default"
-                  }]
+                  [
+                    "render-ui",
+                    "modal",
+                    {
+                      "type": "confirm-dialog",
+                      "title": "Confirm Action",
+                      "message": "This is a modal dialog. Do you want to proceed?",
+                      "confirmText": "Yes, Proceed",
+                      "cancelText": "Cancel",
+                      "variant": "default"
+                    }
+                  ]
                 ]
               },
               {
@@ -2266,8 +4117,16 @@
                 "event": "CONFIRM",
                 "to": "viewing",
                 "effects": [
-                  ["render-ui", "modal", null],
-                  ["notify", "success", "Action confirmed successfully!"]
+                  [
+                    "render-ui",
+                    "modal",
+                    null
+                  ],
+                  [
+                    "notify",
+                    "success",
+                    "Action confirmed successfully!"
+                  ]
                 ]
               },
               {
@@ -2275,7 +4134,11 @@
                 "event": "CANCEL",
                 "to": "viewing",
                 "effects": [
-                  ["render-ui", "modal", null]
+                  [
+                    "render-ui",
+                    "modal",
+                    null
+                  ]
                 ]
               },
               {
@@ -2283,7 +4146,11 @@
                 "event": "CLOSE",
                 "to": "viewing",
                 "effects": [
-                  ["render-ui", "modal", null]
+                  [
+                    "render-ui",
+                    "modal",
+                    null
+                  ]
                 ]
               },
               {
@@ -2291,12 +4158,16 @@
                 "event": "OPEN_DRAWER",
                 "to": "drawerOpen",
                 "effects": [
-                  ["render-ui", "drawer", {
-                    "type": "drawer",
-                    "title": "Drawer Panel",
-                    "position": "right",
-                    "width": "400px"
-                  }]
+                  [
+                    "render-ui",
+                    "drawer",
+                    {
+                      "type": "drawer",
+                      "title": "Drawer Panel",
+                      "position": "right",
+                      "width": "400px"
+                    }
+                  ]
                 ]
               },
               {
@@ -2304,7 +4175,11 @@
                 "event": "CLOSE",
                 "to": "viewing",
                 "effects": [
-                  ["render-ui", "drawer", null]
+                  [
+                    "render-ui",
+                    "drawer",
+                    null
+                  ]
                 ]
               }
             ]
@@ -2316,7 +4191,10 @@
           "name": "ContainerPage",
           "path": "/containers",
           "traits": [
-            { "ref": "ContainerViewer", "linkedEntity": "ContainerDemo" }
+            {
+              "ref": "ContainerViewer",
+              "linkedEntity": "ContainerDemo"
+            }
           ]
         }
       ]

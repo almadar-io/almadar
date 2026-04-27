@@ -10,9 +10,20 @@
         "persistence": "persistent",
         "collection": "authors",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "name", "type": "string", "required": true },
-          { "name": "email", "type": "string" }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "email",
+            "type": "string"
+          }
         ]
       },
       "traits": [
@@ -21,12 +32,28 @@
           "linkedEntity": "Author",
           "category": "interaction",
           "stateMachine": {
-            "states": [{ "name": "browsing", "isInitial": true }],
+            "states": [
+              {
+                "name": "browsing",
+                "isInitial": true
+              }
+            ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "VIEW", "name": "View Author", "payload": [
-                { "name": "id", "type": "string", "required": true }
-              ]}
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "VIEW",
+                "name": "View Author",
+                "payloadSchema": [
+                  {
+                    "name": "id",
+                    "type": "string",
+                    "required": true
+                  }
+                ]
+              }
             ],
             "transitions": [
               {
@@ -34,13 +61,28 @@
                 "event": "INIT",
                 "to": "browsing",
                 "effects": [
-                  ["fetch", "Author"],
-                  ["render-ui", "main", {
-                    "type": "entity-table",
-                    "entity": "Author",
-                    "columns": ["name", "email"],
-                    "itemActions": [{ "event": "VIEW", "label": "View" }]
-                  }]
+                  [
+                    "fetch",
+                    "Author"
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "entity-table",
+                      "entity": "Author",
+                      "columns": [
+                        "name",
+                        "email"
+                      ],
+                      "itemActions": [
+                        {
+                          "event": "VIEW",
+                          "label": "View"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -48,7 +90,10 @@
                 "event": "VIEW",
                 "to": "browsing",
                 "effects": [
-                  ["navigate", "/authors/@payload.id"]
+                  [
+                    "navigate",
+                    "/authors/@payload.id"
+                  ]
                 ]
               }
             ]
@@ -59,7 +104,12 @@
         {
           "name": "AuthorListPage",
           "path": "/authors",
-          "traits": [{ "ref": "AuthorBrowser", "linkedEntity": "Author" }]
+          "traits": [
+            {
+              "ref": "AuthorBrowser",
+              "linkedEntity": "Author"
+            }
+          ]
         }
       ]
     },
@@ -70,11 +120,29 @@
         "persistence": "persistent",
         "collection": "books",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "title", "type": "string", "required": true },
-          { "name": "isbn", "type": "string" },
-          { "name": "publishedYear", "type": "number" },
-          { "name": "authorId", "type": "string", "required": true }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "isbn",
+            "type": "string"
+          },
+          {
+            "name": "publishedYear",
+            "type": "number"
+          },
+          {
+            "name": "authorId",
+            "type": "string",
+            "required": true
+          }
         ]
       },
       "traits": [
@@ -83,12 +151,28 @@
           "linkedEntity": "Book",
           "category": "interaction",
           "stateMachine": {
-            "states": [{ "name": "browsing", "isInitial": true }],
+            "states": [
+              {
+                "name": "browsing",
+                "isInitial": true
+              }
+            ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "VIEW", "name": "View Book", "payload": [
-                { "name": "id", "type": "string", "required": true }
-              ]}
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "VIEW",
+                "name": "View Book",
+                "payloadSchema": [
+                  {
+                    "name": "id",
+                    "type": "string",
+                    "required": true
+                  }
+                ]
+              }
             ],
             "transitions": [
               {
@@ -96,13 +180,29 @@
                 "event": "INIT",
                 "to": "browsing",
                 "effects": [
-                  ["fetch", "Book"],
-                  ["render-ui", "main", {
-                    "type": "entity-table",
-                    "entity": "Book",
-                    "columns": ["title", "isbn", "publishedYear"],
-                    "itemActions": [{ "event": "VIEW", "label": "View" }]
-                  }]
+                  [
+                    "fetch",
+                    "Book"
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "entity-table",
+                      "entity": "Book",
+                      "columns": [
+                        "title",
+                        "isbn",
+                        "publishedYear"
+                      ],
+                      "itemActions": [
+                        {
+                          "event": "VIEW",
+                          "label": "View"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -110,7 +210,10 @@
                 "event": "VIEW",
                 "to": "browsing",
                 "effects": [
-                  ["navigate", "/books/@payload.id"]
+                  [
+                    "navigate",
+                    "/books/@payload.id"
+                  ]
                 ]
               }
             ]
@@ -121,7 +224,12 @@
         {
           "name": "BookListPage",
           "path": "/books",
-          "traits": [{ "ref": "BookBrowser", "linkedEntity": "Book" }]
+          "traits": [
+            {
+              "ref": "BookBrowser",
+              "linkedEntity": "Book"
+            }
+          ]
         }
       ]
     },
@@ -132,8 +240,16 @@
         "persistence": "persistent",
         "collection": "categories",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "name", "type": "string", "required": true }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "required": true
+          }
         ]
       },
       "traits": [
@@ -142,12 +258,28 @@
           "linkedEntity": "Category",
           "category": "interaction",
           "stateMachine": {
-            "states": [{ "name": "browsing", "isInitial": true }],
+            "states": [
+              {
+                "name": "browsing",
+                "isInitial": true
+              }
+            ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "VIEW", "name": "View Category", "payload": [
-                { "name": "id", "type": "string", "required": true }
-              ]}
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "VIEW",
+                "name": "View Category",
+                "payloadSchema": [
+                  {
+                    "name": "id",
+                    "type": "string",
+                    "required": true
+                  }
+                ]
+              }
             ],
             "transitions": [
               {
@@ -155,13 +287,27 @@
                 "event": "INIT",
                 "to": "browsing",
                 "effects": [
-                  ["fetch", "Category"],
-                  ["render-ui", "main", {
-                    "type": "entity-table",
-                    "entity": "Category",
-                    "columns": ["name"],
-                    "itemActions": [{ "event": "VIEW", "label": "View" }]
-                  }]
+                  [
+                    "fetch",
+                    "Category"
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "entity-table",
+                      "entity": "Category",
+                      "columns": [
+                        "name"
+                      ],
+                      "itemActions": [
+                        {
+                          "event": "VIEW",
+                          "label": "View"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -169,7 +315,10 @@
                 "event": "VIEW",
                 "to": "browsing",
                 "effects": [
-                  ["navigate", "/categories/@payload.id"]
+                  [
+                    "navigate",
+                    "/categories/@payload.id"
+                  ]
                 ]
               }
             ]
@@ -180,7 +329,12 @@
         {
           "name": "CategoryListPage",
           "path": "/categories",
-          "traits": [{ "ref": "CategoryBrowser", "linkedEntity": "Category" }]
+          "traits": [
+            {
+              "ref": "CategoryBrowser",
+              "linkedEntity": "Category"
+            }
+          ]
         }
       ]
     }

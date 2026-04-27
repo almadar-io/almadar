@@ -10,16 +10,58 @@
         "persistence": "persistent",
         "collection": "items",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "name", "type": "string", "required": true },
-          { "name": "description", "type": "string" },
-          { "name": "quantity", "type": "number", "default": 0 },
-          { "name": "price", "type": "number" },
-          { "name": "isActive", "type": "boolean", "default": true },
-          { "name": "createdAt", "type": "timestamp" },
-          { "name": "tags", "type": "array", "items": { "type": "string" } },
-          { "name": "metadata", "type": "object" },
-          { "name": "status", "type": "enum", "values": ["draft", "published", "archived"] }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "quantity",
+            "type": "number",
+            "default": 0
+          },
+          {
+            "name": "price",
+            "type": "number"
+          },
+          {
+            "name": "isActive",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "createdAt",
+            "type": "timestamp"
+          },
+          {
+            "name": "tags",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "metadata",
+            "type": "object"
+          },
+          {
+            "name": "status",
+            "type": "enum",
+            "values": [
+              "draft",
+              "published",
+              "archived"
+            ]
+          }
         ]
       },
       "traits": [
@@ -29,13 +71,27 @@
           "category": "interaction",
           "stateMachine": {
             "states": [
-              { "name": "browsing", "isInitial": true }
+              {
+                "name": "browsing",
+                "isInitial": true
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "VIEW", "name": "View Item", "payload": [
-                { "name": "id", "type": "string", "required": true }
-              ]}
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "VIEW",
+                "name": "View Item",
+                "payloadSchema": [
+                  {
+                    "name": "id",
+                    "type": "string",
+                    "required": true
+                  }
+                ]
+              }
             ],
             "transitions": [
               {
@@ -43,15 +99,30 @@
                 "event": "INIT",
                 "to": "browsing",
                 "effects": [
-                  ["fetch", "Item"],
-                  ["render-ui", "main", {
-                    "type": "entity-table",
-                    "entity": "Item",
-                    "columns": ["name", "quantity", "price", "status"],
-                    "itemActions": [
-                      { "event": "VIEW", "label": "View" }
-                    ]
-                  }]
+                  [
+                    "fetch",
+                    "Item"
+                  ],
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "entity-table",
+                      "entity": "Item",
+                      "columns": [
+                        "name",
+                        "quantity",
+                        "price",
+                        "status"
+                      ],
+                      "itemActions": [
+                        {
+                          "event": "VIEW",
+                          "label": "View"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -59,7 +130,10 @@
                 "event": "VIEW",
                 "to": "browsing",
                 "effects": [
-                  ["navigate", "/items/@payload.id"]
+                  [
+                    "navigate",
+                    "/items/@payload.id"
+                  ]
                 ]
               }
             ]
@@ -71,7 +145,10 @@
           "name": "ItemListPage",
           "path": "/items",
           "traits": [
-            { "ref": "ItemBrowser", "linkedEntity": "Item" }
+            {
+              "ref": "ItemBrowser",
+              "linkedEntity": "Item"
+            }
           ]
         }
       ]

@@ -9,9 +9,20 @@
         "name": "Counter",
         "persistence": "runtime",
         "fields": [
-          { "name": "id", "type": "string", "required": true },
-          { "name": "value", "type": "number", "default": 0 },
-          { "name": "lastUpdated", "type": "timestamp" }
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "value",
+            "type": "number",
+            "default": 0
+          },
+          {
+            "name": "lastUpdated",
+            "type": "timestamp"
+          }
         ]
       },
       "traits": [
@@ -21,17 +32,42 @@
           "category": "interaction",
           "stateMachine": {
             "states": [
-              { "name": "idle", "isInitial": true },
-              { "name": "updated" }
+              {
+                "name": "idle",
+                "isInitial": true
+              },
+              {
+                "name": "updated"
+              }
             ],
             "events": [
-              { "key": "INIT", "name": "Initialize" },
-              { "key": "INCREMENT", "name": "Increment" },
-              { "key": "DECREMENT", "name": "Decrement" },
-              { "key": "RESET", "name": "Reset" },
-              { "key": "SET_VALUE", "name": "Set Value", "payload": [
-                { "name": "value", "type": "number", "required": true }
-              ]}
+              {
+                "key": "INIT",
+                "name": "Initialize"
+              },
+              {
+                "key": "INCREMENT",
+                "name": "Increment"
+              },
+              {
+                "key": "DECREMENT",
+                "name": "Decrement"
+              },
+              {
+                "key": "RESET",
+                "name": "Reset"
+              },
+              {
+                "key": "SET_VALUE",
+                "name": "Set Value",
+                "payloadSchema": [
+                  {
+                    "name": "value",
+                    "type": "number",
+                    "required": true
+                  }
+                ]
+              }
             ],
             "transitions": [
               {
@@ -39,16 +75,29 @@
                 "event": "INIT",
                 "to": "idle",
                 "effects": [
-                  ["render-ui", "main", {
-                    "type": "stats",
-                    "title": "Counter Value",
-                    "value": "@entity.value",
-                    "actions": [
-                      { "event": "INCREMENT", "label": "+" },
-                      { "event": "DECREMENT", "label": "-" },
-                      { "event": "RESET", "label": "Reset" }
-                    ]
-                  }]
+                  [
+                    "render-ui",
+                    "main",
+                    {
+                      "type": "stats",
+                      "title": "Counter Value",
+                      "value": "@entity.value",
+                      "actions": [
+                        {
+                          "event": "INCREMENT",
+                          "label": "+"
+                        },
+                        {
+                          "event": "DECREMENT",
+                          "label": "-"
+                        },
+                        {
+                          "event": "RESET",
+                          "label": "Reset"
+                        }
+                      ]
+                    }
+                  ]
                 ]
               },
               {
@@ -56,8 +105,16 @@
                 "event": "INCREMENT",
                 "to": "updated",
                 "effects": [
-                  ["increment", "@entity.value", 1],
-                  ["set", "@entity.lastUpdated", "@now"]
+                  [
+                    "increment",
+                    "@entity.value",
+                    1
+                  ],
+                  [
+                    "set",
+                    "@entity.lastUpdated",
+                    "@now"
+                  ]
                 ]
               },
               {
@@ -65,8 +122,16 @@
                 "event": "DECREMENT",
                 "to": "updated",
                 "effects": [
-                  ["decrement", "@entity.value", 1],
-                  ["set", "@entity.lastUpdated", "@now"]
+                  [
+                    "decrement",
+                    "@entity.value",
+                    1
+                  ],
+                  [
+                    "set",
+                    "@entity.lastUpdated",
+                    "@now"
+                  ]
                 ]
               },
               {
@@ -74,8 +139,16 @@
                 "event": "RESET",
                 "to": "idle",
                 "effects": [
-                  ["set", "@entity.value", 0],
-                  ["set", "@entity.lastUpdated", "@now"]
+                  [
+                    "set",
+                    "@entity.value",
+                    0
+                  ],
+                  [
+                    "set",
+                    "@entity.lastUpdated",
+                    "@now"
+                  ]
                 ]
               },
               {
@@ -83,8 +156,16 @@
                 "event": "SET_VALUE",
                 "to": "updated",
                 "effects": [
-                  ["set", "@entity.value", "@payload.value"],
-                  ["set", "@entity.lastUpdated", "@now"]
+                  [
+                    "set",
+                    "@entity.value",
+                    "@payload.value"
+                  ],
+                  [
+                    "set",
+                    "@entity.lastUpdated",
+                    "@now"
+                  ]
                 ]
               },
               {
@@ -92,7 +173,11 @@
                 "event": "INCREMENT",
                 "to": "updated",
                 "effects": [
-                  ["increment", "@entity.value", 1]
+                  [
+                    "increment",
+                    "@entity.value",
+                    1
+                  ]
                 ]
               },
               {
@@ -100,7 +185,11 @@
                 "event": "DECREMENT",
                 "to": "updated",
                 "effects": [
-                  ["decrement", "@entity.value", 1]
+                  [
+                    "decrement",
+                    "@entity.value",
+                    1
+                  ]
                 ]
               },
               {
@@ -108,7 +197,11 @@
                 "event": "RESET",
                 "to": "idle",
                 "effects": [
-                  ["set", "@entity.value", 0]
+                  [
+                    "set",
+                    "@entity.value",
+                    0
+                  ]
                 ]
               }
             ]
@@ -120,7 +213,10 @@
           "name": "CounterPage",
           "path": "/counter",
           "traits": [
-            { "ref": "CounterActions", "linkedEntity": "Counter" }
+            {
+              "ref": "CounterActions",
+              "linkedEntity": "Counter"
+            }
           ]
         }
       ]
