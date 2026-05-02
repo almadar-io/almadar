@@ -149,8 +149,8 @@ export default function Vision(): ReactNode {
               {translate({ id: "vision.cta.text", message: "The shared digital reality starts with the first model. Build yours." })}
             </Typography>
             <HStack gap="md">
-              <a href="https://orb.almadar.io"><Button variant="primary" size="lg">{translate({ id: "vision.cta.language", message: "Explore the Language" })}</Button></a>
-              <a href="/contact"><Button variant="secondary" size="lg">{translate({ id: "vision.cta.contact", message: "Get in Touch" })}</Button></a>
+              <a href="https://studio.almadar.io"><Button variant="primary" size="lg">{translate({ id: "vision.cta.studio", message: "Try Studio" })}</Button></a>
+              <a href="mailto:osama@almadar.io"><Button variant="secondary" size="lg">{translate({ id: "vision.cta.contact", message: "Get in Touch" })}</Button></a>
             </HStack>
           </VStack>
         </Box>
