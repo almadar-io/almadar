@@ -32,7 +32,7 @@ const GITHUB_LINKS: Record<string, string> = {
 };
 
 const SITE_ICONS: Record<string, { logo: string; favicon: string }> = {
-  main: { logo: "img/almadar-icon-256.png", favicon: "img/almadar-icon-256.png" },
+  main: { logo: "img/new-logos/almadar-logo.svg", favicon: "img/new-logos/almadar-logo-256.png" },
   orb: { logo: "img/orb-icon-transparent.svg", favicon: "img/orb-icon-transparent.svg" },
   studio: { logo: "img/studio-icon.svg", favicon: "img/studio-icon.svg" },
   services: { logo: "img/services-icon-transparent.svg", favicon: "img/services-icon-transparent.svg" },
