@@ -129,7 +129,7 @@ export default function Platform(): ReactNode {
               {translate({ id: "platform.cta.text", message: "Try the builder, explore the infrastructure, or learn the language. Each product works on its own. Together, they form a complete platform." })}
             </Typography>
             <HStack gap="md">
-              <a href="https://studio.almadar.io"><Button variant="primary" size="lg">{translate({ id: "platform.cta.studio", message: "Try Studio" })}</Button></a>
+              <a href="https://kflow-builder-app.web.app"><Button variant="primary" size="lg">{translate({ id: "platform.cta.studio", message: "Try Studio" })}</Button></a>
               <a href="https://orb.almadar.io"><Button variant="secondary" size="lg">{translate({ id: "platform.cta.docs", message: "Explore Orb" })}</Button></a>
             </HStack>
           </VStack>

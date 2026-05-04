@@ -21,7 +21,7 @@ import {
 
 import { OrbitalHeroBackground } from "../components/OrbitalHeroBackground";
 
-const STUDIO_URL = "https://studio.almadar.io";
+const STUDIO_URL = "https://kflow-builder-app.web.app";
 
 // ---------------------------------------------------------------------------
 // Hero prompt input — quick-start form that redirects to Studio with ?prompt

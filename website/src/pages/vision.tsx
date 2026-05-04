@@ -198,7 +198,7 @@ export default function Vision(): ReactNode {
               })}
             </Typography>
             <HStack gap="md">
-              <a href="https://studio.almadar.io"><Button variant="primary" size="lg">{translate({ id: "vision.cta.studio", message: "Try Studio" })}</Button></a>
+              <a href="https://kflow-builder-app.web.app"><Button variant="primary" size="lg">{translate({ id: "vision.cta.studio", message: "Try Studio" })}</Button></a>
               <a href="mailto:osama@almadar.io"><Button variant="secondary" size="lg">{translate({ id: "vision.cta.contact", message: "Get in touch" })}</Button></a>
             </HStack>
           </VStack>

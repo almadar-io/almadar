@@ -221,7 +221,7 @@ export default function Roadmap(): ReactNode {
                 {translate({ id: "roadmap.cta.text", message: "Everything on this roadmap builds on the same foundation: one definition that compiles to every platform. The best way to understand it is to try it." })}
               </Typography>
               <HStack gap="md">
-                <a href="https://studio.almadar.io"><Button variant="primary" size="lg">{translate({ id: "roadmap.cta.studio", message: "Try Studio" })}</Button></a>
+                <a href="https://kflow-builder-app.web.app"><Button variant="primary" size="lg">{translate({ id: "roadmap.cta.studio", message: "Try Studio" })}</Button></a>
                 <a href="https://orb.almadar.io/docs"><Button variant="secondary" size="lg">{translate({ id: "roadmap.cta.docs", message: "Read the Docs" })}</Button></a>
               </HStack>
             </VStack>
