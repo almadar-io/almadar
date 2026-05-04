@@ -29,7 +29,7 @@ const STUDIO_URL = "https://studio.almadar.io";
 function HeroPromptInput(): ReactNode {
   const placeholder = translate({
     id: "home.hero.prompt.placeholder",
-    message: "A real estate dashboard with two maps...",
+    message: "An admin dashboard with users, billing, and reports...",
   });
   const submitLabel = translate({
     id: "home.hero.prompt.submit",
