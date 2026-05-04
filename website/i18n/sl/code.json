@@ -45,7 +45,7 @@
     "message": "Hitra rast"
   },
   "home.decon.title": {
-    "message": "Povlecite pravi produkt v Studio. Preoblikujte ga. Pošljite naslednjo različico ta teden."
+    "message": "Povlecite pravi produkt v Studio in ga preoblikujte. Hitro."
   },
   "home.decon.subtitle": {
     "message": "Studio ne nadomesti tega, kar ste zgradili. Razstavi ga na koščke, ki jih lahko zgrabite, uredite in znova sestavite s hitrostjo startupa."
@@ -237,7 +237,7 @@
     "message": "Nehajte prototipirati. Začnite pošiljati."
   },
   "home.cta.text": {
-    "message": "Odprite Studio, opišite, kar želite zgraditi, in opazujte, kako nastaja pravi, preverjen produkt. Ostanete v nadzoru. Obdržite kodo. Premikate se s hitrostjo startupa."
+    "message": "Opišite, kar želite zgraditi, in opazujte, kako nastaja pravi, preverjen produkt. Obdržite kodo in se premikate s hitrostjo startupa."
   },
   "home.cta.start": {
     "message": "Odprite Studio"

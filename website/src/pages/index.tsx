@@ -7,6 +7,7 @@ import {
   VStack,
   Typography,
   Badge,
+  Button,
   HStack,
   Icon,
   Card,
@@ -51,13 +52,13 @@ function HeroPromptInput(): ReactNode {
           aria-label={placeholder}
           className="flex-1 min-w-0 bg-transparent border-0 outline-none text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] text-base py-3"
         />
-        <button
+        <Button
           type="submit"
+          variant="primary"
+          size="md"
+          iconRight="arrow-up"
           aria-label={submitLabel}
-          className="flex-none w-10 h-10 rounded-full bg-[var(--color-primary)] text-[var(--color-on-primary,#fff)] flex items-center justify-center hover:opacity-90 transition disabled:opacity-50"
-        >
-          <Icon name="arrow-up" size="md" />
-        </button>
+        />
       </Box>
     </form>
   );
@@ -75,8 +76,6 @@ const CAPABILITIES = [
       id: "home.cap.control.desc",
       message: "Studio assembles your product from 116 ready-made features instead of guessing code from prompts. You steer the AI: it's creative on UI and copy, precise on data and workflows.",
     }),
-    href: STUDIO_URL,
-    linkLabel: translate({ id: "home.cap.link", message: "Open Studio" }),
   },
   {
     icon: "shield-check",
@@ -85,8 +84,6 @@ const CAPABILITIES = [
       id: "home.cap.verify.desc",
       message: "Every screen, every flow, every interaction is checked before you ship. Studio runs the actual app, clicks every button, and surfaces broken paths to you and the AI in real time.",
     }),
-    href: STUDIO_URL,
-    linkLabel: translate({ id: "home.cap.link", message: "Open Studio" }),
   },
   {
     icon: "lock-open",
@@ -95,8 +92,6 @@ const CAPABILITIES = [
       id: "home.cap.lockin.desc",
       message: "You own the generated code. Bring your own AI model or use ours. Deploy to our cloud or yours. Take your product and leave any time. Studio enhances your team, it doesn't trap them.",
     }),
-    href: STUDIO_URL,
-    linkLabel: translate({ id: "home.cap.link", message: "Open Studio" }),
   },
 ];
 
@@ -113,7 +108,6 @@ const PERSONAS = [
     }),
     image: { src: "/img/studio-flows/sahar-home.png", alt: "Builder Home with prompt input and product suggestion chips" },
     badge: translate({ id: "home.persona.builder.badge", message: "Prompt to product" }),
-    href: STUDIO_URL,
   },
   {
     title: translate({ id: "home.persona.designer.title", message: "Designers" }),
@@ -123,7 +117,6 @@ const PERSONAS = [
     }),
     image: { src: "/img/studio-flows/nadia-canvas.png", alt: "Studio canvas with palette open and screen flow" },
     badge: translate({ id: "home.persona.designer.badge", message: "Rapid expansion" }),
-    href: STUDIO_URL,
   },
   {
     title: translate({ id: "home.persona.engineer.title", message: "Engineers" }),
@@ -133,7 +126,6 @@ const PERSONAS = [
     }),
     image: { src: "/img/studio-flows/tarek-validation.png", alt: "Studio validation panel with JEPA predictions" },
     badge: translate({ id: "home.persona.engineer.badge", message: "Verified by default" }),
-    href: STUDIO_URL,
   },
 ];
 
@@ -359,6 +351,16 @@ export default function Home(): ReactNode {
           <AnimatedReveal animation="fade-up" delay={100}>
             <FeatureGrid items={CAPABILITIES} columns={3} gap="lg" />
           </AnimatedReveal>
+
+          <AnimatedReveal animation="fade-up" delay={200}>
+            <Box className="mt-12 flex justify-center">
+              <a href={STUDIO_URL}>
+                <Button variant="primary" size="lg">
+                  {translate({ id: "home.cap.cta", message: "Start building in Studio" })}
+                </Button>
+              </a>
+            </Box>
+          </AnimatedReveal>
         </Box>
       </Box>
 
@@ -373,7 +375,7 @@ export default function Home(): ReactNode {
               <Typography variant="h2" align="center" className="max-w-3xl">
                 {translate({
                   id: "home.decon.title",
-                  message: "Pull a real product into Studio. Reshape it. Ship the next version this week.",
+                  message: "Pull a real product into Studio and reshape it. Fast.",
                 })}
               </Typography>
               <Typography variant="body1" color="muted" align="center" className="max-w-2xl">
@@ -441,7 +443,6 @@ export default function Home(): ReactNode {
                   description={persona.description}
                   image={persona.image}
                   badge={persona.badge}
-                  href={persona.href}
                 />
               ))}
             </SimpleGrid>
@@ -490,7 +491,7 @@ export default function Home(): ReactNode {
         title={translate({ id: "home.cta.title", message: "Stop prototyping. Start shipping." })}
         subtitle={translate({
           id: "home.cta.text",
-          message: "Open Studio, describe what you want to build, and watch a real, verified product take shape. You stay in control. You keep the code. You move at startup speed.",
+          message: "Describe what you want and watch a real, verified product take shape. You keep the code and move at startup speed.",
         })}
         primaryAction={{
           label: translate({ id: "home.cta.start", message: "Open Studio" }),
