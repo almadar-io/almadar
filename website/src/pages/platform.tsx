@@ -26,7 +26,7 @@ const PILLARS = [
     logo: "/img/studio-icon.svg",
     title: translate({ id: "platform.studio.title", message: "Almadar Studio" }),
     description: translate({ id: "platform.studio.desc", message: "The builder where humans and AI collaborate. Describe what you want in plain language, the AI agent generates a valid program. Edit visually or in code. Preview in real time. Deploy with one click." }),
-    href: "https://kflow-builder-app.web.app/",
+    href: "https://studio.almadar.io/",
     linkLabel: translate({ id: "platform.studio.link", message: "Open Studio" }),
   },
   {
@@ -129,7 +129,7 @@ export default function Platform(): ReactNode {
               {translate({ id: "platform.cta.text", message: "Try the builder, explore the infrastructure, or learn the language. Each product works on its own. Together, they form a complete platform." })}
             </Typography>
             <HStack gap="md">
-              <a href="https://kflow-builder-app.web.app"><Button variant="primary" size="lg">{translate({ id: "platform.cta.studio", message: "Try Studio" })}</Button></a>
+              <a href="https://studio.almadar.io"><Button variant="primary" size="lg">{translate({ id: "platform.cta.studio", message: "Try Studio" })}</Button></a>
               <a href="https://orb.almadar.io"><Button variant="secondary" size="lg">{translate({ id: "platform.cta.docs", message: "Explore Orb" })}</Button></a>
             </HStack>
           </VStack>
