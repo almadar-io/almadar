@@ -6,13 +6,13 @@
     "message": "أطلق منتجات حقيقية. بسرعة لا تُصدَّق."
   },
   "home.hero.subtitle": {
-    "message": "من الصفر إلى المنتج. ومن المنتج إلى التوسع."
+    "message": "صف المنتج الذي تريده. يجمّعه Almadar Studio من 116 لبنة موثَّقة، ثم يتيح لك ولفريقك إطلاق إصدار جديد كل أسبوع."
   },
-  "home.hero.cta1": {
-    "message": "افتح Studio"
+  "home.hero.prompt.placeholder": {
+    "message": "لوحة تحكم عقارية مع خريطتين..."
   },
-  "home.hero.cta2": {
-    "message": "شاهد كيف يعمل"
+  "home.hero.prompt.submit": {
+    "message": "ابدأ البناء"
   },
   "home.cap.kicker": {
     "message": "ما يمنحك إياه Studio"
@@ -67,18 +67,6 @@
   },
   "home.decon.step3.desc": {
     "message": "أضف قطعاً جديدة، أعد توصيل التدفق، أطلق الإصدار الجديد. نفس اللوحة، إيقاع أسرع."
-  },
-  "home.decon.cap.blocks": {
-    "message": "وحدات بناء"
-  },
-  "home.decon.cap.blocks.desc": {
-    "message": "كل شاشة وكيان وتدفق يصبح وحدة مدارية مستقلة جاهزة للالتقاط."
-  },
-  "home.decon.cap.canvas": {
-    "message": "مُعاد تجميعه في Studio"
-  },
-  "home.decon.cap.canvas.desc": {
-    "message": "اسحب قطعاً جديدة، أعد توصيل التدفق، شاهد التحقق يجري في الوقت الحقيقي."
   },
   "home.persona.kicker": {
     "message": "مبني للفريق بأكمله"

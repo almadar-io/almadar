@@ -129,10 +129,11 @@ export function createConfig(opts: SiteConfig): Config {
                   'react-router-dom': path.dirname(require.resolve('react-router-dom/package.json')),
                 },
                 // Node core modules are not available in the browser; stub them out
-                // (almadar-runtime pulls in fs/path for its Node-side external loader)
+                // (almadar-runtime pulls in fs/path/module for its Node-side OrbitalServerRuntime)
                 fallback: {
                   fs: false,
                   path: false,
+                  module: false,
                 },
               },
               plugins: [
@@ -216,9 +217,22 @@ export function createConfig(opts: SiteConfig): Config {
         items: [
           ...(opts.navbarItems || []),
           buildProductsDropdown(opts.site),
-          { href: GITHUB_LINKS[opts.site] ?? GITHUB_LINKS.main, label: "GitHub", position: "right" as const },
-          { href: "https://discord.gg/q83VjPJx", label: "Discord", position: "right" as const },
+          {
+            type: "dropdown" as const,
+            label: "Community",
+            position: "left" as const,
+            items: [
+              { label: "GitHub", href: GITHUB_LINKS[opts.site] ?? GITHUB_LINKS.main },
+              { label: "Discord", href: "https://discord.gg/9apmY9FGVr" },
+            ],
+          },
           { type: "localeDropdown" as const, position: "right" as const },
+          {
+            href: "https://studio.almadar.io",
+            label: "Start Building",
+            position: "right" as const,
+            className: "navbar__cta",
+          },
         ],
       },
       footer: {
@@ -236,7 +250,7 @@ export function createConfig(opts: SiteConfig): Config {
           {
             title: "Community",
             items: [
-              { label: "Discord", href: "https://discord.gg/q83VjPJx" },
+              { label: "Discord", href: "https://discord.gg/9apmY9FGVr" },
               { label: "GitHub", href: "https://github.com/almadar-io/services" },
               { label: "LinkedIn", href: "https://www.linkedin.com/company/almadar-io" },
             ],

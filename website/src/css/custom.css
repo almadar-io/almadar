@@ -6,3 +6,39 @@
 
 @tailwind components;
 @tailwind utilities;
+
+/* Navbar CTA — mirrors <Button variant="primary" size="lg"> from @almadar/ui */
+.navbar__item.navbar__cta,
+a.navbar__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: var(--font-weight-medium, 600);
+  line-height: 1.2;
+  color: var(--color-primary-foreground, #fff);
+  background: var(--color-primary, #14b8a6);
+  border: none;
+  border-radius: var(--radius-sm, 0.25rem);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: background-color var(--transition-normal, 150ms) ease,
+              box-shadow var(--transition-normal, 150ms) ease,
+              transform var(--transition-normal, 150ms) ease;
+  text-decoration: none;
+}
+
+.navbar__item.navbar__cta:hover,
+a.navbar__cta:hover {
+  background: var(--color-primary-hover, #0d9488);
+  color: var(--color-primary-foreground, #fff);
+  box-shadow: 0 8px 24px -8px rgba(20, 184, 166, 0.45);
+  text-decoration: none;
+}
+
+.navbar__item.navbar__cta:active,
+a.navbar__cta:active {
+  transform: scale(var(--active-scale, 0.97));
+}

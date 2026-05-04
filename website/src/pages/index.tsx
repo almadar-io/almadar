@@ -7,7 +7,6 @@ import {
   VStack,
   Typography,
   Badge,
-  Button,
   HStack,
   Icon,
   Card,
@@ -22,7 +21,47 @@ import {
 import { OrbitalHeroBackground } from "../components/OrbitalHeroBackground";
 
 const STUDIO_URL = "https://studio.almadar.io";
-const STUDIO_FEATURES_URL = "https://studio.almadar.io/features";
+
+// ---------------------------------------------------------------------------
+// Hero prompt input — quick-start form that redirects to Studio with ?prompt
+// ---------------------------------------------------------------------------
+
+function HeroPromptInput(): ReactNode {
+  const placeholder = translate({
+    id: "home.hero.prompt.placeholder",
+    message: "A real estate dashboard with two maps...",
+  });
+  const submitLabel = translate({
+    id: "home.hero.prompt.submit",
+    message: "Start building",
+  });
+  return (
+    <form
+      action={STUDIO_URL}
+      method="GET"
+      className="w-full max-w-2xl mt-2"
+    >
+      <Box className="flex items-center gap-2 w-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-lg pl-5 pr-2 py-2 focus-within:ring-2 focus-within:ring-[var(--color-primary)]/40 transition">
+        <input
+          type="text"
+          name="prompt"
+          required
+          autoComplete="off"
+          placeholder={placeholder}
+          aria-label={placeholder}
+          className="flex-1 min-w-0 bg-transparent border-0 outline-none text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] text-base py-3"
+        />
+        <button
+          type="submit"
+          aria-label={submitLabel}
+          className="flex-none w-10 h-10 rounded-full bg-[var(--color-primary)] text-[var(--color-on-primary,#fff)] flex items-center justify-center hover:opacity-90 transition disabled:opacity-50"
+        >
+          <Icon name="arrow-up" size="md" />
+        </button>
+      </Box>
+    </form>
+  );
+}
 
 // ---------------------------------------------------------------------------
 // What Studio gives you
@@ -284,23 +323,18 @@ export default function Home(): ReactNode {
               {translate({ id: "home.hero.tag", message: "Built for startups" })}
             </Badge>
             <Typography variant="h1" align="center">
-              {translate({ id: "home.hero.title", message: "Ship real products. Absurdly fast." })}
+              {translate({
+                id: "home.hero.title",
+                message: "Ship real products. Absurdly fast.",
+              })}
             </Typography>
             <Typography variant="body1" color="muted" align="center" className="max-w-2xl">
-              {translate({ id: "home.hero.subtitle", message: "From zero to product. From product to scale." })}
+              {translate({
+                id: "home.hero.subtitle",
+                message: "Describe the product you want. Almadar Studio assembles it from 116 verified building blocks, then lets you and your team ship the next version every week.",
+              })}
             </Typography>
-            <HStack gap="md">
-              <a href={STUDIO_URL}>
-                <Button variant="primary" size="lg">
-                  {translate({ id: "home.hero.cta1", message: "Open Studio" })}
-                </Button>
-              </a>
-              <a href={STUDIO_FEATURES_URL}>
-                <Button variant="secondary" size="lg">
-                  {translate({ id: "home.hero.cta2", message: "See how it works" })}
-                </Button>
-              </a>
-            </HStack>
+            <HeroPromptInput />
           </VStack>
         </Box>
       </Box>
@@ -378,56 +412,6 @@ export default function Home(): ReactNode {
             </SimpleGrid>
           </AnimatedReveal>
 
-          <Box className="mt-12">
-            <AnimatedReveal animation="fade-up" delay={150}>
-              <SimpleGrid cols={2} gap="lg">
-                <Card className="p-3 overflow-hidden">
-                  <VStack gap="sm">
-                    <img
-                      src="/img/studio-flows/nadia-overview.png"
-                      alt="Studio overview with two orbital units side by side"
-                      className="w-full h-auto rounded"
-                    />
-                    <Box className="px-2 pb-2">
-                      <VStack gap="xs">
-                        <Typography variant="small" color="primary" className="uppercase font-semibold tracking-wide">
-                          {translate({ id: "home.decon.cap.blocks", message: "Building blocks" })}
-                        </Typography>
-                        <Typography variant="small" color="muted">
-                          {translate({
-                            id: "home.decon.cap.blocks.desc",
-                            message: "Every screen, entity, and flow becomes its own orbital unit, ready to grab.",
-                          })}
-                        </Typography>
-                      </VStack>
-                    </Box>
-                  </VStack>
-                </Card>
-                <Card className="p-3 overflow-hidden">
-                  <VStack gap="sm">
-                    <img
-                      src="/img/studio-flows/nadia-canvas.png"
-                      alt="Studio canvas with palette open, showing flow between orbital screens"
-                      className="w-full h-auto rounded"
-                    />
-                    <Box className="px-2 pb-2">
-                      <VStack gap="xs">
-                        <Typography variant="small" color="primary" className="uppercase font-semibold tracking-wide">
-                          {translate({ id: "home.decon.cap.canvas", message: "Reassembled in Studio" })}
-                        </Typography>
-                        <Typography variant="small" color="muted">
-                          {translate({
-                            id: "home.decon.cap.canvas.desc",
-                            message: "Drag new pieces in, rewire the flow, watch verification run in real time.",
-                          })}
-                        </Typography>
-                      </VStack>
-                    </Box>
-                  </VStack>
-                </Card>
-              </SimpleGrid>
-            </AnimatedReveal>
-          </Box>
         </Box>
       </Box>
 

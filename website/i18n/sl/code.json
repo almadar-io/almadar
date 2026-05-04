@@ -6,13 +6,13 @@
     "message": "Pošiljajte prave produkte. Absurdno hitro."
   },
   "home.hero.subtitle": {
-    "message": "Od nič do produkta. Od produkta do rasti."
+    "message": "Opišite produkt, ki ga želite. Almadar Studio ga sestavi iz 116 preverjenih gradnikov, vi in vaša ekipa pa pošljete novo različico vsak teden."
   },
-  "home.hero.cta1": {
-    "message": "Odprite Studio"
+  "home.hero.prompt.placeholder": {
+    "message": "Nadzorna plošča za nepremičnine z dvema zemljevidoma..."
   },
-  "home.hero.cta2": {
-    "message": "Poglejte, kako deluje"
+  "home.hero.prompt.submit": {
+    "message": "Začnite graditi"
   },
   "home.cap.kicker": {
     "message": "Kaj vam ponuja Studio"
@@ -67,18 +67,6 @@
   },
   "home.decon.step3.desc": {
     "message": "Spustite nove kose noter, znova povežite tok, pošljite novo različico. Isto platno, hitrejši ritem."
-  },
-  "home.decon.cap.blocks": {
-    "message": "Gradniki"
-  },
-  "home.decon.cap.blocks.desc": {
-    "message": "Vsak zaslon, entiteta in tok postane svoja orbitalna enota, pripravljena za zajem."
-  },
-  "home.decon.cap.canvas": {
-    "message": "Znova sestavljen v Studiu"
-  },
-  "home.decon.cap.canvas.desc": {
-    "message": "Povlecite nove kose, znova povežite tok, opazujte preverjanje v realnem času."
   },
   "home.persona.kicker": {
     "message": "Zgrajeno za celotno ekipo"
