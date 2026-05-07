@@ -21,28 +21,47 @@ function JoinPromptInput(): ReactNode {
     message: "Start building",
   });
   return (
-    <form action={STUDIO_URL} method="GET" className="w-full max-w-2xl mt-2">
-      {/* Hidden ref tags so the studio knows the user came in via /join. */}
-      <input type="hidden" name="ref" value="join" />
-      <Box className="flex items-center gap-2 w-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-lg pl-5 pr-2 py-2 focus-within:ring-2 focus-within:ring-[var(--color-primary)]/40 transition">
-        <input
-          type="text"
-          name="prompt"
-          required
-          autoComplete="off"
-          placeholder={placeholder}
-          aria-label={placeholder}
-          className="flex-1 min-w-0 bg-transparent border-0 outline-none text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] text-base py-3"
-        />
-        <Button
-          type="submit"
-          variant="primary"
-          size="md"
-          iconRight="arrow-up"
-          aria-label={submitLabel}
-        />
+    <VStack gap="md" align="center" className="w-full max-w-2xl mt-2">
+      <form action={STUDIO_URL} method="GET" className="w-full">
+        {/* Hidden ref tags so the studio knows the user came in via /join. */}
+        <input type="hidden" name="ref" value="join" />
+        <Box className="flex items-center gap-2 w-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-lg pl-5 pr-2 py-2 focus-within:ring-2 focus-within:ring-[var(--color-primary)]/40 transition">
+          <input
+            type="text"
+            name="prompt"
+            required
+            autoComplete="off"
+            placeholder={placeholder}
+            aria-label={placeholder}
+            className="flex-1 min-w-0 bg-transparent border-0 outline-none text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] placeholder:opacity-60 text-base py-3"
+          />
+          <Button
+            type="submit"
+            variant="primary"
+            size="md"
+            iconRight="arrow-up"
+            aria-label={submitLabel}
+          />
+        </Box>
+      </form>
+
+      {/* "OR" divider — prompt form vs. direct studio link are alternatives. */}
+      <Box className="flex items-center gap-3 w-full my-2">
+        <Box className="flex-1 h-px bg-[var(--color-border)]" />
+        <Typography variant="caption" color="muted" className="uppercase tracking-widest">
+          <Translate id="join.divider.or">Or</Translate>
+        </Typography>
+        <Box className="flex-1 h-px bg-[var(--color-border)]" />
       </Box>
-    </form>
+
+      {/* Direct path — same `ref=join` tag as the prompt form so analytics
+          on the studio side can correlate landings from this page. */}
+      <a href={`${STUDIO_URL}?ref=join`}>
+        <Button variant="primary" size="lg" iconRight="arrow-right">
+          <Translate id="join.cta.studio">Open Studio</Translate>
+        </Button>
+      </a>
+    </VStack>
   );
 }
 

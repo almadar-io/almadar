@@ -50,7 +50,7 @@ function HeroPromptInput(): ReactNode {
           autoComplete="off"
           placeholder={placeholder}
           aria-label={placeholder}
-          className="flex-1 min-w-0 bg-transparent border-0 outline-none text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] text-base py-3"
+          className="flex-1 min-w-0 bg-transparent border-0 outline-none text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] placeholder:opacity-60 text-base py-3"
         />
         <Button
           type="submit"
