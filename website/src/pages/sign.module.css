@@ -38,6 +38,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1.2vw;
   z-index: 1;
 }
@@ -68,9 +69,11 @@
   padding: 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   letter-spacing: -0.035em;
   line-height: 0.92;
-  align-self: flex-start;
+  align-self: center;
   /* Pull the headline closer to vertical center inside the column flex. */
   margin-top: auto;
   margin-bottom: auto;
@@ -85,24 +88,75 @@
   font-weight: 800;
   color: var(--sign-fg);
   white-space: nowrap;
-  margin-bottom: 4vh;
 }
 
-/* Editorial kicker — small caps, letter-spaced, tucked tight against the
-   punch line so the two read as a single block ("LEAVE WITH A working
-   product.") with a strong scale + weight contrast against the opening
-   statement. */
+/* Connector block — centered, sits between the two statements. Holds a
+   vertical arrow that runs top-to-bottom with the kicker label punched
+   through the middle. The arrow shaft is a gradient (white -> teal) so
+   the line itself carries the "idea -> product" transition; the kicker
+   labels the act of transformation; the filled teal arrowhead points at
+   the payoff. */
+.connector {
+  position: relative;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30vh;
+  width: 100%;
+  margin-top: 6vh;
+}
+
+/* Vertical arrow shaft — gradient from white at top to teal at bottom,
+   rounded end caps. Stops just above the arrowhead. */
+.connector::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 1.6vw;
+  width: 0.22vw;
+  min-width: 3px;
+  background: linear-gradient(
+    to bottom,
+    var(--sign-fg) 0%,
+    var(--sign-fg) 30%,
+    var(--sign-accent) 100%
+  );
+  border-radius: 999px;
+  transform: translateX(-50%);
+}
+
+/* Filled teal arrowhead — solid triangle, sharper read than the
+   two-border chevron we had before. */
+.connector::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-left: 0.9vw solid transparent;
+  border-right: 0.9vw solid transparent;
+  border-top: 1.5vw solid var(--sign-accent);
+  transform: translateX(-50%);
+  filter: drop-shadow(0 0 12px rgba(20, 184, 166, 0.4));
+}
+
+/* Editorial kicker — sits on top of the arrow shaft. Solid bg + horizontal
+   padding "knocks out" the line behind the text so the arrow reads as
+   passing through the label rather than colliding with it. */
 .kicker {
+  position: relative;
+  z-index: 1;
+  background: var(--sign-bg);
+  padding: 1vh 1.4vw;
   font-size: 1.6vw;
   font-weight: 600;
   letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--sign-fg);
   line-height: 1;
-  margin-bottom: 1.2vh;
-  /* Small left indent so the kicker visually keys to the punch line below
-     rather than the cap-height of the opening statement above. */
-  padding-left: 0.2vw;
 }
 
 .linePunch {
@@ -110,19 +164,6 @@
   font-weight: 800;
   color: var(--sign-accent);
   white-space: nowrap;
-}
-
-/* Thin accent rule at the bottom — visual anchor, also implies "this is
-   the brand's mark, not just a passive sign". */
-.accent {
-  position: relative;
-  z-index: 1;
-  width: 8vw;
-  min-width: 80px;
-  height: 0.4vh;
-  min-height: 4px;
-  background: var(--sign-accent);
-  border-radius: 999px;
 }
 
 /* Portrait — stack the same content but with bumped sizes. */

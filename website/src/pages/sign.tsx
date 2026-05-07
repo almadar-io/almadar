@@ -28,11 +28,12 @@ export default function Sign(): ReactNode {
 
         <h1 className={styles.headline}>
           <span className={styles.lineNormal}>Bring an idea.</span>
-          <span className={styles.kicker}>Leave with a</span>
+          <div className={styles.connector} aria-hidden>
+            <span className={styles.kicker}>Leave with a</span>
+          </div>
           <span className={styles.linePunch}>working product.</span>
         </h1>
 
-        <div className={styles.accent} aria-hidden />
       </main>
     </>
   );
