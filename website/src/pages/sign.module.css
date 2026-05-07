@@ -1,0 +1,162 @@
+/* Conference sign — full-bleed, dark, large typographic statement.
+   Sized in viewport units so it scales to whatever screen it's projected on. */
+
+:root {
+  --sign-bg: #0a0a0a;
+  --sign-fg: #f4f4f4;
+  --sign-muted: #6b6b6b;
+  --sign-accent: #14b8a6;
+}
+
+.shell {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 5vh 6vw;
+  background: var(--sign-bg);
+  color: var(--sign-fg);
+  font-family: var(--ifm-font-family-base, system-ui, sans-serif);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Soft radial backdrop, off-center, biased toward the punch line. */
+.shell::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(ellipse at 30% 75%, rgba(20, 184, 166, 0.10) 0%, rgba(20, 184, 166, 0) 55%),
+    radial-gradient(ellipse at 70% 30%, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.brand {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.2vw;
+  z-index: 1;
+}
+
+.brandMark {
+  width: 4vw;
+  height: 4vw;
+  min-width: 40px;
+  min-height: 40px;
+}
+
+.brandWord {
+  font-size: 1.8vw;
+  letter-spacing: 0.32em;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--sign-fg);
+  line-height: 1;
+}
+
+/* Headline is the centerpiece. Three stacked lines: two muted setup lines,
+   then the payoff in the brand color with heavier weight. The asymmetric
+   weight + color split is what makes the eye land. */
+.headline {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+  align-self: flex-start;
+  /* Pull the headline closer to vertical center inside the column flex. */
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.lineNormal {
+  /* Mirrors .linePunch in size + weight so the opening statement and the
+     payoff read as equal beats. Only color differs — white vs accent.
+     Sized so "working product." (the longest line) fits on one row at
+     6vw side padding. */
+  font-size: 9vw;
+  font-weight: 800;
+  color: var(--sign-fg);
+  white-space: nowrap;
+  margin-bottom: 4vh;
+}
+
+/* Editorial kicker — small caps, letter-spaced, tucked tight against the
+   punch line so the two read as a single block ("LEAVE WITH A working
+   product.") with a strong scale + weight contrast against the opening
+   statement. */
+.kicker {
+  font-size: 1.6vw;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--sign-fg);
+  line-height: 1;
+  margin-bottom: 1.2vh;
+  /* Small left indent so the kicker visually keys to the punch line below
+     rather than the cap-height of the opening statement above. */
+  padding-left: 0.2vw;
+}
+
+.linePunch {
+  font-size: 9vw;
+  font-weight: 800;
+  color: var(--sign-accent);
+  white-space: nowrap;
+}
+
+/* Thin accent rule at the bottom — visual anchor, also implies "this is
+   the brand's mark, not just a passive sign". */
+.accent {
+  position: relative;
+  z-index: 1;
+  width: 8vw;
+  min-width: 80px;
+  height: 0.4vh;
+  min-height: 4px;
+  background: var(--sign-accent);
+  border-radius: 999px;
+}
+
+/* Portrait — stack the same content but with bumped sizes. */
+@media (orientation: portrait) {
+  .brandWord {
+    font-size: 3.4vw;
+  }
+  .brandMark {
+    width: 7vw;
+    height: 7vw;
+  }
+  .lineNormal {
+    font-size: 9vw;
+  }
+  .kicker {
+    font-size: 2.6vw;
+  }
+  .linePunch {
+    font-size: 9vw;
+  }
+}
+
+/* Phone fallback. */
+@media (max-width: 640px) {
+  .lineNormal {
+    font-size: 9vw;
+  }
+  .kicker {
+    font-size: 3.2vw;
+  }
+  .linePunch {
+    font-size: 9vw;
+  }
+  .brandWord {
+    font-size: 4.2vw;
+  }
+}
