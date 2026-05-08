@@ -27,7 +27,7 @@ export default function Sign(): ReactNode {
         </div>
 
         <h1 className={styles.headline}>
-          <span className={styles.lineNormal}>Bring an idea.</span>
+          <span className={styles.lineNormal}>Come with an idea.</span>
           <div className={styles.connector} aria-hidden>
             <span className={styles.kicker}>Leave with a</span>
           </div>
