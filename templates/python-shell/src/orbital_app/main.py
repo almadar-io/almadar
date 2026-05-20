@@ -95,6 +95,10 @@ async def websocket_entity(websocket: WebSocket, entity_type: str, entity_id: st
         await connection_manager.disconnect(websocket, entity_type, entity_id)
 
 
+# Register verification endpoints (ml-verify introspection API)
+from .verify import router as verify_router
+app.include_router(verify_router)
+
 # Register generated routes
 register_routes(app)
 

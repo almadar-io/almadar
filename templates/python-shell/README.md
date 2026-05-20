@@ -1,10 +1,10 @@
-# Almadar Python Shell
+# Orbital Python Shell
 
-FastAPI server backend for Almadar applications with PyTorch support.
+FastAPI server backend for Orbital applications with PyTorch support.
 
 ## Overview
 
-The Python shell provides a server-side implementation of the Almadar execution model. It processes events from the React client, executes server-side effects (fetch, persist, call_service, PyTorch operations), and returns responses with data and client effects.
+The Python shell provides a server-side implementation of the Orbital execution model. It processes events from the React client, executes server-side effects (fetch, persist, call_service, PyTorch operations), and returns responses with data and client effects.
 
 ## Architecture
 
@@ -222,8 +222,8 @@ Response:
 
 ```bash
 # Compile both targets
-almadar compile app.orb --target typescript  # React client
-almadar compile app.orb --target python      # FastAPI server
+orbital compile app.orb --target typescript  # React client
+orbital compile app.orb --target python      # FastAPI server
 ```
 
 ## Testing

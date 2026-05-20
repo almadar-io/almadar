@@ -12,11 +12,14 @@ export default defineConfig(({ mode }) => {
 
     resolve: {
       alias: {
+        '@design-system': path.resolve(__dirname, '../../../design-system'),
         '@': path.resolve(__dirname, './src'),
         '@generated': path.resolve(__dirname, './src/generated'),
         '@pages': path.resolve(__dirname, './src/pages'),
+        '@app/shared': path.resolve(__dirname, '../shared/src'),
         '@shared': path.resolve(__dirname, '../shared/src'),
       },
+      dedupe: ['react', 'react-dom', '@almadar/ui'],
     },
 
     server: {
@@ -37,6 +40,11 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: 'dist',
       sourcemap: true,
+    },
+
+    test: {
+      environment: 'jsdom',
+      globals: true,
     },
   };
 });

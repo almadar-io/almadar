@@ -1,7 +1,7 @@
 [project]
 name = "orbital-app"
 version = "0.1.0"
-description = "Almadar Python Shell - FastAPI server with PyTorch support"
+description = "Orbital Python Shell - FastAPI server with PyTorch support"
 requires-python = ">=3.10"
 dependencies = [
     "fastapi>=0.100.0",

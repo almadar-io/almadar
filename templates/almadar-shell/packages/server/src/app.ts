@@ -2,7 +2,7 @@
  * Express Application Setup
  */
 
-import express from 'express';
+import express, { type Express } from 'express';
 import cors from 'cors';
 import {
   env,
@@ -13,7 +13,7 @@ import {
 } from '@almadar/server';
 import { registerRoutes } from './routes.js';
 
-export const app = express();
+export const app: Express = express();
 
 // Middleware
 app.use(cors({ origin: true, credentials: true }));

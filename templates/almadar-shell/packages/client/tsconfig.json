@@ -3,6 +3,7 @@
     "target": "ES2022",
     "useDefineForClassFields": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["vite/client"],
     "module": "ESNext",
     "skipLibCheck": true,
     "moduleResolution": "bundler",
@@ -12,17 +13,21 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@generated/*": ["./src/generated/*"],
       "@pages/*": ["./src/pages/*"],
-      "@shared/*": ["../shared/src/*"]
+      "@app/shared": ["../shared/src/index.ts"],
+      "@app/shared/*": ["../shared/src/*"],
+      "@shared/*": ["../shared/src/*"],
+      "@design-system": ["../../../design-system/index.ts"],
+      "@design-system/*": ["../../../design-system/*"]
     }
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src", "../../../design-system/types"],
+  "exclude": ["node_modules", "dist", "src/**/__tests__", "src/**/*.stories.ts", "src/**/*.stories.tsx"]
 }

@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+# Pre-commit hook — ensures pnpm-lock.yaml is up to date with package.json.
+#
+# Two contexts:
+#   Standalone repo: run `pnpm install` to fully regenerate the lockfile.
+#   Inside monorepo:  copy project into /tmp isolation and run `pnpm install`
+#                     there (monorepo workspace absorbs pnpm commands in-place,
+#                     preventing standalone lockfile updates).
+#
+# NOTE: use `pnpm install` not `pnpm update` — install preserves specifiers
+# from package.json exactly, while update rewrites them to pinned versions,
+# causing a specifier mismatch that fails CI frozen-lockfile checks.
+
+
+# ── Block workspace: protocol in dependencies ─────────────────────────────
+# Packages are independent npm packages. workspace: refs break CI publish.
+if grep -qE '"workspace:' package.json 2>/dev/null; then
+  echo "ERROR: package.json contains workspace: protocol dependencies."
+  echo "Packages must use version ranges (e.g., ">=2.0.0"), not workspace:*"
+  echo ""
+  grep --color=always 'workspace:' package.json
+  echo ""
+  echo "Fix: replace workspace:^ with a version range like ">=X.Y.Z""
+  exit 1
+fi
+
+STAGED=$(git diff --cached --name-only --diff-filter=ACMR)
+
+# Only act when a package.json is staged and a lockfile exists
+echo "$STAGED" | grep -q 'package\.json$' || exit 0
+[ -f pnpm-lock.yaml ] || exit 0
+
+# ── Detect monorepo parent ─────────────────────────────────────────────────
+# If this package is itself a workspace root (has pnpm-workspace.yaml), always
+# run pnpm install directly — isolation mode would lose workspace member deps.
+IS_WORKSPACE_ROOT=0
+[ -f pnpm-workspace.yaml ] && IS_WORKSPACE_ROOT=1
+
+IN_PARENT_WORKSPACE=0
+if [ "$IS_WORKSPACE_ROOT" -eq 0 ]; then
+  CHECK_DIR=$(dirname "$(pwd)")
+  while [ "$CHECK_DIR" != "/" ]; do
+    [ -f "$CHECK_DIR/pnpm-workspace.yaml" ] && { IN_PARENT_WORKSPACE=1; break; }
+    CHECK_DIR=$(dirname "$CHECK_DIR")
+  done
+fi
+
+if [ "$IN_PARENT_WORKSPACE" -eq 1 ]; then
+  # Inside a parent monorepo but not a workspace root ourselves:
+  # use /tmp isolation so pnpm treats it as standalone
+  TMPDIR=$(mktemp -d)
+  trap 'rm -rf "$TMPDIR"' EXIT
+
+  cp package.json "$TMPDIR/"
+
+  echo "Updating pnpm-lock.yaml in isolation..."
+  (
+    cd "$TMPDIR" || exit 1
+    pnpm install --ignore-scripts > /dev/null 2>&1
+  )
+
+  if [ $? -eq 0 ]; then
+    cp "$TMPDIR/pnpm-lock.yaml" pnpm-lock.yaml
+    git add pnpm-lock.yaml
+    echo "Updated pnpm-lock.yaml"
+  else
+    echo "Warning: pnpm install failed in isolation — lockfile may be outdated"
+  fi
+else
+  # Standalone or nested workspace root: run pnpm install directly
+  pnpm install --frozen-lockfile > /dev/null 2>&1
+  if [ $? -ne 0 ]; then
+    echo "pnpm-lock.yaml is out of sync — running pnpm install to fix..."
+    pnpm install --ignore-scripts
+    git add pnpm-lock.yaml
+    echo "Staged updated pnpm-lock.yaml"
+  fi
+fi
+
+exit 0
