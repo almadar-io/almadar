@@ -3,57 +3,32 @@ name: CI
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
+    paths-ignore: ['**/*.md', 'docs/**']
+  # No pull_request — this team pushes to main directly (no PRs). Cheap schema
+  # validation runs on each push; heavy builds are tag-gated (see other workflows).
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  validate-test-schemas:
-    name: Validate Test Schemas
+  validate-schemas:
+    name: Validate .orb schemas
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check JSON validity of test schemas
+      # One job validates every .orb schema as JSON. Replaces the three separate
+      # single-step runner jobs that previously did this (ci: validate-test-schemas
+      # + lint; test.yml: validate-schemas) — same coverage, ~1 runner instead of 4.
+      # The website build+deploy lives in deploy-website.yml (tag-gated).
+      - name: Check tests/schemas + examples are valid JSON
         run: |
-          echo "Validating test schemas..."
-          for file in tests/schemas/*.orb; do
-            echo "  Checking $file..."
-            python3 -c "import json; json.load(open('$file'))" || exit 1
+          shopt -s nullglob
+          fail=0
+          for file in tests/schemas/*.orb examples/*.orb; do
+            python3 -c "import json; json.load(open('$file'))" || { echo "::error file=$file::invalid JSON"; fail=1; }
           done
-          echo "All test schemas are valid JSON!"
-
-  build-website:
-    name: Build Website
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Install website dependencies
-        working-directory: website
-        run: npm install
-
-      - name: Build website
-        working-directory: website
-        run: npm run build
-
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Check example schemas
-        run: |
-          if ls examples/*.orb 1> /dev/null 2>&1; then
-            for file in examples/*.orb; do
-              echo "Checking $file..."
-              python3 -c "import json; json.load(open('$file'))"
-            done
-          else
-            echo "No example schemas found (examples/*.orb)"
-          fi
+          [ "$fail" = 0 ] && echo "All .orb schemas are valid JSON."
+          exit $fail

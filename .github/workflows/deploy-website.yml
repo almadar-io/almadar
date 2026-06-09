@@ -2,11 +2,8 @@ name: Deploy Website
 
 on:
   push:
-    branches: [main]
-    paths:
-      - "website/**"
-      - ".github/workflows/deploy-website.yml"
-  workflow_dispatch:
+    tags: ['v*']        # heavy build+deploy runs on release tags, not every push to main
+  workflow_dispatch:    # manual deploy between releases
 
 permissions:
   contents: read
@@ -48,7 +45,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: website
-        run: npm install
+        run: npm ci
 
       - name: Build main site
         working-directory: website
