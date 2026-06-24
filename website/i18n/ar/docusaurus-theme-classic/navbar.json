@@ -50,5 +50,17 @@
   "item.label.Orb — A programming language": {
     "message": "Orb — لغة برمجة",
     "description": "Navbar item with label Orb — A programming language"
+  },
+  "item.label.Roadmap": {
+    "message": "خارطة الطريق",
+    "description": "Navbar item with label Roadmap"
+  },
+  "item.label.Masar — AI training platform": {
+    "message": "Masar — منصة تدريب الذكاء الاصطناعي",
+    "description": "Navbar item with label Masar — AI training platform"
+  },
+  "item.label.Start Building": {
+    "message": "ابدأ البناء",
+    "description": "Navbar item with label Start Building"
   }
 }

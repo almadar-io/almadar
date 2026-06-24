@@ -248,15 +248,33 @@
   "home.meta.title": {
     "message": "Pošiljajte prave produkte. Absurdno hitro."
   },
-  "home.beliefs.title": { "message": "V kaj verjamemo" },
-  "home.beliefs.shared.title": { "message": "Deljeno, ne izolirano" },
-  "home.beliefs.shared.desc": { "message": "Programska oprema naj bi soobstajala in se usklajevala med ekipami in organizacijami. Ena formalna definicija, h kateri prispevajo vsi." },
-  "home.beliefs.ai.title": { "message": "UI gradi programsko opremo, ne samo pomaga" },
-  "home.beliefs.ai.desc": { "message": "Agenti UI, ki gradijo, nameščajo in upravljajo sisteme avtonomno. Programska oprema, zasnovana od temeljev za razumevanje strojev." },
-  "home.beliefs.correct.title": { "message": "Zagotovljena pravilnost" },
-  "home.beliefs.correct.desc": { "message": "Če se prevede, deluje. Prevajalnik dokaže, da je vsako možno stanje veljavno, preden se požene ena vrstica kode." },
-  "home.beliefs.team.title": { "message": "En produkt, celotna ekipa" },
-  "home.beliefs.team.desc": { "message": "Inženirji, oblikovalci, produktni vodje in QA delajo iz ene žive definicije. Vsi prispevajo. Vsi razumejo. Brez prevajalnih plasti." },
+  "home.beliefs.title": {
+    "message": "V kaj verjamemo"
+  },
+  "home.beliefs.shared.title": {
+    "message": "Deljeno, ne izolirano"
+  },
+  "home.beliefs.shared.desc": {
+    "message": "Programska oprema naj bi soobstajala in se usklajevala med ekipami in organizacijami. Ena formalna definicija, h kateri prispevajo vsi."
+  },
+  "home.beliefs.ai.title": {
+    "message": "UI gradi programsko opremo, ne samo pomaga"
+  },
+  "home.beliefs.ai.desc": {
+    "message": "Agenti UI, ki gradijo, nameščajo in upravljajo sisteme avtonomno. Programska oprema, zasnovana od temeljev za razumevanje strojev."
+  },
+  "home.beliefs.correct.title": {
+    "message": "Zagotovljena pravilnost"
+  },
+  "home.beliefs.correct.desc": {
+    "message": "Če se prevede, deluje. Prevajalnik dokaže, da je vsako možno stanje veljavno, preden se požene ena vrstica kode."
+  },
+  "home.beliefs.team.title": {
+    "message": "En produkt, celotna ekipa"
+  },
+  "home.beliefs.team.desc": {
+    "message": "Inženirji, oblikovalci, produktni vodje in QA delajo iz ene žive definicije. Vsi prispevajo. Vsi razumejo. Brez prevajalnih plasti."
+  },
   "home.meta.desc": {
     "message": "Almadar Studio je delovni prostor za razvoj produktov za startupe. Pojdite od nič do produkta, nato od produkta do rasti, s preverjenimi izdajami, popolnim nadzorom in brez vezave na ponudnika."
   },
@@ -981,71 +999,520 @@
     "message": "Oznake",
     "description": "The title of the tag list page"
   },
-  "roadmap.meta.title": { "message": "Načrt razvoja" },
-  "roadmap.meta.desc": { "message": "Ena definicija. Vsaka platforma. Dokazano pravilno. Poglejte, kaj gradimo." },
-  "roadmap.hero.tag": { "message": "Načrt razvoja" },
-  "roadmap.hero.title": { "message": "Kaj gradimo" },
-  "roadmap.hero.subtitle": { "message": "Ena definicija. Vsaka platforma. Dokazano pravilno." },
-  "roadmap.status.active": { "message": "V teku" },
-  "roadmap.status.upcoming": { "message": "Prihaja" },
-  "roadmap.status.future": { "message": "Prihodnost" },
-  "roadmap.beyond": { "message": "2027+" },
-  "roadmap.p1.title": { "message": "Ekosistem Studio V2" },
-  "roadmap.p1.timeline": { "message": "April 2026" },
-  "roadmap.p1.tagline": { "message": "Izdaja graditelja in celotnega ekosistema." },
-  "roadmap.p1.masar": { "message": "Masar v Studiu" },
-  "roadmap.p1.masar.desc": { "message": "Diagnostika vrzeli v živo med gradnjo. Vizualizacija popravkov ob neuspeli validaciji." },
-  "roadmap.p1.extension": { "message": "Razširitev za Chrome" },
-  "roadmap.p1.extension.desc": { "message": "Zajem UI, razhroščevanje konzole, preverjanje namestitve, snemanje interakcij." },
-  "roadmap.p1.converter": { "message": "Cevovod pretvornika" },
-  "roadmap.p1.converter.desc": { "message": "Obratno inženirstvo obstoječih aplikacij v programe .orb." },
-  "roadmap.p1.cli": { "message": "Orb CLI V2" },
-  "roadmap.p1.cli.desc": { "message": "Produkcijsko pripravljena ukaza serve in dev. Lokalni LLM nadomestek. Knjižnica predlog." },
-  "roadmap.p1.verify": { "message": "Preverjanje V2" },
-  "roadmap.p1.verify.desc": { "message": "Vizualno regresijsko testiranje. Osnovne zmogljivosti. AI-generirani testi." },
-  "roadmap.p2.title": { "message": "Vrzeli platforme" },
-  "roadmap.p2.timeline": { "message": "Junij - Avgust 2026" },
-  "roadmap.p2.tagline": { "message": "Zapolnitev vrzeli, utrjevanje platforme, mobilna podpora." },
-  "roadmap.p2.entity": { "message": "Vezava entitet V2" },
-  "roadmap.p2.entity.desc": { "message": "Eksplicitne vezave, lambda lastnosti upodabljanja, povratna združljivost." },
-  "roadmap.p2.mobile": { "message": "Mobilno (React Native)" },
-  "roadmap.p2.mobile.desc": { "message": "Izvorna mobilna knjižnica komponent. Isti .orb, izvorni izhod." },
-  "roadmap.p2.games": { "message": "Komponente iger" },
-  "roadmap.p2.games.desc": { "message": "16 atomov iger, 19 molekul iger. Hibridno upodabljanje Canvas in DOM." },
-  "roadmap.p2.parity": { "message": "Enakost med lupinami" },
-  "roadmap.p2.parity.desc": { "message": "TypeScript, Python, Rust, Android, Swift lupine proizvajajo enako vedenje." },
-  "roadmap.p3.title": { "message": "Agent Trace" },
-  "roadmap.p3.timeline": { "message": "Avgust - Oktober 2026" },
-  "roadmap.p3.tagline": { "message": "Podjetniški nadzor agentov kot samostojen produkt." },
-  "roadmap.p3.standalone": { "message": "Samostojni paket" },
-  "roadmap.p3.standalone.desc": { "message": "Izvleček agent-trace kot samostojen produkt. Večnajemniški." },
-  "roadmap.p3.monitoring": { "message": "Podjetniški nadzor" },
-  "roadmap.p3.monitoring.desc": { "message": "Veriga razmišljanja v živo, časovnica klicev orodij, sledenje stroškov." },
-  "roadmap.p3.replay": { "message": "Ponovitev + Analitika" },
-  "roadmap.p3.replay.desc": { "message": "Ponovna izvedba sej agentov. Trendi stroškov, stopnje uspešnosti." },
-  "roadmap.p3.pricing": { "message": "Stopenjsko oblikovanje cen" },
-  "roadmap.p3.pricing.desc": { "message": "Brezplačno, Ekipa in Podjetje. SSO, revizijski dnevniki, prilagojeno zadrževanje." },
-  "roadmap.p4.title": { "message": "Ekosistem ML/AI" },
-  "roadmap.p4.timeline": { "message": "Avgust - Oktober 2026" },
-  "roadmap.p4.tagline": { "message": "Usposabljanje in namestitev prilagojenih ML modelov iz Studia." },
-  "roadmap.p4.python": { "message": "Python lupina za produkcijo" },
-  "roadmap.p4.python.desc": { "message": "Produkcijski cevovod za Python-prevedene orbitale s PyTorch." },
-  "roadmap.p4.mlops": { "message": "ML operatorji" },
-  "roadmap.p4.mlops.desc": { "message": "Operatorji nn/*, tensor/*, train/*, data/* kot prvorazredni državljani." },
-  "roadmap.p4.composer": { "message": "Studio ML skladatelj" },
-  "roadmap.p4.composer.desc": { "message": "Vizualna sestava ML vedenj. Nadzorne plošče usposabljanja. Upravljanje podatkov." },
-  "roadmap.p4.registry": { "message": "Register modelov" },
-  "roadmap.p4.registry.desc": { "message": "Usposobljeni modeli z različicami ob njihovih .orb definicijah. Namestitev z enim klikom." },
-  "roadmap.p5.title": { "message": "Vgrajeni sistemi + OS" },
-  "roadmap.p5.desc": { "message": "Vgrajena Rust lupina, no_std izvajalno okolje za mikrokrmilnike, strojne lastnostne naprave." },
-  "roadmap.p6.title": { "message": "OrbOS" },
-  "roadmap.p6.desc": { "message": "Operacijski sistem na osnovi Linuxa, kjer je Orb izvorni programski model." },
-  "roadmap.p7.title": { "message": "Robotika" },
-  "roadmap.p7.desc": { "message": "Realnočasovni lastnostni stroji za fizično upravljanje. Fuzija senzorjev, varnostno preverjanje." },
-  "roadmap.future.title": { "message": "Po letu 2026" },
-  "roadmap.future.subtitle": { "message": "Jezik ostaja enak. Prevajalnik dodaja lupine. Preverjanje širi obseg." },
-  "roadmap.cta.title": { "message": "Začnite graditi danes." },
-  "roadmap.cta.text": { "message": "Vse na tem načrtu temelji na istem temelju: ena .orb definicija, ki se prevede za vsako platformo." },
-  "roadmap.cta.studio": { "message": "Preizkusite Studio" },
-  "roadmap.cta.docs": { "message": "Preberite dokumentacijo" }
+  "roadmap.meta.title": {
+    "message": "Načrt razvoja"
+  },
+  "roadmap.meta.desc": {
+    "message": "Ena definicija. Vsaka platforma. Dokazano pravilno. Poglejte, kaj gradimo."
+  },
+  "roadmap.hero.tag": {
+    "message": "Načrt razvoja"
+  },
+  "roadmap.hero.title": {
+    "message": "Kaj gradimo"
+  },
+  "roadmap.hero.subtitle": {
+    "message": "Ena definicija. Vsaka platforma. Dokazano pravilno."
+  },
+  "roadmap.status.active": {
+    "message": "V teku"
+  },
+  "roadmap.status.upcoming": {
+    "message": "Prihaja"
+  },
+  "roadmap.status.future": {
+    "message": "Prihodnost"
+  },
+  "roadmap.beyond": {
+    "message": "2027+"
+  },
+  "roadmap.p1.title": {
+    "message": "Ekosistem Studio V2"
+  },
+  "roadmap.p1.timeline": {
+    "message": "April 2026"
+  },
+  "roadmap.p1.tagline": {
+    "message": "Izdaja graditelja in celotnega ekosistema."
+  },
+  "roadmap.p1.masar": {
+    "message": "Masar v Studiu"
+  },
+  "roadmap.p1.masar.desc": {
+    "message": "Diagnostika vrzeli v živo med gradnjo. Vizualizacija popravkov ob neuspeli validaciji."
+  },
+  "roadmap.p1.extension": {
+    "message": "Razširitev za Chrome"
+  },
+  "roadmap.p1.extension.desc": {
+    "message": "Zajem UI, razhroščevanje konzole, preverjanje namestitve, snemanje interakcij."
+  },
+  "roadmap.p1.converter": {
+    "message": "Cevovod pretvornika"
+  },
+  "roadmap.p1.converter.desc": {
+    "message": "Obratno inženirstvo obstoječih aplikacij v programe .orb."
+  },
+  "roadmap.p1.cli": {
+    "message": "Orb CLI V2"
+  },
+  "roadmap.p1.cli.desc": {
+    "message": "Produkcijsko pripravljena ukaza serve in dev. Lokalni LLM nadomestek. Knjižnica predlog."
+  },
+  "roadmap.p1.verify": {
+    "message": "Preverjanje V2"
+  },
+  "roadmap.p1.verify.desc": {
+    "message": "Vizualno regresijsko testiranje. Osnovne zmogljivosti. AI-generirani testi."
+  },
+  "roadmap.p2.title": {
+    "message": "Vrzeli platforme"
+  },
+  "roadmap.p2.timeline": {
+    "message": "Junij - Avgust 2026"
+  },
+  "roadmap.p2.tagline": {
+    "message": "Zapolnitev vrzeli, utrjevanje platforme, mobilna podpora."
+  },
+  "roadmap.p2.entity": {
+    "message": "Vezava entitet V2"
+  },
+  "roadmap.p2.entity.desc": {
+    "message": "Eksplicitne vezave, lambda lastnosti upodabljanja, povratna združljivost."
+  },
+  "roadmap.p2.mobile": {
+    "message": "Mobilno (React Native)"
+  },
+  "roadmap.p2.mobile.desc": {
+    "message": "Izvorna mobilna knjižnica komponent. Isti .orb, izvorni izhod."
+  },
+  "roadmap.p2.games": {
+    "message": "Komponente iger"
+  },
+  "roadmap.p2.games.desc": {
+    "message": "16 atomov iger, 19 molekul iger. Hibridno upodabljanje Canvas in DOM."
+  },
+  "roadmap.p2.parity": {
+    "message": "Enakost med lupinami"
+  },
+  "roadmap.p2.parity.desc": {
+    "message": "TypeScript, Python, Rust, Android, Swift lupine proizvajajo enako vedenje."
+  },
+  "roadmap.p3.title": {
+    "message": "Agent Trace"
+  },
+  "roadmap.p3.timeline": {
+    "message": "Avgust - Oktober 2026"
+  },
+  "roadmap.p3.tagline": {
+    "message": "Podjetniški nadzor agentov kot samostojen produkt."
+  },
+  "roadmap.p3.standalone": {
+    "message": "Samostojni paket"
+  },
+  "roadmap.p3.standalone.desc": {
+    "message": "Izvleček agent-trace kot samostojen produkt. Večnajemniški."
+  },
+  "roadmap.p3.monitoring": {
+    "message": "Podjetniški nadzor"
+  },
+  "roadmap.p3.monitoring.desc": {
+    "message": "Veriga razmišljanja v živo, časovnica klicev orodij, sledenje stroškov."
+  },
+  "roadmap.p3.replay": {
+    "message": "Ponovitev + Analitika"
+  },
+  "roadmap.p3.replay.desc": {
+    "message": "Ponovna izvedba sej agentov. Trendi stroškov, stopnje uspešnosti."
+  },
+  "roadmap.p3.pricing": {
+    "message": "Stopenjsko oblikovanje cen"
+  },
+  "roadmap.p3.pricing.desc": {
+    "message": "Brezplačno, Ekipa in Podjetje. SSO, revizijski dnevniki, prilagojeno zadrževanje."
+  },
+  "roadmap.p4.title": {
+    "message": "Ekosistem ML/AI"
+  },
+  "roadmap.p4.timeline": {
+    "message": "Avgust - Oktober 2026"
+  },
+  "roadmap.p4.tagline": {
+    "message": "Usposabljanje in namestitev prilagojenih ML modelov iz Studia."
+  },
+  "roadmap.p4.python": {
+    "message": "Python lupina za produkcijo"
+  },
+  "roadmap.p4.python.desc": {
+    "message": "Produkcijski cevovod za Python-prevedene orbitale s PyTorch."
+  },
+  "roadmap.p4.mlops": {
+    "message": "ML operatorji"
+  },
+  "roadmap.p4.mlops.desc": {
+    "message": "Operatorji nn/*, tensor/*, train/*, data/* kot prvorazredni državljani."
+  },
+  "roadmap.p4.composer": {
+    "message": "Studio ML skladatelj"
+  },
+  "roadmap.p4.composer.desc": {
+    "message": "Vizualna sestava ML vedenj. Nadzorne plošče usposabljanja. Upravljanje podatkov."
+  },
+  "roadmap.p4.registry": {
+    "message": "Register modelov"
+  },
+  "roadmap.p4.registry.desc": {
+    "message": "Usposobljeni modeli z različicami ob njihovih .orb definicijah. Namestitev z enim klikom."
+  },
+  "roadmap.p5.title": {
+    "message": "Vgrajeni sistemi + OS"
+  },
+  "roadmap.p5.desc": {
+    "message": "Vgrajena Rust lupina, no_std izvajalno okolje za mikrokrmilnike, strojne lastnostne naprave."
+  },
+  "roadmap.p6.title": {
+    "message": "OrbOS"
+  },
+  "roadmap.p6.desc": {
+    "message": "Operacijski sistem na osnovi Linuxa, kjer je Orb izvorni programski model."
+  },
+  "roadmap.p7.title": {
+    "message": "Robotika"
+  },
+  "roadmap.p7.desc": {
+    "message": "Realnočasovni lastnostni stroji za fizično upravljanje. Fuzija senzorjev, varnostno preverjanje."
+  },
+  "roadmap.future.title": {
+    "message": "Po letu 2026"
+  },
+  "roadmap.future.subtitle": {
+    "message": "Jezik ostaja enak. Prevajalnik dodaja lupine. Preverjanje širi obseg."
+  },
+  "roadmap.cta.title": {
+    "message": "Začnite graditi danes."
+  },
+  "roadmap.cta.text": {
+    "message": "Vse na tem načrtu temelji na istem temelju: ena .orb definicija, ki se prevede za vsako platformo."
+  },
+  "roadmap.cta.studio": {
+    "message": "Preizkusite Studio"
+  },
+  "roadmap.cta.docs": {
+    "message": "Preberite dokumentacijo"
+  },
+  "roadmap.p1.generate": {
+    "message": "Ustvarjanje z umetno inteligenco"
+  },
+  "roadmap.p1.generate.desc": {
+    "message": "Opišite, kaj želite. Agent vas vpraša in v nekaj sekundah ustvari delujočo shemo."
+  },
+  "roadmap.p1.canvas": {
+    "message": "Vizualni graditelj"
+  },
+  "roadmap.p1.canvas.desc": {
+    "message": "Povleci vzorce, urejaj stroje stanj, povezuj dogodke in sestavljaj orbitale na živi površini."
+  },
+  "roadmap.p1.preview": {
+    "message": "Predogled v živo"
+  },
+  "roadmap.p1.preview.desc": {
+    "message": "Pritisni Zaženi in poglej pravo, delujočo aplikacijo — ne maketo. Preizkusi vsak klik pred objavo."
+  },
+  "roadmap.p1.design": {
+    "message": "Sistem oblikovanja"
+  },
+  "roadmap.p1.design.desc": {
+    "message": "Urejaj žetone teme in različice komponent. Spremembe se prelivajo čez celoten projekt."
+  },
+  "roadmap.p1.validation": {
+    "message": "Preverjanje"
+  },
+  "roadmap.p1.validation.desc": {
+    "message": "Preverjanje pravilnosti sheme z razvrščenimi rezultati. Vedite, kaj je pokvarjeno, preden objavite."
+  },
+  "roadmap.p1.personas": {
+    "message": "3 osebe"
+  },
+  "roadmap.p1.personas.desc": {
+    "message": "Načini graditelja, oblikovalca in arhitekta. Vsaka oseba vidi natančno orodja, ki jih potrebuje."
+  },
+  "roadmap.p1.templates": {
+    "message": "Začetne predloge"
+  },
+  "roadmap.p1.templates.desc": {
+    "message": "9 popolnoma delujočih začetnih predlog: e-trgovina, CRM, klepet, pomoč uporabnikom, nadzorna plošča in drugo."
+  },
+  "roadmap.p1.billing": {
+    "message": "Zaračunavanje in ekipe"
+  },
+  "roadmap.p1.billing.desc": {
+    "message": "Stripe blagajna, sledenje uporabe, vabila v ekipo, dostop na podlagi vlog in skupni delovni prostori."
+  },
+  "roadmap.p2.masar": {
+    "message": "Gradnja z vodenjem AI"
+  },
+  "roadmap.p2.masar.desc": {
+    "message": "UI diagnosticira, kaj manjka v vašem izdelku, in natančno predlaga, kaj dodati naslednje."
+  },
+  "roadmap.p2.extension": {
+    "message": "Brskalniški spremljevalec"
+  },
+  "roadmap.p2.extension.desc": {
+    "message": "Zajemi kateri koli obstoječi UI, preveri objavljeno aplikacijo in posnemi interakcije uporabnikov iz brskalnika."
+  },
+  "roadmap.p2.converter": {
+    "message": "Uvozi obstoječe aplikacije"
+  },
+  "roadmap.p2.converter.desc": {
+    "message": "Usmeri na katero koli obstoječe spletno mesto ali kodo in jo pretvori v preverjeno definicijo izdelka."
+  },
+  "roadmap.p2.cli": {
+    "message": "Razvijalski CLI"
+  },
+  "roadmap.p2.cli.desc": {
+    "message": "Gradi iz terminala. Lokalni razvojni strežnik, predloge projektov in podpora AI brez povezave."
+  },
+  "roadmap.p2.verify": {
+    "message": "Samodejno testiranje"
+  },
+  "roadmap.p2.verify.desc": {
+    "message": "Vizualno regresijsko testiranje, sledenje zmogljivosti in AI-generirani testni primeri za vsako spremembo izdelka."
+  },
+  "roadmap.p3.mobile": {
+    "message": "Native mobilne aplikacije"
+  },
+  "roadmap.p3.mobile.desc": {
+    "message": "Vaša definicija izdelka se prevede v native iOS in Android. Ista definicija, izvorna izkušnja."
+  },
+  "roadmap.p3.games": {
+    "message": "Interaktivne izkušnje"
+  },
+  "roadmap.p3.games.desc": {
+    "message": "Igre, simulacije in bogata interaktivna vsebina iz istega graditelja."
+  },
+  "roadmap.p3.parity": {
+    "message": "Enakost več platform"
+  },
+  "roadmap.p3.parity.desc": {
+    "message": "Splet, mobilne naprave, Python, Rust in Swift vse proizvajajo enako preverjeno vedenje."
+  },
+  "roadmap.p4.monitoring": {
+    "message": "Nadzorna plošča agenta v živo"
+  },
+  "roadmap.p4.monitoring.desc": {
+    "message": "Opazujte, kako vaši AI agenti razmišljajo in delujejo v realnem času. Popoln vpogled v vsako odločitev in klic orodja."
+  },
+  "roadmap.p4.replay": {
+    "message": "Ponovitev seje"
+  },
+  "roadmap.p4.replay.desc": {
+    "message": "Ponovi katero koli sejo agenta. Razumej, kaj je delovalo, kaj ni in koliko je stalo."
+  },
+  "roadmap.p5.timeline": {
+    "message": "Q1 - Q2 2027"
+  },
+  "roadmap.p5.tagline": {
+    "message": "Usposobi in namesti prilagojene modele AI iz Studia."
+  },
+  "roadmap.p5.composer": {
+    "message": "Vizualni ML graditelj"
+  },
+  "roadmap.p5.composer.desc": {
+    "message": "Sestavljaj vedenja AI vizualno. Poveži vire podatkov, cevovode usposabljanja in cilje namestitve."
+  },
+  "roadmap.p5.training": {
+    "message": "Nadzorna plošča usposabljanja"
+  },
+  "roadmap.p5.training.desc": {
+    "message": "Spremljaj napredek usposabljanja, primerjaj različice modelov in z enim klikom namesti najboljši model."
+  },
+  "roadmap.p5.registry": {
+    "message": "Tržnica modelov"
+  },
+  "roadmap.p5.registry.desc": {
+    "message": "Delite in ponovno uporabljajte usposobljene modele med projekti. Nadzor različic za modele AI."
+  },
+  "roadmap.p8.title": {
+    "message": "Robotika"
+  },
+  "roadmap.p8.desc": {
+    "message": "Krmili fizične robote s preverjenim vedenjem. Integracija senzorjev, varnostna zagotovila, upravljanje flote."
+  },
+  "join.divider.or": {
+    "message": "Ali"
+  },
+  "join.cta.studio": {
+    "message": "Odpri Studio"
+  },
+  "join.title": {
+    "message": "Hvala, ker ste se nam pridružili v Almadarju"
+  },
+  "join.subtitle": {
+    "message": "Povejte nam, kaj želite zgraditi, in vas bomo peljali naravnost v Studio."
+  },
+  "join.meta.title": {
+    "message": "Dobrodošli v Almadarju"
+  },
+  "vision.letter.p1": {
+    "message": "Almadar smo ustanovili, da bi pomagali zagonskim podjetjem in majhnim ekipam doseči to, kar lahko velika podjetja. Po več kot 15 letih gradnje digitalnih izdelkov smo vedno znova videli isto: majhne ekipe, zaustavljene z orodji, ki so bila bodisi preveč toga bodisi preveč čarobna, da bi jim zaupali."
+  },
+  "vision.letter.p2": {
+    "message": "Verjamemo, da morajo biti ljudje v središču prihajajoče revolucije umetne inteligence, ne pa pripomba za pozneje. Zato je Almadar Studio graditelj izdelkov, ki postavlja ljudi na prvo mesto, AI pa je pomočnik."
+  },
+  "vision.letter.p3": {
+    "message": "Močno verjamemo v digitalno suverenost. Odprti modeli in odprta koda sta pot naprej. Almadar Studio je zgrajen na popolnoma odprtokodni kodi in naši stranke nimajo zaklenitve ponudnika. Naš cilj je ljudem omogočiti gradnjo izdelkov, omejenih le z njihovo domišljijo, ter jim dati prednost, ki jo potrebujejo, da se izstopajo."
+  },
+  "vision.truth.p1": {
+    "message": "V Almadarju izdelek opišete enkrat. Kaj vsebuje, pravila, ki ga urejajo, kaj se zgodi, ko. Ta opis je vir resnice in ostaja živ, ko vaš izdelek raste."
+  },
+  "vision.truth.p2": {
+    "message": "Vse ostalo teče iz te ene definicije. Izdelek deluje iz nje kot celovita koda, ki jo lahko preberete, namestite in posedujete. Vaša dokumentacija jo bere, zato se to, kar vaša ekipa vidi v wikiju, vedno ujema s tem, kar teče v produkciji. AI agenti jo berejo tudi, zato razumejo vaše poslovanje, ker berejo isto kot vaša ekipa."
+  },
+  "vision.truth.p3": {
+    "message": "Večina orodij ustvari kodo iz poziva in pozabi. Almadar ohranja definicijo v središču in vam omogoča izvoz, kjer koli jo potrebujete: koda, dokumentacija in AI agenti, ki delujejo na vašem poslu."
+  },
+  "vision.open.p1": {
+    "message": "Almadar je odprtokoden od vrha do pete. Orodja, s katerimi gradite, koda, ki jo ustvarimo, in platforma, na kateri tečejo, so vsa odprta in pregledna. Nič vas ne zaklene. Nič ne drži vaših podatkov za talca. Nobena pogodba vas ne ustavi, da odidete."
+  },
+  "vision.open.p2": {
+    "message": "Lastnik generirane kode ste vi. Izberete model AI. Odločite se, kje teče. Almadar obstaja, da bi majhni ekipi dal vzvod velike, ne da bi jo odvisno od nas."
+  },
+  "vision.letter.title": {
+    "message": "Zakaj smo ustanovili Almadar."
+  },
+  "vision.truth.kicker": {
+    "message": "En vir resnice"
+  },
+  "vision.open.kicker": {
+    "message": "Digitalna suverenost"
+  },
+  "vision.open.title": {
+    "message": "Privzeto odprto. Vaš po zasnovi."
+  },
+  "vision.cta.studio": {
+    "message": "Preizkusi Studio"
+  },
+  "ai.caps.title": {
+    "message": "Tri zmogljivosti, ki jih LLM-ji nimajo"
+  },
+  "ai.caps.subtitle": {
+    "message": "LLM-ji ustvarjajo besedilo. Masar razume strukturo."
+  },
+  "ai.pipe.title": {
+    "message": "Kako deluje Masar"
+  },
+  "ai.stats.title": {
+    "message": "V številkah"
+  },
+  "ai.sys2.p1": {
+    "message": "Daniel Kahnemanova raziskava je pokazala, da ima človeško spoznavanje dva sistema. Sistem 1 je hiter, intuitiven in asociativen. Sistem 2 je počasen, premišljen in strukuren. Za dobre odločitve potrebujete oba."
+  },
+  "ai.sys2.p2": {
+    "message": "LLM-ji so sistem 1. Takoj se odzovejo, iščejo vzorce v učnih podatkih in ustvarjajo tekoče besedilo. Toda ne morejo načrtovati večkoraknih procesov, preveriti strukturne pravilnosti ali se učiti iz lastnih izkušenj. To je sistem 2."
+  },
+  "ai.sys2.p3": {
+    "message": "Masar je sistem 2 za vsakega LLM agenta. Opravlja premišljeno, strukturno razmišljanje, ki ga jezikovni modeli ne zmorejo. LLM skrbi za jezik in ustvarjanje. Masar skrbi za načrtovanje, preverjanje in pomnilnik. Skupaj tvorita celovitega agenta."
+  },
+  "ai.sys2.cta": {
+    "message": "Razišči Masar"
+  },
+  "ai.caps.plan.title": {
+    "message": "Načrtovanje"
+  },
+  "ai.caps.plan.desc": {
+    "message": "Masar pozna 93 vedenjskih vzorcev v 18 domenah. Ob delnem rezultatu in cilju ustvari navodila, razporejena po odvisnostih, z natančnimi parametri. LLM ne ugiba, kaj zgraditi. Masar mu pove."
+  },
+  "ai.caps.verify.title": {
+    "message": "Preverjanje"
+  },
+  "ai.caps.verify.desc": {
+    "message": "Napove veljavnost v manj kot 5 ms brez zagona prevajalnika. Zazna 20 kategorij strukturnih napak. Ko nekaj odpove, iskanje s snopom v celoti v latentnem prostoru najde optimalno zaporedje popravil."
+  },
+  "ai.caps.memory.title": {
+    "message": "Pomnilnik"
+  },
+  "ai.caps.memory.desc": {
+    "message": "Shranjuje izkušnje agenta kot strukturirane epizode. Sčasoma združuje podobne epizode v ponovno uporabne vzorce. Vaš agent gradi strokovno znanje iz lastnega dela, brez ponovnega usposabljanja."
+  },
+  "ai.pipe.embed.title": {
+    "message": "Vdelaj"
+  },
+  "ai.pipe.embed.desc": {
+    "message": "Masar pretvori trenutno stanje v kompakten zapis, ki zajame strukturno topologijo. Podobne težave pristanejo v istem območju prostora predstavitve."
+  },
+  "ai.pipe.match.title": {
+    "message": "Ujemanje"
+  },
+  "ai.pipe.match.desc": {
+    "message": "Najde najbližji znani vzorec iz knjižnice. 93 vedenj v e-trgovini, zdravstvu, CRM, upravljanju projektov, igrah in 12 dodatnih domenah."
+  },
+  "ai.pipe.plan.title": {
+    "message": "Načrt"
+  },
+  "ai.pipe.plan.desc": {
+    "message": "Izračuna strukturno razliko med tem, kje ste in kam morate priti. Razdeli jo na 7 ravni odvisnosti parametriziranih navodil."
+  },
+  "ai.pipe.verify.title": {
+    "message": "Preveri"
+  },
+  "ai.pipe.verify.desc": {
+    "message": "Po vsakem koraku napove veljavnost in kategorije napak. Zazna težave, preden jih LLM stopnjuje. Ko pride do napak, iskanje s snopom najde najkrajšo pot popravila."
+  },
+  "ai.pipe.remember.title": {
+    "message": "Zapomni si"
+  },
+  "ai.pipe.remember.desc": {
+    "message": "Shranjuje zaključeni rezultat kot epizodo. Sčasoma se epizode združujejo v nove vzorce. 93 ročno napisanih vedenj je samo seme. Knjižnica raste iz izkušenj."
+  },
+  "ai.stats.latency": {
+    "message": "Zakasnitev načrtovanja"
+  },
+  "ai.stats.accuracy": {
+    "message": "Natančnost napovedovanja veljavnosti"
+  },
+  "ai.stats.patterns": {
+    "message": "Vgrajeni vedenjski vzorci"
+  },
+  "ai.stats.domains": {
+    "message": "Pokrite domene"
+  },
+  "ai.stats.errors": {
+    "message": "Zaznane kategorije napak"
+  },
+  "ai.stats.endpoints": {
+    "message": "API končne točke"
+  },
+  "ai.hero.cta1": {
+    "message": "Začni"
+  },
+  "ai.hero.cta2": {
+    "message": "Oglej si API"
+  },
+  "ai.sys2.title": {
+    "message": "Razmišljanje, hitro in počasno"
+  },
+  "home.cap.cta": {
+    "message": "Začni graditi v Studiu"
+  },
+  "join.meta.desc": {
+    "message": "Hvala, ker ste se pridružili Almadarju. Začnite graditi svoj izdelek danes v Studiu."
+  },
+  "join.prompt.placeholder": {
+    "message": "Povejte nam, kaj želite zgraditi..."
+  },
+  "join.prompt.submit": {
+    "message": "Začni graditi"
+  },
+  "vision.letter.pullquote": {
+    "message": "Ljudje na prvem mestu. AI kot pomočnik. Odprta koda od samega začetka."
+  },
+  "vision.open.pullquote": {
+    "message": "Gradi omejeno le s svojo domišljijo, ne s tem, kar dovoljujejo tvoja orodja."
+  },
+  "vision.truth.pullquote": {
+    "message": "Ena definicija. Koda, dokumentacija in AI vsi berejo isto stvar."
+  },
+  "vision.truth.title": {
+    "message": "Definiraj svoj izdelek enkrat. Uporabi ga povsod."
+  }
 }

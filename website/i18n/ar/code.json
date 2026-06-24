@@ -248,15 +248,33 @@
   "home.meta.title": {
     "message": "أطلق منتجات حقيقية. بسرعة لا تُصدَّق."
   },
-  "home.beliefs.title": { "message": "ما نؤمن به" },
-  "home.beliefs.shared.title": { "message": "مُشارَك، وليس معزولاً" },
-  "home.beliefs.shared.desc": { "message": "البرمجيات يجب أن تتعايش وتتنسق عبر الفرق والمؤسسات. تعريف رسمي واحد يساهم فيه الجميع." },
-  "home.beliefs.ai.title": { "message": "الذكاء الاصطناعي يبني البرمجيات، لا يساعد فقط" },
-  "home.beliefs.ai.desc": { "message": "وكلاء ذكاء اصطناعي يبنون وينشرون ويشغلون الأنظمة بشكل مستقل. برمجيات مصممة من الأساس ليفهمها الآلات." },
-  "home.beliefs.correct.title": { "message": "صحة مضمونة" },
-  "home.beliefs.correct.desc": { "message": "إذا تم تجميعه، فهو يعمل. المترجم يُثبت أن كل حالة ممكنة صالحة قبل تشغيل أي سطر من الكود." },
-  "home.beliefs.team.title": { "message": "منتج واحد، الفريق بأكمله" },
-  "home.beliefs.team.desc": { "message": "المهندسون والمصممون ومديرو المنتجات وفرق ضمان الجودة يعملون من تعريف واحد حي. الجميع يساهم. الجميع يفهم. بدون طبقات ترجمة." },
+  "home.beliefs.title": {
+    "message": "ما نؤمن به"
+  },
+  "home.beliefs.shared.title": {
+    "message": "مُشارَك، وليس معزولاً"
+  },
+  "home.beliefs.shared.desc": {
+    "message": "البرمجيات يجب أن تتعايش وتتنسق عبر الفرق والمؤسسات. تعريف رسمي واحد يساهم فيه الجميع."
+  },
+  "home.beliefs.ai.title": {
+    "message": "الذكاء الاصطناعي يبني البرمجيات، لا يساعد فقط"
+  },
+  "home.beliefs.ai.desc": {
+    "message": "وكلاء ذكاء اصطناعي يبنون وينشرون ويشغلون الأنظمة بشكل مستقل. برمجيات مصممة من الأساس ليفهمها الآلات."
+  },
+  "home.beliefs.correct.title": {
+    "message": "صحة مضمونة"
+  },
+  "home.beliefs.correct.desc": {
+    "message": "إذا تم تجميعه، فهو يعمل. المترجم يُثبت أن كل حالة ممكنة صالحة قبل تشغيل أي سطر من الكود."
+  },
+  "home.beliefs.team.title": {
+    "message": "منتج واحد، الفريق بأكمله"
+  },
+  "home.beliefs.team.desc": {
+    "message": "المهندسون والمصممون ومديرو المنتجات وفرق ضمان الجودة يعملون من تعريف واحد حي. الجميع يساهم. الجميع يفهم. بدون طبقات ترجمة."
+  },
   "home.meta.desc": {
     "message": "Almadar Studio هو مساحة تطوير المنتجات للشركات الناشئة. انتقل من الصفر إلى المنتج، ثم من المنتج إلى التوسع، مع إصدارات مُتحقَّق منها وتحكم كامل وبدون قيود مع المورّد."
   },
@@ -981,71 +999,520 @@
     "message": "الوسوم",
     "description": "The title of the tag list page"
   },
-  "roadmap.meta.title": { "message": "خارطة الطريق" },
-  "roadmap.meta.desc": { "message": "تعريف واحد. كل منصة. صحة مُثبتة. اكتشف ما نبنيه." },
-  "roadmap.hero.tag": { "message": "خارطة الطريق" },
-  "roadmap.hero.title": { "message": "ماذا نبني" },
-  "roadmap.hero.subtitle": { "message": "تعريف واحد. كل منصة. صحة مُثبتة." },
-  "roadmap.status.active": { "message": "قيد التنفيذ" },
-  "roadmap.status.upcoming": { "message": "قادم" },
-  "roadmap.status.future": { "message": "مستقبلي" },
-  "roadmap.beyond": { "message": "+2027" },
-  "roadmap.p1.title": { "message": "منظومة Studio V2" },
-  "roadmap.p1.timeline": { "message": "أبريل 2026" },
-  "roadmap.p1.tagline": { "message": "إطلاق البنّاء ومنظومته الكاملة." },
-  "roadmap.p1.masar": { "message": "مسار في Studio" },
-  "roadmap.p1.masar.desc": { "message": "تشخيص الفجوات العصبية أثناء البناء. عرض مرئي لإصلاح الحزمة عند فشل التحقق." },
-  "roadmap.p1.extension": { "message": "إضافة Chrome" },
-  "roadmap.p1.extension.desc": { "message": "التقاط الواجهة، تصحيح الأخطاء، التحقق من النشر، تسجيل التفاعلات." },
-  "roadmap.p1.converter": { "message": "خط أنابيب المحوّل" },
-  "roadmap.p1.converter.desc": { "message": "هندسة عكسية للتطبيقات الحالية إلى برامج .orb." },
-  "roadmap.p1.cli": { "message": "Orb CLI V2" },
-  "roadmap.p1.cli.desc": { "message": "أوامر serve و dev جاهزة للإنتاج. بديل LLM محلي. مكتبة قوالب." },
-  "roadmap.p1.verify": { "message": "التحقق V2" },
-  "roadmap.p1.verify.desc": { "message": "اختبار الانحدار البصري. خطوط أساس الأداء. توليد اختبارات بالذكاء الاصطناعي." },
-  "roadmap.p2.title": { "message": "فجوات المنصة" },
-  "roadmap.p2.timeline": { "message": "يونيو - أغسطس 2026" },
-  "roadmap.p2.tagline": { "message": "سد الفجوات، تقوية المنصة، دعم الجوال." },
-  "roadmap.p2.entity": { "message": "ربط الكيانات V2" },
-  "roadmap.p2.entity.desc": { "message": "ربط صريح، خصائص عرض لامبدا، توافق خلفي." },
-  "roadmap.p2.mobile": { "message": "الجوال (React Native)" },
-  "roadmap.p2.mobile.desc": { "message": "مكتبة مكونات أصلية للجوال. نفس .orb، مخرجات أصلية." },
-  "roadmap.p2.games": { "message": "مكونات الألعاب" },
-  "roadmap.p2.games.desc": { "message": "16 ذرة لعبة، 19 جزيء لعبة. عرض هجين Canvas و DOM." },
-  "roadmap.p2.parity": { "message": "تكافؤ الأصداف" },
-  "roadmap.p2.parity.desc": { "message": "TypeScript و Python و Rust و Android و Swift تنتج سلوكاً متطابقاً." },
-  "roadmap.p3.title": { "message": "Agent Trace" },
-  "roadmap.p3.timeline": { "message": "أغسطس - أكتوبر 2026" },
-  "roadmap.p3.tagline": { "message": "مراقبة وكلاء بمستوى المؤسسات كمنتج مستقل." },
-  "roadmap.p3.standalone": { "message": "حزمة مستقلة" },
-  "roadmap.p3.standalone.desc": { "message": "استخراج agent-trace كمنتج مستقل. متعدد المستأجرين." },
-  "roadmap.p3.monitoring": { "message": "مراقبة المؤسسات" },
-  "roadmap.p3.monitoring.desc": { "message": "سلسلة التفكير الحية، جدول زمني لاستدعاءات الأدوات، تتبع التكاليف." },
-  "roadmap.p3.replay": { "message": "إعادة التشغيل + التحليلات" },
-  "roadmap.p3.replay.desc": { "message": "إعادة تشغيل جلسات الوكيل. اتجاهات التكلفة، معدلات النجاح." },
-  "roadmap.p3.pricing": { "message": "تسعير متدرج" },
-  "roadmap.p3.pricing.desc": { "message": "مجاني، فريق، ومؤسسات. SSO، سجلات التدقيق، احتفاظ مخصص." },
-  "roadmap.p4.title": { "message": "منظومة ML/AI" },
-  "roadmap.p4.timeline": { "message": "أغسطس - أكتوبر 2026" },
-  "roadmap.p4.tagline": { "message": "تدريب ونشر نماذج ML مخصصة من Studio." },
-  "roadmap.p4.python": { "message": "Python Shell للإنتاج" },
-  "roadmap.p4.python.desc": { "message": "خط أنابيب نشر إنتاجي للمدارات المترجمة بـ Python مع PyTorch." },
-  "roadmap.p4.mlops": { "message": "عمليات ML" },
-  "roadmap.p4.mlops.desc": { "message": "عمليات nn/* و tensor/* و train/* و data/* كمواطنين من الدرجة الأولى." },
-  "roadmap.p4.composer": { "message": "مؤلف ML في Studio" },
-  "roadmap.p4.composer.desc": { "message": "تأليف سلوكيات ML مرئياً. لوحات تدريب. إدارة مجموعات البيانات." },
-  "roadmap.p4.registry": { "message": "سجل النماذج" },
-  "roadmap.p4.registry.desc": { "message": "نماذج مدربة مُصدّرة مع تعريفات .orb الخاصة بها. نشر بنقرة واحدة." },
-  "roadmap.p5.title": { "message": "الأنظمة المدمجة + نظام التشغيل" },
-  "roadmap.p5.desc": { "message": "صدفة Rust مدمجة، بيئة تشغيل no_std للمتحكمات الدقيقة، آلات سمات العتاد." },
-  "roadmap.p6.title": { "message": "OrbOS" },
-  "roadmap.p6.desc": { "message": "نظام تشغيل مبني على Linux حيث Orb هو نموذج البرمجة الأصلي. خدمات النظام كمدارات." },
-  "roadmap.p7.title": { "message": "الروبوتات" },
-  "roadmap.p7.desc": { "message": "آلات سمات الوقت الحقيقي للتحكم الفيزيائي. دمج المستشعرات، التحقق من السلامة." },
-  "roadmap.future.title": { "message": "ما بعد 2026" },
-  "roadmap.future.subtitle": { "message": "اللغة تبقى كما هي. المترجم يضيف أصدافاً. التحقق يوسع نطاقه." },
-  "roadmap.cta.title": { "message": "ابدأ البناء اليوم." },
-  "roadmap.cta.text": { "message": "كل ما في خارطة الطريق هذه مبني على نفس الأساس: تعريف .orb واحد يُترجم لكل منصة." },
-  "roadmap.cta.studio": { "message": "جرّب Studio" },
-  "roadmap.cta.docs": { "message": "اقرأ التوثيق" }
+  "roadmap.meta.title": {
+    "message": "خارطة الطريق"
+  },
+  "roadmap.meta.desc": {
+    "message": "تعريف واحد. كل منصة. صحة مُثبتة. اكتشف ما نبنيه."
+  },
+  "roadmap.hero.tag": {
+    "message": "خارطة الطريق"
+  },
+  "roadmap.hero.title": {
+    "message": "ماذا نبني"
+  },
+  "roadmap.hero.subtitle": {
+    "message": "تعريف واحد. كل منصة. صحة مُثبتة."
+  },
+  "roadmap.status.active": {
+    "message": "قيد التنفيذ"
+  },
+  "roadmap.status.upcoming": {
+    "message": "قادم"
+  },
+  "roadmap.status.future": {
+    "message": "مستقبلي"
+  },
+  "roadmap.beyond": {
+    "message": "+2027"
+  },
+  "roadmap.p1.title": {
+    "message": "منظومة Studio V2"
+  },
+  "roadmap.p1.timeline": {
+    "message": "أبريل 2026"
+  },
+  "roadmap.p1.tagline": {
+    "message": "إطلاق البنّاء ومنظومته الكاملة."
+  },
+  "roadmap.p1.masar": {
+    "message": "مسار في Studio"
+  },
+  "roadmap.p1.masar.desc": {
+    "message": "تشخيص الفجوات العصبية أثناء البناء. عرض مرئي لإصلاح الحزمة عند فشل التحقق."
+  },
+  "roadmap.p1.extension": {
+    "message": "إضافة Chrome"
+  },
+  "roadmap.p1.extension.desc": {
+    "message": "التقاط الواجهة، تصحيح الأخطاء، التحقق من النشر، تسجيل التفاعلات."
+  },
+  "roadmap.p1.converter": {
+    "message": "خط أنابيب المحوّل"
+  },
+  "roadmap.p1.converter.desc": {
+    "message": "هندسة عكسية للتطبيقات الحالية إلى برامج .orb."
+  },
+  "roadmap.p1.cli": {
+    "message": "Orb CLI V2"
+  },
+  "roadmap.p1.cli.desc": {
+    "message": "أوامر serve و dev جاهزة للإنتاج. بديل LLM محلي. مكتبة قوالب."
+  },
+  "roadmap.p1.verify": {
+    "message": "التحقق V2"
+  },
+  "roadmap.p1.verify.desc": {
+    "message": "اختبار الانحدار البصري. خطوط أساس الأداء. توليد اختبارات بالذكاء الاصطناعي."
+  },
+  "roadmap.p2.title": {
+    "message": "فجوات المنصة"
+  },
+  "roadmap.p2.timeline": {
+    "message": "يونيو - أغسطس 2026"
+  },
+  "roadmap.p2.tagline": {
+    "message": "سد الفجوات، تقوية المنصة، دعم الجوال."
+  },
+  "roadmap.p2.entity": {
+    "message": "ربط الكيانات V2"
+  },
+  "roadmap.p2.entity.desc": {
+    "message": "ربط صريح، خصائص عرض لامبدا، توافق خلفي."
+  },
+  "roadmap.p2.mobile": {
+    "message": "الجوال (React Native)"
+  },
+  "roadmap.p2.mobile.desc": {
+    "message": "مكتبة مكونات أصلية للجوال. نفس .orb، مخرجات أصلية."
+  },
+  "roadmap.p2.games": {
+    "message": "مكونات الألعاب"
+  },
+  "roadmap.p2.games.desc": {
+    "message": "16 ذرة لعبة، 19 جزيء لعبة. عرض هجين Canvas و DOM."
+  },
+  "roadmap.p2.parity": {
+    "message": "تكافؤ الأصداف"
+  },
+  "roadmap.p2.parity.desc": {
+    "message": "TypeScript و Python و Rust و Android و Swift تنتج سلوكاً متطابقاً."
+  },
+  "roadmap.p3.title": {
+    "message": "Agent Trace"
+  },
+  "roadmap.p3.timeline": {
+    "message": "أغسطس - أكتوبر 2026"
+  },
+  "roadmap.p3.tagline": {
+    "message": "مراقبة وكلاء بمستوى المؤسسات كمنتج مستقل."
+  },
+  "roadmap.p3.standalone": {
+    "message": "حزمة مستقلة"
+  },
+  "roadmap.p3.standalone.desc": {
+    "message": "استخراج agent-trace كمنتج مستقل. متعدد المستأجرين."
+  },
+  "roadmap.p3.monitoring": {
+    "message": "مراقبة المؤسسات"
+  },
+  "roadmap.p3.monitoring.desc": {
+    "message": "سلسلة التفكير الحية، جدول زمني لاستدعاءات الأدوات، تتبع التكاليف."
+  },
+  "roadmap.p3.replay": {
+    "message": "إعادة التشغيل + التحليلات"
+  },
+  "roadmap.p3.replay.desc": {
+    "message": "إعادة تشغيل جلسات الوكيل. اتجاهات التكلفة، معدلات النجاح."
+  },
+  "roadmap.p3.pricing": {
+    "message": "تسعير متدرج"
+  },
+  "roadmap.p3.pricing.desc": {
+    "message": "مجاني، فريق، ومؤسسات. SSO، سجلات التدقيق، احتفاظ مخصص."
+  },
+  "roadmap.p4.title": {
+    "message": "منظومة ML/AI"
+  },
+  "roadmap.p4.timeline": {
+    "message": "أغسطس - أكتوبر 2026"
+  },
+  "roadmap.p4.tagline": {
+    "message": "تدريب ونشر نماذج ML مخصصة من Studio."
+  },
+  "roadmap.p4.python": {
+    "message": "Python Shell للإنتاج"
+  },
+  "roadmap.p4.python.desc": {
+    "message": "خط أنابيب نشر إنتاجي للمدارات المترجمة بـ Python مع PyTorch."
+  },
+  "roadmap.p4.mlops": {
+    "message": "عمليات ML"
+  },
+  "roadmap.p4.mlops.desc": {
+    "message": "عمليات nn/* و tensor/* و train/* و data/* كمواطنين من الدرجة الأولى."
+  },
+  "roadmap.p4.composer": {
+    "message": "مؤلف ML في Studio"
+  },
+  "roadmap.p4.composer.desc": {
+    "message": "تأليف سلوكيات ML مرئياً. لوحات تدريب. إدارة مجموعات البيانات."
+  },
+  "roadmap.p4.registry": {
+    "message": "سجل النماذج"
+  },
+  "roadmap.p4.registry.desc": {
+    "message": "نماذج مدربة مُصدّرة مع تعريفات .orb الخاصة بها. نشر بنقرة واحدة."
+  },
+  "roadmap.p5.title": {
+    "message": "الأنظمة المدمجة + نظام التشغيل"
+  },
+  "roadmap.p5.desc": {
+    "message": "صدفة Rust مدمجة، بيئة تشغيل no_std للمتحكمات الدقيقة، آلات سمات العتاد."
+  },
+  "roadmap.p6.title": {
+    "message": "OrbOS"
+  },
+  "roadmap.p6.desc": {
+    "message": "نظام تشغيل مبني على Linux حيث Orb هو نموذج البرمجة الأصلي. خدمات النظام كمدارات."
+  },
+  "roadmap.p7.title": {
+    "message": "الروبوتات"
+  },
+  "roadmap.p7.desc": {
+    "message": "آلات سمات الوقت الحقيقي للتحكم الفيزيائي. دمج المستشعرات، التحقق من السلامة."
+  },
+  "roadmap.future.title": {
+    "message": "ما بعد 2026"
+  },
+  "roadmap.future.subtitle": {
+    "message": "اللغة تبقى كما هي. المترجم يضيف أصدافاً. التحقق يوسع نطاقه."
+  },
+  "roadmap.cta.title": {
+    "message": "ابدأ البناء اليوم."
+  },
+  "roadmap.cta.text": {
+    "message": "كل ما في خارطة الطريق هذه مبني على نفس الأساس: تعريف .orb واحد يُترجم لكل منصة."
+  },
+  "roadmap.cta.studio": {
+    "message": "جرّب Studio"
+  },
+  "roadmap.cta.docs": {
+    "message": "اقرأ التوثيق"
+  },
+  "roadmap.p1.generate": {
+    "message": "التوليد بالذكاء الاصطناعي"
+  },
+  "roadmap.p1.generate.desc": {
+    "message": "صف ما تريد. الوكيل يجري معك مقابلة، ثم يولّد مخططًا عاملًا في ثوانٍ."
+  },
+  "roadmap.p1.canvas": {
+    "message": "منشئ مرئي"
+  },
+  "roadmap.p1.canvas.desc": {
+    "message": "اسحب الأنماط، عدّل آلات الحالة، ربط الأحداث، ورتب المدارات على لوحة حية."
+  },
+  "roadmap.p1.preview": {
+    "message": "معاينة مباشرة"
+  },
+  "roadmap.p1.preview.desc": {
+    "message": "اضغط تشغيل وشاهد تطبيقًا حقيقيًا عاملًا — ليس نموذجًا. اختبر كل نقرة قبل النشر."
+  },
+  "roadmap.p1.design": {
+    "message": "نظام التصميم"
+  },
+  "roadmap.p1.design.desc": {
+    "message": "عدّل رموز السمة ومتغيرات المكونات. التغييرات تنتشر عبر مشروعك بأكمله."
+  },
+  "roadmap.p1.validation": {
+    "message": "التحقق"
+  },
+  "roadmap.p1.validation.desc": {
+    "message": "فحوصات صحة المخطط مع نتائج مصنفة. اعرف ما هو معطل قبل النشر."
+  },
+  "roadmap.p1.personas": {
+    "message": "3 شخصيات"
+  },
+  "roadmap.p1.personas.desc": {
+    "message": "أوضاع الباني والمصمم والمهندس المعماري. كل شخصية ترى بالضبط الأدوات التي تحتاجها."
+  },
+  "roadmap.p1.templates": {
+    "message": "قوالب البداية"
+  },
+  "roadmap.p1.templates.desc": {
+    "message": "9 قوالب بداية كاملة العمل: التجارة الإلكترونية، إدارة العملاء، الدردشة، مكتب المساعدة، لوحة المعلومات، وأكثر."
+  },
+  "roadmap.p1.billing": {
+    "message": "الفوترة والفرق"
+  },
+  "roadmap.p1.billing.desc": {
+    "message": "الدفع عبر Stripe، تتبع الاستخدام، دعوات الفريق، الوصول المبني على الأدوار، ومساحات عمل مشتركة."
+  },
+  "roadmap.p2.masar": {
+    "message": "البناء بالذكاء الاصطناعي"
+  },
+  "roadmap.p2.masar.desc": {
+    "message": "الذكاء الاصطناعي يشخّص ما ينقص منتجك ويقترح بالضبط ما يجب إضافته تاليًا."
+  },
+  "roadmap.p2.extension": {
+    "message": "رفيق المتصفح"
+  },
+  "roadmap.p2.extension.desc": {
+    "message": "التقط أي واجهة مستخدم حالية، تحقق من تطبيقك المنشور، وسجّل تفاعلات المستخدم من متصفحك."
+  },
+  "roadmap.p2.converter": {
+    "message": "استيراد التطبيقات الحالية"
+  },
+  "roadmap.p2.converter.desc": {
+    "message": "أشر إلى أي موقع أو قاعدة شفرات حالية وحوّلها إلى تعريف منتج متحقق."
+  },
+  "roadmap.p2.cli": {
+    "message": "واجهة سطر أوامر المطور"
+  },
+  "roadmap.p2.cli.desc": {
+    "message": "ابنِ من طرفيتك. خادم تطوير محلي، قوالب المشاريع، ودعم الذكاء الاصطناعي دون اتصال."
+  },
+  "roadmap.p2.verify": {
+    "message": "الاختبار الآلي"
+  },
+  "roadmap.p2.verify.desc": {
+    "message": "اختبار الانحدار البصري، تتبع الأداء، وحالات اختبار مولدة بالذكاء الاصطناعي لكل تغيير في المنتج."
+  },
+  "roadmap.p3.mobile": {
+    "message": "تطبيقات جوال أصلية"
+  },
+  "roadmap.p3.mobile.desc": {
+    "message": "يتم تجميع تعريف منتجك إلى تطبيقات iOS وAndroid أصلية. نفس التعريف، تجربة أصلية."
+  },
+  "roadmap.p3.games": {
+    "message": "تجارب تفاعلية"
+  },
+  "roadmap.p3.games.desc": {
+    "message": "ألعاب ومحاكيات ومحتوى تفاعلي غني من نفس المنشئ."
+  },
+  "roadmap.p3.parity": {
+    "message": "تكافؤ المنصات المتعددة"
+  },
+  "roadmap.p3.parity.desc": {
+    "message": "تنتج أهداف الويب والجوال وPython وRust وSwift سلوكًا متحققًا متطابقًا."
+  },
+  "roadmap.p4.monitoring": {
+    "message": "لوحة معلومات الوكيل المباشرة"
+  },
+  "roadmap.p4.monitoring.desc": {
+    "message": "شاهد وكلاء الذكاء الاصطناعي يفكرون ويتصرفون في الوقت الفعلي. رؤية كاملة لكل قرار ونداء أداة."
+  },
+  "roadmap.p4.replay": {
+    "message": "إعادة تشغيل الجلسة"
+  },
+  "roadmap.p4.replay.desc": {
+    "message": "أعد تشغيل أي جلسة وكيل. افهم ما نجح، وما فشل، وكم كلفت."
+  },
+  "roadmap.p5.timeline": {
+    "message": "الربع الأول - الثاني 2027"
+  },
+  "roadmap.p5.tagline": {
+    "message": "درب وانشر نماذج ذكاء اصطناعي مخصصة من Studio."
+  },
+  "roadmap.p5.composer": {
+    "message": "منشئ التعلم الآلي المرئي"
+  },
+  "roadmap.p5.composer.desc": {
+    "message": "ركّب سلوكيات الذكاء الاصطناعي بصريًا. اربط مصادر البيانات وخطوط التدريب وأهداف النشر."
+  },
+  "roadmap.p5.training": {
+    "message": "لوحة تدريب"
+  },
+  "roadmap.p5.training.desc": {
+    "message": "راقب تقدم التدريب، قارن بين إصدارات النماذج، وانشر أفضل نموذج بنقرة واحدة."
+  },
+  "roadmap.p5.registry": {
+    "message": "سوق النماذج"
+  },
+  "roadmap.p5.registry.desc": {
+    "message": "شارك وأعد استخدام النماذج المدربة عبر المشاريع. التحكم بالإصدارات لنماذج الذكاء الاصطناعي."
+  },
+  "roadmap.p8.title": {
+    "message": "الروبوتات"
+  },
+  "roadmap.p8.desc": {
+    "message": "تحكم بالروبوتات المادية بسلوك متحقق. تكامل المستشعرات، ضمانات السلامة، وإدارة الأسطول."
+  },
+  "join.divider.or": {
+    "message": "أو"
+  },
+  "join.cta.studio": {
+    "message": "افتح Studio"
+  },
+  "join.title": {
+    "message": "شكرًا لانضمامك إلينا في Almadar"
+  },
+  "join.subtitle": {
+    "message": "أخبرنا ما تريد بناءه وسنأخذك مباشرة إلى Studio."
+  },
+  "join.meta.title": {
+    "message": "مرحبًا بك في Almadar"
+  },
+  "vision.letter.p1": {
+    "message": "أسسنا Almadar لمساعدة الشركات الناشئة والفرق الصغيرة على تحقيق ما تستطيع الشركات الكبيرة تحقيقه. بعد أكثر من 15 عامًا في بناء المنتجات الرقمية، ظللنا نرى نفس الشيء: فرق صغيرة متوقفة بسبب أدوات إما صلبة للغاية أو سحرية بزيادة عن اللزوم."
+  },
+  "vision.letter.p2": {
+    "message": "نؤمن أن البشر يجب أن يكونوا في قلب الثورة القادمة للذكاء الاصطناعي، وليس فكرة لاحقة. لهذا السبب Almadar Studio هو منشئ المنتجات للبشر أولاً، مع الذكاء الاصطناعي كمساعد."
+  },
+  "vision.letter.p3": {
+    "message": "نؤمن بشدة بالسيادة الرقمية. النماذج المفتوحة والبرمجيات مفتوحة المصدر هي الطريق إلى الأمام. Almadar Studio مبني على كود مفتوح المصدر بالكامل، وعملاؤنا ليسوا مقيدين بمزود. هدفنا تمكين الناس من بناء منتجات لا يحدها إلا خيالهم، ومنحهم الميزة التي يحتاجونها للتميز."
+  },
+  "vision.truth.p1": {
+    "message": "في Almadar، تصف منتجك مرة واحدة. ما يحتويه، القواعد التي تحكمه، ما يحدث عندما. هذا الوصف هو مصدر الحقيقة، ويبقى حيًا مع نمو منتجك."
+  },
+  "vision.truth.p2": {
+    "message": "كل شيء آخر يتدفق من هذا التعريف الواحد. المنتج يعمل منه ككود كامل يمكنك قراءته ونشره وامتلاكه. توثيقك يقرأ منه، لذا ما يراه فريقك في الويكي يتوافق دائمًا مع ما يعمل في الإنتاج. وكلاء الذكاء الاصطناعي يقرأون منه أيضًا، لذا يفهمون عملك بقراءة نفس ما يقرأه فريقك."
+  },
+  "vision.truth.p3": {
+    "message": "معظم الأدوات تولد الكود من توجيه وتنسى. Almadar يبقي التعريف في المركز، ويتيح لك تصديره أينما تحتاج: الكود، التوثيق، ووكلاء الذكاء الاصطناعي الذين يعملون فوق عملك."
+  },
+  "vision.open.p1": {
+    "message": "Almadar مفتوح المصدر من الأعلى إلى الأسفل. الأدوات التي تبني بها، والكود الذي نولده، والمنصة التي تشغلها كلها مفتوحة وقابلة للفحص. لا شيء يقيدك. لا شيء يحتجز بياناتك. لا عقد يمنعك من المغادرة."
+  },
+  "vision.open.p2": {
+    "message": "أنت تمتلك الكود المولد. أنت تختار نموذج الذكاء الاصطناعي. أنت تقرر أين يعمل. Almadar موجود ليمنح الفريق الصغير رافعة الفريق الكبير، لا ليجعلهم يعتمدون علينا."
+  },
+  "vision.letter.title": {
+    "message": "لماذا أسسنا Almadar."
+  },
+  "vision.truth.kicker": {
+    "message": "مصدر واحد للحقيقة"
+  },
+  "vision.open.kicker": {
+    "message": "السيادة الرقمية"
+  },
+  "vision.open.title": {
+    "message": "مفتوح افتراضيًا. ملكك بالتصميم."
+  },
+  "vision.cta.studio": {
+    "message": "جرب Studio"
+  },
+  "ai.caps.title": {
+    "message": "ثلاث قدرات تنقص نماذج اللغة"
+  },
+  "ai.caps.subtitle": {
+    "message": "نماذج اللغة تولّد النص. Masar يفهم البنية."
+  },
+  "ai.pipe.title": {
+    "message": "كيف يعمل Masar"
+  },
+  "ai.stats.title": {
+    "message": "بالأرقام"
+  },
+  "ai.sys2.p1": {
+    "message": "أظهر بحث دانيال كاهنمان أن الإدراك البشري يمتلك نظامين. النظام الأول سريع وبديهي وترابطي. النظام الثاني بطيء ومدروس وبنيوي. تحتاج كليهما لاتخاذ قرارات جيدة."
+  },
+  "ai.sys2.p2": {
+    "message": "نماذج اللغة هي النظام الأول. تستجيب فورًا، تطابق الأنماط من بيانات التدريب، وتولّد نصًا سلسًا. لكنها لا تستطيع تخطيط العمليات متعددة الخطوات، أو التحقق من الصحة البنيوية، أو التعلم من تجربتها الخاصة. هذا هو النظام الثاني."
+  },
+  "ai.sys2.p3": {
+    "message": "Masar هو النظام الثاني لأي وكيل نموذج لغة. يتولى التفكير المدروس والبنيوي الذي لا تستطيع نماذج اللغة القيام به. نموذج اللغة يتولى اللغة والتوليد. Masar يتولى التخطيط والتحقق والذاكرة. معًا، يشكلان وكيلًا كاملًا."
+  },
+  "ai.sys2.cta": {
+    "message": "استكشف Masar"
+  },
+  "ai.caps.plan.title": {
+    "message": "التخطيط"
+  },
+  "ai.caps.plan.desc": {
+    "message": "يعرف Masar 93 نمطًا سلوكيًا في 18 مجالًا. بناءً على نتيجة جزئية وهدف، ينتج تعليمات مرتبة حسب التبعية مع معاملات دقيقة. نموذج اللغة لا يخمّن ما يجب بناؤه. Masar يخبره."
+  },
+  "ai.caps.verify.title": {
+    "message": "التحقق"
+  },
+  "ai.caps.verify.desc": {
+    "message": "يتنبأ بالصحة في أقل من 5 مللي ثانية دون تشغيل المصرّف. يكتشف 20 فئة من الأخطاء البنيوية. عند الفشل، يجد البحث الشعاعي تسلسل الإصلاح الأمثل بالكامل في الفضاء الكامن."
+  },
+  "ai.caps.memory.title": {
+    "message": "الذاكرة"
+  },
+  "ai.caps.memory.desc": {
+    "message": "يخزن تجارب الوكيل كحلقات منظمة. يجمّع الحلقات المتشابهة في أنماط قابلة لإعادة الاستخدام مع مرور الوقت. يبني وكيلك خبرته من عمله الخاص، دون إعادة تدريب."
+  },
+  "ai.pipe.embed.title": {
+    "message": "تضمين"
+  },
+  "ai.pipe.embed.desc": {
+    "message": "يحوّل Masar الحالة الحالية إلى تمثيل مضغوط يلتقط الطوبولوجيا البنيوية. المشكلات المتشابهة تنتهي في نفس منطقة فضاء التمثيل."
+  },
+  "ai.pipe.match.title": {
+    "message": "مطابقة"
+  },
+  "ai.pipe.match.desc": {
+    "message": "يجد أقرب نمط معروف من المكتبة. 93 سلوكًا في التجارة الإلكترونية والرعاية الصحية وإدارة العملاء وإدارة المشاريع والألعاب و12 مجالًا آخر."
+  },
+  "ai.pipe.plan.title": {
+    "message": "خطّط"
+  },
+  "ai.pipe.plan.desc": {
+    "message": "يحسب الفرق البنيوي بين مكانك والمكان الذي تريد الوصول إليه. يفككه إلى 7 مستويات تبعية من التعليمات ذات المعاملات."
+  },
+  "ai.pipe.verify.title": {
+    "message": "تحقق"
+  },
+  "ai.pipe.verify.desc": {
+    "message": "بعد كل خطوة، يتنبأ بالصحة وفئات الأخطاء. يلتقط المشكلات قبل أن يتفاقمها نموذج اللغة. عند حدوث أخطاء، يجد البحث الشعاعي أقصر مسار إصلاح."
+  },
+  "ai.pipe.remember.title": {
+    "message": "تذكّر"
+  },
+  "ai.pipe.remember.desc": {
+    "message": "يخزن النتيجة المكتملة كحلقة. مع مرور الوقت، تتكتل الحلقات في أنماط جديدة. السلوكيات الـ 93 المكتوبة يدويًا هي مجرد بذرة. المكتبة تنمو من الخبرة."
+  },
+  "ai.stats.latency": {
+    "message": "تأخير التخطيط"
+  },
+  "ai.stats.accuracy": {
+    "message": "دقة التنبؤ بالصحة"
+  },
+  "ai.stats.patterns": {
+    "message": "أنماط سلوكية مدمجة"
+  },
+  "ai.stats.domains": {
+    "message": "المجالات المغطاة"
+  },
+  "ai.stats.errors": {
+    "message": "فئات الأخطاء المكتشفة"
+  },
+  "ai.stats.endpoints": {
+    "message": "نقاط نهاية واجهة البرمجة"
+  },
+  "ai.hero.cta1": {
+    "message": "ابدأ الآن"
+  },
+  "ai.hero.cta2": {
+    "message": "عرض واجهة البرمجة"
+  },
+  "ai.sys2.title": {
+    "message": "التفكير، السريع والبطيء"
+  },
+  "home.cap.cta": {
+    "message": "ابدأ البناء في Studio"
+  },
+  "join.meta.desc": {
+    "message": "شكرًا لانضمامك إلى Almadar. ابدأ ببناء منتجك اليوم في Studio."
+  },
+  "join.prompt.placeholder": {
+    "message": "أخبرنا ما تريد بناءه..."
+  },
+  "join.prompt.submit": {
+    "message": "ابدأ البناء"
+  },
+  "vision.letter.pullquote": {
+    "message": "البشر أولاً. الذكاء الاصطناعي كمساعد. مفتوح المصدر من الأساس."
+  },
+  "vision.open.pullquote": {
+    "message": "ابنِ محدودًا فقط بخيالك، لا بما تسمح به أدواتك."
+  },
+  "vision.truth.pullquote": {
+    "message": "تعريف واحد. الكود والتوثيق والذكاء الاصطناعي كلها تقرأ الشيء نفسه."
+  },
+  "vision.truth.title": {
+    "message": "عرف منتجك مرة واحدة. استخدمه في كل مكان."
+  }
 }

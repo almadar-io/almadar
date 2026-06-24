@@ -50,5 +50,17 @@
   "item.label.Orb — A programming language": {
     "message": "Orb — Programski jezik",
     "description": "Navbar item with label Orb — A programming language"
+  },
+  "item.label.Roadmap": {
+    "message": "Smernica",
+    "description": "Navbar item with label Roadmap"
+  },
+  "item.label.Masar — AI training platform": {
+    "message": "Masar — Platforma za usposabljanje AI",
+    "description": "Navbar item with label Masar — AI training platform"
+  },
+  "item.label.Start Building": {
+    "message": "Začni graditi",
+    "description": "Navbar item with label Start Building"
   }
 }
