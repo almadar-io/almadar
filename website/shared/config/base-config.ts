@@ -60,9 +60,6 @@ function buildProductsDropdown(currentSite: string) {
 }
 
 export function createConfig(opts: SiteConfig): Config {
-  // In the standalone repo, the site root is two levels up from shared/config/
-  const siteDir = path.resolve(__dirname, '../..');
-
   return {
     title: opts.title,
     tagline: opts.tagline,
@@ -127,6 +124,19 @@ export function createConfig(opts: SiteConfig): Config {
         return {
           name: "almadar-ui-webpack-compat",
           configureWebpack(config, isServer) {
+            // @phosphor-icons/react (from @almadar/ui's icon family) ships a CJS main
+            // (dist/index.cjs.js) that throws "exports is not defined" under Docusaurus's
+            // ESM webpack, so we force its ESM build. Resolve it via @almadar/ui (its
+            // owner) instead of a hardcoded site-root path: under pnpm's strict layout
+            // phosphor is private to @almadar/ui and not hoisted to the site node_modules.
+            const phosphorEsm = path.join(
+              path.dirname(
+                require.resolve('@phosphor-icons/react', {
+                  paths: [path.dirname(require.resolve('@almadar/ui'))],
+                }),
+              ),
+              'index.es.js',
+            );
             return {
               resolve: {
                 alias: {
@@ -136,13 +146,35 @@ export function createConfig(opts: SiteConfig): Config {
                   // single v5 copy so Router context is shared across the bundle.
                   'react-router': path.dirname(require.resolve('react-router/package.json')),
                   'react-router-dom': path.dirname(require.resolve('react-router-dom/package.json')),
+                  '@phosphor-icons/react$': phosphorEsm,
+                  // The Docusaurus site is browser-only. @almadar/runtime's server-side
+                  // code (and its Node-only transitive deps like @almadar-io/rabit)
+                  // is dead code in the client bundle, but webpack still resolves its
+                  // static imports. Stub the whole server package so the build doesn't
+                  // need to install or bundle packages that require Node at runtime.
+                  '@almadar/server': false,
+                  '@almadar-io/rabit': false,
+                  '@almadar-io/skills': false,
                 },
-                // Node core modules are not available in the browser; stub them out
-                // (almadar-runtime pulls in fs/path/module for its Node-side OrbitalServerRuntime)
+                // Node core modules are not available in the browser; stub them
+                // out. `@almadar/runtime`'s `OrbitalServerRuntime` guards every
+                // Node-only call site with `isNodeEnv()` at runtime, but the
+                // static imports for `LocalPersistenceAdapter`, `createOsHandlers`,
+                // and the express `Router` still resolve their transitive deps
+                // (fs/path/net/child_process/express). Setting them to false
+                // tells webpack to emit empty modules for the dead branches —
+                // the runtime never reaches those code paths in the browser
+                // because mock mode uses `MockPersistenceAdapter` and
+                // `BrowserPlayground`'s in-process transport bypasses the
+                // express Router entirely.
                 fallback: {
                   fs: false,
                   path: false,
                   module: false,
+                  net: false,
+                  child_process: false,
+                  express: false,
+                  url: false,
                 },
               },
               plugins: [
