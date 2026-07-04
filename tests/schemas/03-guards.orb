@@ -82,8 +82,8 @@
                     "main",
                     {
                       "type": "entity-table",
-                      "entity": "Account",
-                      "columns": [
+                      "entity": "@entity",
+                      "fields": [
                         "balance",
                         "isVerified"
                       ],

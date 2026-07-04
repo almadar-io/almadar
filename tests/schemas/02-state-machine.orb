@@ -103,8 +103,8 @@
                     "main",
                     {
                       "type": "entity-table",
-                      "entity": "Order",
-                      "columns": [
+                      "entity": "@entity",
+                      "fields": [
                         "customerName",
                         "total"
                       ],
