@@ -13,7 +13,6 @@
     "@almadar/analytics": "^0.1.1",
     "@almadar/core": "^10.13.0",
     "@almadar/evaluator": "^2.18.0",
-    "@almadar/patterns": "^2.88.1",
     "@almadar/runtime": "^6.20.0",
     "@almadar/std": "^16.103.2",
     "@almadar/syntax": "^1.4.0",
