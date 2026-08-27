@@ -22,9 +22,6 @@ importers:
       '@almadar/evaluator':
         specifier: ^2.18.0
         version: 2.21.0
-      '@almadar/patterns':
-        specifier: ^2.88.1
-        version: 2.95.0
       '@almadar/runtime':
         specifier: ^6.20.0
         version: 6.24.0(express@4.22.2)

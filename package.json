@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@almadar/core": "^10.25.0",
-    "@almadar/std": "^2.0.0",
+    "@almadar/std": "^16.186.0",
     "@almadar/validation": "^2.0.0"
   },
   "devDependencies": {
