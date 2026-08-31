@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.ALMADAR_RUNNER || 'ubuntu-latest' }}
     strategy:
       matrix:
         node-version: [20, 22]
