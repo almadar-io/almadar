@@ -42,9 +42,7 @@ export default function OrbPreviewBlock({
       >
         {showCode && (
           <div style={{ overflow: 'auto', maxHeight: height }}>
-            <CodeBlock language="json" title="schema.orb">
-              {schema.trim()}
-            </CodeBlock>
+            <CodeBlock code={schema.trim()} language="orb" title="schema.orb" />
           </div>
         )}
         <BrowserOnly fallback={<div style={{ height, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed var(--ifm-color-emphasis-300)', borderRadius: '8px' }}>Loading preview...</div>}>
