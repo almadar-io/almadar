@@ -34,5 +34,5 @@ Lint every file you touched with `--max-warnings 0`. CI (`.github/workflows/`: `
 - **No silent compromises.** Never drop a feature or take a shortcut without saying so plainly in your report.
 - **Minimal comments.** Default to none; one short line only when the *why* is non-obvious.
 - **Diagnose from evidence.** Read logs, or add them with the package logger, before claiming a cause.
-- **Own what you find.** A bug or broken tool you hit goes into your report with its location and suggested owner. In the monorepo it goes into `docs/Almadar_Gaps.md`.
+- **Gaps live in `Almadar_Gaps.md` here.** Read it before starting. When you fix a gap, delete its entry in the same commit. A new gap you find in this repo gets an entry, using the file's `Next code` (bump it). A gap that needs another repo goes in your report or PR body instead.
 - **Never npm/pnpm update** here. Lockfile-respecting installs only (`pnpm install --frozen-lockfile`).
