@@ -2,12 +2,7 @@ import React from "react";
 import type { ReactNode } from "react";
 import Layout from "@theme/Layout";
 import Translate, { translate } from "@docusaurus/Translate";
-import {
-  Box,
-  VStack,
-  Typography,
-  Button,
-} from "@almadar/ui/marketing";
+import { Box, VStack, Typography, Button } from '@almadar/ui/ssr';
 
 const STUDIO_URL = "https://studio.almadar.io";
 

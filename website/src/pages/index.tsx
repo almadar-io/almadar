@@ -2,22 +2,8 @@ import React from "react";
 import type { ReactNode } from "react";
 import Layout from "@theme/Layout";
 import { translate } from "@docusaurus/Translate";
-import {
-  Box,
-  VStack,
-  Typography,
-  Badge,
-  Button,
-  HStack,
-  Icon,
-  Card,
-  FeatureGrid,
-  FeatureCard,
-  ShowcaseCard,
-  CTABanner,
-  SimpleGrid,
-  AnimatedReveal,
-} from "@almadar/ui/marketing";
+import { Box, VStack, Typography, Badge, Button, HStack, Icon, Card, FeatureGrid, FeatureCard, SimpleGrid, AnimatedReveal } from '@almadar/ui/ssr';
+import { ShowcaseCard, CTABanner } from '../../shared/components/sections';
 
 import { OrbitalHeroBackground } from "../components/OrbitalHeroBackground";
 

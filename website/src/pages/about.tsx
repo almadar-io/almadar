@@ -2,13 +2,7 @@ import React from "react";
 import type { ReactNode } from "react";
 import Layout from "@theme/Layout";
 import Translate, { translate } from "@docusaurus/Translate";
-import {
-  Box,
-  VStack,
-  HStack,
-  Typography,
-  Card,
-} from "@almadar/ui/marketing";
+import { Box, VStack, HStack, Typography, Card } from '@almadar/ui/ssr';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
 export default function About(): ReactNode {
