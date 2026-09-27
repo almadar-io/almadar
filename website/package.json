@@ -4,6 +4,10 @@
   "description": "Almadar documentation and marketing website",
   "private": true,
   "scripts": {
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "serve": "docusaurus serve",
+    "clear": "docusaurus clear",
     "validate": "almadar validate",
     "compile": "almadar compile",
     "dev": "almadar dev",
