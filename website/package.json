@@ -1,91 +1,17 @@
 {
   "name": "@almadar/website",
-  "version": "1.0.0",
-  "description": "Almadar documentation and marketing website",
+  "version": "2.0.0",
+  "description": "almadar.io — built from the std-almadar-website .lolo organism",
   "private": true,
+  "type": "module",
   "scripts": {
-    "start": "docusaurus start",
-    "build": "docusaurus build",
-    "serve": "docusaurus serve",
-    "clear": "docusaurus clear",
-    "validate": "almadar validate",
-    "compile": "almadar compile",
-    "dev": "almadar dev",
-    "test": "almadar test"
-  },
-  "dependencies": {
-    "@almadar/analytics": "^0.1.1",
-    "@almadar/core": "^10.13.0",
-    "@almadar/evaluator": "^2.18.0",
-    "@almadar/runtime": "^6.20.0",
-    "@almadar/std": "^16.103.2",
-    "@almadar/syntax": "^1.4.0",
-    "@almadar/ui": "^6.37.0",
-    "@docusaurus/core": "3.9.2",
-    "@docusaurus/plugin-google-gtag": "3.9.2",
-    "@docusaurus/preset-classic": "3.9.2",
-    "@docusaurus/theme-common": "3.9.2",
-    "@mdx-js/react": "^3.0.0",
-    "@monaco-editor/react": "^4.6.0",
-    "@react-three/drei": "^9.122.0",
-    "@react-three/fiber": "^9.0.0",
-    "@react-three/postprocessing": "^2.19.1",
-    "@tanstack/react-query": "^5.0.0",
-    "@types/three": "^0.182.0",
-    "clsx": "^2.1.1",
-    "katex": "^0.16.0",
-    "lucide-react": "^0.570.0",
-    "postprocessing": "^6.38.2",
-    "prism-react-renderer": "^2.4.1",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "react-markdown": "^9.0.0",
-    "react-router-dom": "^5.3.4",
-    "react-syntax-highlighter": "^16.1.1",
-    "rehype-katex": "^7.0.0",
-    "remark-math": "^6.0.0",
-    "tailwind-merge": "^2.0.0",
-    "three": "^0.182.0"
+    "build": "node ../orb/scripts/build-site.mjs --organism std-almadar-website --origin https://almadar.io",
+    "deploy": "npx firebase-tools deploy --only hosting:main --project kflow-b3a39"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^3.9.2",
-    "@docusaurus/tsconfig": "^3.9.2",
-    "@docusaurus/types": "^3.9.2",
-    "@storybook/addon-links": "^10.2.6",
-    "@storybook/addon-themes": "^10.2.6",
-    "@storybook/react": "^10.2.6",
-    "@storybook/react-vite": "^10.2.6",
-    "@types/react-syntax-highlighter": "^15.5.13",
-    "autoprefixer": "^10.4.0",
-    "chokidar": "^5.0.0",
-    "esbuild": "^0.27.2",
-    "raw-loader": "^4.0.2",
-    "storybook": "^10.2.6",
-    "tailwindcss": "^3.4.0",
-    "turbo": "^2.8.17",
-    "typescript": "~5.6.2"
-  },
-  "browserslist": {
-    "production": [
-      ">0.5%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 3 chrome version",
-      "last 3 firefox version",
-      "last 5 safari version"
-    ]
-  },
-  "engines": {
-    "node": ">=18.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "react": "^19.2.0",
-      "react-dom": "^19.2.0",
-      "webpack": "5.97.1"
-    }
+    "@almadar-io/behaviors": "^0.16.194",
+    "@almadar/orb": "^17.11.2",
+    "@almadar/std": "^16.246.0"
   },
   "packageManager": "pnpm@10.30.3"
 }

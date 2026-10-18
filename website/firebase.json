@@ -1,16 +1,106 @@
 {
-  "hosting": [
-    {
-      "target": "main",
-      "public": "build",
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-      "rewrites": [{ "source": "**", "destination": "/index.html" }],
-      "headers": [
-        { "source": "**/*.@(js|css)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=300, must-revalidate" }] },
-        { "source": "**/*.@(png|jpg|jpeg|gif|svg|ico|webp)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=300, must-revalidate" }] },
-        { "source": "**/*.html", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }
-      ]
-    }
-  ]
+  "hosting": {
+    "target": "main",
+    "public": "build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "redirects": [
+      {
+        "regex": "^/roadmap/?$",
+        "destination": "/vision",
+        "type": 301
+      },
+      {
+        "regex": "^/(systems|how-it-works|sign|markdown-page)/?$",
+        "destination": "/",
+        "type": 301
+      },
+      {
+        "regex": "^/blog/(tags|authors|page|archive)(/.*)?$",
+        "destination": "/blog",
+        "type": 301
+      },
+      {
+        "regex": "^/(ar|sl)/roadmap/?$",
+        "destination": "/:1/vision",
+        "type": 301
+      },
+      {
+        "regex": "^/(ar|sl)/(systems|how-it-works|sign|markdown-page)/?$",
+        "destination": "/:1",
+        "type": 301
+      },
+      {
+        "regex": "^/(ar|sl)/blog/(tags|authors|page|archive)(/.*)?$",
+        "destination": "/:1/blog",
+        "type": 301
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
+    "headers": [
+      {
+        "source": "/install.sh",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/x-sh; charset=utf-8"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
+        "source": "/install.ps1",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "text/plain; charset=utf-8"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(js|css)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=300, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(png|jpg|jpeg|gif|svg|ico|webp)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=300, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "**/*.html",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      }
+    ]
+  }
 }
-

@@ -2,109 +2,54 @@ name: Deploy Website
 
 on:
   push:
-    tags: ['v*']        # heavy build+deploy runs on release tags, not every push to main
-  workflow_dispatch:    # manual deploy between releases
+    tags: ['v*']
+  workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
-  build:
-    name: Build Main Site
+  deploy:
+    name: Build & Deploy almadar.io
     runs-on: ${{ vars.ALMADAR_RUNNER || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: true
 
-      - name: Setup pnpm
+      - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          package_json_file: website/package.json
+          version: 10.30.3
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          cache: pnpm
-          cache-dependency-path: website/pnpm-lock.yaml
-
-      # Cache Docusaurus build artifacts: webpack5's filesystem cache
-      # (website/node_modules/.cache/webpack) and Docusaurus's plugin
-      # output (website/.docusaurus). On a warm hit webpack reuses
-      # ~95% of compiled modules, dropping a long build down to a few
-      # minutes.
-      - name: Cache Docusaurus build artifacts
-        uses: actions/cache@v4
-        with:
-          path: |
-            website/.docusaurus
-            website/node_modules/.cache
-          key: docusaurus-${{ runner.os }}-${{ hashFiles('website/pnpm-lock.yaml', 'website/docusaurus.config.ts', 'website/shared/**', 'website/docs/**', 'website/blog/**', 'website/src/**', 'website/static/**') }}
-          restore-keys: |
-            docusaurus-${{ runner.os }}-
+          node-version: "22"
 
       - name: Install dependencies
         working-directory: website
-        run: pnpm install --ignore-workspace --frozen-lockfile
-
-      - name: Build main site
-        working-directory: website
-        run: pnpm run build
+        run: pnpm install --ignore-workspace --no-frozen-lockfile
         env:
-          NODE_ENV: production
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
 
-      - name: Upload main build
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-main
-          path: website/build
-
-      - name: Upload main for GitHub Pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: website/build
-
-  deploy-github-pages:
-    name: Deploy to GitHub Pages
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ${{ vars.ALMADAR_RUNNER || 'ubuntu-latest' }}
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-  deploy-firebase:
-    name: Deploy to Firebase Hosting
-    runs-on: ${{ vars.ALMADAR_RUNNER || 'ubuntu-latest' }}
-    needs: build
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Download main build
-        uses: actions/download-artifact@v4
-        with:
-          name: build-main
-          path: website/build
+      - name: Build
+        working-directory: website
+        run: pnpm build
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+          NODE_OPTIONS: --max-old-space-size=6144
 
       - name: Authenticate to Firebase
         run: |
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > /tmp/firebase-sa.json
 
-      - name: Deploy main site to Firebase
+      - name: Deploy to Firebase Hosting
         working-directory: website
-        run: npx firebase-tools deploy --only hosting --project kflow-b3a39
+        run: npx firebase-tools deploy --only hosting:main --project kflow-b3a39
         env:
           GOOGLE_APPLICATION_CREDENTIALS: /tmp/firebase-sa.json
 
       - name: Cleanup credentials
         if: always()
         run: rm -f /tmp/firebase-sa.json
-
