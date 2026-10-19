@@ -81,11 +81,11 @@ orbital dev my-app.orb
 
 ### Published Packages (npm)
 
-**Core**: `@almadar/core`, `@almadar/std`, `@almadar/evaluator`, `@almadar/patterns`, `@almadar/validation`
+**Core**: `@almadar/core` (types and the pattern registry), `@almadar/std`, `@almadar/syntax`
 
-**Runtime**: `@almadar/runtime`, `@almadar/server`, `@almadar/ui`, `@almadar/integrations`
+**Runtime**: `@almadar/runtime` (the kernel host), `@almadar/server`, `@almadar/ui`, `@almadar/db`, `@almadar/auth`
 
-**AI**: `@almadar/agent`, `@almadar/llm`, `@almadar/skills`
+**Kernel**: `@almadar/kernel` (the `orbital-core` kernel as WebAssembly)
 
 ### Key Design Decisions
 
