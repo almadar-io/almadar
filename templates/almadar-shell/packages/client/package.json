@@ -15,7 +15,6 @@
   "dependencies": {
     "@almadar/core": "^7.14.3",
     "@almadar/logger": "^1.3.0",
-    "@almadar/patterns": "^2.30.2",
     "@almadar/syntax": "^1.4.0",
     "@almadar/ui": "^4.55.0",
     "@monaco-editor/react": "^4.7.0",
