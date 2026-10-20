@@ -4,11 +4,7 @@ Shell templates used by the Almadar compiler to generate full-stack applications
 
 ## Available Templates
 
-### Almadar Shell (`almadar-shell/`)
-- **Frontend**: React with TypeScript
-- **Backend**: Express.js
-- **Packages**: Uses @almadar/* npm packages for UI, runtime, and server utilities
-- **Use case**: Web applications, dashboards, CRUD apps
+The TypeScript shell template lives with its shell: `orbital-rust/crates/orbital-shell-typescript/templates/almadar-shell`.
 
 ### Python Shell (`python-shell/`)
 - **Backend**: FastAPI with PyTorch
