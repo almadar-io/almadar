@@ -15,4 +15,4 @@ Next code: `G-ALMADAR-003`
 ### Apps tier
 
 
-- **G-TOOLS-016** — Both orb.almadar.io quickstart programs currently fail `orb validate`. [mechanical] `[good candidate IF the fix is just updating the quickstart .lolo samples, not a compiler drift — check which before assigning]` — orig: `Almadar_Compiler_Gaps.md` → §126
+- **G-TOOLS-016** — Both orb.almadar.io quickstart programs currently fail `orb validate`. [mechanical] `[good candidate IF the fix is just updating the quickstart .lolo samples, not a compiler drift — check which before assigning]` — orig: `Almadar_Compiler_Gaps.md` → §126 Root cause: T3.
