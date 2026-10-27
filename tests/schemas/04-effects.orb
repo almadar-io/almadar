@@ -1,7 +1,7 @@
 {
   "name": "effects-test",
   "version": "1.0.0",
-  "description": "Test: Effect execution (render_ui, set, increment, persist)",
+  "description": "Test: Effect execution (render-ui, set, increment, persist)",
   "orbitals": [
     {
       "name": "CounterManager",

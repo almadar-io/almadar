@@ -1,7 +1,7 @@
 {
   "name": "patterns-test",
   "version": "1.0.0",
-  "description": "Test: UI patterns (render_ui effects)",
+  "description": "Test: UI patterns (render-ui effects)",
   "orbitals": [
     {
       "name": "ProductManager",
