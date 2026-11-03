@@ -1,117 +1,137 @@
+<div align="center">
+
 # Almadar
 
-> Building tools for formally verifiable, AI-native software development.
+**The almadar.io website and the repo that also hosts the orb.almadar.io site, tests, templates and skills.**
 
-Almadar builds developer tools that treat software behavior as a first-class, formally verifiable artifact. We combine programming language design, compiler engineering, and AI agent systems to make software that's correct by construction.
+[![CI](https://github.com/almadar-io/almadar/actions/workflows/ci.yml/badge.svg)](https://github.com/almadar-io/almadar/actions/workflows/ci.yml)
+[![License: BSL 1.1](https://img.shields.io/badge/license-BSL%201.1-blue)](LICENSE)
 
----
+</div>
 
-## Products
+Almadar builds tools for software whose behavior is a verified, first-class artifact: natural language becomes a `.lolo` program, which lowers to `.orb` IR and runs as a full-stack app. This repo is the public home of that work: the almadar.io site (`website/`, built from the `std-almadar-website` organism), the orb.almadar.io site (the `orb/` submodule), and the black-box language tests, shell templates and agent skills.
 
-### [Orb](https://github.com/almadar-io/orb) - Programming Language
+## Where this fits
 
-A formal language for describing how software behaves. Write a world model, the compiler proves it correct, AI agents generate valid implementations.
-
+```mermaid
+flowchart TB
+  subgraph kernel["Kernel and substrate"]
+    core["orbital-core<br/>IR · evaluator · kernel"]
+    canvas["orbital-canvas<br/>2D/3D render primitives"]
+  end
+  subgraph lang["Language"]
+    lolo["orbital-lolo<br/>.lolo → .orb"]
+    compiler["orbital-compiler<br/>validate · codegen"]
+  end
+  subgraph hosts["Shells and hosts"]
+    ts["orbital-shell-typescript<br/>web · node · @almadar/core"]
+    rs["orbital-shell-rust<br/>desktop · tui"]
+    py["orbital-shell-python"]
+    ios["orbital-shell-ios"]
+    android["orbital-shell-android"]
+    os["orbital-shell-os"]
+    wasm["orbital-wasm<br/>browser kernel"]
+    ffi["orbital-ffi<br/>C ABI for mobile"]
+    router["orbital-router"]
+  end
+  cli["orbital-cli<br/>the orb binary"]
+  ws["orbital-rust<br/>workspace · cross-crate tests"]
+  dist["orb<br/>npm · releases"]
+  subgraph pkgs["Language packages"]
+    std["almadar-std<br/>@almadar/std substrate"]
+    beh["behaviors<br/>themed organisms"]
+    langs["lolo-ar · lolo-sl<br/>language packs"]
+  end
+  subgraph apps["Apps and sites"]
+    builder["builder (studio)"]
+    kflow["kflow-academy"]
+    nata["nata"]
+    rawi["rawi"]
+    site["almadar (websites)"]
+  end
+  core --> lolo & compiler & ts & rs & py & ios & android & os & wasm & ffi & router
+  canvas --> ts & rs & ffi
+  lolo --> compiler
+  compiler --> cli
+  ts & rs & py & ios & android & os --> cli
+  cli --> dist
+  ws -.pins.-> core & lolo & compiler & cli
+  dist --> std
+  std --> beh
+  std --> langs
+  beh --> builder & kflow & nata & rawi & site
+  click core "https://github.com/almadar-io/orbital-core"
+  click canvas "https://github.com/almadar-io/orbital-canvas"
+  click lolo "https://github.com/almadar-io/orbital-lolo"
+  click compiler "https://github.com/almadar-io/orbital-compiler"
+  click ts "https://github.com/almadar-io/orbital-shell-typescript"
+  click rs "https://github.com/almadar-io/orbital-shell-rust"
+  click py "https://github.com/almadar-io/orbital-shell-python"
+  click ios "https://github.com/almadar-io/orbital-shell-ios"
+  click android "https://github.com/almadar-io/orbital-shell-android"
+  click os "https://github.com/almadar-io/orbital-shell-os"
+  click wasm "https://github.com/almadar-io/orbital-wasm"
+  click ffi "https://github.com/almadar-io/orbital-ffi"
+  click router "https://github.com/almadar-io/orbital-router"
+  click cli "https://github.com/almadar-io/orbital-cli"
+  click ws "https://github.com/almadar-io/orbital-rust"
+  click dist "https://github.com/almadar-io/orb"
+  click std "https://github.com/almadar-io/almadar-std"
+  click beh "https://github.com/almadar-io/behaviors"
+  click langs "https://github.com/almadar-io/lolo-ar"
+  click builder "https://github.com/itechdom/almadar-studio"
+  click kflow "https://github.com/almadar-io/almadar-kflow-academy"
+  click nata "https://github.com/almadar-io/almadar-nata"
+  click rawi "https://github.com/almadar-io/almadar-rawi"
+  click site "https://github.com/almadar-io/almadar"
+  classDef here fill:#2563eb,color:#fff,stroke:#1e40af,stroke-width:3px
+  
+  class site here
 ```
-World Model (.orb) --> Compiler --> Valid System
-```
 
-- Turing-complete language for state machines, effects, and UI
-- Deterministic compiler (Rust) with TypeScript and Python shells
-- 129 standard behaviors across 18 domains
-- Open source
+| Upstream (this repo depends on) | Downstream (depends on this repo) |
+|---|---|
+| [behaviors](https://github.com/almadar-io/behaviors): the `std-almadar-website` organism the site is built from | none inside the monorepo |
+| [almadar-std](https://github.com/almadar-io/almadar-std): `@almadar/std`, the substrate | |
+| [orb](https://github.com/almadar-io/orb): the `orb/` submodule (the orb site, `@almadar/orb`) and its shared `build-site.mjs` | |
 
-### [Almadar Studio](https://studio.almadar.io) - Builder IDE
-
-Visual builder where humans and AI agents collaborate to create software. Describe what you want in natural language, the agent generates a valid .orb program, the compiler produces a deployable app.
-
-### [Almadar Services](https://services.almadar.io) - Infrastructure
-
-AI-native infrastructure: compute, storage, authentication, event routing. Designed for agent-built applications.
-
-### [KFlow Academy](https://kflow.academy) - Learning Platform
-
-Interactive courses on software engineering, from fundamentals to AI-powered development.
-
----
-
-## Architecture
-
-```
-Natural Language --> AI Agent --> .orb Program --> Rust Compiler --> Deployable App
-                                     |                  |
-                              Standard Library     Deterministic
-                              (129 behaviors)      Validation
-```
-
-The core pipeline: a user (or AI agent) writes a `.orb` program describing system behavior. The Rust compiler validates it deterministically and generates a full-stack application (TypeScript frontend + Express backend). No runtime interpretation needed in production.
-
----
-
-## Repositories
-
-| Repository | Description |
-|------------|-------------|
-| [orb](https://github.com/almadar-io/orb) | The Orb programming language: compiler, standard library, CLI |
-| [almadar-ui](https://github.com/almadar-io/almadar-ui) | React component library and design system |
-| [almadar-core](https://github.com/almadar-io/almadar-core) | Core schema types and definitions |
-| [almadar-std](https://github.com/almadar-io/almadar-std) | Standard library: 129 reusable behaviors |
-| [almadar-agent](https://github.com/almadar-io/almadar-agent) | AI agent infrastructure (LangGraph, JEPA planner) |
-| [almadar-llm](https://github.com/almadar-io/almadar-llm) | Multi-provider LLM client (Anthropic, DeepSeek, OpenRouter) |
-
----
-
-## For Developers
-
-### Quick Start
+## Quick start
 
 ```bash
-# Install the Orb compiler
-npm install -g @almadar/cli
-
-# Create and validate a schema
-orbital validate my-app.orb
-
-# Compile to TypeScript
-orbital compile my-app.orb --shell typescript
-
-# Start development server
-orbital dev my-app.orb
+cd website
+pnpm install --ignore-workspace
+pnpm build          # orb compile --mode client, then prerender every route into website/build/
 ```
 
-### Published Packages (npm)
+There is no site source in `website/`: `pnpm build` compiles the installed `std-almadar-website` organism with `orb`, prerenders every route and copies `static/` beside the result, using the script shared with orb.almadar.io (`orb/scripts/build-site.mjs`). Deploy with `pnpm deploy` (Firebase Hosting target `main`, project `kflow-b3a39`); CI deploys on a `v*` tag.
 
-**Core**: `@almadar/core` (types and the pattern registry), `@almadar/std`, `@almadar/syntax`
+## What's inside
 
-**Runtime**: `@almadar/runtime` (the kernel host), `@almadar/server`, `@almadar/ui`, `@almadar/db`, `@almadar/auth`
+| Path | What |
+|---|---|
+| `website/` | almadar.io: `package.json`, `static/`, `firebase.json`; the page content is the organism |
+| `orb/` | submodule [almadar-io/orb](https://github.com/almadar-io/orb): orb.almadar.io and the `orb` npm/releases distribution |
+| `tests/` | black-box `.orb` schemas for language features (`tests/schemas/`) and `tests/run-tests.sh` |
+| `examples/` | example programs |
+| `templates/` | shell templates (`python-shell/`) |
+| `skills/` | agent skills (`almadar-orb-universal`, `almadar-orbitals`) |
 
-**Kernel**: `@almadar/kernel` (the `orbital-core` kernel as WebAssembly)
+Community: [Discord](https://discord.gg/q83VjPJx) and [GitHub Discussions](https://github.com/almadar-io/almadar/discussions). Contribution guidance is in [CONTRIBUTING.md](CONTRIBUTING.md). Built by [Almadar](https://almadar.io) in Ljubljana, Slovenia.
 
-### Key Design Decisions
+## Development
 
-- **Schema first**: Edit the .orb program, recompile. Never edit generated code.
-- **Deterministic validation**: The compiler catches errors before runtime. No flaky tests.
-- **Closed circuit**: Every user action flows through Event --> Guard --> State Machine --> Effects --> UI. No hidden mutations.
-- **AI-native**: Token-efficient representations that agents generate and reason about reliably.
+The `ci.yml` workflow runs on push to `main` and checks that every `.orb` file in `tests/schemas/` and `examples/` is valid JSON. The package scripts are `validate`, `compile`, `dev` and `test`, each a call to the `almadar` CLI from `@almadar/cli`.
 
-### Documentation
+```bash
+pnpm install --frozen-lockfile
+pnpm test
+pnpm exec eslint --no-warn-ignored --max-warnings 0 <files you touched>
+```
 
-- [Orb Language Docs](https://orb.almadar.io/docs/getting-started/introduction)
-- [API Reference](https://almadar.io/docs)
+Open gaps are in `Almadar_Gaps.md`. Work on `main` only; never publish from here (releases go through the monorepo cascade and CI).
 
----
-
-## Community
-
-- [Discord](https://discord.gg/q83VjPJx)
-- [GitHub Discussions](https://github.com/almadar-io/almadar/discussions)
-
----
-
-## Team
-
-Built by [Almadar](https://almadar.io) in Ljubljana, Slovenia.
+## Docs
+- [Orb language docs](https://orb.almadar.io/docs/getting-started/introduction)
 
 ## License
-
-BSL 1.1 (Business Source License). Converts to Apache 2.0 on 2030-02-01. Non-production use is free.
+Business Source License 1.1, Licensor Almadar FZE; production use for non-commercial purposes and internal evaluation is granted, and the license converts to Apache 2.0 on 2030-02-01. See [LICENSE](LICENSE).
