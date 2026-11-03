@@ -9,7 +9,7 @@
 
 </div>
 
-<p align="center"><sub>Part of <a href="https://github.com/almadar-io/orb"><b>Orb</b></a>: the language where the rule is the program. <a href="https://orb.almadar.io">orb.almadar.io</a></sub></p>
+<p align="center"><sub>Part of <a href="https://github.com/almadar-io/orb"><b>Orb</b></a>: a programming language of composable state machines. <a href="https://orb.almadar.io">orb.almadar.io</a></sub></p>
 
 Almadar builds tools for software whose behavior is a verified, first-class artifact: natural language becomes a `.lolo` program, which lowers to `.orb` IR and runs as a full-stack app. This repo is the public home of that work: the almadar.io site (`website/`, built from the `std-almadar-website` organism), the orb.almadar.io site (the `orb/` submodule), and the black-box language tests, shell templates and agent skills.
 
