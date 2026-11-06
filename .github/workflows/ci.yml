@@ -1,11 +1,10 @@
 name: CI
 
 on:
+  # CI runs on a release tag (alongside publish) or by hand, never on a branch push.
   push:
-    branches: [main]
-    paths-ignore: ['**/*.md', 'docs/**']
-  # No pull_request — this team pushes to main directly (no PRs). Cheap schema
-  # validation runs on each push; heavy builds are tag-gated (see other workflows).
+    tags: ['v*']
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.ref }}
