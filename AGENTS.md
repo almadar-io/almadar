@@ -19,13 +19,13 @@ pnpm install --frozen-lockfile
 pnpm test
 pnpm exec eslint --no-warn-ignored --max-warnings 0 <files you touched>
 ```
-Lint every file you touched with `--max-warnings 0`. CI (`.github/workflows/`: `ci.yml`, `deploy-website.yml`) runs the same steps on push and pull request; a change is not finished until it passes there too.
+Lint every file you touched with `--max-warnings 0`. There is no GitHub CI: `orb release --check` from the monorepo root runs the release set's builds and checks locally.
 
 ## Rules
 - **Stay in this repo.** Never edit, vendor or copy sibling source. If the right fix is upstream (see Upstream above), stop and write it up in your report or PR body: the file, the fix, and why. Don't patch around it here.
 - **Main line only.** Commit to `main`. If your harness requires a branch (cloud agents), make it one short-lived PR that fast-forwards onto `main`, and never build on top of it.
 - **Never discard work.** No `git reset`, `checkout --`, `restore`, `clean`, `stash` or `revert`. Commit or push only when asked.
-- **Never publish.** No `npm publish` / `pnpm publish`, no version bumps, no tags. Releases go through the monorepo cascade and CI.
+- **Never publish.** No `npm publish` / `pnpm publish`, no version bumps, no tags. Releases go through `orb release` from the monorepo root.
 - **Never edit generated output:** `dist/`. Fix the source or the generator.
 - **Tests first.** A bug fix starts with a failing unit test at the owning component. It uses the real implementation, not a mock of the thing under test. Every positive case gets a paired control, and edge cases are listed before coding. The test stays as prevention.
 - **Type safety.** No `as any`, no `unknown` casts, no `as unknown as X`, in tests too. A missing field means the upstream type is wrong; report it rather than shadow-typing it here.
