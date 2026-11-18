@@ -11,13 +11,23 @@
     "trailingSlash": false,
     "redirects": [
       {
-        "regex": "^/(vision|platform|ai|blog|roadmap|systems|how-it-works|sign|markdown-page)(/.*)?$",
+        "regex": "^/(vision|platform|ai|roadmap|systems|how-it-works|sign|markdown-page)(/.*)?$",
         "destination": "/",
         "type": 302
       },
       {
-        "regex": "^/(ar|sl)/(vision|platform|ai|blog|roadmap|systems|how-it-works|sign|markdown-page)(/.*)?$",
+        "regex": "^/(ar|sl)/(vision|platform|ai|roadmap|systems|how-it-works|sign|markdown-page)(/.*)?$",
         "destination": "/:1",
+        "type": 302
+      },
+      {
+        "regex": "^/blog/(tags|authors|page|archive)(/.*)?$",
+        "destination": "/blog",
+        "type": 302
+      },
+      {
+        "regex": "^/(ar|sl)/blog/(tags|authors|page|archive)(/.*)?$",
+        "destination": "/:1/blog",
         "type": 302
       }
     ],
