@@ -11,34 +11,14 @@
     "trailingSlash": false,
     "redirects": [
       {
-        "regex": "^/roadmap/?$",
-        "destination": "/vision",
-        "type": 301
-      },
-      {
-        "regex": "^/(systems|how-it-works|sign|markdown-page)/?$",
+        "regex": "^/(vision|platform|ai|blog|roadmap|systems|how-it-works|sign|markdown-page)(/.*)?$",
         "destination": "/",
-        "type": 301
+        "type": 302
       },
       {
-        "regex": "^/blog/(tags|authors|page|archive)(/.*)?$",
-        "destination": "/blog",
-        "type": 301
-      },
-      {
-        "regex": "^/(ar|sl)/roadmap/?$",
-        "destination": "/:1/vision",
-        "type": 301
-      },
-      {
-        "regex": "^/(ar|sl)/(systems|how-it-works|sign|markdown-page)/?$",
+        "regex": "^/(ar|sl)/(vision|platform|ai|blog|roadmap|systems|how-it-works|sign|markdown-page)(/.*)?$",
         "destination": "/:1",
-        "type": 301
-      },
-      {
-        "regex": "^/(ar|sl)/blog/(tags|authors|page|archive)(/.*)?$",
-        "destination": "/:1/blog",
-        "type": 301
+        "type": 302
       }
     ],
     "rewrites": [
@@ -98,6 +78,33 @@
           {
             "key": "Cache-Control",
             "value": "no-cache"
+          }
+        ]
+      },
+      {
+        "source": "**/!(*.*)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(html|json|orb)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
+        "source": "/assets/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
           }
         ]
       }
